@@ -116,7 +116,7 @@
 
   <!-- ── Nav bar ──────────────────────────────────────────────────────── -->
   <span class="title-bar h3 heading">Journey Index</span>
-  <nav class="nav-bar bg-slate-100">
+  <nav class="nav-bar">
 
     <div class="nav-left">
       <span class="nav-divider" aria-hidden="true" />
@@ -276,9 +276,6 @@
         on:click={() => selectedIndex.update(i => i - 1)}
         aria-label="Previous step"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
         Prev
       </button>
       <div class="step-dots">
@@ -348,12 +345,6 @@
   width: 1px;
   height: 20px;
   background: #d1d5db;
-}
-
-.nav-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
 }
 
 .persona-tabs {

@@ -33,13 +33,13 @@ export function ratingToLabel(val) {
 
 // ── Stage color palette ───────────────────────────────────────────────────────
 export const STAGE_COLORS = [
-  '#F1DDCB', // Desert Sand
-  '#EDCAAA', // Desert Sand 2
-  '#FCFFB2', // Desert Sand 3
-  '#CCFFB2', // Almond Cream
-  '#EDDAC6', // Almond Cream 2
-  '#EDE0CF', // Almond Cream 3
-  '#EDE5D8', // Soft Linen
+  '#006363ff', // Desert Sand
+  '#237674ff', // Desert Sand 2
+  '#468A85ff', // Desert Sand 3
+  '#699D97ff', // Almond Cream
+  '#8CB0A8ff', // Almond Cream 2
+  '#AFC4B9ff', // Almond Cream 3
+  '#D2D7CAff', // Soft Linen
 ];
 
 /**
