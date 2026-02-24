@@ -1,0 +1,99 @@
+{
+    "step_id": "6",
+    "stage": "Neurology",
+    "step": "Misdiagnosis",
+    "experience_wheel": {
+      "emotional_context": {
+        "primary_emotion": "surprise",
+        "secondary_emotions": ["anger", "confusion", "self-doubt"],
+        "emotional_valence": -3,
+        "provider_trust": -2,
+        "medical_self_efficacy": -1,
+        "logistical_capacity": -3
+      },
+      "touchpoints": [
+        {
+          "id": "tp_1",
+          "moment": "Neurologist delivers initial diagnosis",
+          "type": "clinical_interaction",
+          "sentiment": "leans_negative",
+          "make_or_break": true,
+          "positive_design_opportunity": "Clear explanation of diagnostic uncertainty and next steps",
+          "data_needed": "Common patient misunderstandings during first neuro consult"
+        },
+        {
+          "id": "tp_2",
+          "moment": "Prescription of initial medication",
+          "type": "treatment_initiation",
+          "sentiment": "neutral_to_negative",
+          "make_or_break": false,
+          "positive_design_opportunity": "Provide medication expectation framing and monitoring plan",
+          "data_needed": "Drop-off rates after first-line therapy initiation"
+        },
+        {
+          "id": "tp_3",
+          "moment": "Symptoms fail to improve or worsen",
+          "type": "disease_progression",
+          "sentiment": "negative",
+          "make_or_break": true,
+          "positive_design_opportunity": "Structured re-evaluation protocol trigger",
+          "data_needed": "Average time to reassessment after non-response"
+        },
+        {
+          "id": "tp_4",
+          "moment": "Patient seeks information online",
+          "type": "self-directed_research",
+          "sentiment": "mixed",
+          "make_or_break": false,
+          "positive_design_opportunity": "Sponsor-supported plain-language differential diagnosis guide",
+          "data_needed": "Top search queries during diagnostic uncertainty"
+        },
+        {
+          "id": "tp_5",
+          "moment": "Family questions diagnosis",
+          "type": "caregiver_intervention",
+          "sentiment": "negative",
+          "make_or_break": true,
+          "positive_design_opportunity": "Caregiver-facing question checklist for second opinions",
+          "data_needed": "Caregiver-reported barriers to challenging clinicians"
+        },
+        {
+          "id": "tp_6",
+          "moment": "Referral delay to movement disorder specialist",
+          "type": "system_barrier",
+          "sentiment": "negative",
+          "make_or_break": true,
+          "positive_design_opportunity": "Expedited referral pathway education",
+          "data_needed": "Average referral lag time in target geographies"
+        }
+      ],
+      "inflection_analysis": {
+        "convergent_metrics": ["emotional_valence", "provider_trust", "logistical_capacity"],
+        "risk_level": "high",
+        "dropout_risk": "elevated",
+        "trial_perception_shift": "system_failure_may_reduce_future_trial_trust",
+        "sponsor_opportunity_category": [
+          "trust_rebuilding",
+          "diagnostic_education",
+          "early_specialist_identification"
+        ]
+      },
+      "sponsor_actions": [
+        {
+          "category": "communication",
+          "action": "Develop educational materials acknowledging diagnostic complexity",
+          "timing": "pre-trial engagement phase"
+        },
+        {
+          "category": "site_training",
+          "action": "Train investigators to explicitly address prior misdiagnosis trauma",
+          "timing": "site initiation"
+        },
+        {
+          "category": "recruitment",
+          "action": "Frame trial as second-chance clarity rather than experimental risk",
+          "timing": "screening outreach"
+        }
+      ]
+    }
+  }

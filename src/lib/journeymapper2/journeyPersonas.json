@@ -1,0 +1,630 @@
+{
+    "metrics": [
+      {
+        "key": "emotional_valence",
+        "color": "#9b6bc4",
+        "label": "Emotional Valence"
+      },
+      {
+        "key": "provider_trust",
+        "color": "#3a7fc1",
+        "label": "Trust in Providers"
+      },
+      {
+        "key": "medical_self_efficacy",
+        "color": "#c8902a",
+        "label": "Medical Self-Efficacy"
+      },
+      {
+        "key": "logistical_capacity",
+        "color": "#4a9e7f",
+        "label": "Logistical Capacity"
+      }
+    ],
+    "experienceWheels": {
+      "6": {
+        "emotional_context": {
+          "primary_emotion": "surprise",
+          "secondary_emotions": [
+            "anger",
+            "confusion",
+            "self-doubt"
+          ],
+          "emotional_valence": -3,
+          "provider_trust": -2,
+          "medical_self_efficacy": -1,
+          "logistical_capacity": -3
+        },
+        "touchpoints": [
+          {
+            "id": "tp_1",
+            "moment": "Neurologist delivers initial diagnosis",
+            "type": "clinical_interaction",
+            "sentiment": "leans_negative",
+            "make_or_break": true,
+            "positive_design_opportunity": "Clear explanation of diagnostic uncertainty and next steps",
+            "data_needed": "Common patient misunderstandings during first neuro consult"
+          },
+          {
+            "id": "tp_2",
+            "moment": "Prescription of initial medication",
+            "type": "treatment_initiation",
+            "sentiment": "neutral_to_negative",
+            "make_or_break": false,
+            "positive_design_opportunity": "Provide medication expectation framing and monitoring plan",
+            "data_needed": "Drop-off rates after first-line therapy initiation"
+          },
+          {
+            "id": "tp_3",
+            "moment": "Symptoms fail to improve or worsen",
+            "type": "disease_progression",
+            "sentiment": "negative",
+            "make_or_break": true,
+            "positive_design_opportunity": "Structured re-evaluation protocol trigger",
+            "data_needed": "Average time to reassessment after non-response"
+          },
+          {
+            "id": "tp_4",
+            "moment": "Patient seeks information online",
+            "type": "self-directed_research",
+            "sentiment": "mixed",
+            "make_or_break": false,
+            "positive_design_opportunity": "Sponsor-supported plain-language differential diagnosis guide",
+            "data_needed": "Top search queries during diagnostic uncertainty"
+          },
+          {
+            "id": "tp_5",
+            "moment": "Family questions diagnosis",
+            "type": "caregiver_intervention",
+            "sentiment": "negative",
+            "make_or_break": true,
+            "positive_design_opportunity": "Caregiver-facing question checklist for second opinions",
+            "data_needed": "Caregiver-reported barriers to challenging clinicians"
+          },
+          {
+            "id": "tp_6",
+            "moment": "Referral delay to movement disorder specialist",
+            "type": "system_barrier",
+            "sentiment": "negative",
+            "make_or_break": true,
+            "positive_design_opportunity": "Expedited referral pathway education",
+            "data_needed": "Average referral lag time in target geographies"
+          }
+        ],
+        "inflection_analysis": {
+          "convergent_metrics": [
+            "emotional_valence",
+            "provider_trust",
+            "logistical_capacity"
+          ],
+          "risk_level": "high",
+          "dropout_risk": "elevated",
+          "trial_perception_shift": "system_failure_may_reduce_future_trial_trust",
+          "sponsor_opportunity_category": [
+            "trust_rebuilding",
+            "diagnostic_education",
+            "early_specialist_identification"
+          ]
+        },
+        "sponsor_actions": [
+          {
+            "category": "communication",
+            "action": "Develop educational materials acknowledging diagnostic complexity",
+            "timing": "pre-trial engagement phase"
+          },
+          {
+            "category": "site_training",
+            "action": "Train investigators to explicitly address prior misdiagnosis trauma",
+            "timing": "site initiation"
+          },
+          {
+            "category": "recruitment",
+            "action": "Frame trial as second-chance clarity rather than experimental risk",
+            "timing": "screening outreach"
+          }
+        ]
+      }
+    },
+    "personas": [
+      {
+        "id": "persona_1",
+        "type": "patient",
+        "profile": {
+          "initials": "MW",
+          "name": "Margaret W.",
+          "role": "Early-Stage Patient",
+          "age": 67,
+          "gender": "Female",
+          "occupation": "Retired Teacher",
+          "caregiver": "Adult daughter",
+          "preference": "In-person consultations",
+          "diagnosed": "18 months after symptom onset",
+          "imageFile": "MargaretW.jpg"
+        },
+        "currentState": [
+          {
+            "label": "Motivation",
+            "value": 0.92,
+            "minLabel": "Avoid changes",
+            "maxLabel": "Seek improvement"
+          },
+          {
+            "label": "Care coordination level",
+            "value": 0.65,
+            "minLabel": "Disjointed",
+            "maxLabel": "Cohesive"
+          },
+          {
+            "label": "Willingness to accept help",
+            "value": 0.83,
+            "minLabel": "Resistant",
+            "maxLabel": "Willing"
+          }
+        ],
+        "discussionThemes": [
+          {
+            "label": "Diagnosis",
+            "sentiments": [
+              0.05,
+              0.1,
+              0.15,
+              0.2,
+              0.1,
+              0.3,
+              0.35,
+              0.4,
+              0.45,
+              0.5,
+              0.55,
+              0.55,
+              0.6,
+              0.6,
+              0.65,
+              0.65,
+              0.7,
+              0.75,
+              0.8
+            ]
+          },
+          {
+            "label": "Treatment",
+            "sentiments": [
+              0.05,
+              0.1,
+              0.15,
+              0.2,
+              0.25,
+              0.35,
+              0.4,
+              0.5,
+              0.55,
+              0.6,
+              0.65,
+              0.7,
+              0.75,
+              0.8
+            ]
+          },
+          {
+            "label": "Day-to-day adaptations",
+            "sentiments": [
+              0.08,
+              0.2,
+              0.35,
+              0.5,
+              0.55,
+              0.6,
+              0.65,
+              0.7,
+              0.75,
+              0.8,
+              0.82
+            ]
+          },
+          {
+            "label": "Clinical trials",
+            "sentiments": [
+              0.05,
+              0.1,
+              0.15,
+              0.2,
+              0.25,
+              0.3,
+              0.6,
+              0.65,
+              0.7,
+              0.75,
+              0.8
+            ]
+          },
+          {
+            "label": "Speech/Physical therapy",
+            "sentiments": [
+              0.1,
+              0.2,
+              0.45,
+              0.5,
+              0.5,
+              0.55,
+              0.6,
+              0.65,
+              0.75,
+              0.8
+            ]
+          }
+        ],
+        "journey": [
+          {
+            "stage_id": "1",
+            "stage": "Initial Symptoms",
+            "step_id": "1",
+            "step": "Initial Symptom Onset",
+            "sentiment": 1,
+            "plutchik_score": "alarm",
+            "emotional_valence": 3,
+            "provider_trust": 4,
+            "medical_self_efficacy": 2,
+            "logistical_capacity": 3,
+            "narrative_description": "Margaret first notices subtle balance changes and fatigue. She is concerned but assumes it may be age-related. She trusts her providers and believes the issue will be manageable."
+          },
+          {
+            "stage_id": "1",
+            "stage": "Initial Symptoms",
+            "step_id": "2",
+            "step": "Mild Symptom Improvement",
+            "sentiment": 2,
+            "plutchik_score": "hope",
+            "emotional_valence": 2,
+            "provider_trust": 3,
+            "medical_self_efficacy": 1,
+            "logistical_capacity": 3,
+            "narrative_description": "When symptoms fluctuate or temporarily improve, Margaret feels reassured. Hope increases and she interprets the instability as something benign or reversible."
+          },
+          {
+            "stage_id": "2",
+            "stage": "Initial Care",
+            "step_id": "3",
+            "step": "Initial Care",
+            "sentiment": 1,
+            "plutchik_score": "trust",
+            "emotional_valence": -1,
+            "provider_trust": 1,
+            "medical_self_efficacy": -1,
+            "logistical_capacity": 1,
+            "narrative_description": "During early appointments, Margaret struggles to clearly describe her symptoms. She leaves feeling partially heard but uncertain. Trust begins to soften as explanations feel incomplete."
+          },
+          {
+            "stage_id": "2",
+            "stage": "Initial Care",
+            "step_id": "4",
+            "step": "Continued Regression",
+            "sentiment": -1,
+            "plutchik_score": "sadness",
+            "emotional_valence": -2,
+            "provider_trust": -1,
+            "medical_self_efficacy": -2,
+            "logistical_capacity": -1,
+            "narrative_description": "As symptoms continue progressing, Margaret feels discouraged and confused. The lack of clarity lowers her confidence in her own understanding and in the care pathway."
+          },
+          {
+            "stage_id": "3",
+            "stage": "Neurology",
+            "step_id": "5",
+            "step": "Referral to Neurologist",
+            "sentiment": 1,
+            "plutchik_score": "anticipation",
+            "emotional_valence": 1,
+            "provider_trust": 2,
+            "medical_self_efficacy": 0,
+            "logistical_capacity": -2,
+            "narrative_description": "The referral to a neurologist restores cautious optimism. Margaret believes expert input may finally provide answers, even though the logistics feel burdensome."
+          },
+          {
+            "stage_id": "3",
+            "stage": "Neurology",
+            "step_id": "6",
+            "step": "Misdiagnosis",
+            "sentiment": -2,
+            "plutchik_score": "surprise",
+            "emotional_valence": -3,
+            "provider_trust": -2,
+            "medical_self_efficacy": -1,
+            "logistical_capacity": -3,
+            "has_experience_wheel": true,
+            "narrative_description": "Receiving an initial but incorrect diagnosis is destabilizing. Margaret feels surprised and unsettled. When treatment does not help, doubt grows—both in the system and in her own interpretation of symptoms."
+          },
+          {
+            "stage_id": "4",
+            "stage": "Second Opinion",
+            "step_id": "7",
+            "step": "Second Opinion",
+            "sentiment": 1,
+            "plutchik_score": "hope",
+            "emotional_valence": 2,
+            "provider_trust": 1,
+            "medical_self_efficacy": 2,
+            "logistical_capacity": -1,
+            "narrative_description": "Seeking a second opinion feels proactive. Margaret regains some agency and begins researching more deeply, determined to reach diagnostic clarity."
+          },
+          {
+            "stage_id": "4",
+            "stage": "Diagnosis",
+            "step_id": "8",
+            "step": "Parkinson's Diagnosis",
+            "sentiment": -1,
+            "plutchik_score": "grief",
+            "emotional_valence": -3,
+            "provider_trust": -1,
+            "medical_self_efficacy": -4,
+            "logistical_capacity": -4,
+            "narrative_description": "The Parkinson’s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. She feels overwhelmed by the long arc of disease progression."
+          },
+          {
+            "stage_id": "5",
+            "stage": "Community",
+            "step_id": "9",
+            "step": "Joining Online Communities",
+            "sentiment": 2,
+            "plutchik_score": "joy",
+            "emotional_valence": 3,
+            "provider_trust": 2,
+            "medical_self_efficacy": 3,
+            "logistical_capacity": 2,
+            "narrative_description": "Online communities provide emotional validation and practical insights. Margaret feels less alone and gains confidence in navigating future decisions."
+          },
+          {
+            "stage_id": "6",
+            "stage": "Trials",
+            "step_id": "10",
+            "step": "Choosing Between Trials",
+            "sentiment": 1,
+            "plutchik_score": "anticipation",
+            "emotional_valence": 1,
+            "provider_trust": 3,
+            "medical_self_efficacy": 2,
+            "logistical_capacity": -2,
+            "narrative_description": "When evaluating clinical trials, Margaret feels cautiously hopeful. She trusts her neurologist but worries about the physical and logistical demands participation may require."
+          }
+        ]
+      },
+      {
+        "id": "persona_2",
+        "type": "caregiver",
+        "profile": {
+          "initials": "DW",
+          "name": "David W.",
+          "role": "Primary Caregiver",
+          "age": 42,
+          "gender": "Male",
+          "occupation": "Software Engineer",
+          "caregiver": "Self (son-in-law)",
+          "preference": "Telehealth & online resources",
+          "diagnosed": "Learned at time of patient diagnosis"
+        },
+        "currentState": [
+          {
+            "label": "Motivation",
+            "value": 0.78,
+            "minLabel": "Avoid changes",
+            "maxLabel": "Seek improvement"
+          },
+          {
+            "label": "Care coordination level",
+            "value": 0.55,
+            "minLabel": "Disjointed",
+            "maxLabel": "Cohesive"
+          },
+          {
+            "label": "Willingness to accept help",
+            "value": 0.62,
+            "minLabel": "Resistant",
+            "maxLabel": "Willing"
+          }
+        ],
+        "discussionThemes": [
+          {
+            "label": "Diagnosis",
+            "sentiments": [
+              0.05,
+              0.08,
+              0.12,
+              0.15,
+              0.2,
+              0.25,
+              0.4,
+              0.5,
+              0.55,
+              0.6,
+              0.65,
+              0.7
+            ]
+          },
+          {
+            "label": "Treatment",
+            "sentiments": [
+              0.1,
+              0.15,
+              0.2,
+              0.3,
+              0.4,
+              0.5,
+              0.6,
+              0.65,
+              0.7
+            ]
+          },
+          {
+            "label": "Day-to-day adaptations",
+            "sentiments": [
+              0.1,
+              0.25,
+              0.4,
+              0.5,
+              0.55,
+              0.6,
+              0.65,
+              0.7
+            ]
+          },
+          {
+            "label": "Clinical trials",
+            "sentiments": [
+              0.05,
+              0.1,
+              0.15,
+              0.35,
+              0.55,
+              0.65,
+              0.7
+            ]
+          },
+          {
+            "label": "Caregiver burnout",
+            "sentiments": [
+              0.1,
+              0.1,
+              0.15,
+              0.2,
+              0.35,
+              0.5,
+              0.55,
+              0.6
+            ]
+          }
+        ],
+        "journey": [
+          {
+            "stage_id": "1",
+            "stage": "Initial Symptoms",
+            "step_id": "1",
+            "step": "Initial Symptom Onset",
+            "sentiment": -1,
+            "plutchik_score": "fear",
+            "emotional_valence": -2,
+            "provider_trust": 2,
+            "medical_self_efficacy": 1,
+            "logistical_capacity": 2,
+            "narrative_description": "David notices changes before Margaret fully acknowledges them. He feels uneasy but initially trusts that routine care will resolve the issue."
+          },
+          {
+            "stage_id": "1",
+            "stage": "Initial Symptoms",
+            "step_id": "2",
+            "step": "Mild Symptom Improvement",
+            "sentiment": 1,
+            "plutchik_score": "hope",
+            "emotional_valence": 1,
+            "provider_trust": 2,
+            "medical_self_efficacy": 1,
+            "logistical_capacity": 2,
+            "narrative_description": "Temporary improvement reduces David’s anxiety. He interprets it as confirmation that the issue may not be serious."
+          },
+          {
+            "stage_id": "2",
+            "stage": "Initial Care",
+            "step_id": "3",
+            "step": "Initial Care",
+            "sentiment": 0,
+            "plutchik_score": "anticipation",
+            "emotional_valence": 0,
+            "provider_trust": 2,
+            "medical_self_efficacy": 0,
+            "logistical_capacity": 0,
+            "narrative_description": "David begins tracking symptoms and preparing questions. He feels responsible for coordinating information but senses early fragmentation across providers."
+          },
+          {
+            "stage_id": "2",
+            "stage": "Initial Care",
+            "step_id": "4",
+            "step": "Continued Regression",
+            "sentiment": -2,
+            "plutchik_score": "sadness",
+            "emotional_valence": -3,
+            "provider_trust": -1,
+            "medical_self_efficacy": -1,
+            "logistical_capacity": -2,
+            "narrative_description": "As regression continues, David’s frustration increases. He worries about lost time and becomes more assertive in pushing for referrals and clearer answers."
+          },
+          {
+            "stage_id": "3",
+            "stage": "Neurology",
+            "step_id": "5",
+            "step": "Referral to Neurologist",
+            "sentiment": 2,
+            "plutchik_score": "anticipation",
+            "emotional_valence": 2,
+            "provider_trust": 3,
+            "medical_self_efficacy": 1,
+            "logistical_capacity": -1,
+            "narrative_description": "The specialist referral feels like progress. David becomes more engaged, researching terminology and preparing for complex discussions."
+          },
+          {
+            "stage_id": "3",
+            "stage": "Neurology",
+            "step_id": "6",
+            "step": "Misdiagnosis",
+            "sentiment": -3,
+            "plutchik_score": "outrage",
+            "emotional_valence": -4,
+            "provider_trust": -3,
+            "medical_self_efficacy": -2,
+            "logistical_capacity": -4,
+            "has_experience_wheel": true,
+            "narrative_description": "When the diagnosis proves incorrect, David feels anger and betrayal. He questions whether earlier intervention could have changed outcomes. Trust in the system drops sharply."
+          },
+          {
+            "stage_id": "4",
+            "stage": "Second Opinion",
+            "step_id": "7",
+            "step": "Second Opinion",
+            "sentiment": 1,
+            "plutchik_score": "hope",
+            "emotional_valence": 1,
+            "provider_trust": 2,
+            "medical_self_efficacy": 2,
+            "logistical_capacity": -1,
+            "narrative_description": "David approaches the second opinion strategically, compiling records and advocating firmly. His sense of agency increases even as exhaustion builds."
+          },
+          {
+            "stage_id": "4",
+            "stage": "Diagnosis",
+            "step_id": "8",
+            "step": "Parkinson's Diagnosis",
+            "sentiment": -2,
+            "plutchik_score": "grief",
+            "emotional_valence": -4,
+            "provider_trust": 0,
+            "medical_self_efficacy": -3,
+            "logistical_capacity": -5,
+            "narrative_description": "The diagnosis confirms disease seriousness. David shifts into logistical planning mode, focusing on long-term care implications, financial impact, and progression management."
+          },
+          {
+            "stage_id": "5",
+            "stage": "Community",
+            "step_id": "9",
+            "step": "Joining Online Communities",
+            "sentiment": 2,
+            "plutchik_score": "joy",
+            "emotional_valence": 2,
+            "provider_trust": 2,
+            "medical_self_efficacy": 4,
+            "logistical_capacity": 3,
+            "narrative_description": "Online groups provide tactical knowledge and emotional normalization. David absorbs practical strategies and begins thinking ahead about advanced planning."
+          },
+          {
+            "stage_id": "6",
+            "stage": "Trials",
+            "step_id": "10",
+            "step": "Choosing Between Trials",
+            "sentiment": 0,
+            "plutchik_score": "anticipation",
+            "emotional_valence": 0,
+            "provider_trust": 2,
+            "medical_self_efficacy": 3,
+            "logistical_capacity": -3,
+            "narrative_description": "When evaluating trials, David weighs risk, travel, inclusion criteria, and caregiver burden. He sees opportunity but also anticipates significant logistical strain."
+          }
+        ]
+      }
+    ]
+  }
