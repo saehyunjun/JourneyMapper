@@ -65,7 +65,11 @@
   const RADIUS = 4;
 </script>
 
-<div class="section-label">Current Experience</div>
+<div class = "header">
+<span class="heading h3 h-small text-blue">
+  Current Experience
+</span>
+</div>
 
 <svg width={width} height={S_SVG_HEIGHT} class="sentiment-svg">
 

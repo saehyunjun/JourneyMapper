@@ -44,14 +44,14 @@
   >
     <!-- Header -->
      
-    <div class="drawer-header">
+    <div class="header">
     
       <div class="header-meta">
-        {#if eyebrow}
-          <span class="header-eyebrow">{eyebrow}</span>
-        {/if}
         {#if title}
-          <span class="header-title">{title}</span>
+          <span class="h2 heading">{title}</span>
+        {/if}
+        {#if eyebrow}
+          <span class="label-uppercase">{eyebrow}</span>
         {/if}
         <!-- Named slot so callers can fully replace the header text region -->
         <slot name="header-meta" />
@@ -109,18 +109,6 @@
     overflow: hidden;
   }
 
-  /* ── Header ─────────────────────────────────────────────────── */
-  .drawer-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px 14px;
-    border-bottom: 1px solid #DFC3A8;
-    background: #EDE5D8;
-    flex-shrink: 0;
-    gap: 12px;
-  }
-
   .header-meta {
     display: flex;
     flex-direction: column;
@@ -128,32 +116,6 @@
     flex: 1;
     min-width: 0;
   }
-
-  .header-eyebrow {
-    font-size: 9px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #A08060;
-  }
-
-  .header-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: #5A3E28;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-  }
-
   /* ── Close button ───────────────────────────────────────────── */
   .close-btn {
     width: 28px;
@@ -173,17 +135,6 @@
     background: #DFC3A8;
     color: #5A3E28;
   }
-
-  /* ── Body ───────────────────────────────────────────────────── */
-  .drawer-body {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  .drawer-body::-webkit-scrollbar { width: 4px; }
-  .drawer-body::-webkit-scrollbar-track { background: transparent; }
-  .drawer-body::-webkit-scrollbar-thumb { background: #DFC3A8; border-radius: 2px; }
 
   /* ── Footer ─────────────────────────────────────────────────── */
   .drawer-nav {

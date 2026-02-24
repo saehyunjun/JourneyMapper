@@ -73,24 +73,23 @@
   >
 
     <!-- Sentiment + Plutchik row -->
-  <div class="tip-summary">
+  <div class= "ContentRowWide border-bottom">
       <div class="tip-summary-item">
-        <span class="text-2xs text-slate-500 font-semibold uppercase">Overall Sentiment</span>
+        <span class="label-heading">Overall Sentiment</span>
         <div class = "flex flex-row gap-2 align-middle items-baseline">
           <div
             class="w-2 h-2 ring-1 ring-slate-900"
             style="background: {sentimentColor};"
           />
-        <span class="text-xs text-slate-600">
+        <span class="label">
            {sentimentLabel}
         </span>
       </div>
     </div>
 
-      <div class="" />
 
       <div class="tip-summary-item tip-summary-item--plutchik">
-        <span class="text-2xs text-slate-500 font-semibold uppercase">
+        <span class="label-heading">
           Emotion
         </span>
         <div class = "flex flex-row gap-2 align-middle items-baseline">
@@ -98,7 +97,7 @@
           class="w-2 h-2 rounded-full ring-1 ring-slate-900"
           style="background: {plutchikBg};"
         />
-      <span class="text-xs text-slate-800 capitalize">
+      <span class="label capitalize">
         {step.plutchik_score}
       </span>
     </div>
@@ -118,9 +117,9 @@
     <div class="tip-metrics">
       {#each metrics as m}
         <div class="tip-row">
-          <span class="tip-dot" style="background: {m.color};" />
-          <span class="tip-label">{m.label}</span>
-          <span class="tip-value">{ratingToLabel(step[m.key])}</span>
+          <span class="w-4 h-4" style="background: {m.color};" />
+          <span class="label">{m.label}</span>
+          <span class="label">{ratingToLabel(step[m.key])}</span>
         </div>
       {/each}
     </div>
@@ -141,69 +140,4 @@
     transition: left 60ms linear, top 60ms linear;
   }
 
-  /* ── Header ─────────────────────────────────────────────────── */
-  .tip-header {
-    border-bottom: #5A3E28 .5px dotted;
-    justify-content: center;
-    align-content: center;
-  }
-
-  /* ── Sentiment + Plutchik summary band ──────────────────────── */
-  .tip-summary {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 0 8px;
-    border-bottom: 1px solid #EDE5D8;
-  }
-
-  .tip-summary-item {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    flex: 1;
-  }
-
-  .tip-summary-divider {
-    width: 1px;
-    height: 36px;
-    background: #DFC3A8;
-    flex-shrink: 0;
-  }
-  
-  /* ── Metric rows ─────────────────────────────────────────────── */
-  .tip-metrics {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding-top: 8px;
-  }
-
-  .tip-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .tip-dot {
-    width: .25em;
-    height: .725em;
-    border-radius: 2em;
-    flex-shrink: 0;
-    opacity: 0.9;
-  }
-
-  .tip-label {
-    font-size: .825em;
-    color: #7A5A3A;
-    flex: 1;
-  }
-
-  .tip-value {
-    font-size: .825em;
-    color: #5A3E28;
-    font-weight: 500;
-    text-align: right;
-    white-space: nowrap;
-  }
 </style>

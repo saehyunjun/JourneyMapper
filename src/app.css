@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googles.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lexend+Peta:wght@100..900&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
@@ -11,6 +11,12 @@
   --font-heading: "Jost", display;
   --font-body: "IBM Plex Sans", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
+}
+
+
+.blue 
+{
+color: #23ABAB;
 }
 
 /* Base */
@@ -29,9 +35,13 @@ h1, h2, h3, h4, h5, h6,
   font-family: var(--font-heading);
   font-weight: 500;
   font-size: 2em;
-  color: #80766B;
   line-height: 1.2;
   text-transform: uppercase;
+}
+
+.h-small 
+{
+font-size: 1em;
 }
 
 .display-serif {
@@ -56,9 +66,38 @@ h1, h2, h3, h4, h5, h6,
 .caption, .label, small, figcaption,
 .text-mono {
   font-family: var(--font-mono);
-  font-size: .625em;
-  letter-spacing: 0.04em;
+  font-size: .725em;
   color: #28211E;
+}
+
+.label-heading
+{
+   font-family: var(--font-heading);
+   font-size: .725em;
+   color: #73726C; 
+   font-weight: 600;
+   text-transform: uppercase;
+}
+
+.label-bold 
+{    font-family: var(--font-body);
+    font-size: .825em;
+    font-weight: 800;
+    color: #141413;
+    mix-blend-mode: darken;
+}
+
+.label-uppercase {
+    font-family: var(--font-body);
+    font-size: .825em;
+    text-transform: uppercase;
+   }
+
+.label-uppercase-bold {
+    font-family: var(--font-body);
+    font-size: .825em;
+    text-transform: uppercase;
+    font-weight: 800;
 }
 
 /* JourneyMapper page typography (class-based) */
@@ -84,6 +123,20 @@ h1, h2, h3, h4, h5, h6,
   text-transform: uppercase;
 }
 
+.tag {
+    display: flex;
+    flex: row;
+    padding: .125em .25em .125em .25em;
+    border: .5px solid #141413;
+}
+
+
+.border-bottom {
+    border-bottom: .5px solid #141413;
+    padding-bottom: .25em;
+}
+
+
 
 .nav-title { font-size: .725em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
 .tab-initials { font-size: .725em; font-weight: 700; }
@@ -106,8 +159,44 @@ h1, h2, h3, h4, h5, h6,
 .journey-wrapper {
     display: flex;
     flex-direction: column;
-    background-color: #FAF9F5;
     height: 100%;
+  }
+
+  /* ── Body row ─────────────────────────────────────────────────────── */
+  .journey-body {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+    scrollbar-color: #9898C8;
+  }
+
+  /* ── Main content column (right of sidebar) ───────────────────────── */
+  .journey-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+    min-width: 0;
+  }
+
+  /* ── Chart scroll container ───────────────────────────────────────── */
+  .journey-index {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .shared-scroll {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: visible;
+    position: relative;
+    padding-bottom: 1em;
   }
 
 .even-col {
@@ -135,9 +224,23 @@ h1, h2, h3, h4, h5, h6,
     display: flex;
     flex-direction: row;
     gap: 2;
-    background-color: #FAF9F5;
+    padding: .25em 1.25em;
+    font-weight: 600;
+    text-transform: uppercase;
     color: #23ABAB;
     border: 1px #23ABAB solid;
+    cursor: pointer;
+  }
+
+  .nav-btn {
+    display: flex;
+    flex-direction: row;
+    gap: 2;
+    padding: .25em 1.25em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #FF0000;
+    border: 1px #FF0000 solid;
     cursor: pointer;
   }
 
@@ -146,15 +249,143 @@ h1, h2, h3, h4, h5, h6,
     animation-duration: 200ms;
   }
 
-    /* ── Header ─────────────────────────────────────────────────── */
-    .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 16px 20px 14px;
-        border-bottom: .5px solid #DFC3A8;
-        background: #FAF9F5;
-        flex-shrink: 0;
-        gap: 12px;
-      }
-    
+/* ── Header ─────────────────────────────────────────────────── */
+.header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 1em 2.25em .25em .725em;
+border-bottom: .5px solid #DFC3A8;
+flex-shrink: 0;
+gap: 12px;
+}
+
+.profile-photo {
+    display: block;
+    width: 12.5em;
+    height: 12.5em;
+}
+
+.HeroTwoColumn, .CardTwoColumn {
+    column-gap: 32px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    max-width: 100%;
+    row-gap: 32px;
+    width: 100%;    
+}
+
+.ContentRowWide {
+    display: grid;
+    width: 100%;
+    justify-content: stretch;
+}
+
+.CardContent  {
+    display: flex;
+    flex-direction: column;
+    row-gap: .25em;
+    max-width: 100%;
+    width: 100%;    
+    height: 100%;
+}
+
+
+.persona-profile-card {
+    /* Reset button defaults */
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+  
+    border: 1.5px solid #23ABAB;
+    padding: 1em;
+    margin: 0 0 2em 2em;
+  
+    transition:
+      border-color 0.18s ease,
+      box-shadow  0.18s ease,
+      background  0.18s ease;
+  }
+  
+  .persona-profile-card:hover {
+    border-color: #FF0000;
+  }
+  
+  .persona-profile-card--open {
+    border-width: 2px;
+  }
+  
+  /* Inner flex row */
+  .persona-profile-card__content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  /* Avatar circle */
+  .persona-profile-card__photo {
+    flex-shrink: 0;
+    width: 5em;
+    height: 5em;
+    overflow: hidden;
+    background: #E8E5DE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .persona-profile-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .persona-profile-card__initials {
+    font-weight: 600;
+    color: #28211E;
+    letter-spacing: 0.02em;
+  }
+  
+  /* Text section */
+  .persona-profile-card__name {
+    font-weight: 600;
+    color: #2C2A25;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .persona-profile-card__role {
+    font-size: 12px;
+    color: #8A8070;
+    margin-left: auto; /* push role to the right */
+    white-space: nowrap;
+  }
+  
+  /* Quick-look key/value pairs */
+  .persona-profile-card__field {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  
+  .persona-profile-card__field-key {
+    font-size: .825em;
+    font-weight: 400;
+    color: #A09585;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  
+  .hero-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
+
+  
+  .pill {
+    font-family: 'IBM Plex Sans', sans-serif; font-size: .925em; text-transform: uppercase; color: #232323;
+    border: 1px solid #232323; border-radius: 20px;
+    padding: .25em 1.125em;
+  }
