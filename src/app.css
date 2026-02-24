@@ -2,12 +2,13 @@
 
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lexend+Peta:wght@100..900&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 /* Typography tokens */
 :root {
-  --font-heading: "Spectral", serif;
+  --font-heading: "Jost", display;
   --font-body: "IBM Plex Sans", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
 }
@@ -24,13 +25,12 @@ html, body {
 
 /* Headings */
 h1, h2, h3, h4, h5, h6,
-.heading, .text-heading, .nav-title {
+.heading, .text-heading, .nav-title, .subheading {
   font-family: var(--font-heading);
   font-weight: 500;
   font-size: 2em;
   color: #80766B;
   line-height: 1.2;
-  letter-spacing: -0.05em;
   text-transform: uppercase;
 }
 
@@ -56,7 +56,9 @@ h1, h2, h3, h4, h5, h6,
 .caption, .label, small, figcaption,
 .text-mono {
   font-family: var(--font-mono);
+  font-size: .625em;
   letter-spacing: 0.04em;
+  color: #28211E;
 }
 
 /* JourneyMapper page typography (class-based) */
@@ -110,11 +112,18 @@ h1, h2, h3, h4, h5, h6,
 
   .nav-bar, .title-bar {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     gap: 2;
     padding: .25em .5em .25em .725em;
     background-color: #F0EEE6;
     border-bottom:  .25px solid rgba(25, 25, 25, 0.275);
+  }
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
   .nav-btn {

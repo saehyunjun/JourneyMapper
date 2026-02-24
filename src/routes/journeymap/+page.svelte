@@ -117,13 +117,8 @@
   <!-- ── Nav bar ──────────────────────────────────────────────────────── -->
   <span class="title-bar h3 heading">Journey Index</span>
   <nav class="nav-bar">
-
-    <div class="nav-left">
-      <span class="nav-divider" aria-hidden="true" />
-    </div>
-
     <!-- Persona switcher tabs -->
-    <div class="nav-personas">
+    <div class="nav-left">
       {#each personas as p}
         <button
           class="persona-tab"
@@ -327,13 +322,6 @@
   height: 100%;
 }
 
-.top-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-  border-bottom: 1px solid #e5e7eb;
-}
 
 .nav-left {
   display: flex;
