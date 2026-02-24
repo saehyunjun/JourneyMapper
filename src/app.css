@@ -1,1 +1,99 @@
 @import "tailwindcss";
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+/* Typography tokens */
+:root {
+  --font-heading: "Spectral", serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+/* Base */
+html, body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  color: #111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.heading, .text-heading, .nav-title {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 1em;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* Body */
+.text-body {
+  font-family: var(--font-body);
+}
+
+/* Captions / labels */
+.caption, .label, small, figcaption,
+.text-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+/* JourneyMapper page typography (class-based) */
+.tab-name,
+.tab-initials,
+.plutchik-btn,
+.strip-name,
+.strip-initials,
+.strip-val,
+.strip-cue,
+.nav-btn,
+.close-btn {
+  font-family: var(--font-mono);
+}
+
+.tab-type,
+.strip-role,
+.strip-key,
+.cite,
+.persona-footer-note {
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.nav-title { font-size: .725em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.tab-initials { font-size: .725em; font-weight: 700; }
+.tab-name { font-size: .725em; font-weight: 700; line-height: 1.2; }
+.tab-type { font-size: .725em; }
+.plutchik-btn { font-size: .725em; letter-spacing: 0.07em; text-transform: uppercase; }
+.strip-initials { font-size: .725em; font-weight: 700; }
+.strip-name { font-size: .725em; font-weight: 700; letter-spacing: 0.02em; }
+.strip-role { font-size: .725em; }
+.strip-key { font-size: .725em; font-weight: 500; letter-spacing: 0.08em; }
+.strip-val { font-size: .725em; }
+.strip-cue { font-size: .725em; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.nav-btn { font-size: .725em; letter-spacing: 0.05em; border: 1px #111; }
+.close-btn { font-size: .725em; letter-spacing: 0.05em; }
+.cite, .persona-footer-note { font-size: .725em; line-height: 1.5; font-style: italic; text-transform: none; letter-spacing: 0; }
+.cite em { font-style: normal; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; }
+
+
+.journey-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: #FAF9F5;
+    height: 100%;
+  }
+
+  .nav-bar, .title-bar {
+    display: flex;
+    flex-direction: row;
+    gap: 2;
+  }

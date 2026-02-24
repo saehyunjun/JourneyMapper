@@ -1,6 +1,6 @@
-<script>
+<script lang=ts>
     /** Full persona object from journeyPersonas.json */
-    export let persona = null;
+    export let persona: any = null;
   
     function tileColor(v) {
       const n = Math.max(0, Math.min(1, v));

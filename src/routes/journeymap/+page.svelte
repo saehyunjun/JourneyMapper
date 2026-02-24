@@ -115,12 +115,11 @@
 <div class="journey-wrapper">
 
   <!-- ── Nav bar ──────────────────────────────────────────────────────── -->
-  <nav class="journey-nav">
+  <span class="title-bar h3 heading">Journey Index</span>
+  <nav class="nav-bar bg-slate-100">
 
     <div class="nav-left">
-      <span class="nav-title">Journey Index</span>
       <span class="nav-divider" aria-hidden="true" />
-      <JourneyLegend items={metrics} />
     </div>
 
     <!-- Persona switcher tabs -->
@@ -218,14 +217,14 @@
     {/each}
 
     <!-- View-profile cue -->
-    <div class="strip-cue" aria-hidden="true">
+    <div class="" aria-hidden="true">
       <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
         <path d="M1.5 5.5h8M5.5 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       Profile
     </div>
   </button>
-
+  <JourneyLegend items={metrics} />
   <!-- ── Chart area ────────────────────────────────────────────────────── -->
   <div class="journey-index">
     <div class="shared-scroll" bind:this={scrollEl}>
@@ -324,201 +323,61 @@
 
   :global(body) { background: #FAF9F5; margin: 0; padding: 0; }
 
+
   .journey-wrapper {
-    display: flex; flex-direction: column;
-    background: #FAF9F5; color: #5A3E28; min-height: 100vh;
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-  /* ── Nav ─────────────────────────────────────────────────────────────── */
-  .journey-nav {
-    position: sticky; top: 0; z-index: 100;
-    display: flex; align-items: center;
-    height: 52px; background: #EDE5D8; border-bottom: 1px solid #DFC3A8;
-    padding: 0 16px 0 20px;
-  }
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
 
-  .nav-left { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-  .nav-title {
-    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase; color: #7A5A3A; white-space: nowrap;
-  }
+.nav-divider {
+  width: 1px;
+  height: 20px;
+  background: #d1d5db;
+}
 
-  .nav-divider { width: 1px; height: 20px; background: #DFC3A8; flex-shrink: 0; }
+.nav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 
-  /* Persona tabs */
-  .nav-personas {
-    display: flex; align-items: center; gap: 4px;
-    flex: 1; justify-content: center; padding: 0 16px;
-  }
+.persona-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
 
-  .persona-tab {
-    display: flex; align-items: center; gap: 8px;
-    padding: 5px 12px 5px 6px;
-    background: transparent; border: 1px solid transparent; border-radius: 3px;
-    cursor: pointer; white-space: nowrap;
-    transition: background 0.15s, border-color 0.15s;
-  }
+.persona-tab {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}
 
-  .persona-tab:hover { background: #F4EFE5; border-color: #DFC3A8; }
+.persona-tab.active {
+  background: #111;
+  color: white;
+}
 
-  .persona-tab--active {
-    background: #F4EFE5; border-color: #C4956A;
-    box-shadow: 0 1px 3px rgba(90,62,40,0.08);
-  }
-
-  .tab-avatar-wrap {
-    width: 26px; height: 26px; border-radius: 50%; overflow: hidden;
-    border: 1.5px solid #DFC3A8; flex-shrink: 0;
-    background: #DFC3A8; transition: border-color 0.15s;
-  }
-
-  .persona-tab--active .tab-avatar-wrap { border-color: #C4956A; }
-
-  .tab-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-  .tab-initials {
-    width: 100%; height: 100%; background: #C4956A; color: #F4EFE5;
-    font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .tab-meta { display: flex; flex-direction: column; gap: 1px; }
-
-  .tab-name {
-    font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
-    color: #5A3E28; line-height: 1.2;
-  }
-
-  .tab-type {
-    font-family: 'DM Sans', sans-serif; font-size: 8px;
-    text-transform: uppercase; letter-spacing: 0.08em; color: #A08060;
-  }
-
-  .nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-
-  .plutchik-btn {
-    display: flex; align-items: center; gap: 6px;
-    font-family: 'Space Mono', monospace; font-size: 9px;
-    letter-spacing: 0.07em; text-transform: uppercase;
-    color: #A08060; background: #F4EFE5; border: 1px solid #DFC3A8; border-radius: 2px;
-    padding: 5px 10px; cursor: pointer; white-space: nowrap;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-  }
-
-  .plutchik-btn:hover   { background: #DFC3A8; color: #5A3E28; border-color: #C4956A; }
-  .plutchik-btn--active { background: #C4956A; color: #F4EFE5; border-color: #C4956A; }
-
-  /* ── Persona strip ───────────────────────────────────────────────────── */
-  .persona-strip {
-    display: flex; align-items: center; gap: 14px;
-    width: 100%; padding: 8px 20px;
-    background: #F4EFE5; border: none;
-    border-bottom: 1px solid #DFC3A8;
-    cursor: pointer; text-align: left;
-    transition: background 0.14s;
-    flex-wrap: wrap;
-  }
-
-  .persona-strip:hover { background: #EDE5D8; }
-
-  .persona-strip--open {
-    background: #EDE5D8;
-    box-shadow: inset 0 -2px 0 #C4956A;
-  }
-
-  .strip-photo-ring {
-    width: 32px; height: 32px; border-radius: 50%; overflow: hidden;
-    border: 2px solid #DFC3A8; flex-shrink: 0; background: #EDE5D8;
-  }
-
-  .strip-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-  .strip-initials {
-    width: 100%; height: 100%; background: #C4956A; color: #F4EFE5;
-    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .strip-name-block { display: flex; flex-direction: column; gap: 1px; flex-shrink: 0; }
-
-  .strip-name {
-    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
-    color: #5A3E28; letter-spacing: 0.02em;
-  }
-
-  .strip-role {
-    font-family: 'DM Sans', sans-serif; font-size: 8px;
-    text-transform: uppercase; letter-spacing: 0.08em; color: #A08060;
-  }
-
-  .strip-divider { width: 1px; height: 24px; background: #DFC3A8; flex-shrink: 0; }
-
-  .strip-field { display: flex; flex-direction: column; gap: 1px; flex-shrink: 0; }
-
-  .strip-key {
-    font-family: 'DM Sans', sans-serif; font-size: 8px; font-weight: 500;
-    text-transform: uppercase; letter-spacing: 0.08em; color: #BFA080;
-  }
-
-  .strip-val { font-family: 'Space Mono', monospace; font-size: 9px; color: #5A3E28; }
-
-  .strip-cue {
-    margin-left: auto; display: flex; align-items: center; gap: 5px; flex-shrink: 0;
-    font-family: 'Space Mono', monospace; font-size: 8px;
-    letter-spacing: 0.06em; text-transform: uppercase; color: #BFA080;
-    transition: color 0.14s;
-  }
-
-  .persona-strip:hover .strip-cue,
-  .persona-strip--open .strip-cue { color: #C4956A; }
-
-  /* ── Chart ────────────────────────────────────────────────────────────── */
-  .journey-index { display: flex; flex-direction: column; }
-
-  .shared-scroll { overflow-x: auto; overflow-y: visible; background: #F4EFE5; position: relative; }
-
-  /* ── Drawer footer ────────────────────────────────────────────────────── */
-  .nav-btn {
-    display: flex; align-items: center; gap: 6px;
-    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.05em;
-    color: #8A6A4A; background: none; border: 1px solid #DFC3A8; border-radius: 2px;
-    padding: 5px 10px; cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-  }
-
-  .nav-btn:hover:not(:disabled) { background: #F4EFE5; color: #5A3E28; }
-  .nav-btn:disabled { opacity: 0.35; cursor: default; }
-
-  .step-dots { display: flex; gap: 5px; align-items: center; }
-
-  .step-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: #DFC3A8; border: none; padding: 0; cursor: pointer;
-    transition: background 0.15s, transform 0.15s;
-  }
-
-  .step-dot.active { background: #A08060; transform: scale(1.4); }
-  .step-dot:hover:not(.active) { background: #BFA080; }
-
-  .cite {
-    font-family: 'DM Sans', sans-serif; font-size: 9px;
-    color: #BFA080; font-style: italic; line-height: 1.5; flex: 1;
-  }
-
-  .cite em { font-style: normal; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; }
-
-  .close-btn {
-    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.05em;
-    color: #8A6A4A; background: none; border: 1px solid #DFC3A8; border-radius: 2px;
-    padding: 5px 10px; cursor: pointer; flex-shrink: 0;
-    transition: background 0.15s, color 0.15s;
-  }
-
-  .close-btn:hover { background: #F4EFE5; color: #5A3E28; }
-
-  .persona-footer-note {
-    font-family: 'DM Sans', sans-serif; font-size: 9px; color: #BFA080;
-    font-style: italic; flex: 1;
-  }
+.journey-container {
+  flex: 1;
+  overflow-x: auto;
+  padding: 24px;
+}
 </style>
