@@ -11,10 +11,13 @@
   import StepDetailContent    from '$lib/journeymapper2/StepDetailContent.svelte';
   import PlutchikContent      from '$lib/journeymapper2/PlutchikContent.svelte';
   import PersonaDetailContent from '$lib/journeymapper2/PersonaDetailContent.svelte';
+  import PersonaSelector from '$lib/journeymapper2/PersonaSelector.svelte';
+
 
   import { STEP_WIDTH, LEFT_AXIS_WIDTH, valueToY } from '$lib/journeymapper2/journeyConfig.js';
   import { selectedIndex } from '$lib/journeymapper2/journeyStore.js';
   import personaFile from '$lib/journeymapper2/journeyPersonas.json';
+  
 
   const { metrics, personas } = personaFile;
 
@@ -22,8 +25,18 @@
   const experienceWheels = personaFile.experienceWheels ?? {};
 
   // ── Active persona ────────────────────────────────────────────────────
-  let activePersonaId = personas?.[0]?.id ?? '';
 
+
+  let activePersonaId = personas[0].id;
+
+  function handleSwitch(event) {
+    activePersonaId = event.detail.id;
+  }
+
+  function handleOpenPersonaDrawer() {
+    // open modal / drawer logic here
+    console.log('Open persona drawer');
+  }
   /** @type {any} */
   $: activePersona = personas.find((p) => p.id === activePersonaId) ?? personas?.[0] ?? null;
 
@@ -110,6 +123,8 @@
 
   /** @type {HTMLDivElement | null} */
   let scrollEl = null;
+
+  
 </script>
 
 <div class="journey-wrapper">
@@ -119,33 +134,14 @@
   <nav class="nav-bar">
     <!-- Persona switcher tabs -->
     <div class="nav-left">
-      {#each personas as p}
-        <button
-          class="persona-tab"
-          class:persona-tab--active={p.id === activePersonaId}
-          on:click={() => switchPersona(p.id)}
-          aria-pressed={p.id === activePersonaId}
-        >
-          <span class="tab-avatar-wrap">
-            {#if !tabImgError[p.id]}
-              <img
-                src="/assets/profiles/{p.profile.imageFile}"
-                alt={p.profile.name}
-                class="tab-photo"
-                on:error={() => { tabImgError[p.id] = true; tabImgError = { ...tabImgError }; }}
-              />
-            {:else}
-              <span class="tab-initials">{p.profile.initials}</span>
-            {/if}
-          </span>
-          <span class="tab-meta">
-            <span class="tab-name">{p.profile.name}</span>
-            <span class="tab-type">{p.type}</span>
-          </span>
-        </button>
-      {/each}
-    </div>
-
+  
+      <PersonaSelector
+      {personas}
+      {activePersonaId}
+      on:switch={handleSwitch}
+      on:openPersonaDrawer={handleOpenPersonaDrawer}
+    />
+  
     <div class="nav-right">
       <button
         class="plutchik-btn"

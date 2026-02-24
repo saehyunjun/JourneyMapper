@@ -48,7 +48,7 @@
 {/if}
 
       <!-- Sentiment bar -->
-      <div class="sentiment-section">
+      <div class="even-col">
         <span class="section-heading">Overall Sentiment</span>
         <div class="sentiment-bar-track">
           <div

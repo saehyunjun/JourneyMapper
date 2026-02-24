@@ -119,7 +119,7 @@
     x1={width} y1={TOP_PADDING}
     x2={width} y2={TOP_PADDING + GRID_HEIGHT}
     stroke="#DFC3A8" stroke-width="1.25" pointer-events="none"
-  />
+/>
 
   <!-- ── Slot: lines, nodes, callouts ────────────────────────────────────── -->
   <slot />
