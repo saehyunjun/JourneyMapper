@@ -160,6 +160,8 @@
       <div class="journey-index">
         <div class="shared-scroll" bind:this={scrollEl}>
           <JourneyStages data={journeyData} />
+          <JourneySteps data={journeyData} />
+
           <JourneySentiment data={journeyData} />
 
           <JourneyGrid data={journeyData}>
@@ -171,7 +173,6 @@
             {/each}
           </JourneyGrid>
           <JourneyLegend items={metrics} />
-          <JourneySteps data={journeyData} />
           <JourneyTooltip
             data={journeyData}
             metrics={metrics}

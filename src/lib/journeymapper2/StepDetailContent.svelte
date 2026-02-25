@@ -36,20 +36,27 @@
     <div class="content-wrap">
   
       <!-- Step name -->
-      <h2 class="step-name">{step.step}</h2>
+      <h2 class="jm-title">{step.step}</h2>
   
 
     <!-- Narrative description -->
       {#if step.narrative_description}
         <div class="narrative-section">
-          <span class="section-heading">Step Narrative</span>
+          <span class="jm-kicker">Step Narrative</span>
           <p class="narrative-text">{step.narrative_description}</p>
 </div>
 {/if}
 
       <!-- Sentiment bar -->
-      <div class="even-col">
-        <span class="section-heading">Overall Sentiment</span>
+  
+      <div class="divider" />
+  
+      <!-- Metric bars -->
+      <div class="metrics-section">
+
+        <div class="even-col">
+          <span class="jm-kicker">Overall Sentiment</span>
+        </div>
         <div class="sentiment-bar-track">
           <div
             class="sentiment-bar-fill"
@@ -59,13 +66,7 @@
             {parseFloat(step.sentiment) > 0 ? '+' : ''}{step.sentiment}
           </span>
         </div>
-      </div>
-  
-      <div class="divider" />
-  
-      <!-- Metric bars -->
-      <div class="metrics-section">
-        <span class="section-heading">Index Metrics</span>
+        <span class="jm-kicker">Index Metrics</span>
         {#each metrics as m}
           {@const pct = toPercent(step[m.key])}
           {@const val = parseFloat(step[m.key])}
@@ -96,7 +97,7 @@
   
       <!-- Emotion tag -->
       <div class="emotion-section">
-        <span class="section-heading">Emotional State</span>
+        <span class="jm-kicker">Emotional State</span>
         <span class="plutchik-tag">{step.plutchik_score}</span>
       </div>
   
@@ -128,36 +129,8 @@
       gap: 20px;
     }
   
-    .step-name {
-      font-family: 'Space Mono', monospace;
-      font-size: 15px;
-      font-weight: normal;
-      color: #5A3E28;
-      line-height: 1.5;
-      letter-spacing: 0.02em;
-      margin: 0;
-    }
-  
-    .divider {
-      height: 1px;
-      background: #DFC3A8;
-      margin: 0 -2em;
-    }
-  
-    .section-heading {
-      display: block;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 9px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #A08060;
-      margin-bottom: 10px;
-    }
-  
     /* ── Sentiment bar ──────────────────────────────────────────── */
-    .sentiment-section { display: flex; flex-direction: column; }
-  
+
     .sentiment-bar-track {
       position: relative;
       height: 6px;
@@ -232,19 +205,6 @@
     /* ── Emotion tag ────────────────────────────────────────────── */
     .emotion-section { display: flex; flex-direction: column; }
   
-    .plutchik-tag {
-      display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: capitalize;
-      color: #7A5A3A;
-      background: #EDE5D8;
-      border: 1px solid #DFC3A8;
-      border-radius: 2px;
-      padding: 5px 10px;
-      align-self: flex-start;
-    }
 
     /* ── Experience Wheel section ───────────────────────────────── */
     .wheel-section {

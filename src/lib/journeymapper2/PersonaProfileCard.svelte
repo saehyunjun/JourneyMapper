@@ -12,7 +12,7 @@
   </script>
   
   <button
-    class="persona-profile-card"
+    class="card"
     class:persona-profile-card--open={isOpen}
     on:click={onClick}
     aria-label="Open {personaProfile.name} persona profile"
@@ -31,21 +31,20 @@
           <div class="persona-profile-card__initials">{personaProfile.initials}</div>
         {/if}
       </div>
-  
   <div class = "CardContent">
       <!-- Name -->
-      <span class="persona-profile-card__name">{personaProfile.name}</span>
+      <span class="jm-title">{personaProfile.name}</span>
   
       <!-- Role -->
-      <div class="persona-profile-card__role">
-        <span class = "pill">{personaProfile.role}</span>
+      <div class="jm-metric-row">
+        <span class = "jm-label">{personaProfile.role}</span>
       </div>
   
       <!-- Quick-look fields -->
       {#each [['Age', personaProfile.age]] as [key, val]}
-        <div class="persona-profile-card__field">
-          <span class="label-uppercase">{key}</span>
-          <span class="label-uppercase-bold">{val}</span>
+        <div class="jm-label">
+          <span class="">{key}</span>
+          <span class="">{val}</span>
         </div>
       {/each}
     </div>

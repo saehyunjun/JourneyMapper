@@ -116,26 +116,6 @@
     flex: 1;
     min-width: 0;
   }
-  /* ── Close button ───────────────────────────────────────────── */
-  .close-btn {
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: 1px solid #DFC3A8;
-    border-radius: 2px;
-    color: #A08060;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-  }
-
-  .close-btn:hover {
-    background: #DFC3A8;
-    color: #5A3E28;
-  }
-
   /* ── Footer ─────────────────────────────────────────────────── */
   .drawer-nav {
     display: flex;

@@ -1,50 +1,68 @@
 @import "tailwindcss";
 
-/* Google Fonts */
-@import url('https://fonts.googles.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lexend+Peta:wght@100..900&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+/* Google Fonts (remove the invalid googles.com import) */
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lexend+Peta:wght@100..900&family=Spectral:ital,wght@0,200..800;1,200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
-/* Typography tokens */
+/* -------------------------------------------------------------------------- */
+/* TOKENS                                                                      */
+/* -------------------------------------------------------------------------- */
 :root {
-  --font-heading: "Jost", display;
-  --font-body: "IBM Plex Sans", sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  /* Typography */
+  --font-heading: "Jost", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Core palette */
+  --ink: #141413;
+  --paper: #f4efe5;
+  --panel: #f0eee6;
+  --card: #ede5d8;
+
+  /* Brand / accents */
+  --teal: #23abab;
+  --red: #ff0000;
+
+  /* Common strokes/shadows */
+  --stroke: 2px solid #1a1a1a;
+  --hairline: 0.5px solid var(--ink);
+  --shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
 }
 
+/* -------------------------------------------------------------------------- */
+/* BASE                                                                        */
+/* -------------------------------------------------------------------------- */
+@layer base {
+  html,
+  body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.325;
+    color: #111;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-.blue 
-{
-color: #23ABAB;
+  h1, h2, h3, h4, h5, h6,
+  .heading, .text-heading, .nav-title, .subheading {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 2em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
 }
 
-/* Base */
-html, body {
-  font-family: var(--font-body);
-  font-weight: 400;
-  line-height: 1.325;
-  color: #111;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* -------------------------------------------------------------------------- */
+/* UTILITIES                                                                   */
+/* -------------------------------------------------------------------------- */
+@layer utilities {
+  .blue { color: var(--teal); }
 
-/* Headings */
-h1, h2, h3, h4, h5, h6,
-.heading, .text-heading, .nav-title, .subheading {
-  font-family: var(--font-heading);
-  font-weight: 500;
-  font-size: 2em;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
+  .h-small { font-size: 1em; }
 
-.h-small 
-{
-font-size: 1em;
-}
-
-.display-serif {
+  .display-serif {
     font-family: var(--font-heading);
     font-weight: 500;
     font-size: 1.25em;
@@ -52,127 +70,126 @@ font-size: 1em;
     letter-spacing: -0.05em;
     text-transform: uppercase;
   }
-/* Body */
-.text-body {
-  font-family: var(--font-body);
-}
 
-.text-body-lg {
- font-family: var(--font-body);
- font-size: 1.25em;
-}
+  .text-body { font-family: var(--font-body); }
 
-/* Captions / labels */
-.caption, .label, small, figcaption,
-.text-mono {
-  font-family: var(--font-mono);
-  font-size: .725em;
-  color: #28211E;
-}
-
-.label-heading
-{
-   font-family: var(--font-heading);
-   font-size: .725em;
-   color: #73726C; 
-   font-weight: 600;
-   text-transform: uppercase;
-}
-
-.label-bold 
-{    font-family: var(--font-body);
-    font-size: .825em;
-    font-weight: 800;
-    color: #141413;
-    mix-blend-mode: darken;
-}
-
-.label-uppercase {
+  .text-body-lg {
     font-family: var(--font-body);
-    font-size: .825em;
-    text-transform: uppercase;
-   }
-
-.label-uppercase-bold {
-    font-family: var(--font-body);
-    font-size: .825em;
-    text-transform: uppercase;
-    font-weight: 800;
-}
-
-/* JourneyMapper page typography (class-based) */
-.tab-name,
-.tab-initials,
-.plutchik-btn,
-.strip-name,
-.strip-initials,
-.strip-val,
-.strip-cue,
-.nav-btn,
-.close-btn {
-  font-family: var(--font-mono);
-}
-
-.tab-type,
-.strip-role,
-.strip-key,
-.cite,
-.persona-footer-note {
-  font-family: var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.tag {
-    display: flex;
-    flex: row;
-    padding: .125em .25em .125em .25em;
-    border: .5px solid #141413;
-}
-
-
-.border-bottom {
-    border-bottom: .5px solid #141413;
-    padding-bottom: .25em;
-}
-
-
-
-.nav-title { font-size: .725em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-.tab-initials { font-size: .725em; font-weight: 700; }
-.tab-name { font-size: .725em; font-weight: 700; line-height: 1.2; }
-.tab-type { font-size: .725em; }
-.plutchik-btn { font-size: .725em; letter-spacing: 0.07em; text-transform: uppercase; }
-.strip-initials { font-size: .725em; font-weight: 700; }
-.strip-name { font-size: .725em; font-weight: 700; letter-spacing: 0.02em; }
-.strip-role { font-size: .725em; }
-.strip-key { font-size: .725em; font-weight: 500; letter-spacing: 0.08em; }
-.strip-val { font-size: .725em; }
-.strip-cue { font-size: .725em; letter-spacing: 0.06em; text-transform: uppercase; }
-
-.nav-btn { font-size: .725em; letter-spacing: 0.05em; border: 1px #111; }
-.close-btn { font-size: .725em; letter-spacing: 0.05em; }
-.cite, .persona-footer-note { font-size: .725em; line-height: 1.5; font-style: italic; text-transform: none; letter-spacing: 0; }
-.cite em { font-style: normal; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; }
-
-
-.journey-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    font-size: 1.25em;
   }
 
-  /* ── Body row ─────────────────────────────────────────────────────── */
+  .caption, .label, small, figcaption, .text-mono {
+    font-family: var(--font-mono);
+    font-size: 0.725em;
+    color: #28211e;
+  }
+
+  .label-heading {
+    font-family: var(--font-heading);
+    font-size: 0.725em;
+    color: #73726c;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .label-bold {
+    font-family: var(--font-body);
+    font-size: 0.825em;
+    font-weight: 800;
+    color: var(--ink);
+    mix-blend-mode: darken;
+  }
+
+  .label-uppercase {
+    font-family: var(--font-body);
+    font-size: 0.825em;
+    text-transform: uppercase;
+  }
+
+  .label-uppercase-bold {
+    font-family: var(--font-body);
+    font-size: 0.825em;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+
+  .border-bottom {
+    border-bottom: var(--hairline);
+    padding-bottom: 0.25em;
+  }
+
+  .tag {
+    display: inline-flex;
+    padding: 0.125em 0.25em;
+    border: 0.5px solid var(--ink);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* COMPONENTS                                                                  */
+/* -------------------------------------------------------------------------- */
+@layer components {
+  /* JourneyMapper typography hooks */
+  .tab-name,
+  .tab-initials,
+  .plutchik-btn,
+  .strip-name,
+  .strip-initials,
+  .strip-val,
+  .strip-cue,
+  .nav-btn,
+  .close-btn {
+    font-family: var(--font-mono);
+  }
+
+  .tab-type,
+  .strip-role,
+  .strip-key,
+  .cite,
+  .persona-footer-note {
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .nav-title { font-size: 0.725em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .tab-initials { font-size: 0.725em; font-weight: 700; }
+  .tab-name { font-size: 0.725em; font-weight: 700; line-height: 1.2; }
+  .tab-type { font-size: 0.725em; }
+  .plutchik-btn { font-size: 0.725em; letter-spacing: 0.07em; text-transform: uppercase; }
+  .strip-initials { font-size: 0.725em; font-weight: 700; }
+  .strip-name { font-size: 0.725em; font-weight: 700; letter-spacing: 0.02em; }
+  .strip-role { font-size: 0.725em; }
+  .strip-key { font-size: 0.725em; font-weight: 500; letter-spacing: 0.08em; }
+  .strip-val { font-size: 0.725em; }
+  .strip-cue { font-size: 0.725em; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .cite, .persona-footer-note {
+    font-size: 0.725em;
+    line-height: 1.5;
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .cite em {
+    font-style: normal;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 2px;
+  }
+
+  /* Layout: Journey */
+  .journey-wrapper { display: flex; flex-direction: column; height: 100%; }
+
   .journey-body {
     display: flex;
     flex-direction: row;
     flex: 1;
     overflow: hidden;
     min-height: 0;
-    scrollbar-color: #9898C8;
+    scrollbar-color: #9898c8;
   }
 
-  /* ── Main content column (right of sidebar) ───────────────────────── */
   .journey-main {
     flex: 1;
     display: flex;
@@ -182,7 +199,6 @@ font-size: 1em;
     min-width: 0;
   }
 
-  /* ── Chart scroll container ───────────────────────────────────────── */
   .journey-index {
     flex: 1;
     display: flex;
@@ -199,193 +215,405 @@ font-size: 1em;
     padding-bottom: 1em;
   }
 
-.even-col {
-    display: flex;
-    flex-direction: row;
-}
+  .even-col { display: flex; flex-direction: column; }
 
-  .nav-bar, .title-bar {
+  /* Nav / title bars */
+  .nav-bar,
+  .title-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 2;
-    padding: .25em .5em .25em .725em;
-    background-color: #F0EEE6;
-    border-bottom:  .25px solid rgba(25, 25, 25, 0.275);
+    gap: 0.5rem;
+    padding: 0.25em 0.5em 0.25em 0.725em;
+    background-color: var(--panel);
+    border-bottom: 0.25px solid rgba(25, 25, 25, 0.275);
   }
 
-.nav-left {
+  .nav-left { display: flex; align-items: center; gap: 12px; }
+
+  /* Single source of truth for nav button (dedupes your two blocks) */
+  .nav-btn, .close-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 1px solid var(--red);
+    cursor: pointer;
+  }
+  .nav-btn, .close-btn:hover { 
+    filter: saturate(2); 
+}
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--red);
+    border-radius: 3px;
+    padding: 10px 10px 8px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    flex-grow: 0;
+    gap: 6px;
+  }
+
+  /* Header */
+  .header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding: 1em 2.25em 0.25em 0.725em;
+    border-bottom: 0.5px solid #dfc3a8;
+    flex-shrink: 0;
     gap: 12px;
   }
 
-  .nav-btn {
-    display: flex;
-    flex-direction: row;
-    gap: 2;
-    padding: .25em 1.25em;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #23ABAB;
-    border: 1px #23ABAB solid;
-    cursor: pointer;
-  }
-
-  .nav-btn {
-    display: flex;
-    flex-direction: row;
-    gap: 2;
-    padding: .25em 1.25em;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #FF0000;
-    border: 1px #FF0000 solid;
-    cursor: pointer;
-  }
-
-  .nav-btn:hover {
-    filter: saturate(2);
-    animation-duration: 200ms;
-  }
-
-/* ── Header ─────────────────────────────────────────────────── */
-.header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 1em 2.25em .25em .725em;
-border-bottom: .5px solid #DFC3A8;
-flex-shrink: 0;
-gap: 12px;
-}
-
-.profile-photo {
-    display: block;
-    width: 12.5em;
-    height: 12.5em;
-}
-
-.HeroTwoColumn, .CardTwoColumn {
-    column-gap: 32px;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    max-width: 100%;
-    row-gap: 32px;
-    width: 100%;    
-}
-
-.ContentRowWide {
-    display: grid;
-    width: 100%;
-    justify-content: stretch;
-}
-
-.CardContent  {
-    display: flex;
-    flex-direction: column;
-    row-gap: .25em;
-    max-width: 100%;
-    width: 100%;    
-    height: 100%;
-}
-
-
-.persona-profile-card {
-    /* Reset button defaults */
+  /* Persona card (leave as-is but now grouped) */
+  .persona-profile-card {
     all: unset;
     box-sizing: border-box;
     cursor: pointer;
     display: flex;
-  
-    border: 1.5px solid #23ABAB;
+    border: 1.5px solid var(--teal);
     padding: 1em;
     margin: 0 0 2em 2em;
-  
-    transition:
-      border-color 0.18s ease,
-      box-shadow  0.18s ease,
-      background  0.18s ease;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
   }
-  
-  .persona-profile-card:hover {
-    border-color: #FF0000;
-  }
-  
-  .persona-profile-card--open {
-    border-width: 2px;
-  }
-  
-  /* Inner flex row */
+  .persona-profile-card:hover { border-color: var(--red); }
+  .persona-profile-card--open { border-width: 2px; }
+
   .persona-profile-card__content {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-content: baseline;
+    justify-content: flex-start;
     gap: 12px;
   }
-  
-  /* Avatar circle */
+
   .persona-profile-card__photo {
     flex-shrink: 0;
     width: 5em;
     height: 5em;
     overflow: hidden;
-    background: #E8E5DE;
+    background: #e8e5de;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  
-  .persona-profile-card__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .persona-profile-card__initials {
-    font-weight: 600;
-    color: #28211E;
-    letter-spacing: 0.02em;
-  }
-  
-  /* Text section */
+
+  .persona-profile-card__img { width: 100%; height: 100%; object-fit: cover; }
+  .persona-profile-card__initials { font-weight: 600; color: #28211e; letter-spacing: 0.02em; }
   .persona-profile-card__name {
     font-weight: 600;
-    color: #2C2A25;
+    color: #2c2a25;
     line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
   .persona-profile-card__role {
     font-size: 12px;
-    color: #8A8070;
-    margin-left: auto; /* push role to the right */
+    color: #8a8070;
+    margin-left: auto;
     white-space: nowrap;
   }
-  
-  /* Quick-look key/value pairs */
-  .persona-profile-card__field {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex-shrink: 0;
-  }
-  
-  .persona-profile-card__field-key {
-    font-size: .825em;
-    font-weight: 400;
-    color: #A09585;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  
+
+  /* Pills */
   .hero-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
 
-  
   .pill {
-    font-family: 'IBM Plex Sans', sans-serif; font-size: .925em; text-transform: uppercase; color: #232323;
-    border: 1px solid #232323; border-radius: 20px;
-    padding: .25em 1.125em;
+    font-family: var(--font-body);
+    font-size: 0.925em;
+    text-transform: uppercase;
+    color: #232323;
+    border: 1px solid #232323;
+    border-radius: 20px;
+    padding: 0.25em 1.125em;
+  }
+
+  /* ---------------------------------------------------------------------- */
+  /* Journey tooltip (ported from the component styles)                       */
+  /* ---------------------------------------------------------------------- */
+  .tooltip {
+    position: fixed;
+    pointer-events: none;
+    z-index: 300;
+
+    background: var(--paper);
+    border: var(--stroke);
+    box-shadow: var(--shadow);
+
+    width: 420px;
+    padding: 16px 18px 14px;
+    transition: left 60ms linear, top 60ms linear;
+  }
+
+  .tooltip .title-block { padding-bottom: 8px; }
+
+  .tooltip .kicker {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #3b3b3b;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .tooltip .title {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.15;
+    color: #111;
+  }
+
+  .tooltip .rule {
+    height: 2px;
+    background: #1a1a1a;
+    margin: 8px 0 12px;
+  }
+
+  .tooltip .section-bar {
+    background: #4a4a4a;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 8px 10px;
+    margin: 0 0 10px;
+  }
+
+  .tooltip .emotion-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: center;
+    padding: 6px 2px 10px;
+    border-bottom: var(--stroke);
+  }
+
+  .tooltip .sentiment,
+  .tooltip .emotion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 28px;
+  }
+
+  .tooltip .dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    border: 2px solid #1a1a1a;
+    flex: 0 0 auto;
+  }
+
+  .tooltip .swatches {
+    display: inline-flex;
+    border: 2px solid #1a1a1a;
+    height: 18px;
+    overflow: hidden;
+  }
+
+  .tooltip .swatch { width: 18px; height: 18px; display: inline-block; }
+
+  .tooltip .value {
+    font-weight: 900;
+    font-size: 16px;
+    color: #111;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .tooltip .metrics {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tooltip .metric-row {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .tooltip .mini-swatch {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #1a1a1a;
+    display: inline-block;
+  }
+
+  .tooltip .label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2a2a2a;
+  }
+
+  .tooltip .val {
+    font-size: 12px;
+    font-weight: 800;
+    color: #111;
+    text-transform: uppercase;
+  }
+}
+/* ---------- Journey UI primitives (reusable) ---------- */
+
+.jm-surface {
+    background: var(--paper, #f4efe5);
+    border: var(--stroke, 2px solid #1a1a1a);
+    box-shadow: var(--shadow, 0 10px 28px rgba(0,0,0,0.18));
+  }
+  
+  .jm-title-block { padding-bottom: 8px; }
+  
+  .jm-kicker {
+    font-size: .725em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #3b3b3b;
+    font-weight: 700;
+    margin-bottom: 1em;
+  }
+  
+  .jm-title {
+    font-size: 2em;
+    font-weight: 500;
+    line-height: 1.15;
+    color: #111;
+  }
+  
+  .jm-rule {
+    height: 2px;
+    background: #1a1a1a;
+    margin: 8px 0 12px;
+  }
+  
+  .jm-section-bar {
+    background: #4a4a4a;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 8px 10px;
+    margin: 0 0 10px;
+  }
+  
+  .jm-emotion-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: center;
+    padding: 6px 2px 10px;
+    border-bottom: var(--stroke, 2px solid #1a1a1a);  .jm-emotion-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: center;
+    padding: 6px 2px 10px;
+    border-bottom: var(--stroke, 2px solid #1a1a1a);
+  }
+  }
+
+  .jm-emotion-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    padding: 6px 2px 10px;
+    border-bottom: var(--stroke, 2px solid #1a1a1a);
+  }
+  
+  .jm-sentiment,
+  .jm-emotion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 28px;
+  }
+  
+  .jm-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    border: 2px solid #1a1a1a;
+    flex: 0 0 auto;
+  }
+  
+  .jm-swatches {
+    display: inline-flex;
+    border: 2px solid #1a1a1a;
+    height: 18px;
+    overflow: hidden;
+  }
+  
+  .jm-swatch {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+  }
+  
+  .jm-value {
+    font-weight: 900;
+    font-size: 16px;
+    color: #111;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  
+  .jm-metrics {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .jm-metric-row {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .jm-mini-swatch {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #1a1a1a;
+    display: inline-block;
+  }
+  
+  .jm-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #2a2a2a;
+  }
+  
+  .jm-val {
+    font-size: 12px;
+    font-weight: 800;
+    color: #111;
+    text-transform: uppercase;
+  }
+  
+  /* ---------- Tooltip: positioning only ---------- */
+  
+  .tooltip {
+    position: fixed;
+    pointer-events: none;
+    z-index: 300;
+    width: 420px;
+    padding: 16px 18px 14px;
+    transition: left 60ms linear, top 60ms linear;
+  }
+  
+  .divider {
+    height: 1px;
+    background: #DFC3A8;
+    margin: 0 -2em;
   }
