@@ -13,6 +13,8 @@
   import PersonaDetailContent from '$lib/journeymapper2/PersonaDetailContent.svelte';
   import PersonaSelectorSidebar from '$lib/journeymapper2/PersonaSelectorSidebar.svelte';
   import PersonaProfileCard   from '$lib/journeymapper2/PersonaProfileCard.svelte';
+  import JourneyInfoSources from '$lib/journeymapper2/JourneyInfoSources.svelte';
+
 
   import { STEP_WIDTH, LEFT_AXIS_WIDTH, valueToY } from '$lib/journeymapper2/journeyConfig.js';
   import { selectedIndex, zoomedIndex } from '$lib/journeymapper2/journeyStore.js';
@@ -123,7 +125,7 @@
     if ($zoomedIndex >= 0 && scrollEl) {
       const stepCenterX = LEFT_AXIS_WIDTH + $zoomedIndex * STEP_WIDTH + STEP_WIDTH / 2;
       const containerWidth = scrollEl.clientWidth;
-      scrollEl.scrollTo({ left: Math.max(0, stepCenterX - containerWidth / 2), behavior: 'smooth' });
+      scrollEl.scrollTo({ left: Math.max(0, stepCenterX - containerWidth / 3), behavior: 'smooth' });
       zoomScale = 1.28;
       zoomOriginX = `${stepCenterX}px`;
     } else {
@@ -221,6 +223,8 @@
             <JourneySteps data={journeyData} on:openDrawer={handleOpenDrawer} />
 
             <JourneyLegend items={metrics} />
+            <JourneyInfoSources data={journeyData} />
+
             <JourneyTooltip
               data={journeyData}
               metrics={metrics}
@@ -384,7 +388,7 @@
     overflow-x: auto;
     overflow-y: visible;
     width: 100%;
-    height: 100%;
+    height: 50vh;
     /* transform applied inline via Svelte binding */
   }
 
