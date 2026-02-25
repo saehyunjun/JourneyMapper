@@ -17,14 +17,14 @@
     on:click={onClick}
     aria-label="Open {personaProfile.name} persona profile"
   >
-    <div class="persona-profile-card__content">
+    <div class="flex flex-col w-full h-full">
       <!-- Photo / fallback initials -->
       <div class="persona-profile-card__photo">
         {#if !imgError}
           <img
             src="/assets/profiles/{personaProfile.imageFile}"
             alt={personaProfile.name}
-            class="persona-profile-card__img"
+            class="w-22 "
             on:error={() => (imgError = true)}
           />
         {:else}
@@ -33,20 +33,13 @@
       </div>
   <div class = "CardContent">
       <!-- Name -->
-      <span class="jm-title">{personaProfile.name}</span>
+      <span class="h-small">{personaProfile.name}</span>
   
       <!-- Role -->
       <div class="jm-metric-row">
         <span class = "jm-label">{personaProfile.role}</span>
       </div>
   
-      <!-- Quick-look fields -->
-      {#each [['Age', personaProfile.age]] as [key, val]}
-        <div class="jm-label">
-          <span class="">{key}</span>
-          <span class="">{val}</span>
-        </div>
-      {/each}
     </div>
     </div>
   </button>

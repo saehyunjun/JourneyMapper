@@ -250,10 +250,10 @@
   .card {
     background: var(--card);
     border: 1px solid var(--red);
-    border-radius: 3px;
     padding: 10px 10px 8px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: left;
     cursor: pointer;
     flex-grow: 0;
     gap: 6px;
