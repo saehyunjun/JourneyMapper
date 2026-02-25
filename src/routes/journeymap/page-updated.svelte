@@ -12,11 +12,10 @@
   import PlutchikContent      from '$lib/journeymapper2/PlutchikContent.svelte';
   import PersonaDetailContent from '$lib/journeymapper2/PersonaDetailContent.svelte';
   import PersonaSelectorSidebar from '$lib/journeymapper2/PersonaSelectorSidebar.svelte';
-  import PersonaProfileCard   from '$lib/journeymapper2/PersonaProfileCard.svelte';
-
   import { STEP_WIDTH, LEFT_AXIS_WIDTH, valueToY } from '$lib/journeymapper2/journeyConfig.js';
-  import { selectedIndex, zoomedIndex } from '$lib/journeymapper2/journeyStore.js';
+  import { selectedIndex } from '$lib/journeymapper2/journeyStore.js';
   import personaFile from '$lib/journeymapper2/journeyPersonas.json';
+  
 
   const { metrics, personas } = personaFile;
 
@@ -24,8 +23,9 @@
   const experienceWheels = personaFile.experienceWheels ?? {};
 
   // ── Active persona ────────────────────────────────────────────────────
-  let activePersonaId = personas[0].id;
 
+
+  let activePersonaId = personas[0].id;
   /** @type {any} */
   $: activePersona = personas.find((p) => p.id === activePersonaId) ?? personas?.[0] ?? null;
 
@@ -72,9 +72,13 @@
   let drawerMode = null;
   $: drawerOpen = drawerMode !== null;
 
-  // True when the user is interacting with the main timeline
+
+  // ── Timeline active state (collapses persona sidebar) ────────────────────
+  // True when the user is interacting with the main timeline (step selected or drawer open)
   $: timelineActive = $selectedIndex >= 0 || drawerOpen;
 
+  // Auto-open step drawer when a step is selected
+  $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
   function handlePersonaSelect(event) {
     switchPersona(event.detail.id);
   }
@@ -83,7 +87,6 @@
   function switchPersona(id) {
     activePersonaId = id;
     selectedIndex.set(-1);
-    zoomedIndex.set(-1);
     if (drawerMode === 'step') drawerMode = null;
   }
 
@@ -95,7 +98,6 @@
   function handleDrawerClose() {
     drawerMode = null;
     selectedIndex.set(-1);
-    zoomedIndex.set(-1);
   }
 
   $: drawerEyebrow =
@@ -111,71 +113,51 @@
 
   $: drawerWidth = drawerMode === 'persona' ? 460 : (drawerMode === 'step' && selectedWheelData) ? 740 : 520;
 
+  // ── Tab photo error tracking ──────────────────────────────────────────
+  /** @type {Record<string, boolean>} */
+  let tabImgError = {};
+  let stripImgError = false;
+
   /** @type {HTMLDivElement | null} */
   let scrollEl = null;
 
-  // ── Zoom: smooth-scroll + scale around the active step ──────────────────
-  let zoomScale = 1;
-  /** @type {string} */
-  let zoomOriginX = '70%';
-
-  $: {
-    if ($zoomedIndex >= 0 && scrollEl) {
-      const stepCenterX = LEFT_AXIS_WIDTH + $zoomedIndex * STEP_WIDTH + STEP_WIDTH / 2;
-      const containerWidth = scrollEl.clientWidth;
-      scrollEl.scrollTo({ left: Math.max(0, stepCenterX - containerWidth / 2), behavior: 'smooth' });
-      zoomScale = 1.28;
-      zoomOriginX = `${stepCenterX}px`;
-    } else {
-      zoomScale = 1;
-      zoomOriginX = '50%';
-    }
-  }
-
-  /** Handles the openDrawer event dispatched by chart components on second click */
-  function handleOpenDrawer(/** @type {CustomEvent} */ e) {
-    const idx = e?.detail?.index ?? $zoomedIndex;
-    selectedIndex.set(idx);
-    drawerMode = 'step';
-  }
-
-  /** Escape: first press clears zoom, second press closes drawer */
-  function handleGlobalKeydown(/** @type {KeyboardEvent} */ e) {
-    if (e.key === 'Escape') {
-      if (drawerMode) {
-        drawerMode = null;
-        selectedIndex.set(-1);
-        zoomedIndex.set(-1);
-      } else if ($zoomedIndex >= 0) {
-        zoomedIndex.set(-1);
-        selectedIndex.set(-1);
-      }
-    }
-  }
+  
 </script>
-
-<svelte:window on:keydown={handleGlobalKeydown} />
 
 <div class="journey-wrapper">
 
-  <!-- ── Title bar ────────────────────────────────────────────────────── -->
-  <div class="title-bar">
-    <span class="h3 heading blue">JourneyMapper</span>
-    <span class="nav-title">Powered by PatientlyIQ</span>
-
-    <!-- Plutchik button lives in the nav bar, right-aligned -->
+  <!-- ── Nav bar ──────────────────────────────────────────────────────── -->
+  <span class="title-bar h3 heading">Journey Index</span>
+  <nav class="nav-bar">
+    <!-- Persona switcher tabs -->
+    <div class="nav-left">
+      <!-- Persona switcher tabs removed (moved to sidebar) -->
+    </div>
+  
     <div class="nav-right">
       <button
         class="plutchik-btn"
         class:plutchik-btn--active={drawerMode === 'plutchik'}
         on:click={() => { drawerMode = drawerMode === 'plutchik' ? null : 'plutchik'; selectedIndex.set(-1); }}
       >
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <circle cx="6"    cy="6"    r="1.5"  fill="currentColor" opacity="0.9"/>
+          <circle cx="6"    cy="2"    r="1.25" fill="currentColor" opacity="0.55"/>
+          <circle cx="6"    cy="10"   r="1.25" fill="currentColor" opacity="0.55"/>
+          <circle cx="2"    cy="6"    r="1.25" fill="currentColor" opacity="0.55"/>
+          <circle cx="10"   cy="6"    r="1.25" fill="currentColor" opacity="0.55"/>
+          <circle cx="2.93" cy="2.93" r="1.1"  fill="currentColor" opacity="0.35"/>
+          <circle cx="9.07" cy="2.93" r="1.1"  fill="currentColor" opacity="0.35"/>
+          <circle cx="2.93" cy="9.07" r="1.1"  fill="currentColor" opacity="0.35"/>
+          <circle cx="9.07" cy="9.07" r="1.1"  fill="currentColor" opacity="0.35"/>
+        </svg>
         About Plutchik
       </button>
     </div>
-  </div>
 
-  <!-- ── Body row: sidebar + main ─────────────────────────────────────── -->
+  </nav>
+
+  <!-- ── Body row: sidebar + main content ─────────────────────────────── -->
   <div class="journey-body">
 
     <!-- LEFT: Persona selector sidebar -->
@@ -189,54 +171,86 @@
     <!-- RIGHT: main content column -->
     <div class="journey-main">
 
-      <!-- Persona profile strip -->
-      <PersonaProfileCard
-        {personaProfile}
-        isOpen={drawerMode === 'persona'}
-        onClick={openPersonaDrawer}
+  <!-- ── Persona strip — CLICKABLE ──────────────────────────────────────── -->
+  <button
+    class="persona-strip"
+    class:persona-strip--open={drawerMode === 'persona'}
+    on:click={openPersonaDrawer}
+    aria-label="Open {personaProfile.name} persona profile"
+  >
+    <!-- Photo / fallback -->
+    <div class="strip-photo-ring">
+      {#if !stripImgError}
+        <img
+          src="/assets/profiles/{personaProfile.imageFile}"
+          alt={personaProfile.name}
+          class="strip-photo"
+          on:error={() => stripImgError = true}
+        />
+      {:else}
+        <div class="strip-initials">{personaProfile.initials}</div>
+      {/if}
+    </div>
+
+    <!-- Name / role -->
+    <div class="strip-name-block">
+      <span class="strip-name">{personaProfile.name}</span>
+      <span class="strip-role">{personaProfile.role}</span>
+    </div>
+
+    <div class="strip-divider" aria-hidden="true" />
+
+    <!-- Quick-look fields -->
+    {#each [
+      ['Age',        personaProfile.age],
+      ['Occupation', personaProfile.occupation],
+      ['Preference', personaProfile.preference],
+      ['Diagnosed',  personaProfile.diagnosed],
+    ] as [key, val]}
+      <div class="strip-field">
+        <span class="strip-key">{key}</span>
+        <span class="strip-val">{val}</span>
+      </div>
+    {/each}
+
+    <!-- View-profile cue -->
+    <div class="" aria-hidden="true">
+      <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+        <path d="M1.5 5.5h8M5.5 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Profile
+    </div>
+  </button>
+  <JourneyLegend items={metrics} />
+  <!-- ── Chart area ────────────────────────────────────────────────────── -->
+  <div class="journey-index">
+    <div class="shared-scroll" bind:this={scrollEl}>
+      <JourneyStages data ={journeyData} />
+      <JourneySentiment data={journeyData} />
+
+      <JourneyGrid data={journeyData}>
+        {#each metrics as m}
+          <JourneyLine  data={journeyData} metricKey={m.key} color={m.color} label={m.label} />
+        {/each}
+        {#each metrics as m, mi}
+          <JourneyNodes data={journeyData} metricKey={m.key} color={m.color} offsets={nodeOffsets[mi]} />
+        {/each}
+      </JourneyGrid>
+      <JourneySteps data={journeyData} />
+      <JourneyTooltip
+        data={journeyData}
+        metrics={metrics}
+        anchorEl={scrollEl}
+        stepWidth={STEP_WIDTH}
+        axisWidth={LEFT_AXIS_WIDTH}
       />
+    </div>
+  </div>
 
-      <!-- ── Chart area ──────────────────────────────────────────────── -->
-      <div class="journey-index">
-        <div class="chart-zoom-clip">
+    </div>
+  </div>
 
-          <!-- BUG FIX: shared-scroll properly wraps ALL chart children -->
-          <div
-            class="shared-scroll"
-            bind:this={scrollEl}
-            style="transform: scale({zoomScale}); transform-origin: {zoomOriginX} center; transition: transform 380ms cubic-bezier(0.34, 1.2, 0.64, 1);"
-          >
-            <JourneyStages data={journeyData} />
-            <JourneySentiment data={journeyData} on:openDrawer={handleOpenDrawer} />
-
-            <JourneyGrid data={journeyData} on:openDrawer={handleOpenDrawer}>
-              {#each metrics as m}
-                <JourneyLine  data={journeyData} metricKey={m.key} color={m.color} label={m.label} />
-              {/each}
-              {#each metrics as m, mi}
-                <JourneyNodes data={journeyData} metricKey={m.key} color={m.color} offsets={nodeOffsets[mi]} />
-              {/each}
-            </JourneyGrid>
-
-            <JourneySteps data={journeyData} on:openDrawer={handleOpenDrawer} />
-
-            <JourneyLegend items={metrics} />
-            <JourneyTooltip
-              data={journeyData}
-              metrics={metrics}
-              anchorEl={scrollEl}
-              stepWidth={STEP_WIDTH}
-              axisWidth={LEFT_AXIS_WIDTH}
-            />
-          </div><!-- end shared-scroll -->
-
-        </div><!-- end chart-zoom-clip -->
-      </div><!-- end journey-index -->
-
-    </div><!-- end journey-main -->
-  </div><!-- end journey-body -->
-
-</div><!-- end journey-wrapper -->
+</div>
 
 <!-- ── Shared drawer ──────────────────────────────────────────────────── -->
 <JourneyDrawer
@@ -303,93 +317,72 @@
 </JourneyDrawer>
 
 <style>
+
   :global(body) { background: #FAF9F5; margin: 0; padding: 0; }
 
-  /* ── Wrapper ────────────────────────────────────────────────────────── */
+
   .journey-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-  /* ── Title bar ──────────────────────────────────────────────────────── */
-  .title-bar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 20px;
-    height: 44px;
-    background: #EDE5D8;
-    border-bottom: 1px solid #DFC3A8;
-    flex-shrink: 0;
-  }
 
-  .nav-right {
-    margin-left: auto;
-  }
 
-  .plutchik-btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    color: #A08060;
-    background: none;
-    border: 1px solid #DFC3A8;
-    border-radius: 3px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background 0.14s, color 0.14s;
-  }
+/* ── Body row ───────────────────────────────────────────────────────── */
+.journey-body {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
 
-  .plutchik-btn:hover,
-  .plutchik-btn--active {
-    background: #DFC3A8;
-    color: #5A3E28;
-  }
+/* ── Main content column (everything to the right of the sidebar) ───── */
+.journey-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
 
-  /* ── Body row ───────────────────────────────────────────────────────── */
-  .journey-body {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    overflow: hidden;
-    min-height: 0;
-  }
 
-  /* ── Main column ────────────────────────────────────────────────────── */
-  .journey-main {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-  }
 
-  /* ── Chart area ─────────────────────────────────────────────────────── */
-  .journey-index {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    overflow: hidden;
-  }
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-  .chart-zoom-clip {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-  }
+.nav-divider {
+  width: 1px;
+  height: 20px;
+  background: #d1d5db;
+}
 
-  .shared-scroll {
-    overflow-x: auto;
-    overflow-y: visible;
-    width: 100%;
-    height: 100%;
-    /* transform applied inline via Svelte binding */
-  }
+.persona-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
 
-  /* Scrollbar styling */
-  .shared-scroll::-webkit-scrollbar { height: 6px; }
-  .shared-scroll::-webkit-scrollbar-track { background: transparent; }
-  .shared-scroll::-webkit-scrollbar-thumb { background: #DFC3A8; border-radius: 3px; }
+.persona-tab {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.persona-tab.active {
+  background: #111;
+  color: white;
+}
+
+.journey-container {
+  flex: 1;
+  overflow-x: auto;
+  padding: 24px;
+}
 </style>

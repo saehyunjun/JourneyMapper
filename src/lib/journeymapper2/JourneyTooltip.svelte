@@ -75,7 +75,7 @@
     aria-live="polite"
   >
     <!-- Title block (matches wireframe: big step title, then rule) -->
-    <div class="title-block">
+    <div class="jm-block">
       <div class="kicker">{step.stage}</div>
       <div class="title">{step.step}</div>
     </div>
@@ -133,9 +133,6 @@
     transition: left 60ms linear, top 60ms linear;
   }
 
-  .title-block {
-    padding-bottom: 8px;
-  }
 
   .kicker {
     font-size: 11px;

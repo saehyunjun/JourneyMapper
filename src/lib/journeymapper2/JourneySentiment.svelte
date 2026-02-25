@@ -8,114 +8,107 @@
     stepToX,
     totalWidth,
   } from './journeyConfig.js';
-  import { hoveredIndex, selectedIndex } from './journeyStore.js';
+  import { hoveredIndex, selectedIndex, zoomedIndex } from './journeyStore.js';
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
 
   export let data = [];
 
-  /**
-   * Map of stage_id → hex color, shared from the page via buildStageColorMap().
-   */
+  /** Map of stage_id → hex color, shared from the page via buildStageColorMap(). */
   export let stageColorMap = {};
+
+  // ── Sentiment chart sizing ───────────────────────────────────────────────
+  const S_GRID_HEIGHT = 80;
+  const SVG_HEIGHT = S_GRID_HEIGHT + TOP_PADDING * 2;
+  const RADIUS = 3;
 
   $: width = totalWidth(data.length);
 
-  const S_GRID_HEIGHT = GRID_HEIGHT / 2;
-  const S_SVG_HEIGHT  = S_GRID_HEIGHT + TOP_PADDING * 2;
+  // ── Color per sentiment value ────────────────────────────────────────────
+  function sentimentColor(v) {
+    const n = parseFloat(v);
+    if (n >= 3)  return '#2E7D32';
+    if (n >= 1)  return '#7DB85A';
+    if (n >= -1) return '#C8A84A';
+    if (n >= -3) return '#C03030';
+    return '#7A1A1A';
+  }
 
-  function valueToY(val) {
-    const n = parseFloat(val);
+  // ── Y within the sentiment mini-chart ───────────────────────────────────
+  function sValToY(v) {
+    const n = parseFloat(v);
     return TOP_PADDING + ((5 - n) / 10) * S_GRID_HEIGHT;
   }
 
-  function sentimentToColor(val) {
-    const n = Math.max(-5, Math.min(5, parseFloat(val)));
-    const t = (n + 5) / 10;
-    let r, g, b;
-    if (t < 0.5) {
-      const u = t / 0.5;
-      r = Math.round(192 + (212 - 192) * u);
-      g = Math.round(57  + (138 - 57)  * u);
-      b = Math.round(43  + (27  - 43)  * u);
-    } else {
-      const u = (t - 0.5) / 0.5;
-      r = Math.round(212 + (39  - 212) * u);
-      g = Math.round(138 + (174 - 138) * u);
-      b = Math.round(27  + (96  - 27)  * u);
-    }
-    return `rgb(${r},${g},${b})`;
-  }
-
-  $: segments = data.slice(0, -1).map((d, i) => {
-    const next = data[i + 1];
-    const avg  = (parseFloat(d.sentiment) + parseFloat(next.sentiment)) / 2;
-    return {
-      x1: stepToX(i),     y1: valueToY(d.sentiment),
-      x2: stepToX(i + 1), y2: valueToY(next.sentiment),
-      color: sentimentToColor(avg),
-    };
-  });
+  // ── Per-segment colored line points ─────────────────────────────────────
+  $: segments = data.slice(0, -1).map((d, i) => ({
+    x1: stepToX(i),
+    y1: sValToY(d.sentiment),
+    x2: stepToX(i + 1),
+    y2: sValToY(data[i + 1].sentiment),
+    color: sentimentColor((d.sentiment + data[i + 1].sentiment) / 2),
+  }));
 
   $: nodePoints = data.map((d, i) => ({
-    cx:    stepToX(i),
-    cy:    valueToY(d.sentiment),
-    color: sentimentToColor(parseFloat(d.sentiment)),
+    cx: stepToX(i),
+    cy: sValToY(d.sentiment),
+    color: sentimentColor(d.sentiment),
     index: i,
   }));
 
-  const RADIUS = 4;
+  function handleColumnClick(i) {
+    if ($zoomedIndex === i) {
+      dispatch('openDrawer', { index: i });
+    } else {
+      zoomedIndex.set(i);
+      selectedIndex.set(i);
+    }
+  }
 </script>
 
-<div class = "header">
-<span class="heading h3 h-small text-blue">
-  Current Experience
-</span>
-</div>
+<svg width={width} height={SVG_HEIGHT} class="sentiment-svg">
 
-<svg width={width} height={S_SVG_HEIGHT} class="sentiment-svg">
-
-  <!-- ── Per-column stage color bands (0.6 opacity) ─────────────────────── -->
+  <!-- ── Per-column stage color bands ───────────────────────────────────── -->
   {#each data as d, i}
     {#if stageColorMap[d.stage_id]}
       <rect
         x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={TOP_PADDING}
         width={STEP_WIDTH} height={S_GRID_HEIGHT}
         fill={stageColorMap[d.stage_id]}
-        opacity="0.6"
+        opacity="0.25"
+        pointer-events="none"
       />
     {/if}
   {/each}
 
-  <!-- ── Column highlight bands ────────────────────────────────────────── -->
+  <!-- ── Column highlight bands ──────────────────────────────────────────── -->
   {#each data as _d, i}
-    {#if $selectedIndex === i}
+    {#if $zoomedIndex === i}
       <rect
         x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={TOP_PADDING}
         width={STEP_WIDTH} height={S_GRID_HEIGHT}
-        fill="#F9564E" opacity="0.08"
+        fill="#C4956A" opacity="0.16" pointer-events="none"
       />
-    {/if}
-    {#if $hoveredIndex === i}
+    {:else if $hoveredIndex === i}
       <rect
         x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={TOP_PADDING}
         width={STEP_WIDTH} height={S_GRID_HEIGHT}
-        fill="#C4956A" opacity="0.06"
+        fill="#C4956A" opacity="0.07" pointer-events="none"
       />
     {/if}
   {/each}
 
-  <!-- ── Horizontal grid lines + axis labels ──────────────────────────── -->
+  <!-- ── Horizontal grid lines ────────────────────────────────────────────── -->
   {#each ROW_VALUES as rowVal}
-    {@const y      = valueToY(rowVal)}
+    {@const y      = sValToY(rowVal)}
     {@const isZero = rowVal === 0}
-
     <line
-      x1={LEFT_AXIS_WIDTH} y1={y}
-      x2={width}           y2={y}
+      x1={LEFT_AXIS_WIDTH} y1={y} x2={width} y2={y}
       stroke={isZero ? "#A08060" : "#DFC3A8"}
       stroke-width={isZero ? 1.5 : 0.75}
       stroke-dasharray={isZero ? undefined : "4 4"}
     />
-
     <text
       x={LEFT_AXIS_WIDTH - 6} y={y + 4}
       text-anchor="end"
@@ -126,19 +119,19 @@
 
   <!-- ── Vertical column dividers ─────────────────────────────────────── -->
   {#each data as _d, i}
-    {@const isActive = $hoveredIndex === i || $selectedIndex === i}
+    {@const isZoomed  = $zoomedIndex  === i}
+    {@const isHovered = $hoveredIndex === i}
     <line
       x1={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y1={TOP_PADDING}
       x2={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y2={TOP_PADDING + S_GRID_HEIGHT}
-      stroke={isActive ? "#F9564E" : "#DFC3A8"}
-      stroke-width={isActive ? 2 : 0.75}
-      opacity={isActive ? 0.6 : 1}
+      stroke={isZoomed ? "#C4956A" : isHovered ? "#F9564E" : "#DFC3A8"}
+      stroke-width={isZoomed ? 2.5 : isHovered ? 2 : 0.75}
+      opacity={isZoomed ? 0.9 : isHovered ? 0.6 : 1}
     />
   {/each}
   <!-- Right edge -->
   <line
-    x1={width} y1={TOP_PADDING}
-    x2={width} y2={TOP_PADDING + S_GRID_HEIGHT}
+    x1={width} y1={TOP_PADDING} x2={width} y2={TOP_PADDING + S_GRID_HEIGHT}
     stroke="#DFC3A8" stroke-width="0.75"
   />
 
@@ -153,15 +146,15 @@
   <!-- ── Per-point colored nodes ─────────────────────────────────────── -->
   <g pointer-events="none">
     {#each nodePoints as pt}
-      {@const isHovered  = $hoveredIndex  === pt.index}
-      {@const isSelected = $selectedIndex === pt.index}
-      {@const active     = isHovered || isSelected}
+      {@const isZoomed   = $zoomedIndex  === pt.index}
+      {@const isHovered  = $hoveredIndex === pt.index}
+      {@const active     = isZoomed || isHovered}
 
       <circle cx={pt.cx} cy={pt.cy}
         r={active ? RADIUS * 3.5 : RADIUS * 2.25}
         fill={pt.color} opacity="1"
       />
-      {#if isSelected}
+      {#if isZoomed}
         <circle cx={pt.cx} cy={pt.cy}
           r={RADIUS * 5} fill="none"
           stroke={pt.color} stroke-width="2" opacity="0.725"
@@ -179,27 +172,19 @@
       style="cursor: pointer;"
       on:mouseenter={() => hoveredIndex.set(i)}
       on:mouseleave={() => hoveredIndex.set(-1)}
-      on:click={() => selectedIndex.set($selectedIndex === i ? -1 : i)}
+      on:click={() => handleColumnClick(i)}
     />
   {/each}
 
 </svg>
 
 <style>
-  .section-label {
-    color: #8A6A4A;
-    padding: 4px 12px;
-    background: #F4EFE5;
-    border-top: 1px solid #DFC3A8;
-    border-bottom: 1px solid #DFC3A8;
-  }
-
   .sentiment-svg {
     display: block;
     background: #F4EFE5;
   }
-
   .axis-label {
+    font-size: 9px;
     letter-spacing: 0.02em;
     user-select: none;
   }

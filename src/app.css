@@ -617,3 +617,17 @@
     background: #DFC3A8;
     margin: 0 -2em;
   }
+
+  .chart-zoom-clip {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Also update .shared-scroll to NOT have its own overflow-x:auto,
+     since the clip div now contains it. Keep: */
+  .shared-scroll {
+    overflow-x: auto;
+    overflow-y: visible;  /* allow scale to show full chart */
+    width: 100%;
+  }
