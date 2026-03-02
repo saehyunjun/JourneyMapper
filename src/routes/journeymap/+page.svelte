@@ -6,6 +6,7 @@
   import JourneySteps         from '$lib/journeymapper2/JourneySteps.svelte';
   import JourneyStages        from '$lib/journeymapper2/JourneyStages.svelte';
   import JourneySentiment     from '$lib/journeymapper2/JourneySentiment.svelte';
+  import JourneyInfoSources from '$lib/journeymapper2/JourneyInfoSources.svelte';
   import JourneyTooltip       from '$lib/journeymapper2/JourneyTooltip.svelte';
   import JourneyDrawer        from '$lib/journeymapper2/JourneyDrawer.svelte';
   import StepDetailContent    from '$lib/journeymapper2/StepDetailContent.svelte';
@@ -146,21 +147,22 @@
     />
 
 
-      <!-- ── Persona Profile Card (extracted component) ──────────────── -->
-      <div class = "w-1/12">
-      <PersonaProfileCard
-        {personaProfile}
-        isOpen={drawerMode === 'persona'}
-        onClick={openPersonaDrawer}
-      />
-      </div>
-    <!-- RIGHT: main content column -->
-    <div class="journey-main">
-
+<!-- RIGHT: main content column -->
+<div class="journey-main">
+  <!-- ── Persona Profile Card (extracted component) ──────────────── -->
+  <div class = "flex flex-row grow-0 w-1/12 pl-10">
+  <PersonaProfileCard
+    {personaProfile}
+    isOpen={drawerMode === 'persona'}
+    onClick={openPersonaDrawer}
+    class = "flex flex-col w-full"
+  />
+  </div>
+  
 
 
       <!-- ── Chart area ──────────────────────────────────────────────── -->
-      <div class="journey-index">
+      <div class="journey-index w-9-12">
         <div class="shared-scroll" bind:this={scrollEl}>
           <JourneyStages data={journeyData} />
           <JourneySteps data={journeyData} />
@@ -175,6 +177,7 @@
               <JourneyNodes data={journeyData} metricKey={m.key} color={m.color} offsets={nodeOffsets[mi]} />
             {/each}
           </JourneyGrid>
+          <JourneyInfoSources data={journeyData} />
           <JourneyLegend items={metrics} />
           <JourneyTooltip
             data={journeyData}

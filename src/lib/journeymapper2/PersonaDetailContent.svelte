@@ -23,7 +23,7 @@
   
     <!-- ── Hero ──────────────────────────────────────────────────────────── -->
     <div class="hero">
-      <div class="photo-ring">
+      <div class="photo-lg">
         {#if !imgError}
           <img
             src="/assets/profiles/{persona.profile.imageFile}"
@@ -36,7 +36,7 @@
         {/if}
       </div>
       <div class="hero-meta">
-        <p class="hero-name">{persona.profile.name}</p>
+        <p class="">{persona.profile.name}</p>
         <p class="hero-role">{persona.profile.role}</p>
         <div class="hero-pills">
           <span class="pill">{persona.profile.age} yrs</span>
@@ -61,18 +61,18 @@
     <!-- ── Current State ─────────────────────────────────────────────────── -->
     {#if persona.currentState?.length}
       <div class="divider" />
-      <div class="band-head">Current State</div>
-      <div class="state-block">
+      <div class="jm-section-bar">Current State</div>
+      <div class="title-block">
         {#each persona.currentState as item}
-          <div class="state-row">
-            <span class="state-lbl">{item.label}</span>
-            <div class="bar-col">
+          <div class="row">
+            <span class="label">{item.label}</span>
+            <div class="col">
               <div class="bar-track">
-                <div class="bar-fill" style="width:{pct(item.value)};" />
+                <div class="fill" style="width:{pct(item.value)};" />
               </div>
-              <div class="bar-axis">
-                <span>{item.minLabel}</span>
-                <span>{item.maxLabel}</span>
+              <div class="axis">
+                <span class="min-label">{item.minLabel}</span>
+                <span class="max-label" >{item.maxLabel}</span>
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@
   
     <!-- ── Discussion Themes ─────────────────────────────────────────────── -->
     {#if persona.discussionThemes?.length}
-      <div class="divider" />
+      <div class="divider"/>
       <div class="band-head">Key Discussion Themes</div>
       <div class="themes-block">
         {#each persona.discussionThemes as theme}
@@ -107,134 +107,5 @@
   {/if}
   
   <style>
-    .wrap { display: flex; flex-direction: column; }
-  
-    /* Hero */
-    .hero {
-      display: flex; align-items: center; gap: 16px;
-      padding: 22px 22px 14px;
-    }
-  
-    .photo-ring {
-      width: 72px; height: 72px; border-radius: 50%;
-      border: 2px solid #DFC3A8; overflow: hidden; flex-shrink: 0;
-      background: #EDE5D8;
-    }
-  
-    .photo { width: 100%; height: 100%; object-fit: cover; display: block; }
-  
-    .photo-fallback {
-      width: 100%; height: 100%;
-      background: #C4956A; color: #F4EFE5;
-      font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-  
-    .hero-meta { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-  
-    .hero-name {
-      font-family: 'IBM Plex Serif', serif; font-size: 2em; font-weight: 400;
-      color: #232323; letter-spacing: 0.02em; margin: 0;
-    }
-  
-    .hero-role {
-      font-family: 'DM Sans', sans-serif; font-size: 10px;
-      text-transform: uppercase; letter-spacing: 0.08em; color: #A08060; margin: 0;
-    }
-  
-    .hero-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
-  
-    .pill {
-      font-family: 'Space Mono', monospace; font-size: .825em; color: #232323;
-      background: #EDE5D8; border: .5px solid #DFC3A8; border-radius: 20px;
-      padding: 4px 8px;
-    }
-  
-    /* Details */
-    .detail-grid {
-      display: grid; grid-template-columns: 78px 1fr;
-      gap: 5px 10px; padding: 4px 22px 18px; align-items: baseline;
-    }
-
-    .dv {
-      font-family: 'Space Mono', monospace; font-size: 9px;
-      color: #5A3E28; line-height: 1.5;
-    }
-  
-    /* Shared */
-    .divider { height: 1px; background: #DFC3A8; }
-  
-    /* Dark band heading — matches the screenshot */
-    .band-head {
-      background: #3A3A3A; color: #E8E0D4;
-      font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.12em;
-      padding: 5px 22px; line-height: 1;
-    }
-  
-    /* Current State bars */
-    .state-block {
-      padding: 14px 22px 20px;
-      display: flex; flex-direction: column; gap: 16px;
-      background: #FAF7F2;
-    }
-  
-    .state-row { display: flex; align-items: flex-start; gap: 14px; }
-  
-    .state-lbl {
-      font-family: 'DM Sans', sans-serif; font-size: 11px; color: #3A3A3A;
-      width: 150px; flex-shrink: 0; padding-top: 2px; line-height: 1.4;
-    }
-  
-    .bar-col { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-  
-    .bar-track {
-      height: 14px; background: #E8E0D0;
-      border: 1px solid #D0C0A8; border-radius: 1px; overflow: hidden;
-    }
-  
-    .bar-fill {
-      height: 100%; background: #9898C8;
-      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-    }
-  
-    .bar-axis {
-      display: flex; justify-content: space-between;
-      font-family: 'Space Mono', monospace; font-size: 8px;
-      color: #A08060; font-style: italic;
-    }
-  
-  
-    .theme-row {
-      display: flex; align-items: center; gap: 12px;
-      padding: 8px 0; border-bottom: 1px solid #EDE5D8;
-    }
-  
-    .theme-row:last-of-type { border-bottom: none; }
-  
-    .theme-lbl {
-      font-family: 'DM Sans', sans-serif; font-size: 11px; color: #3A3A3A;
-      width: 150px; flex-shrink: 0; line-height: 1.4;
-    }
-  
-    .tiles { display: flex; gap: 2px; flex-wrap: wrap; }
-  
-    .tile {
-      width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0;
-      cursor: default; transition: transform 0.1s;
-    }
-  
-    .tile:hover { transform: scale(1.4); position: relative; z-index: 1; }
-  
-    /* Legend */
-    .legend {
-      display: flex; align-items: center; gap: 5px;
-      padding: 12px 0 2px; border-top: 1px dashed #DFC3A8; margin-top: 8px;
-    }
-  
-    .ls { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-  
-    .ll {
-      font-family: 'DM Sans', sans-serif; font-size: 8.5px; color: #BFA080;
-    }
+   
   </style>
