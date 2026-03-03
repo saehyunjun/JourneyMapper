@@ -133,12 +133,12 @@
           "initials": "MW",
           "name": "Margaret W.",
           "role": "Patient",
-          "age": 67,
+          "age": "mid-60s",
           "gender": "Female",
-          "occupation": "Retired Teacher",
+          "occupation": "Retired",
           "caregiver": "Adult daughter",
-          "preference": "In-person consultations",
-          "diagnosed": "18 months after symptom onset",
+          "preference": "Seeking new treatment",
+          "diagnosed": "5-10 years",
           "imageFile": "MargaretW.jpg"
         },
         "currentState": [

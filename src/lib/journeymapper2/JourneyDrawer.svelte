@@ -51,7 +51,6 @@
           <span class="h2 heading">{title}</span>
         {/if}
         {#if eyebrow}
-          <span class="label-uppercase">{eyebrow}</span>
         {/if}
         <!-- Named slot so callers can fully replace the header text region -->
         <slot name="header-meta" />

@@ -31,20 +31,20 @@
             class="photo"
             on:error={() => imgError = true}
           />
-        {:else}
+      {:else}
           <div class="photo-fallback">{persona.profile.initials}</div>
         {/if}
       </div>
-      <div class="hero-meta">
-        <p class="">{persona.profile.name}</p>
+      <div class="jm-content-row">
         <p class="hero-role">{persona.profile.role}</p>
+        <p class="">{persona.profile.name}</p>
+        </div>  
         <div class="hero-pills">
-          <span class="pill">{persona.profile.age} yrs</span>
           <span class="pill">{persona.profile.gender}</span>
+          <span class="pill">{persona.profile.age} yrs</span>
           <span class="pill">{persona.profile.occupation}</span>
         </div>
       </div>
-    </div>
   
     <!-- ── Profile details ───────────────────────────────────────────────── -->
     <div class="detail-grid">

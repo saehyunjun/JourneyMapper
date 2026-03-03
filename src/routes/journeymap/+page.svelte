@@ -133,29 +133,28 @@
   <nav class="nav-bar">
     <div class="nav-left">
       <!-- Persona switcher tabs removed (moved to sidebar) -->
-    </div>
-
-  <!-- ── Body row: sidebar + main content ─────────────────────────────── -->
-  <div class="journey-body">
-
-    <!-- LEFT: Persona selector sidebar -->
     <PersonaSelectorSidebar
       {personas}
       {activePersonaId}
       {timelineActive}
       on:select={handlePersonaSelect}
     />
+    </div>
+
+  <!-- ── Body row: sidebar + main content ─────────────────────────────── -->
+  <div class="journey-body">
+
+    <!-- LEFT: Persona selector sidebar -->
 
 
 <!-- RIGHT: main content column -->
 <div class="journey-main">
   <!-- ── Persona Profile Card (extracted component) ──────────────── -->
-  <div class = "flex flex-row grow-0 w-1/12 pl-10">
+  <div class = "flex flex-row">
   <PersonaProfileCard
     {personaProfile}
     isOpen={drawerMode === 'persona'}
     onClick={openPersonaDrawer}
-    class = "flex flex-col w-full"
   />
   </div>
   
