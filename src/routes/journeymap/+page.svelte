@@ -1,7 +1,6 @@
 <script>
-  import JourneyGrid          from '$lib/journeymapper2/JourneyGrid.svelte';
-  import JourneyLine          from '$lib/journeymapper2/JourneyLine.svelte';
-  import JourneyNodes         from '$lib/journeymapper2/JourneyNodes.svelte';
+  import JourneyAxis          from '$lib/journeymapper2/JourneyAxis.svelte';
+  import JourneyIndex from '$lib/journeymapper2/JourneyIndex.svelte';
   import JourneyLegend        from '$lib/journeymapper2/JourneyLegend.svelte';
   import JourneySteps         from '$lib/journeymapper2/JourneySteps.svelte';
   import JourneyStages        from '$lib/journeymapper2/JourneyStages.svelte';
@@ -131,18 +130,6 @@
   <span class="h3 heading blue">JourneyMapper</span> 
   <span class="nav-title">Powered by PatientlyIQ</span>
   </div>
-
-  <nav class="nav-bar">
-    <div class="nav-left">
-      <!-- Persona switcher tabs removed (moved to sidebar) -->
-    <PersonaSelectorSidebar
-      {personas}
-      {activePersonaId}
-      {timelineActive}
-      on:select={handlePersonaSelect}
-    />
-    </div>
-
   <!-- ── Body row: sidebar + main content ─────────────────────────────── -->
   <div class="journey-body">
 
@@ -164,22 +151,25 @@
 
       <!-- ── Chart area ──────────────────────────────────────────────── -->
       <div class="journey-index w-9-12">
+        <JourneyStages data={journeyData} />
+        <JourneySteps data={journeyData} />
+
         <div class="shared-scroll" bind:this={scrollEl}>
-          <JourneyStages data={journeyData} />
+      <JourneyAxis />
           
-          <JourneySentiment data={journeyData} />
-          <JourneySteps data={journeyData} />
+    
+      <!-- ── JourneySentiment ────────────────────────────────────────── -->  
+        <JourneySentiment data={journeyData} />
           
-          <JourneyGrid data={journeyData}>
-            {#each metrics as m}
-              <JourneyLine  data={journeyData} metricKey={m.key} color={m.color} label={m.label} />
-            {/each}
-            {#each metrics as m, mi}
-              <JourneyNodes data={journeyData} metricKey={m.key} color={m.color} offsets={nodeOffsets[mi]} />
-            {/each}
-          </JourneyGrid>
-          <JourneyInfoSources data={journeyData} />
+          
+      <!-- ── JourneyIndex ──────────────────────────────────────────── -->  
+      <JourneyAxis />
+
+      <JourneyIndex data={journeyData} {metrics} />
+
           <JourneyLegend items={metrics} />
+          <JourneyInfoSources data={journeyData} />
+    
           <JourneyTooltip
             data={journeyData}
             metrics={metrics}
@@ -268,6 +258,9 @@ About Plutchik
 
 
 <style>
-
+.shared-scroll {
+  position:relative;
+  overflow-x: auto;
+}
 
 </style>

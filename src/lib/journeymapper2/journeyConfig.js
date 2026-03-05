@@ -42,6 +42,8 @@ export const STAGE_COLORS = [
   '#D2D7CAff', // Soft Linen
 ];
 
+
+
 /**
  * Given journey data, return a map of stage_id → hex color.
  * Cycles through STAGE_COLORS if there are more stages than palette entries.
@@ -59,20 +61,6 @@ export function buildStageColorMap(data) {
 }
 
 
-// ─── Plutchik Emotion Registry ────────────────────────────────────────────────
-//
-// Single source of truth for all Plutchik emotion identifiers, display labels,
-// wheel colors (taken directly from Plutchik_Dyads_1.svg), and readable text
-// colors for rendering labels on top of each emotion's background.
-//
-// Ordered clockwise from Joy (12 o'clock) — matches PlutchikWheel.svelte layout.
-//
-// Usage:
-//   import { PLUTCHIK_EMOTIONS, emotionColor, emotionTextColor } from './journeyConfig.js';
-//
-//   const color = emotionColor('anger');           // → '#D50000'
-//   const text  = emotionTextColor('joy');         // → '#5A3E28'
-//   const meta  = PLUTCHIK_EMOTIONS.find(e => e.id === 'trust');
 
 export const PLUTCHIK_EMOTIONS = [
   {
@@ -244,3 +232,45 @@ export const SCORE_ALIASES = {
   rage:         'anger',
   vigilance:    'anticipation',
 };
+
+export const SENTIMENT_SCALE = [
+  "#a50026", // −5.0  deep red
+  "#d73027", // −3.9
+  "#f46d43", // −2.8
+  "#fdae61", // −1.7
+  "#fee08b", // −0.6
+  "#d9ef8b", //  +0.6
+  "#a6d96a", //  +1.7
+  "#66bd63", //  +2.8
+  "#1a9850", //  +3.9
+  "#006837", //  +5.0  deep green
+];
+
+/**
+ * Maps a sentiment value (−5 to +5) to a color by interpolating between
+ * adjacent stops in SENTIMENT_SCALE.
+ *
+ * @param {number|string} val — sentiment score, clamped to [−5, +5]
+ * @returns {string} — rgb() color string
+ */
+export function sentimentToColor(val) {
+  const norm = Math.max(-5, Math.min(5, parseFloat(val)));
+  const t    = (norm + 5) / 10; // normalise to [0, 1]
+  const pos  = t * (SENTIMENT_SCALE.length - 1);
+  const lo   = Math.floor(pos);
+  const hi   = Math.min(lo + 1, SENTIMENT_SCALE.length - 1);
+  const u    = pos - lo;
+
+  const hex = SENTIMENT_SCALE[lo];
+  const hex2 = SENTIMENT_SCALE[hi];
+  const n1 = parseInt(hex.slice(1), 16);
+  const n2 = parseInt(hex2.slice(1), 16);
+
+  const r = Math.round(((n1 >> 16) & 255) + (((n2 >> 16) & 255) - ((n1 >> 16) & 255)) * u);
+  const g = Math.round(((n1 >>  8) & 255) + (((n2 >>  8) & 255) - ((n1 >>  8) & 255)) * u);
+  const b = Math.round(( n1        & 255) + (( n2        & 255) - ( n1        & 255)) * u);
+
+  return `rgb(${r},${g},${b})`;
+}
+
+

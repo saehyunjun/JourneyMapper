@@ -81,7 +81,7 @@
       y={bandY + STAGE_TOP_STROKE + 6}
       text-anchor="middle"
       dominant-baseline="hanging"
-      class="label jm-stage-label"
+      class="label"
     >
       {group.stage}
     </text>
