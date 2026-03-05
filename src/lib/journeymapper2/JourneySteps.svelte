@@ -30,7 +30,7 @@
   $: width = totalWidth(data.length);
 
   // ── Layout + wrapping ───────────────────────────────────────────────────
-  const HEADER_HEIGHT = 22;
+  const HEADER_HEIGHT = 0;
   const LABEL_PAD_X = 8;
   const LABEL_PAD_Y = 8;
   const LINE_HEIGHT = 16;
@@ -89,7 +89,7 @@
   $: wrappedSteps = data.map((d) => wrapToWidth(d.step, labelMaxWidth));
   $: labelRowHeight =
     Math.max(1, ...wrappedSteps.map((lines) => lines.length)) * LINE_HEIGHT + LABEL_PAD_Y * 2;
-  $: svgHeight = HEADER_HEIGHT + labelRowHeight;
+  $: svgHeight = labelRowHeight;
 
   function stageWidth(group) {
     return (group.endIndex - group.startIndex + 1) * STEP_WIDTH;
@@ -128,7 +128,7 @@
 
   <!-- Border lines -->
   <line x1="0" y1="0" x2={width} y2="0" stroke="#DFC3A8" stroke-width="1" />
-  <line x1="0" y1={HEADER_HEIGHT} x2={width} y2={HEADER_HEIGHT} stroke="#DFC3A8" stroke-width="1" />
+
 
   <!-- Left axis gutter -->
   <rect x="0" y="0" width={LEFT_AXIS_WIDTH} height={svgHeight} fill="#F4EFE5" />
@@ -137,15 +137,15 @@
   {#each data as _d, i}
     {#if $zoomedIndex === i}
       <rect
-        x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={HEADER_HEIGHT}
-        width={STEP_WIDTH} height={svgHeight - HEADER_HEIGHT}
+        x={LEFT_AXIS_WIDTH + i * STEP_WIDTH}
+        width={STEP_WIDTH} height={svgHeight}
         fill="#C4956A" opacity="0.18"
         pointer-events="none"
       />
     {:else if $hoveredIndex === i}
       <rect
-        x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={HEADER_HEIGHT}
-        width={STEP_WIDTH} height={svgHeight - HEADER_HEIGHT}
+        x={LEFT_AXIS_WIDTH + i * STEP_WIDTH}
+        width={STEP_WIDTH} height={svgHeight}
         fill="#F9564E" opacity="0.08"
         pointer-events="none"
       />

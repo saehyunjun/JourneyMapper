@@ -431,6 +431,15 @@
     display: inline-block;
   }
 
+  .label-sm {
+    font-size: .625em;
+    font-weight: 500;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    text-align: start;
+    text-transform: uppercase;
+  }
+
   .label {
     font-size: 1em;
     font-weight: 800;
@@ -451,6 +460,15 @@
     color: #111;
     text-transform: uppercase;
   }
+}
+
+/* Stage headers (JourneyStages.svelte) */
+.jm-stage-topbar {
+  shape-rendering: crispEdges;
+}
+
+.jm-stage-label {
+  pointer-events: none; /* keeps stage labels from interfering with hover/click hit-rects */
 }
 /* ---------- Journey UI primitives (reusable) ---------- */
 

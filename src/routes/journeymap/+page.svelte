@@ -166,10 +166,10 @@
       <div class="journey-index w-9-12">
         <div class="shared-scroll" bind:this={scrollEl}>
           <JourneyStages data={journeyData} />
-          <JourneySteps data={journeyData} />
-
+          
           <JourneySentiment data={journeyData} />
-
+          <JourneySteps data={journeyData} />
+          
           <JourneyGrid data={journeyData}>
             {#each metrics as m}
               <JourneyLine  data={journeyData} metricKey={m.key} color={m.color} label={m.label} />
@@ -269,21 +269,5 @@ About Plutchik
 
 <style>
 
-  :global(body) { background: #FAF9F5; margin: 0; padding: 0; }
-
-  .journey-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  /* ── Body row ─────────────────────────────────────────────────────── */
-  .journey-body {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    overflow: hidden;
-    min-height: 0;
-  }
 
 </style>

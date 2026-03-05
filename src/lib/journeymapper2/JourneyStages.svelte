@@ -24,7 +24,6 @@
   })();
 
   $: stageColorMap = buildStageColorMap(data);
-
   $: width = totalWidth(data.length);
 
   function stageX(group) {
@@ -36,20 +35,20 @@
   function stageWidth(group) {
     return (group.endIndex - group.startIndex + 1) * STEP_WIDTH;
   }
-const STAGE_BAND_HEIGHT = 32;
-const SVG_HEIGHT = STAGE_BAND_HEIGHT
+
+  const STAGE_TOP_STROKE = 10;
+  const STAGE_BAND_HEIGHT = 38;
+  const SVG_HEIGHT = STAGE_BAND_HEIGHT;
 </script>
 
 <svg width={width} height={SVG_HEIGHT} class="stages-svg">
-
-
   <!-- ── Column highlight bands ─────────────────────────────────────────── -->
   {#each data as _d, i}
     {#if $selectedIndex === i}
       <rect
         x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y="22"
         width={STEP_WIDTH} height={SVG_HEIGHT}
-        fill="#C4956A" opacity="0.15"
+        fill="#C4956A" opacity="0.90"
       />
     {/if}
     {#if $hoveredIndex === i}
@@ -61,18 +60,31 @@ const SVG_HEIGHT = STAGE_BAND_HEIGHT
     {/if}
   {/each}
 
-  <!-- ── Stage group band ───────────────────────────────────────────────── -->
+  <!-- ── Stage group band (top stroke + label below) ───────────────────── -->
   {#each stageGroups as group}
-    {@const gx    = LEFT_AXIS_WIDTH + group.startIndex * STEP_WIDTH}
-    {@const gw    = stageWidth(group)}
-    {@const midX  = stageX(group)}
+    {@const gx = LEFT_AXIS_WIDTH + group.startIndex * STEP_WIDTH}
+    {@const gw = stageWidth(group)}
+    {@const midX = stageX(group)}
     {@const bandY = 0}
+
+    <!-- Top stroke -->
     <rect
-      x={gx + 0} y={bandY}
-      width={gw} height={STAGE_BAND_HEIGHT }
+      x={gx} y={bandY}
+      width={gw} height={STAGE_TOP_STROKE}
       fill={stageColorMap[group.stage_id]}
+      class="jm-stage-topbar"
     />
-    <text x={midX} y={bandY + 19} text-anchor="middle" class="stage-label text-xs font-semibold uppercase text-slate-500">{group.stage}</text>
+
+    <!-- Label under the stroke -->
+    <text
+      x={midX}
+      y={bandY + STAGE_TOP_STROKE + 6}
+      text-anchor="middle"
+      dominant-baseline="hanging"
+      class="label jm-stage-label"
+    >
+      {group.stage}
+    </text>
   {/each}
 
   <!-- ── Full-column hit areas ─────────────────────────────────────────── -->
@@ -87,9 +99,4 @@ const SVG_HEIGHT = STAGE_BAND_HEIGHT
       on:click={() => selectedIndex.set($selectedIndex === i ? -1 : i)}
     />
   {/each}
-
 </svg>
-
-<style>
-
-</style>
