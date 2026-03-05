@@ -17,6 +17,8 @@
   import { STEP_WIDTH, LEFT_AXIS_WIDTH, valueToY } from '$lib/journeymapper2/journeyConfig.js';
   import { selectedIndex, zoomedIndex } from '$lib/journeymapper2/journeyStore.js';
 
+
+  import PolarChart from '$lib/journeymapper2/PolarChart.svelte';
   import personaFile from '$lib/journeymapper2/journeyPersonas.json';
   
 
