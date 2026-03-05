@@ -641,3 +641,8 @@
     overflow-y: visible;  /* allow scale to show full chart */
     width: 100%;
   }
+
+  .spacer {
+    min-height: 2em;
+    width: 100%;
+  }

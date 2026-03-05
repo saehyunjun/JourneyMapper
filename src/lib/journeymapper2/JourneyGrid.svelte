@@ -64,13 +64,7 @@
 
   <!-- ── Column highlight bands ──────────────────────────────────────────── -->
   {#each data as _d, i}
-    {#if $zoomedIndex === i}
-      <rect
-        x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={TOP_PADDING}
-        width={STEP_WIDTH} height={GRID_HEIGHT}
-        fill="#C4956A" opacity="0.14" pointer-events="none"
-      />
-    {:else if $hoveredIndex === i}
+    {#if $hoveredIndex === i}
       <rect
         x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={TOP_PADDING}
         width={STEP_WIDTH} height={GRID_HEIGHT}

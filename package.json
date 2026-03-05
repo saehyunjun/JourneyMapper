@@ -17,6 +17,7 @@
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tailwindcss/postcss": "^4.2.1",
 		"autoprefixer": "^10.4.24",
+		"phosphor-icons-svelte": "^2.1.0",
 		"postcss": "^8.5.6",
 		"svelte": "^5.51.0",
 		"svelte-check": "^4.3.6",

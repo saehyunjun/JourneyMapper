@@ -153,22 +153,22 @@
       <div class="journey-index w-9-12">
 
         <div class="shared-scroll" bind:this={scrollEl}>
-      <JourneyAxis />
-      <JourneyStages data={journeyData} />
 
+      <!-- Stages and steps sit above the chart — no axis needed here -->
+      <JourneyStages data={journeyData} />
       <JourneySteps data={journeyData} />
 
-    
-      <!-- ── JourneySentiment ────────────────────────────────────────── -->  
-        <JourneySentiment data={journeyData} />
-          
-          
-      <!-- ── JourneyIndex ──────────────────────────────────────────── -->  
+      <!-- ── JourneySentiment ────────────────────────────────────────── -->
       <JourneyAxis />
-      <JourneyLegend items={metrics} />
+      <JourneySentiment data={journeyData} />
 
+      <!-- ── JourneyIndex ──────────────────────────────────────────── -->
+      <!-- Axis must be the immediate predecessor of JourneyIndex so its
+           margin-bottom: -SVG_HEIGHT pulls it flush over the grid SVG -->
+      <div class="spacer" />
+      <JourneyAxis />
       <JourneyIndex data={journeyData} {metrics} />
-
+      <JourneyLegend items={metrics} />
 
           <JourneyInfoSources data={journeyData} />
     
