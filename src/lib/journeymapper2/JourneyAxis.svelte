@@ -27,17 +27,17 @@
     <svg
       width={LEFT_AXIS_WIDTH}
       height={SVG_HEIGHT}
-      class="axis-svg"
+      class="axis-svg opacity-50 shadow-2xl"
       aria-hidden="true"
     >
       <!-- Solid background so chart content doesn't bleed through -->
-      <rect x="0" y="0" width={LEFT_AXIS_WIDTH} height={SVG_HEIGHT} fill="#EBEBEB" />
+      <rect x="0" y="0" width={LEFT_AXIS_WIDTH} height={SVG_HEIGHT} fill="#fff"  />
   
       <!-- Right edge border -->
       <line
         x1={LEFT_AXIS_WIDTH - 0.5} y1={TOP_PADDING}
         x2={LEFT_AXIS_WIDTH - 0.5} y2={TOP_PADDING + GRID_HEIGHT}
-        stroke="#FF0000" stroke-width="1"
+        stroke="#161616" stroke-width="1"
       />
   
       <!--
@@ -80,7 +80,7 @@
       /* Don't capture pointer events — clicks should fall through to the grid */
       pointer-events: none;
       flex-shrink: 0;
-      background-color: #EBEBEB;
+      background-color: #fff;
     }
   
     .axis-svg {

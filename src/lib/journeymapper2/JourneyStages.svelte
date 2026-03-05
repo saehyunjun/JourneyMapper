@@ -42,23 +42,7 @@
 </script>
 
 <svg width={width} height={SVG_HEIGHT} class="stages-svg">
-  <!-- ── Column highlight bands ─────────────────────────────────────────── -->
-  {#each data as _d, i}
-    {#if $selectedIndex === i}
-      <rect
-        x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y="22"
-        width={STEP_WIDTH} height={SVG_HEIGHT}
-        fill="#C4956A" opacity="0.0"
-      />
-    {/if}
-    {#if $hoveredIndex === i}
-      <rect
-        x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y="22"
-        width={STEP_WIDTH} height={SVG_HEIGHT}
-        fill="#F9564E" opacity="0.08"
-      />
-    {/if}
-  {/each}
+
 
   <!-- ── Stage group band (top stroke + label below) ───────────────────── -->
   {#each stageGroups as group}

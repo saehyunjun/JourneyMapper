@@ -115,7 +115,7 @@
 
 
   <!-- Left axis gutter -->
-  <rect x="0" y="0" width={LEFT_AXIS_WIDTH} height={svgHeight} fill="#161616" />
+  <rect x="0" y="0" width={LEFT_AXIS_WIDTH} height={svgHeight} fill="#fff" />
 
   <!-- ── Column highlight bands ─────────────────────────────────────────── -->
   {#each data as _d, i}
@@ -135,7 +135,7 @@
     <line
       x1={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y1="0"
       x2={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y2={svgHeight}
-      stroke={ isHovered ? "#F9564E" : "#D9D9D9"}
+      stroke={ isHovered ? "#F9564E" : "#EBEBEB"}
       stroke-width={ isHovered ? 2 : 0.5}
       opacity={ isHovered ? 0.8 : 1}
       pointer-events="none"
