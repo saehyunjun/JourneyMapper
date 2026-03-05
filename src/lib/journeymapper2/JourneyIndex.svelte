@@ -26,7 +26,7 @@
    */
   function computeOffsets(d, mets) {
     const ns = d.length, nm = mets.length;
-    const offs = mets.map(() => new Array(ns).fill(0));
+    const offs = mets.map(() => new     Array(ns).fill(0));
     for (let si = 0; si < ns; si++) {
       const groups = new Map();
       for (let mi = 0; mi < nm; mi++) {
@@ -62,5 +62,5 @@
       color={m.color}
       offsets={nodeOffsets[mi]}
     />
-  {/each}
+  {/each}s
 </JourneyGrid>

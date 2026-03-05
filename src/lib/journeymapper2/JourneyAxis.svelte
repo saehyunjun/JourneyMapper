@@ -43,9 +43,7 @@
         x={LEFT_AXIS_WIDTH - 6}
         y={y + 4}
         text-anchor="end"
-        class="axis-label"
-        fill={isZero ? "#8A6A4A" : "#BFA080"}
-        font-weight={isZero ? "600" : "400"}
+        class="label-sm"
       >{rowVal}</text>
     {/each}
   </svg>
@@ -73,10 +71,4 @@
     display: block;
   }
 
-  .axis-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.02em;
-    user-select: none;
-  }
 </style>

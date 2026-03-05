@@ -12,7 +12,6 @@
   <JourneyLine
     {data}
     metricKey="sentiment"
-    colorFn={sentimentToColor}
     opacity={1}
     label="Sentiment"
   />

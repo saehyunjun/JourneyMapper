@@ -31,8 +31,6 @@
   }));
 
   $: anyActive = $hoveredIndex >= 0 || $zoomedIndex >= 0;
-  $: metricGlowOpacity = anyActive ? 0.06 : 0.015;
-  $: metricLineOpacity  = anyActive ? 0.88 : 0.22;
 
   function handleColumnClick(i) {
     if ($zoomedIndex === i) {
@@ -55,7 +53,8 @@
     {#if stageColorMap[d.stage_id]}
       <rect
         x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={TOP_PADDING}
-        width={STEP_WIDTH} height={GRID_HEIGHT}
+        width={STEP_WIDTH} 
+        height={GRID_HEIGHT}
         fill={stageColorMap[d.stage_id]}
         opacity="0.525"
         pointer-events="none"
@@ -86,18 +85,12 @@
     {@const isZero = rowVal === 0}
     <line
       x1={LEFT_AXIS_WIDTH} y1={y} x2={width} y2={y}
-      stroke={isZero ? "#A08060" : "#DFC3A8"}
-      stroke-width={isZero ? 2.275 : 0.75}
-      stroke-dasharray={isZero ? undefined : "4 4"}
+      stroke={isZero ? "#161616" : "#9B9B9B"}
+      stroke-width={isZero ? 2.275 : 0.725}
+      stroke-dasharray={isZero ? undefined : "1 4"}
       pointer-events="none"
     />
-    <text
-      x={LEFT_AXIS_WIDTH - 6} y={y + 4}
-      text-anchor="end"
-      class="axis-label"
-      fill={isZero ? "#8A6A4A" : "#BFA080"}
-      pointer-events="none"
-    >{rowVal}</text>
+  
   {/each}
 
   <!-- ── Vertical column dividers ──────────────────────────────────────── -->
@@ -140,11 +133,6 @@
 <style>
   .journey-svg {
     display: block;
-    background: #F4EFE5;
-  }
-  .axis-label {
-    font-size: 9px;
-    letter-spacing: 0.02em;
-    user-select: none;
+    background: #f3f3f3;
   }
 </style>

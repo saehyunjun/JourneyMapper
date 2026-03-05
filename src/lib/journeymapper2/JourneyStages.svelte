@@ -48,7 +48,7 @@
       <rect
         x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y="22"
         width={STEP_WIDTH} height={SVG_HEIGHT}
-        fill="#C4956A" opacity="0.90"
+        fill="#C4956A" opacity="0.0"
       />
     {/if}
     {#if $hoveredIndex === i}
@@ -81,7 +81,7 @@
       y={bandY + STAGE_TOP_STROKE + 6}
       text-anchor="middle"
       dominant-baseline="hanging"
-      class="label"
+      class="label-sm"
     >
       {group.stage}
     </text>

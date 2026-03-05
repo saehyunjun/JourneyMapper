@@ -151,12 +151,13 @@
 
       <!-- ── Chart area ──────────────────────────────────────────────── -->
       <div class="journey-index w-9-12">
-        <JourneyStages data={journeyData} />
-        <JourneySteps data={journeyData} />
 
         <div class="shared-scroll" bind:this={scrollEl}>
       <JourneyAxis />
-          
+      <JourneyStages data={journeyData} />
+
+      <JourneySteps data={journeyData} />
+
     
       <!-- ── JourneySentiment ────────────────────────────────────────── -->  
         <JourneySentiment data={journeyData} />
@@ -164,10 +165,11 @@
           
       <!-- ── JourneyIndex ──────────────────────────────────────────── -->  
       <JourneyAxis />
+      <JourneyLegend items={metrics} />
 
       <JourneyIndex data={journeyData} {metrics} />
 
-          <JourneyLegend items={metrics} />
+
           <JourneyInfoSources data={journeyData} />
     
           <JourneyTooltip
@@ -261,6 +263,7 @@ About Plutchik
 .shared-scroll {
   position:relative;
   overflow-x: auto;
+  padding: 1em 0em 2em 0em;
 }
 
 </style>

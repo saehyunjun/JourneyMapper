@@ -9,7 +9,7 @@
   export let metricKey = '';
 
   /** Stroke color for this line — ignored when useGradient or colorFn is set */
-  export let color = '#ffffff';
+  export let color = '#818181';
 
   /** Optional label for debugging / accessibility */
   export let label = '';

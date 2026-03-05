@@ -4,7 +4,7 @@ export const ROW_VALUES  = [5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5];
 export const GRID_HEIGHT = 340;
 export const STEP_WIDTH  = 225;
 export const LEFT_AXIS_WIDTH = 36;
-export const TOP_PADDING = 16;
+export const TOP_PADDING = 0;
 export const SVG_HEIGHT  = GRID_HEIGHT + TOP_PADDING * 1.25;
 
 export function valueToY(val) {
@@ -33,17 +33,15 @@ export function ratingToLabel(val) {
 
 // ── Stage color palette ───────────────────────────────────────────────────────
 export const STAGE_COLORS = [
-  '#006363ff', // Desert Sand
-  '#237674ff', // Desert Sand 2
-  '#468A85ff', // Desert Sand 3
-  '#699D97ff', // Almond Cream
-  '#8CB0A8ff', // Almond Cream 2
-  '#AFC4B9ff', // Almond Cream 3
-  '#D2D7CAff', // Soft Linen
-];
-
-
-
+  '#264290', // Dark Blue
+  '#3F73FF', // Deep Blue
+  '#468A85ff', // Teal Green
+  '#699D97ff', // Light TG
+  '#28B798', // Warren Green
+  '#55FFDA', // Mint Green
+  '#5830A2', // Purple
+  '#341967', // Dark Purple  
+]
 /**
  * Given journey data, return a map of stage_id → hex color.
  * Cycles through STAGE_COLORS if there are more stages than palette entries.
@@ -237,9 +235,9 @@ export const SENTIMENT_SCALE = [
   "#a50026", // −5.0  deep red
   "#d73027", // −3.9
   "#f46d43", // −2.8
-  "#fdae61", // −1.7
-  "#fee08b", // −0.6
-  "#d9ef8b", //  +0.6
+  "#FF9473", // −1.7
+  "#FDAE61", // −0.6
+  "#91C938", //  +0.6
   "#a6d96a", //  +1.7
   "#66bd63", //  +2.8
   "#1a9850", //  +3.9

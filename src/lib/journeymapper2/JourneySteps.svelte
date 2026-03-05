@@ -6,7 +6,7 @@
     totalWidth,
     buildStageColorMap,
   } from './journeyConfig.js';
-  import { hoveredIndex, selectedIndex, zoomedIndex } from './journeyStore.js';
+  import { hoveredIndex, selectedIndex } from './journeyStore.js';
 
   const dispatch = createEventDispatcher();
 
@@ -40,7 +40,7 @@
     if (measureCtx) return;
     const canvas = document.createElement('canvas');
     measureCtx = canvas.getContext('2d');
-    measureCtx.font = '500 13px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif';
+    measureCtx.font = '500 10px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif';
   }
 
   function wrapToWidth(text, maxWidthPx) {
@@ -95,23 +95,7 @@
     return (group.endIndex - group.startIndex + 1) * STEP_WIDTH;
   }
 
-  // ── Two-click zoom / drawer logic ──────────────────────────────────────
-  function handleColumnClick(i) {
-    if ($zoomedIndex === i) {
-      // Second click on already-zoomed column → open drawer
-      dispatch('openDrawer', { index: i });
-    } else {
-      // First click → zoom in on this column
-      zoomedIndex.set(i);
-      selectedIndex.set(i);
-    }
-  }
-
-  function handleBackgroundClick() {
-    // Clicking outside any column resets zoom
-    zoomedIndex.set(-1);
-    selectedIndex.set(-1);
-  }
+ 
 </script>
 
 <svg width={width} height={svgHeight} class="stages-svg">
@@ -127,26 +111,19 @@
   {/each}
 
   <!-- Border lines -->
-  <line x1="0" y1="0" x2={width} y2="0" stroke="#DFC3A8" stroke-width="1" />
+  <line x1="0" y1="0" x2={width} y2="0" stroke="#E8E8E8" stroke-width="1" />
 
 
   <!-- Left axis gutter -->
-  <rect x="0" y="0" width={LEFT_AXIS_WIDTH} height={svgHeight} fill="#F4EFE5" />
+  <rect x="0" y="0" width={LEFT_AXIS_WIDTH} height={svgHeight} fill="#161616" />
 
   <!-- ── Column highlight bands ─────────────────────────────────────────── -->
   {#each data as _d, i}
-    {#if $zoomedIndex === i}
+    {#if $hoveredIndex === i}
       <rect
         x={LEFT_AXIS_WIDTH + i * STEP_WIDTH}
         width={STEP_WIDTH} height={svgHeight}
-        fill="#C4956A" opacity="0.18"
-        pointer-events="none"
-      />
-    {:else if $hoveredIndex === i}
-      <rect
-        x={LEFT_AXIS_WIDTH + i * STEP_WIDTH}
-        width={STEP_WIDTH} height={svgHeight}
-        fill="#F9564E" opacity="0.08"
+        fill="#F9564E" opacity="0.8"
         pointer-events="none"
       />
     {/if}
@@ -154,14 +131,13 @@
 
   <!-- ── Vertical column dividers ──────────────────────────────────────── -->
   {#each data as _d, i}
-    {@const isZoomed = $zoomedIndex === i}
     {@const isHovered = $hoveredIndex === i}
     <line
       x1={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y1="0"
       x2={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y2={svgHeight}
-      stroke={isZoomed ? "#C4956A" : isHovered ? "#F9564E" : "#DFC3A8"}
-      stroke-width={isZoomed ? 2.5 : isHovered ? 2 : 0.75}
-      opacity={isZoomed ? 0.9 : isHovered ? 0.6 : 1}
+      stroke={ isHovered ? "#F9564E" : "#D9D9D9"}
+      stroke-width={ isHovered ? 2 : 0.5}
+      opacity={ isHovered ? 0.8 : 1}
       pointer-events="none"
     />
   {/each}
@@ -170,42 +146,19 @@
   {#each data as d, i}
     {@const x0 = LEFT_AXIS_WIDTH + i * STEP_WIDTH + LABEL_PAD_X}
     {@const y0 = HEADER_HEIGHT + LABEL_PAD_Y + LINE_HEIGHT * 0.825}
-    {@const isZoomed  = $zoomedIndex  === i}
     {@const isHovered = $hoveredIndex === i}
-    <!-- "Click to open" hint shown when zoomed -->
-    {#if isZoomed}
-      {@const midX = LEFT_AXIS_WIDTH + i * STEP_WIDTH + STEP_WIDTH / 2}
-      <text
-        x={midX} y={svgHeight - 6}
-        text-anchor="middle"
-        class="zoom-hint"
-        pointer-events="none"
-      >click again to open →</text>
-    {/if}
+
     <text
       x={x0} y={y0}
-      class="label"
-      fill={isZoomed ? "#3A2210" : isHovered ? "#28211E" : "#8A6A4A"}
-      font-weight={isZoomed ? "700" : "500"}
+      class="label-sm"
+      fill={ isHovered ? "#0B0245" : "#767676"}
     >
+
       {#each wrappedSteps[i] as line, li}
         <tspan x={x0} dy={li === 0 ? 0 : LINE_HEIGHT}>{line}</tspan>
       {/each}
     </text>
 
-    <!-- Experience Wheel indicator dot -->
-    {#if d.has_experience_wheel}
-      {@const dotCx = LEFT_AXIS_WIDTH + i * STEP_WIDTH + STEP_WIDTH / 2}
-      {@const dotCy = HEADER_HEIGHT / 2 + 1}
-      <circle cx={dotCx} cy={dotCy} r="5" fill="#C4956A" opacity="0.15" pointer-events="none" />
-      <circle cx={dotCx} cy={dotCy} r="3.5" fill="#C4956A" opacity="0.9" pointer-events="none" />
-      <text
-        x={dotCx} y={dotCy + 0.5}
-        text-anchor="middle" dominant-baseline="middle"
-        class="wheel-dot-label"
-        pointer-events="none"
-      >W</text>
-    {/if}
   {/each}
 
   <!-- ── Full-column hit areas ─────────────────────────────────────────── -->
@@ -224,17 +177,4 @@
 </svg>
 
 <style>
-  .wheel-dot-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 5px;
-    font-weight: 700;
-    fill: #F4EFE5;
-  }
-  .zoom-hint {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 8px;
-    fill: #C4956A;
-    opacity: 0.8;
-    letter-spacing: 0.04em;
-  }
 </style>
