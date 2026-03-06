@@ -2,56 +2,38 @@
   import { valueToY, stepToX, totalWidth } from './journeyConfig.js';
   import { hoveredIndex, selectedIndex } from './journeyStore.js';
 
-  /** The full journey data array */
-  export let data = [];
-
-  /** The key to read from each data object e.g. "emotional_state" */
+  export let data      = [];
   export let metricKey = '';
-
-  /** Stroke color for this line — ignored when useGradient or colorFn is set */
-  export let color = '#818181';
-
-  /** Optional label for debugging / accessibility */
-  export let label = '';
-
-  /** Resting opacity for non-active segments */
-  export let opacity = 0.9;
-
-  /**
-   * When true, ignores `color` and paints the line with a per-step gradient
-   * running red (−5) → yellow (0) → green (+5) along the x-axis.
-   */
+  /** Static stroke color */
+  export let color     = '#ffffff';
+  /** Optional per-value color function (val: number) => string */
+  export let colorFn   = null;
+  export let label     = '';
+  export let opacity   = 0.9;
   export let useGradient = false;
+  /** When true, renders dashed ghost branches for inflection steps */
+  export let showInflection = false;
 
-  /**
-   * Optional per-segment color function. When provided, overrides both `color`
-   * and `useGradient`. Called with the averaged value of the two endpoints:
-   *   colorFn(avgValue: number) → string
-   *
-   * Example — sentiment coloring:
-   *   colorFn={sentimentToColor}
-   */
-  export let colorFn = null;
-
-  // ── Unique gradient id so multiple instances don't collide ──────────────
   const gradientId = `line-gradient-${metricKey}`;
 
-  // ── Segment geometry ─────────────────────────────────────────────────────
+  function resolveColor(val) {
+    return colorFn ? colorFn(parseFloat(val)) : color;
+  }
+
+  // ── Main segments ────────────────────────────────────────────────────────
   $: segments = data.slice(0, -1).map((d, i) => {
     const next = data[i + 1];
-    const avgVal = (parseFloat(d[metricKey]) + parseFloat(next[metricKey])) / 2;
+    const avg  = (parseFloat(d[metricKey]) + parseFloat(next[metricKey])) / 2;
     return {
-      x1: stepToX(i),
-      y1: valueToY(d[metricKey]),
-      x2: stepToX(i + 1),
-      y2: valueToY(next[metricKey]),
-      avgVal,
+      x1: stepToX(i),          y1: valueToY(d[metricKey]),
+      x2: stepToX(i + 1),      y2: valueToY(next[metricKey]),
+      stroke: resolveColor(avg),
       indexA: i,
       indexB: i + 1,
     };
   });
 
-  // ── Gradient stops — one per data point, positioned by x percentage ──────
+  // ── Gradient (unchanged from original) ──────────────────────────────────
   $: svgWidth = totalWidth(data.length);
 
   $: gradientStops = data.map((d, i) => ({
@@ -59,12 +41,6 @@
     color:  valueToGradientColor(parseFloat(d[metricKey])),
   }));
 
-  /**
-   * Maps a −5…+5 value to a color:
-   *   -5  → #F9564E  (bright red)
-   *    0  → #F4D35E  (warm yellow)
-   *   +5  → #44BBA4  (bright green)
-   */
   function valueToGradientColor(val) {
     const n = Math.max(-5, Math.min(5, val));
     if (n < 0) {
@@ -81,21 +57,48 @@
       return `rgb(${r},${g},${b})`;
     }
   }
+
+  // ── Inflection ghost segments ────────────────────────────────────────────
+  // For each inflection step, fan two dashed branches (pos/neg) to neighbours.
+  // The branch meets the neighbour at that neighbour's own metric value,
+  // so the ghost "diverges" at the inflection point and rejoins the main line.
+  $: ghostSegments = data.reduce((acc, d, i) => {
+    if (d.inflection !== 'Y') return acc;
+
+    const baseVal = parseFloat(d[metricKey]);
+    const posVal  = baseVal + parseFloat(d.inflection_pos ?? 0);
+    const negVal  = baseVal + parseFloat(d.inflection_neg ?? 0);
+    const cx      = stepToX(i);
+    const posCy   = valueToY(posVal);
+    const negCy   = valueToY(negVal);
+
+    if (i > 0) {
+      const prevCy = valueToY(data[i - 1][metricKey]);
+      const prevCx = stepToX(i - 1);
+      acc.push({ x1: prevCx, y1: prevCy, x2: cx, y2: posCy, branch: 'pos' });
+      acc.push({ x1: prevCx, y1: prevCy, x2: cx, y2: negCy, branch: 'neg' });
+    }
+    if (i < data.length - 1) {
+      const nextCy = valueToY(data[i + 1][metricKey]);
+      const nextCx = stepToX(i + 1);
+      acc.push({ x1: cx, y1: posCy, x2: nextCx, y2: nextCy, branch: 'pos' });
+      acc.push({ x1: cx, y1: negCy, x2: nextCx, y2: nextCy, branch: 'neg' });
+    }
+
+    return acc;
+  }, []);
 </script>
 
 {#if segments.length}
   <g class="journey-line" aria-label={label}>
 
-    <!-- Gradient definition — only rendered when useGradient is true -->
-    {#if useGradient && !colorFn}
+    {#if useGradient}
       <defs>
         <linearGradient
           id={gradientId}
           gradientUnits="userSpaceOnUse"
-          x1={stepToX(0)}
-          y1="0"
-          x2={stepToX(data.length - 1)}
-          y2="0"
+          x1={stepToX(0)} y1="0"
+          x2={stepToX(data.length - 1)} y2="0"
         >
           {#each gradientStops as stop}
             <stop offset="{stop.offset}%" stop-color={stop.color} />
@@ -104,24 +107,37 @@
       </defs>
     {/if}
 
+    <!-- ── Ghost inflection branches (drawn first, behind main line) ──────── -->
+    {#if showInflection}
+    {#each ghostSegments as seg}
+      <line
+        x1={seg.x1} y1={seg.y1}
+        x2={seg.x2} y2={seg.y2}
+        stroke={seg.branch === 'pos' ? '#7BB57B' : '#B57B7B'}
+        stroke-width="1.25"
+        stroke-dasharray="3 3"
+        stroke-linecap="round"
+        opacity="0.55"
+        pointer-events="none"
+      />
+    {/each}
+    {/if}
+
+    <!-- ── Main line segments ────────────────────────────────────────────── -->
     {#each segments as seg}
       {@const active    = $hoveredIndex === seg.indexA || $hoveredIndex === seg.indexB ||
                           $selectedIndex === seg.indexA || $selectedIndex === seg.indexB}
       {@const anyActive = $hoveredIndex >= 0 || $selectedIndex >= 0}
-      {@const stroke    = colorFn
-                            ? colorFn(seg.avgVal)
-                            : useGradient
-                              ? `url(#${gradientId})`
-                              : color}
+      {@const stroke    = useGradient ? `url(#${gradientId})` : seg.stroke}
 
-      <!-- Main line -->
       <line
         x1={seg.x1} y1={seg.y1}
         x2={seg.x2} y2={seg.y2}
-        stroke={stroke}
-        stroke-width="2.25"
+        {stroke}
+        stroke-width="1.25"
         stroke-linecap="round"
         opacity={active ? opacity : anyActive ? 0.18 : opacity}
+        pointer-events="none"
       />
     {/each}
 

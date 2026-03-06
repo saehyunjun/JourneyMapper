@@ -67,7 +67,7 @@
   <style>
     .axis-wrap {
       /* Stick to the left as the user scrolls horizontally */
-      position: sticky;
+      position: sticky; 
       left: 0;
       /* Sit exactly over the left gutter of the chart SVGs */
       width: var(--axis-w);

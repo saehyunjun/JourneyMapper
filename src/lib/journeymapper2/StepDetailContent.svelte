@@ -35,37 +35,39 @@
   {#if step}
     <div class="content-wrap">
   
+      <div class="jm-hero">
       <!-- Step name -->
       <h2 class="jm-title">{step.step}</h2>
   
 
     <!-- Narrative description -->
       {#if step.narrative_description}
-        <div class="narrative-section">
+        <div class="jm-content-col">
           <span class="jm-kicker">Step Narrative</span>
-          <p class="narrative-text">{step.narrative_description}</p>
+          <p class="text-body">{step.narrative_description}</p>
 </div>
 {/if}
+</div>
 
       <!-- Sentiment bar -->
-  
-      <div class="divider" />
+<div class="divider" />
   
       <!-- Metric bars -->
-      <div class="metrics-section">
-
-        <div class="even-col">
+  <div class="jm-content-row">
+        <div class="jm-content-row">
           <span class="jm-kicker">Overall Sentiment</span>
-        </div>
-        <div class="sentiment-bar-track">
-          <div
+          <div class="sentiment-bar-track">
+            <div
             class="sentiment-bar-fill"
             style="width: {toPercent(step.sentiment)}%; background: {sentimentToColor(step.sentiment)};"
-          />
+           />
+        </div>
+        <div class="jm-content-col">
           <span class="sentiment-value" style="color: {sentimentToColor(step.sentiment)};">
             {parseFloat(step.sentiment) > 0 ? '+' : ''}{step.sentiment}
           </span>
         </div>
+<div class="jm-content-col">
         <span class="jm-kicker">Index Metrics</span>
         {#each metrics as m}
           {@const pct = toPercent(step[m.key])}
@@ -89,9 +91,12 @@
                 "
               />
             </div>
-          </div>
+            </div>
         {/each}
-      </div>
+      </div>          
+    </div>
+    </div>
+
   
       <div class="divider" />
   

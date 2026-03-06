@@ -2,6 +2,8 @@
   import { fly, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
   import { createEventDispatcher } from 'svelte';
+  import X from "phosphor-icons-svelte/IconXRegular.svelte";
+
 
   const dispatch = createEventDispatcher();
 
@@ -47,23 +49,15 @@
     <div class="header">
     
       <div class="header-meta">
-        {#if title}
-          <span class="h2 heading">{title}</span>
-        {/if}
-        {#if eyebrow}
-        {/if}
-        <!-- Named slot so callers can fully replace the header text region -->
+       <!-- Named slot so callers can fully replace the header text region -->
         <slot name="header-meta" />
       </div>
 
       <div class="header-actions">
         <!-- Optional header-level actions (e.g. nav arrows) -->
         <slot name="header-actions" />
-
-        <button class="close-btn" on:click={close} aria-label="Close panel">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
+        <button class="btn-empty" on:click={close} aria-label="Close panel">
+          <X />
         </button>
       </div>
 

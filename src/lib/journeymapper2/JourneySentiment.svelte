@@ -12,8 +12,10 @@
   <JourneyLine
     {data}
     metricKey="sentiment"
+    colorFn={sentimentToColor}
     opacity={1}
     label="Sentiment"
+    showInflection={true}
   />
   <JourneyNodes
     {data}

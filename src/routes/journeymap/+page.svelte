@@ -150,7 +150,7 @@
 
 
       <!-- ── Chart area ──────────────────────────────────────────────── -->
-      <div class="journey-index w-9-12">
+      <div class="journey-index">
 
         <div class="shared-scroll" bind:this={scrollEl}>
 
@@ -159,14 +159,12 @@
       <JourneySteps data={journeyData} />
 
       <!-- ── JourneySentiment ────────────────────────────────────────── -->
-      <JourneyAxis />
       <JourneySentiment data={journeyData} />
 
       <!-- ── JourneyIndex ──────────────────────────────────────────── -->
       <!-- Axis must be the immediate predecessor of JourneyIndex so its
            margin-bottom: -SVG_HEIGHT pulls it flush over the grid SVG -->
       <div class="spacer" />
-      <JourneyAxis />
       <JourneyIndex data={journeyData} {metrics} />
       <JourneyLegend items={metrics} />
 

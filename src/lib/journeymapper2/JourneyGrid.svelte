@@ -42,6 +42,7 @@
   }
 </script>
 
+
 <svg
   width={width}
   height={SVG_HEIGHT}
@@ -79,13 +80,14 @@
     {@const isZero = rowVal === 0}
     <line
       x1={LEFT_AXIS_WIDTH} y1={y} x2={width} y2={y}
-      stroke={isZero ? "#161616" : "#9B9B9B"}
-      stroke-width={isZero ? 2.275 : 0.725}
-      stroke-dasharray={isZero ? undefined : "1 4"}
+      stroke={isZero ? "#5E5A5B" : "#D6D6D6"}
+      stroke-width={isZero ? 1. : 0.725}
       pointer-events="none"
     />
   
   {/each}
+
+  
 
   <!-- ── Vertical column dividers ──────────────────────────────────────── -->
   {#each data as _step, i}
@@ -94,8 +96,8 @@
     <line
       x1={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y1={TOP_PADDING}
       x2={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y2={TOP_PADDING + GRID_HEIGHT}
-      stroke={isZoomed ? "#C4956A" : isHovered ? "#F9564E" : "#DFC3A8"}
-      stroke-width={isZoomed ? 3 : isHovered ? 3 : 0.75}
+      stroke={isHovered ? "#F9564E" : "#CACCB7"}
+      stroke-width= {isHovered ? 2 : 1}
       opacity={isZoomed ? 0.9 : isHovered ? 0.85 : 1}
       pointer-events="none"
     />

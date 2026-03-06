@@ -17,12 +17,12 @@
     // Encoded per step_id (1–12 based on journeyPersonas.json journey)
     const INFO_SOURCES = [
       { key: 'physician',     label: 'Physician / Clinician' },
-      { key: 'online_search', label: 'Online Search / WebMD' },
-      { key: 'patient_orgs',  label: 'Patient Advocacy Orgs' },
-      { key: 'family_peers',  label: 'Family & Peer Network' },
-      { key: 'pharma_brand',  label: 'Pharma / Brand Materials' },
-      { key: 'social_media',  label: 'Social Media / Forums' },
-      { key: 'pharmacy',      label: 'Pharmacist' },
+      { key: 'online_search', label: 'Online Search' },
+      { key: 'patient_orgs',  label: 'Advocacy Org' },
+      { key: 'family_peers',  label: 'Online Forums' },
+      { key: 'pharma_brand',  label: 'Branded Marketing' },
+      { key: 'social_media',  label: 'Social Media' },
+      { key: 'pharmacy',      label: 'Specialist' },
     ];
   
     // step_id → { sourceKey → 'up' | 'down' | 'steady' | 'absent' }
@@ -185,19 +185,19 @@
   
   <!-- ── Legend ─────────────────────────────────────────────────────────── -->
   <div class="legend-row">
-    <span class="legend-item">
+    <span class="label-sm">
       <svg width="10" height="10" viewBox="0 0 10 10">
         <polygon points="5,0 0,10 10,10" fill="#4a9e7f" opacity="0.9" />
       </svg>
       Trending up
     </span>
-    <span class="legend-item">
+    <span class="label-sm">
       <svg width="10" height="10" viewBox="0 0 10 10">
         <polygon points="5,10 0,0 10,0" fill="#c8902a" opacity="0.9" />
       </svg>
       Trending down
     </span>
-    <span class="legend-item">
+    <span class="label-sm">
       <svg width="10" height="10" viewBox="0 0 10 10">
         <rect x="1" y="1" width="8" height="8" fill="#3a7fc1" opacity="0.85" rx="1" />
       </svg>
@@ -210,51 +210,9 @@
   </div>
   
   <style>
-    .section-label {
-      color: #8A6A4A;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 4px 12px;
-      background: #F4EFE5;
-      border-top: 1px solid #DFC3A8;
-      border-bottom: 1px solid #DFC3A8;
-    }
+
   
-    .info-sources-svg {
-      display: block;
-      background: #F4EFE5;
-    }
-  
-    .source-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 8px;
-      fill: #8A6A4A;
-      letter-spacing: 0.01em;
-    }
-  
-    .legend-row {
-      display: flex;
-      gap: 18px;
-      align-items: center;
-      padding: 6px 12px 6px calc(v-bind(LEFT_AXIS_WIDTH) * 1px);
-      background: #F4EFE5;
-      border-bottom: 1px solid #DFC3A8;
-      flex-wrap: wrap;
-    }
-  
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 9px;
-      color: #8A6A4A;
-      letter-spacing: 0.03em;
-    }
-  
-    .legend-absent { color: #BFA080; }
+
   
     .absent-dash {
       font-size: 13px;

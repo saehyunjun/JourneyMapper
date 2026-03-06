@@ -4,23 +4,25 @@
 
   export let data      = [];
   export let metricKey = '';
-  /** Static color for all nodes — ignored when colorFn is provided */
+  /** Static color string — used when colorFn is not provided */
   export let color     = '#ffffff';
-  export let radius    = 6;
+  /** Optional per-value color function (val: number) => string */
+  export let colorFn   = null;
+  export let radius    = 4;
   /** Optional per-step Y offsets (pixels) to separate coincident nodes */
   export let offsets   = [];
   /** Resting opacity for non-active nodes */
-  export let opacity   = 0.925;
+  export let opacity   = 0.725;
 
-  /**
-   * Optional per-node color function. When provided, overrides `color`.
-   * Called with the raw data value at each step:
-   *   colorFn(value: number) → string
-   *
-   * Example — sentiment coloring:
-   *   colorFn={sentimentToColor}
-   */
-  export let colorFn = null;
+  /** Resolve color for a given data value */
+  function resolveColor(val) {
+    return colorFn ? colorFn(parseFloat(val)) : color;
+  }
+
+  /** Diamond polygon points centered on (cx, cy) with half-size s */
+  function diamondPoints(cx, cy, s) {
+    return `${cx},${cy - s} ${cx + s},${cy} ${cx},${cy + s} ${cx - s},${cy}`;
+  }
 </script>
 
 <g class="journey-nodes" pointer-events="none">
@@ -32,26 +34,46 @@
     {@const isSelected = $selectedIndex === i}
     {@const active     = isHovered || isSelected}
     {@const anyActive  = $hoveredIndex >= 0 || $selectedIndex >= 0}
-    {@const nodeColor  = colorFn ? colorFn(parseFloat(d[metricKey])) : color}
+    {@const nodeColor  = resolveColor(d[metricKey])}
+    {@const nodeOpacity = active ? 0.95 : anyActive ? 0.18 : opacity}
+    {@const baseSize   = active ? radius * 1.75 : radius * 1}
 
-    <!-- Inner filled dot -->
-    <circle
-      {cx} {cy}
-      r={active ? radius * 1.75 : radius * 1}
-      fill={nodeColor}
-      opacity={active ? 0.95 : anyActive ? 0.18 : opacity}
-    />
-    <!-- Selected dotted outer ring -->
-    {#if isSelected}
+    {#if d.inflection === 'Y'}
+      <!-- Diamond node for inflection steps -->
+      <polygon
+        points={diamondPoints(cx, cy, baseSize * 1.85)}
+        fill={nodeColor}
+        opacity={nodeOpacity}*1.25
+      />
+      {#if isSelected}
+        <polygon
+          points={diamondPoints(cx, cy, radius + 10)}
+          fill="none"
+          stroke={nodeColor}
+          stroke-width="1"
+          opacity="0.75"
+          stroke-dasharray="2 3"
+        />
+      {/if}
+    {:else}
+      <!-- Standard circle node -->
       <circle
         {cx} {cy}
-        r={radius + 8}
-        fill="none"
-        stroke={nodeColor}
-        stroke-width="1"
-        opacity="0.35"
-        stroke-dasharray="1 3"
+        r={baseSize}
+        fill={nodeColor}
+        opacity={nodeOpacity}
       />
+      {#if isSelected}
+        <circle
+          {cx} {cy}
+          r={radius + 8}
+          fill="none"
+          stroke={nodeColor}
+          stroke-width="1"
+          opacity="0.35"
+          stroke-dasharray="1 3"
+        />
+      {/if}
     {/if}
   {/each}
 </g>
