@@ -89,7 +89,7 @@
     </div>
 
     <!-- Sentiment + Emotion -->
-    <div class="jm-content-row">
+    <div class="jm-content-row-stretch">
 
       <!-- Sentiment -->
       <div class="jm-content-col gap-1">
@@ -100,12 +100,12 @@
           />
           <span class="text-body-sm-uppercase">{sentimentLabel}</span>
         </div>
-        <span class="label-sm">Overall Sentiment</span>
+        <span class="label-xs">Overall Sentiment</span>
       </div>
 
       <!-- Emotion -->
-      <div class="jm-content-col gap-1">
-        <div class="flex items-center gap-2">
+      <div class="flex flex-col gap-1 justify-right">
+        <div class="flex items-center gap-2 justify-right">
           <div class="flex">
             {#each emotionSwatches as color}
               <span class="jm-mini-swatch" style="background:{color}" />
@@ -113,7 +113,7 @@
           </div>
           <span class="text-body-sm-uppercase">{step.plutchik_score}</span>
         </div>
-        <span class="label-sm">Emotion</span>
+        <span class="label-xs">Emotion</span>
       </div>
 
     </div>

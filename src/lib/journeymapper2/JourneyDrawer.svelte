@@ -44,27 +44,12 @@
     role="complementary"
     aria-label={title || 'Detail panel'}
   >
-    <!-- Header -->
-     
-    <div class="header">
-    
-      <div class="header-meta">
-       <!-- Named slot so callers can fully replace the header text region -->
-        <slot name="header-meta" />
-      </div>
 
-      <div class="header-actions">
-        <!-- Optional header-level actions (e.g. nav arrows) -->
-        <slot name="header-actions" />
-        <button class="btn-empty" on:click={close} aria-label="Close panel">
-          <X />
-        </button>
-      </div>
-
-    <!-- Footer -->
-  </div>
   {#if $$slots.footer}
-  <div class="drawer-nav">
+  <div class="drawer-nav pt-2">
+    <button class="btn-sm" on:click={close} aria-label="Close panel">
+      <X />
+    </button>
     <slot name="footer" />
   </div>
 {/if}
@@ -96,27 +81,18 @@
     bottom: 0;
     z-index: 201;
     display: flex;
-    flex-direction: column;
-    background: #FAF9F5;
-    border-left: 5px solid #23ABAB;
+    flex-direction: row;
+    background: #fff;;
+    border-left: 4px solid #161616;
     overflow: hidden;
-  }
-
-  .header-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    flex: 1;
-    min-width: 0;
   }
   /* ── Footer ─────────────────────────────────────────────────── */
   .drawer-nav {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 20px;
-    border-top: 1px solid #DFC3A8;
-    background: #EDE5D8;
-    flex-shrink: 0;
+    flex-direction: column;
+    gap:0;
+    align-items: start;
+    justify-content: start;
+    background-color: #e0e0e0;
   }
 </style>

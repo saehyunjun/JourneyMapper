@@ -256,10 +256,10 @@
         "journey": [
           {
             "stage_id": "1",
-            "stage": "Initial Symptoms",
+            "stage": "Initial Symptoms + Care",
             "step_id": "1",
             "step": "Initial Symptom Onset",
-            "inflection":"Y",
+            "inflection":"N",
             "inflection_pos": 2,
             "inflection_neg": -2,
             "sentiment": 1,
@@ -268,11 +268,12 @@
             "provider_trust": 4,
             "medical_self_efficacy": 2,
             "logistical_capacity": 3,
-            "narrative_description": "Margaret first notices subtle balance changes and fatigue. She is concerned but assumes it may be age-related. She trusts her providers and believes the issue will be manageable."
+            "narrative_description": "Margaret first notices subtle balance changes and fatigue. She is concerned but assumes it may be age-related. She trusts her providers and believes the issue will be manageable.",
+            "quote": "Test"
           },
           {
             "stage_id": "1",
-            "stage": "Initial Symptoms",
+            "stage": "Initial Symptoms + Care",
             "step_id": "2",
             "step": "Mild Symptom Improvement",
             "sentiment": 2,
@@ -284,8 +285,8 @@
             "narrative_description": "When symptoms fluctuate or temporarily improve, Margaret feels reassured. Hope increases and she interprets the instability as something benign or reversible."
           },
           {
-            "stage_id": "2",
-            "stage": "Initial Care",
+            "stage_id": "1",
+            "stage": "Initial Symptoms + Care",
             "step_id": "3",
             "step": "Initial Care",
             "sentiment": 1,
@@ -297,8 +298,8 @@
             "narrative_description": "During early appointments, Margaret struggles to clearly describe her symptoms. She leaves feeling partially heard but uncertain. Trust begins to soften as explanations feel incomplete."
           },
           {
-            "stage_id": "2",
-            "stage": "Initial Care",
+            "stage_id": "1",
+            "stage": "Initial Symptoms + Care",
             "step_id": "4",
             "step": "Continued Regression",
             "sentiment": -1,
@@ -313,8 +314,8 @@
             "narrative_description": "As symptoms continue progressing, Margaret feels discouraged and confused. The lack of clarity lowers her confidence in her own understanding and in the care pathway."
           },
           {
-            "stage_id": "3",
-            "stage": "Neurology",
+            "stage_id": "2",
+            "stage": "Referral to Specialist",
             "step_id": "5",
             "step": "Referral to Neurologist",
             "sentiment": 1,
@@ -326,8 +327,8 @@
             "narrative_description": "The referral to a neurologist restores cautious optimism. Margaret believes expert input may finally provide answers, even though the logistics feel burdensome."
           },
           {
-            "stage_id": "3",
-            "stage": "Neurology",
+            "stage_id": "2",
+            "stage": "Referral to Specialist",
             "step_id": "6",
             "step": "Misdiagnosis",
             "sentiment": -2,
@@ -340,8 +341,8 @@
             "narrative_description": "Receiving an initial but incorrect diagnosis is destabilizing. Margaret feels surprised and unsettled. When treatment does not help, doubt grows—both in the system and in her own interpretation of symptoms."
           },
           {
-            "stage_id": "4",
-            "stage": "Second Opinion",
+            "stage_id": "3",
+            "stage": "Diagnosis",
             "step_id": "7",
             "step": "Second Opinion",
             "sentiment": 1,
@@ -353,7 +354,7 @@
             "narrative_description": "Seeking a second opinion feels proactive. Margaret regains some agency and begins researching more deeply, determined to reach diagnostic clarity."
           },
           {
-            "stage_id": "4",
+            "stage_id": "3",
             "stage": "Diagnosis",
             "step_id": "8",
             "step": "Parkinson's Diagnosis",
@@ -369,8 +370,8 @@
             "narrative_description": "The Parkinson’s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. She feels overwhelmed by the long arc of disease progression."
           },
           {
-            "stage_id": "5",
-            "stage": "Community",
+            "stage_id": "4",
+            "stage": "Self-Education",
             "step_id": "9",
             "step": "Joining Online Communities",
             "sentiment": 2,
@@ -382,8 +383,8 @@
             "narrative_description": "Online communities provide emotional validation and practical insights. Margaret feels less alone and gains confidence in navigating future decisions."
           },
           {
-            "stage_id": "6",
-            "stage": "Trials",
+            "stage_id": "4",
+            "stage": "Self-Education",
             "step_id": "10",
             "step": "Choosing Between Trials",
             "sentiment": 1,

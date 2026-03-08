@@ -59,29 +59,48 @@
   <div class="content-wrap">
 
     <!-- Step name -->
-    <h2 class="step-name">{step.step}</h2>
+    <h2 class="heading">
+      {step.step}
+    </h2>
+    <div class="flex flex-row gap-4 w-full justify-between">
+        <!-- Sentiment bar -->
+        <div class="flex flex-col w-9/12">
+          <span class="label-sm pb-2">
+            Overall Sentiment</span>
+          <div class="label-sm pb-2">
+            <div
+              class="w-4 h-4 ring-1 ring-slate-800 rounded-full"
+              style="background: {sentimentToColor(step.sentiment)};"
+            />
+            <span class="sentiment-value" style="color: {sentimentToColor(step.sentiment)};">
+              {parseFloat(step.sentiment) > 0 ? '+' : ''}{step.sentiment}
+            </span>
+            <span class="label uppercase">{step.plutchik_score}</span>
+          </div>
+        </div>
+    
+        <!-- Emotion tag -->
+        <div class="emotion-section">
+          <span class="label-sm pb-2">
+            Emotional State</span>
+          <div class="plutchik-tag-row">
+            {#each emotionSwatches as color}
+              <span class="w-4 h-4 ring-1 ring-slate-800" style="background: {color};" />
+            {/each}
+            <span class="label uppercase">{step.plutchik_score}</span>
+          </div>
+        </div>
+      </div>
+    <div class="divider" />
 
     <!-- Narrative description -->
     {#if step.narrative_description}
-      <div class="narrative-section">
-        <span class="section-heading">Step Narrative</span>
-        <p class="narrative-text">{step.narrative_description}</p>
+      <div class="jm-content-row">
+        <span class="label-lg">Step Narrative</span>
+        <p class="text-body">{step.narrative_description}</p>
       </div>
     {/if}
 
-    <!-- Sentiment bar -->
-    <div class="sentiment-section">
-      <span class="section-heading">Overall Sentiment</span>
-      <div class="sentiment-bar-track">
-        <div
-          class="sentiment-bar-fill"
-          style="width: {toPercent(step.sentiment)}%; background: {sentimentToColor(step.sentiment)};"
-        />
-        <span class="sentiment-value" style="color: {sentimentToColor(step.sentiment)};">
-          {parseFloat(step.sentiment) > 0 ? '+' : ''}{step.sentiment}
-        </span>
-      </div>
-    </div>
 
     <div class="divider" />
 
@@ -116,16 +135,6 @@
 
     <div class="divider" />
 
-    <!-- Emotion tag -->
-    <div class="emotion-section">
-      <span class="section-heading">Emotional State</span>
-      <div class="plutchik-tag-row">
-        {#each emotionSwatches as color}
-          <span class="dyad-square" style="background: {color};" />
-        {/each}
-        <span class="plutchik-tag">{step.plutchik_score}</span>
-      </div>
-    </div>
     
 
   </div>
@@ -154,16 +163,6 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-  }
-
-  .step-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 15px;
-    font-weight: normal;
-    color: #5A3E28;
-    line-height: 1.5;
-    letter-spacing: 0.02em;
-    margin: 0;
   }
 
   .divider {
@@ -200,7 +199,7 @@
   .sentiment-bar-track {
     position: relative;
     height: 6px;
-    background: #EDE5D8;
+    background: #919191;
     border-radius: 3px;
     overflow: visible;
     display: flex;

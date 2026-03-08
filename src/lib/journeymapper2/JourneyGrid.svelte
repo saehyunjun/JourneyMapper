@@ -129,6 +129,6 @@
 <style>
   .journey-svg {
     display: block;
-    background: #f3f3f3;
+    background: #fff;
   }
 </style>

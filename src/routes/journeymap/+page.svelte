@@ -16,6 +16,8 @@
   import { STEP_WIDTH, LEFT_AXIS_WIDTH, valueToY } from '$lib/journeymapper2/journeyConfig.js';
   import { selectedIndex, zoomedIndex } from '$lib/journeymapper2/journeyStore.js';
 
+  import CaretRight from "phosphor-icons-svelte/IconCaretRightRegular.svelte";
+  import CaretLeft from "phosphor-icons-svelte/IconCaretLeftRegular.svelte";
 
   import PolarChart from '$lib/journeymapper2/PolarChart.svelte';
   import personaFile from '$lib/journeymapper2/journeyPersonas.json';
@@ -123,7 +125,7 @@
   
 </script>
 
-<div class="journey-wrapper">
+<div class="journey-wrapper overflow-x-scroll">
 
   <!-- ── Nav bar ──────────────────────────────────────────────────────── -->
   <div class="title-bar flex flex-row min-w-full">
@@ -204,12 +206,12 @@
   <svelte:fragment slot="footer">
     {#if drawerMode === 'step'}
       <button
-        class="btn-fill"
+        class="btn-fill"  
         disabled={$selectedIndex <= 0}
         on:click={() => selectedIndex.update(i => i - 1)}
         aria-label="Previous step"
       >
-        Prev
+      <CaretLeft />
       </button>
       <div class="step-dots">
         {#each journeyData as _, i}
@@ -225,26 +227,22 @@
         class="btn-fill"
         disabled={$selectedIndex >= journeyData.length - 1}
         on:click={() => selectedIndex.update(i => i + 1)}
-        aria-label="Next step"
-      >
-        Next
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        aria-label="Next step">
+      <CaretRight />
       </button>
 
     {:else if drawerMode === 'plutchik'}
       <span class="cite">
         Plutchik, R. (1980). <em>Emotion: A Psychoevolutionary Synthesis.</em> Harper & Row.
       </span>
-      <button class="close-btn" on:click={handleDrawerClose}>Close</button>
+      <button class="btn-sm" on:click={handleDrawerClose}>Close</button>
 
     {:else if drawerMode === 'persona'}
       <span class="persona-footer-note">
         {activePersona.journey.length} steps ·
         {[...new Set(activePersona.journey.map(d => d.stage_id))].length} stages
       </span>
-      <button class="close-btn" on:click={handleDrawerClose}>Close</button>
+      <button class="btn-sm" on:click={handleDrawerClose}>Close</button>
     {/if}
   </svelte:fragment>
 </JourneyDrawer>
@@ -253,7 +251,8 @@
 <style>
 .shared-scroll {
   position:relative;
-  overflow-x: auto;
+  overflow-x: scroll;
+  height: 100px;
   padding: 1em 0em 2em 0em;
 }
 

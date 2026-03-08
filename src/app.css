@@ -17,8 +17,9 @@
 
   /* Core palette */
   --ink: #312F28;
+  --gray: #919191;
   --paper: #FFFFF0;
-  --panel: #f0eee6;
+  --panel: #e8e8e8;
   --card: #ede5d8;
 
   /* Brand / accents */
@@ -275,12 +276,11 @@
   .btn-fill {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
     padding: 0.525em .325em 0.525em 1em ;
-    font-weight: 800;
+    font-weight: 500;
     text-transform: uppercase;
-    background-color: #312F28;
-    color:#e8e5de;
+    background-color: #f45d5d;
+    color:#FFFFF0;
     font-size: .825em;
     cursor: pointer;
   }
@@ -297,9 +297,25 @@
     cursor: pointer;
   }
 
-  .btn-fill:hover, .btn-empty:hover { 
+  .btn-fill:hover, .btn-empty:hover, .btn-sm:hover { 
     background-color: #23abab;
+    color: #e8e5de;
 }
+
+  .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25em;
+    font-weight: 800;
+    text-transform: uppercase;
+    background-color: #FFFFF0;
+    border: 1px solid #73726c;
+    color:#161616;
+    font-size: .625em;
+    border-radius: 10px;
+    cursor: pointer;
+  }
 
   .card {
     background: var(--card);
@@ -317,7 +333,7 @@
     cursor: pointer;
   }
   
-.card-lg:hover {
+.card-lg:ho er {
     background-color: bisque;
   }
 
@@ -357,15 +373,15 @@
 
   .pill {
     font-family: var(--font-body);
-    font-size: 0.725em;
-    font-weight: 800;
+    font-size: 0.625em;
+    font-weight: 600;
     text-transform: uppercase;
-    color: #312F28; 
-    border: 1px solid #312F28;
+    color: var(--font--gray);
+    background-color: #9898c8;
     border-radius: 20px;
     align-items: center;
     justify-content: center;
-    padding: 0.45em ;
+    padding: .625em .5em .625em .5em;
   }
 
   .pill-sm {
@@ -492,6 +508,15 @@
     height: 1em;
     border: 2px solid #1a1a1a;
     display: inline-block;
+  }
+
+  .label-xs {
+    font-size: .5em;
+    font-weight: 800;
+    color: var(--gray);
+    font-family: var(--font-heading);
+    text-align: start;
+    text-transform: uppercase;
   }
 
   .label-sm {

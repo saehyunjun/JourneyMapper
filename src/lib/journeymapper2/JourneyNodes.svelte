@@ -8,7 +8,7 @@
   export let color     = '#ffffff';
   /** Optional per-value color function (val: number) => string */
   export let colorFn   = null;
-  export let radius    = 4;
+  export let radius    = 6;
   /** Optional per-step Y offsets (pixels) to separate coincident nodes */
   export let offsets   = [];
   /** Resting opacity for non-active nodes */
@@ -43,7 +43,7 @@
       <polygon
         points={diamondPoints(cx, cy, baseSize * 1.85)}
         fill={nodeColor}
-        opacity={nodeOpacity}*1.25
+        opacity={nodeOpacity}
       />
       {#if isSelected}
         <polygon

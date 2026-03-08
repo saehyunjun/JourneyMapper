@@ -25,6 +25,21 @@
   <!-- ── HERO ───────────────────────────── -->
   <div class="jm-hero">
 
+    <div class="jm-content-col">
+      <span class="label-xs">{persona.profile.role}</span>
+      <span class="heading">{persona.profile.name}</span>
+    </div>
+
+    <div class="flex flex-col gap-2">
+
+      <div class="flex flex-wrap gap-2">
+        <span class="pill">{persona.profile.gender}</span>
+        <span class="pill">{persona.profile.age} yrs</span>
+        <span class="pill">{persona.profile.occupation}</span>
+      </div>
+
+    </div>
+
     <div class="photo-lg">
       {#if !imgError}
         <img
@@ -40,21 +55,7 @@
       {/if}
     </div>
 
-    <div class="flex flex-col gap-2">
-
-      <div class="jm-content-col">
-        <span class="label-sm">{persona.profile.role}</span>
-        <span class="heading-sm">{persona.profile.name}</span>
-      </div>
-
-      <div class="flex flex-wrap gap-2">
-        <span class="pill">{persona.profile.gender}</span>
-        <span class="pill">{persona.profile.age} yrs</span>
-        <span class="pill">{persona.profile.occupation}</span>
-      </div>
-
-    </div>
-
+ 
   </div>
 
 
@@ -68,7 +69,7 @@
     ] as [k,v]}
 
       <div class="jm-content-col">
-        <span class="label-sm">{k}</span>
+        <span class="text-body-sm">{k}</span>
         <span class="text-body-sm">{v}</span>
       </div>
 
@@ -79,8 +80,6 @@
 
   <!-- ── CURRENT STATE ───────────────────── -->
   {#if persona.currentState?.length}
-
-    <div class="divider"></div>
 
     <div class="jm-section-bar">
       <span class="heading-xs">Current State</span>
@@ -122,8 +121,6 @@
   <!-- ── DISCUSSION THEMES ───────────────── -->
   {#if persona.discussionThemes?.length}
 
-    <div class="divider"></div>
-
     <div class="jm-section-bar">
       <span class="heading-xs">Key Discussion Themes</span>
     </div>
@@ -156,24 +153,24 @@
 
       <div class="flex gap-3 text-body-sm">
 
-        <span class="flex items-center gap-1">
-          <span class="w-3 h-3" style="background:#7A1A1A"></span>
+        <span class="flex items-baseline gap-1 label-sm">
+          <span class="w-2 h-2" style="background:#7A1A1A"></span>
           Very Negative
         </span>
 
-        <span class="flex items-center gap-1">
-          <span class="w-3 h-3" style="background:#C8A84A"></span>
+        <span class="flex items-baseline gap-1 label-sm">
+          <span class="w-2 h-2" style="background:#C8A84A"></span>
           Neutral
         </span>
 
-        <span class="flex items-center gap-1">
-          <span class="w-3 h-3" style="background:#2E7D32"></span>
+        <span class="flex items-baseline gap-1 label-sm">
+          <span class="w-2 h-2" style="background:#2E7D32"></span>
           Very Positive
         </span>
 
       </div>
 
-    </div>
+    </div> 
 
   {/if}
 
