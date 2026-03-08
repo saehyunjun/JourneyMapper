@@ -1,6 +1,8 @@
 <script>
     import { PLUTCHIK_EMOTIONS } from './journeyConfig.js';
-  
+    import ArrowsOutVertical from 'phosphor-icons-svelte/IconArrowsOutLineVerticalRegular.svelte'; 
+    import Smiley from 'phosphor-icons-svelte/IconSmileyRegular.svelte';
+    import Question from 'phosphor-icons-svelte/IconQuestionRegular.svelte';
     /** @type {any} */
     export let data = null;
   
@@ -13,8 +15,8 @@
     $: sponsorActions = /** @type {any[]} */ (data?.sponsor_actions ?? []);
   
     const CX = 240, CY = 240;
-    const RING_INNER = 145;
-    const RING_OUTER = 190;
+    const RING_INNER = 120;
+    const RING_OUTER = 140;
   
     const PHASES = [
       { label: 'BEFORE', startDeg: 210, endDeg: 330 },
@@ -121,11 +123,18 @@
   </script>
   
   <div class="wheel-wrap">
-    <div class="wheel-legend">
-      <div class="legend-item"><span class="icon-smiley">☺</span><span>Positive design opportunity</span></div>
-      <div class="legend-item"><span class="icon-mob">◀</span><span>Make-or-break moment</span></div>
-      <div class="legend-item"><span class="icon-info">ⓘ</span><span>Data needed</span></div>
+    <div class="spacer-sm" />
+    <div class="jm-content-grid-3">
+      <div class="legend-item"><Smiley />
+        <span class="label-sm">Positive design opportunity</span></div>
+      
+        <div class="legend-item"><ArrowsOutVertical />
+          <span class="label-sm">Make-or-break moment</span></div>
+      <div class="legend-item">
+        <Question />
+        <span class="label-sm">Information gaps</span></div>
     </div>
+    <div class="divider" />
   
     <div class="wheel-svg-wrap">
       <svg viewBox="0 0 480 480" width="100%" class="wheel-svg" overflow="visible">
@@ -134,7 +143,7 @@
             d={phaseArcFill(RING_INNER, RING_OUTER, phase.startDeg, phase.endDeg)}
             fill={PHASE_COLORS[pi]}
             opacity="0.7"
-            stroke="#DFC3A8"
+            stroke="#fff"
             stroke-width="0.5"
           />
         {/each}
@@ -227,14 +236,14 @@
           class="tp-tooltip tp-tooltip--floating"
           style="left: {tooltipPos.x}px; top: {tooltipPos.y}px;"
         >
-          <div class="tooltip-moment">{tp.moment}</div>
-          <div class="tooltip-type">{tp.type.replace(/_/g, ' ')}</div>
+          <div class="pill-sm w-fit">{tp.type.replace(/_/g, ' ')}</div>
+          <div class="label">{tp.moment}</div>
           <div class="tooltip-divider"></div>
   
           {#if tp.positive_design_opportunity}
             <div class="tooltip-row">
               <span class="tooltip-icon smiley">☺</span>
-              <span class="tooltip-text">{tp.positive_design_opportunity}</span>
+              <span class="text-body">{tp.positive_design_opportunity}</span>
             </div>
           {/if}
   
@@ -247,7 +256,7 @@
   
           {#if tp.make_or_break}
             <div class="tooltip-mob">
-              <span class="tooltip-icon mob">◀</span>
+              <ArrowsOutVertical />
               <span>Make-or-break moment</span>
             </div>
           {/if}
@@ -256,26 +265,26 @@
     </div>
   
     <div class="bottom-panels">
-      <div class="panel">
-        <div class="panel-heading">Inflection Analysis</div>
-        <div class="panel-row">
-          <span class="panel-key">Risk level</span>
-          <span class="risk-badge risk-{inflection.risk_level}">{inflection.risk_level}</span>
+      <div class="jm-content-col gap-4">
+        <div class="label-lg">Inflection Analysis</div>
+        <div class="jm-content-row">
+          <span class="label-sm">Risk level</span>
+          <span class="label risk-badge risk-{inflection.risk_level}">{inflection.risk_level}</span>
         </div>
         <div class="panel-row">
-          <span class="panel-key">Dropout risk</span>
-          <span class="panel-val">{inflection.dropout_risk}</span>
+          <span class="label-sm">Dropout risk</span>
+          <span class="label capitalize">{inflection.dropout_risk}</span>
         </div>
         <div class="panel-row panel-row--col">
-          <span class="panel-key">Trial perception</span>
-          <span class="panel-val small">{inflection.trial_perception_shift?.replace(/_/g, ' ')}</span>
+          <span class="label-sm">Trial perception</span>
+          <span class="text-body">{inflection.trial_perception_shift?.replace(/_/g, ' ')}</span>
         </div>
         {#if inflection.sponsor_opportunity_category?.length}
           <div class="panel-row panel-row--col">
             <span class="panel-key">Opportunities</span>
             <div class="tag-list">
               {#each inflection.sponsor_opportunity_category as cat}
-                <span class="tag">{cat.replace(/_/g, ' ')}</span>
+                <span class="text-body">{cat.replace(/_/g, ' ')}</span>
               {/each}
             </div>
           </div>
@@ -296,10 +305,10 @@
   </div>
   
   <style>
-    .wheel-wrap { display: flex; flex-direction: column; background: #F4EFE5; font-family: 'DM Sans', sans-serif; }
+    .wheel-wrap { display: flex; flex-direction: column; overflow-y: scroll;}
   
     .wheel-legend { display: flex; flex-wrap: wrap; gap: 12px; padding: 10px 16px; background: #F4EFE5; border-bottom: 1px solid #EDE5D8; }
-    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 1em; color: #8A6A4A; }
+    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 1em; color: #161616; }
     .icon-smiley { color: #4a9e7f; font-size: 13px; }
     .icon-mob    { color: #C4956A; font-size: 11px; }
     .icon-info   { color: #3a7fc1; font-size: 11px; }
@@ -312,9 +321,9 @@
       position: relative; /* required for absolute tooltip positioning */
       gap: 12px;
     }
-    .wheel-svg { display: block; overflow: visible; max-width: 360px; }
+    .wheel-svg { display: block; overflow: visible; max-width: 600px; }
   
-    :global(.phase-label)        { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.1em; fill: #8A6A4A; }
+    :global(.phase-label)        { font-family: 'IBM Plex Sans', monospace; font-size: 5px; font-weight: 700; letter-spacing: 0.1em; fill: #8A6A4A; }
     :global(.node-icon)          { font-size: 8px; fill: #F4EFE5; font-weight: bold; }
     :global(.data-icon)          { font-size: 7px; fill: #3a7fc1; }
     :global(.center-step)        { font-family: 'Space Mono', monospace; font-size: 8.5px; fill: #5A3E28; font-weight: 700; }
@@ -355,7 +364,7 @@
     .tooltip-icon.info   { color: #3a7fc1; }
     .tooltip-icon.mob    { color: #C4956A; }
     .tooltip-text   { font-size: 1em; color: #7A5A3A; line-height: 1.1; }
-    .tooltip-mob    { display: flex; gap: 5px; align-items: center; font-size: 8.5px; color: #C4956A; font-family: 'Space Mono', monospace; font-weight: 700; }
+    .tooltip-mob    { display: flex; gap: 5px; align-items: center; font-size: 10.5px; color: #161616; font-family: 'IBM Plex Sans', monospace; font-weight: 500; }
   
     .bottom-panels { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #DFC3A8; }
     .panel { padding: 12px 14px; display: flex; flex-direction: column; gap: 7px; border-right: 1px solid #DFC3A8; }

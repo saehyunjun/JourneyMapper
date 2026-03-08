@@ -204,7 +204,7 @@
   <svelte:fragment slot="footer">
     {#if drawerMode === 'step'}
       <button
-        class="nav-btn"
+        class="btn-fill"
         disabled={$selectedIndex <= 0}
         on:click={() => selectedIndex.update(i => i - 1)}
         aria-label="Previous step"
@@ -222,7 +222,7 @@
         {/each}
       </div>
       <button
-        class="nav-btn"
+        class="btn-fill"
         disabled={$selectedIndex >= journeyData.length - 1}
         on:click={() => selectedIndex.update(i => i + 1)}
         aria-label="Next step"
@@ -248,13 +248,6 @@
     {/if}
   </svelte:fragment>
 </JourneyDrawer>
-<button
-class="nav-btn"
-class:plutchik-btn--active={drawerMode === 'plutchik'}
-on:click={() => { drawerMode = drawerMode === 'plutchik' ? null : 'plutchik'; selectedIndex.set(-1); }}
->
-About Plutchik
-</button>
 
 
 <style>

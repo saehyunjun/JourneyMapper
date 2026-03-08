@@ -1,6 +1,6 @@
 <script>
   import { hoveredIndex } from './journeyStore.js';
-  import { ratingToLabel, emotionColor, emotionTextColor, plutchikScoreToColor, sentimentToColor } from './journeyConfig.js';
+  import { ratingToLabel, emotionColor, emotionTextColor, plutchikScoreToColor, DYAD_BY_ID, SCORE_ALIASES } from './journeyConfig.js';
 
   export let data    = [];
   export let metrics = [];
@@ -23,15 +23,41 @@
   // ── Sentiment label and color ──────────────────────────────────────────────
   $: sentimentVal   = step ? parseFloat(step.sentiment) : 0;
   $: sentimentLabel = step ? ratingToLabel(step.sentiment) : '';
-  $: sentimentColor = step ? sentimentToColor(step.sentiment) : '#BFA080';
+  $: sentimentColor = step ? (() => {
+      const n = Math.max(-5, Math.min(5, sentimentVal));
+      const t = (n + 5) / 10;
+      let r, g, b;
+      if (t < 0.5) {
+        const u = t / 0.5;
+        r = Math.round(192 + (212 - 192) * u);
+        g = Math.round(57  + (138 - 57)  * u);
+        b = Math.round(43  + (27  - 43)  * u);
+      } else {
+        const u = (t - 0.5) / 0.5;
+        r = Math.round(212 + (39  - 212) * u);
+        g = Math.round(138 + (174 - 138) * u);
+        b = Math.round(27  + (96  - 27)  * u);
+      }
+      return `rgb(${r},${g},${b})`;
+    })() : '#BFA080';
 
-  // ── Plutchik score color ───────────────────────────────────────────────────
-  $: plutchikBg      = step ? plutchikScoreToColor(step.plutchik_score) : '#BFA080';
-  $: plutchikTextCol = step ? emotionTextColor(step.plutchik_score) : '#5A3E28';
+  // ── Plutchik dyad squares ──────────────────────────────────────────────────
+  // Same priority logic as StepDetailContent: check DYAD_BY_ID first on the
+  // raw label, then fall back to SCORE_ALIASES for intensity variants.
+  $: emotionSwatches = (() => {
+    if (!step) return [];
+    const raw  = step.plutchik_score?.toLowerCase().trim() ?? '';
+    const dyad = DYAD_BY_ID[raw];
+    if (dyad) {
+      return dyad.primary.map(pid => emotionColor(pid));
+    }
+    const id = SCORE_ALIASES[raw] ?? raw;
+    return [emotionColor(id)];
+  })();
 
   // ── Tooltip dimensions (must match CSS below) ──────────────────────────────
-  const TIP_W = 375;
-  const TIP_H = 40 + metrics.length * 28 + 60; // extra for sentiment + plutchik rows
+  const TIP_W    = 375;
+  const TIP_H    = 40 + metrics.length * 28 + 60;
   const OFFSET_X = 14;
   const OFFSET_Y = 12;
 
@@ -50,141 +76,94 @@
 
 {#if step}
   <div
-    class="tooltip flex flex-col"
+    class="tooltip jm-surface flex flex-col gap-2"
     style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px;"
     role="tooltip"
     aria-live="polite"
   >
 
-    <!-- Sentiment + Plutchik row -->
-    <div class="tip-summary">
-      <div class="tip-summary-item">
-        <span class="text-2xs text-slate-500 font-semibold uppercase">Overall Sentiment</span>
-        <div class="flex flex-row gap-2 align-middle items-baseline">
-          <div
-            class="w-2 h-2 ring-1 ring-slate-900"
-            style="background: {sentimentColor};"
-          />
-          <span class="text-xs text-slate-600">
-            {sentimentLabel}
-          </span>
-        </div>
-      </div>
-
-      <div class="" />
-
-      <div class="tip-summary-item tip-summary-item--plutchik">
-        <span class="text-2xs text-slate-500 font-semibold uppercase">
-          Emotion
-        </span>
-        <div class="flex flex-row gap-2 align-middle items-baseline">
-          <div
-            class="w-2 h-2 rounded-full ring-1 ring-slate-900"
-            style="background: {plutchikBg};"
-          />
-          <span class="text-xs text-slate-800 capitalize">
-            {step.plutchik_score}
-          </span>
-        </div>
-      </div>
+    <!-- Header -->
+    <div class="jm-section-bar">
+      <p class="label-lg">{step.step}</p>
+      <span class="pill-sm">{step.stage}</span>
     </div>
 
-    <!-- Header: stage + step name -->
-    <div class="tip-header flex flex-col w-full align-center justify-center py-2 gap-1">
-      <p class="tip-stage flex text-2xs uppercase justify-center">{step.stage}</p>
-      <p class="tip-step flex justify-center w-full text-lg font-medium leading-none">{step.step}</p>
+    <!-- Sentiment + Emotion -->
+    <div class="jm-content-row">
+
+      <!-- Sentiment -->
+      <div class="jm-content-col gap-1">
+        <div class="flex items-center gap-2">
+          <span
+            class="tip-dot"
+            style="background:{sentimentColor}"
+          />
+          <span class="text-body-sm-uppercase">{sentimentLabel}</span>
+        </div>
+        <span class="label-sm">Overall Sentiment</span>
+      </div>
+
+      <!-- Emotion -->
+      <div class="jm-content-col gap-1">
+        <div class="flex items-center gap-2">
+          <div class="flex">
+            {#each emotionSwatches as color}
+              <span class="jm-mini-swatch" style="background:{color}" />
+            {/each}
+          </div>
+          <span class="text-body-sm-uppercase">{step.plutchik_score}</span>
+        </div>
+        <span class="label-sm">Emotion</span>
+      </div>
+
     </div>
 
-    <!-- Metric rows -->
-    <div class="tip-metrics">
+    <!-- Metrics -->
+    <div class="jm-metrics">
       {#each metrics as m}
-        <div class="tip-row">
-          <span class="tip-dot" style="background: {m.color};" />
-          <span class="tip-label">{m.label}</span>
-          <span class="tip-value">{ratingToLabel(step[m.key])}</span>
+        <div class="jm-metric-row">
+
+          <span
+            class="jm-mini-swatch"
+            style="background:{m.color}"
+          />
+
+          <span class="label-sm">{m.label}</span>
+          <span class="text-body-sm">
+            {ratingToLabel(step[m.key])}
+          </span>
+
         </div>
       {/each}
     </div>
 
   </div>
 {/if}
-
 <style>
-  .tooltip {
-    position: fixed;
-    pointer-events: none;
-    z-index: 300;
-    background: #F4EFE5;
-    border: 1px solid #DFC3A8;
-    border-radius: 4px;
-    padding: 10px 12px 12px;
-    box-shadow: 0 4px 16px rgba(160, 100, 60, 0.14);
-    transition: left 60ms linear, top 60ms linear;
-  }
+.tooltip {
+  position: fixed;
+  pointer-events: none;
+  z-index: 300;
 
-  /* ── Header ──────────────────────────────────────────────────── */
-  .tip-header {
-    border-bottom: #5A3E28 .5px dotted;
-    justify-content: center;
-    align-content: center;
-  }
+  padding: 10px 12px 12px;
+  border-radius: 4px;
 
-  /* ── Sentiment + Plutchik summary band ──────────────────────── */
-  .tip-summary {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 0 8px;
-    border-bottom: 1px solid #EDE5D8;
-  }
+  transition: left 60ms linear, top 60ms linear;
+}
 
-  .tip-summary-item {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    flex: 1;
-  }
+/* Sentiment dot */
+.tip-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,.5);
+  flex-shrink: 0;
+}
 
-  .tip-summary-divider {
-    width: 1px;
-    height: 36px;
-    background: #DFC3A8;
-    flex-shrink: 0;
-  }
-
-  /* ── Metric rows ─────────────────────────────────────────────── */
-  .tip-metrics {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding-top: 8px;
-  }
-
-  .tip-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .tip-dot {
-    width: .25em;
-    height: .725em;
-    border-radius: 2em;
-    flex-shrink: 0;
-    opacity: 0.9;
-  }
-
-  .tip-label {
-    font-size: .825em;
-    color: #7A5A3A;
-    flex: 1;
-  }
-
-  .tip-value {
-    font-size: .825em;
-    color: #5A3E28;
-    font-weight: 500;
-    text-align: right;
-    white-space: nowrap;
-  }
+/* Emotion swatches */
+.emotion-square {
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(0,0,0,.25);
+}
 </style>

@@ -12,12 +12,12 @@
   </script>
   
   <button
-    class="flex flex-row justify-stretch bg-slate-100 saturate-50 hover:saturate-100 hover:text-shadow-blue-800 duration-300 rounded-sm"
+    class="flex flex-row justify-stretch  saturate-80 hover:saturate-100 hover:text-shadow-blue-800 duration-300 cursor-pointer rounded-sm"
     on:click={onClick}
     aria-label="Open {personaProfile.name} persona profile"
   >
       <!-- Photo / fallback initials -->
-      <div class="photo-lg rounded-l-sm">
+      <div class="photo-sm rounded-l-sm">
         {#if !imgError}
           <img
             src="/assets/profiles/{personaProfile.imageFile}"
@@ -29,7 +29,9 @@
         {/if}
       </div>
       <div class="jm-content-col pl-4">
-        <span class="text-blue-300 font-medium text-2xl">{personaProfile.name}</span>
-      <span class="pill bg-blue-300">{personaProfile.role}</span>
+        <span class="heading">{personaProfile.name}</span>
+      <span class="pill-sm">
+        {personaProfile.role}
+      </span>
     </div>
   </button>
