@@ -141,9 +141,6 @@
     </div>
 
 <div class="journey-main">
-  <!-- ── Persona Profile Card (extracted component) ──────────────── -->
-  
-
 
       <!-- ── Chart area ──────────────────────────────────────────────── -->
       <div class="journey-index">

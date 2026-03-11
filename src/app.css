@@ -805,7 +805,7 @@
   width: 240px;
   height: 300px;
 
-  border-radius: 16px;
+  border-radius: 24px;
   overflow: hidden;
 
   perspective: 1200px;
@@ -831,7 +831,7 @@
   position: absolute;
   inset: 0;
 
-  border-radius: 16px;
+  border-radius: 24px;
   overflow: hidden;
 
   backface-visibility: hidden;
