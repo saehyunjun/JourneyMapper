@@ -285,6 +285,30 @@
     cursor: pointer;
   }
 
+    /* ── CTA button ───────────────────────────────────────────────────── */
+    .open-btn {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 100px;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      background: var(--card);
+      font-family: var(--font-heading);
+      font-size: 0.6725rem;
+      font-weight: 600;
+      text-transform: capitalize;
+      letter-spacing: 0.06em;
+      color: var(--text, #1a1a1a);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      margin-top: auto;
+    }
+  
+    .open-btn:hover {
+      background: rgba(64, 115, 255, 0.425);
+      border-color: rgba(64, 115, 255, 0.725);
+    }
+  
+
   .btn-empty {
     display: inline-flex;
     align-items: center;

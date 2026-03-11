@@ -99,7 +99,7 @@
         </div>
 
         <button class="open-btn" on:click={openDetails}>
-          View Full Persona
+          Click for More About {personaProfile.name}
         </button>
 
       </div>
@@ -321,29 +321,6 @@
     width: 14px;
     text-align: right;
     flex-shrink: 0;
-  }
-
-  /* ── CTA button ───────────────────────────────────────────────────── */
-  .open-btn {
-    width: 100%;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1.5px solid rgba(0, 0, 0, 0.14);
-    background: transparent;
-    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text, #1a1a1a);
-    cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
-    margin-top: auto;
-  }
-
-  .open-btn:hover {
-    background: rgba(0, 0, 0, 0.06);
-    border-color: rgba(0, 0, 0, 0.22);
   }
 
   /* ── Pills ────────────────────────────────────────────────────────── */

@@ -10,7 +10,9 @@
   import StepDetailContent    from '$lib/journeymapper2/StepDetailContent.svelte';
   import PlutchikContent      from '$lib/journeymapper2/PlutchikContent.svelte';
   import PersonaDetailContent from '$lib/journeymapper2/PersonaDetailContent.svelte';
-  import PersonaProfileCard   from '$lib/journeymapper2/PersonaProfileCard.svelte';
+  import PersonaProfileCard from '$lib/journeymapper2/PersonaProfileCard.svelte';
+  import PersonaCardStack from '$lib/journeymapper2/PersonaCardStack.svelte';
+
   import { STEP_WIDTH, LEFT_AXIS_WIDTH, valueToY } from '$lib/journeymapper2/journeyConfig.js';
   import { selectedIndex } from '$lib/journeymapper2/journeyStore.js';
 
@@ -82,10 +84,11 @@
   $: timelineActive = $selectedIndex >= 0 || drawerOpen;
 
   // Auto-open step drawer when a step is selected
-  $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
-  function handlePersonaSelect(event) {
-    switchPersona(event.detail.id);
-  }
+  function handlePersonaSelect(e) {
+  activePersonaId = e.detail.id;
+  selectedIndex.set(-1); // reset selected step when switching personas
+}
+
 
   /** @param {string} id */
   function switchPersona(id) {
@@ -133,11 +136,13 @@
   <!-- ── Body row: sidebar + main content ─────────────────────────────── -->
   <div class="journey-body">
 
-    <div class = "flex flex-row h-full pt-10">
-      <PersonaProfileCard
-      {personaProfile}
-      onOpenDetails={openPersonaDrawer}
-    />
+    <div class="flex flex-row h-full pt-10">
+      <PersonaCardStack
+        {personas}
+        {activePersonaId}
+        onOpenDetails={openPersonaDrawer}
+        on:select={handlePersonaSelect}
+      />
     </div>
 
 <div class="journey-main">
