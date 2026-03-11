@@ -1,37 +1,91 @@
 <script>
-    /** @type {Record<string, any>} */
-    export let personaProfile = {};
-  
-    /** @type {boolean} */
-    export let isOpen = false;
-  
-    /** @type {() => void} */
-    export let onClick = () => {};
-  
-    let imgError = false;
-  </script>
-  
-  <button
-    class="flex flex-row justify-stretch  saturate-80 hover:saturate-100 hover:text-shadow-blue-800 duration-300 cursor-pointer rounded-sm"
-    on:click={onClick}
-    aria-label="Open {personaProfile.name} persona profile"
-  >
-      <!-- Photo / fallback initials -->
-      <div class="photo-sm rounded-l-sm">
-        {#if !imgError}
-          <img
-            src="/assets/profiles/{personaProfile.imageFile}"
-            alt={personaProfile.name}
-            on:error={() => (imgError = true)}
-          />
-        {:else}
-          <div class="label-uppercase">{personaProfile.initials}</div>
-        {/if}
+  export let personaProfile = {};
+  export let onOpenDetails = () => {};
+
+  let flipped = false;
+  let imgError = false;
+
+  function flip() {
+    flipped = !flipped;
+  }
+
+  function openDetails(e) {
+    e.stopPropagation();
+    onOpenDetails();
+  }
+</script>
+
+<div class="persona-card" on:click={flip}>
+
+  <div class="persona-card-inner" class:flipped={flipped}>
+
+    <!-- FRONT -->
+    <div class="persona-card-face persona-card-front">
+
+      {#if !imgError}
+        <img
+          class="persona-card-img"
+          src="/assets/profiles/{personaProfile.imageFile}"
+          alt={personaProfile.name}
+          on:error={() => (imgError = true)}
+        />
+      {:else}
+        <div class="persona-card-fallback">
+          {personaProfile.initials}
+        </div>
+      {/if}
+
+      <div class="persona-card-overlay">
+        <span class="persona-card-title">
+          {personaProfile.name}
+        </span>
       </div>
-      <div class="jm-content-col pl-4">
-        <span class="heading">{personaProfile.name}</span>
-      <span class="pill-sm">
-        {personaProfile.role}
-      </span>
+
+      <div class="persona-card-overlay-pill">
+        <span class="pill-white">
+          {personaProfile.role}
+        </span>
+      </div>
+
     </div>
-  </button>
+
+
+    <!-- BACK -->
+    <div class="persona-card-face persona-card-back">
+
+      <div class="persona-back-content">
+
+        <div class="persona-back-header">
+          <span class="persona-back-name">
+            {personaProfile.name}
+          </span>
+        </div>
+
+        <div class="persona-back-metrics">
+          <div class="metric">
+            <span class="label-uppercase">Medical Understanding</span>
+            <span>{personaProfile.medicalUnderstanding}/10</span>
+          </div>
+
+          <div class="metric">
+            <span class="label-uppercase">Trust</span>
+            <span>{personaProfile.trust}/10</span>
+          </div>
+
+          <div class="metric">
+            <span class="label-uppercase">Logistical Capacity</span>
+            <span>{personaProfile.logisticalCapacity}/10</span>
+          </div>
+        </div>
+
+        <button class="btn-sm persona-open-btn" on:click={openDetails}>
+          View Full Persona
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

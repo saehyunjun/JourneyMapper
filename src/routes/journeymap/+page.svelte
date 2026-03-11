@@ -133,19 +133,15 @@
   <!-- ── Body row: sidebar + main content ─────────────────────────────── -->
   <div class="journey-body">
 
-    <!-- LEFT: Persona selector sidebar -->
+    <div class = "flex flex-row h-full pt-10">
+      <PersonaProfileCard
+      {personaProfile}
+      onOpenDetails={openPersonaDrawer}
+    />
+    </div>
 
-
-<!-- RIGHT: main content column -->
 <div class="journey-main">
   <!-- ── Persona Profile Card (extracted component) ──────────────── -->
-  <div class = "flex flex-row">
-  <PersonaProfileCard
-    {personaProfile}
-    isOpen={drawerMode === 'persona'}
-    onClick={openPersonaDrawer}
-  />
-  </div>
   
 
 

@@ -20,7 +20,7 @@
   --gray: #919191;
   --paper: #FFFFF0;
   --panel: #e8e8e8;
-  --card: #ede5d8;
+  --card: #d8deed;
 
   /* Brand / accents */
   --teal: #23abab;
@@ -320,27 +320,29 @@
   .card {
     background: var(--card);
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    width: 15vw;
     align-items: center;
     cursor: pointer;
     gap: 1em;
+    border: 1px solid #9898c8;
+    border-radius: 20px;
   }
 
   .card-lg {
     display: flex; 
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     cursor: pointer;
   }
   
-.card-lg:ho er {
-    background-color: bisque;
+.card:hover {
+    border: 1px solid #274290;
   }
 
  .photo-sm {
     flex-shrink: 0;
-    width: 5em;
-    height: 5em;
+    width: 10em;
     overflow: hidden;
     background: #e8e5de;
     display: flex;
@@ -370,6 +372,11 @@
     justify-content: center;
   }
 
+  .photo-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .pill {
     font-family: var(--font-body);
@@ -384,17 +391,18 @@
     padding: .625em .5em .625em .5em;
   }
 
-  .pill-sm {
+  .pill-white {
     font-family: var(--font-body);
-    font-size: 0.625em;
+    font-size: 0.7425em;
     font-weight: 400;
     text-transform: uppercase;
-    color: #312F28; 
-    border: .5px solid #312F28;
+    color: var(--paper); 
+    border: 1px solid #e8e5de;
     border-radius: 20px;
     align-items: center;
     justify-content: center;
     padding: .25em .425em .25em .425em;
+    mix-blend-mode: exclusion;
   }
 
   /* ---------------------------------------------------------------------- */
@@ -787,3 +795,165 @@
     min-height: 1em;
     width: 100%;
   }
+
+  /* -------------------------------------------------------------------------- */
+/* PERSONA CARD                                                               */
+/* -------------------------------------------------------------------------- */
+
+.persona-card {
+  position: relative;
+  width: 240px;
+  height: 300px;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  perspective: 1200px;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.persona-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  transition: transform .6s ease;
+  transform-style: preserve-3d;
+}
+
+.persona-card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.persona-card-face {
+  position: absolute;
+  inset: 0;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  backface-visibility: hidden;
+}
+
+.persona-card-front {
+  background: black;
+}
+
+.persona-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.persona-card-back {
+  background: var(--panel);
+  transform: rotateY(180deg);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px;
+}
+
+.persona-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 38px rgba(0,0,0,.22);
+}
+
+.persona-back-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.persona-back-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.persona-back-name {
+  font-family: var(--font-heading);
+  font-size: 18px;
+}
+
+.persona-back-section {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+/* image fills card */
+
+.persona-card-img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* dark gradient for legibility */
+
+.persona-card-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 18px;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,.65) 10%,
+      rgba(0,0,0,.25) 35%,
+      rgba(0,0,0,.15) 65%,
+      rgba(22,22,22,.35) 90%
+    );
+}
+
+.persona-card-overlay-pill {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 2; /* ensures it sits above the image */
+}
+/* text */
+
+.persona-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.725em;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: white;
+  mix-blend-mode: exclusion;
+}
+
+/* fallback initials */
+
+.persona-card-fallback {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--font-heading);
+  font-size: 36px;
+
+  background: var(--card);
+}
