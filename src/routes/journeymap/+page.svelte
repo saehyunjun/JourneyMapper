@@ -1,5 +1,4 @@
 <script>
-  import JourneyAxis          from '$lib/journeymapper2/JourneyAxis.svelte';
   import JourneyIndex from '$lib/journeymapper2/JourneyIndex.svelte';
   import JourneyLegend        from '$lib/journeymapper2/JourneyLegend.svelte';
   import JourneySteps         from '$lib/journeymapper2/JourneySteps.svelte';
@@ -11,10 +10,9 @@
   import StepDetailContent    from '$lib/journeymapper2/StepDetailContent.svelte';
   import PlutchikContent      from '$lib/journeymapper2/PlutchikContent.svelte';
   import PersonaDetailContent from '$lib/journeymapper2/PersonaDetailContent.svelte';
-  import PersonaSelectorSidebar from '$lib/journeymapper2/PersonaSelectorSidebar.svelte';
   import PersonaProfileCard   from '$lib/journeymapper2/PersonaProfileCard.svelte';
   import { STEP_WIDTH, LEFT_AXIS_WIDTH, valueToY } from '$lib/journeymapper2/journeyConfig.js';
-  import { selectedIndex, zoomedIndex } from '$lib/journeymapper2/journeyStore.js';
+  import { selectedIndex } from '$lib/journeymapper2/journeyStore.js';
 
   import CaretRight from "phosphor-icons-svelte/IconCaretRightRegular.svelte";
   import CaretLeft from "phosphor-icons-svelte/IconCaretLeftRegular.svelte";
@@ -129,7 +127,7 @@
 
   <!-- ── Nav bar ──────────────────────────────────────────────────────── -->
   <div class="title-bar flex flex-row min-w-full">
-  <span class="h3 heading blue">JourneyMapper</span> 
+  <span class="h3 heading-sm font-black text-slate-800">JourneyMapper</span> 
   <span class="nav-title">Powered by PatientlyIQ</span>
   </div>
   <!-- ── Body row: sidebar + main content ─────────────────────────────── -->

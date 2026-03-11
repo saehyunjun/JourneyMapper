@@ -130,16 +130,17 @@
         "id": "persona_1",
         "type": "patient",
         "profile": {
-          "initials": "MW",
-          "name": "Margaret W.",
+          "initials": "KW",
+          "name": "Karl W.",
           "role": "Patient",
-          "age": "mid-60s",
-          "gender": "Female",
-          "occupation": "Retired",
-          "caregiver": "Adult daughter",
+          "age": "mid-40s",
+          "gender": "Male",
+          "occupation": "Part-time",
+          "caregiver": "None",
           "preference": "Seeking new treatment",
-          "diagnosed": "5-10 years",
-          "imageFile": "MargaretW.jpg"
+          "diagnosed": "5 years ago",
+          "imageFile": "KarlW.jpeg",
+          "bio": "Karl* was diagnosed twelve years ago after a biopsy and genetic testing. With no formal diagnostic framework, no standardized testing to measure disease activity, and few knowledgeable specialists beyond her nephrologist, Karl has fought to attain even basic care.Living in a rural area exacerbates his care barriers. Over time, Karl abandoned local specialty care in favor of traveling several hours to academic centers in the larger city 350 miles away. He has participated in clinical research. For Karl, research participation began as a strategic manuever to access newer treatment options. He now accepts that a new drug may not help him in time, but still finds purpose in contributing the data that may make the difference for future patients.During the early years post-diagnosis, Karl felt isolated living with a rare disease but has since found belonging within the broader kidney disease community. He is deeply involved in patient advocacy and research engagement. Connecting families to specialists, advising them to seek out true experts, encouraging participation in research when appropriate: These actions give him an invaluable sense of agency. Although Karl ultimately viewed his trial experience positively, he encountered critical inflection points that could have led to withdrawal. This Journey Map reflects posts written during a period when fatigue and logistical strain left him feeling overwhelmed by trial demands, and seriously considering dropping out."
         },
         "currentState": [
           {
@@ -306,7 +307,7 @@
             "inflection":"Y",
             "inflection_pos": 2,
             "inflection_neg": -2,
-            "plutchik_score": "sadness",
+            "plutchik_score": "Despair",
             "emotional_valence": -2,
             "provider_trust": -1,
             "medical_self_efficacy": -2,

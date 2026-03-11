@@ -40,7 +40,7 @@
 
     </div>
 
-    <div class="photo-lg">
+    <div class="photo">
       {#if !imgError}
         <img
           src="/assets/profiles/{persona.profile.imageFile}"

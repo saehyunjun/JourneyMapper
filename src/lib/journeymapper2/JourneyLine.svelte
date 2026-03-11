@@ -113,22 +113,14 @@
       <line
         x1={seg.x1} y1={seg.y1}
         x2={seg.x2} y2={seg.y2}
-        stroke={seg.branch === 'pos' ? '#161616' : '#191919'}
+        stroke={seg.branch === 'pos' ? '#B6C0B1' : '#A5A8C7'}
         stroke-width="2.25"
-        stroke-dasharray="4.25 5"
-        stroke-linecap=""
-        opacity="0.25"
+        stroke-dasharray="1 5"
+        stroke-linecap="square"
+        opacity="0.95"
         pointer-events="none"
       />
-            <line
-            x1={seg.x1} y1={seg.y1}
-            x2={seg.x2} y2={seg.y2}
-            stroke={seg.branch === 'pos' ? '#1CD819' : '#FF676A'}
-            stroke-width="4.25"
-            stroke-linecap="square"
-            opacity="0.175"
-            pointer-events="none"
-          />
+
     {/each}
     {/if}
 
