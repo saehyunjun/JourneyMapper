@@ -135,8 +135,7 @@
   </div>
   <!-- ── Body row: sidebar + main content ─────────────────────────────── -->
   <div class="journey-body">
-
-    <div class="flex flex-row h-full pt-10">
+    <div class="flex flex-col">
       <PersonaCardStack
         {personas}
         {activePersonaId}
@@ -249,7 +248,6 @@
   position:relative;
   overflow-x: scroll;
   height: 100px;
-  padding: 1em 0em 2em 0em;
 }
 
 </style>

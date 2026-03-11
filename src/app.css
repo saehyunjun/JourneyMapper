@@ -224,8 +224,7 @@
     flex-direction: row;
     flex: 1;
     overflow: hidden;
-    min-height: 0;
-    scrollbar-color: #9898c8;
+    height: 100%;
   }
 
   .journey-main {
@@ -290,13 +289,12 @@
       width: 100%;
       padding: 8px 10px;
       border-radius: 100px;
-      border: 1px solid rgba(0, 0, 0, 0.14);
+      border: 1px solid #523AFE;
       background: var(--card);
       font-family: var(--font-heading);
-      font-size: 0.6725rem;
+      font-size: 0.625rem;
       font-weight: 600;
       text-transform: capitalize;
-      letter-spacing: 0.06em;
       color: var(--text, #1a1a1a);
       cursor: pointer;
       transition: background 0.15s, border-color 0.15s;

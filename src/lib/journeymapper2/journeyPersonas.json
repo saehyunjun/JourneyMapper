@@ -422,6 +422,9 @@
         "preference": "Telehealth & online resources",
         "diagnosed": "Learned at time of patient diagnosis",
         "imageFile": "davidR.jpeg",
+
+        "quote": "I have been managing this disease for over twenty years but need some new solutions. I do not know if starting another expensive drug is in the cards for me",
+
         "bio": "Sarah is the primary caregiver for her husband following his recent diagnosis. She coordinates appointments, manages medications, and often acts as the intermediary between clinicians and family members. While emotionally resilient, she often feels overwhelmed by the amount of information and responsibility involved in managing care.",
 
         "goal1": "Ensure her husband receives the best available care and treatment.",
@@ -693,7 +696,7 @@
         {
           "label": "Care coordination level",
           "value": 0.65,
-          "minLabel": "Disjointed",
+          "minLabel": "Dis  ointed",
           "maxLabel": "Cohesive"
         },
         {

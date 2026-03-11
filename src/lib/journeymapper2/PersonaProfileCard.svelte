@@ -99,7 +99,7 @@
         </div>
 
         <button class="open-btn" on:click={openDetails}>
-          Click for More About {personaProfile.name}
+          More about {personaProfile.name}
         </button>
 
       </div>
@@ -113,7 +113,7 @@
 <style>
   /* ── Scene: holds the perspective so preserve-3d works correctly ──── */
   .card-scene {
-    width: 240px;
+    width: 18vw;
     height: 300px;
     perspective: 1000px;
     cursor: pointer;
@@ -124,11 +124,11 @@
   .card-scene:hover .card-body {
     /* only lift when NOT mid-flip */
     transform: translateY(-5px);
-    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.26);
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.3);
   }
 
   .card-scene:hover .card-body.is-flipped {
-    transform: rotateY(180deg) translateY(-5px);
+    transform: rotateY(180deg) translateY(-10px);
   }
 
   /* ── Card body: the thing that actually rotates ───────────────────── */
@@ -143,7 +143,7 @@
       transform 0.55s cubic-bezier(0.45, 0.05, 0.55, 0.95),
       box-shadow 0.25s ease;
 
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.3);
     will-change: transform;
   }
 
