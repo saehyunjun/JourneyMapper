@@ -78,6 +78,10 @@
   let drawerMode = null;
   $: drawerOpen = drawerMode !== null;
 
+// Auto-open step drawer when a step is selected
+$: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
+
+
 
   // ── Timeline active state (collapses persona sidebar) ────────────────────
   // True when the user is interacting with the main timeline (step selected or drawer open)
@@ -164,8 +168,6 @@
       <div class="spacer" />
       <JourneyIndex data={journeyData} {metrics} />
       <JourneyLegend items={metrics} />
-
-          <JourneyInfoSources data={journeyData} />
     
           <JourneyTooltip
             data={journeyData}

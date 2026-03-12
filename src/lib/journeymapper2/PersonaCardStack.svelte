@@ -200,17 +200,22 @@
 }
 
 .thumb{ 
-    width:95%;
-    height:10em;
+    width:5em;
+    height:5em;
     margin:auto;
-    border-radius:12px;
+    border-radius:100px;
     overflow:hidden;
     cursor:pointer;
     transition:transform .2s cubic-bezier(.34,1.4,.64,1);
+    box-shadow:
+0px 0px 0px 1px rgba(0, 0, 0, 0.06),
+0px 1px 2px -1px rgba(0, 0, 0, 0.06),
+0px 2px 4px 0px rgba(0, 0, 0, 0.04);
     }
     
 .thumb:hover{
     transform:scale(1.02);
+    border: 1px solid #E5EDF5 
     }
     
 .thumb-photo{
