@@ -113,8 +113,9 @@
 <style>
   /* ── Scene: holds the perspective so preserve-3d works correctly ──── */
   .card-scene {
-    width: 18vw;
-    height: 300px;
+    width: 30vw;
+    height: 500px;
+    max-width: 325px;
     perspective: 1000px;
     cursor: pointer;
     flex-shrink: 0;

@@ -39,10 +39,12 @@
     });
     </script>
     
-    <div class="sidebar" class:sidebar--open={open} aria-label="Persona selector">
+    <div class="sidebar" 
+    class:sidebar--open={open} aria-label="Persona selector">
     
+    <div class="flex flex-row justify-end">
     <button
-      class="toggle-btn"
+      class="btn-base"
       class:toggle-btn--open={open}
       on:click={toggle}
     >
@@ -54,6 +56,7 @@
     {/if}
     </svg>
     </button>
+</div>
     
     {#if !open}
     <button class="thumb" on:click={toggle}>
@@ -168,40 +171,26 @@
     position:relative;
     display:flex;
     flex-direction:column;
-    align-content: center;
-    align-items: center;
     background:#F7F9FC;
     border-right: 1px solid #E5EDF5;
     height: 100%; 
-    width: 10vw;
+    width: 7.25vw;
+    max-width: 200px;
     transition:width 380ms cubic-bezier(.22,1,.36,1);
     }
     
-    .sidebar--open{
-    width:20vw;
-    }
-    
-.toggle-btn{
-    width:24px;
-    height:24px;
-    margin:6px auto;
-    align-items: end;
-    justify-items: end;
-    cursor:pointer;
-    transition:transform 260ms cubic-bezier(.22,1,.36,1);
-    }
-    
-.sidebar--open .toggle-btn{
-    transform:translateX(-3px);
+.sidebar--open{
+    width:32.5vw;
+    max-width: 350px;
     }
 
 .active-card-wrap {
-    width: 90%;
+    width: 95%;
 }
 
 .thumb{ 
-    width:5em;
-    height:5em;
+    width:6.75vw;
+    height:6.75vw;
     margin:auto;
     border-radius:100px;
     overflow:hidden;
@@ -241,28 +230,14 @@
     transform 260ms cubic-bezier(.22,1,.36,1);
     }
     
-    .stack--open{
+.stack--open{
     opacity:1;
     transform:translateX(0);
     transition-delay:70ms;
     }
     
-    .stack-heading{
-    display:flex;
-    justify-content:space-between;
-    padding:4px;
-    font-size:.6rem;
-    text-transform:uppercase;
-    letter-spacing:.1em;
-    }
     
-    .stack-count{
-    background:rgba(0,0,0,.08);
-    padding:2px 6px;
-    border-radius:100px;
-    }
-    
-    .mini-card{
+.mini-card{
     display:flex;
     align-items:center;
     gap:8px;

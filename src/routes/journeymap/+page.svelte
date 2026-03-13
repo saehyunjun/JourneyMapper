@@ -203,25 +203,16 @@ $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
   <svelte:fragment slot="footer">
     {#if drawerMode === 'step'}
       <button
-        class="btn-fill"  
+        class="btn-base"  
         disabled={$selectedIndex <= 0}
         on:click={() => selectedIndex.update(i => i - 1)}
         aria-label="Previous step"
       >
       <CaretLeft />
       </button>
-      <div class="step-dots">
-        {#each journeyData as _, i}
-          <button
-            class="step-dot"
-            class:active={i === $selectedIndex}
-            on:click={() => selectedIndex.set(i)}
-            aria-label="Go to step {i + 1}"
-          />
-        {/each}
-      </div>
+  
       <button
-        class="btn-fill"
+        class="btn-base"
         disabled={$selectedIndex >= journeyData.length - 1}
         on:click={() => selectedIndex.update(i => i + 1)}
         aria-label="Next step">

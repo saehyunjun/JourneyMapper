@@ -96,7 +96,7 @@
     <!-- Narrative description -->
     {#if step.narrative_description}
       <div class="jm-content-row">
-        <span class="label-lg">Step Narrative</span>
+        <span class="heading-sm">Step Narrative</span>
         <p class="text-body">{step.narrative_description}</p>
       </div>
     {/if}
@@ -106,7 +106,7 @@
 
     <!-- Metric bars -->
     <div class="metrics-section">
-      <span class="section-heading">Index Metrics</span>
+      <span class="heading-sm">Index Metrics</span>
       {#each metrics as m}
         {@const pct = toPercent(step[m.key])}
         {@const val = parseFloat(step[m.key])}
@@ -158,60 +158,7 @@
 
 
 <style>
-  .content-wrap {
-    padding: 2em;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .divider {
-    height: 1px;
-    background: #DFC3A8;
-    margin: 0 -2em;
-  }
-
-  .section-heading {
-    display: block;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 9px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #A08060;
-    margin-bottom: 10px;
-  }
-
-  /* ── Narrative ──────────────────────────────────────────────── */
-  .narrative-section { display: flex; flex-direction: column; }
-
-  .narrative-text {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    color: #7A5A3A;
-    line-height: 1.7;
-    margin: 0;
-  }
-
-  /* ── Sentiment bar ──────────────────────────────────────────── */
-  .sentiment-section { display: flex; flex-direction: column; }
-
-  .sentiment-bar-track {
-    position: relative;
-    height: 6px;
-    background: #919191;
-    border-radius: 3px;
-    overflow: visible;
-    display: flex;
-    align-items: center;
-  }
-
-  .sentiment-bar-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.3s ease;
-  }
-
+  
   .sentiment-value {
     position: absolute;
     right: 0;

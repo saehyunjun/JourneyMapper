@@ -83,9 +83,9 @@
   >
 
     <!-- Header -->
-    <div class="jm-section-bar">
+    <div class="jm-section">
+      <span class="label-sm">{step.stage}</span>
       <p class="label-lg">{step.step}</p>
-      <span class="pill-sm">{step.stage}</span>
     </div>
 
     <!-- Sentiment + Emotion -->
