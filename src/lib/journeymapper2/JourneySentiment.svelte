@@ -10,18 +10,20 @@
 
 <JourneyGrid {data}>
   <JourneyLine
-    {data}
-    metricKey="sentiment"
-    colorFn={sentimentToColor}
-    opacity={1}
-    label="Sentiment"
-    showInflection={true}
-  />
+  {data}
+  metricKey="sentiment"
+  colorFn={sentimentToColor}
+  opacity={1}
+  label="Sentiment"
+  showInflection={true}
+  alignLeft={true}
+/>
   <JourneyNodes
-    {data}
-    metricKey="sentiment"
-    colorFn={sentimentToColor}
-    opacity={1}
+  {data}
+  metricKey="sentiment"
+  colorFn={sentimentToColor}
+  opacity={1}
+  alignLeft={true}
   />
 </JourneyGrid>
 

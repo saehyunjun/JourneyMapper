@@ -14,8 +14,8 @@
   <div class="persona-strip">
     <div class="strip-avatar">{profile.initials}</div>
   
-    <div class="strip-name-block">
-      <span class="strip-name">{profile.name}</span>
+    <div class="tab-name-block">
+      <span class="tab-name">{profile.name}</span>
       <span class="strip-role">{profile.role}</span>
     </div>
   
@@ -59,14 +59,14 @@
       flex-shrink: 0;
     }
   
-    .strip-name-block {
+    .tab-name-block {
       display: flex;
       flex-direction: column;
       gap: 1px;
       flex-shrink: 0;
     }
   
-    .strip-name {
+    .tab-name {
       font-family: 'IBM Plex Sans';
       font-size: 1em;
       font-weight: 600;

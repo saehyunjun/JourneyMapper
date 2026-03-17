@@ -1,10 +1,10 @@
 <script>
-  import JourneyIndex from '$lib/journeymapper2/JourneyIndex.svelte';
+  import JourneyIndexBars from '$lib/journeymapper2/JourneyIndexBars.svelte';
   import JourneyLegend        from '$lib/journeymapper2/JourneyLegend.svelte';
   import JourneySteps         from '$lib/journeymapper2/JourneySteps.svelte';
   import JourneyStages        from '$lib/journeymapper2/JourneyStages.svelte';
   import JourneySentiment     from '$lib/journeymapper2/JourneySentiment.svelte';
-  import JourneyInfoSources from '$lib/journeymapper2/JourneyInfoSources.svelte';
+
   import JourneyTooltip       from '$lib/journeymapper2/JourneyTooltip.svelte';
   import JourneyDrawer        from '$lib/journeymapper2/JourneyDrawer.svelte';
   import StepDetailContent    from '$lib/journeymapper2/StepDetailContent.svelte';
@@ -166,7 +166,7 @@ $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
       <!-- Axis must be the immediate predecessor of JourneyIndex so its
            margin-bottom: -SVG_HEIGHT pulls it flush over the grid SVG -->
       <div class="spacer"></div>
-      <JourneyIndex data={journeyData} {metrics} />
+      <JourneyIndexBars data={journeyData} {metrics} />
       <JourneyLegend items={metrics} />
     
           <JourneyTooltip

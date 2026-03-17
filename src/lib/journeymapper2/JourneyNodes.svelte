@@ -1,25 +1,22 @@
+<!-- JourneyNodes.svelte -->
 <script>
-  import { valueToY, stepToX } from './journeyConfig.js';
-  import { hoveredIndex, selectedIndex } from './journeyStore.js';
+import { valueToY, stepToX, STEP_WIDTH } from './journeyConfig.js';
+import { hoveredIndex, selectedIndex } from './journeyStore.js';
 
   export let data      = [];
   export let metricKey = '';
-  /** Static color string — used when colorFn is not provided */
   export let color     = '#ffffff';
-  /** Optional per-value color function (val: number) => string */
   export let colorFn   = null;
   export let radius    = 6;
-  /** Optional per-step Y offsets (pixels) to separate coincident nodes */
   export let offsets   = [];
-  /** Resting opacity for non-active nodes */
+  export let alignLeft = false;
   export let opacity   = 0.725;
 
-  /** Resolve color for a given data value */
+
   function resolveColor(val) {
     return colorFn ? colorFn(parseFloat(val)) : color;
   }
 
-  /** Diamond polygon points centered on (cx, cy) with half-size s */
   function diamondPoints(cx, cy, s) {
     return `${cx},${cy - s} ${cx + s},${cy} ${cx},${cy + s} ${cx - s},${cy}`;
   }
@@ -27,7 +24,8 @@
 
 <g class="journey-nodes" pointer-events="none">
   {#each data as d, i}
-    {@const cx         = stepToX(i)}
+    {@const baseCx     = stepToX(i)}
+    {@const cx         = alignLeft ? baseCx - STEP_WIDTH / 2 : baseCx}
     {@const baseY      = valueToY(d[metricKey])}
     {@const cy         = baseY + (offsets[i] ?? 0)}
     {@const isHovered  = $hoveredIndex  === i}
@@ -39,7 +37,6 @@
     {@const baseSize   = active ? radius * 1.75 : radius * 1}
 
     {#if d.inflection === 'Y'}
-      <!-- Diamond node for inflection steps -->
       <polygon
         points={diamondPoints(cx, cy, baseSize * 1.85)}
         fill={nodeColor}
@@ -56,7 +53,6 @@
         />
       {/if}
     {:else}
-      <!-- Standard circle node -->
       <circle
         {cx} {cy}
         r={baseSize}
