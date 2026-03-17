@@ -24,8 +24,8 @@
 
   // ── Bar layout ────────────────────────────────────────────────────────────
   // Leave a small gutter on each side of the column so bars don't crowd dividers
-  const COL_GUTTER   = 14; // px total inset per column (split left/right)
-  const BAR_GAP      = 3;  // px gap between bars within a group
+  const COL_GUTTER   = 24; // px total inset per column (split left/right)
+  const BAR_GAP      = 12;  // px gap between bars within a group
 
   /**
    * Given the number of metrics and the step column width, compute the width
@@ -111,7 +111,7 @@
         width={STEP_WIDTH}
         height={GRID_HEIGHT}
         fill={stageColorMap[d.stage_id]}
-        opacity="0.18"
+        opacity="0"
         pointer-events="none"
       />
     {/if}
@@ -208,12 +208,12 @@
           x={rect.x + rect.width / 2}
           y={labelY}
           text-anchor="middle"
-          class="bar-val-label"
+          class="label-sm"
           fill={m.color}
           pointer-events="none"
         >
           {val > 0 ? '+' : ''}{val}
-        </text>
+    </text>
       {/if}
     {/each}
   {/each}
@@ -226,18 +226,6 @@
     pointer-events="none"
   />
 
-  <!-- ── Axis row-value labels ──────────────────────────────────────────── -->
-  {#each [-4, -2, 0, 2, 4] as rowVal}
-    <text
-      x={LEFT_AXIS_WIDTH - 4}
-      y={valueToY(rowVal) + 3.5}
-      text-anchor="end"
-      class="axis-label"
-      pointer-events="none"
-    >
-      {rowVal > 0 ? `+${rowVal}` : rowVal}
-    </text>
-  {/each}
 
   <!-- ── Full-column hit areas ─────────────────────────────────────────── -->
   {#each data as _d, i}
@@ -257,21 +245,7 @@
 <style>
   .journey-bars-svg {
     display: block;
-    background: #fff;
     z-index: 1;
   }
 
-  .bar-val-label {
-    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-    font-size: 8.5px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-
-  .axis-label {
-    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-    font-size: 8px;
-    fill: #9b9490;
-    letter-spacing: 0.01em;
-  }
 </style>

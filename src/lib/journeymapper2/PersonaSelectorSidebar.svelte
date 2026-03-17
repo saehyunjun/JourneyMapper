@@ -2,6 +2,9 @@
   import { fly, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
   import { createEventDispatcher } from 'svelte';
+  import IconCaretLeftRegular from 'phosphor-icons-svelte/IconCaretLeftRegular.svelte';
+  import IconCaretRightRegular from 'phosphor-icons-svelte/IconCaretRightRegular.svelte';
+    
 
   const dispatch = createEventDispatcher();
 
@@ -57,15 +60,7 @@
       aria-label={open ? 'Collapse personas' : 'Expand personas'}
       title={open ? 'Collapse' : 'Expand'}
     >
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-        <path
-          d="M9 2L4 7L9 12"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+    <IconCaretLeftRegular />
     </button>
   </div>
 
