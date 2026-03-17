@@ -130,5 +130,6 @@
   .journey-svg {
     display: block;
     background: #fff;
+    z-index: 1;
   }
 </style>

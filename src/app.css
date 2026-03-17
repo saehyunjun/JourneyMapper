@@ -265,8 +265,8 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.25em 0.5em 0.25em 0.725em;
-    background-color: var(--panel);
-    border-bottom: 0.25px solid rgba(25, 25, 25, 0.275);
+    background-color: var(--drop-shadow-xl);
+    border-bottom: 0.25px solid #e8e5de;
   } 
 
   .nav-left { 

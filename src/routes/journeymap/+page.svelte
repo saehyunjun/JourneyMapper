@@ -134,7 +134,7 @@ $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
 
   <!-- ── Nav bar ──────────────────────────────────────────────────────── -->
   <div class="title-bar flex flex-row min-w-full">
-  <span class="h3 heading-sm font-black text-slate-800">JourneyMapper</span> 
+  <span class="h3 nav-title">JourneyMapper</span> 
   <span class="nav-title">Powered by PatientlyIQ</span>
   </div>
   <!-- ── Body row: sidebar + main content ─────────────────────────────── -->
@@ -165,7 +165,7 @@ $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
       <!-- ── JourneyIndex ──────────────────────────────────────────── -->
       <!-- Axis must be the immediate predecessor of JourneyIndex so its
            margin-bottom: -SVG_HEIGHT pulls it flush over the grid SVG -->
-      <div class="spacer" />
+      <div class="spacer"></div>
       <JourneyIndex data={journeyData} {metrics} />
       <JourneyLegend items={metrics} />
     
@@ -240,6 +240,7 @@ $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
 .shared-scroll {
   position:relative;
   overflow-x: scroll;
+  z-index: 1;
   height: 100px;
 }
 

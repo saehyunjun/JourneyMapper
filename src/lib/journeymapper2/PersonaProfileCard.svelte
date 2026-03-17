@@ -1,4 +1,6 @@
 <script>
+  import { RotateClockwise } from "carbon-icons-svelte";
+
   export let personaProfile = {};
   export let onOpenDetails = () => {};
 
@@ -13,13 +15,33 @@
     e.stopPropagation();
     onOpenDetails();
   }
+
+  // ── Bio tooltip ───────────────────────────────────────────────────────────
+  let hovered = false;
+  let mouseX  = 0;
+  let mouseY  = 0;
+
+  const TIP_W    = 300;
+  const OFFSET_X = 16;
+  const OFFSET_Y = 12;
+
+  function onMouseMove(e) { mouseX = e.clientX; mouseY = e.clientY; }
+
+  $: vpW     = typeof window !== 'undefined' ? window.innerWidth  : 9999;
+  $: flipLeft = mouseX + OFFSET_X + TIP_W > vpW - 12;
+  $: tipX    = flipLeft ? mouseX - TIP_W - OFFSET_X : mouseX + OFFSET_X;
+  $: tipY    = mouseY + OFFSET_Y;
 </script>
+
+<svelte:window on:mousemove={onMouseMove} />
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="card-scene"
   on:click={flip}
+  on:mouseenter={() => (hovered = true)}
+  on:mouseleave={() => (hovered = false)}
   title="Click to flip"
 >
   <div class="card-body" class:is-flipped={flipped}>
@@ -53,13 +75,8 @@
 
       <!-- flip hint -->
       <div class="flip-hint">
-        <svg width="14" height="14" viewBox="0 0 256 256" fill="none" aria-hidden="true">
           <!-- Phosphor "ArrowsClockwise" regular -->
-          <path
-            d="M224,48V96a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h28.69L182.06,73.37a79.56,79.56,0,0,0-56.19-23.43C95.5,49.84,67.8,67.68,53.77,96a8,8,0,0,1-14.3-7.18C56.06,54.42,90.44,33.86,125.87,34a95.43,95.43,0,0,1,67.3,28.09L208,76.69V48a8,8,0,0,1,16,0ZM202.23,167.14A80.1,80.1,0,0,1,73.31,182.63L59.31,168.63H88a8,8,0,0,0,0-16H40a8,8,0,0,0-8,8v48a8,8,0,0,0,16,0V180.69l14.63,14.63a95.43,95.43,0,0,0,67.3,28.09c35.43.1,69.81-20.46,86.4-55.18a8,8,0,0,0-14.1-7.09Z"
-            fill="currentColor"
-          />
-        </svg>
+          <RotateClockwise class="text-white" />
       </div>
 
     </div>
@@ -109,6 +126,23 @@
   </div>
 </div>
 
+<!-- ── Bio tooltip ──────────────────────────────────────────────────────── -->
+{#if hovered && personaProfile.bio}
+  <div
+    class="persona-bio-tooltip jm-surface"
+    style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px;"
+    role="tooltip"
+    aria-live="polite"
+  >
+    <div class="jm-section-bar" style="margin-bottom: 10px;">
+      <span class="label-lg">{personaProfile.name}</span>
+      {#if personaProfile.role}
+        <span class="pill-sm">{personaProfile.role}</span>
+      {/if}
+    </div>
+    <p class="tip-bio">{personaProfile.bio}</p>
+  </div>
+{/if}
 
 <style>
   /* ── Scene: holds the perspective so preserve-3d works correctly ──── */
@@ -355,5 +389,25 @@
     text-transform: uppercase;
     color: var(--text-muted, #6b6050);
     white-space: nowrap;
+  }
+  /* ── Bio tooltip (no existing styles modified) ───────────────────── */
+  .persona-bio-tooltip {
+    position: fixed;
+    pointer-events: none;
+    z-index: 400;
+    padding: 12px 14px 14px;
+    transition: left 60ms linear, top 60ms linear;
+  }
+
+  .tip-bio {
+    font-family: var(--font-body, 'IBM Plex Sans', sans-serif);
+    font-size: 11.5px;
+    line-height: 1.65;
+    color: #3b3b3b;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 </style>

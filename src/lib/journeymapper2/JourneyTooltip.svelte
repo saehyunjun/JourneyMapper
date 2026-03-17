@@ -143,7 +143,7 @@
 .tooltip {
   position: fixed;
   pointer-events: none;
-  z-index: 300;
+  z-index: 990;
 
   padding: 10px 12px 12px;
   border-radius: 4px;
