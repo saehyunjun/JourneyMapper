@@ -87,7 +87,7 @@
   });
 
   // ── Radial geometry ────────────────────────────────────────────────────────
-  const PADDING = 48;
+  const PADDING = 128;
 
   $: plotR    = svgSize / 2 - PADDING;   // Layerchart plot radius
   $: arcInner = plotR + 32;              // inner edge of stage band (gap = step label lane)
@@ -107,8 +107,8 @@
     .outerRadius(arcOuter)
     .startAngle(d => d.startAngle)
     .endAngle(d => d.endAngle)
-    .padAngle(0.015)
-    .cornerRadius(2);
+    .padAngle(0.03425)
+    .cornerRadius(0);
 
   // ── Stage arc data ─────────────────────────────────────────────────────────
   interface StageArc {
@@ -165,18 +165,18 @@ const ly = (BASE_R * dy) + (dy * EXTRA_OFFSET);
       // Bottom
 else if (dy > 0.6) baseline = 'hanging';
 
-return {
-  group: g,
-  arcPath,
-  midAngle: mid,
-  spanAngle: span,
-  labelX: lx,
-  labelY: ly,
-  labelAnchor: anchor,
-  labelBaseline: baseline
-};
-    });
-  })();
+    return {
+      group: g,
+      arcPath,
+      midAngle: mid,
+      spanAngle: span,
+      labelX: lx,
+      labelY: ly,
+      labelAnchor: anchor,
+      labelBaseline: baseline
+    };
+        });
+      })();
 
   // ── Step label geometry ────────────────────────────────────────────────────
   // Labels sit in the lane between plotR and arcInner
@@ -317,8 +317,8 @@ return {
                 x={arc.labelX}
                 y={arc.labelY}
                 text-anchor={arc.labelAnchor}
-                dominant-baseline="middle"
-                class="stage-flat-label"
+                dominant-baseline="start"
+                class="label"
               >{arc.group.label}</text>
             {/each}
 
@@ -382,7 +382,8 @@ return {
   .radial-chart-wrap {
     width: 100%;
     aspect-ratio: 1 / 1;
-    max-width: 680px;
+    max-width: 1080px;
+    padding: 1em;
     margin: 0 auto;
     /* Extra overflow room for stage labels that sit outside the arc */
     overflow: visible;
@@ -409,26 +410,4 @@ return {
     color: var(--paper);
   }
 
-  /* Stage labels — flat, outside the arc band */
-  :global(.stage-flat-label) {
-    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    fill: var(--ink, #312F28);
-    pointer-events: none;
-    user-select: none;
-  }
-
-  /* Step labels — inside the gap between chart and arc band */
-  :global(.step-spoke-label) {
-    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-    font-size: 7.5px;
-    font-weight: 500;
-    fill: var(--ink, #312F28);
-    letter-spacing: 0.01em;
-    pointer-events: none;
-    user-select: none;
-  }
 </style>
