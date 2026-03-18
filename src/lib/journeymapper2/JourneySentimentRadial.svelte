@@ -7,6 +7,8 @@
   import { Area, Axis, Chart, Spline, Points, Svg } from 'layerchart';
 
   import { sentimentToColor, buildStageColorMap } from './journeyConfig.js';
+  import { hoveredIndex } from './journeyStore.js';
+  import JourneyTooltip from './JourneyTooltip.svelte';
 
   // ── Types ──────────────────────────────────────────────────────────────────
   interface JourneyStep {
@@ -36,6 +38,7 @@
 
   // ── Props ──────────────────────────────────────────────────────────────────
   export let data: JourneyStep[] = [];
+  export let metrics: { key: string; label: string; color: string }[] = [];
   export let curve: CurveFactory = curveCatmullRomClosed as CurveFactory;
   export let showZeroRing = true;
   export let showLabels   = true;
@@ -116,14 +119,13 @@
     arcPath:     string;
     midAngle:    number;
     spanAngle:   number;
-    // Flat label position outside the arc band
     labelX:      number;
     labelY:      number;
     labelAnchor: string;
     labelBaseline: string;
   }
 
-  const STAGE_LABEL_GAP = 20; // px between arcOuter and label baseline
+  const STAGE_LABEL_GAP = 20;
 
   $: stageArcs = (() => {
     if (!svgSize || !n) return [] as StageArc[];
@@ -136,50 +138,36 @@
 
       const arcPath = arcGen({ startAngle: sa, endAngle: ea }) ?? '';
 
-      // Label sits at arcOuter + gap, pointing radially outward from midAngle
       const BASE_R = arcOuter + STAGE_LABEL_GAP;
+      const dx = Math.cos(mid);
+      const dy = Math.sin(mid);
+      const EXTRA_OFFSET = 10;
+      const lx = (BASE_R * dx) + (dx * EXTRA_OFFSET);
+      const ly = (BASE_R * dy) + (dy * EXTRA_OFFSET);
 
-// unit direction vector
-const dx = Math.cos(mid);
-const dy = Math.sin(mid);
-
-// push further outward depending on quadrant
-const EXTRA_OFFSET = 10;
-
-const lx = (BASE_R * dx) + (dx * EXTRA_OFFSET);
-const ly = (BASE_R * dy) + (dy * EXTRA_OFFSET);
-      // Anchor by horizontal position: right side → start, left → end, top/bottom → middle
-      const normMid = ((mid % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI); // 0–2π
+      const normMid = ((mid % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
       let anchor: 'start' | 'middle' | 'end' = 'middle';
       let baseline: 'middle' | 'hanging' | 'baseline' = 'middle';
 
-      // Right side
       if (dx > 0.3) anchor = 'start';
-
-      // Left side
       else if (dx < -0.3) anchor = 'end';
-
-      // Top
       if (dy < -0.6) baseline = 'baseline';
+      else if (dy > 0.6) baseline = 'hanging';
 
-      // Bottom
-else if (dy > 0.6) baseline = 'hanging';
-
-    return {
-      group: g,
-      arcPath,
-      midAngle: mid,
-      spanAngle: span,
-      labelX: lx,
-      labelY: ly,
-      labelAnchor: anchor,
-      labelBaseline: baseline
-    };
-        });
-      })();
+      return {
+        group: g,
+        arcPath,
+        midAngle: mid,
+        spanAngle: span,
+        labelX: lx,
+        labelY: ly,
+        labelAnchor: anchor,
+        labelBaseline: baseline
+      };
+    });
+  })();
 
   // ── Step label geometry ────────────────────────────────────────────────────
-  // Labels sit in the lane between plotR and arcInner
   $: stepLabelR = plotR + (arcInner - plotR) / 2;
 
   interface StepLabel {
@@ -198,15 +186,11 @@ else if (dy > 0.6) baseline = 'hanging';
       const x = stepLabelR * Math.cos(theta);
       const y = stepLabelR * Math.sin(theta);
 
-      // Rotate text tangent to the circle. svgDeg converts from top-CW radians
-      // to SVG right-CW degrees. Right half: anchor "end" (text grows toward arc).
-      // Left half: flip 180°, anchor "start" (same visual effect).
       const svgDeg      = theta * (180 / Math.PI) + 90;
       const inRightHalf = theta >= -Math.PI / 2 && theta <= Math.PI / 2;
       const degrees     = inRightHalf ? svgDeg : svgDeg + 180;
       const anchor      = inRightHalf ? 'end' : 'start';
 
-      // Word-wrap to ≤11 chars per line
       const words = d.name.split(' ');
       const lines: string[] = [];
       let current = '';
@@ -218,6 +202,29 @@ else if (dy > 0.6) baseline = 'hanging';
       if (current) lines.push(current);
 
       return { x, y, angle: degrees, anchor, lines: lines.slice(0, 3) };
+    });
+  })();
+
+  // ── Hit circle geometry — radius proportional to the value, for hover ──────
+  // Each hit circle sits at the spline's plotted position in polar space.
+  // r=plotR maps to value=5, r=0 maps to value=-5 (same scale as yDomain).
+  // We clamp to a minimum so even very negative values get a hittable target.
+  $: hitPoints = (() => {
+    if (!svgSize || !n) return [] as { x: number; y: number; r: number; index: number }[];
+
+    return chartData.map((d, i) => {
+      const theta = stepMidAngle(i);
+      // Mirror Layerchart's linear radial scale: yDomain [-5,5], yPadding [0,1]
+      // effectiveMax = 5 + 1 = 6, scale factor = plotR / 6
+      const effectiveMax = 6;
+      const scaledR = ((d.value + 5) / (effectiveMax + 5)) * plotR;
+      const clampedR = Math.max(scaledR, 0);
+      return {
+        x: clampedR * Math.cos(theta),
+        y: clampedR * Math.sin(theta),
+        r: 18,  // generous hit radius for easy targeting
+        index: i,
+      };
     });
   })();
 </script>
@@ -311,7 +318,7 @@ else if (dy > 0.6) baseline = 'hanging';
               <path d={arc.arcPath} fill={arc.group.color} opacity="0.85" />
             {/each}
 
-            <!-- Stage labels — flat text outside the arc band -->
+            <!-- Stage labels -->
             {#each stageArcs as arc}
               <text
                 x={arc.labelX}
@@ -322,8 +329,7 @@ else if (dy > 0.6) baseline = 'hanging';
               >{arc.group.label}</text>
             {/each}
 
-          
-            <!-- ── Step labels radiating outward ────────────────────────── -->
+            <!-- Step labels -->
             {#if showLabels}
               {#each stepLabels as lbl, i}
                 <text
@@ -340,6 +346,46 @@ else if (dy > 0.6) baseline = 'hanging';
                   {/each}
                 </text>
               {/each}
+            {/if}
+
+            <!-- ── Invisible hit circles at each data point ───────────────
+                 These capture hover events and update hoveredIndex so
+                 JourneyTooltip knows which step to show.               -->
+            {#each hitPoints as pt}
+              <circle
+                cx={pt.x}
+                cy={pt.y}
+                r={pt.r}
+                fill="transparent"
+                style="cursor: crosshair;"
+                on:mouseenter={() => hoveredIndex.set(pt.index)}
+                on:mouseleave={() => hoveredIndex.set(-1)}
+              />
+            {/each}
+
+            <!-- Hovered point highlight ring -->
+            {#if $hoveredIndex >= 0 && hitPoints[$hoveredIndex]}
+              {@const hp = hitPoints[$hoveredIndex]}
+              {@const hd = chartData[$hoveredIndex]}
+              <circle
+                cx={hp.x}
+                cy={hp.y}
+                r={9}
+                fill={hd.color}
+                opacity="0.9"
+                pointer-events="none"
+              />
+              <circle
+                cx={hp.x}
+                cy={hp.y}
+                r={14}
+                fill="none"
+                stroke={hd.color}
+                stroke-width="1.5"
+                opacity="0.5"
+                stroke-dasharray="2 3"
+                pointer-events="none"
+              />
             {/if}
 
           </g>
@@ -378,6 +424,9 @@ else if (dy > 0.6) baseline = 'hanging';
 
 </div>
 
+<!-- ── Tooltip — listens to hoveredIndex store automatically ──────────────── -->
+<JourneyTooltip {data} {metrics} />
+
 <style>
   .radial-chart-wrap {
     width: 100%;
@@ -385,7 +434,6 @@ else if (dy > 0.6) baseline = 'hanging';
     max-width: 1080px;
     padding: 1em;
     margin: 0 auto;
-    /* Extra overflow room for stage labels that sit outside the arc */
     overflow: visible;
   }
 
@@ -409,5 +457,4 @@ else if (dy > 0.6) baseline = 'hanging';
     background-color: var(--ink);
     color: var(--paper);
   }
-
 </style>
