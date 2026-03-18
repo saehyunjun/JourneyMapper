@@ -90,8 +90,8 @@
   const PADDING = 48;
 
   $: plotR    = svgSize / 2 - PADDING;   // Layerchart plot radius
-  $: arcInner = plotR + 28;              // inner edge of stage band (gap = step label lane)
-  $: arcOuter = arcInner + 18;           // outer edge of stage band
+  $: arcInner = plotR + 32;              // inner edge of stage band (gap = step label lane)
+  $: arcOuter = arcInner + 8;           // outer edge of stage band
 
   $: n = chartData.length;
   $: stepAngle = n > 0 ? (2 * Math.PI) / n : 0;
@@ -120,9 +120,10 @@
     labelX:      number;
     labelY:      number;
     labelAnchor: string;
+    labelBaseline: string;
   }
 
-  const STAGE_LABEL_GAP = 10; // px between arcOuter and label baseline
+  const STAGE_LABEL_GAP = 20; // px between arcOuter and label baseline
 
   $: stageArcs = (() => {
     if (!svgSize || !n) return [] as StageArc[];
@@ -136,17 +137,44 @@
       const arcPath = arcGen({ startAngle: sa, endAngle: ea }) ?? '';
 
       // Label sits at arcOuter + gap, pointing radially outward from midAngle
-      const r  = arcOuter + STAGE_LABEL_GAP;
-      const lx = r * Math.cos(mid);
-      const ly = r * Math.sin(mid);
+      const BASE_R = arcOuter + STAGE_LABEL_GAP;
 
+// unit direction vector
+const dx = Math.cos(mid);
+const dy = Math.sin(mid);
+
+// push further outward depending on quadrant
+const EXTRA_OFFSET = 10;
+
+const lx = (BASE_R * dx) + (dx * EXTRA_OFFSET);
+const ly = (BASE_R * dy) + (dy * EXTRA_OFFSET);
       // Anchor by horizontal position: right side → start, left → end, top/bottom → middle
       const normMid = ((mid % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI); // 0–2π
-      let anchor = 'middle';
-      if      (normMid > Math.PI * 0.15 && normMid < Math.PI * 0.85)  anchor = 'start'; // right arc
-      else if (normMid > Math.PI * 1.15 && normMid < Math.PI * 1.85)  anchor = 'end';   // left arc
+      let anchor: 'start' | 'middle' | 'end' = 'middle';
+      let baseline: 'middle' | 'hanging' | 'baseline' = 'middle';
 
-      return { group: g, arcPath, midAngle: mid, spanAngle: span, labelX: lx, labelY: ly, labelAnchor: anchor };
+      // Right side
+      if (dx > 0.3) anchor = 'start';
+
+      // Left side
+      else if (dx < -0.3) anchor = 'end';
+
+      // Top
+      if (dy < -0.6) baseline = 'baseline';
+
+      // Bottom
+else if (dy > 0.6) baseline = 'hanging';
+
+return {
+  group: g,
+  arcPath,
+  midAngle: mid,
+  spanAngle: span,
+  labelX: lx,
+  labelY: ly,
+  labelAnchor: anchor,
+  labelBaseline: baseline
+};
     });
   })();
 
