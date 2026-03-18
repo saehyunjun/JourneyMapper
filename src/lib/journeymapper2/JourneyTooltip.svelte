@@ -119,9 +119,9 @@
     </div>
 
     <!-- Metrics -->
-    <div class="jm-metrics">
+    <div class="metrics">
       {#each metrics as m}
-        <div class="jm-metric-row">
+        <div class="metric-row">
 
           <span
             class="jm-mini-swatch"
@@ -160,10 +160,4 @@
   flex-shrink: 0;
 }
 
-/* Emotion swatches */
-.emotion-square {
-  width: 10px;
-  height: 10px;
-  border: 1px solid rgba(0,0,0,.25);
-}
 </style>

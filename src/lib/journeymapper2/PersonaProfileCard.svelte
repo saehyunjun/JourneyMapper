@@ -4,6 +4,11 @@
   export let personaProfile = {};
   export let onOpenDetails = () => {};
 
+function toggle(e) {
+  if (e?.target?.closest?.('.open-btn')) return;
+  flipped = !flipped;
+}
+
   let flipped = false;
   let imgError = false;
 
@@ -48,7 +53,8 @@
 
     <!-- ── FRONT ─────────────────────────────────────────────────── -->
     <div class="card-face card-front" aria-hidden={flipped}>
-
+      <div class="persona-card-gradient"></div>
+      <div class="persona-card-shimmer"></div>
       {#if !imgError}
         <img
           class="card-photo"
@@ -115,9 +121,15 @@
           </div>
         </div>
 
-        <button class="open-btn" on:click={openDetails}>
-          More about {personaProfile.name}
-        </button>
+        <button
+  class="open-btn"
+  on:click={(e) => {
+    e.stopPropagation();
+    onOpenDetails(persona);
+  }}
+>
+  Open Details
+</button>
 
       </div>
 

@@ -172,18 +172,6 @@
     gap: 8px;
   }
 
-  .sidebar-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #A08060;
-    white-space: nowrap;
-    overflow: hidden;
-    flex: 1;
-  }
-
   .toggle-btn {
     width: 26px;
     height: 26px;

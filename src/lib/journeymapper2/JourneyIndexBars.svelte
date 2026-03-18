@@ -183,7 +183,6 @@
         height={rect.height}
         fill={m.color}
         opacity={isActive ? 0.88 : 0.54}
-        rx="1.5"
         pointer-events="none"
       />
 
@@ -196,7 +195,7 @@
           y2={rect.y}
           stroke={m.color}
           stroke-width="1.5"
-          opacity={isActive ? 1 : 0.72}
+          opacity={isActive ? 1 : 0.925}
           pointer-events="none"
         />
       {/if}
