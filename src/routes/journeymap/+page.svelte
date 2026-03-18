@@ -11,6 +11,7 @@
   import PlutchikContent      from '$lib/journeymapper2/PlutchikContent.svelte';
   import PersonaDetailContent from '$lib/journeymapper2/PersonaDetailContent.svelte';
   import PersonaProfileCard from '$lib/journeymapper2/PersonaProfileCard.svelte';
+  import PersonaTopSelector from '$lib/journeymapper2/PersonaTopSelector.svelte';
   import PersonaCardStack from '$lib/journeymapper2/PersonaCardStack.svelte';
 
   import { STEP_WIDTH, LEFT_AXIS_WIDTH, valueToY } from '$lib/journeymapper2/journeyConfig.js';
@@ -21,6 +22,7 @@
 
   import PolarChart from '$lib/journeymapper2/PolarChart.svelte';
   import personaFile from '$lib/journeymapper2/journeyPersonas.json';
+	import JourneySentimentRadial from '$lib/journeymapper2/JourneySentimentRadial.svelte';
   
 
   const { metrics, personas } = personaFile;
@@ -138,15 +140,13 @@ $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
   <span class="nav-title">Powered by PatientlyIQ</span>
   </div>
   <!-- ── Body row: sidebar + main content ─────────────────────────────── -->
-  <div class="journey-body">
-    <div class="flex flex-col">
-      <PersonaCardStack
-        {personas}
+    <PersonaTopSelector 
+         {personas}
         {activePersonaId}
-        onOpenDetails={openPersonaDrawer}
-        on:select={handlePersonaSelect}
-      />
-    </div>
+        on:select={(e) => switchPersona(e.detail.id)}
+        />
+  <div class="journey-body">
+
 
 <div class="journey-main">
 
@@ -155,26 +155,16 @@ $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
 
         <div class="shared-scroll" bind:this={scrollEl}>
 
-      <!-- Stages and steps sit above the chart — no axis needed here -->
-      <JourneyStages data={journeyData} />
-      <JourneySteps data={journeyData} />
-
       <!-- ── JourneySentiment ────────────────────────────────────────── -->
-      <JourneySentiment data={journeyData} />
+      <JourneySentimentRadial data={journeyData} />
 
-      <!-- ── JourneyIndex ──────────────────────────────────────────── -->
-      <!-- Axis must be the immediate predecessor of JourneyIndex so its
-           margin-bottom: -SVG_HEIGHT pulls it flush over the grid SVG -->
-      <div class="spacer"></div>
-      <JourneyIndexBars data={journeyData} {metrics} />
-      <JourneyLegend items={metrics} />
     
-          <JourneyTooltip
-            data={journeyData}
-            metrics={metrics}
-            anchorEl={scrollEl}
-            stepWidth={STEP_WIDTH}
-            axisWidth={LEFT_AXIS_WIDTH}
+      <JourneyTooltip
+        data={journeyData}
+        metrics={metrics}
+        anchorEl={scrollEl}
+        stepWidth={STEP_WIDTH}
+        axisWidth={LEFT_AXIS_WIDTH}
           />
         </div>
       </div>

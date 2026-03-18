@@ -3,7 +3,7 @@
   import { cubicOut } from 'svelte/easing';
   import { createEventDispatcher } from 'svelte';
   import IconCaretLeftRegular from 'phosphor-icons-svelte/IconCaretLeftRegular.svelte';
-  import IconCaretRightRegular from 'phosphor-icons-svelte/IconCaretRightRegular.svelte';
+
     
 
   const dispatch = createEventDispatcher();
@@ -366,24 +366,4 @@
     border-radius: 50%;
   }
 
-  .rail-initials {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    color: #F4EFE5;
-    letter-spacing: 0.04em;
-    pointer-events: none;
-  }
-
-  /* Small dot below avatar when active */
-  .rail-pip {
-    position: absolute;
-    bottom: -6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #C4956A;
-  }
 </style>

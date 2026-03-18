@@ -114,7 +114,7 @@
     font-weight: 600;
     color: var(--ink);
     text-transform: uppercase;
-  }
+  } 
 
   .text-body-lg {
     font-family: var(--font-body);
@@ -175,6 +175,33 @@
     padding: 0.125em 0.25em;
     border: 0.5px solid var(--ink);
   }
+}
+
+.persona-avatar {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: visible;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  transition: transform 0.14s, border-color 0.18s;
+}
+
+.persona-avatar:hover {
+  transform: scale(1.08);
+  border-color: #FF4A4A;
+}
+
+.persona-avatar--active {
+  border-color: #ff1616;
+  width: 64px;
+  height: 64px;
 }
 
 /* -------------------------------------------------------------------------- */
