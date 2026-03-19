@@ -200,8 +200,8 @@
 
 .persona-avatar--active {
   border-color: #ff1616;
-  width: 64px;
-  height: 64px;
+  width: 54px;
+  height: 54px;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -258,7 +258,7 @@
   }
 
   /* Layout: Journey */
-  .journey-wrapper { display: flex; flex-direction: column; height: 100vh; }
+  .journey-wrapper { display: flex; flex-direction: column; height: 100vh; min-width: none; }
 
   .journey-body {
     display: flex;
@@ -499,7 +499,7 @@
 
   .pill-white {
     font-family: var(--font-body);
-    font-size: 0.7425em;
+    font-size: 0.625em;
     font-weight: 400;
     text-transform: uppercase;
     color: var(--paper); 
@@ -881,7 +881,7 @@
      since the clip div now contains it. Keep: */
   .shared-scroll {
     overflow-x: auto;
-    overflow-y: visible;  /* allow scale to show full chart */
+    overflow-y: visible;  /* allow scale to show  ll chart */
     width: 100%;
   }
 

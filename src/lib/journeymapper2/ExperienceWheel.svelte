@@ -236,13 +236,13 @@
           class="tp-tooltip tp-tooltip--floating"
           style="left: {tooltipPos.x}px; top: {tooltipPos.y}px;"
         >
-          <div class="pill-sm w-fit">{tp.type.replace(/_/g, ' ')}</div>
+          <div class="pill-white w-fit">{tp.type.replace(/_/g, ' ')}</div>
           <div class="label">{tp.moment}</div>
           <div class="tooltip-divider"></div>
   
           {#if tp.positive_design_opportunity}
             <div class="tooltip-row">
-              <span class="tooltip-icon smiley">☺</span>
+              <Smiley class="w-6" />
               <span class="text-body">{tp.positive_design_opportunity}</span>
             </div>
           {/if}

@@ -941,6 +941,192 @@
           "narrative_description": "When evaluating clinical trials, Margaret feels cautiously hopeful. She trusts her neurologist but worries about the physical and logistical demands participation may require."
         }
       ]
+    },
+    {
+      "id": "persona_4",
+      "type": "caregiver",
+      "profile": {
+        "initials": "KT",
+        "name": "Kristen T.",
+        "role": "Caregiver (Mother)",
+        "age": "mid-30s",
+        "gender": "Female",
+        "occupation": "Part-time / caregiver",
+        "caregiver": "Primary (child with Osteogenesis Imperfecta)",
+        "preference": "Specialist-led care + peer communities",
+        "diagnosed": "At birth / early infancy",
+        "imageFile": "kristenT.jpeg",
+    
+        "quote": "You’re constantly balancing protection and independence. Every fall could mean a fracture, but you still want them to have a normal life.",
+    
+        "bio": "Kristen is the primary caregiver for her young child diagnosed with osteogenesis imperfecta (OI), a rare genetic disorder characterized by brittle bones and frequent fractures. From infancy, she has navigated repeated hospital visits, surgeries, and ongoing physical therapy. She has become highly knowledgeable about OI management, but the emotional and logistical burden remains constant. She operates in a state of continuous vigilance, balancing safety with her child’s quality of life.",
+    
+        "goal1": "Minimize fractures and complications while enabling a normal childhood experience.",
+        "goal2": "Coordinate care across orthopedic surgeons, geneticists, and rehabilitation teams.",
+        "goal3": "Build long-term independence and resilience for her child.",
+    
+        "barrier1": "Constant risk of injury requiring immediate medical intervention.",
+        "barrier2": "High logistical burden from frequent appointments, surgeries, and therapy.",
+        "barrier3": "Emotional strain of maintaining vigilance without limiting the child’s development."
+      },
+    
+      "currentState": [
+        {
+          "label": "Motivation",
+          "value": 0.95,
+          "minLabel": "Avoid changes",
+          "maxLabel": "Seek improvement"
+        },
+        {
+          "label": "Care coordination level",
+          "value": 0.85,
+          "minLabel": "Disjointed",
+          "maxLabel": "Cohesive"
+        },
+        {
+          "label": "Willingness to accept help",
+          "value": 0.72,
+          "minLabel": "Resistant",
+          "maxLabel": "Willing"
+        }
+      ],
+    
+      "discussionThemes": [
+        {
+          "label": "Fractures & surgeries",
+          "sentiments": [0.05, 0.1, 0.15, 0.2, 0.3, 0.4]
+        },
+        {
+          "label": "Care coordination",
+          "sentiments": [0.2, 0.3, 0.4, 0.5, 0.6]
+        },
+        {
+          "label": "Child independence",
+          "sentiments": [0.3, 0.45, 0.55, 0.65, 0.75]
+        },
+        {
+          "label": "Caregiver vigilance",
+          "sentiments": [0.05, 0.1, 0.15, 0.25, 0.35]
+        },
+        {
+          "label": "Community support",
+          "sentiments": [0.4, 0.5, 0.6, 0.7, 0.8]
+        }
+      ],
+    
+      "journey": [
+        {
+          "stage_id": "1",
+          "stage": "Early Diagnosis",
+          "step_id": "1",
+          "step": "Initial Fractures / Diagnosis",
+          "sentiment": -2,
+          "plutchik_score": "alarm",
+          "emotional_valence": -4,
+          "provider_trust": 2,
+          "medical_self_efficacy": -2,
+          "logistical_capacity": -2,
+          "narrative_description": "Early fractures lead to rapid escalation into specialist care. Kristen feels shock and fear, trying to understand a rare diagnosis while managing immediate medical needs.",
+          "quote": "We didn’t even know what OI was — suddenly we were in a world of specialists and uncertainty."
+        },
+        {
+          "stage_id": "1",
+          "stage": "Early Diagnosis",
+          "step_id": "2",
+          "step": "Genetic Confirmation",
+          "sentiment": -1,
+          "plutchik_score": "fear+anticipation",
+          "emotional_valence": -3,
+          "provider_trust": 3,
+          "medical_self_efficacy": -1,
+          "logistical_capacity": -1,
+          "narrative_description": "Genetic confirmation provides clarity but reinforces the lifelong nature of the condition. Kristen begins shifting from reaction to long-term planning."
+        },
+        {
+          "stage_id": "2",
+          "stage": "Acute Management",
+          "step_id": "3",
+          "step": "Cycle of Fractures + ER Visits",
+          "sentiment": -3,
+          "plutchik_score": "fear+distress",
+          "emotional_valence": -5,
+          "provider_trust": 1,
+          "medical_self_efficacy": -2,
+          "logistical_capacity": -4,
+          "inflection": "Y",
+          "inflection_pos": 2,
+          "inflection_neg": -3,
+          "narrative_description": "Frequent fractures create a repetitive cycle of ER visits, casting, and recovery. Kristen experiences exhaustion and hypervigilance, constantly anticipating the next injury.",
+          "quote": "You’re always waiting for the next break. It never fully leaves your mind."
+        },
+        {
+          "stage_id": "2",
+          "stage": "Acute Management",
+          "step_id": "4",
+          "step": "Orthopedic Surgery",
+          "sentiment": -1,
+          "plutchik_score": "fear+trust",
+          "emotional_valence": -2,
+          "provider_trust": 4,
+          "medical_self_efficacy": 1,
+          "logistical_capacity": -3,
+          "narrative_description": "Surgical interventions offer structural stability but introduce new risks. Trust in specialized providers increases despite ongoing fear."
+        },
+        {
+          "stage_id": "3",
+          "stage": "Rehabilitation",
+          "step_id": "5",
+          "step": "Physical Therapy + Mobility Training",
+          "sentiment": 1,
+          "plutchik_score": "hope+anticipation",
+          "emotional_valence": 2,
+          "provider_trust": 4,
+          "medical_self_efficacy": 3,
+          "logistical_capacity": -2,
+          "narrative_description": "Rehabilitation introduces progress and optimism. Kristen sees incremental gains in strength and mobility, reinforcing her role as an active care coordinator."
+        },
+        {
+          "stage_id": "4",
+          "stage": "Daily Life Adaptation",
+          "step_id": "6",
+          "step": "Balancing Safety vs Independence",
+          "sentiment": 0,
+          "plutchik_score": "fear+trust",
+          "emotional_valence": 0,
+          "provider_trust": 3,
+          "medical_self_efficacy": 4,
+          "logistical_capacity": -1,
+          "narrative_description": "Kristen navigates constant tradeoffs between protecting her child and enabling normal development. This becomes a persistent emotional tension.",
+          "quote": "You don’t want to hold them back, but you’re always thinking about what could happen."
+        },
+        {
+          "stage_id": "5",
+          "stage": "Long-Term Management",
+          "step_id": "7",
+          "step": "Becoming an Expert Caregiver",
+          "sentiment": 2,
+          "plutchik_score": "trust+anticipation",
+          "emotional_valence": 3,
+          "provider_trust": 4,
+          "medical_self_efficacy": 5,
+          "logistical_capacity": 1,
+          "narrative_description": "Over time, Kristen becomes highly knowledgeable about OI care. She advocates effectively, coordinates care, and anticipates complications.",
+          "quote": "You learn everything — medications, signs of fractures, who to call. You have to."
+        },
+        {
+          "stage_id": "5",
+          "stage": "Long-Term Management",
+          "step_id": "8",
+          "step": "Community + Support Networks",
+          "sentiment": 2,
+          "plutchik_score": "joy+trust",
+          "emotional_valence": 3,
+          "provider_trust": 3,
+          "medical_self_efficacy": 4,
+          "logistical_capacity": 2,
+          "narrative_description": "Connecting with other OI families reduces isolation and provides practical strategies. Emotional burden becomes more manageable through shared experience."
+        }
+      ]
     }
   ]
 }

@@ -1,7 +1,7 @@
 <script>
   import { selectedIndex } from './journeyStore.js';
   import ExperienceWheel from './ExperienceWheel.svelte';
-  import { emotionColor, DYAD_BY_ID, SCORE_ALIASES } from './journeyConfig.js';
+  import { emotionColor, ratingToLabel, DYAD_BY_ID, SCORE_ALIASES } from './journeyConfig.js';
 
   export let data    = [];
   export let metrics = [];
@@ -9,16 +9,8 @@
   export let wheelData = /** @type {any} */ (null);
 
   $: step = $selectedIndex >= 0 ? data[$selectedIndex] : null;
+  $: sentimentLabel = step ? ratingToLabel(step.sentiment) : '';
 
-  /**
-   * For the current step's plutchik_score, resolve to a canonical id,
-   * then check if it's a dyad. If so, return the two primary emotion colors.
-   * If it's a primary emotion, return just that one color in an array.
-   *
-   * Priority: DYAD_BY_ID first (raw label may be a dyad like "hope"),
-   * then SCORE_ALIASES (for intensity variants like "alarm" → "fear"),
-   * then treat as a primary emotion id directly.
-   */
   $: emotionSwatches = (() => {
     if (!step) return [];
     const raw = step.plutchik_score?.toLowerCase().trim() ?? '';
@@ -53,13 +45,15 @@
   function toPercent(val) {
     return ((parseFloat(val) + 5) / 10) * 100;
   }
+
+  
 </script>
 
 {#if step}
   <div class="content-wrap">
 
     <!-- Step name -->
-    <h2 class="heading">
+    <h2 class="heading text-3xl">
       {step.step}
     </h2>
     <div class="flex flex-row gap-4 w-full justify-between">
@@ -75,7 +69,7 @@
             <span class="sentiment-value" style="color: {sentimentToColor(step.sentiment)};">
               {parseFloat(step.sentiment) > 0 ? '+' : ''}{step.sentiment}
             </span>
-            <span class="label uppercase">{step.plutchik_score}</span>
+            <span class="label uppercase font-medium">{step.sentimentLabel}</span>
           </div>
         </div>
     
@@ -87,7 +81,7 @@
             {#each emotionSwatches as color}
               <span class="w-4 h-4 ring-1 ring-slate-800" style="background: {color};" />
             {/each}
-            <span class="label uppercase">{step.plutchik_score}</span>
+            <span class="label uppercase font-medium">{step.plutchik_score}</span>
           </div>
         </div>
       </div>

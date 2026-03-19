@@ -71,6 +71,9 @@
     return groups;
   })();
 
+  // ── Hover helpers ──────────────────────────────────────────────────────────
+  $: anyHovered = $hoveredIndex >= 0;
+
   // ── Curve toggle helpers ───────────────────────────────────────────────────
   $: isSmooth = curve === curveCatmullRomClosed;
   function setSmooth() { curve = curveCatmullRomClosed as CurveFactory; }
@@ -92,19 +95,18 @@
   // ── Radial geometry ────────────────────────────────────────────────────────
   const PADDING = 128;
 
-  $: plotR    = svgSize / 2 - PADDING;   // Layerchart plot radius
-  $: arcInner = plotR + 32;              // inner edge of stage band (gap = step label lane)
-  $: arcOuter = arcInner + 8;           // outer edge of stage band
+  $: plotR    = svgSize / 2 - PADDING;
+  $: arcInner = plotR + 32;
+  $: arcOuter = arcInner + 8;
 
   $: n = chartData.length;
   $: stepAngle = n > 0 ? (2 * Math.PI) / n : 0;
 
-  // Angles measured from top (−π/2), clockwise — matches Layerchart scaleBand
   function stepStartAngle(idx: number) { return -Math.PI / 2 + idx * stepAngle - stepAngle / 2; }
   function stepEndAngle  (idx: number) { return -Math.PI / 2 + idx * stepAngle + stepAngle / 2; }
   function stepMidAngle  (idx: number) { return -Math.PI / 2 + idx * stepAngle; }
 
-  // ── D3 arc generator for the stage band ───────────────────────────────────
+  // ── D3 arc generator ──────────────────────────────────────────────────────
   $: arcGen = d3Arc<{ startAngle: number; endAngle: number }>()
     .innerRadius(arcInner)
     .outerRadius(arcOuter)
@@ -115,13 +117,13 @@
 
   // ── Stage arc data ─────────────────────────────────────────────────────────
   interface StageArc {
-    group:       StageGroup;
-    arcPath:     string;
-    midAngle:    number;
-    spanAngle:   number;
-    labelX:      number;
-    labelY:      number;
-    labelAnchor: string;
+    group:         StageGroup;
+    arcPath:       string;
+    midAngle:      number;
+    spanAngle:     number;
+    labelX:        number;
+    labelY:        number;
+    labelAnchor:   string;
     labelBaseline: string;
   }
 
@@ -131,9 +133,9 @@
     if (!svgSize || !n) return [] as StageArc[];
 
     return stageGroups.map((g): StageArc => {
-      const sa   = stepStartAngle(g.startIndex);
-      const ea   = stepEndAngle(g.endIndex);
-      const mid  = (sa + ea) / 2;
+      const sa  = stepStartAngle(g.startIndex);
+      const ea  = stepEndAngle(g.endIndex);
+      const mid = (sa + ea) / 2;
       const span = ea - sa;
 
       const arcPath = arcGen({ startAngle: sa, endAngle: ea }) ?? '';
@@ -142,28 +144,18 @@
       const dx = Math.cos(mid);
       const dy = Math.sin(mid);
       const EXTRA_OFFSET = 10;
-      const lx = (BASE_R * dx) + (dx * EXTRA_OFFSET);
-      const ly = (BASE_R * dy) + (dy * EXTRA_OFFSET);
+      const lx = BASE_R * dx + dx * EXTRA_OFFSET;
+      const ly = BASE_R * dy + dy * EXTRA_OFFSET;
 
-      const normMid = ((mid % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
       let anchor: 'start' | 'middle' | 'end' = 'middle';
       let baseline: 'middle' | 'hanging' | 'baseline' = 'middle';
+      if (dx > 0.3)       anchor   = 'start';
+      else if (dx < -0.3) anchor   = 'end';
+      if (dy < -0.6)      baseline = 'baseline';
+      else if (dy > 0.6)  baseline = 'hanging';
 
-      if (dx > 0.3) anchor = 'start';
-      else if (dx < -0.3) anchor = 'end';
-      if (dy < -0.6) baseline = 'baseline';
-      else if (dy > 0.6) baseline = 'hanging';
-
-      return {
-        group: g,
-        arcPath,
-        midAngle: mid,
-        spanAngle: span,
-        labelX: lx,
-        labelY: ly,
-        labelAnchor: anchor,
-        labelBaseline: baseline
-      };
+      return { group: g, arcPath, midAngle: mid, spanAngle: span,
+               labelX: lx, labelY: ly, labelAnchor: anchor, labelBaseline: baseline };
     });
   })();
 
@@ -171,11 +163,11 @@
   $: stepLabelR = plotR + (arcInner - plotR) / 2;
 
   interface StepLabel {
-    x: number;
-    y: number;
-    angle: number;
+    x:      number;
+    y:      number;
+    angle:  number;
     anchor: string;
-    lines: string[];
+    lines:  string[];
   }
 
   $: stepLabels = (() => {
@@ -205,24 +197,46 @@
     });
   })();
 
-  // ── Hit circle geometry — radius proportional to the value, for hover ──────
-  // Each hit circle sits at the spline's plotted position in polar space.
-  // r=plotR maps to value=5, r=0 maps to value=-5 (same scale as yDomain).
-  // We clamp to a minimum so even very negative values get a hittable target.
+  // ── Spoke geometry — drawn manually for per-spoke opacity control ──────────
+  $: spokePoints = (() => {
+    if (!svgSize || !n) return [] as { x1: number; y1: number; x2: number; y2: number }[];
+    return chartData.map((_, i) => {
+      const theta = stepMidAngle(i);
+      const INNER_STUB = plotR * 0.08;
+      return {
+        x1: INNER_STUB * Math.cos(theta),
+        y1: INNER_STUB * Math.sin(theta),
+        x2: (plotR + 2) * Math.cos(theta),
+        y2: (plotR + 2) * Math.sin(theta),
+      };
+    });
+  })();
+
+  // ── Hit circles at each plotted data point ────────────────────────────────
+  // Mirrors Layerchart's radial scale: yDomain [-5,5], yPadding [0,1]
   $: hitPoints = (() => {
     if (!svgSize || !n) return [] as { x: number; y: number; r: number; index: number }[];
-
     return chartData.map((d, i) => {
       const theta = stepMidAngle(i);
-      // Mirror Layerchart's linear radial scale: yDomain [-5,5], yPadding [0,1]
-      // effectiveMax = 5 + 1 = 6, scale factor = plotR / 6
-      const effectiveMax = 6;
+      const effectiveMax = 6; // 5 + yPadding 1
       const scaledR = ((d.value + 5) / (effectiveMax + 5)) * plotR;
-      const clampedR = Math.max(scaledR, 0);
       return {
-        x: clampedR * Math.cos(theta),
-        y: clampedR * Math.sin(theta),
-        r: 18,  // generous hit radius for easy targeting
+        x: Math.max(scaledR, 0) * Math.cos(theta),
+        y: Math.max(scaledR, 0) * Math.sin(theta),
+        r: 18,
+        index: i,
+      };
+    });
+  })();
+
+  // ── Wide invisible lines along each spoke for easy spoke targeting ─────────
+  $: spokeHitLines = (() => {
+    if (!svgSize || !n) return [] as { x2: number; y2: number; index: number }[];
+    return chartData.map((_, i) => {
+      const theta = stepMidAngle(i);
+      return {
+        x2: arcInner * Math.cos(theta),
+        y2: arcInner * Math.sin(theta),
         index: i,
       };
     });
@@ -263,7 +277,7 @@
       >
         <Svg center>
 
-          <!-- Grid rings -->
+          <!-- Grid rings — always fully visible -->
           <Axis placement="radius"
             grid={{ class: 'stroke-(--ink) opacity-10' }}
             ticks={[-4, -2, 0, 2, 4]}
@@ -276,49 +290,69 @@
               format={() => ''} />
           {/if}
 
-          <!-- Spokes -->
+          <!-- Layerchart angle axis — hidden; we draw our own spokes below -->
           <Axis placement="angle"
-            grid={{ class: 'stroke-(--ink) opacity-8' }}
+            grid={{ class: 'opacity-0' }}
             tickLength={0}
             format={() => ''} />
 
-          <!-- Positive fill -->
-          <Area data={chartData}
-            y0={() => 0}
-            y1={(d: ChartDatum) => Math.max(0, d.value)}
-            {curve}
-            class="fill-[#27ae60] opacity-20" />
+          <!-- ── Fills — whole-group dim on any hover ──────────────────── -->
+          <g style="opacity:{anyHovered ? 0.08 : 1}; transition:opacity 200ms ease;">
+            <Area data={chartData}
+              y0={() => 0}
+              y1={(d: ChartDatum) => Math.max(0, d.value)}
+              {curve}
+              class="fill-[#27ae60] opacity-20" />
+          </g>
 
-          <!-- Negative fill -->
-          <Area data={chartData}
-            y0={(d: ChartDatum) => Math.min(0, d.value)}
-            y1={() => 0}
-            {curve}
-            class="fill-[#c0392b] opacity-20" />
+          <g style="opacity:{anyHovered ? 0.08 : 1}; transition:opacity 200ms ease;">
+            <Area data={chartData}
+              y0={(d: ChartDatum) => Math.min(0, d.value)}
+              y1={() => 0}
+              {curve}
+              class="fill-[#c0392b] opacity-20" />
+          </g>
 
-          <!-- Spline -->
-          <Spline data={chartData} y="value" {curve}
-            class="stroke-(--ink) stroke-[1.5px] fill-none" />
+          <!-- ── Spline — dims on any hover ────────────────────────────── -->
+          <g style="opacity:{anyHovered ? 0.1 : 1}; transition:opacity 200ms ease;">
+            <Spline data={chartData} y="value" {curve}
+              class="stroke-(--ink) stroke-[1.5px] fill-none" />
+          </g>
 
-          <!-- Points -->
-          <Points data={chartData} y="value" r={4}
-            class="stroke-(--ink) stroke-[1px] fill-transparent" />
+          <!-- Layerchart Points suppressed — replaced by D3 overlay dots -->
+          <g class="opacity-0" aria-hidden="true">
+            <Points data={chartData} y="value" r={0} />
+          </g>
 
-          <!-- Radius labels -->
+          <!-- Radius axis labels — always visible -->
           <Axis placement="radius"
             rule={{ y: 'top', class: 'stroke-(--ink) opacity-20' }}
             ticks={[-4, 0, 4]}
             format={(v: number) => (v > 0 ? `+${v}` : `${v}`)} />
 
           <!-- ── D3 overlay ──────────────────────────────────────────────── -->
-          <g aria-hidden="true">
+          <g>
 
-            <!-- Stage arc bands -->
-            {#each stageArcs as arc}
-              <path d={arc.arcPath} fill={arc.group.color} opacity="0.85" />
+            <!-- Per-spoke axis lines — dim non-active spokes on hover -->
+            {#each spokePoints as sp, i}
+              {@const isActive = $hoveredIndex === i}
+              <line
+                x1={sp.x1} y1={sp.y1}
+                x2={sp.x2} y2={sp.y2}
+                stroke="var(--ink)"
+                stroke-width={isActive ? 1.5 : 0.75}
+                opacity={anyHovered ? (isActive ? 0.55 : 0.06) : 0.12}
+                style="transition: opacity 200ms ease, stroke-width 150ms ease;"
+                pointer-events="none"
+              />
             {/each}
 
-            <!-- Stage labels -->
+            <!-- Stage arc bands — always visible -->
+            {#each stageArcs as arc}
+              <path d={arc.arcPath} fill={arc.group.color} opacity="0.85" pointer-events="none" />
+            {/each}
+
+            <!-- Stage labels — always visible -->
             {#each stageArcs as arc}
               <text
                 x={arc.labelX}
@@ -326,59 +360,39 @@
                 text-anchor={arc.labelAnchor}
                 dominant-baseline="start"
                 class="label"
+                pointer-events="none"
               >{arc.group.label}</text>
             {/each}
 
-            <!-- Step labels -->
-            {#if showLabels}
-              {#each stepLabels as lbl, i}
-                <text
-                  transform="translate({lbl.x},{lbl.y})"
-                  text-anchor={lbl.anchor}
-                  class="label-sm"
-                  dominant-baseline="end"
-                >
-                  {#each lbl.lines as line, li}
-                    <tspan
-                      x="0"
-                      dy={li === 0 ? -(lbl.lines.length - 1) * 5 : 10}
-                    >{line}</tspan>
-                  {/each}
-                </text>
-              {/each}
-            {/if}
-
-            <!-- ── Invisible hit circles at each data point ───────────────
-                 These capture hover events and update hoveredIndex so
-                 JourneyTooltip knows which step to show.               -->
-            {#each hitPoints as pt}
-              <circle
-                cx={pt.x}
-                cy={pt.y}
-                r={pt.r}
-                fill="transparent"
-                style="cursor: crosshair;"
-                on:mouseenter={() => hoveredIndex.set(pt.index)}
-                on:mouseleave={() => hoveredIndex.set(-1)}
-              />
+            <!-- Per-step data point dots — dim non-active on hover -->
+            {#each chartData as d, i}
+              {@const hp = hitPoints[i]}
+              {@const isActive = $hoveredIndex === i}
+              {#if hp}
+                <circle
+                  cx={hp.x} cy={hp.y}
+                  r={isActive ? 6 : 4}
+                  fill={d.color}
+                  stroke="var(--ink)"
+                  stroke-width={isActive ? 1.5 : 0.75}
+                  opacity={anyHovered ? (isActive ? 1 : 0.08) : 0.8}
+                  style="transition: opacity 200ms ease;"
+                  pointer-events="none"
+                />
+              {/if}
             {/each}
 
-            <!-- Hovered point highlight ring -->
+            <!-- Active point highlight ring -->
             {#if $hoveredIndex >= 0 && hitPoints[$hoveredIndex]}
               {@const hp = hitPoints[$hoveredIndex]}
               {@const hd = chartData[$hoveredIndex]}
               <circle
-                cx={hp.x}
-                cy={hp.y}
-                r={9}
-                fill={hd.color}
-                opacity="0.9"
+                cx={hp.x} cy={hp.y} r={11}
+                fill={hd.color} opacity="0.9"
                 pointer-events="none"
               />
               <circle
-                cx={hp.x}
-                cy={hp.y}
-                r={14}
+                cx={hp.x} cy={hp.y} r={17}
                 fill="none"
                 stroke={hd.color}
                 stroke-width="1.5"
@@ -387,6 +401,53 @@
                 pointer-events="none"
               />
             {/if}
+
+            <!-- ── Step labels — hover on the text itself ─────────────────
+                 Targets: the label text + the step's spoke + the data point.
+                 All three share the same mouseenter/mouseleave handlers.    -->
+            {#if showLabels}
+              {#each stepLabels as lbl, i}
+                {@const isActive = $hoveredIndex === i}
+                <text
+                  transform="translate({lbl.x},{lbl.y}) rotate({lbl.angle})"
+                  text-anchor={lbl.anchor}
+                  class="label-sm step-label"
+                  dominant-baseline="end"
+                  opacity={anyHovered ? (isActive ? 1 : 0.1) : 0.85}
+                  style="transition: opacity 200ms ease; cursor: default;"
+                  on:mouseenter={() => hoveredIndex.set(i)}
+                  on:mouseleave={() => hoveredIndex.set(-1)}
+                >
+                  {#each lbl.lines as line, li}
+                    <tspan x="0" dy={li === 0 ? -(lbl.lines.length - 1) * 5 : 10}>{line}</tspan>
+                  {/each}
+                </text>
+              {/each}
+            {/if}
+
+            <!-- ── Wide invisible spoke hit areas ────────────────────────── -->
+            {#each spokeHitLines as sh}
+              <line
+                x1="0" y1="0"
+                x2={sh.x2} y2={sh.y2}
+                stroke="transparent"
+                stroke-width="28"
+                style="cursor: crosshair;"
+                on:mouseenter={() => hoveredIndex.set(sh.index)}
+                on:mouseleave={() => hoveredIndex.set(-1)}
+              />
+            {/each}
+
+            <!-- ── Invisible hit circles at each data point ──────────────── -->
+            {#each hitPoints as pt}
+              <circle
+                cx={pt.x} cy={pt.y} r={pt.r}
+                fill="transparent"
+                style="cursor: crosshair;"
+                on:mouseenter={() => hoveredIndex.set(pt.index)}
+                on:mouseleave={() => hoveredIndex.set(-1)}
+              />
+            {/each}
 
           </g>
 
@@ -424,7 +485,7 @@
 
 </div>
 
-<!-- ── Tooltip — listens to hoveredIndex store automatically ──────────────── -->
+<!-- ── Tooltip ────────────────────────────────────────────────────────────── -->
 <JourneyTooltip {data} {metrics} />
 
 <style>
@@ -456,5 +517,10 @@
   .btn-base.active {
     background-color: var(--ink);
     color: var(--paper);
+  }
+
+  /* SVG text needs explicit pointer-events to fire mouseenter/mouseleave */
+  .step-label {
+    pointer-events: all;
   }
 </style>
