@@ -108,7 +108,7 @@
       },
       "sponsor_actions": [
         {
-          
+
           "category": "communication",
           "action": "Develop educational materials acknowledging diagnostic complexity",
           "timing": "pre-trial engagement phase"
@@ -365,13 +365,13 @@
           "logistical_capacity": -1,
           "narrative_description": "Seeking a second opinion feels proactive. Margaret regains some agency and begins researching more deeply, determined to reach diagnostic clarity."
         },
-        {
+         {
           "stage_id": "3",
           "stage": "Diagnosis",
           "step_id": "8",
           "step": "Parkinson's Diagnosis",
           "sentiment": -1,
-          "inflection":"Y",
+          "inflection": "Y",
           "inflection_pos": 2,
           "inflection_neg": -2,
           "plutchik_score": "grief",
@@ -379,7 +379,33 @@
           "provider_trust": -1,
           "medical_self_efficacy": -4,
           "logistical_capacity": -4,
-          "narrative_description": "The Parkinson’s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. She feels overwhelmed by the long arc of disease progression."
+          "narrative_description": "The Parkinson’s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. She feels overwhelmed by the long arc of disease progression.",
+          "inflection_detail": {
+            "label": "Diagnosis Decision Point",
+            "description": "Receiving a confirmed Parkinson's diagnosis is the central inflection of Margaret's journey. How she and her care team respond in the immediate aftermath — emotionally, informationally, and logistically — determines whether she moves toward empowered self-management or retreats into isolation and fear.",
+            "risk_level": "critical",
+            "dropout_risk": "high",
+            "sponsor_opportunity": "Develop a diagnosis-day support package for HCPs: standardized emotional framing language, a patient-facing 'What happens next' one-pager, and a warm handoff to a patient navigator or advocacy organization.",
+            "data_needed": "Rate of clinical trial awareness at time of confirmed PD diagnosis; proportion of patients who receive disease management education within 30 days of diagnosis.",
+            "paths": [
+              {
+                "id": "path_pos",
+                "direction": "positive",
+                "label": "Supported Transition to Self-Management",
+                "outcome": "Margaret receives structured post-diagnosis education, is connected to an advocacy community, and begins shared decision-making with her neurologist. Trial awareness is introduced within 60 days.",
+                "sentiment_delta": 2,
+                "key_driver": "Proactive HCP communication, patient navigator support, and strong family involvement."
+              },
+              {
+                "id": "path_neg",
+                "direction": "negative",
+                "label": "Emotional Withdrawal and Disengagement",
+                "outcome": "Without structured support, grief dominates. Margaret delays follow-up appointments, withdraws from her caregiver network, and is unlikely to engage with trial options for 12+ months.",
+                "sentiment_delta": -2,
+                "key_driver": "Information overload at point of diagnosis, lack of emotional scaffolding, and unaddressed logistical concerns."
+              }
+            ]
+          }
         },
         {
           "stage_id": "4",
@@ -631,7 +657,33 @@
           "provider_trust": 0,
           "medical_self_efficacy": -3,
           "logistical_capacity": -5,
-          "narrative_description": "The diagnosis confirms disease seriousness. David shifts into logistical planning mode, focusing on long-term care implications, financial impact, and progression management."
+          "narrative_description": "The diagnosis confirms disease seriousness. David shifts into logistical planning mode, focusing on long-term care implications, financial impact, and progression management.",
+          "inflection_detail": {
+            "label": "Planning Mode Activation",
+            "description": "Unlike Margaret, David's response to confirmed diagnosis is less emotional and more operational. The inflection here is whether David's logistical focus becomes a strength — channeled into structured care coordination and trial evaluation — or a vulnerability that masks unprocessed grief and caregiver burnout.",
+            "risk_level": "high",
+            "dropout_risk": "moderate",
+            "sponsor_opportunity": "Offer caregiver-specific onboarding materials alongside patient diagnosis support. A 'caregiver care plan' tool that addresses financial planning, respite resources, and care team communication would directly address David's profile.",
+            "data_needed": "Caregiver burnout rate within 6 months of patient PD diagnosis; proportion of caregivers included in post-diagnosis HCP conversations.",
+            "paths": [
+              {
+                "id": "path_pos",
+                "direction": "positive",
+                "label": "Structured Caregiver Engagement",
+                "outcome": "David channels logistical energy productively. He builds a care coordination system, engages with the patient advocacy community, and begins evaluating clinical trials as a family unit within 90 days of diagnosis.",
+                "sentiment_delta": 2,
+                "key_driver": "Access to caregiver-specific resources, clear communication from the care team, and online community connection."
+              },
+              {
+                "id": "path_neg",
+                "direction": "negative",
+                "label": "Caregiver Burnout and Isolation",
+                "outcome": "David becomes the sole coordinator without support. Logistical burden escalates, grief goes unaddressed, and he disengages from trial conversations due to perceived complexity and time cost.",
+                "sentiment_delta": -2,
+                "key_driver": "No caregiver support touchpoint from HCP team; financial anxiety and time pressure dominate decision-making."
+              }
+            ]
+          }
         },
         {
           "stage_id": "5",

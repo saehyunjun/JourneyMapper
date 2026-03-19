@@ -450,13 +450,6 @@
       gap: 3px;
     }
   
-    /* ── Index metrics ───────────────────────────────────────────── */
-    .metrics-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-  
     .index-metric-row {
       display: flex;
       flex-direction: column;
