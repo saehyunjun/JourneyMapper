@@ -138,31 +138,11 @@ function toggle(e) {
   </div>
 </div>
 
-<!-- ── Bio tooltip ──────────────────────────────────────────────────────── -->
-{#if hovered && personaProfile.bio}
-  <div
-    class="persona-bio-tooltip jm-surface"
-    style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px;"
-    role="tooltip"
-    aria-live="polite"
-  >
-    <div class="jm-section-bar" style="margin-bottom: 10px;">
-      <span class="label-lg">{personaProfile.name}</span>
-      {#if personaProfile.role}
-        <span class="pill-sm">{personaProfile.role}</span>
-      {/if}
-    </div>
-    <p class="tip-bio">{personaProfile.bio}</p>
-  </div>
-{/if}
-
 <style>
   /* ── Scene: holds the perspective so preserve-3d works correctly ──── */
   .card-scene {
-    width: 30vw;
-    height: 500px;
-    max-width: 325px;
-    perspective: 1000px;
+    height: 225px;
+    aspect-ratio: 9/6 auto;
     cursor: pointer;
     flex-shrink: 0;
   }
@@ -221,17 +201,6 @@ function toggle(e) {
     object-fit: cover;
   }
 
-  .card-initials {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-heading);
-    font-size: 36px;
-    background: var(--card, #2a2a2a);
-    color: #fff;
-  }
 
   /* Gradient overlay for legibility */
   .card-gradient {
@@ -402,24 +371,5 @@ function toggle(e) {
     color: var(--text-muted, #6b6050);
     white-space: nowrap;
   }
-  /* ── Bio tooltip (no existing styles modified) ───────────────────── */
-  .persona-bio-tooltip {
-    position: fixed;
-    pointer-events: none;
-    z-index: 400;
-    padding: 12px 14px 14px;
-    transition: left 60ms linear, top 60ms linear;
-  }
 
-  .tip-bio {
-    font-family: var(--font-body, 'IBM Plex Sans', sans-serif);
-    font-size: 11.5px;
-    line-height: 1.65;
-    color: #3b3b3b;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 10;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
 </style>

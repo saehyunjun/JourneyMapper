@@ -79,7 +79,7 @@
   
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="persona-topbar" aria-label="Persona selector" on:mousemove={handleMouseMove}>
-    <div class="flex flex-row align-middle justify-evenly">
+    <div class="flex flex-row gap-4 py-2 align-middle justify-evenly">
       {#each personas as p (p.id)}
         {@const active = p.id === activePersonaId}
         <div class="flex flex-col items-center">
@@ -132,7 +132,7 @@
   
         <!-- Bio excerpt -->
         {#if hp.profile.bio}
-          <p class="body-text-sm">{hp.profile.bio}</p>
+          <p class="body-text text-sm">{hp.profile.bio}</p>
         {/if}
   
         <!-- Key fields -->
@@ -154,7 +154,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #fff;
+      background: #FFFFF0;
       border-bottom: 1px solid #F4EFE5;
       box-sizing: border-box;
     }
@@ -205,16 +205,6 @@
       border-radius: 50%;
       display: block;
     }
-  
-    .persona-initials {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      color: #F4EFE5;
-      letter-spacing: 0.04em;
-      line-height: 1;
-    }
-  
     /* ── Tooltip ────────────────────────────────────────────────────────── */
     .persona-top-tooltip {
       position: fixed;

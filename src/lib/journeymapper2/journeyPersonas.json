@@ -108,6 +108,7 @@
       },
       "sponsor_actions": [
         {
+          
           "category": "communication",
           "action": "Develop educational materials acknowledging diagnostic complexity",
           "timing": "pre-trial engagement phase"
@@ -133,7 +134,7 @@
         "initials": "KW",
         "name": "Karl W.",
         "role": "Patient",
-        "age": "mid-40s",
+        "age": "mid-60s",
         "gender": "Male",
         "occupation": "Part-time",
         "caregiver": "None",
@@ -142,7 +143,7 @@
         "concerns": "testing",
         "diagnosed": "5 years ago",
         "imageFile": "KarlW.jpeg",
-        "bio": "Alex is a mid-career technology professional who began experiencing unexplained neurological symptoms that disrupted his work and daily routines. After a long diagnostic journey involving multiple specialists, he was finally diagnosed with a rare condition. Alex approaches his healthcare analytically and often researches medical literature and patient communities before making decisions about treatment or trials.",
+        "bio": "Karl is a mid-career technology professional who began experiencing unexplained neurological symptoms that disrupted his work and daily routines. After a long diagnostic journey involving multiple specialists, he was finally diagnosed with a rare condition. Karl approaches his healthcare analytically and often researches medical literature and patient communities before making decisions about treatment or trials.",
 
         "goal1": "Understand the full range of treatment options and how they might affect long-term outcomes.",
         "goal2": "Maintain his professional productivity and independence despite symptoms.",
@@ -1089,7 +1090,7 @@
           "stage_id": "4",
           "stage": "Daily Life Adaptation",
           "step_id": "6",
-          "step": "Balancing Safety vs Independence",
+          "step": "Balancing Independence",
           "sentiment": 0,
           "plutchik_score": "fear+trust",
           "emotional_valence": 0,

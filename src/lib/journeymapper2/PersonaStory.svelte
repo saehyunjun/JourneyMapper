@@ -147,9 +147,9 @@
             {/if}
             <div class="bio-scrim" aria-hidden="true" />
             <div class="bio-overlay">
-              <span class="pill-white">{(persona.type ?? 'persona').charAt(0).toUpperCase() + (persona.type ?? 'persona').slice(1)}</span>
+              <span class="pill-white w-fit px-2">{(persona.type ?? 'persona').charAt(0).toUpperCase() + (persona.type ?? 'persona').slice(1)}</span>
               <h2 class="heading" style="color:#fff; font-size:1.4rem">{profile.name}</h2>
-              <span class="label-heading" style="color:rgba(255,255,255,0.7)">{profile.role ?? ''}</span>
+
             </div>
           </div>
   
@@ -411,14 +411,6 @@
       flex-direction: column;
     }
   
-    /* Bio hero */
-    .bio-hero {
-      position: relative;
-      height: 190px;
-      flex-shrink: 0;
-      overflow: hidden;
-      background: #e8e5de;
-    }
     .bio-photo {
       width: 100%;
       height: 100%;

@@ -4,8 +4,11 @@
     import JourneySteps         from '$lib/journeymapper2/JourneySteps.svelte';
     import JourneyStages        from '$lib/journeymapper2/JourneyStages.svelte';
     import JourneySentiment     from '$lib/journeymapper2/JourneySentiment.svelte';
+    import JourneyFlowDiagram from '$lib/journeymapper2/JourneyFlowDiagram.svelte';
     import PersonaStory         from '$lib/journeymapper2/PersonaStory.svelte';
     import JourneyTooltip       from '$lib/journeymapper2/JourneyTooltip.svelte';
+    import JourneyInfoSidebar from '$lib/journeymapper2/JourneyInfoSidebar.svelte';
+
     import JourneyDrawer        from '$lib/journeymapper2/JourneyDrawer.svelte';
     import StepDetailContent    from '$lib/journeymapper2/StepDetailContent.svelte';
     import PlutchikContent      from '$lib/journeymapper2/PlutchikContent.svelte';
@@ -115,7 +118,7 @@
   
 <div class="journey-wrapper overflow-x-scroll">
 
-  <!-- ── Nav bar ───────────────────────────────────────────────────────── -->
+  <!-- ── Nav bar ─────────────────────────────────~─────────────────────── -->
   <div class="title-bar flex flex-row min-w-full">
     <span class="h3 nav-title">JourneyMapper</span>
     <span class="nav-title">Powered by PatientlyIQ</span>
@@ -135,6 +138,8 @@
 
       <!-- ── Chart area ─────────────────────────────────────────────── -->
       <div class="journey-index">
+        <JourneyFlowDiagram data={journeyData} />
+
         <div class="shared-scroll" bind:this={scrollEl}>
 
           <JourneyStages data={journeyData} />
@@ -146,20 +151,21 @@
           <JourneyIndexBars data={journeyData} {metrics} />
           <JourneyLegend items={metrics} />
 
-          <JourneyTooltip
-            data={journeyData}
-            metrics={metrics}
-            anchorEl={scrollEl}
-            stepWidth={STEP_WIDTH}
-            axisWidth={LEFT_AXIS_WIDTH}
-          />
         </div>
       </div>
 
-    </div>
+    </div>  
+
+       <!-- RIGHT sidebar — 1/6 width, full height -->
+       <JourneyInfoSidebar
+       {activePersona}
+       data={journeyData}
+       {metrics}
+     />
+   </div>
   </div>
 
-</div>
+
 
 <!-- ── Drawer ────────────────────────────────────────────────────────────── -->
 <JourneyDrawer

@@ -563,10 +563,9 @@
 
   .tooltip .emotion-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr auto;
     gap: 14px;
     align-items: center;
-    padding: 6px 2px 10px;
     border-bottom: var(--stroke);
   }
 
