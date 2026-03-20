@@ -18,9 +18,11 @@
   /* Core palette */
   --ink: #312F28;
   --gray: #919191;
+  --grayblue: #3B4B59;
+  --orange: #CC6324;
   --paper: #FFFFF0;
-  --panel: #e8e8e8;
-  --card: #d8deed;
+  --panel: #D9C3B0;
+  --card: #E5EDF5;
 
   /* Brand / accents */
   --teal: #23abab;
@@ -30,7 +32,6 @@
   --stroke: 2px solid #1a1a1a;
   --hairline: 0.5px solid var(--ink);
   --shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
-}
 
 
 --ease-standard: cubic-bezier(.25,.46,.45,.94);
@@ -130,8 +131,8 @@
 
   .caption-lg, .label-lg {
     font-family: var(--font-sans);
-    font-size: 1em;
-    font-weight: 500;
+    font-size: .8725em;
+    line-height: 1.2;
     color: var(--ink);
     text-transform: capitalize;
   }
@@ -531,7 +532,7 @@
   .tooltip .title-block { padding-bottom: 8px; }
 
   .tooltip .kicker {
-    font-size: ;
+    font-size: 12px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ink);
@@ -737,6 +738,16 @@
     align-items: start;
   }
 
+  .section-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.3rem 0.65rem;
+  }
+
+
   .jm-content-grid-3 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -876,6 +887,24 @@
     position: relative;
   }
 
+
+  /* ── Sidebar shell ────────────────────────────────────────────── */
+  .sticky-panel {
+    position: sticky;
+    top: 0;
+    width: 12.5%; /* 1/6 screen */
+    min-width: 320px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+    scrollbar-width: thin;
+    border-left: 1px solid var(--orange);
+    background-color: var(--white);
+    scrollbar-color: (--orange) transparent;
+  }
   /* Also update .shared-scroll to NOT have its own overflow-x:auto,
      since the clip div now contains it. Keep: */
   .shared-scroll {
@@ -1064,4 +1093,5 @@
   font-size: 36px;
 
   background: var(--card);
+}
 }

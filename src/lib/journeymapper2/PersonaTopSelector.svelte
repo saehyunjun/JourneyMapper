@@ -154,7 +154,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #FFFFF0;
+      background: #fff;
       border-bottom: 1px solid #F4EFE5;
       box-sizing: border-box;
     }
@@ -167,18 +167,22 @@
       overflow: visible;
       border: 2px solid transparent;
       background: #e8e5de;
+      filter: saturate(.25);
       cursor: pointer;
       padding: 0;
       transition: border-color 180ms ease, transform 160ms cubic-bezier(.34,1.4,.64,1);
     }
 
     .persona-avatar:hover {
-      transform: scale(1.06);
+      transform: scale(1.02);
+      filter: saturate(.8);
+      border-color: var(--ink, #312F28);
     }
 
     /* Active state: solid ring */
     .persona-avatar--active {
-      border-color: var(--ink, #312F28);
+      border-color: var(--teal, #23abab);
+      filter: saturate(1);
     }
 
     /* Pulse ring on active avatar — signals it's clickable again */
@@ -187,7 +191,7 @@
       position: absolute;
       inset: -5px;
       border-radius: 50%;
-      border: 1.5px solid var(--ink, #312F28);
+      border: 1.5px solid var(--teal, #23abab);
       opacity: 0;
       animation: avatar-pulse 2.4s ease-out infinite;
       pointer-events: none;

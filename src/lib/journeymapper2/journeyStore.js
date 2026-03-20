@@ -2,6 +2,8 @@ import { writable } from 'svelte/store';
 
 // Index of the currently hovered step column (-1 = none)
 export const hoveredIndex = writable(-1);
+export const hoveredInflectionIndex = writable(-1);
+
 
 // Index of the currently selected/clicked step column (-1 = none).
 // Mirrors zoomedIndex so existing components that read selectedIndex still work.
