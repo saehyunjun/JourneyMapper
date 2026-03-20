@@ -34,7 +34,7 @@
 
   <!-- Step card -->
   <button
-    class="flow-step-card"
+    class="card-sm"
     class:flow-step-card--hovered={$hoveredIndex === step.index}
     class:flow-step-card--selected={$selectedIndex === step.index}
     style="border-bottom-color:{stageColor};"
@@ -43,34 +43,38 @@
     on:click={handleClick}
     aria-pressed={$selectedIndex === step.index}
   >
-    <span class="flow-step-top-row">
-      <span
-        class="sentiment-bar"
+    <span class="flex flex-row w-full justify-between -my-1">
+      <div
+        class="w-16 h-2 ring-1"
         style="background-color:{sentimentToColor(d?.sentiment)};"
         aria-label="Sentiment: {d?.sentiment}"
-      ></span>
+      ></div>
 
-    <!-- Emotion swatches -->
-    {#if emotionSwatches.length}
-    <span class="emotion-swatches" aria-label="Emotion: {d?.plutchik_score}">
+  <!-- Emotion swatches -->
+  {#if emotionSwatches.length}
+    <div class="flex flex-row" aria-label="Emotion: {d?.plutchik_score}">
+    
       {#each emotionSwatches as color}
-        <span class="emotion-swatch" style="background:{color};"> </span>
+        <div class="w-3 h-3 rounded-full ring-1" 
+        style="background:{color};"> 
+        </div>
       {/each}
-    </span>
+    
+    </div>
   {/if}
     </span>
-
-    <span class="label-lg">
+<div class="flex flex-row p-2">
+  <span class="text-body-lg">
       {step.step}
     </span>
-
+</div>
   </button>
 
   <!-- Inflection connector + card -->
   {#if infl}
     <div class="flow-inflection-connector" aria-hidden="true"></div>
     <div
-      class="flow-inflection-card"
+      class="card-sm bg-slate-100"
       class:flow-inflection-card--hovered={$hoveredInflectionIndex === step.index}
       class:flow-inflection-card--selected={$selectedIndex === step.index}
       style="border-bottom-color:{stageColor};"
@@ -97,36 +101,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .flow-step-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-    padding: 0.25em 0.525em 0.4em;
-    width: 180px;
-    min-height: 75px;
-    background-color: var(--white);
-    border: 0.5px solid #c8cdd8;
-    border-bottom-width: 3px;
-    cursor: pointer;
-    text-align: left;
-    transition: background-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
-  }
-
-  .flow-step-card:hover,
-  .flow-step-card--hovered {
-    background-color: #eaeff8;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1), 0 0 0 1px rgba(63,115,255,0.18);
-    transform: translateY(-1px);
-    z-index: 1;
-  }
-
-  .flow-step-card--selected {
-    background-color: var(--card, #fffff0);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.14), 0 0 0 2px #3f73ff;
-    z-index: 2;
   }
 
   .flow-step-top-row {

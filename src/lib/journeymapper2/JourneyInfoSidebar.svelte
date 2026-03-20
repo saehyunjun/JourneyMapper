@@ -78,7 +78,8 @@
   ════════════════════════════════════════════════════════════════ -->
   {#if activePersona}
     {#key activePersona.id}
-      <div class="sidebar-section persona-section" in:fly={{ y: 8, duration: 220, easing: cubicOut }}>
+      <div class="sidebar-section persona-section" 
+      in:fly={{ y: 8, duration: 220, easing: cubicOut }}>
 
           <PersonaProfileCard 
           personaProfile={activePersona.profile}
@@ -88,13 +89,13 @@
         <!-- Bio + Goals — collapse when a step is active -->
         <div class="bio-goals-wrap" class:bio-goals-wrap--hidden={displayIndex >= 0}>
                 <!-- Quick fields -->
-                <div class="persona-fields">
+                <div class="flex flex-col">
                   {#if profile.age}
-                    <div class="field-row">
+                    <div class="flex flex-row">
                       <UserRegular class="w-3" />
                       <span class="label-sm">Age</span>
-                      <span class="label-sm">{profile.age}</span>
                     </div>
+                    <span class="body-text font-medium capitalize">{profile.age}</span>
                   {/if}
                   {#if profile.occupation}
                     <div class="field-row">
