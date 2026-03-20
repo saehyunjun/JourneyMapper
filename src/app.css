@@ -21,7 +21,7 @@
   --grayblue: #3B4B59;
   --orange: #CC6324;
   --paper: #FFFFF0;
-  --panel: #D9C3B0;
+  --panel: #FEF7F1;
   --card: #E5EDF5;
 
   /* Brand / accents */
@@ -90,6 +90,17 @@
     line-height: 1.2;
     text-transform: capitalize;
   }
+
+  .pull-quote { 
+    font-family: var(--font-heading); 
+    line-height: 115%;
+    font-size: 1.2em;
+    font-weight: 600;
+    text-transform:inherit;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+
 
   .text-body { 
     font-family: var(--font-body); 
@@ -500,19 +511,45 @@
   }
 
   .pill-white {
+    display: flex;
+    flex-direction: row;
     font-family: var(--font-body);
     font-size: 0.625em;
     font-weight: 400;
     text-transform: uppercase;
-    color: var(--paper); 
-    border: 1px solid #e8e5de;
+    color: var(--panel); 
+    border: 1.25px solid #e8e5de;
+    width: fit-content;
+    border-radius: 100px;
+    align-items: center;
+    justify-content: center;
+    padding: .325em .6725em .325em .325em;
+  }
+
+
+  .pill-sm {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    font-family: var(--font-body);
+    font-size: 0.825em;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: var(--grayblue); 
+    border: 1px solid var(--grayblue);
     border-radius: 20px;
     align-items: center;
     justify-content: center;
-    padding: .25em .425em .25em .425em;
-    mix-blend-mode: exclusion;
+    width: fit-content;
+    padding: 0 .725em 0 .5em;
   }
 
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+  }
   /* ---------------------------------------------------------------------- */
   /* Journey tooltip (ported from the component styles)                       */
   /* ---------------------------------------------------------------------- */
@@ -621,14 +658,19 @@
   .tooltip .mini-swatch {
     width: 1em;
     height: 1em;
-    border: 2px solid #1a1a1a;
+    border: 1px solid #1a1a1a;
     display: inline-block;
   }
 
+  .mini-swartch-round {
+
+  }
+
   .label-xs {
-    font-size: .5em;
-    font-weight: 800;
+    font-size: .525em;
+    font-weight: 600;
     color: var(--gray);
+    mix-blend-mode: darken;
     font-family: var(--font-heading);
     text-align: start;
     text-transform: uppercase;
@@ -733,11 +775,20 @@
   }
 
   .jm-content-row {
-    display: grid;
-    grid-template-columns: 1fr 1.725fr;
-    gap: .25em;
-    justify-content: space-evenly;
-    align-items: start;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .jm-content-row-divider {
+    display: flex;
+    flex-direction: row;
+    padding-top: 1em;
+    margin-top: 1em;
+    width: 100%;
+    border-top: .5px solid var(--ink);
+    justify-content: space-between;
   }
 
   .section-header {
@@ -747,6 +798,14 @@
     justify-content: space-between;
     gap: 0.5rem;
     padding: 0.3rem 0.65rem;
+  }
+
+  .jm-content-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-evenly;
+    align-items: start;
+    padding: 0em 0 .725em 0.5em
   }
 
 
@@ -829,7 +888,7 @@
     text-transform: uppercase;
   }
   
-  .jm-mini-swatch {
+  .jm-mini-swatch, .mini-swatch {
     width: .725em;
     height: .725em;
     border: .725px solid #73726c;
@@ -843,11 +902,11 @@
     display: inline-block;
   }
 
-  .jm-swatch-circle {
+  .jm-swatch-circle, .mini-swatch-circle {
     width: 1em;
     height: 1em;
     border-radius: 100px;
-    border: 1px solid #73726c;
+    border: 1px solid var(--ink);
     display: inline-block;
   }
   
@@ -871,15 +930,18 @@
   .tooltip {
     position: fixed;
     pointer-events: none;
-    z-index: 300;
-    width: 420px;
-    padding: 16px 18px 14px;
+    z-index: 990;
+    padding: 10px 12px 12px;
+    background-color: var(--panel);
     transition: left 60ms linear, top 60ms linear;
   }
   
   .divider {
     height: 1px;
     background: #425466;
+    width: 95%;
+    align-items: center;
+    justify-self: center;
     margin: 0 -2em;
   }
 

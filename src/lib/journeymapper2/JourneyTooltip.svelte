@@ -3,6 +3,7 @@
   import { ratingToLabel, emotionColor, plutchikScoreToColor, DYAD_BY_ID, SCORE_ALIASES } from './journeyConfig.js';
 
   import QuotesRegular from "phosphor-icons-svelte/IconQuotesRegular.svelte";
+  import IconArrowsOutLineVerticalRegular from 'phosphor-icons-svelte/IconArrowsOutLineVerticalRegular.svelte';
 
   export let data    = [];
   export let metrics = [];
@@ -96,113 +97,76 @@
   >
 
     <!-- ── Header ─────────────────────────────────────────────────────── -->
-    <div class="jm-section">
+    {#if isInflection}
+    <div class="flex flex-row w-full justify-end">
+    <span class="pill-sm">
+      <IconArrowsOutLineVerticalRegular />
+      Inflection Point</span>
+    </div>
+    {/if}
+    
+
+    <div class="header">
       <span class="label-sm">{step.stage}</span>
       <p class="label-lg">{step.step}</p>
-      {#if isInflection}
-        <span class="pill-sm w-fit">Inflection Point</span>
-      {/if}
     </div>
 
+
+    <!-- ── Quote ──────────────────────────────────────────────────────── -->
+    {#if hasQuote}
+      <div class="flex flex-col justify-center">
+        <span class="tip-quote-icon" aria-hidden="true">
+          <QuotesRegular class="h-12" />
+        </span>
+        <p class="pull-quote">{step.quote}</p>
+      </div>
+    {/if}
+
+
     <!-- ── Sentiment + Emotion ────────────────────────────────────────── -->
-    <div class="jm-content-row-stretch">
+
+    <div class="jm-content-row-divider">
+      <div class="flex flex-row">
 
       <!-- Sentiment -->
-      <div class="jm-content-col gap-1">
-        <div class="flex items-center gap-2">
-          <span class="tip-dot" style="background:{sentimentColor}" />
-          <span class="text-body-sm-uppercase">{sentimentLabel}</span>
+       <div class ="jm-content-col">
+        <div class="flex flex-col">
+          <span class="w-full h-2 ring-1" 
+          style="background:{sentimentColor}">
+          </span>
+          
+          <div class="jm-content-col mt-1">
+          <span class="text-body font-semibold">
+            {sentimentLabel}
+          </span>
+        <span class="label-xs">
+          Overall Sentiment
+        </span>
+      </div>
         </div>
-        <span class="label-xs">Overall Sentiment</span>
+      </div>
       </div>
 
       <!-- Emotion / Plutchik -->
       <div class="flex flex-col gap-1">
-        <div class="flex items-center gap-2">
-          <div class="flex gap-1">
+        <div class="flex flex-col">
+          <div class="flex">
             {#each emotionSwatches as color}
-              <span class="jm-mini-swatch" style="background:{color}" />
+              <span class="mini-swatch-circle" style="background:{color}">
+              </span>
             {/each}
           </div>
-          <span class="text-body-sm-uppercase">{step.plutchik_score}</span>
+          
+          <div class="jm-content-col mt-1">
+            <span class="text-body-sm-uppercase">
+            {step.plutchik_score}
+          </span>
+          <span class="label-xs">Emotion</span>
+          </div>
         </div>
-        <span class="label-xs">Emotion</span>
       </div>
-
-    </div>
-
-    <!-- ── Quote ──────────────────────────────────────────────────────── -->
-    {#if hasQuote}
-      <div class="tip-quote-block">
-        <span class="tip-quote-icon" aria-hidden="true">
-          <QuotesRegular size={12} />
-        </span>
-        <p class="tip-quote-text">"{step.quote}"</p>
-      </div>
-    {/if}
-
-    <!-- ── Metrics ────────────────────────────────────────────────────── -->
-    <div class="jm-metrics">
-      {#each metrics as m}
-        <div class="jm-metric-row">
-          <span class="jm-mini-swatch" style="background:{m.color}" />
-          <span class="label-sm">{m.label}</span>
-          <span class="text-body-sm">{ratingToLabel(step[m.key])}</span>
-        </div>
-      {/each}
-    </div>
-
+  </div>
   </div>
 {/if}
-
 <style>
-  .tooltip {
-    position: fixed;
-    pointer-events: none;
-    z-index: 990;
-    padding: 10px 12px 12px;
-    border-radius: 4px;
-    transition: left 60ms linear, top 60ms linear;
-  }
-
-  /* Sentiment dot */
-  .tip-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1px solid rgba(0,0,0,.5);
-    flex-shrink: 0;
-  }
-
-  /* ── Quote block ────────────────────────────────────────────────────── */
-  .tip-quote-block {
-    display: flex;
-    gap: 7px;
-    align-items: flex-start;
-    padding: 8px 10px;
-    background: #EDE5D8;
-    border-left: 2px solid #C4956A;
-    border-radius: 2px;
-  }
-
-  .tip-quote-icon {
-    color: #C4956A;
-    flex-shrink: 0;
-    margin-top: 1px;
-    display: flex;
-    align-items: flex-start;
-  }
-
-  .tip-quote-text {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    color: #5A3E28;
-    line-height: 1.6;
-    margin: 0;
-    font-style: italic;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
 </style>
