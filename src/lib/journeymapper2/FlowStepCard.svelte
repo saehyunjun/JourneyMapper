@@ -84,8 +84,9 @@
       on:mouseleave={() => hoveredInflectionIndex.set(-1)}
     >
       {#if inflDet}
-        <div class="infl-placeholder-row">
-          <span class="label-lg font-normal">{inflDet.label}</span>
+
+      <div class="flex flex-row p-2">
+          <span class="text-body-sm">{inflDet.label}</span>
         </div>
       {:else}
         <span class="infl-placeholder-empty label-heading">Inflection point</span>

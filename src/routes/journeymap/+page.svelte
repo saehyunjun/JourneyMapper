@@ -225,6 +225,9 @@
   on:select={e => { activePersonaId = e.detail.id; }}
 />
 
+<JourneyTooltip data={journeyData} {metrics} />
+
+
 <style>
   .shared-scroll {
     position: relative;
