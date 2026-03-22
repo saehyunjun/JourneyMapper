@@ -1,6 +1,6 @@
 <script>
   import { hoveredIndex, hoveredInflectionIndex } from './journeyStore.js';
-  import { ratingToLabel, emotionColor, plutchikScoreToColor, DYAD_BY_ID, SCORE_ALIASES } from './journeyConfig.js';
+  import { ratingToLabel, emotionColor, plutchikScoreToColor, DYAD_BY_ID, SCORE_ALIASES, sentimentToColor } from './journeyConfig.js';
 
   import QuotesRegular from "phosphor-icons-svelte/IconQuotesRegular.svelte";
   import IconArrowsOutLineVerticalRegular from 'phosphor-icons-svelte/IconArrowsOutLineVerticalRegular.svelte';
@@ -21,7 +21,6 @@
   }
 
   // ── Resolve which step to show ─────────────────────────────────────────────
-  // hoveredIndex (main card) takes priority; inflection card is the fallback.
   $: activeIndex = $hoveredIndex >= 0
     ? $hoveredIndex
     : $hoveredInflectionIndex >= 0
@@ -30,33 +29,14 @@
 
   $: step = activeIndex >= 0 ? data[activeIndex] : null;
 
-  // ── Flag when we're showing data via the inflection sub-card ──────────────
   $: isInflection = $hoveredIndex < 0 && $hoveredInflectionIndex >= 0;
 
   // ── Sentiment label and color ──────────────────────────────────────────────
   $: sentimentVal   = step ? parseFloat(step.sentiment) : 0;
   $: sentimentLabel = step ? ratingToLabel(step.sentiment) : '';
-  $: sentimentColor = step ? (() => {
-      const n = Math.max(-5, Math.min(5, sentimentVal));
-      const t = (n + 5) / 10;
-      let r, g, b;
-      if (t < 0.5) {
-        const u = t / 0.5;
-        r = Math.round(192 + (212 - 192) * u);
-        g = Math.round(57  + (138 - 57)  * u);
-        b = Math.round(43  + (27  - 43)  * u);
-      } else {
-        const u = (t - 0.5) / 0.5;
-        r = Math.round(212 + (39  - 212) * u);
-        g = Math.round(138 + (174 - 138) * u);
-        b = Math.round(27  + (96  - 27)  * u);
-      }
-      return `rgb(${r},${g},${b})`;
-    })() : '#BFA080';
+  $: sentimentColor = step ? sentimentToColor(step.sentiment) : '#BFA080';
 
   // ── Plutchik dyad squares ──────────────────────────────────────────────────
-  // Priority: DYAD_BY_ID on the raw label first, then SCORE_ALIASES for
-  // intensity variants. Matches the lookup order used everywhere else.
   $: emotionSwatches = (() => {
     if (!step) return [];
     const raw  = step.plutchik_score?.toLowerCase().trim() ?? '';
@@ -73,9 +53,8 @@
   const TIP_W    = 375;
   const TIP_H    = 40 + metrics.length * 28 + 80;
   const OFFSET_X = 14;
-  const OFFSET_Y = 12;
+  const OFFSET_Y = 8;
 
-  // ── Edge-flip: keep tooltip inside the viewport ────────────────────────────
   $: vpW = typeof window !== 'undefined' ? window.innerWidth  : 9999;
   $: vpH = typeof window !== 'undefined' ? window.innerHeight : 9999;
 
@@ -106,9 +85,9 @@
     {/if}
     
 
-    <div class="header">
+    <div class="header-row">
+      <p class="label font-bold">{step.step}</p>
       <span class="label-sm">{step.stage}</span>
-      <p class="label-lg">{step.step}</p>
     </div>
 
 
@@ -125,7 +104,7 @@
 
     <!-- ── Sentiment + Emotion ────────────────────────────────────────── -->
 
-    <div class="jm-content-row-divider">
+  <div class="jm-content-row-divider">
       <div class="flex flex-row">
 
       <!-- Sentiment -->
@@ -136,7 +115,7 @@
           </span>
           
           <div class="jm-content-col mt-1">
-          <span class="text-body font-semibold">
+          <span class="text-body-sm font-semibold">
             {sentimentLabel}
           </span>
         <span class="label-xs">
@@ -158,7 +137,7 @@
           </div>
           
           <div class="jm-content-col mt-1">
-            <span class="text-body-sm-uppercase">
+            <span class="text-body-sm font-semibold capitalize">
             {step.plutchik_score}
           </span>
           <span class="label-xs">Emotion</span>

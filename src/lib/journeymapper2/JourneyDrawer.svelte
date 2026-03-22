@@ -32,10 +32,9 @@
   <!-- Backdrop -->
   <div
     class="backdrop"
-    transition:fade={{ duration: 200 }}
     on:click={close}
-    aria-hidden="true"
-  />
+    aria-hidden="true">
+    </div>
 
   <!-- Drawer shell -->
   <aside
@@ -64,14 +63,7 @@
 
 <style>
   /* ── Backdrop ───────────────────────────────────────────────── */
-  .backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(56, 56, 56, 0.725);
-    backdrop-filter: blur(1px);
-    z-index: 200;
-    cursor: pointer;
-  }
+
 
   /* ── Shell ──────────────────────────────────────────────────── */
   .drawer {

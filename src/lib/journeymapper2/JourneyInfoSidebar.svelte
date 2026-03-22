@@ -14,7 +14,6 @@
   import ArrowDownRegular     from 'phosphor-icons-svelte/IconArrowDownRegular.svelte';
   import LightbulbRegular     from 'phosphor-icons-svelte/IconLightbulbRegular.svelte';
   import ChartLineRegular     from 'phosphor-icons-svelte/IconChartLineRegular.svelte';
-  import SmileyRegular        from 'phosphor-icons-svelte/IconSmileyRegular.svelte';
   import MapPinRegular        from 'phosphor-icons-svelte/IconMapPinRegular.svelte';
 
   /** Active persona object — full shape from journeyPersonas.json */
@@ -81,13 +80,12 @@
       <div class="sidebar-section persona-section" 
       in:fly={{ y: 8, duration: 220, easing: cubicOut }}>
 
+        <!-- Bio + Goals — collapse when a step is active -->
+        <div class="bio-goals-wrap" class:bio-goals-wrap--hidden={displayIndex >= 0}>
+
           <PersonaProfileCard 
           personaProfile={activePersona.profile}
               />
-
-
-        <!-- Bio + Goals — collapse when a step is active -->
-        <div class="bio-goals-wrap" class:bio-goals-wrap--hidden={displayIndex >= 0}>
                 <!-- Quick fields -->
                 <div class="flex flex-col">
                   {#if profile.age}
@@ -313,7 +311,7 @@
 
           <!-- Narrative -->
           {#if step.narrative_description}
-            <div class="metric-block narrative-block">
+            <div class="narrative-block">
               <div class="jm-section-bar" style="margin-bottom: 6px;">
                 <span class="label-sm">Narrative</span>
               </div>
@@ -323,15 +321,7 @@
 
         </div>
       {/key}
-
-    {:else}
-      <!-- Empty state -->
-      <div class="empty-state" in:fade={{ duration: 180 }}>
-        <MapPinRegular size={20} />
-        <span class="text-body-sm">Hover or select a step to see details</span>
-      </div>
-    {/if}
-
+        {/if}
   </div>
 
 </aside>
@@ -350,7 +340,6 @@
     overflow-x: hidden;
     flex-shrink: 0;
     scrollbar-width: thin;
-    scrollbar-color: #DFC3A8 transparent;
   }
 
   /* ── Sections ────────────────────────────────────────────────── */

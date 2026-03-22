@@ -159,49 +159,13 @@
       box-sizing: border-box;
     }
 
-    .persona-avatar {
-      position: relative;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      overflow: visible;
-      border: 2px solid transparent;
-      background: #e8e5de;
-      filter: saturate(.25);
-      cursor: pointer;
-      padding: 0;
-      transition: border-color 180ms ease, transform 160ms cubic-bezier(.34,1.4,.64,1);
-    }
-
-    .persona-avatar:hover {
-      transform: scale(1.02);
-      filter: saturate(.8);
-      border-color: var(--ink, #312F28);
-    }
-
     /* Active state: solid ring */
     .persona-avatar--active {
       border-color: var(--teal, #23abab);
       filter: saturate(1);
     }
 
-    /* Pulse ring on active avatar — signals it's clickable again */
-    .persona-avatar--active::after {
-      content: '';
-      position: absolute;
-      inset: -5px;
-      border-radius: 50%;
-      border: 1.5px solid var(--teal, #23abab);
-      opacity: 0;
-      animation: avatar-pulse 2.4s ease-out infinite;
-      pointer-events: none;
-    }
 
-    @keyframes avatar-pulse {
-      0%   { inset: -4px; opacity: 0.5; }
-      100% { inset: -12px; opacity: 0; }
-    }
-  
     .persona-photo {
       width: 100%;
       height: 100%;
@@ -241,15 +205,5 @@
       color: #BFA080;
       flex-shrink: 0;
     }
-  
-    .tip-val {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      color: #5A3E28;
-      text-align: right;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+
   </style>

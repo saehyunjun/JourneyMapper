@@ -92,7 +92,7 @@
   
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="story-backdrop" on:click={close} role="presentation" />
+    <div class="backdrop" on:click={close} role="presentation" />
   
     <div
       class="story-panel jm-surface"
@@ -123,25 +123,25 @@
             <span class="label-heading">{SCREENS[screenIdx].label}</span>
           </div>
         </div>
-        <button class="btn-base" on:click|stopPropagation={close} aria-label="Close story">
-          <IconXRegular size={16} />
+        <button class="btn-base-sm" on:click|stopPropagation={close} aria-label="Close story">
+          <IconXRegular />
         </button>
       </div>
   
       <!-- Invisible click zones — left rewinds, right advances -->
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <div class="click-zone click-zone--left"  on:click={rewind}  />
+      <div class="click-zone click-zone--left"  on:click={rewind}> </div>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <div class="click-zone click-zone--right" on:click={advance} />
+      <div class="click-zone click-zone--right" on:click={advance}> </div>
   
       <!-- ── SCREEN 0: BIO ─────────────────────────────────────────────── -->
       {#if screen === 'bio'}
         <div class="story-screen">
           <div class="bio-hero">
             {#if !imgError && profile.imageFile}
-              <img class="bio-photo" src="/assets/profiles/{profile.imageFile}" alt={profile.name} on:error={() => imgError = true} />
+              <img class="photo-full" src="/assets/profiles/{profile.imageFile}" alt={profile.name} on:error={() => imgError = true} />
             {:else}
               <div class="bio-photo-fallback"><IconUserRegular size={72} /></div>
             {/if}
@@ -167,7 +167,8 @@
                 ['Preference', profile.preference],
                 ['Caregiver',  profile.caregiver],
               ].filter(([, v]) => v) as [key, val]}
-                <div class="fact-row border-bottom">
+                
+              <div class="jm-content-row-divider-sm">
                   <span class="label-heading">{key}</span>
                   <span class="text-body-sm">{val}</span>
                 </div>
@@ -175,7 +176,7 @@
             </div>
   
             {#if states.length}
-              <div class="jm-section-bar"><span class="label-lg">
+            <div class="jm-section-bar"><span class="label-lg">
                 Current State</span></div>
               <div class="flex flex-col gap-3">
                 {#each states as s}
@@ -185,7 +186,7 @@
                       <span class="label-heading">{Math.round(s.value * 100)}%</span>
                     </div>
                     <div class="state-track">
-                      <div class="state-fill" style="width:{s.value * 100}%" />
+                      <div class="state-fill" style="width:{s.value * 100}%"></div>
                     </div>
                     <div class="flex justify-between">
                       <span class="label-heading" style="font-size:0.5rem;opacity:0.7">{s.minLabel}</span>
@@ -202,13 +203,14 @@
       {:else if screen === 'quote'}
         <div class="story-screen">
           <div class="bio-hero">
-            <div class="bio-scrim" aria-hidden="true" />
+            <div class="bio-scrim" aria-hidden="true"></div>
           </div>
   
-          <div class="content-wrap" style="flex:1; justify-content:center;">
-            <div style="color:rgba(49,47,40,0.2); line-height:1"><IconQuotesRegular class="h-8" /></div>
+          <div class="content-wrap" style="flex:1;">
+            <div class="flex flex-row w-full align-center justify-center"><IconQuotesRegular class="h-8" /></div>
             {#if profile.quote}
-              <blockquote class="body-text" style="margin:0">{profile.quote}</blockquote>
+              <blockquote class="pull-quote justify-center text-center" style="margin:0">
+                {profile.quote}</blockquote>
             {:else}
               <p class="text-body-sm" style="font-style:italic">No quote recorded for this persona.</p>
             {/if}
@@ -223,7 +225,7 @@
               <IconChatsRegular size={13} /> Discussion Themes
             </div>
             <div class="jm-section-bar">
-              <span class="label-lg">What {profile.name?.split(' ')[0]} talks about</span>
+              <span class="label-lg capitalize">What {profile.name?.split(' ')[0]} talks about</span>
             </div>
   
             {#if themes.length}
@@ -318,15 +320,6 @@
   {/if}
   
   <style>
-    .story-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(16, 14, 10, 0.75);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      z-index: 700;
-      cursor: pointer;
-    }
   
     .story-panel {
       position: fixed;
@@ -429,7 +422,6 @@
     .bio-scrim {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, transparent 30%, rgba(20,18,14,0.82) 100%);
     }
     .bio-overlay {
       position: absolute;
@@ -439,16 +431,6 @@
       flex-direction: column;
       gap: 3px;
     }
-  
-    /* Fact rows */
-    .fact-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 8px;
-      padding: 6px 0;
-    }
-  
     /* State bars — only the track/fill need component-scoped styles */
     .state-track {
       height: 4px;

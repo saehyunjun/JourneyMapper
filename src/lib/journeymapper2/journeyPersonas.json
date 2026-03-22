@@ -269,7 +269,7 @@
           "step_id": "1",
           "step": "Initial Symptom Onset",
           "inflection": "N",
-          "inflection_pos": 2,
+          "inflection_pos": 4,
           "inflection_neg": -2,
           "sentiment": 1,
           "plutchik_score": "alarm",
@@ -277,7 +277,7 @@
           "provider_trust": 4,
           "medical_self_efficacy": 2,
           "logistical_capacity": 3,
-          "narrative_description": "Margaret first notices subtle balance changes and fatigue. She is concerned but assumes it may be age-related. She trusts her providers and believes the issue will be manageable.",
+          "narrative_description": "Karl first notices subtle balance changes and fatigue. He is concerned but assumes it may be age-related. He trusts her providers and believes the issue will be manageable.",
           "quote": "Something feels off, but I keep telling myself it\u2019s probably nothing serious."
         },
         {
@@ -291,7 +291,7 @@
           "provider_trust": 3,
           "medical_self_efficacy": 1,
           "logistical_capacity": 3,
-          "narrative_description": "When symptoms fluctuate or temporarily improve, Margaret feels reassured. Hope increases and she interprets the instability as something benign or reversible.",
+          "narrative_description": "When symptoms fluctuate or temporarily improve, Karl feels reassured. Hope increases and He interprets the instability as something benign or reversible.",
           "quote": "When it gets a little better, I convince myself I might be overreacting."
         },
         {
@@ -305,7 +305,7 @@
           "provider_trust": 1,
           "medical_self_efficacy": -1,
           "logistical_capacity": 1,
-          "narrative_description": "During early appointments, Margaret struggles to clearly describe her symptoms. She leaves feeling partially heard but uncertain. Trust begins to soften as explanations feel incomplete.",
+          "narrative_description": "During early appointments, Karl struggles to clearly describe her symptoms. He leaves feeling partially heard but uncertain. Trust begins to soften as explanations feel incomplete.",
           "quote": "I\u2019m trying to explain what\u2019s happening, but I\u2019m not sure I\u2019m being understood."
         },
         {
@@ -322,10 +322,10 @@
           "provider_trust": -1,
           "medical_self_efficacy": -2,
           "logistical_capacity": -1,
-          "narrative_description": "As symptoms continue progressing, Margaret feels discouraged and confused. The lack of clarity lowers her confidence in her own understanding and in the care pathway.",
+          "narrative_description": "As symptoms continue progressing, Karl feels discouraged and confused. The lack of clarity lowers her confidence in her own understanding and in the care pathway.",
           "inflection_detail": {
             "label": "Care Pathway Fork",
-            "description": "Worsening symptoms with no clear explanation force a decision: continue with the current provider and wait, or escalate toward specialist care. The choice made here directly determines how long Margaret remains undiagnosed.",
+            "description": "Worsening symptoms with no clear explanation force a decision: continue with the current provider and wait, or escalate toward specialist care. The choice made here directly determines how long Karl remains undiagnosed.",
             "risk_level": "high",
             "dropout_risk": "moderate",
             "sponsor_opportunity": "Provide primary care physicians with a structured symptom-progression checklist that triggers automatic neurology referral when motor symptoms persist beyond 90 days.",
@@ -362,7 +362,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 0,
           "logistical_capacity": -2,
-          "narrative_description": "The referral to a neurologist restores cautious optimism. Margaret believes expert input may finally provide answers, even though the logistics feel burdensome.",
+          "narrative_description": "The referral to a neurologist restores cautious optimism. Karl believes expert input may finally provide answers, even though the logistics feel burdensome.",
           "quote": "Seeing a specialist finally feels like a step in the right direction."
         },
         {
@@ -377,7 +377,7 @@
           "medical_self_efficacy": -1,
           "logistical_capacity": -3,
           "has_experience_wheel": true,
-          "narrative_description": "Receiving an initial but incorrect diagnosis is destabilizing. Margaret feels surprised and unsettled. When treatment does not help, doubt grows\u2014both in the system and in her own interpretation of symptoms.",
+          "narrative_description": "Receiving an initial but incorrect diagnosis is destabilizing. Karl feels surprised and unsettled. When treatment does not help, doubt grows\u2014both in the system and in her own interpretation of symptoms.",
           "quote": "If this diagnosis is wrong, what else have we missed?"
         },
         {
@@ -391,7 +391,7 @@
           "provider_trust": 1,
           "medical_self_efficacy": 2,
           "logistical_capacity": -1,
-          "narrative_description": "Seeking a second opinion feels proactive. Margaret regains some agency and begins researching more deeply, determined to reach diagnostic clarity.",
+          "narrative_description": "Seeking a second opinion feels proactive. Karl regains some agency and begins researching more deeply, determined to reach diagnostic clarity.",
           "quote": "I need to take control and make sure we\u2019re not overlooking anything."
         },
         {
@@ -408,10 +408,10 @@
           "provider_trust": -1,
           "medical_self_efficacy": -4,
           "logistical_capacity": -4,
-          "narrative_description": "The Parkinson\u2019s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. She feels overwhelmed by the long arc of disease progression.",
+          "narrative_description": "The Parkinson\u2019s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. He feels overwhelmed by the long arc of disease progression.",
           "inflection_detail": {
             "label": "Diagnosis Decision Point",
-            "description": "Receiving a confirmed Parkinson's diagnosis is the central inflection of Margaret's journey. How she and her care team respond in the immediate aftermath \u2014 emotionally, informationally, and logistically \u2014 determines whether she moves toward empowered self-management or retreats into isolation and fear.",
+            "description": "Receiving a confirmed Parkinson's diagnosis is the central inflection of Karl's journey. How He and her care team respond in the immediate aftermath \u2014 emotionally, informationally, and logistically \u2014 determines whether He moves toward empowered self-management or retreats into isolation and fear.",
             "risk_level": "critical",
             "dropout_risk": "high",
             "sponsor_opportunity": "Develop a diagnosis-day support package for HCPs: standardized emotional framing language, a patient-facing 'What happens next' one-pager, and a warm handoff to a patient navigator or advocacy organization.",
@@ -421,7 +421,7 @@
                 "id": "path_pos",
                 "direction": "positive",
                 "label": "Supported Transition to Self-Management",
-                "outcome": "Margaret receives structured post-diagnosis education, is connected to an advocacy community, and begins shared decision-making with her neurologist. Trial awareness is introduced within 60 days.",
+                "outcome": "Karl receives structured post-diagnosis education, is connected to an advocacy community, and begins shared decision-making with her neurologist. Trial awareness is introduced within 60 days.",
                 "sentiment_delta": 2,
                 "key_driver": "Proactive HCP communication, patient navigator support, and strong family involvement."
               },
@@ -429,7 +429,7 @@
                 "id": "path_neg",
                 "direction": "negative",
                 "label": "Emotional Withdrawal and Disengagement",
-                "outcome": "Without structured support, grief dominates. Margaret delays follow-up appointments, withdraws from her caregiver network, and is unlikely to engage with trial options for 12+ months.",
+                "outcome": "Without structured support, grief dominates. Karl delays follow-up appointments, withdraws from her caregiver network, and is unlikely to engage with trial options for 12+ months.",
                 "sentiment_delta": -2,
                 "key_driver": "Information overload at point of diagnosis, lack of emotional scaffolding, and unaddressed logistical concerns."
               }
@@ -448,7 +448,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 3,
           "logistical_capacity": 2,
-          "narrative_description": "Online communities provide emotional validation and practical insights. Margaret feels less alone and gains confidence in navigating future decisions.",
+          "narrative_description": "Online communities provide emotional validation and practical insights. Karl feels less alone and gains confidence in navigating future decisions.",
           "quote": "Hearing from others like me makes this feel a little less isolating."
         },
         {
@@ -462,7 +462,7 @@
           "provider_trust": 3,
           "medical_self_efficacy": 2,
           "logistical_capacity": -2,
-          "narrative_description": "When evaluating clinical trials, Margaret feels cautiously hopeful. She trusts her neurologist but worries about the physical and logistical demands participation may require.",
+          "narrative_description": "When evaluating clinical trials, Karl feels cautiously hopeful. He trusts her neurologist but worries about the physical and logistical demands participation may require.",
           "quote": "I want to try something new, but I need to be sure I can handle what it takes."
         }
       ]
@@ -482,7 +482,7 @@
         "diagnosed": "Learned at time of patient diagnosis",
         "imageFile": "davidR.jpeg",
         "quote": "I have been managing this disease for over twenty years but need some new solutions. I do not know if starting another expensive drug is in the cards for me",
-        "bio": "Sarah is the primary caregiver for her husband following his recent diagnosis. She coordinates appointments, manages medications, and often acts as the intermediary between clinicians and family members. While emotionally resilient, she often feels overwhelmed by the amount of information and responsibility involved in managing care.",
+        "bio": "Sarah is the primary caregiver for her husband following his recent diagnosis. He coordinates appointments, manages medications, and often acts as the intermediary between clinicians and family members. While emotionally resilient, He often feels overwhelmed by the amount of information and responsibility involved in managing care.",
         "goal1": "Ensure her husband receives the best available care and treatment.",
         "goal2": "Coordinate medical logistics efficiently across multiple providers.",
         "goal3": "Find support resources and communities for caregivers facing similar challenges.",
@@ -593,7 +593,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 1,
           "logistical_capacity": 2,
-          "narrative_description": "David notices changes before Margaret fully acknowledges them. He feels uneasy but initially trusts that routine care will resolve the issue.",
+          "narrative_description": "David notices changes before Karl fully acknowledges them. He feels uneasy but initially trusts that routine care will resolve the issue.",
           "quote": "I can see something\u2019s wrong even if they\u2019re trying to brush it off."
         },
         {
@@ -695,7 +695,7 @@
           "narrative_description": "The diagnosis confirms disease seriousness. David shifts into logistical planning mode, focusing on long-term care implications, financial impact, and progression management.",
           "inflection_detail": {
             "label": "Planning Mode Activation",
-            "description": "Unlike Margaret, David's response to confirmed diagnosis is less emotional and more operational. The inflection here is whether David's logistical focus becomes a strength \u2014 channeled into structured care coordination and trial evaluation \u2014 or a vulnerability that masks unprocessed grief and caregiver burnout.",
+            "description": "Unlike Karl, David's response to confirmed diagnosis is less emotional and more operational. The inflection here is whether David's logistical focus becomes a strength \u2014 channeled into structured care coordination and trial evaluation \u2014 or a vulnerability that masks unprocessed grief and caregiver burnout.",
             "risk_level": "high",
             "dropout_risk": "moderate",
             "sponsor_opportunity": "Offer caregiver-specific onboarding materials alongside patient diagnosis support. A 'caregiver care plan' tool that addresses financial planning, respite resources, and care team communication would directly address David's profile.",
@@ -902,7 +902,7 @@
           "provider_trust": 4,
           "medical_self_efficacy": 2,
           "logistical_capacity": 3,
-          "narrative_description": "Margaret first notices subtle balance changes and fatigue. She is concerned but assumes it may be age-related. She trusts her providers and believes the issue will be manageable.",
+          "narrative_description": "Karl first notices subtle balance changes and fatigue. He is concerned but assumes it may be age-related. She trusts her providers and believes the issue will be manageable.",
           "quote": "I noticed something small, but I didn\u2019t think it would turn into this."
         },
         {
@@ -916,7 +916,7 @@
           "provider_trust": 3,
           "medical_self_efficacy": 1,
           "logistical_capacity": 3,
-          "narrative_description": "When symptoms fluctuate or temporarily improve, Margaret feels reassured. Hope increases and she interprets the instability as something benign or reversible.",
+          "narrative_description": "When symptoms fluctuate or temporarily improve, Karl feels reassured. Hope increases and she interprets the instability as something benign or reversible.",
           "quote": "When it improves, I feel like maybe everything is still under control."
         },
         {
@@ -930,7 +930,7 @@
           "provider_trust": 1,
           "medical_self_efficacy": -1,
           "logistical_capacity": 1,
-          "narrative_description": "During early appointments, Margaret struggles to clearly describe her symptoms. She leaves feeling partially heard but uncertain. Trust begins to soften as explanations feel incomplete.",
+          "narrative_description": "During early appointments, Karl struggles to clearly describe her symptoms. She leaves feeling partially heard but uncertain. Trust begins to soften as explanations feel incomplete.",
           "quote": "I leave appointments with more questions than answers."
         },
         {
@@ -947,7 +947,7 @@
           "provider_trust": -1,
           "medical_self_efficacy": -2,
           "logistical_capacity": -1,
-          "narrative_description": "As symptoms continue progressing, Margaret feels discouraged and confused. The lack of clarity lowers her confidence in her own understanding and in the care pathway.",
+          "narrative_description": "As symptoms continue progressing, Karl feels discouraged and confused. The lack of clarity lowers her confidence in her own understanding and in the care pathway.",
           "quote": "I feel like I\u2019m slipping, and no one can tell me why."
         },
         {
@@ -961,7 +961,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 0,
           "logistical_capacity": -2,
-          "narrative_description": "The referral to a neurologist restores cautious optimism. Margaret believes expert input may finally provide answers, even though the logistics feel burdensome.",
+          "narrative_description": "The referral to a neurologist restores cautious optimism. Karl believes expert input may finally provide answers, even though the logistics feel burdensome.",
           "quote": "Maybe this specialist will finally connect the dots."
         },
         {
@@ -976,7 +976,7 @@
           "medical_self_efficacy": -1,
           "logistical_capacity": -3,
           "has_experience_wheel": true,
-          "narrative_description": "Receiving an initial but incorrect diagnosis is destabilizing. Margaret feels surprised and unsettled. When treatment does not help, doubt grows\u2014both in the system and in her own interpretation of symptoms.",
+          "narrative_description": "Receiving an initial but incorrect diagnosis is destabilizing. Karl feels surprised and unsettled. When treatment does not help, doubt grows\u2014both in the system and in her own interpretation of symptoms.",
           "quote": "This doesn\u2019t feel right\u2014why isn\u2019t anything improving?"
         },
         {
@@ -990,7 +990,7 @@
           "provider_trust": 1,
           "medical_self_efficacy": 2,
           "logistical_capacity": -1,
-          "narrative_description": "Seeking a second opinion feels proactive. Margaret regains some agency and begins researching more deeply, determined to reach diagnostic clarity.",
+          "narrative_description": "Seeking a second opinion feels proactive. Karl regains some agency and begins researching more deeply, determined to reach diagnostic clarity.",
           "quote": "I need another opinion\u2014I can\u2019t just accept uncertainty."
         },
         {
@@ -1010,7 +1010,7 @@
           "narrative_description": "The Parkinson\u2019s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. She feels overwhelmed by the long arc of disease progression.",
           "inflection_detail": {
             "label": "Diagnosis Decision Point",
-            "description": "Receiving a confirmed Parkinson's diagnosis is the central inflection of Margaret's journey. How she and her care team respond in the immediate aftermath \u2014 emotionally, informationally, and logistically \u2014 determines whether she moves toward empowered self-management or retreats into isolation and fear.",
+            "description": "Receiving a confirmed Parkinson's diagnosis is the central inflection of Karl's journey. How she and her care team respond in the immediate aftermath \u2014 emotionally, informationally, and logistically \u2014 determines whether she moves toward empowered self-management or retreats into isolation and fear.",
             "risk_level": "critical",
             "dropout_risk": "high",
             "sponsor_opportunity": "Develop a diagnosis-day support package for HCPs: standardized emotional framing language, a patient-facing 'What happens next' one-pager, and a warm handoff to a patient navigator or advocacy organization.",
@@ -1020,7 +1020,7 @@
                 "id": "path_pos",
                 "direction": "positive",
                 "label": "Supported Transition to Self-Management",
-                "outcome": "Margaret receives structured post-diagnosis education, is connected to an advocacy community, and begins shared decision-making with her neurologist. Trial awareness is introduced within 60 days.",
+                "outcome": "Karl receives structured post-diagnosis education, is connected to an advocacy community, and begins shared decision-making with her neurologist. Trial awareness is introduced within 60 days.",
                 "sentiment_delta": 2,
                 "key_driver": "Proactive HCP communication, patient navigator support, and strong family involvement."
               },
@@ -1028,7 +1028,7 @@
                 "id": "path_neg",
                 "direction": "negative",
                 "label": "Emotional Withdrawal and Disengagement",
-                "outcome": "Without structured support, grief dominates. Margaret delays follow-up appointments, withdraws from her caregiver network, and is unlikely to engage with trial options for 12+ months.",
+                "outcome": "Without structured support, grief dominates. Karl delays follow-up appointments, withdraws from her caregiver network, and is unlikely to engage with trial options for 12+ months.",
                 "sentiment_delta": -2,
                 "key_driver": "Information overload at point of diagnosis, lack of emotional scaffolding, and unaddressed logistical concerns."
               }
@@ -1047,7 +1047,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 3,
           "logistical_capacity": 2,
-          "narrative_description": "Online communities provide emotional validation and practical insights. Margaret feels less alone and gains confidence in navigating future decisions.",
+          "narrative_description": "Online communities provide emotional validation and practical insights. Karl feels less alone and gains confidence in navigating future decisions.",
           "quote": "Talking to others makes me feel like I can actually manage this."
         },
         {
@@ -1061,7 +1061,7 @@
           "provider_trust": 3,
           "medical_self_efficacy": 2,
           "logistical_capacity": -2,
-          "narrative_description": "When evaluating clinical trials, Margaret feels cautiously hopeful. She trusts her neurologist but worries about the physical and logistical demands participation may require.",
+          "narrative_description": "When evaluating clinical trials, Karl feels cautiously hopeful. She trusts her neurologist but worries about the physical and logistical demands participation may require.",
           "quote": "I want to explore every option, but I\u2019m worried about what it will take."
         }
       ]

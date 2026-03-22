@@ -252,7 +252,7 @@ export const SENTIMENT_SCALE = [
  * @returns {string} — rgb() color string
  */
 export function sentimentToColor(val) {
-  const norm = Math.max(-5, Math.min(5, parseFloat(val)));
+  const norm = Math.max(0, Math.min(10, parseFloat(val)));
   const t    = (norm + 5) / 10; // normalise to [0, 1]
   const pos  = t * (SENTIMENT_SCALE.length - 1);
   const lo   = Math.floor(pos);
