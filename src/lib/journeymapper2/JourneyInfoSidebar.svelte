@@ -200,7 +200,8 @@
         <!-- Sponsor opportunity -->
         {#if inflDetail.sponsor_opportunity}
           <div class="infl-sub-block">
-            <span class="jm-kicker" style="margin-bottom:0.35rem;">Sponsor Opportunity</span>
+            <span class="jm-kicker" style="margin-bottom:0.35rem;">
+              Sponsor Opportunity</span>
             <div class="infl-opportunity">
               <span class="infl-opportunity-icon"><LightbulbRegular size={11} /></span>
               <span class="text-body-sm">{inflDetail.sponsor_opportunity}</span>

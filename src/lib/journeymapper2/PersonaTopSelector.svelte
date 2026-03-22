@@ -124,15 +124,15 @@
       >
         <!-- Header row -->
         <div class="jm-section-bar" style="margin-bottom: 8px;">
-          <span class="label-lg">{hp.profile.name}</span>
+          <span class="text-body-lg">{hp.profile.name}</span>
           {#if hp.type}
-            <span class="pill-white">{hp.type}</span>
+            <span class="pill-sm">{hp.type}</span>
           {/if}
         </div>
   
         <!-- Bio excerpt -->
-        {#if hp.profile.bio}
-          <p class="body-text text-sm">{hp.profile.bio}</p>
+        {#if hp.profile.bio_1}
+          <p class="body-text text-sm">{hp.profile.bio_1}</p>
         {/if}
   
         <!-- Key fields -->
@@ -161,7 +161,7 @@
 
     /* Active state: solid ring */
     .persona-avatar--active {
-      border-color: var(--teal, #23abab);
+      border: 3px solid var(--teal, #23abab);
       filter: saturate(1);
     }
 

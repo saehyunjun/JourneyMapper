@@ -133,16 +133,21 @@
         "initials": "KW",
         "name": "Karl W.",
         "role": "Patient",
+        "indication": "Autoimmune Encephalitis",
+        "therapeutic area": "Central Nervous System Diseases", 
         "age": "mid-60s",
         "gender": "Male",
+        "location": "Midwest US",
         "occupation": "Part-time",
+        "current_treatments": ["Rituximab", "Cyclophosphamide"],
+        "past_treatments": ["Corticosteroids, IVIg"],
         "caregiver": "None",
         "preference": "Seeking new treatment",
-        "goals": "testing",
-        "concerns": "testing",
         "diagnosed": "5 years ago",
+        "quote": "Something feels off, but I keep telling myself it\u2019s probably nothing serious.",
         "imageFile": "KarlW.jpeg",
-        "bio": "Karl is a mid-career technology professional who began experiencing unexplained neurological symptoms that disrupted his work and daily routines. After a long diagnostic journey involving multiple specialists, he was finally diagnosed with a rare condition. Karl approaches his healthcare analytically and often researches medical literature and patient communities before making decisions about treatment or trials.",
+        "bio_1": "Karl began experiencing unexplained neurological symptoms that disrupted his daily life about ten years agfo. After a years-long diagnostic odyssey involving multiple specialists, he was finally diagnosed with a rare condition.",
+        "bio_2": "Karl prefers to approach healthcare choices analytically and often researches medical literature and engages heavily in online patient groups before making decisions about his treatment options.",
         "goal1": "Understand the full range of treatment options and how they might affect long-term outcomes.",
         "goal2": "Maintain his professional productivity and independence despite symptoms.",
         "goal3": "Identify clinical trials that could provide earlier access to promising therapies.",
@@ -153,19 +158,19 @@
       "currentState": [
         {
           "label": "Motivation",
-          "value": 0.92,
+          "value": 0.7,
           "minLabel": "Avoid changes",
           "maxLabel": "Seek improvement"
         },
         {
           "label": "Care coordination level",
-          "value": 0.65,
+          "value": 0.30,
           "minLabel": "Disjointed",
           "maxLabel": "Cohesive"
         },
         {
           "label": "Willingness to accept help",
-          "value": 0.83,
+          "value": 0.80,
           "minLabel": "Resistant",
           "maxLabel": "Willing"
         }
@@ -468,286 +473,321 @@
       ]
     },
     {
-      "id": "persona_2",
-      "type": "caregiver",
+      "id": "persona_nmdar_01",
+      "type": "patient",
       "profile": {
-        "initials": "DR",
-        "name": "David R.",
-        "role": "Caregiver",
-        "age": 42,
-        "gender": "Male",
-        "occupation": "Software Engineer",
-        "caregiver": "Self (son-in-law)",
-        "preference": "Telehealth & online resources",
-        "diagnosed": "Learned at time of patient diagnosis",
-        "imageFile": "davidR.jpeg",
-        "quote": "I have been managing this disease for over twenty years but need some new solutions. I do not know if starting another expensive drug is in the cards for me",
-        "bio": "Sarah is the primary caregiver for her husband following his recent diagnosis. He coordinates appointments, manages medications, and often acts as the intermediary between clinicians and family members. While emotionally resilient, He often feels overwhelmed by the amount of information and responsibility involved in managing care.",
-        "goal1": "Ensure her husband receives the best available care and treatment.",
-        "goal2": "Coordinate medical logistics efficiently across multiple providers.",
-        "goal3": "Find support resources and communities for caregivers facing similar challenges.",
-        "barrier1": "Limited time to research treatment options while managing work and caregiving duties.",
-        "barrier2": "Difficulty interpreting complex medical information presented during consultations.",
-        "barrier3": "Emotional stress and burnout from balancing caregiving with other responsibilities."
+        "initials": "CD",
+        "name": "Candace D.",
+        "role": "Patient",
+        "age": 27,
+        "gender": "Female",
+        "occupation": "Graduate student (on medical leave)",
+        "caregiver": "Mother (primary), Partner (secondary)",
+        "preference": "Prefers written summaries of appointments; communicates via patient portal messaging",
+        "diagnosed": "14 months ago",
+        "imageFile": "CandaceD.jpg",
+        "quote": "There were months I don't remember at all. I had to learn who I was again — and now I'm trying to figure out if there's something that can actually stop this from coming back.",
+        "bio_1": "Maya was a second-year PhD candidate in linguistics when she experienced what her family initially described as a psychiatric break — erratic behavior, paranoia, and seizure-like episodes that escalated over several weeks. After an extended hospitalization and a lumbar puncture, she was diagnosed with anti-NMDA receptor encephalitis. She spent nearly four months inpatient, including three weeks in the ICU.",
+        "bio_2": "Now in partial recovery, Maya manages residual cognitive fatigue, word-finding difficulties, and anxiety that she and her care team attribute to post-encephalitis syndrome. She has resumed light coursework but is not yet back to full academic capacity. She is highly motivated to understand her disease and advocates for herself in clinical settings, though she sometimes struggles with memory and processing speed during complex conversations.",
+        "goal1": "Achieve full cognitive recovery and return to her doctoral program without permanent academic setback.",
+        "goal2": "Reduce relapse risk and understand whether maintenance immunotherapy or a clinical trial offers better long-term protection.",
+        "goal3": "Rebuild a sense of identity and continuity after a period of significant memory loss and personality disruption.",
+        "barrier1": "Rarity of the disease means few local neurologists have meaningful experience treating anti-NMDAR encephalitis beyond acute stabilization.",
+        "barrier2": "Cognitive fatigue and residual word-finding difficulties make it hard to fully engage in complex medical conversations or parse dense clinical trial protocols.",
+        "barrier3": "Deep anxiety about relapse and uncertainty about whether current stability reflects true remission or temporary suppression."
       },
       "currentState": [
         {
           "label": "Motivation",
-          "value": 0.78,
+          "value": 0.85,
           "minLabel": "Avoid changes",
           "maxLabel": "Seek improvement"
         },
         {
           "label": "Care coordination level",
-          "value": 0.55,
+          "value": 0.42,
           "minLabel": "Disjointed",
           "maxLabel": "Cohesive"
         },
         {
           "label": "Willingness to accept help",
-          "value": 0.62,
+          "value": 0.74,
           "minLabel": "Resistant",
           "maxLabel": "Willing"
+        },
+        {
+          "label": "Health literacy",
+          "value": 0.80,
+          "minLabel": "Low",
+          "maxLabel": "High"
+        },
+        {
+          "label": "Cognitive capacity for decision-making",
+          "value": 0.58,
+          "minLabel": "Severely impaired",
+          "maxLabel": "Fully intact"
         }
       ],
       "discussionThemes": [
         {
           "label": "Diagnosis",
           "sentiments": [
-            0.05,
-            0.08,
-            0.12,
-            0.15,
-            0.2,
-            0.25,
-            0.4,
-            0.5,
-            0.55,
-            0.6,
-            0.65,
-            0.7
+            0.03, 0.04, 0.06, 0.08, 0.15, 0.25, 0.38, 0.50, 0.60, 0.65, 0.68
           ]
         },
         {
-          "label": "Treatment",
+          "label": "Acute hospitalization",
           "sentiments": [
-            0.1,
-            0.15,
-            0.2,
-            0.3,
-            0.4,
-            0.5,
-            0.6,
-            0.65,
-            0.7
+            0.04, 0.05, 0.08, 0.12, 0.20, 0.30, 0.42, 0.52, 0.58
           ]
         },
         {
-          "label": "Day-to-day adaptations",
+          "label": "Cognitive recovery",
           "sentiments": [
-            0.1,
-            0.25,
-            0.4,
-            0.5,
-            0.55,
-            0.6,
-            0.65,
-            0.7
+            0.10, 0.18, 0.28, 0.38, 0.48, 0.55, 0.60, 0.65
+          ]
+        },
+        {
+          "label": "Relapse fear",
+          "sentiments": [
+            0.08, 0.10, 0.12, 0.18, 0.22, 0.30, 0.38, 0.42, 0.48
           ]
         },
         {
           "label": "Clinical trials",
           "sentiments": [
-            0.05,
-            0.1,
-            0.15,
-            0.35,
-            0.55,
-            0.65,
-            0.7
+            0.10, 0.20, 0.35, 0.48, 0.58, 0.65, 0.70
           ]
         },
         {
-          "label": "Caregiver burnout",
+          "label": "Identity and return to self",
           "sentiments": [
-            0.1,
-            0.1,
-            0.15,
-            0.2,
-            0.35,
-            0.5,
-            0.55,
-            0.6
+            0.05, 0.08, 0.15, 0.25, 0.38, 0.48, 0.55, 0.62
           ]
         }
       ],
       "journey": [
         {
           "stage_id": "1",
-          "stage": "Initial Symptoms",
+          "stage": "Prodromal Period",
           "step_id": "1",
-          "step": "Initial Symptom Onset",
+          "step": "Behavioral and Psychiatric Onset",
           "sentiment": -1,
           "plutchik_score": "fear",
           "emotional_valence": -2,
-          "provider_trust": 2,
+          "provider_trust": 1,
           "medical_self_efficacy": 1,
           "logistical_capacity": 2,
-          "narrative_description": "David notices changes before Karl fully acknowledges them. He feels uneasy but initially trusts that routine care will resolve the issue.",
-          "quote": "I can see something\u2019s wrong even if they\u2019re trying to brush it off."
+          "narrative_description": "Maya and her family notice mood changes, insomnia, and increasingly disorganized thinking. Initial consultations with a campus mental health counselor result in a provisional anxiety and stress diagnosis. Maya complies but feels that something more serious is being missed.",
+          "quote": "I knew it wasn't just stress. I've been stressed before. This was different."
         },
         {
           "stage_id": "1",
-          "stage": "Initial Symptoms",
+          "stage": "Prodromal Period",
           "step_id": "2",
-          "step": "Mild Symptom Improvement",
-          "sentiment": 1,
-          "plutchik_score": "hope",
-          "emotional_valence": 1,
-          "provider_trust": 2,
-          "medical_self_efficacy": 1,
-          "logistical_capacity": 2,
-          "narrative_description": "Temporary improvement reduces David\u2019s anxiety. He interprets it as confirmation that the issue may not be serious.",
-          "quote": "Maybe this really is temporary\u2014I want to believe that."
+          "step": "Escalation to Psychosis and Seizures",
+          "sentiment": -3,
+          "plutchik_score": "terror",
+          "emotional_valence": -4,
+          "provider_trust": -1,
+          "medical_self_efficacy": -2,
+          "logistical_capacity": -3,
+          "narrative_description": "Within weeks, Maya experiences auditory hallucinations, catatonic episodes, and a witnessed seizure in her apartment. Her partner calls 911. She is admitted to an inpatient psychiatric unit before transfer to a general neurology service. Maya has limited memory of this period.",
+          "quote": "I barely remember the first few weeks. I've had to piece it together from my mom's notes."
         },
         {
           "stage_id": "2",
-          "stage": "Initial Care",
+          "stage": "Acute Hospitalization",
           "step_id": "3",
-          "step": "Initial Care",
-          "sentiment": 0,
-          "plutchik_score": "anticipation",
-          "emotional_valence": 0,
-          "provider_trust": 2,
-          "medical_self_efficacy": 0,
-          "logistical_capacity": 0,
-          "narrative_description": "David begins tracking symptoms and preparing questions. He feels responsible for coordinating information but senses early fragmentation across providers.",
-          "quote": "I need to stay organized, because no one else is connecting the dots."
-        },
-        {
-          "stage_id": "2",
-          "stage": "Initial Care",
-          "step_id": "4",
-          "step": "Continued Regression",
+          "step": "ICU and Initial Immunotherapy",
           "sentiment": -2,
           "plutchik_score": "sadness",
           "emotional_valence": -3,
-          "provider_trust": -1,
-          "medical_self_efficacy": -1,
-          "logistical_capacity": -2,
-          "narrative_description": "As regression continues, David\u2019s frustration increases. He worries about lost time and becomes more assertive in pushing for referrals and clearer answers.",
-          "quote": "We\u2019re losing time, and I feel like I have to push harder to get answers."
+          "provider_trust": 2,
+          "medical_self_efficacy": -3,
+          "logistical_capacity": -5,
+          "narrative_description": "Maya is intubated and receives high-dose steroids and IVIG in the ICU. Her mother becomes the primary decision-maker during this period. The medical team explains anti-NMDAR encephalitis to her family, though Maya herself is not cognitively present for these conversations.",
+          "quote": "My mom said the doctors finally had a name for it. I was there but I wasn't really there."
+        },
+        {
+          "stage_id": "2",
+          "stage": "Acute Hospitalization",
+          "step_id": "4",
+          "step": "Tumor Workup and Negative Ovarian Teratoma Screen",
+          "sentiment": 1,
+          "plutchik_score": "relief",
+          "emotional_valence": 1,
+          "provider_trust": 3,
+          "medical_self_efficacy": 0,
+          "logistical_capacity": -3,
+          "narrative_description": "Imaging and surgical evaluation reveal no underlying teratoma, which the team presents as a favorable prognostic signal. Maya's family receives this news with cautious relief. Maya begins a slow return to awareness and can hold brief conversations.",
+          "quote": "No tumor. That was the first thing that felt like good news."
         },
         {
           "stage_id": "3",
-          "stage": "Neurology",
+          "stage": "Inpatient Recovery",
           "step_id": "5",
-          "step": "Referral to Neurologist",
-          "sentiment": 2,
+          "step": "Second-Line Rituximab Therapy",
+          "sentiment": 0,
           "plutchik_score": "anticipation",
-          "emotional_valence": 2,
+          "emotional_valence": 0,
           "provider_trust": 3,
           "medical_self_efficacy": 1,
-          "logistical_capacity": -1,
-          "narrative_description": "The specialist referral feels like progress. David becomes more engaged, researching terminology and preparing for complex discussions.",
-          "quote": "Now we\u2019re finally talking to someone who might actually know what\u2019s going on."
+          "logistical_capacity": -2,
+          "narrative_description": "After incomplete response to first-line therapy, the neurology team initiates rituximab. Maya is now cognitively present enough to be partially involved in consent discussions, though she relies heavily on her mother. She experiences fatigue and nausea but gradually stabilizes.",
+          "quote": "They explained what rituximab was. I remember nodding and not really absorbing all of it."
         },
         {
           "stage_id": "3",
-          "stage": "Neurology",
+          "stage": "Inpatient Recovery",
           "step_id": "6",
-          "step": "Misdiagnosis",
-          "sentiment": -3,
-          "plutchik_score": "outrage",
-          "emotional_valence": -4,
-          "provider_trust": -3,
-          "medical_self_efficacy": -2,
-          "logistical_capacity": -4,
-          "has_experience_wheel": true,
-          "narrative_description": "When the diagnosis proves incorrect, David feels anger and betrayal. He questions whether earlier intervention could have changed outcomes. Trust in the system drops sharply.",
-          "quote": "How did we get this so wrong, and what has it cost us?"
+          "step": "Discharge Planning and Post-Acute Transition",
+          "sentiment": 1,
+          "plutchik_score": "anticipation",
+          "emotional_valence": 2,
+          "provider_trust": 2,
+          "medical_self_efficacy": 1,
+          "logistical_capacity": -1,
+          "narrative_description": "After nearly four months, Maya is discharged with an outpatient immunology follow-up plan and neuropsychological testing scheduled. Her family receives limited structured guidance on what recovery should look like at home. She moves back with her mother.",
+          "quote": "They said I was stable enough to go home. I didn't feel stable — I just wasn't ICU-level anymore."
         },
         {
           "stage_id": "4",
-          "stage": "Second Opinion",
+          "stage": "Post-Acute Recovery",
           "step_id": "7",
-          "step": "Second Opinion",
-          "sentiment": 1,
-          "plutchik_score": "hope",
-          "emotional_valence": 1,
+          "step": "Cognitive Rehabilitation and Neuropsychological Assessment",
+          "sentiment": 0,
+          "plutchik_score": "sadness",
+          "emotional_valence": -1,
+          "provider_trust": 2,
+          "medical_self_efficacy": 2,
+          "logistical_capacity": 0,
+          "narrative_description": "Neuropsychological testing reveals deficits in processing speed, working memory, and verbal fluency. Maya finds the results both validating and devastating — the data confirms what she has been experiencing, but also documents how far she is from her prior baseline. She begins occupational and speech therapy.",
+          "quote": "Seeing the numbers made it real. I knew I was slower, but now I had proof."
+        },
+        {
+          "stage_id": "4",
+          "stage": "Post-Acute Recovery",
+          "step_id": "8",
+          "step": "Relapse Anxiety and Symptom Monitoring",
+          "sentiment": -2,
+          "plutchik_score": "fear",
+          "emotional_valence": -3,
           "provider_trust": 2,
           "medical_self_efficacy": 2,
           "logistical_capacity": -1,
-          "narrative_description": "David approaches the second opinion strategically, compiling records and advocating firmly. His sense of agency increases even as exhaustion builds.",
-          "quote": "I\u2019m going in prepared this time\u2014I\u2019m not leaving without clarity."
-        },
-        {
-          "stage_id": "4",
-          "stage": "Diagnosis",
-          "step_id": "8",
-          "step": "Parkinson's Diagnosis",
-          "sentiment": -2,
-          "plutchik_score": "grief",
-          "emotional_valence": -4,
-          "provider_trust": 0,
-          "medical_self_efficacy": -3,
-          "logistical_capacity": -5,
-          "narrative_description": "The diagnosis confirms disease seriousness. David shifts into logistical planning mode, focusing on long-term care implications, financial impact, and progression management.",
+          "has_experience_wheel": true,
+          "narrative_description": "Every new headache, word-retrieval failure, or sleep disturbance triggers fear of relapse. Maya begins tracking symptoms obsessively in a notes app and contacts her neurologist frequently. The care team provides reassurance but limited structured guidance on relapse warning signs.",
           "inflection_detail": {
-            "label": "Planning Mode Activation",
-            "description": "Unlike Karl, David's response to confirmed diagnosis is less emotional and more operational. The inflection here is whether David's logistical focus becomes a strength \u2014 channeled into structured care coordination and trial evaluation \u2014 or a vulnerability that masks unprocessed grief and caregiver burnout.",
+            "label": "Hypervigilance Inflection",
+            "description": "Maya's post-discharge symptom monitoring behavior reflects both high health literacy and unmanaged relapse anxiety. This is a critical window where structured support could channel her vigilance productively — or, without intervention, escalate to avoidance and psychological burden.",
             "risk_level": "high",
             "dropout_risk": "moderate",
-            "sponsor_opportunity": "Offer caregiver-specific onboarding materials alongside patient diagnosis support. A 'caregiver care plan' tool that addresses financial planning, respite resources, and care team communication would directly address David's profile.",
-            "data_needed": "Caregiver burnout rate within 6 months of patient PD diagnosis; proportion of caregivers included in post-diagnosis HCP conversations.",
+            "sponsor_opportunity": "Provide a structured relapse early-warning framework — co-developed with patients — that distinguishes normal recovery fluctuation from actionable warning signs. A digital symptom tracker with embedded clinical guidance could reduce anxiety-driven contacts while increasing meaningful signal capture.",
+            "data_needed": "Percentage of anti-NMDAR encephalitis patients who experience clinically documented relapse within 24 months; rate of anxiety disorder comorbidity in post-encephalitis populations.",
             "paths": [
               {
                 "id": "path_pos",
                 "direction": "positive",
-                "label": "Structured Caregiver Engagement",
-                "outcome": "David channels logistical energy productively. He builds a care coordination system, engages with the patient advocacy community, and begins evaluating clinical trials as a family unit within 90 days of diagnosis.",
+                "label": "Structured Monitoring Engagement",
+                "outcome": "Maya's vigilance is formalized into a symptom-tracking protocol with her care team. She receives psychoeducation on distinguishing recovery variation from relapse signals, reducing acute anxiety while maintaining appropriate monitoring. She becomes an engaged candidate for prevention-focused clinical trials.",
                 "sentiment_delta": 2,
-                "key_driver": "Access to caregiver-specific resources, clear communication from the care team, and online community connection."
+                "key_driver": "Clear relapse criteria provided by HCP team; access to a nurse navigator or disease-specific patient coordinator; peer connection with other anti-NMDAR encephalitis survivors."
               },
               {
                 "id": "path_neg",
                 "direction": "negative",
-                "label": "Caregiver Burnout and Isolation",
-                "outcome": "David becomes the sole coordinator without support. Logistical burden escalates, grief goes unaddressed, and he disengages from trial conversations due to perceived complexity and time cost.",
-                "sentiment_delta": -2,
-                "key_driver": "No caregiver support touchpoint from HCP team; financial anxiety and time pressure dominate decision-making."
+                "label": "Anxiety Escalation and Disengagement",
+                "outcome": "Without structured guidance, Maya's self-monitoring becomes destabilizing. She begins avoiding activities that could trigger perceived symptoms, withdraws from academic reintegration, and grows skeptical of trial participation due to fear of adverse events destabilizing her fragile recovery.",
+                "sentiment_delta": -3,
+                "key_driver": "Lack of post-discharge relapse education; no mental health co-management; perceived dismissiveness from neurology team regarding ongoing anxiety."
               }
             ]
           },
-          "quote": "Now that we know, I need to figure out how to manage everything moving forward."
+          "quote": "Every time something feels off, I spiral. Is this the beginning of another episode? How would I even know?"
         },
         {
           "stage_id": "5",
-          "stage": "Community",
+          "stage": "Community and Information Seeking",
           "step_id": "9",
-          "step": "Joining Online Communities",
-          "sentiment": 2,
+          "step": "Discovery of Disease-Specific Communities",
+          "sentiment": 3,
           "plutchik_score": "joy",
+          "emotional_valence": 3,
+          "provider_trust": 2,
+          "medical_self_efficacy": 4,
+          "logistical_capacity": 2,
+          "narrative_description": "Maya discovers the Autoimmune Encephalitis Alliance and multiple patient-run online communities. Reading others' recovery narratives provides her first real sense of what the trajectory can look like. She begins contributing, sharing her own experience, and asking detailed questions about treatment maintenance and trial options.",
+          "quote": "I found people who had been where I was and made it back further than I thought was possible. That changed everything."
+        },
+        {
+          "stage_id": "5",
+          "stage": "Community and Information Seeking",
+          "step_id": "10",
+          "step": "Research into Clinical Trial Landscape",
+          "sentiment": 1,
+          "plutchik_score": "anticipation",
           "emotional_valence": 2,
           "provider_trust": 2,
           "medical_self_efficacy": 4,
-          "logistical_capacity": 3,
-          "narrative_description": "Online groups provide tactical knowledge and emotional normalization. David absorbs practical strategies and begins thinking ahead about advanced planning.",
-          "quote": "Other caregivers have figured this out\u2014I can learn from them."
+          "logistical_capacity": 1,
+          "narrative_description": "Motivated by community members' experiences and her own desire to access novel maintenance therapies, Maya begins reviewing ClinicalTrials.gov listings. She identifies several trials investigating B-cell depletion maintenance and neonatal Fc receptor (FcRn) antagonists for autoimmune encephalitis but struggles to parse eligibility criteria and endpoints.",
+          "quote": "I can find the trials. I just can't always tell if I qualify, or what I'd actually be signing up for."
         },
         {
           "stage_id": "6",
-          "stage": "Trials",
-          "step_id": "10",
-          "step": "Choosing Between Trials",
+          "stage": "Clinical Trial Consideration",
+          "step_id": "11",
+          "step": "HCP Conversation About Trial Eligibility",
           "sentiment": 0,
           "plutchik_score": "anticipation",
-          "emotional_valence": 0,
+          "emotional_valence": 1,
           "provider_trust": 2,
           "medical_self_efficacy": 3,
-          "logistical_capacity": -3,
-          "narrative_description": "When evaluating trials, David weighs risk, travel, inclusion criteria, and caregiver burden. He sees opportunity but also anticipates significant logistical strain.",
-          "quote": "This could help, but I have to think about the real-world impact on our lives."
+          "logistical_capacity": -1,
+          "narrative_description": "Maya raises trial participation with her neurologist, who is supportive but candid about the limited trial infrastructure available locally. She is referred to a specialist at an academic medical center three hours away who has more experience with the disease and active trial affiliations. The added travel burden concerns her but does not deter her.",
+          "quote": "My doctor was honest — she said she wasn't the right person to guide me on trials. I appreciated that more than I expected."
+        },
+        {
+          "stage_id": "6",
+          "stage": "Clinical Trial Consideration",
+          "step_id": "12",
+          "step": "Informed Consent Process and Decision Point",
+          "sentiment": -1,
+          "plutchik_score": "anticipation",
+          "emotional_valence": 0,
+          "provider_trust": 3,
+          "medical_self_efficacy": 3,
+          "logistical_capacity": -2,
+          "has_experience_wheel": true,
+          "narrative_description": "At the academic center, Maya reviews an informed consent document for a maintenance immunotherapy trial. The protocol is dense and cognitively demanding. She asks her mother to attend and takes the document home to review. Her key concerns are adverse event risk, the possibility of randomization to placebo, and whether participation requires pausing her academic reintegration.",
+          "inflection_detail": {
+            "label": "Consent Comprehension and Enrollment Decision",
+            "description": "For patients with residual cognitive effects of anti-NMDAR encephalitis, the standard informed consent process may present a disproportionate barrier. Maya's high health literacy partially compensates, but cognitive fatigue and anxiety around the decision remain significant. This is both a patient support opportunity and a site-level protocol design issue.",
+            "risk_level": "high",
+            "dropout_risk": "high",
+            "sponsor_opportunity": "Develop plain-language, layered consent materials adapted for patients with cognitive sequelae. Include explicit timelines for academic or occupational impact. Consider a 'trial companion' resource — a peer mentor who has participated in a similar trial — to supplement the traditional informed consent conversation.",
+            "data_needed": "Drop-off rate between initial trial inquiry and enrollment in autoimmune encephalitis populations; proportion of patients who cite protocol complexity or cognitive burden as barrier to enrollment.",
+            "paths": [
+              {
+                "id": "path_pos",
+                "direction": "positive",
+                "label": "Supported Enrollment with Clear Expectations",
+                "outcome": "With accessible consent materials and a peer navigator, Maya enrolls. Her participation is anchored in a clear schedule that accommodates her academic timeline. She becomes a strong protocol adherent and an informal advocate for the trial within patient communities.",
+                "sentiment_delta": 3,
+                "key_driver": "Simplified, visually structured consent materials; accommodating site coordinator; predictable visit schedule that integrates with her academic calendar."
+              },
+              {
+                "id": "path_neg",
+                "direction": "negative",
+                "label": "Cognitive and Logistical Barrier to Enrollment",
+                "outcome": "The complexity of the consent process and uncertainty about placebo randomization overwhelm Maya's decision-making capacity at this stage of recovery. She defers, intending to revisit — but without follow-up from the site, the window closes as she gradually stabilizes and perceives less urgency.",
+                "sentiment_delta": -2,
+                "key_driver": "Standard consent format not adapted for cognitive sequelae; lack of a patient navigator; academic reintegration concerns unaddressed by site team."
+              }
+            ]
+          },
+          "quote": "I want to do this. I just need to actually understand what I'm agreeing to — and I need to know it won't set back everything I've worked to rebuild."
         }
       ]
     },
@@ -763,14 +803,13 @@
         "occupation": "Retired",
         "caregiver": "None",
         "preference": "Seeking new treatment",
-        "goals": "testing",
-        "concerns": "testing",
+
         "diagnosed": "5 years ago",
         "imageFile": "maggieP.jpeg",
-        "bio": "David recently retired when his symptoms began interfering with his ability to work safely. His diagnosis came as a shock and he relies heavily on his healthcare providers to guide treatment decisions. While he values clear explanations and reassurance, he often feels uncertain navigating new medical systems and terminology.",
+        "bio_1": "Maggie recently retired when her symptoms began interfering with her ability to work safely. her diagnosis came as a shock and he relies heavily on her healthcare providers to guide treatment decisions. While he values clear explanations and reassurance, he often feels uncertain navigating new medical systems and terminology.",
         "goal1": "Slow disease progression and maintain physical independence.",
         "goal2": "Understand treatment expectations and potential side effects.",
-        "goal3": "Reduce the burden on his family as he navigates the disease.",
+        "goal3": "Reduce the burden on her family as he navigates the disease.",
         "barrier1": "Limited familiarity with medical terminology and treatment pathways.",
         "barrier2": "Transportation challenges for frequent appointments and evaluations.",
         "barrier3": "Anxiety about how quickly the disease may progress."
@@ -1081,7 +1120,7 @@
         "diagnosed": "At birth / early infancy",
         "imageFile": "kristenT.jpeg",
         "quote": "You\u2019re constantly balancing protection and independence. Every fall could mean a fracture, but you still want them to have a normal life.",
-        "bio": "Kristen is the primary caregiver for her young child diagnosed with osteogenesis imperfecta (OI), a rare genetic disorder characterized by brittle bones and frequent fractures. From infancy, she has navigated repeated hospital visits, surgeries, and ongoing physical therapy. She has become highly knowledgeable about OI management, but the emotional and logistical burden remains constant. She operates in a state of continuous vigilance, balancing safety with her child\u2019s quality of life.",
+        "bio_1": "Kristen is the primary caregiver for her young child diagnosed with osteogenesis imperfecta (OI), a rare genetic disorder characterized by brittle bones and frequent fractures. From infancy, she has navigated repeated hospital visits, surgeries, and ongoing physical therapy. She has become highly knowledgeable about OI management, but the emotional and logistical burden remains constant. She operates in a state of continuous vigilance, balancing safety with her child\u2019s quality of life.",
         "goal1": "Minimize fractures and complications while enabling a normal childhood experience.",
         "goal2": "Coordinate care across orthopedic surgeons, geneticists, and rehabilitation teams.",
         "goal3": "Build long-term independence and resilience for her child.",
