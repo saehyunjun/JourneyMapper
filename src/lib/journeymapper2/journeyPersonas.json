@@ -479,16 +479,19 @@
         "initials": "CD",
         "name": "Candace D.",
         "role": "Patient",
+        "indication": "Autoimmune Encephalitis",
+        "therapeutic area": "Central Nervous System Diseases", 
         "age": 27,
         "gender": "Female",
         "occupation": "Graduate student (on medical leave)",
         "caregiver": "Mother (primary), Partner (secondary)",
-        "preference": "Prefers written summaries of appointments; communicates via patient portal messaging",
+        "preference": "Clinical trial consideration",
         "diagnosed": "14 months ago",
         "imageFile": "CandaceD.jpg",
         "quote": "There were months I don't remember at all. I had to learn who I was again — and now I'm trying to figure out if there's something that can actually stop this from coming back.",
-        "bio_1": "Maya was a second-year PhD candidate in linguistics when she experienced what her family initially described as a psychiatric break — erratic behavior, paranoia, and seizure-like episodes that escalated over several weeks. After an extended hospitalization and a lumbar puncture, she was diagnosed with anti-NMDA receptor encephalitis. She spent nearly four months inpatient, including three weeks in the ICU.",
-        "bio_2": "Now in partial recovery, Maya manages residual cognitive fatigue, word-finding difficulties, and anxiety that she and her care team attribute to post-encephalitis syndrome. She has resumed light coursework but is not yet back to full academic capacity. She is highly motivated to understand her disease and advocates for herself in clinical settings, though she sometimes struggles with memory and processing speed during complex conversations.",
+        "bio_1": "Candace was a second-year PhD candidate when she experienced what her family described as a psychiatric break — erratic behavior, paranoia, and seizure-like episodes that escalated over several weeks. After hospitalization, she was diagnosed with anti-NMDA receptor encephalitis.",
+        "bio_2": "She spent nearly four months inpatient, including three weeks in the ICU. Now in partial recovery, Candace manages residual cognitive fatigue, word-finding difficulties, and anxiety that she and her care team attribute to post-encephalitis syndrome. She has resumed light coursework but is not yet back to full academic capacity. She is highly motivated to understand her disease and advocates for herself in clinical settings, though she sometimes struggles with memory and processing speed during complex conversations.",
+        
         "goal1": "Achieve full cognitive recovery and return to her doctoral program without permanent academic setback.",
         "goal2": "Reduce relapse risk and understand whether maintenance immunotherapy or a clinical trial offers better long-term protection.",
         "goal3": "Rebuild a sense of identity and continuity after a period of significant memory loss and personality disruption.",
@@ -578,7 +581,7 @@
           "provider_trust": 1,
           "medical_self_efficacy": 1,
           "logistical_capacity": 2,
-          "narrative_description": "Maya and her family notice mood changes, insomnia, and increasingly disorganized thinking. Initial consultations with a campus mental health counselor result in a provisional anxiety and stress diagnosis. Maya complies but feels that something more serious is being missed.",
+          "narrative_description": "Candace and her family notice mood changes, insomnia, and increasingly disorganized thinking. Initial consultations with a campus mental health counselor result in a provisional anxiety and stress diagnosis. Candace complies but feels that something more serious is being missed.",
           "quote": "I knew it wasn't just stress. I've been stressed before. This was different."
         },
         {
@@ -592,7 +595,7 @@
           "provider_trust": -1,
           "medical_self_efficacy": -2,
           "logistical_capacity": -3,
-          "narrative_description": "Within weeks, Maya experiences auditory hallucinations, catatonic episodes, and a witnessed seizure in her apartment. Her partner calls 911. She is admitted to an inpatient psychiatric unit before transfer to a general neurology service. Maya has limited memory of this period.",
+          "narrative_description": "Within weeks, Candace experiences auditory hallucinations, catatonic episodes, and a witnessed seizure in her apartment. Her partner calls 911. She is admitted to an inpatient psychiatric unit before transfer to a general neurology service. Candace has limited memory of this period.",
           "quote": "I barely remember the first few weeks. I've had to piece it together from my mom's notes."
         },
         {
@@ -606,7 +609,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": -3,
           "logistical_capacity": -5,
-          "narrative_description": "Maya is intubated and receives high-dose steroids and IVIG in the ICU. Her mother becomes the primary decision-maker during this period. The medical team explains anti-NMDAR encephalitis to her family, though Maya herself is not cognitively present for these conversations.",
+          "narrative_description": "Candace is intubated and receives high-dose steroids and IVIG in the ICU. Her mother becomes the primary decision-maker during this period. The medical team explains anti-NMDAR encephalitis to her family, though Candace herself is not cognitively present for these conversations.",
           "quote": "My mom said the doctors finally had a name for it. I was there but I wasn't really there."
         },
         {
@@ -620,7 +623,7 @@
           "provider_trust": 3,
           "medical_self_efficacy": 0,
           "logistical_capacity": -3,
-          "narrative_description": "Imaging and surgical evaluation reveal no underlying teratoma, which the team presents as a favorable prognostic signal. Maya's family receives this news with cautious relief. Maya begins a slow return to awareness and can hold brief conversations.",
+          "narrative_description": "Imaging and surgical evaluation reveal no underlying teratoma, which the team presents as a favorable prognostic signal. Candace's family receives this news with cautious relief. Candace begins a slow return to awareness and can hold brief conversations.",
           "quote": "No tumor. That was the first thing that felt like good news."
         },
         {
@@ -634,7 +637,7 @@
           "provider_trust": 3,
           "medical_self_efficacy": 1,
           "logistical_capacity": -2,
-          "narrative_description": "After incomplete response to first-line therapy, the neurology team initiates rituximab. Maya is now cognitively present enough to be partially involved in consent discussions, though she relies heavily on her mother. She experiences fatigue and nausea but gradually stabilizes.",
+          "narrative_description": "After incomplete response to first-line therapy, the neurology team initiates rituximab. Candace is now cognitively present enough to be partially involved in consent discussions, though she relies heavily on her mother. She experiences fatigue and nausea but gradually stabilizes.",
           "quote": "They explained what rituximab was. I remember nodding and not really absorbing all of it."
         },
         {
@@ -648,7 +651,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 1,
           "logistical_capacity": -1,
-          "narrative_description": "After nearly four months, Maya is discharged with an outpatient immunology follow-up plan and neuropsychological testing scheduled. Her family receives limited structured guidance on what recovery should look like at home. She moves back with her mother.",
+          "narrative_description": "After nearly four months, Candace is discharged with an outpatient immunology follow-up plan and neuropsychological testing scheduled. Her family receives limited structured guidance on what recovery should look like at home. She moves back with her mother.",
           "quote": "They said I was stable enough to go home. I didn't feel stable — I just wasn't ICU-level anymore."
         },
         {
@@ -662,7 +665,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 2,
           "logistical_capacity": 0,
-          "narrative_description": "Neuropsychological testing reveals deficits in processing speed, working memory, and verbal fluency. Maya finds the results both validating and devastating — the data confirms what she has been experiencing, but also documents how far she is from her prior baseline. She begins occupational and speech therapy.",
+          "narrative_description": "Neuropsychological testing reveals deficits in processing speed, working memory, and verbal fluency. Candace finds the results both validating and devastating — the data confirms what she has been experiencing, but also documents how far she is from her prior baseline. She begins occupational and speech therapy.",
           "quote": "Seeing the numbers made it real. I knew I was slower, but now I had proof."
         },
         {
@@ -677,10 +680,10 @@
           "medical_self_efficacy": 2,
           "logistical_capacity": -1,
           "has_experience_wheel": true,
-          "narrative_description": "Every new headache, word-retrieval failure, or sleep disturbance triggers fear of relapse. Maya begins tracking symptoms obsessively in a notes app and contacts her neurologist frequently. The care team provides reassurance but limited structured guidance on relapse warning signs.",
+          "narrative_description": "Every new headache, word-retrieval failure, or sleep disturbance triggers fear of relapse. Candace begins tracking symptoms obsessively in a notes app and contacts her neurologist frequently. The care team provides reassurance but limited structured guidance on relapse warning signs.",
           "inflection_detail": {
             "label": "Hypervigilance Inflection",
-            "description": "Maya's post-discharge symptom monitoring behavior reflects both high health literacy and unmanaged relapse anxiety. This is a critical window where structured support could channel her vigilance productively — or, without intervention, escalate to avoidance and psychological burden.",
+            "description": "Candace's post-discharge symptom monitoring behavior reflects both high health literacy and unmanaged relapse anxiety. This is a critical window where structured support could channel her vigilance productively — or, without intervention, escalate to avoidance and psychological burden.",
             "risk_level": "high",
             "dropout_risk": "moderate",
             "sponsor_opportunity": "Provide a structured relapse early-warning framework — co-developed with patients — that distinguishes normal recovery fluctuation from actionable warning signs. A digital symptom tracker with embedded clinical guidance could reduce anxiety-driven contacts while increasing meaningful signal capture.",
@@ -690,7 +693,7 @@
                 "id": "path_pos",
                 "direction": "positive",
                 "label": "Structured Monitoring Engagement",
-                "outcome": "Maya's vigilance is formalized into a symptom-tracking protocol with her care team. She receives psychoeducation on distinguishing recovery variation from relapse signals, reducing acute anxiety while maintaining appropriate monitoring. She becomes an engaged candidate for prevention-focused clinical trials.",
+                "outcome": "Candace's vigilance is formalized into a symptom-tracking protocol with her care team. She receives psychoeducation on distinguishing recovery variation from relapse signals, reducing acute anxiety while maintaining appropriate monitoring. She becomes an engaged candidate for prevention-focused clinical trials.",
                 "sentiment_delta": 2,
                 "key_driver": "Clear relapse criteria provided by HCP team; access to a nurse navigator or disease-specific patient coordinator; peer connection with other anti-NMDAR encephalitis survivors."
               },
@@ -698,7 +701,7 @@
                 "id": "path_neg",
                 "direction": "negative",
                 "label": "Anxiety Escalation and Disengagement",
-                "outcome": "Without structured guidance, Maya's self-monitoring becomes destabilizing. She begins avoiding activities that could trigger perceived symptoms, withdraws from academic reintegration, and grows skeptical of trial participation due to fear of adverse events destabilizing her fragile recovery.",
+                "outcome": "Without structured guidance, Candace's self-monitoring becomes destabilizing. She begins avoiding activities that could trigger perceived symptoms, withdraws from academic reintegration, and grows skeptical of trial participation due to fear of adverse events destabilizing her fragile recovery.",
                 "sentiment_delta": -3,
                 "key_driver": "Lack of post-discharge relapse education; no mental health co-management; perceived dismissiveness from neurology team regarding ongoing anxiety."
               }
@@ -717,7 +720,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 4,
           "logistical_capacity": 2,
-          "narrative_description": "Maya discovers the Autoimmune Encephalitis Alliance and multiple patient-run online communities. Reading others' recovery narratives provides her first real sense of what the trajectory can look like. She begins contributing, sharing her own experience, and asking detailed questions about treatment maintenance and trial options.",
+          "narrative_description": "Candace discovers the Autoimmune Encephalitis Alliance and multiple patient-run online communities. Reading others' recovery narratives provides her first real sense of what the trajectory can look like. She begins contributing, sharing her own experience, and asking detailed questions about treatment maintenance and trial options.",
           "quote": "I found people who had been where I was and made it back further than I thought was possible. That changed everything."
         },
         {
@@ -731,7 +734,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 4,
           "logistical_capacity": 1,
-          "narrative_description": "Motivated by community members' experiences and her own desire to access novel maintenance therapies, Maya begins reviewing ClinicalTrials.gov listings. She identifies several trials investigating B-cell depletion maintenance and neonatal Fc receptor (FcRn) antagonists for autoimmune encephalitis but struggles to parse eligibility criteria and endpoints.",
+          "narrative_description": "Motivated by community members' experiences and her own desire to access novel maintenance therapies, Candace begins reviewing ClinicalTrials.gov listings. She identifies several trials investigating B-cell depletion maintenance and neonatal Fc receptor (FcRn) antagonists for autoimmune encephalitis but struggles to parse eligibility criteria and endpoints.",
           "quote": "I can find the trials. I just can't always tell if I qualify, or what I'd actually be signing up for."
         },
         {
@@ -745,7 +748,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 3,
           "logistical_capacity": -1,
-          "narrative_description": "Maya raises trial participation with her neurologist, who is supportive but candid about the limited trial infrastructure available locally. She is referred to a specialist at an academic medical center three hours away who has more experience with the disease and active trial affiliations. The added travel burden concerns her but does not deter her.",
+          "narrative_description": "Candace raises trial participation with her neurologist, who is supportive but candid about the limited trial infrastructure available locally. She is referred to a specialist at an academic medical center three hours away who has more experience with the disease and active trial affiliations. The added travel burden concerns her but does not deter her.",
           "quote": "My doctor was honest — she said she wasn't the right person to guide me on trials. I appreciated that more than I expected."
         },
         {
@@ -760,10 +763,10 @@
           "medical_self_efficacy": 3,
           "logistical_capacity": -2,
           "has_experience_wheel": true,
-          "narrative_description": "At the academic center, Maya reviews an informed consent document for a maintenance immunotherapy trial. The protocol is dense and cognitively demanding. She asks her mother to attend and takes the document home to review. Her key concerns are adverse event risk, the possibility of randomization to placebo, and whether participation requires pausing her academic reintegration.",
+          "narrative_description": "At the academic center, Candace reviews an informed consent document for a maintenance immunotherapy trial. The protocol is dense and cognitively demanding. She asks her mother to attend and takes the document home to review. Her key concerns are adverse event risk, the possibility of randomization to placebo, and whether participation requires pausing her academic reintegration.",
           "inflection_detail": {
             "label": "Consent Comprehension and Enrollment Decision",
-            "description": "For patients with residual cognitive effects of anti-NMDAR encephalitis, the standard informed consent process may present a disproportionate barrier. Maya's high health literacy partially compensates, but cognitive fatigue and anxiety around the decision remain significant. This is both a patient support opportunity and a site-level protocol design issue.",
+            "description": "For patients with residual cognitive effects of anti-NMDAR encephalitis, the standard informed consent process may present a disproportionate barrier. Candace's high health literacy partially compensates, but cognitive fatigue and anxiety around the decision remain significant. This is both a patient support opportunity and a site-level protocol design issue.",
             "risk_level": "high",
             "dropout_risk": "high",
             "sponsor_opportunity": "Develop plain-language, layered consent materials adapted for patients with cognitive sequelae. Include explicit timelines for academic or occupational impact. Consider a 'trial companion' resource — a peer mentor who has participated in a similar trial — to supplement the traditional informed consent conversation.",
@@ -773,7 +776,7 @@
                 "id": "path_pos",
                 "direction": "positive",
                 "label": "Supported Enrollment with Clear Expectations",
-                "outcome": "With accessible consent materials and a peer navigator, Maya enrolls. Her participation is anchored in a clear schedule that accommodates her academic timeline. She becomes a strong protocol adherent and an informal advocate for the trial within patient communities.",
+                "outcome": "With accessible consent materials and a peer navigator, Candace enrolls. Her participation is anchored in a clear schedule that accommodates her academic timeline. She becomes a strong protocol adherent and an informal advocate for the trial within patient communities.",
                 "sentiment_delta": 3,
                 "key_driver": "Simplified, visually structured consent materials; accommodating site coordinator; predictable visit schedule that integrates with her academic calendar."
               },
@@ -781,7 +784,7 @@
                 "id": "path_neg",
                 "direction": "negative",
                 "label": "Cognitive and Logistical Barrier to Enrollment",
-                "outcome": "The complexity of the consent process and uncertainty about placebo randomization overwhelm Maya's decision-making capacity at this stage of recovery. She defers, intending to revisit — but without follow-up from the site, the window closes as she gradually stabilizes and perceives less urgency.",
+                "outcome": "The complexity of the consent process and uncertainty about placebo randomization overwhelm Candace's decision-making capacity at this stage of recovery. She defers, intending to revisit — but without follow-up from the site, the window closes as she gradually stabilizes and perceives less urgency.",
                 "sentiment_delta": -2,
                 "key_driver": "Standard consent format not adapted for cognitive sequelae; lack of a patient navigator; academic reintegration concerns unaddressed by site team."
               }

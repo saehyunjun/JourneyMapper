@@ -161,7 +161,7 @@
 
     /* Active state: solid ring */
     .persona-avatar--active {
-      border: 3px solid var(--teal, #23abab);
+      border: 4px solid var(--teal, #23abab);
       filter: saturate(1);
     }
 
