@@ -572,9 +572,9 @@
       "journey": [
         {
           "stage_id": "1",
-          "stage": "Prodromal Period",
+          "stage": "Initial Symptoms",
           "step_id": "1",
-          "step": "Behavioral and Psychiatric Onset",
+          "step": "Behavioral Changes",
           "sentiment": -1,
           "plutchik_score": "fear",
           "emotional_valence": -2,
@@ -586,7 +586,7 @@
         },
         {
           "stage_id": "1",
-          "stage": "Prodromal Period",
+          "stage": "Initial Symptoms",
           "step_id": "2",
           "step": "Escalation to Psychosis and Seizures",
           "sentiment": -3,

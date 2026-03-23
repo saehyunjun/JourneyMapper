@@ -89,7 +89,7 @@
 
     <!-- Narrative description -->
     {#if step.narrative_description}
-      <div class="jm-content-row">
+      <div class="jm-content-col gap-2 text-pretty">
         <span class="heading-sm">Step Narrative</span>
         <p class="text-body">{step.narrative_description}</p>
       </div>

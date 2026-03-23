@@ -86,8 +86,8 @@
     
 
     <div class="header-row">
-      <p class="label font-bold">{step.step}</p>
-      <span class="label-sm">{step.stage}</span>
+      <p class="label-sm font-bold">{step.step}</p>
+      <span class="label-sm text-right">{step.stage}</span>
     </div>
 
 
@@ -131,7 +131,7 @@
         <div class="flex flex-col">
           <div class="flex">
             {#each emotionSwatches as color}
-              <span class="mini-swatch-circle" style="background:{color}">
+              <span class="w-3 h-3 ring-1 rounded-full" style="background:{color}">
               </span>
             {/each}
           </div>

@@ -11,6 +11,14 @@ export const selectedIndex = writable(-1);
 // A second click on the same zoomed step triggers the drawer to open.
 export const zoomedIndex = writable(-1);
 
-// Index of the currently hovered inflection sub-card (-1 = none).
-// Set by FlowStepCard when the user hovers the inflection branch card.
+// Index of the step whose inflection sub-card is currently hovered (-1 = none).
+// Used by JourneyTooltip and FlowStepCard to show inflection context.
 export const hoveredInflectionIndex = writable(-1);
+
+// Index of the step whose inflection fork was clicked (-1 = none).
+// Set alongside selectedInflectionPath when a fork path card is clicked.
+export const selectedInflectionIndex = writable(-1);
+
+// Which fork path was clicked: 'positive' | 'negative' | null
+// null when no inflection is selected.
+export const selectedInflectionPath = writable(/** @type {'positive'|'negative'|null} */ (null));

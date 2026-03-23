@@ -68,11 +68,10 @@
     function getTooltipFields(p) {
       const prof = p.profile ?? {};
       return [
-        ['Role',       prof.role],
         ['Age',        prof.age],
         ['Occupation', prof.occupation],
         ['Diagnosed',  prof.diagnosed],
-        ['Preference', prof.preference],
+        ['Current Status', prof.preference],
       ].filter(([, val]) => val != null && val !== '');
     }
   </script>
@@ -136,11 +135,11 @@
         {/if}
   
         <!-- Key fields -->
-        <div class="tip-fields">
+        <div class="flex flex-col gap-4 mt-8">
           {#each getTooltipFields(hp) as [key, val]}
             <div class="tip-field-row">
-              <span class="tip-key">{key}</span>
-              <span class="tip-val">{val}</span>
+              <span class="label-sm">{key}</span>
+              <span class="label font-bold">{val}</span>
             </div>
           {/each}
         </div>
@@ -177,7 +176,7 @@
     .persona-top-tooltip {
       position: fixed;
       pointer-events: none;
-      min-width: 300px;
+      min-width: 425px;
       z-index: 500;
       padding: 12px 14px 14px;
       transition: left 50ms linear, top 50ms linear;
@@ -192,6 +191,7 @@
     .tip-field-row {
       display: flex;
       justify-content: space-between;
+      border-bottom: 1px solid var(--color-stone-200);
       align-items: baseline;
       gap: 6px;
     }

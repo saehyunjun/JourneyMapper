@@ -6,6 +6,8 @@
   import JourneyStages        from '$lib/journeymapper2/JourneyStages.svelte';
   import JourneySentiment     from '$lib/journeymapper2/JourneySentiment.svelte';
   import JourneyFlowDiagram from '$lib/journeymapper2/JourneyFlowDiagram.svelte';
+  import InflectionDetailContent from '$lib/journeymapper2/InflectionDetailContent.svelte';
+
   import PersonaStory         from '$lib/journeymapper2/PersonaStory.svelte';
   import JourneyTooltip       from '$lib/journeymapper2/JourneyTooltip.svelte';
   import JourneyInfoSidebar from '$lib/journeymapper2/JourneyInfoSidebar.svelte';
@@ -17,8 +19,7 @@
   import PersonaTopSelector   from '$lib/journeymapper2/PersonaTopSelector.svelte';
 
   import { STEP_WIDTH, LEFT_AXIS_WIDTH, valueToY } from '$lib/journeymapper2/journeyConfig.js';
-  import { selectedIndex } from '$lib/journeymapper2/journeyStore.js';
-
+  import { selectedIndex, selectedInflectionIndex, selectedInflectionPath } from '$lib/journeymapper2/journeyStore.js';
   import CaretRight from "phosphor-icons-svelte/IconCaretRightRegular.svelte";
   import CaretLeft  from "phosphor-icons-svelte/IconCaretLeftRegular.svelte";
 
@@ -48,9 +49,17 @@
   /** @type {any} */
   $: personaProfile = activePersona?.profile ?? {};
 
-  // Wheel data for the currently selected step
+  // Wheel data for the currently selected st$: ifep
   $: selectedStep      = $selectedIndex >= 0 ? (journeyData[$selectedIndex] ?? null) : null;
   $: selectedWheelData = selectedStep?.step_id ? (experienceWheels[selectedStep.step_id] ?? null) : null;
+
+  // Auto-open step drawer when a step is selected
+$: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
+
+// Auto-open inflection drawer when a fork path card is clicked
+$: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
+$: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
+
 
   // ── Jitter offsets for coincident nodes ──────────────────────────────
   const JITTER = 7;
@@ -82,7 +91,9 @@
 
   // ── Drawer state ──────────────────────────────────────────────────────
   /** @type {'step' | 'plutchik' | 'persona' | null} */
+  /** @type {'step' | 'plutchik' | 'persona' | 'inflection' | null} */
   let drawerMode = null;
+
   $: drawerOpen = drawerMode !== null;
 
   // Auto-open step drawer when a step is selected
@@ -101,9 +112,11 @@
   }
 
   function handleDrawerClose() {
-    drawerMode = null;
-    selectedIndex.set(-1);
-  }
+  drawerMode = null;
+  selectedIndex.set(-1);
+  selectedInflectionIndex.set(-1);
+  selectedInflectionPath.set(null);
+}
 
   $: drawerEyebrow =
     drawerMode === 'plutchik' ? 'Methodology' :
@@ -187,6 +200,10 @@ on:close={handleDrawerClose}
   <PlutchikContent />
 {:else if drawerMode === 'persona'}
   <PersonaDetailContent persona={activePersona} />
+
+// Add to drawer slot:
+{:else if drawerMode === 'inflection'}
+  <InflectionDetailContent data={journeyData} />
 {/if}
 
 <svelte:fragment slot="footer">
