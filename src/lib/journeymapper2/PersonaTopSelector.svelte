@@ -78,10 +78,10 @@
   
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="sticky-panel-left" aria-label="Persona selector" on:mousemove={handleMouseMove}>
-    <div class="flex flex-col gap-4 py-2 align-middle justify-evenly">
+    <div class="flex flex-col gap-4 py-2 align-middle justify-center">
       {#each personas as p (p.id)}
         {@const active = p.id === activePersonaId}
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center align-middle justify-center">
           <button
             class="persona-avatar"
             class:persona-avatar--active={active}
@@ -155,7 +155,6 @@
       filter: saturate(1);
     }
 
-
     .persona-photo {
       width: 100%;
       height: 100%;
@@ -173,7 +172,6 @@
       transition: left 50ms linear, top 50ms linear;
     }
   
-  
     .tip-field-row {
       display: flex;
       justify-content: space-between;
@@ -181,6 +179,4 @@
       align-items: baseline;
       gap: 6px;
     }
-  
-
   </style>

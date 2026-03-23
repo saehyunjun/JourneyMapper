@@ -31,7 +31,8 @@
 
   /** @type {Record<string, any>} */
   const experienceWheels = personaFile.experienceWheels ?? {};
-    // ── Layout toggle ─────────────────────────────────────────────────────
+
+  // ── Layout toggle ─────────────────────────────────────────────────────
   /** @type {'horizontal' | 'vertical'} */
   let layout = 'horizontal';
   $: isVertical = layout === 'vertical';
@@ -39,7 +40,6 @@
   // ── Chart view toggle ─────────────────────────────────────────────────
   /** @type {'chart' | 'flow'} */
   let chartView = 'chart';
-
 
   // ── Story overlay ─────────────────────────────────────────────────────
   let storyOpen    = false;
@@ -55,17 +55,15 @@
   /** @type {any} */
   $: personaProfile = activePersona?.profile ?? {};
 
-  // Wheel data for the currently selected st$: ifep
+  // Wheel data for the currently selected step
   $: selectedStep      = $selectedIndex >= 0 ? (journeyData[$selectedIndex] ?? null) : null;
   $: selectedWheelData = selectedStep?.step_id ? (experienceWheels[selectedStep.step_id] ?? null) : null;
 
   // Auto-open step drawer when a step is selected
-$: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
+  $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
 
-// Auto-open inflection drawer when a fork path card is clicked
-$: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
-$: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
-
+  // Auto-open inflection drawer when a fork path card is clicked
+  $: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
 
   // ── Jitter offsets for coincident nodes ──────────────────────────────
   const JITTER = 7;
@@ -96,14 +94,10 @@ $: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode 
   $: nodeOffsets = computeOffsets(journeyData, metrics);
 
   // ── Drawer state ──────────────────────────────────────────────────────
-  /** @type {'step' | 'plutchik' | 'persona' | null} */
   /** @type {'step' | 'plutchik' | 'persona' | 'inflection' | null} */
   let drawerMode = null;
 
   $: drawerOpen = drawerMode !== null;
-
-  // Auto-open step drawer when a step is selected
-  $: if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
 
   $: timelineActive = $selectedIndex >= 0 || drawerOpen;
 
@@ -118,11 +112,11 @@ $: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode 
   }
 
   function handleDrawerClose() {
-  drawerMode = null;
-  selectedIndex.set(-1);
-  selectedInflectionIndex.set(-1);
-  selectedInflectionPath.set(null);
-}
+    drawerMode = null;
+    selectedIndex.set(-1);
+    selectedInflectionIndex.set(-1);
+    selectedInflectionPath.set(null);
+  }
 
   $: drawerEyebrow =
     drawerMode === 'plutchik' ? 'Methodology' :
@@ -141,152 +135,169 @@ $: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode 
   let scrollEl = null;
 </script>
 
-<div class="journey-wrapper overflow-x-scroll">
+<!-- ── Page shell: full viewport height, no scroll on the outer wrapper ── -->
+<div class="journey-wrapper flex flex-col h-screen overflow-hidden">
 
-<!-- ── Nav bar ─────────────────────────────────~─────────────────────── -->
-<div class="title-bar flex flex-row min-w-full">
-  <span class="h3 nav-title">JourneyMapper</span>
-  <span class="nav-title">Powered by PatientlyIQ</span>
-</div>
 
-<!-- ── Persona selector — on:story wired here ─────────────────── -->
-<div class="toolbar" role="tablist">
-  <button
-    class="btn-nav"
-    class:view-tab--active={chartView === 'chart'}
-    role="tab"
-    aria-selected={chartView === 'chart'}
-    on:click={() => chartView = 'chart'}
-  >
-    <IconChartLineRegular />
-    <span>Journey Sentiment</span>
-  </button>
-  <button
-    class="btn-nav"
-    class:view-tab--active={chartView === 'flow'}
-    role="tab"
-    aria-selected={chartView === 'flow'}
-    on:click={() => chartView = 'flow'}
-  >
-    <IconFlowArrowRegular />
-    <span>Journey Flow</span>
-  </button>
-<!-- ── Body ──────────────────────────────────────────────────────────── -->
-<div class="journey-body">
-    </div>
+  <!-- ── Toolbar ──────────────────────────────────────────────────────── -->
+  <div class="toolbar" role="tablist">
+    <div class="flex flex-row gap-2 justify-start">
+    <button
+      class="btn-nav"
+      class:view-tab--active={chartView === 'chart'}
+      role="tab"
+      aria-selected={chartView === 'chart'}
+      on:click={() => chartView = 'chart'}
+    >
+      <IconChartLineRegular />
+      <span>Journey Sentiment</span>
+    </button>
+    <button
+      class="btn-nav"
+      class:view-tab--active={chartView === 'flow'}
+      role="tab"
+      aria-selected={chartView === 'flow'}
+      on:click={() => chartView = 'flow'}
+    >
+      <IconFlowArrowRegular />
+      <span>Journey Flow</span>
+    </button>
+  </div>
+
     {#if chartView === 'flow'}
       <JourneyLayoutToggle bind:layout />
     {/if}
-    </div>
-<PersonaTopSelector
-  {personas}
-  {activePersonaId}
-  on:select={handlePersonaSelect}
-  on:story={handlePersonaStory}
-/>
+  </div>
 
-<div class="journey-main">
-  <div class="shared-scroll">
+  <!-- ── Three-column body ────────────────────────────────────────────── -->
+  <!--
+    Left  : PersonaTopSelector  (fixed-width, full height, scrollable)
+    Middle: chart / flow area   (flex-1, horizontally scrollable)
+    Right : JourneyInfoSidebar  (fixed-width, full height, scrollable)
+  -->
+  <div class="journey-body flex flex-row flex-1 min-h-0">
+
+    <!-- LEFT — persona selector column -->
+    <div class="persona-col shrink-0 overflow-y-auto">
+      <PersonaTopSelector
+        {personas}
+        {activePersonaId}
+        on:select={handlePersonaSelect}
+        on:story={handlePersonaStory}
+      />
+    </div>
+
+    <!-- MIDDLE — chart / flow, scrolls horizontally -->
+    <div class="chart-col flex-1 min-w-0 overflow-x-auto overflow-y-hidden" bind:this={scrollEl}>
       {#if chartView === 'flow'}
         <JourneyFlowDiagram data={journeyData} {layout} />
       {:else}
-        <div class="shared-scroll" bind:this={scrollEl}>
-          <JourneyStages data={journeyData} />
-          <JourneySteps  data={journeyData} />
-          <JourneySentiment data={journeyData} />
-          <div class="spacer"></div>
-          <JourneyIndexBars data={journeyData} {metrics} />
-          <JourneyLegend items={metrics} />
-        </div>
+        <JourneyStages data={journeyData} />
+        <JourneySteps  data={journeyData} />
+        <JourneySentiment data={journeyData} />
+        <div class="spacer"></div>
+        <JourneyIndexBars data={journeyData} {metrics} />
+        <JourneyLegend items={metrics} />
       {/if}
-      </div>
     </div>
-  </div>  
 
-      <!-- RIGHT sidebar — 1/6 width, full height -->
-     <JourneyInfoSidebar
-     {activePersona}
-     data={journeyData}
-     {metrics}
+    <!-- RIGHT — info sidebar column -->
+    <div class="info-col shrink-0 overflow-y-auto">
+      <JourneyInfoSidebar
+        {activePersona}
+        data={journeyData}
+        {metrics}
+      />
+    </div>
 
-   />
+  </div><!-- /journey-body -->
 
+</div><!-- /journey-wrapper -->
 
 
 <!-- ── Drawer ────────────────────────────────────────────────────────────── -->
 <JourneyDrawer
-bind:open={drawerOpen}
-eyebrow={drawerEyebrow}
-title={drawerTitle}
-width={drawerWidth}
-on:close={handleDrawerClose}
+  bind:open={drawerOpen}
+  eyebrow={drawerEyebrow}
+  title={drawerTitle}
+  width={drawerWidth}
+  on:close={handleDrawerClose}
 >
-{#if drawerMode === 'step'}
-  <StepDetailContent data={journeyData} metrics={metrics} wheelData={selectedWheelData} />
-{:else if drawerMode === 'plutchik'}
-  <PlutchikContent />
-{:else if drawerMode === 'persona'}
-  <PersonaDetailContent persona={activePersona} />
-
-// Add to drawer slot:
-{:else if drawerMode === 'inflection'}
-  <InflectionDetailContent data={journeyData} />
-{/if}
-
-<svelte:fragment slot="footer">
   {#if drawerMode === 'step'}
-    <button
-      class="btn-base"
-      disabled={$selectedIndex <= 0}
-      on:click={() => selectedIndex.update(i => i - 1)}
-      aria-label="Previous step"
-    ><CaretLeft /></button>
-
-    <button
-      class="btn-base"
-      disabled={$selectedIndex >= journeyData.length - 1}
-      on:click={() => selectedIndex.update(i => i + 1)}
-      aria-label="Next step"
-    ><CaretRight /></button>
-
+    <StepDetailContent data={journeyData} metrics={metrics} wheelData={selectedWheelData} />
   {:else if drawerMode === 'plutchik'}
-    <span class="cite">
-      Plutchik, R. (1980). <em>Emotion: A Psychoevolutionary Synthesis.</em> Harper & Row.
-    </span>
-    <button class="btn-sm" on:click={handleDrawerClose}>Close</button>
-
+    <PlutchikContent />
   {:else if drawerMode === 'persona'}
-    <span class="persona-footer-note">
-      {activePersona.journey.length} steps ·
-      {[...new Set(activePersona.journey.map(d => d.stage_id))].length} stages
-    </span>
-    <button class="btn-sm" on:click={handleDrawerClose}>Close</button>
+    <PersonaDetailContent persona={activePersona} />
+  {:else if drawerMode === 'inflection'}
+    <InflectionDetailContent data={journeyData} />
   {/if}
-</svelte:fragment>
+
+  <svelte:fragment slot="footer">
+    {#if drawerMode === 'step'}
+      <button
+        class="btn-base"
+        disabled={$selectedIndex <= 0}
+        on:click={() => selectedIndex.update(i => i - 1)}
+        aria-label="Previous step"
+      ><CaretLeft /></button>
+
+      <button
+        class="btn-base"
+        disabled={$selectedIndex >= journeyData.length - 1}
+        on:click={() => selectedIndex.update(i => i + 1)}
+        aria-label="Next step"
+      ><CaretRight /></button>
+
+    {:else if drawerMode === 'plutchik'}
+      <span class="cite">
+        Plutchik, R. (1980). <em>Emotion: A Psychoevolutionary Synthesis.</em> Harper & Row.
+      </span>
+      <button class="btn-sm" on:click={handleDrawerClose}>Close</button>
+
+    {:else if drawerMode === 'persona'}
+      <span class="persona-footer-note">
+        {activePersona.journey.length} steps ·
+        {[...new Set(activePersona.journey.map(d => d.stage_id))].length} stages
+      </span>
+      <button class="btn-sm" on:click={handleDrawerClose}>Close</button>
+    {/if}
+  </svelte:fragment>
 </JourneyDrawer>
+
 
 <!-- ── Story overlay ─────────────────────────────────────────────────────── -->
 <PersonaStory
-bind:open={storyOpen}
-{personas}
-activeIndex={personas.findIndex(p => p.id === activePersonaId)}
-originEl={storyOriginEl}
-on:close={() => storyOpen = false}
-on:select={e => { activePersonaId = e.detail.id; }}
+  bind:open={storyOpen}
+  {personas}
+  activeIndex={personas.findIndex(p => p.id === activePersonaId)}
+  originEl={storyOriginEl}
+  on:close={() => storyOpen = false}
+  on:select={e => { activePersonaId = e.detail.id; }}
 />
 
 <JourneyTooltip data={journeyData} {metrics} />
 
 
 <style>
-.shared-scroll {
-  position: relative;
-  overflow-x: auto;
-  overflow-y: visible;
-  z-index: 1;
-  flex: 1;
-  padding-bottom: 1em;
-}
 
 
+  /* Middle scrolling chart area */
+  .chart-col {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 1em;
+    scrollbar-width: auto;
+    overflow-x: scroll;   /* force horizontal scrollbar */
+    overflow-y: hidden;   /* prevent vertical scrollbar */
+    scrollbar-gutter: stable;    
+    scrollbar-color: var(--color-orange-700);
+    overflow: scroll;
+  }
+
+  /* Right info sidebar — fixed width, scrollable */
+  .info-col {
+    max-width: 320px; /* adjust to match JourneyInfoSidebar's natural width */
+    border-left: 1px solid var(--jm-border, rgba(0,0,0,0.08));
+  }
 </style>

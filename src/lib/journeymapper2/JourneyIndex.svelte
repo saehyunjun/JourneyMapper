@@ -46,6 +46,9 @@
   $: nodeOffsets = computeOffsets(data, metrics);
 </script>
 
+<div class="header-row">
+  <h3 class="heading">Index</h3>
+</div>
 <JourneyGrid {data}>
   {#each metrics as m}
     <JourneyLine

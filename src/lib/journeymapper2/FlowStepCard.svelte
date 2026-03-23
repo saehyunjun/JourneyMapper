@@ -10,15 +10,9 @@
 
   /** The stage accent color (hex) for border and index label */
   export let stageColor = '#6b7280';
+  export let hideHeader = false;
+export let layout = 'horizontal';
 
-  /**
-   * Layout orientation forwarded from the diagram.
-   * 'horizontal' — inflection card hangs below (default)
-   * 'vertical'   — inflection card sits to the right
-   */
-  export let layout = 'horizontal';
-
-  $: isVertical = layout === 'vertical';
 
   function handleClick() {
     selectedIndex.update(i => i === step.index ? -1 : step.index);
@@ -28,7 +22,7 @@
   $: infl    = d?.inflection === 'Y';
   $: inflDet = d?.inflection_detail ?? null;
 
-  // Resolve plutchik_score → one or two primary emotion colors
+  // Resolve plutchik_score → one or two primary emotion colors (same logic as StepDetailContent)
   $: emotionSwatches = (() => {
     const raw = d?.plutchik_score?.toLowerCase().trim() ?? '';
     if (!raw) return [];
@@ -39,16 +33,7 @@
   })();
 </script>
 
-<!--
-  In horizontal mode: step card stacks vertically with inflection below.
-  In vertical mode:   step card sits in a row with inflection to the right,
-                      and the whole slot is laid out horizontally so it reads
-                      left-to-right within the vertical stage band.
--->
-<div
-  class="flow-step-slot"
-  class:flow-step-slot--vertical={isVertical}
->
+<div class="flow-step-slot">
 
   <!-- Step card -->
   <button
@@ -66,40 +51,31 @@
         class="w-16 h-2 ring-1"
         style="background-color:{sentimentToColor(d?.sentiment)};"
         aria-label="Sentiment: {d?.sentiment}"
-      >
-      </div>
+      ></div>
 
-      <!-- Emotion swatches -->
-      {#if emotionSwatches.length}
-        <div class="flex flex-row" aria-label="Emotion: {d?.plutchik_score}">
-          {#each emotionSwatches as color}
-            <div class="w-3 h-3 rounded-full ring-1"
-              style="background:{color};">
-            </div>
-          {/each}
+  <!-- Emotion swatches -->
+  {#if emotionSwatches.length}
+    <div class="flex flex-row" aria-label="Emotion: {d?.plutchik_score}">
+    
+      {#each emotionSwatches as color}
+        <div class="w-3 h-3 rounded-full ring-1" 
+        style="background:{color};"> 
         </div>
-      {/if}
-    </span>
-
-    <div class="flex flex-row p-2">
-      <span class="text-body-lg">
-        {step.step}
-      </span>
+      {/each}
+    
     </div>
+  {/if}
+    </span>
+<div class="flex flex-row p-2">
+  <span class="text-body-lg">
+      {step.step}
+    </span>
+</div>
   </button>
 
   <!-- Inflection connector + card -->
   {#if infl}
-    <!--
-      Horizontal: dashed vertical line dropping down to the inflection card.
-      Vertical:   dashed horizontal line extending right to the inflection card.
-    -->
-    <div
-      class="flow-inflection-connector px-2"
-      class:flow-inflection-connector--vertical={isVertical}
-      aria-hidden="true"
-    ></div>
-
+    <div class="flow-inflection-connector" aria-hidden="true"></div>
     <div
       class="card-sm bg-slate-100"
       class:flow-inflection-card--hovered={$hoveredInflectionIndex === step.index}
@@ -111,36 +87,60 @@
       on:mouseleave={() => hoveredInflectionIndex.set(-1)}
     >
       {#if inflDet}
-        <div class="flex flex-row p-2">
+
+      <div class="flex flex-row p-2">
           <span class="text-body-sm">{inflDet.label}</span>
         </div>
       {:else}
         <span class="infl-placeholder-empty label-heading">Inflection point</span>
       {/if}
     </div>
+    
   {/if}
 
 </div>
 
 <style>
-  /* ── Slot wrapper ─────────────────────────────────────────────────────── */
-
-  /* Horizontal (default): step card on top, inflection below */
   .flow-step-slot {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  /* Vertical: step card on the left, inflection to the right */
-  .flow-step-slot--vertical {
+  .flow-step-top-row {
+    display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
   }
 
-  /* ── Inflection connector ─────────────────────────────────────────────── */
+  .sentiment-bar {
+    display: block;
+    width: 1.5rem;
+    height: 0.375rem;
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
 
-  /* Default: vertical dashed line dropping down */
+  /* ── Emotion swatches ──────────────────────────────────────── */
+  .emotion-swatches {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    margin-top: auto;
+    padding-top: 0.2rem;
+  }
+
+  .emotion-swatch {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    flex-shrink: 0;
+  }
+
   .flow-inflection-connector {
     width: 1px;
     height: 20px;
@@ -148,13 +148,20 @@
     flex-shrink: 0;
   }
 
-  /* Vertical layout: horizontal dashed line extending right */
-  .flow-inflection-connector--vertical {
-    width: 20px;
-    height: 1px;
-    border-left: none;
-    border-top: 1.5px dashed #a0a8b8;
-    align-self: center;
+  .flow-inflection-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 0.25em 0.525em;
+    width: 180px;
+    min-height: 55px;
+    background-color: var(--paper);
+    border: 0.5px solid #c8cdd8;
+    border-bottom-width: 3px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
   }
 
   .flow-inflection-card--hovered {
@@ -167,6 +174,13 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
 
+  .infl-placeholder-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem;
+  }
 
   .infl-placeholder-empty {
     font-size: 0.5rem;

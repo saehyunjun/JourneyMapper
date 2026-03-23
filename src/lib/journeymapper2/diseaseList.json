@@ -1,0 +1,54 @@
+{
+  "therapeutic_areas": [
+    {
+      "therapeutic_area": "Rheumatology",
+      "indications": [
+        "Rheumatoid Arthritis",
+        "Psoriatic Arthritis",
+        "Ankylosing Spondylitis",
+        "Systemic Lupus Erythematosus",
+        "Sjogren's Syndrome"
+      ]
+    },
+    {
+      "therapeutic_area": "Oncology",
+      "indications": [
+        "Non-Small Cell Lung Cancer",
+        "Breast Cancer",
+        "Colorectal Cancer",
+        "Multiple Myeloma",
+        "Pancreatic Cancer"
+      ]
+    },
+    {
+      "therapeutic_area": "Neurology",
+      "indications": [
+        "Alzheimer's Disease",
+        "Parkinson's Disease",
+        "Multiple Sclerosis",
+        "Epilepsy",
+        "Amyotrophic Lateral Sclerosis"
+      ]
+    },
+    {
+      "therapeutic_area": "Cardiology",
+      "indications": [
+        "Heart Failure",
+        "Atrial Fibrillation",
+        "Hypertension",
+        "Coronary Artery Disease",
+        "Hyperlipidemia"
+      ]
+    },
+    {
+      "therapeutic_area": "Gastroenterology",
+      "indications": [
+        "Crohn's Disease",
+        "Ulcerative Colitis",
+        "Irritable Bowel Syndrome",
+        "Nonalcoholic Steatohepatitis",
+        "Gastroesophageal Reflux Disease"
+      ]
+    }
+  ]
+}
