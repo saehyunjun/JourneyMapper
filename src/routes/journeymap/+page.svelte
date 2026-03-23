@@ -14,8 +14,11 @@
   import JourneyInfoSidebar from '$lib/journeymapper2/JourneyInfoSidebar.svelte';
 
   import JourneyDrawer        from '$lib/journeymapper2/JourneyDrawer.svelte';
+   
+  import JourneySubDrawer from '$lib/journeymapper2/JourneySubDrawer.svelte';
+  import PlutchikContent  from '$lib/journeymapper2/PlutchikContent.svelte';
+
   import StepDetailContent    from '$lib/journeymapper2/StepDetailContent.svelte';
-  import PlutchikContent      from '$lib/journeymapper2/PlutchikContent.svelte';
   import PersonaDetailContent from '$lib/journeymapper2/PersonaDetailContent.svelte';
   import PersonaTopSelector   from '$lib/journeymapper2/PersonaTopSelector.svelte';
 
@@ -126,6 +129,16 @@
     selectedIndication = e.detail.indication;
   }
 
+
+let emotionSubDrawerOpen = false;
+ 
+ function openEmotionDetail() {
+   emotionSubDrawerOpen = true;
+ }
+  
+ // Close sub-drawer when main drawer closes
+ $: if (!drawerOpen) emotionSubDrawerOpen = false;
+
   $: drawerEyebrow =
     drawerMode === 'plutchik' ? 'Methodology' :
     drawerMode === 'persona'  ? ((activePersona?.type ?? '').charAt(0).toUpperCase() + (activePersona?.type ?? '').slice(1)) :
@@ -172,7 +185,7 @@
       on:click={() => chartView = 'flow'}
     >
       <IconFlowArrowRegular />
-      <span class>Journey Flow</span>
+      <span >Journey Flow</span>
     </button>
   </div>
   </div>
@@ -236,8 +249,15 @@
   on:close={handleDrawerClose}
 >
   {#if drawerMode === 'step'}
-    <StepDetailContent data={journeyData} metrics={metrics} wheelData={selectedWheelData} />
-  {:else if drawerMode === 'plutchik'}
+<!-- AFTER -->
+<StepDetailContent
+  data={journeyData}
+  metrics={metrics}
+  wheelData={selectedWheelData}
+  on:openEmotionDetail={openEmotionDetail}
+/>
+
+{:else if drawerMode === 'plutchik'}
     <PlutchikContent />
   {:else if drawerMode === 'persona'}
     <PersonaDetailContent persona={activePersona} />
@@ -277,6 +297,22 @@
   </svelte:fragment>
 </JourneyDrawer>
 
+
+<JourneySubDrawer
+  bind:open={emotionSubDrawerOpen}
+  eyebrow="Methodology"
+  title="Plutchik's Wheel of Emotions"
+  width={380}
+  on:close={() => (emotionSubDrawerOpen = false)}
+>
+  <PlutchikContent />
+ 
+  <svelte:fragment slot="footer">
+    <span style="font-size:10px; color:#A08060; font-style:italic;">
+      Plutchik, R. (1980). <em>Emotion: A Psychoevolutionary Synthesis.</em> Harper &amp; Row.
+    </span>
+  </svelte:fragment>
+</JourneySubDrawer>
 
 <!-- ── Story overlay ─────────────────────────────────────────────────────── -->
 <PersonaStory

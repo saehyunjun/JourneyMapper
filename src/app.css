@@ -27,6 +27,7 @@
   --paper: #FFFFF0;
   --panel: #F4F5F3;
   --panel-mid: #D9DACF;
+  --panel-dark: #DBDFD3;
   --card: #F4F5F3;
 
   /* Brand / accents */
@@ -324,7 +325,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
-    background-color: var(--lightteal);
+    background-color: var(--panel-dark);
     border-bottom: 0.25px solid #e8e5de;
   } 
 
@@ -354,7 +355,7 @@
     user-select: none;
     cursor: pointer;
 
-    background-color: var(--card);
+    background-color: var(--panel-dark);
     color: #161616;
 
     box-shadow:
@@ -390,7 +391,7 @@
     user-select: none;
     cursor: pointer;
 
-    background-color: var(--panel);
+    background-color: var(--panel-dark);
     color: #161616;
 
     box-shadow:
@@ -767,7 +768,7 @@
 
   .label-sm {
     font-size: .625em;
-    font-weight: 500;
+    font-weight: 800;
     color: var(--ink);
     font-family: var(--font-heading);
     text-align: start;
@@ -1059,9 +1060,9 @@ color: var(--card);
   }
   
   .divider {
-    height: 1px;
-    background: #425466;
-    width: 95%;
+    height: .5px;
+    background-color: var(--grayblue);
+    width: 100%;
     align-items: center;
     justify-self: center;
     margin: 0 -2em;
