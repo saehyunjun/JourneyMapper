@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import JourneyLayoutToggle from '$lib/journeymapper2/JourneyLayoutToggle.svelte';
   import JourneyIndexBars from '$lib/journeymapper2/JourneyIndexBars.svelte';
   import JourneyLegend        from '$lib/journeymapper2/JourneyLegend.svelte';
@@ -7,6 +7,7 @@
   import JourneySentiment     from '$lib/journeymapper2/JourneySentiment.svelte';
   import JourneyFlowDiagram from '$lib/journeymapper2/JourneyFlowDiagram.svelte';
   import InflectionDetailContent from '$lib/journeymapper2/InflectionDetailContent.svelte';
+  import DiseaseSelectDropdowns from '$lib/journeymapper2/DiseaseSelectDropdowns.svelte';
 
   import PersonaStory         from '$lib/journeymapper2/PersonaStory.svelte';
   import JourneyTooltip       from '$lib/journeymapper2/JourneyTooltip.svelte';
@@ -26,21 +27,23 @@
   import IconFlowArrowRegular    from "phosphor-icons-svelte/IconFlowArrowRegular.svelte";
 
   import personaFile from '$lib/journeymapper2/journeyPersonas.json';
-
+  
   const { metrics, personas } = personaFile;
-
+  
   /** @type {Record<string, any>} */
   const experienceWheels = personaFile.experienceWheels ?? {};
-
   // ── Layout toggle ─────────────────────────────────────────────────────
+  
   /** @type {'horizontal' | 'vertical'} */
   let layout = 'horizontal';
   $: isVertical = layout === 'vertical';
-
+  
   // ── Chart view toggle ─────────────────────────────────────────────────
   /** @type {'chart' | 'flow'} */
   let chartView = 'chart';
-
+  
+  let selectedTherapeuticArea: string | undefined;
+  let selectedIndication: string | undefined;
   // ── Story overlay ─────────────────────────────────────────────────────
   let storyOpen    = false;
   /** @type {HTMLElement | null} */
@@ -118,6 +121,11 @@
     selectedInflectionPath.set(null);
   }
 
+  function handleChange(e) {
+    selectedTherapeuticArea = e.detail.therapeuticArea;
+    selectedIndication = e.detail.indication;
+  }
+
   $: drawerEyebrow =
     drawerMode === 'plutchik' ? 'Methodology' :
     drawerMode === 'persona'  ? ((activePersona?.type ?? '').charAt(0).toUpperCase() + (activePersona?.type ?? '').slice(1)) :
@@ -141,7 +149,11 @@
 
   <!-- ── Toolbar ──────────────────────────────────────────────────────── -->
   <div class="toolbar" role="tablist">
+      <DiseaseSelectDropdowns
+      on:change={handleChange}
+    />
     <div class="flex flex-row gap-2 justify-start">
+
     <button
       class="btn-nav"
       class:view-tab--active={chartView === 'chart'}
@@ -160,13 +172,9 @@
       on:click={() => chartView = 'flow'}
     >
       <IconFlowArrowRegular />
-      <span>Journey Flow</span>
+      <span class>Journey Flow</span>
     </button>
   </div>
-
-    {#if chartView === 'flow'}
-      <JourneyLayoutToggle bind:layout />
-    {/if}
   </div>
 
   <!-- ── Three-column body ────────────────────────────────────────────── -->
@@ -190,7 +198,10 @@
     <!-- MIDDLE — chart / flow, scrolls horizontally -->
     <div class="chart-col flex-1 min-w-0 overflow-x-auto overflow-y-hidden" bind:this={scrollEl}>
       {#if chartView === 'flow'}
-        <JourneyFlowDiagram data={journeyData} {layout} />
+      <div class="flex flex-col w-full justify-right">
+      <JourneyLayoutToggle bind:layout />
+      <JourneyFlowDiagram data={journeyData} {layout} />
+      </div>
       {:else}
         <JourneyStages data={journeyData} />
         <JourneySteps  data={journeyData} />
@@ -199,6 +210,7 @@
         <JourneyIndexBars data={journeyData} {metrics} />
         <JourneyLegend items={metrics} />
       {/if}
+
     </div>
 
     <!-- RIGHT — info sidebar column -->

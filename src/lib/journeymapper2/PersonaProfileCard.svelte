@@ -142,7 +142,6 @@ function toggle(e) {
   /* ── Scene: holds the perspective so preserve-3d works correctly ──── */
   .card-scene {
     height: 225px;
-    aspect-ratio: 9/6 auto;
     cursor: pointer;
     flex-shrink: 0;
   }
@@ -163,14 +162,16 @@ function toggle(e) {
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 16px;
+    border-radius: 8px;
 
     transform-style: preserve-3d;
     transition:
       transform 0.55s cubic-bezier(0.45, 0.05, 0.55, 0.95),
       box-shadow 0.25s ease;
 
-    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+    0 10px 20px -12px rgba(50, 50, 93, 0.125), 
+    0 18px 18px -8px rgba(0, 0, 0, 0.25);
     will-change: transform;
   }
 
@@ -182,7 +183,7 @@ function toggle(e) {
   .card-face {
     position: absolute;
     inset: 0;
-    border-radius: 16px;
+    border-radius: 8px;
     overflow: hidden;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;

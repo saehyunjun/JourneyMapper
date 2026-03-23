@@ -63,38 +63,4 @@
 </div>
 
 <style>
-  .layout-toggle-wrap {
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-    padding: 2px;
-    background: rgba(0, 0, 0, 0.06);
-    border-radius: 100rem;
-  }
-
-  .layout-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    height: 1.75rem;
-    padding: 0 0.625rem;
-    border-radius: 100rem;
-    background: transparent;
-    box-shadow: none;
-    color: #7A6A58;
-    transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .layout-btn:hover:not(.layout-btn--active) {
-    background: rgba(196, 149, 106, 0.15);
-    color: #5A3E28;
-  }
-
-  .layout-btn--active {
-    background: #F4EFE5;
-    color: #3B2A1A;
-    box-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.12),
-      0 0 0 1px rgba(0, 0, 0, 0.06);
-  }
 </style>

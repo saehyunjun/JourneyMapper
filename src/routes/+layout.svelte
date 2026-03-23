@@ -2,7 +2,7 @@
 	import '../app.css';
 </script>
   <!-- ── Nav bar ──────────────────────────────────────────────────────── -->
-  <div class="title-bar bg-slate-300 flex flex-row min-w-full shrink-0 px-2 py-2">
+  <div class="title-bar flex flex-row min-w-full shrink-0 px-2 py-2">
     <span class="h3 nav-title">JourneyMapper</span>
     <span class="nav-title">Powered by PatientlyIQ</span>
   </div>

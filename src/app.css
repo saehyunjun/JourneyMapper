@@ -19,11 +19,15 @@
   --ink: #312F28;
   --gray: #919191;
   --grayblue: #446079;
+  --lightgrayblue: #E7EDED;
+  --lightteal: #D0D9DC;
+  --lightorange:#FDDCCC;
   --orange: #CC6324;
   --brightorange: #FF8341;
   --paper: #FFFFF0;
-  --panel: #FEF7F1;
-  --card: #E5EDF5;
+  --panel: #F4F5F3;
+  --panel-mid: #D9DACF;
+  --card: #F4F5F3;
 
   /* Brand / accents */
   --teal: #23abab;
@@ -320,7 +324,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
-    background-color: var(--drop-shadow-xl);
+    background-color: var(--lightteal);
     border-bottom: 0.25px solid #e8e5de;
   } 
 
@@ -379,14 +383,14 @@
   .btn-base-sm, .btn-nav {
     display: flex;
     flex-direction: row;
-    gap: .5em;
+    gap: 1em;
     align-items: center;
     justify-content: center;
   
     user-select: none;
     cursor: pointer;
 
-    background-color: var(--card);
+    background-color: var(--panel);
     color: #161616;
 
     box-shadow:
@@ -401,7 +405,7 @@
   
     font-size: 0.875rem; /* text-sm */
   
-    border-radius: 100rem; /* rounded-lg */
+    border-radius: 100em; /* rounded-lg */
   
     will-change: transform;
   
@@ -414,13 +418,13 @@
   
   /* hover */
   .btn-base:hover, .btn-nav:hover, .btn-base-sm:hover {
-    background: var(--panel);
+    background: var(--lightorange);
     color: var(--orange);
   } 
   
     /* active */
-  .btn-base:active, .btn-nav:active, .layout-btn:active {
-      border: 1px solid var(--brightorange);
+     .btn-base:active, .btn-nav:active, .layout-btn:active {
+      border: .5px solid var(--brightorange);
       color: #fff;
       box-shadow: 
       0 1px -3px rgba(0, 0, 0, 0.12),
@@ -440,6 +444,12 @@
       box-shadow:
         0 2px 6px rgba(0,0,0,0.15),
         0 0 0 1px rgba(0,0,0,0.1);
+    }
+
+
+    .layout-btn--active {
+      background: var(--teal);
+      color: white;
     }
     
     /* disabled */
@@ -485,22 +495,26 @@
 
   .btn-fill:hover, .btn-empty:hover, .btn-sm:hover { 
     background-color: #23abab;
-    color: #e8e5de;
-}
+    color: var(--panel-mid);
+    border: .25px solid var(--grayblue);
+    box-shadow:     0 2px 6px rgba(0,0,0,0.15),
+    0 0 0 1px rgba(0,0,0,0.1);
+  }
 
   .btn-sm {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    height: 3.5em;
+    width: 3.5em;
     padding: 0.25em;
     font-weight: 800;
-    text-transform: uppercase;
-    background-color: #FFFFF0;
-    border: 1px solid #73726c;
+    background-color: var(--panel-mid);
+    border: .25px solid var(--lightgrayblue);
     color:#161616;
-    font-size: .625em;
-    border-radius: 10px;
     cursor: pointer;
+    font-size: .625em;
+    transition: background 0.25s ease, border-color 0.15s ease-in;
   }
 
   .card {
@@ -800,8 +814,8 @@ justify-content: space-between;
 gap: .5em;
 width: 100%;
 padding: .25em;
-background-color: var(--card);
-box-shadow: 0 2px -2px 0 rgba(60, 64, 43, 0.12);
+background-color: var(--panel-mid);
+box-shadow: 0 2px -5px 10 rgba(60, 64, 43, 0.12);
 border-bottom: .5px solid var(--paper);
 color: var(--card);
 }
@@ -853,7 +867,7 @@ color: var(--card);
     align-content: start;
     justify-items: left;
     justify-content: space-between;
-    border-bottom: 1px solid var(--ink);
+    border-bottom: .5px solid var(--gray);
     padding: 0 0 .25em 0;
   }
 
@@ -1104,9 +1118,11 @@ color: var(--card);
     overflow-x: hidden;
     flex-shrink: 0;
     scrollbar-width: thin;
-    border-left: 1px solid var(--paper);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    background-color: var(--white);
+    border-left: .5px solid var(--lightgrayblue);
+    box-shadow: 
+    0 2px 12px -10px rgba(0,0,0,0.15)
+    0 20px 20px 10px rgba(0,0,0,0.25);
+    background-color: var(--panel);
     scrollbar-color: (--orange) transparent;
   }
 
@@ -1123,7 +1139,7 @@ color: var(--card);
       scrollbar-width: thin;
       border-right: 1px solid var(--card);
       padding: 2em .5em 0 .5em;
-      background-color: var(--white);
+      background-color: var(--panel);
       scrollbar-color: (--orange) transparent;
     }
   /* Also update .shared-scroll to NOT have its own overflow-x:auto,

@@ -124,35 +124,35 @@
           <!-- Quick fields -->
           <div class="flex flex-col gap-2">
             {#if profile.age}
-              <div class="jm-section-bar">
-                <span class="label-heading flex items-center gap-1">
-                  <UserRegular />Age
+              <div class="flex flex-col">
+                <span class="label-sm uppercase text-slate-400 flex items-center gap-1">
+                  <UserRegular />Age Range
                 </span>
-                <span class="label-bold">{profile.age}</span>
+                <span class="text-body-sm capitalize">{profile.age}</span>
               </div>
             {/if}
             {#if profile.occupation}
-              <div class="jm-section-bar">
-                <span class="label-heading flex items-center gap-1">
+              <div class="flex flex-col">
+                <span class="label-sm uppercase text-slate-400 flex items-center gap-1">
                   <BriefcaseRegular />Occupation
                 </span>
-                <span class="label-heading">{profile.occupation}</span>
+                <span class="text-body-sm capitalize">{profile.occupation}</span>
               </div>
             {/if}
             {#if profile.diagnosed}
-              <div class="jm-section-bar">
-                <span class="label-heading flex items-center gap-1">
+              <div class="flex flex-col">
+                <span class="label-sm uppercase text-slate-400 flex items-center gap-1">
                   <CalendarRegular />Diagnosed
                 </span>
-                <span class="label-heading">{profile.diagnosed}</span>
+                <span class="text-body-sm capitalize">{profile.diagnosed}</span>
               </div>
             {/if}
             {#if profile.preference}
-              <div class="jm-section-bar">
-                <span class="label-heading flex items-center gap-1">
-                  <HeartRegular />Preference
+              <div class="flex flex-col">
+                <span class="text-body-sm capitalize">{profile.preference}</span>
+                <span class="label-sm uppercase text-slate-400 flex items-center gap-1">
+                  <HeartRegular />Current Goal
                 </span>
-                <span class="label-heading">{profile.preference}</span>
               </div>
             {/if}
           </div>
@@ -165,8 +165,8 @@
 
           {#if profile.goal1 || profile.goal2 || profile.goal3}
             <div class="jm-content-col gap-2">
-              <div class="jm-section-bar">
-                <span class="label-heading">Goals</span>
+              <div class="flex flex-col">
+                <span class="label-sm uppercase text-slate-400">Goals</span>
               </div>
               {#each [profile.goal1, profile.goal2, profile.goal3].filter(Boolean) as goal}
                 <div class="flex items-start gap-1">
@@ -218,7 +218,7 @@
                   <span class="label-bold">{path.label}</span>
                   <span class="text-body-sm">{path.outcome}</span>
                   {#if path.key_driver}
-                    <span class="label-heading" style="font-style:italic;">{path.key_driver}</span>
+                    <span class="text-body-sm capitalize" style="font-style:italic;">{path.key_driver}</span>
                   {/if}
                 </div>
               </div>
@@ -240,7 +240,7 @@
         <!-- Data needed -->
         {#if inflDetail.data_needed}
           <div class="jm-content-col gap-0.5 pt-2 border-top">
-            <span class="label-heading">Data needed</span>
+            <span class="text-body-sm capitalize">Data needed</span>
             <span class="text-body-sm">{inflDetail.data_needed}</span>
           </div>
         {/if}
@@ -267,7 +267,7 @@
           in:fly={{ y: 8, duration: 220, delay: 40, easing: cubicOut }}
           out:fade={{ duration: 120 }}
         >
-          <span class="label-heading">{displayIndex + 1} / {data.length}</span>
+          <span class="text-body-sm capitalize">{displayIndex + 1} / {data.length}</span>
           <span class="jm-kicker">{step.stage}</span>
           <p class="heading-sm">{step.step}</p>
         </div>
@@ -275,8 +275,8 @@
 
       <!-- Sentiment — row of colored squares, active square highlighted -->
       <div class="jm-content-col gap-1">
-        <div class="jm-section-bar">
-          <span class="label-heading">Sentiment</span>
+        <div class="flex flex-col">
+          <span class="text-body-sm capitalize">Sentiment</span>
           {#key displayIndex}
             <span
               class="label-bold"
@@ -303,7 +303,7 @@
         </div>
         {#key displayIndex}
           <span
-            class="label-heading"
+            class="text-body-sm capitalize"
             style="color: {sentimentColor};"
             in:fade={{ duration: 200, delay: 100 }}
             out:fade={{ duration: 100 }}
@@ -315,8 +315,8 @@
 
       <!-- Emotional state — swatches + label crossfade -->
       <div class="jm-content-col gap-1">
-        <div class="jm-section-bar">
-          <span class="label-heading">Emotion</span>
+        <div class="flex flex-col">
+          <span class="text-body-sm capitalize">Emotion</span>
         </div>
         {#key displayIndex}
           <div
@@ -341,8 +341,8 @@
       <!-- Index metrics — labels crossfade, bars tween -->
       {#if metrics.length}
         <div class="jm-content-col gap-2">
-          <div class="jm-section-bar">
-            <span class="label-heading">Index Metrics</span>
+          <div class="flex flex-col">
+            <span class="text-body-sm capitalize">Index Metrics</span>
             <ChartLineRegular />
           </div>
 
@@ -354,7 +354,7 @@
             >
               <div class="jm-metric-row">
                 <span class="jm-mini-swatch" style="background: {m.color};" />
-                <span class="label-heading">{m.label}</span>
+                <span class="text-body-sm capitalize">{m.label}</span>
                 {#key displayIndex}
                   <span
                     class="label-bold"
@@ -396,8 +396,8 @@
             in:fly={{ y: 6, duration: 220, delay: 100, easing: cubicOut }}
             out:fade={{ duration: 120 }}
           >
-            <div class="jm-section-bar">
-              <span class="label-heading">Narrative</span>
+            <div class="flex flex-col">
+              <span class="text-body-sm capitalize">Narrative</span>
             </div>
             <p class="text-body-sm">{step.narrative_description}</p>
           </div>
@@ -436,8 +436,7 @@
   .score-square {
     flex: 1;
     height: 10px;
-    border-radius: 1px;
-    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .score-square--active {
     outline: 1.5px solid rgba(0, 0, 0, 0.55);
