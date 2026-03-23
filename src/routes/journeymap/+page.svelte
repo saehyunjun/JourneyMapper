@@ -149,57 +149,44 @@ $: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode 
   <span class="nav-title">Powered by PatientlyIQ</span>
 </div>
 
+<!-- ── Persona selector — on:story wired here ─────────────────── -->
+<div class="toolbar" role="tablist">
+  <button
+    class="btn-nav"
+    class:view-tab--active={chartView === 'chart'}
+    role="tab"
+    aria-selected={chartView === 'chart'}
+    on:click={() => chartView = 'chart'}
+  >
+    <IconChartLineRegular />
+    <span>Journey Sentiment</span>
+  </button>
+  <button
+    class="btn-nav"
+    class:view-tab--active={chartView === 'flow'}
+    role="tab"
+    aria-selected={chartView === 'flow'}
+    on:click={() => chartView = 'flow'}
+  >
+    <IconFlowArrowRegular />
+    <span>Journey Flow</span>
+  </button>
 <!-- ── Body ──────────────────────────────────────────────────────────── -->
 <div class="journey-body">
-
-    <PersonaTopSelector
-      {personas}
-      {activePersonaId}
-      on:select={handlePersonaSelect}
-      on:story={handlePersonaStory}
-    />
-    <!-- ── Persona selector — on:story wired here ─────────────────── -->
-    <div class="toolbar" role="tablist">
-      <button
-        class="btn-base text-slate-800"
-        class:view-tab--active={chartView === 'chart'}
-        role="tab"
-        aria-selected={chartView === 'chart'}
-        on:click={() => chartView = 'chart'}
-      >
-        <IconChartLineRegular />
-        <span>Journey Sentiment</span>
-      </button>
-      <button
-        class="btn-base text-slate-800"
-        class:view-tab--active={chartView === 'flow'}
-        role="tab"
-        aria-selected={chartView === 'flow'}
-        on:click={() => chartView = 'flow'}
-      >
-        <IconFlowArrowRegular />
-        <span>Journey Flow</span>
-      </button>
-    </div>
     </div>
     {#if chartView === 'flow'}
       <JourneyLayoutToggle bind:layout />
     {/if}
-
-
-
-  <div class="journey-main">
-
-    <div class="shared-scroll">
-    <!-- ── View toolbar ──────────────────────────────────────────────── -->
-    <div class="grid grid-cols-2 bg-slate-50">
-
-      <!-- Layout toggle only relevant in flow view -->
     </div>
+<PersonaTopSelector
+  {personas}
+  {activePersonaId}
+  on:select={handlePersonaSelect}
+  on:story={handlePersonaStory}
+/>
 
-    <!-- ── Chart area ─────────────────────────────────────────────── -->
-    <div class="journey-index">
-
+<div class="journey-main">
+  <div class="shared-scroll">
       {#if chartView === 'flow'}
         <JourneyFlowDiagram data={journeyData} {layout} />
       {:else}
@@ -215,7 +202,7 @@ $: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode 
       </div>
     </div>
   </div>  
- </div>
+
       <!-- RIGHT sidebar — 1/6 width, full height -->
      <JourneyInfoSidebar
      {activePersona}

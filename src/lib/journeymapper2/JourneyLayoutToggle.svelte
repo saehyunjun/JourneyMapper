@@ -37,7 +37,6 @@
       display: inline-flex;
       align-items: center;
       gap: .5em;
-      padding: .25em 0 .35em .35em;
       border-radius: 100rem;
     }
   
