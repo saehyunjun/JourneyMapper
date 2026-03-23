@@ -278,7 +278,8 @@
 
   .journey-body {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+  
     flex: 1;
     overflow: hidden;
     height: 100%;
@@ -296,7 +297,7 @@
   .journey-index {
     flex: 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: fit-content;
   }
 
@@ -316,6 +317,15 @@
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
+    background-color: var(--drop-shadow-xl);
+    border-bottom: 0.25px solid #e8e5de;
+  } 
+
+  .nav-bar-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     padding: 0.25em 0.5em 0.25em 0.725em;
     background-color: var(--drop-shadow-xl);
     border-bottom: 0.25px solid #e8e5de;
@@ -327,7 +337,7 @@
     align-items: stretch;
     gap: 1em; }
 
-  .btn-base {
+  .btn-base, .btn-base-2, .layout-btn {
     display: flex;
     flex-direction: row;
     gap: .5em;
@@ -401,9 +411,8 @@
   } 
   
     /* active */
-  .btn-base:active, .layout-btn--active {
+  .btn-base:active, .layout-btn:active {
       border: 1px solid var(--brightorange);
-      background-color: var(--orange);
       color: #fff;
       box-shadow: 
       0 1px 3px rgba(0, 0, 0, 0.12),
@@ -765,6 +774,19 @@
   cursor: pointer;
 }
 
+.toolbar {
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+gap: .5em;
+width: 100%;
+padding: .25em;
+background-color: var(--card);
+box-shadow: 0 2px 0 0 rgba(60, 64, 43, 0.2);
+color: var(--card);
+}
+
 /* Stage headers (JourneyStages.svelte) */
 .jm-stage-topbar {
   shape-rendering: crispEdges;
@@ -1065,6 +1087,21 @@
     background-color: var(--white);
     scrollbar-color: (--orange) transparent;
   }
+
+    /* ── Sidebar shell ────────────────────────────────────────────── */
+    .sticky-panel-left {
+      position: sticky;
+      top: 0;
+      width: fit-content;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      scrollbar-width: thin;
+      border-right: 1px solid var(--card);
+      padding-right: 1em;
+      background-color: var(--white);
+      scrollbar-color: (--orange) transparent;
+    }
   /* Also update .shared-scroll to NOT have its own overflow-x:auto,
      since the clip div now contains it. Keep: */
   .shared-scroll {

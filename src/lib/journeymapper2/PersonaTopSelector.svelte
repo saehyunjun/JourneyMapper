@@ -77,8 +77,8 @@
   </script>
   
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="persona-topbar" aria-label="Persona selector" on:mousemove={handleMouseMove}>
-    <div class="flex flex-row gap-4 py-2 align-middle justify-evenly">
+  <div class="sticky-panel-left" aria-label="Persona selector" on:mousemove={handleMouseMove}>
+    <div class="flex flex-col gap-4 py-2 align-middle justify-evenly">
       {#each personas as p (p.id)}
         {@const active = p.id === activePersonaId}
         <div class="flex flex-col items-center">
@@ -148,16 +148,7 @@
   {/if}
   
   <style>
-    .persona-topbar {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      border-bottom: 1px solid #F4EFE5;
-      box-sizing: border-box;
-    }
-
+ 
     /* Active state: solid ring */
     .persona-avatar--active {
       border: 4px solid var(--teal, #23abab);
@@ -182,11 +173,6 @@
       transition: left 50ms linear, top 50ms linear;
     }
   
-    .tip-fields {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
   
     .tip-field-row {
       display: flex;
@@ -196,14 +182,5 @@
       gap: 6px;
     }
   
-    .tip-key {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 8px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #BFA080;
-      flex-shrink: 0;
-    }
 
   </style>

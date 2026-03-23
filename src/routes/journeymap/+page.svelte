@@ -22,6 +22,8 @@
   import { selectedIndex, selectedInflectionIndex, selectedInflectionPath } from '$lib/journeymapper2/journeyStore.js';
   import CaretRight from "phosphor-icons-svelte/IconCaretRightRegular.svelte";
   import CaretLeft  from "phosphor-icons-svelte/IconCaretLeftRegular.svelte";
+  import IconChartLineRegular    from "phosphor-icons-svelte/IconChartLineRegular.svelte";
+  import IconFlowArrowRegular    from "phosphor-icons-svelte/IconFlowArrowRegular.svelte";
 
   import personaFile from '$lib/journeymapper2/journeyPersonas.json';
 
@@ -33,6 +35,10 @@
   /** @type {'horizontal' | 'vertical'} */
   let layout = 'horizontal';
   $: isVertical = layout === 'vertical';
+
+  // ── Chart view toggle ─────────────────────────────────────────────────
+  /** @type {'chart' | 'flow'} */
+  let chartView = 'chart';
 
 
   // ── Story overlay ─────────────────────────────────────────────────────
@@ -145,44 +151,78 @@ $: if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode 
 
 <!-- ── Body ──────────────────────────────────────────────────────────── -->
 <div class="journey-body">
-  <div class="journey-main">
 
-    <!-- ── Persona selector — on:story wired here ─────────────────── -->
     <PersonaTopSelector
       {personas}
       {activePersonaId}
       on:select={handlePersonaSelect}
       on:story={handlePersonaStory}
     />
-    <JourneyLayoutToggle bind:layout />
-    <!-- ── Chart area ─────────────────────────────────────────────── -->
-    <div class="journey-index">
-      <JourneyFlowDiagram data={journeyData} {layout} />
+    <!-- ── Persona selector — on:story wired here ─────────────────── -->
+    <div class="toolbar" role="tablist">
+      <button
+        class="btn-base text-slate-800"
+        class:view-tab--active={chartView === 'chart'}
+        role="tab"
+        aria-selected={chartView === 'chart'}
+        on:click={() => chartView = 'chart'}
+      >
+        <IconChartLineRegular />
+        <span>Journey Sentiment</span>
+      </button>
+      <button
+        class="btn-base text-slate-800"
+        class:view-tab--active={chartView === 'flow'}
+        role="tab"
+        aria-selected={chartView === 'flow'}
+        on:click={() => chartView = 'flow'}
+      >
+        <IconFlowArrowRegular />
+        <span>Journey Flow</span>
+      </button>
+    </div>
+    </div>
+    {#if chartView === 'flow'}
+      <JourneyLayoutToggle bind:layout />
+    {/if}
 
-      <div class="shared-scroll" bind:this={scrollEl}>
 
-        <JourneyStages data={journeyData} />
-        <JourneySteps  data={journeyData} />
 
-        <JourneySentiment data={journeyData} />
+  <div class="journey-main">
 
-        <div class="spacer"></div>
-        <JourneyIndexBars data={journeyData} {metrics} />
-        <JourneyLegend items={metrics} />
+    <div class="shared-scroll">
+    <!-- ── View toolbar ──────────────────────────────────────────────── -->
+    <div class="grid grid-cols-2 bg-slate-50">
 
-      </div>
+      <!-- Layout toggle only relevant in flow view -->
     </div>
 
-  </div>  
+    <!-- ── Chart area ─────────────────────────────────────────────── -->
+    <div class="journey-index">
 
-     <!-- RIGHT sidebar — 1/6 width, full height -->
+      {#if chartView === 'flow'}
+        <JourneyFlowDiagram data={journeyData} {layout} />
+      {:else}
+        <div class="shared-scroll" bind:this={scrollEl}>
+          <JourneyStages data={journeyData} />
+          <JourneySteps  data={journeyData} />
+          <JourneySentiment data={journeyData} />
+          <div class="spacer"></div>
+          <JourneyIndexBars data={journeyData} {metrics} />
+          <JourneyLegend items={metrics} />
+        </div>
+      {/if}
+      </div>
+    </div>
+  </div>  
+ </div>
+      <!-- RIGHT sidebar — 1/6 width, full height -->
      <JourneyInfoSidebar
      {activePersona}
      data={journeyData}
      {metrics}
+
    />
- </div>
-</div>
 
 
 
@@ -260,4 +300,6 @@ on:select={e => { activePersonaId = e.detail.id; }}
   flex: 1;
   padding-bottom: 1em;
 }
+
+
 </style>
