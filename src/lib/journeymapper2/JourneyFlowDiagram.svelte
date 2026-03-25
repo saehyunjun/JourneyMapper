@@ -127,8 +127,10 @@
   .flow-diagram-col {
     display: flex;
     flex-direction: column;
-    min-width: 30vw;
+    min-width: 50vw;
     align-items: center;
+    margin:auto;
+    justify-content: center;
     width: 100%;
   }
 
@@ -174,6 +176,7 @@
   .stage-steps-row {
     flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     overflow-x: auto;
   }

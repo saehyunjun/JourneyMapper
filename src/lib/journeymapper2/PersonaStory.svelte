@@ -5,8 +5,8 @@
    * Screens are computed at runtime — any screen whose data is absent is skipped.
    *
    * Story order:
-   *  1.  profile-hero    — image + quote
-   *  2.  bio1            — Bio 1
+   *  1.  key-quote    — image + quote
+   *  2.  event-1            — Bio 1
    *  3.  themes          — Discussion Themes
    *  4.  bio2            — Bio 2
    *  5.  current-state   — Current State bars
@@ -62,16 +62,16 @@
   $: SCREENS = [
     // 0. Intro summary
     profile.name
-      ? { id: 'intro', label: 'Overview' }
+      ? { id: 'intro', label: 'Introduction' }
       : null,
     // 1. Profile hero — needs at least a name or image
     (profile.quote || profile.imageFile)
-      ? { id: 'profile-hero', label: 'Profile' }
+      ? { id: 'key-quote', label: 'Key Quote' }
       : null,
 
     // 2. Bio 1
     profile.bio_1
-      ? { id: 'bio1', label: 'Background' }
+      ? { id: 'event-1', label: 'Inciting Event' }
       : null,
 
     // 3. Discussion Themes
@@ -260,17 +260,27 @@
     </div>
 
     <!-- Header -->
-    <div class="story-header">
-      <div class="story-avatar" class:story-avatar--caregiver={persona.type === 'caregiver'}>
+    <div class="jm-content-row pt-2 px-2">
+      <div class="persona-avatar-sm"
+      class:persona-avatar-sm--caregiver={persona.type === 'caregiver'}>
         {#if !imgError && profile.imageFile}
-          <img class="story-avatar-img" src="/assets/profiles/{profile.imageFile}" alt={profile.name} on:error={() => imgError = true} />
+          <img class="persona-avatar-sm-img" src="/assets/profiles/{profile.imageFile}" alt={profile.name} on:error={() => imgError = true} />
         {:else}
-          <span class="label-heading">{profile.initials ?? '?'}</span>
+
+          <span class="label-sm">
+            {profile.initials ?? '?'}
+          </span>
         {/if}
       </div>
+
       <div class="flex flex-col items-end">
-          <span class="label-uppercase-bold">{profile.name}</span>
-          <span class="label-heading">{SCREENS[screenIdx]?.label ?? ''}</span>
+          <span class="label uppercase">
+            {profile.name}
+          </span>
+
+          <span class="label-sm">
+            {SCREENS[screenIdx]?.label ?? ''}
+          </span>
       </div>
     </div>
 
@@ -292,13 +302,13 @@
       <div class="aspect-3/2 object-cover">
             {#if !imgError && profile.imageFile}
               <img
-                class="story-avatar-img"
+                class="persona-avatar-sm-img"
                 src="/assets/profiles/{profile.imageFile}"
                 alt={profile.name}
                 on:error={() => imgError = true}
               />
             {:else}
-              <span class="label-heading">{profile.initials ?? '?'}</span>
+              <span class="label-sm">{profile.initials ?? '?'}</span>
             {/if}
           </div>
 
@@ -323,22 +333,16 @@
     <!-- ══ SCREEN: PROFILE HERO ══════════════════════════════════════════════
          Image + quote
     ═══════════════════════════════════════════════════════════════════════ -->
-    {:else if screen === 'profile-hero'}
+    {:else if screen === 'key-quote'}
       <div class="story-screen">
-        <div class="persona-profile">
-          <div class="bio-overlay">
-            <span class="pill-white w-fit px-2">
-              {(persona.type ?? 'persona').charAt(0).toUpperCase() + (persona.type ?? 'persona').slice(1)}
-            </span>
-            <h2 class="heading" style="color:#fff;font-size:1.4rem">{profile.name}</h2>
-          </div>
-        </div>
-
+      
         {#if profile.quote}
-          <div class="content-wrap stats-animation-gradient__gradient--night bg-slate-900 align-middle">
+          <div class="content-wrap stats-animation-gradient__gradient--night align-middle">
             <div class="flex flex-col justify-center pt-8 align-middle">
               <IconQuotesRegular class="text-white mx-auto mb-12 justify-center"/>
-            <blockquote class="text-2xl text-center text-white" style="margin:0">{profile.quote}</blockquote>
+            <blockquote class="text-2xl text-center text-white">
+              {profile.quote}
+            </blockquote>
           </div>
           </div>
         {/if}
@@ -346,16 +350,17 @@
 
 
     <!-- ══ SCREEN: BIO 1 ══════════════════════════════════════════════════════ -->
-    {:else if screen === 'bio1'}
+    {:else if screen === 'event-1'}
       <div class="story-screen">
         <div class="content-wrap">
-          <div class="jm-kicker flex items-center gap-2">
-            <IconUserRegular /> Background
+          <div class="flex flex-col gap-8">
+            <span class="heading">
+              How It Began
+            </span>
+            <p class="text-body">
+              {profile.bio_1}
+            </p>
           </div>
-          <div class="jm-section-bar">
-            <span class="label-lg">{firstName(profile.name)}'s story</span>
-          </div>
-          <p class="text-body-sm">{profile.bio_1}</p>
         </div>
       </div>
 
@@ -367,25 +372,22 @@
     {:else if screen === 'themes'}
       <div class="story-screen">
         <div class="content-wrap">
-          <div class="jm-kicker flex items-center gap-2">
-            <IconChatsRegular /> Discussion Themes
-          </div>
-          <div class="jm-section-bar">
-            <span class="label-lg capitalize">What {firstName(profile.name)} talks about</span>
-          </div>
-
+            <span class="label-heading capitalize">
+              Topics {firstName(profile.name)} discusses most
+            </span>
           <div class="flex flex-col gap-5">
             {#each themes as theme}
               {@const avg = theme.sentiments?.length
                 ? theme.sentiments.reduce((a,b)=>a+b,0) / theme.sentiments.length
                 : null}
-              <div class="theme-row">
 
+              <div class="theme-row">
                 <!-- Label + summary label -->
-                <div class="theme-row-header">
-                  <span class="text-body-sm" style="font-weight:500;flex:1">{theme.label}</span>
+                <div class="jm-content-row border-b-1 border-gray-400 mb-1">
+                  <span class="label-sm">
+                    {theme.label}</span>
                   {#if avg != null}
-                    <span class="theme-avg-label" style="color:{sentimentToColor(avg)}">
+                    <span class="label-lg" style="color:{sentimentToColor(avg)}">
                       {avgSentimentLabel(theme.sentiments)}
                     </span>
                   {/if}
@@ -393,30 +395,28 @@
 
                 <!-- Pixel squares row -->
                 {#if theme.sentiments?.length}
-                  <div class="squares-row" aria-hidden="true">
+                  <div class="flex flex-row gap-1" aria-hidden="true">
                     {#each theme.sentiments as val}
                       <span
-                        class="sentiment-sq"
+                        class="jm-swatches"
                         style="background:{sentimentToColor(val)}"
-                        title="{Math.round(val * 100)}"
-                      />
+                        title="{Math.round(val * 100)}"></span>
                     {/each}
                   </div>
                 {/if}
-
               </div>
             {/each}
-          </div>
+            </div>
 
           <!-- Colour scale legend -->
           <div class="sentiment-legend" aria-label="Sentiment scale">
-            <span class="label-heading" style="font-size:0.5rem;opacity:0.55">Negative</span>
+            <span class="label-sm" >Negative</span>
             <div class="legend-strip" aria-hidden="true">
               {#each Array(20) as _, i}
-                <div class="legend-cell" style="background:{sentimentToColor(i/19)}" />
+                <div class="legend-cell" style="background:{sentimentToColor(i/19)}"></div>
               {/each}
             </div>
-            <span class="label-heading" style="font-size:0.5rem;opacity:0.55">Positive</span>
+            <span class="label-sm" >Positive</span>
           </div>
 
         </div>
@@ -431,7 +431,7 @@
             <IconUserRegular /> Approach
           </div>
           <div class="jm-section-bar">
-            <span class="label-lg">How {firstName(profile.name)} navigates care</span>
+            <span class="label-sm">How {firstName(profile.name)} navigates care</span>
           </div>
           <p class="text-body-sm">{profile.bio_2}</p>
         </div>
@@ -446,7 +446,7 @@
             <IconFlagRegular /> Current State
           </div>
           <div class="jm-section-bar">
-            <span class="label-lg">Where {firstName(profile.name)} stands today</span>
+            <span class="label-sm">Where {firstName(profile.name)} stands today</span>
           </div>
           <div class="flex flex-col gap-4">
             {#each states as s, i}
@@ -454,17 +454,17 @@
               {@const leansMax = s.value > 0.5}
               {@const leansMin = s.value < 0.5}
               <div class="flex flex-col gap-1">
-                <span class="label-heading">{s.label}</span>
+                <span class="label-sm">{s.label}</span>
                 <div class="state-track">
                   <div class="state-fill" style="width:{s.value * 100}%;background:{color}" />
                 </div>
                 <div class="flex justify-between">
                   <span
-                    class="label-heading"
+                    class="label-lg"
                     style="font-size:0.5rem;{leansMin ? `opacity:1;font-weight:700;color:${color}` : 'opacity:0.45'}"
                   >{s.minLabel}</span>
                   <span
-                    class="label-heading"
+                    class="label-lg"
                     style="font-size:0.5rem;{leansMax ? `opacity:1;font-weight:700;color:${color}` : 'opacity:0.45'}"
                   >{s.maxLabel}</span>
                 </div>
@@ -485,7 +485,7 @@
               <IconTargetRegular /> Goals
             </div>
             <div class="jm-section-bar">
-              <span class="label-lg">What {firstName(profile.name)} is working toward</span>
+              <span class="label-sm">What {firstName(profile.name)} is working toward</span>
             </div>
             <ol class="flex flex-col gap-3" style="list-style:none;padding:0;margin:0 0 20px">
               {#each goals as goal, i}
@@ -502,7 +502,7 @@
               <IconWarningRegular /> Barriers
             </div>
             <div class="jm-section-bar">
-              <span class="label-lg">What's standing in the way</span>
+              <span class="label-sm">What's standing in the way</span>
             </div>
             <ol class="flex flex-col gap-3" style="list-style:none;padding:0;margin:0">
               {#each barriers as barrier, i}
@@ -555,7 +555,7 @@
             <IconLightningRegular /> Experience
           </div>
           <div class="jm-section-bar">
-            <span class="label-lg">{inflectionStep.stage} · {inflectionStep.step}</span>
+            <span class="label-sm">{inflectionStep.stage} · {inflectionStep.step}</span>
           </div>
 
           {#if inflectionStep.narrative_description}
@@ -622,7 +622,7 @@
 
           {#if detail.label}
             <div class="jm-section-bar">
-              <span class="label-lg">{detail.label}</span>
+              <span class="label-sm">{detail.label}</span>
             </div>
           {/if}
 
@@ -635,14 +635,14 @@
             <div class="flex gap-2 flex-wrap">
               {#if detail.risk_level}
                 <div class="risk-badge risk-badge--{detail.risk_level}">
-                  <span class="label-heading" style="font-size:0.5rem;letter-spacing:0.08em;text-transform:uppercase;opacity:0.7">Risk</span>
-                  <span class="label-heading capitalize">{detail.risk_level}</span>
+                  <span class="label-lg" style="font-size:0.5rem;letter-spacing:0.08em;text-transform:uppercase;opacity:0.7">Risk</span>
+                  <span class="label-lg capitalize">{detail.risk_level}</span>
                 </div>
               {/if}
               {#if detail.dropout_risk}
                 <div class="risk-badge risk-badge--{detail.dropout_risk}">
-                  <span class="label-heading" style="font-size:0.5rem;letter-spacing:0.08em;text-transform:uppercase;opacity:0.7">Dropout Risk</span>
-                  <span class="label-heading capitalize">{detail.dropout_risk}</span>
+                  <span class="label-lg" style="font-size:0.5rem;letter-spacing:0.08em;text-transform:uppercase;opacity:0.7">Dropout Risk</span>
+                  <span class="label-lg capitalize">{detail.dropout_risk}</span>
                 </div>
               {/if}
             </div>
@@ -678,7 +678,7 @@
             <IconPathRegular /> {isPosScreen ? 'Positive Path' : 'Negative Path'}
           </div>
           <div class="jm-section-bar">
-            <span class="label-lg">
+            <span class="label-sm">
               {isPosScreen ? 'Best-case progression' : 'Risk trajectory'}
             </span>
           </div>
@@ -714,7 +714,7 @@
 
                 {#if path.key_driver}
                   <div class="path-driver">
-                    <span class="label-heading" style="font-size:0.55rem;text-transform:uppercase;letter-spacing:0.07em;opacity:0.65">
+                    <span class="label-lg" style="font-size:0.55rem;text-transform:uppercase;letter-spacing:0.07em;opacity:0.65">
                       Key driver
                     </span>
                     <p class="text-body-sm" style="margin:0;font-size:0.72rem">
@@ -765,7 +765,7 @@
             <IconFlagRegular /> Journey End
           </div>
           <div class="jm-section-bar">
-            <span class="label-lg">{finalStep.stage} · {finalStep.step}</span>
+            <span class="label-sm">{finalStep.stage} · {finalStep.step}</span>
           </div>
 
           {#if finalStep.narrative_description}
@@ -829,7 +829,7 @@
 
     {#if screenIdx === 0}
       <div class="tap-hint">
-        <span class="label-heading">Tap to advance</span>
+        <span class="label-sm">Tap to advance</span>
       </div>
     {/if}
 
@@ -881,21 +881,6 @@
     position: relative;
     z-index: 2;
   }
-
-  /* ── Avatar ───────────────────────────────────────────────────────────── */
-  .story-avatar {
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    border: 2px solid var(--ink, #312F28);
-    overflow: hidden;
-    flex-shrink: 0;
-    background: #e8e5de;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .story-avatar--caregiver { border-color: var(--teal, #23abab); }
-  .story-avatar-img { width: 100%; height: 100%; object-fit: cover; }
 
   /* ── Click zones ──────────────────────────────────────────────────────── */
   .click-zone {
@@ -1141,7 +1126,7 @@
   .theme-row {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+
   }
   .theme-row-header {
     display: flex;

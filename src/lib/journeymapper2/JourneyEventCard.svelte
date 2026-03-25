@@ -114,7 +114,7 @@
       <span class="event-pill__icon" aria-hidden="true">
         <svelte:component this={Icon} size={12} weight="regular" />
       </span>
-      <span class="event-pill__label label-heading">{displayShortLabel}</span>
+      <span class="event-pill__label heading-sm">{displayShortLabel}</span>
     </button>
   
   <!-- ─────────────────────────────────────────────────────────────────────────
@@ -367,7 +367,7 @@
     }
   
     .event-pill__label {
-      /* Inherits label-heading from app.css */
+      /* Inherits heading-sm from app.css */
       font-size: 0.6rem;
       letter-spacing: 0.07em;
       line-height: 1;

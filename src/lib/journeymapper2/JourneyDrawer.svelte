@@ -24,6 +24,7 @@
   function onKeydown(e) {
     if (e.key === 'Escape') close();
   }
+  
 </script>
 
 <svelte:window on:keydown={onKeydown} />
@@ -38,15 +39,15 @@
 
   <!-- Drawer shell -->
   <aside
-    class="drawer w-8/12"
+    class="drawer w-7/12"
     transition:fly={{ x: 120, duration: 320, easing: cubicOut }}
-    role="complementary"
     aria-label={title || 'Detail panel'}
   >
 
   {#if $$slots.footer}
-  <div class="flex flex-col h-full bg-[#DBDFD3] ring-1 ring-slate-400 shadow-2xl">
-    <button class="btn-sm bg-[#FF8341]" on:click={close} aria-label="Close panel">
+  <div class="toolbar-light">
+    <button class="btn-sm bg-[#CC6324] text-white hover:bg-[#FF8341]" 
+      on:click={close} aria-label="Close panel">
       <X />
     </button>
     <slot name="footer" />
@@ -73,8 +74,8 @@
     bottom: 0;
     z-index: 201;
     display: flex;
-    flex-direction: row;
-    background: #fff;
+    flex-direction: column;
+    background: #F4F4FF;
     border-left: .5px solid ##EAEFF8;
     box-shadow: 
     0px 0px 0px 1px rgba(0, 0, 0, 0.08),

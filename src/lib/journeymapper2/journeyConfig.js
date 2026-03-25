@@ -31,6 +31,64 @@ export function ratingToLabel(val) {
   return 'Very Negative';
 }
 
+export function metricScoreLabel(key, val) {
+  const n     = Math.max(-5, Math.min(5, parseFloat(val)));
+  const bands = METRIC_SCORE_LABELS[key];
+  if (!bands) return ratingToLabel(n);
+  const idx   = Math.round((n + 5) / 10 * (bands.length - 1));
+  return bands[Math.max(0, Math.min(bands.length - 1, idx))];
+}
+
+
+const METRIC_SCORE_LABELS = {
+  emotional_valence: [
+    'Severe Distress',     // −5
+    'High Distress',       // −3.75
+    'Distressed',          // −2.5
+    'Low Affect',          // −1.25
+    'Neutral',             //  0
+    'Mild Positivity',     // +1.25
+    'Positive Affect',     // +2.5
+    'High Wellbeing',      // +3.75
+    'Flourishing',         // +5
+  ],
+  provider_trust: [
+    'Deep Distrust',       // −5
+    'Strongly Distrustful',
+    'Distrustful',
+    'Skeptical',
+    'Uncertain',
+    'Cautious Trust',
+    'Trusting',
+    'High Confidence',
+    'Full Confidence',     // +5
+  ],
+  medical_self_efficacy: [
+    'Helpless',            // −5
+    'Very Low Efficacy',
+    'Low Efficacy',
+    'Unsure',
+    'Neutral',
+    'Some Agency',
+    'Capable',
+    'Empowered',
+    'Highly Empowered',    // +5
+  ],
+  logistical_capacity: [
+    'Overwhelmed',         // −5
+    'Severely Strained',
+    'Strained',
+    'Stretched',
+    'Managing',
+    'Adequate Capacity',
+    'Well Managed',
+    'Stable',
+    'Fully Managed',       // +5
+  ],
+};
+ 
+
+
 // ── Stage color palette ───────────────────────────────────────────────────────
 export const STAGE_COLORS = [
   '#264290', // Dark Blue

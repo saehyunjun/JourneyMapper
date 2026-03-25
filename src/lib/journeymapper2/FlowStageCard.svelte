@@ -91,8 +91,8 @@
   <!-- Stage header — hidden in vertical mode (label lives in the left rail) -->
   {#if !hideHeader}
     <div class="section-header" style="background-color:{stageColor};">
-      <span class="label-heading" style="color:#fff">{group.stage}</span>
-      <span class="flow-stage-count label-heading" style="color:rgba(255,255,255,0.65);">{group.stage_id}</span>
+      <span class="heading-sm" style="color:#fff">{group.stage}</span>
+      <span class="flow-stage-count heading-sm" style="color:rgba(255,255,255,0.65);">{group.stage_id}</span>
     </div>
   {/if}
 
@@ -278,8 +278,8 @@
   .flow-steps-row {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    align-items: top;
+    justify-content: flex-start;
     padding: 1em;
     gap: 0;
   }

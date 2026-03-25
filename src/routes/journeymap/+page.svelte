@@ -40,6 +40,10 @@
    return true;
  });
   
+ $: stepIllustration = selectedStep
+  ? `lib/static/illustrations/Regression1.jpeg`
+  : 'lib/static/illustrations/Regression1.jpeg';
+
  // Reset active persona when the current one is filtered out
  $: if (filteredPersonas.length && !filteredPersonas.find((p) => p.id === activePersonaId)) {
    activePersonaId = filteredPersonas[0].id;
@@ -230,10 +234,17 @@ let emotionSubDrawerOpen = false;
       <JourneyFlowDiagram data={journeyData} {layout} />
       </div>
       {:else}
+      <div class="toolbar px-4 py-2 w-full">
+        <h3 class="heading-sm">Sentiment</h3>
+      </div>
         <JourneyStages data={journeyData} />
         <JourneySteps  data={journeyData} />
         <JourneySentiment data={journeyData} />
         <div class="spacer"></div>
+          <div class="toolbar px-4 py-2 w-full">
+        <h3 class="heading-sm">Sentiment Drivers</h3>
+      </div>
+
         <JourneyIndexBars data={journeyData} {metrics} />
         <JourneyLegend items={metrics} />
       {/if}
@@ -267,6 +278,7 @@ let emotionSubDrawerOpen = false;
 <StepDetailContent
   data={journeyData}
   metrics={metrics}
+  illustrationSrc={stepIllustration}
   wheelData={selectedWheelData}
   on:openEmotionDetail={openEmotionDetail}
 />
@@ -281,7 +293,7 @@ let emotionSubDrawerOpen = false;
 
   <svelte:fragment slot="footer">
     {#if drawerMode === 'step'}
-    <div class="flex flex-col">
+    <div class="flex flex-row">
       <button
         class="btn-sm"
         disabled={$selectedIndex <= 0}
@@ -292,12 +304,13 @@ let emotionSubDrawerOpen = false;
         </button>
 
       <button
-        class="btn-sm"
+        class="btn-sm-alt"
         disabled={$selectedIndex >= journeyData.length - 1}
         on:click={() => selectedIndex.update(i => i + 1)}
         aria-label="Next step"
         ><CaretRight /></button>
   </div>
+
     {:else if drawerMode === 'plutchik'}
       <span class="cite">
         Plutchik, R. (1980). <em>Emotion: A Psychoevolutionary Synthesis.</em> Harper & Row.

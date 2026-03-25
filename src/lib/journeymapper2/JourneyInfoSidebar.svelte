@@ -265,30 +265,57 @@
       <!-- Step header — crossfades out/in when step changes -->
       {#key displayIndex}
         <div
-          class="jm-content-col step-header-block"
+          class="flex flex-row w-full justify-between"
           in:fly={{ y: 8, duration: 220, delay: 40, easing: cubicOut }}
           out:fade={{ duration: 120 }}
         >
-          <span class="text-body-sm capitalize">{displayIndex + 1} / {data.length}</span>
-          <span class="jm-kicker">{step.stage}</span>
-          <p class="heading-sm">{step.step}</p>
+        <div class="flex flex-col">
+          <div class="step-circles mb-4">
+            {#each data as _, i}
+              <div
+                class="step-circle"
+                class:step-circle--active={i === displayIndex}
+                class:step-circle--complete={i < displayIndex}>
+              </div>
+            {/each}
+          </div>
+          <span class="heading-sm">{step.stage}</span>
+          <p class="heading-md">{step.step}</p>
         </div>
+      </div>
       {/key}
 
+      <!-- Narrative — crossfades on step change -->
+      {#if step.narrative_description}
+        {#key displayIndex}
+          <div
+            class="gap-1"
+            in:fly={{ y: 6, duration: 220, delay: 100, easing: cubicOut }}
+            out:fade={{ duration: 120 }}
+          >
+            <div class="flex flex-col">
+              <span class="heading-sm">Narrative</span>
+            </div>
+            <p class="text-body-sm">{step.narrative_description}</p>
+          </div>
+        {/key}
+      {/if}
+
+
       <!-- Sentiment — row of colored squares, active square highlighted -->
-      <div class="jm-content-col gap-1">
-        <div class="flex flex-col">
-          <span class="text-body-sm capitalize">Sentiment</span>
-          {#key displayIndex}
-            <span
-              class="label-bold"
-              style="color: {sentimentColor};"
-              in:fade={{ duration: 200, delay: 80 }}
-              out:fade={{ duration: 100 }}
-            >
-              {sentimentTweenVal > 0 ? '+' : ''}{sentimentTweenVal.toFixed(1)}
-            </span>
-          {/key}
+      <div class="jm-content-col gap-1 mt-2">
+        <div class="flex flex-row w-full justify-between">
+          <span class="heading-sm">Sentiment</span>
+        {#key displayIndex}
+        <span
+          class="pill uppercase font-semibold"
+          style="border: 1px solid {sentimentColor};"
+          in:fade={{ duration: 200, delay: 100 }}
+          out:fade={{ duration: 100 }}
+        >
+          {sentimentLabel($sentimentTween)}
+        </span>
+      {/key}
         </div>
         <div class="score-squares">
           {#each SENTIMENT_SCALE as stopColor, i}
@@ -303,48 +330,22 @@
             />
           {/each}
         </div>
-        {#key displayIndex}
-          <span
-            class="text-body-sm capitalize"
-            style="color: {sentimentColor};"
-            in:fade={{ duration: 200, delay: 100 }}
-            out:fade={{ duration: 100 }}
-          >
-            {sentimentLabel($sentimentTween)}
-          </span>
-        {/key}
       </div>
 
       <!-- Index metrics — labels crossfade, bars tween -->
       {#if metrics.length}
-        <div class="jm-content-col gap-2">
-          <div class="flex items-center gap-1">
-            <span class="label-sm capitalize">Index Metrics</span>
-            <ChartLineRegular />
+        <div class="flex flex-col mt-8">
+          <div class="flex items-center gap-1 mb-2">
+            <span class="heading-sm">Index Metrics</span>
           </div>
           <IndexMetricBars
             {metrics}
             {metricVals}
             selectedIndex={displayIndex}
+            compact={true}
           />
         </div>
       {/if}
-      <!-- Narrative — crossfades on step change -->
-      {#if step.narrative_description}
-        {#key displayIndex}
-          <div
-            class="jm-content-col gap-1 border-top pt-2"
-            in:fly={{ y: 6, duration: 220, delay: 100, easing: cubicOut }}
-            out:fade={{ duration: 120 }}
-          >
-            <div class="flex flex-col">
-              <span class="text-body-sm capitalize">Narrative</span>
-            </div>
-            <p class="text-body-sm">{step.narrative_description}</p>
-          </div>
-        {/key}
-      {/if}
-
     {/if}
   </div>
 

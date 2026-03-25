@@ -90,7 +90,6 @@
       </p>
     </div>
   
-    <div class="divider" />
   
     <!-- Primary emotions -->
     <div class="section-heading">8 Primary Emotions</div>
