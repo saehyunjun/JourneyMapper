@@ -129,22 +129,29 @@
     {
       "id": "persona_1",
       "type": "patient",
+      "therapeutic_area": "Neurology",
+      "indication": "Parkinson's Disease",
       "profile": {
         "initials": "KW",
         "name": "Karl W.",
         "role": "Patient",
         "indication": "Autoimmune Encephalitis",
-        "therapeutic area": "Central Nervous System Diseases", 
+        "therapeutic area": "Central Nervous System Diseases",
         "age": "mid-60s",
         "gender": "Male",
         "location": "Midwest US",
         "occupation": "Part-time",
-        "current_treatments": ["Rituximab", "Cyclophosphamide"],
-        "past_treatments": ["Corticosteroids, IVIg"],
+        "current_treatments": [
+          "Rituximab",
+          "Cyclophosphamide"
+        ],
+        "past_treatments": [
+          "Corticosteroids, IVIg"
+        ],
         "caregiver": "None",
         "preference": "Seeking new treatment",
         "diagnosed": "5 years ago",
-        "quote": "Something feels off, but I keep telling myself it\u2019s probably nothing serious.",
+        "quote": "Something feels off, but I keep telling myself it’s probably nothing serious.",
         "imageFile": "KarlW.jpeg",
         "bio_1": "Karl began experiencing unexplained neurological symptoms that disrupted his daily life about ten years agfo. After a years-long diagnostic odyssey involving multiple specialists, he was finally diagnosed with a rare condition.",
         "bio_2": "Karl prefers to approach healthcare choices analytically and often researches medical literature and engages heavily in online patient groups before making decisions about his treatment options.",
@@ -164,13 +171,13 @@
         },
         {
           "label": "Care coordination level",
-          "value": 0.30,
+          "value": 0.3,
           "minLabel": "Disjointed",
           "maxLabel": "Cohesive"
         },
         {
           "label": "Willingness to accept help",
-          "value": 0.80,
+          "value": 0.8,
           "minLabel": "Resistant",
           "maxLabel": "Willing"
         }
@@ -283,7 +290,7 @@
           "medical_self_efficacy": 2,
           "logistical_capacity": 3,
           "narrative_description": "Karl first notices subtle balance changes and fatigue. He is concerned but assumes it may be age-related. He trusts her providers and believes the issue will be manageable.",
-          "quote": "Something feels off, but I keep telling myself it\u2019s probably nothing serious."
+          "quote": "Something feels off, but I keep telling myself it’s probably nothing serious."
         },
         {
           "stage_id": "1",
@@ -311,7 +318,7 @@
           "medical_self_efficacy": -1,
           "logistical_capacity": 1,
           "narrative_description": "During early appointments, Karl struggles to clearly describe her symptoms. He leaves feeling partially heard but uncertain. Trust begins to soften as explanations feel incomplete.",
-          "quote": "I\u2019m trying to explain what\u2019s happening, but I\u2019m not sure I\u2019m being understood."
+          "quote": "I’m trying to explain what’s happening, but I’m not sure I’m being understood."
         },
         {
           "stage_id": "1",
@@ -340,7 +347,7 @@
                 "id": "path_pos",
                 "direction": "positive",
                 "label": "Escalates to Specialist",
-                "outcome": "Referral to a movement disorder neurologist is initiated. Diagnostic timeline shortens by an estimated 6\u201312 months, preserving provider trust and patient confidence.",
+                "outcome": "Referral to a movement disorder neurologist is initiated. Diagnostic timeline shortens by an estimated 6–12 months, preserving provider trust and patient confidence.",
                 "sentiment_delta": 2,
                 "key_driver": "Family pressure and persistent symptom logging prompt action."
               },
@@ -354,7 +361,7 @@
               }
             ]
           },
-          "quote": "Things are getting worse and I still don\u2019t have answers\u2014it\u2019s starting to wear on me."
+          "quote": "Things are getting worse and I still don’t have answers—it’s starting to wear on me."
         },
         {
           "stage_id": "2",
@@ -382,7 +389,7 @@
           "medical_self_efficacy": -1,
           "logistical_capacity": -3,
           "has_experience_wheel": true,
-          "narrative_description": "Receiving an initial but incorrect diagnosis is destabilizing. Karl feels surprised and unsettled. When treatment does not help, doubt grows\u2014both in the system and in her own interpretation of symptoms.",
+          "narrative_description": "Receiving an initial but incorrect diagnosis is destabilizing. Karl feels surprised and unsettled. When treatment does not help, doubt grows—both in the system and in her own interpretation of symptoms.",
           "quote": "If this diagnosis is wrong, what else have we missed?"
         },
         {
@@ -397,7 +404,7 @@
           "medical_self_efficacy": 2,
           "logistical_capacity": -1,
           "narrative_description": "Seeking a second opinion feels proactive. Karl regains some agency and begins researching more deeply, determined to reach diagnostic clarity.",
-          "quote": "I need to take control and make sure we\u2019re not overlooking anything."
+          "quote": "I need to take control and make sure we’re not overlooking anything."
         },
         {
           "stage_id": "3",
@@ -413,10 +420,10 @@
           "provider_trust": -1,
           "medical_self_efficacy": -4,
           "logistical_capacity": -4,
-          "narrative_description": "The Parkinson\u2019s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. He feels overwhelmed by the long arc of disease progression.",
+          "narrative_description": "The Parkinson’s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. He feels overwhelmed by the long arc of disease progression.",
           "inflection_detail": {
             "label": "Diagnosis Decision Point",
-            "description": "Receiving a confirmed Parkinson's diagnosis is the central inflection of Karl's journey. How He and her care team respond in the immediate aftermath \u2014 emotionally, informationally, and logistically \u2014 determines whether He moves toward empowered self-management or retreats into isolation and fear.",
+            "description": "Receiving a confirmed Parkinson's diagnosis is the central inflection of Karl's journey. How He and her care team respond in the immediate aftermath — emotionally, informationally, and logistically — determines whether He moves toward empowered self-management or retreats into isolation and fear.",
             "risk_level": "critical",
             "dropout_risk": "high",
             "sponsor_opportunity": "Develop a diagnosis-day support package for HCPs: standardized emotional framing language, a patient-facing 'What happens next' one-pager, and a warm handoff to a patient navigator or advocacy organization.",
@@ -440,7 +447,7 @@
               }
             ]
           },
-          "quote": "At least I have a name for it now, but I\u2019m not sure what comes next."
+          "quote": "At least I have a name for it now, but I’m not sure what comes next."
         },
         {
           "stage_id": "4",
@@ -475,23 +482,24 @@
     {
       "id": "persona_nmdar_01",
       "type": "patient",
+      "therapeutic_area": "Neurology",
+      "indication": "anti-NMDA receptor encephalitis",
       "profile": {
         "initials": "CD",
         "name": "Candace D.",
         "role": "Patient",
         "indication": "Autoimmune Encephalitis",
-        "therapeutic area": "Central Nervous System Diseases", 
+        "therapeutic area": "Central Nervous System Diseases",
         "age": "mid-20s",
         "gender": "Female",
-        "occupation": "On medical leave",
+        "occupation": "on medical leave",
         "caregiver": "Mother (primary), Partner (secondary)",
-        "preference": "Clinical trial consideration",
+        "preference": "find a clinical trial",
         "diagnosed": "14 months ago",
         "imageFile": "CandaceD.jpg",
         "quote": "There were months I don't remember at all. I had to learn who I was again — and now I'm trying to figure out if there's something that can actually stop this from coming back.",
         "bio_1": "Candace was a second-year PhD candidate when she experienced what her family described as a psychiatric break — erratic behavior, paranoia, and seizure-like episodes that escalated over several weeks. After hospitalization, she was diagnosed with anti-NMDA receptor encephalitis.",
         "bio_2": "She spent nearly four months inpatient, including three weeks in the ICU. Now in partial recovery, Candace manages residual cognitive fatigue, word-finding difficulties, and anxiety that she and her care team attribute to post-encephalitis syndrome. She has resumed light coursework but is not yet back to full academic capacity. She is highly motivated to understand her disease and advocates for herself in clinical settings, though she sometimes struggles with memory and processing speed during complex conversations.",
-        
         "goal1": "Achieve full cognitive recovery and return to her doctoral program without permanent academic setback.",
         "goal2": "Reduce relapse risk and understand whether maintenance immunotherapy or a clinical trial offers better long-term protection.",
         "goal3": "Rebuild a sense of identity and continuity after a period of significant memory loss and personality disruption.",
@@ -520,7 +528,7 @@
         },
         {
           "label": "Health literacy",
-          "value": 0.80,
+          "value": 0.8,
           "minLabel": "Low",
           "maxLabel": "High"
         },
@@ -535,37 +543,83 @@
         {
           "label": "Diagnosis",
           "sentiments": [
-            0.03, 0.04, 0.06, 0.08, 0.15, 0.25, 0.38, 0.50, 0.60, 0.65, 0.68
+            0.03,
+            0.04,
+            0.06,
+            0.08,
+            0.15,
+            0.25,
+            0.38,
+            0.5,
+            0.6,
+            0.65,
+            0.68
           ]
         },
         {
           "label": "Acute hospitalization",
           "sentiments": [
-            0.04, 0.05, 0.08, 0.12, 0.20, 0.30, 0.42, 0.52, 0.58
+            0.04,
+            0.05,
+            0.08,
+            0.12,
+            0.2,
+            0.3,
+            0.42,
+            0.52,
+            0.58
           ]
         },
         {
           "label": "Cognitive recovery",
           "sentiments": [
-            0.10, 0.18, 0.28, 0.38, 0.48, 0.55, 0.60, 0.65
+            0.1,
+            0.18,
+            0.28,
+            0.38,
+            0.48,
+            0.55,
+            0.6,
+            0.65
           ]
         },
         {
           "label": "Relapse fear",
           "sentiments": [
-            0.08, 0.10, 0.12, 0.18, 0.22, 0.30, 0.38, 0.42, 0.48
+            0.08,
+            0.1,
+            0.12,
+            0.18,
+            0.22,
+            0.3,
+            0.38,
+            0.42,
+            0.48
           ]
         },
         {
           "label": "Clinical trials",
           "sentiments": [
-            0.10, 0.20, 0.35, 0.48, 0.58, 0.65, 0.70
+            0.1,
+            0.2,
+            0.35,
+            0.48,
+            0.58,
+            0.65,
+            0.7
           ]
         },
         {
           "label": "Identity and return to self",
           "sentiments": [
-            0.05, 0.08, 0.15, 0.25, 0.38, 0.48, 0.55, 0.62
+            0.05,
+            0.08,
+            0.15,
+            0.25,
+            0.38,
+            0.48,
+            0.55,
+            0.62
           ]
         }
       ],
@@ -582,7 +636,19 @@
           "medical_self_efficacy": 1,
           "logistical_capacity": 2,
           "narrative_description": "Candace and her family notice mood changes, insomnia, and increasingly disorganized thinking. Initial consultations with a campus mental health counselor result in a provisional anxiety and stress diagnosis. Candace complies but feels that something more serious is being missed.",
-          "quote": "I knew it wasn't just stress. I've been stressed before. This was different."
+          "quote": "I knew it wasn't just stress. I've been stressed before. This was different.",
+          "events": [
+            {
+              "event_id": "ev_cd_01",
+              "type": "roadblock",
+              "label": "Dismissed as Anxiety",
+              "short_label": "Misread as stress",
+              "description": "Campus counselor attributes symptoms to graduate school stress. Candace is given coping strategies but no medical referral, delaying workup by several weeks.",
+              "sentiment_impact": -1,
+              "step_position": 1.4,
+              "tooltip": "Stress and anxiety misdiagnosis delayed medical workup by several weeks, allowing symptoms to worsen unchecked."
+            }
+          ]
         },
         {
           "stage_id": "1",
@@ -596,7 +662,29 @@
           "medical_self_efficacy": -2,
           "logistical_capacity": -3,
           "narrative_description": "Within weeks, Candace experiences auditory hallucinations, catatonic episodes, and a witnessed seizure in her apartment. Her partner calls 911. She is admitted to an inpatient psychiatric unit before transfer to a general neurology service. Candace has limited memory of this period.",
-          "quote": "I barely remember the first few weeks. I've had to piece it together from my mom's notes."
+          "quote": "I barely remember the first few weeks. I've had to piece it together from my mom's notes.",
+          "events": [
+            {
+              "event_id": "ev_cd_02",
+              "type": "hospitalization",
+              "label": "911 Call / Emergency Admission",
+              "short_label": "Emergency admission",
+              "description": "Partner calls 911 after witnessed tonic-clonic seizure. Candace is transported by ambulance and admitted to an inpatient psychiatric unit before neurology transfer.",
+              "sentiment_impact": -3,
+              "step_position": 2.0,
+              "tooltip": "Witnessed seizure triggers 911 call. Admitted to psychiatric unit before neurology transfer — a common and costly misrouting."
+            },
+            {
+              "event_id": "ev_cd_03",
+              "type": "roadblock",
+              "label": "Routed to Psychiatric Unit First",
+              "short_label": "Psych unit mismatch",
+              "description": "Initial psychiatric placement delays neurological workup by 48–72 hours. Symptom escalation during this window increases severity of the acute episode.",
+              "sentiment_impact": -2,
+              "step_position": 2.3,
+              "tooltip": "Psychiatric placement delays neurological workup 48–72 hours, worsening the acute episode before a correct unit transfer."
+            }
+          ]
         },
         {
           "stage_id": "2",
@@ -610,7 +698,29 @@
           "medical_self_efficacy": -3,
           "logistical_capacity": -5,
           "narrative_description": "Candace is intubated and receives high-dose steroids and IVIG in the ICU. Her mother becomes the primary decision-maker during this period. The medical team explains anti-NMDAR encephalitis to her family, though Candace herself is not cognitively present for these conversations.",
-          "quote": "My mom said the doctors finally had a name for it. I was there but I wasn't really there."
+          "quote": "My mom said the doctors finally had a name for it. I was there but I wasn't really there.",
+          "events": [
+            {
+              "event_id": "ev_cd_04",
+              "type": "hospitalization",
+              "label": "ICU Intubation",
+              "short_label": "ICU / intubation",
+              "description": "Respiratory compromise leads to intubation. Candace is placed on mechanical ventilation and receives high-dose steroids and IVIG. Her mother becomes sole medical decision-maker.",
+              "sentiment_impact": -4,
+              "step_position": 3.0,
+              "tooltip": "Respiratory compromise leads to intubation in the ICU. Candace's mother becomes sole medical decision-maker."
+            },
+            {
+              "event_id": "ev_cd_05",
+              "type": "progress",
+              "label": "Anti-NMDAR Antibody Confirmed",
+              "short_label": "Diagnosis confirmed",
+              "description": "CSF analysis confirms anti-NMDA receptor antibodies. The team delivers a definitive diagnosis to Candace's family, replacing weeks of diagnostic uncertainty with a named condition and a treatment roadmap.",
+              "sentiment_impact": 2,
+              "step_position": 3.6,
+              "tooltip": "CSF analysis confirms anti-NMDA receptor antibodies — replacing weeks of diagnostic uncertainty with a named condition and treatment roadmap."
+            }
+          ]
         },
         {
           "stage_id": "2",
@@ -624,7 +734,29 @@
           "medical_self_efficacy": 0,
           "logistical_capacity": -3,
           "narrative_description": "Imaging and surgical evaluation reveal no underlying teratoma, which the team presents as a favorable prognostic signal. Candace's family receives this news with cautious relief. Candace begins a slow return to awareness and can hold brief conversations.",
-          "quote": "No tumor. That was the first thing that felt like good news."
+          "quote": "No tumor. That was the first thing that felt like good news.",
+          "events": [
+            {
+              "event_id": "ev_cd_06",
+              "type": "progress",
+              "label": "Teratoma Ruled Out",
+              "short_label": "No tumor found",
+              "description": "Pelvic MRI and surgical oncology consultation confirm no underlying ovarian teratoma. The medical team presents this as a favorable prognostic signal. Candace's family exhales.",
+              "sentiment_impact": 2,
+              "step_position": 4.2,
+              "tooltip": "No underlying teratoma found on imaging. Team presents this as a favorable prognostic signal; family receives first genuinely good news."
+            },
+            {
+              "event_id": "ev_cd_07",
+              "type": "progress",
+              "label": "Candace Regains Awareness",
+              "short_label": "Returns to awareness",
+              "description": "Candace begins holding brief, coherent conversations for the first time in weeks. She recognizes her mother and partner. Care team marks this as a meaningful clinical milestone.",
+              "sentiment_impact": 3,
+              "step_position": 4.7,
+              "tooltip": "Candace holds brief, coherent conversations for the first time in weeks — a key clinical milestone marking neurological stabilization."
+            }
+          ]
         },
         {
           "stage_id": "3",
@@ -638,7 +770,29 @@
           "medical_self_efficacy": 1,
           "logistical_capacity": -2,
           "narrative_description": "After incomplete response to first-line therapy, the neurology team initiates rituximab. Candace is now cognitively present enough to be partially involved in consent discussions, though she relies heavily on her mother. She experiences fatigue and nausea but gradually stabilizes.",
-          "quote": "They explained what rituximab was. I remember nodding and not really absorbing all of it."
+          "quote": "They explained what rituximab was. I remember nodding and not really absorbing all of it.",
+          "events": [
+            {
+              "event_id": "ev_cd_08",
+              "type": "roadblock",
+              "label": "Incomplete Response to First-Line Therapy",
+              "short_label": "First-line failure",
+              "description": "Steroids and IVIG do not produce sufficient clinical improvement. The team escalates to rituximab, extending hospitalization and introducing new side effect concerns for Candace and her family.",
+              "sentiment_impact": -2,
+              "step_position": 5.2,
+              "tooltip": "First-line steroids and IVIG produce insufficient improvement, requiring escalation to rituximab and extending hospitalization."
+            },
+            {
+              "event_id": "ev_cd_09",
+              "type": "progress",
+              "label": "Stabilization on Rituximab",
+              "short_label": "Stabilizes on Ritux",
+              "description": "After two rituximab infusions, Candace shows measurable neurological improvement. Cognitive responsiveness increases and motor symptoms begin to recede. The care team considers discharge planning.",
+              "sentiment_impact": 2,
+              "step_position": 5.7,
+              "tooltip": "Two rituximab infusions yield measurable neurological improvement. Cognitive responsiveness increases and discharge planning begins."
+            }
+          ]
         },
         {
           "stage_id": "3",
@@ -652,7 +806,19 @@
           "medical_self_efficacy": 1,
           "logistical_capacity": -1,
           "narrative_description": "After nearly four months, Candace is discharged with an outpatient immunology follow-up plan and neuropsychological testing scheduled. Her family receives limited structured guidance on what recovery should look like at home. She moves back with her mother.",
-          "quote": "They said I was stable enough to go home. I didn't feel stable — I just wasn't ICU-level anymore."
+          "quote": "They said I was stable enough to go home. I didn't feel stable — I just wasn't ICU-level anymore.",
+          "events": [
+            {
+              "event_id": "ev_cd_10",
+              "type": "roadblock",
+              "label": "Discharge Without Recovery Roadmap",
+              "short_label": "No recovery plan",
+              "description": "Candace is discharged stable but without structured written guidance on what recovery milestones to expect, what symptoms warrant re-admission, or how to access mental health support for post-encephalitis syndrome.",
+              "sentiment_impact": -2,
+              "step_position": 6.4,
+              "tooltip": "Discharged without written recovery milestones, re-admission criteria, or mental health referral — leaving Candace and her family without a structured roadmap."
+            }
+          ]
         },
         {
           "stage_id": "4",
@@ -666,7 +832,29 @@
           "medical_self_efficacy": 2,
           "logistical_capacity": 0,
           "narrative_description": "Neuropsychological testing reveals deficits in processing speed, working memory, and verbal fluency. Candace finds the results both validating and devastating — the data confirms what she has been experiencing, but also documents how far she is from her prior baseline. She begins occupational and speech therapy.",
-          "quote": "Seeing the numbers made it real. I knew I was slower, but now I had proof."
+          "quote": "Seeing the numbers made it real. I knew I was slower, but now I had proof.",
+          "events": [
+            {
+              "event_id": "ev_cd_11",
+              "type": "roadblock",
+              "label": "Neuropsych Testing Reveals Deficits",
+              "short_label": "Cognitive deficits confirmed",
+              "description": "Formal testing documents significant impairments in processing speed, working memory, and verbal fluency relative to pre-illness baseline. Candace finds the results validating but devastating.",
+              "sentiment_impact": -2,
+              "step_position": 7.3,
+              "tooltip": "Testing documents significant deficits in processing speed, working memory, and verbal fluency — confirming what Candace felt but making it clinically undeniable."
+            },
+            {
+              "event_id": "ev_cd_12",
+              "type": "progress",
+              "label": "Begins Occupational + Speech Therapy",
+              "short_label": "Rehab therapy starts",
+              "description": "Candace begins a structured rehabilitation program. Early sessions are cognitively exhausting but begin to show incremental improvement in word retrieval and task sequencing.",
+              "sentiment_impact": 1,
+              "step_position": 7.7,
+              "tooltip": "Structured rehab program begins. Early sessions are exhausting but show incremental gains in word retrieval and task sequencing."
+            }
+          ]
         },
         {
           "stage_id": "4",
@@ -707,7 +895,29 @@
               }
             ]
           },
-          "quote": "Every time something feels off, I spiral. Is this the beginning of another episode? How would I even know?"
+          "quote": "Every time something feels off, I spiral. Is this the beginning of another episode? How would I even know?",
+          "events": [
+            {
+              "event_id": "ev_cd_13",
+              "type": "roadblock",
+              "label": "Relapse Fear Triggers Symptom Spiral",
+              "short_label": "Relapse anxiety spiral",
+              "description": "A minor headache and word-retrieval lapse send Candace into hours of obsessive symptom tracking and an urgent call to her neurologist. No relapse is occurring, but the anxiety becomes debilitating.",
+              "sentiment_impact": -3,
+              "step_position": 8.2,
+              "tooltip": "A minor headache triggers hours of obsessive symptom tracking and an urgent call to her neurologist — no relapse, but the anxiety becomes destabilizing."
+            },
+            {
+              "event_id": "ev_cd_14",
+              "type": "roadblock",
+              "label": "No Structured Relapse Warning Protocol",
+              "short_label": "No relapse framework",
+              "description": "Candace's care team provides verbal reassurance but no written framework distinguishing normal recovery fluctuation from true relapse signals. This gap sustains her anxiety and generates repeated unplanned contacts.",
+              "sentiment_impact": -1,
+              "step_position": 8.5,
+              "tooltip": "No written framework provided to distinguish normal recovery fluctuation from true relapse signals, sustaining hypervigilance and unplanned care contacts."
+            }
+          ]
         },
         {
           "stage_id": "5",
@@ -721,7 +931,29 @@
           "medical_self_efficacy": 4,
           "logistical_capacity": 2,
           "narrative_description": "Candace discovers the Autoimmune Encephalitis Alliance and multiple patient-run online communities. Reading others' recovery narratives provides her first real sense of what the trajectory can look like. She begins contributing, sharing her own experience, and asking detailed questions about treatment maintenance and trial options.",
-          "quote": "I found people who had been where I was and made it back further than I thought was possible. That changed everything."
+          "quote": "I found people who had been where I was and made it back further than I thought was possible. That changed everything.",
+          "events": [
+            {
+              "event_id": "ev_cd_15",
+              "type": "community",
+              "label": "Finds Autoimmune Encephalitis Alliance",
+              "short_label": "AE Alliance discovered",
+              "description": "Candace discovers the AE Alliance and connects with other anti-NMDAR encephalitis survivors online. Reading full recovery stories for the first time fundamentally shifts her sense of what is possible.",
+              "sentiment_impact": 4,
+              "step_position": 9.2,
+              "tooltip": "Connecting with AE Alliance survivors — including people who returned to graduate school — fundamentally shifts Candace's sense of what recovery is possible."
+            },
+            {
+              "event_id": "ev_cd_16",
+              "type": "community",
+              "label": "Peer Mentorship with Fellow Survivor",
+              "short_label": "Peer mentor connection",
+              "description": "An AE Alliance volunteer who recovered from anti-NMDAR encephalitis and returned to graduate school reaches out directly. Their exchange becomes a monthly touchpoint that sustains Candace's motivation during cognitively difficult weeks.",
+              "sentiment_impact": 3,
+              "step_position": 9.7,
+              "tooltip": "Monthly peer mentorship with an AE Alliance volunteer who completed a PhD post-encephalitis sustains motivation through cognitively difficult weeks."
+            }
+          ]
         },
         {
           "stage_id": "5",
@@ -735,7 +967,29 @@
           "medical_self_efficacy": 4,
           "logistical_capacity": 1,
           "narrative_description": "Motivated by community members' experiences and her own desire to access novel maintenance therapies, Candace begins reviewing ClinicalTrials.gov listings. She identifies several trials investigating B-cell depletion maintenance and neonatal Fc receptor (FcRn) antagonists for autoimmune encephalitis but struggles to parse eligibility criteria and endpoints.",
-          "quote": "I can find the trials. I just can't always tell if I qualify, or what I'd actually be signing up for."
+          "quote": "I can find the trials. I just can't always tell if I qualify, or what I'd actually be signing up for.",
+          "events": [
+            {
+              "event_id": "ev_cd_17",
+              "type": "progress",
+              "label": "Identifies Relevant Trial on ClinicalTrials.gov",
+              "short_label": "Trial identified",
+              "description": "Candace finds an active Phase II trial investigating FcRn antagonist maintenance therapy in anti-NMDAR encephalitis. She bookmarks the listing and prepares questions for her next neurology appointment.",
+              "sentiment_impact": 2,
+              "step_position": 10.4,
+              "tooltip": "Candace identifies an active Phase II FcRn antagonist maintenance trial on ClinicalTrials.gov and prepares questions for her next neurology appointment."
+            },
+            {
+              "event_id": "ev_cd_18",
+              "type": "roadblock",
+              "label": "Eligibility Criteria Too Complex to Parse",
+              "short_label": "Criteria unclear",
+              "description": "The inclusion/exclusion criteria reference biomarker thresholds and prior treatment windows Candace cannot evaluate without clinician interpretation. She cannot confirm her own eligibility unaided.",
+              "sentiment_impact": -1,
+              "step_position": 10.7,
+              "tooltip": "Inclusion/exclusion criteria reference biomarker thresholds Candace cannot evaluate without clinician help — she cannot confirm eligibility unaided."
+            }
+          ]
         },
         {
           "stage_id": "6",
@@ -749,7 +1003,29 @@
           "medical_self_efficacy": 3,
           "logistical_capacity": -1,
           "narrative_description": "Candace raises trial participation with her neurologist, who is supportive but candid about the limited trial infrastructure available locally. She is referred to a specialist at an academic medical center three hours away who has more experience with the disease and active trial affiliations. The added travel burden concerns her but does not deter her.",
-          "quote": "My doctor was honest — she said she wasn't the right person to guide me on trials. I appreciated that more than I expected."
+          "quote": "My doctor was honest — she said she wasn't the right person to guide me on trials. I appreciated that more than I expected.",
+          "events": [
+            {
+              "event_id": "ev_cd_19",
+              "type": "progress",
+              "label": "Referred to Academic Medical Center",
+              "short_label": "Academic referral",
+              "description": "Local neurologist proactively refers Candace to a specialist at an academic center 3 hours away who has treated over 40 anti-NMDAR cases and leads an active trial site. This is Candace's first access to true disease expertise.",
+              "sentiment_impact": 2,
+              "step_position": 11.4,
+              "tooltip": "Local neurologist refers Candace to a specialist who has treated 40+ anti-NMDAR cases and leads an active trial site — her first access to true disease expertise."
+            },
+            {
+              "event_id": "ev_cd_20",
+              "type": "roadblock",
+              "label": "3-Hour Travel Burden",
+              "short_label": "Travel burden",
+              "description": "The academic center requires in-person screening visits and monthly follow-ups. Travel time, overnight accommodations, and lost academic days create a significant practical barrier that Candace and her mother begin calculating.",
+              "sentiment_impact": -1,
+              "step_position": 11.7,
+              "tooltip": "Academic center requires in-person screening and monthly follow-ups. Three-hour travel plus overnight stays create a significant practical burden."
+            }
+          ]
         },
         {
           "stage_id": "6",
@@ -790,13 +1066,47 @@
               }
             ]
           },
-          "quote": "I want to do this. I just need to actually understand what I'm agreeing to — and I need to know it won't set back everything I've worked to rebuild."
+          "quote": "I want to do this. I just need to actually understand what I'm agreeing to — and I need to know it won't set back everything I've worked to rebuild.",
+          "events": [
+            {
+              "event_id": "ev_cd_21",
+              "type": "roadblock",
+              "label": "Dense Consent Document Exceeds Cognitive Capacity",
+              "short_label": "Consent overload",
+              "description": "The 28-page informed consent document is cognitively overwhelming for Candace at her current recovery stage. She cannot fully process adverse event descriptions and placebo randomization language in a single session.",
+              "sentiment_impact": -2,
+              "step_position": 12.2,
+              "tooltip": "28-page consent document overwhelms Candace's current cognitive capacity. Adverse event descriptions and placebo language cannot be fully processed in one session."
+            },
+            {
+              "event_id": "ev_cd_22",
+              "type": "community",
+              "label": "Trial Peer Navigator Introduced",
+              "short_label": "Peer navigator",
+              "description": "The academic site coordinator connects Candace with a patient who completed the same trial protocol. This peer navigator helps decode consent language, shares personal experience with the visit schedule, and reduces Candace's anxiety about the unknown.",
+              "sentiment_impact": 3,
+              "step_position": 12.6,
+              "tooltip": "Site coordinator connects Candace with a trial peer navigator who decodes consent language and shares first-hand experience of the visit schedule."
+            },
+            {
+              "event_id": "ev_cd_23",
+              "type": "progress",
+              "label": "Enrollment Decision Made",
+              "short_label": "Enrolls in trial",
+              "description": "With her mother present and consent questions answered across two sessions, Candace signs the informed consent form and is formally enrolled. She describes the moment as the first decision in over a year that felt fully hers.",
+              "sentiment_impact": 4,
+              "step_position": 12.9,
+              "tooltip": "Across two consent sessions with her mother present, Candace signs and formally enrolls — describing it as the first decision in over a year that felt fully hers."
+            }
+          ]
         }
       ]
     },
     {
       "id": "persona_3",
       "type": "patient",
+      "therapeutic_area": "Neurology",
+      "indication": "anti-NMDA receptor encephalitis",
       "profile": {
         "initials": "MW",
         "name": "Maggie W.",
@@ -806,7 +1116,6 @@
         "occupation": "Retired",
         "caregiver": "None",
         "preference": "Seeking new treatment",
-
         "diagnosed": "5 years ago",
         "imageFile": "maggieP.jpeg",
         "bio_1": "Maggie recently retired when her symptoms began interfering with her ability to work safely. her diagnosis came as a shock and he relies heavily on her healthcare providers to guide treatment decisions. While he values clear explanations and reassurance, he often feels uncertain navigating new medical systems and terminology.",
@@ -945,7 +1254,7 @@
           "medical_self_efficacy": 2,
           "logistical_capacity": 3,
           "narrative_description": "Karl first notices subtle balance changes and fatigue. He is concerned but assumes it may be age-related. She trusts her providers and believes the issue will be manageable.",
-          "quote": "I noticed something small, but I didn\u2019t think it would turn into this."
+          "quote": "I noticed something small, but I didn’t think it would turn into this."
         },
         {
           "stage_id": "1",
@@ -990,7 +1299,7 @@
           "medical_self_efficacy": -2,
           "logistical_capacity": -1,
           "narrative_description": "As symptoms continue progressing, Karl feels discouraged and confused. The lack of clarity lowers her confidence in her own understanding and in the care pathway.",
-          "quote": "I feel like I\u2019m slipping, and no one can tell me why."
+          "quote": "I feel like I’m slipping, and no one can tell me why."
         },
         {
           "stage_id": "2",
@@ -1018,8 +1327,8 @@
           "medical_self_efficacy": -1,
           "logistical_capacity": -3,
           "has_experience_wheel": true,
-          "narrative_description": "Receiving an initial but incorrect diagnosis is destabilizing. Karl feels surprised and unsettled. When treatment does not help, doubt grows\u2014both in the system and in her own interpretation of symptoms.",
-          "quote": "This doesn\u2019t feel right\u2014why isn\u2019t anything improving?"
+          "narrative_description": "Receiving an initial but incorrect diagnosis is destabilizing. Karl feels surprised and unsettled. When treatment does not help, doubt grows—both in the system and in her own interpretation of symptoms.",
+          "quote": "This doesn’t feel right—why isn’t anything improving?"
         },
         {
           "stage_id": "3",
@@ -1033,7 +1342,7 @@
           "medical_self_efficacy": 2,
           "logistical_capacity": -1,
           "narrative_description": "Seeking a second opinion feels proactive. Karl regains some agency and begins researching more deeply, determined to reach diagnostic clarity.",
-          "quote": "I need another opinion\u2014I can\u2019t just accept uncertainty."
+          "quote": "I need another opinion—I can’t just accept uncertainty."
         },
         {
           "stage_id": "3",
@@ -1049,10 +1358,10 @@
           "provider_trust": -1,
           "medical_self_efficacy": -4,
           "logistical_capacity": -4,
-          "narrative_description": "The Parkinson\u2019s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. She feels overwhelmed by the long arc of disease progression.",
+          "narrative_description": "The Parkinson’s diagnosis brings both relief and grief. Relief that there is finally a label; grief over what it implies. She feels overwhelmed by the long arc of disease progression.",
           "inflection_detail": {
             "label": "Diagnosis Decision Point",
-            "description": "Receiving a confirmed Parkinson's diagnosis is the central inflection of Karl's journey. How she and her care team respond in the immediate aftermath \u2014 emotionally, informationally, and logistically \u2014 determines whether she moves toward empowered self-management or retreats into isolation and fear.",
+            "description": "Receiving a confirmed Parkinson's diagnosis is the central inflection of Karl's journey. How she and her care team respond in the immediate aftermath — emotionally, informationally, and logistically — determines whether she moves toward empowered self-management or retreats into isolation and fear.",
             "risk_level": "critical",
             "dropout_risk": "high",
             "sponsor_opportunity": "Develop a diagnosis-day support package for HCPs: standardized emotional framing language, a patient-facing 'What happens next' one-pager, and a warm handoff to a patient navigator or advocacy organization.",
@@ -1076,7 +1385,7 @@
               }
             ]
           },
-          "quote": "It\u2019s a relief to know, but it\u2019s also overwhelming to accept."
+          "quote": "It’s a relief to know, but it’s also overwhelming to accept."
         },
         {
           "stage_id": "4",
@@ -1104,13 +1413,15 @@
           "medical_self_efficacy": 2,
           "logistical_capacity": -2,
           "narrative_description": "When evaluating clinical trials, Karl feels cautiously hopeful. She trusts her neurologist but worries about the physical and logistical demands participation may require.",
-          "quote": "I want to explore every option, but I\u2019m worried about what it will take."
+          "quote": "I want to explore every option, but I’m worried about what it will take."
         }
       ]
     },
     {
       "id": "persona_4",
       "type": "caregiver",
+      "therapeutic_area": "Neurology",
+      "indication": "anti-NMDA receptor encephalitis",
       "profile": {
         "initials": "KT",
         "name": "Kristen T.",
@@ -1122,14 +1433,14 @@
         "preference": "Specialist-led care + peer communities",
         "diagnosed": "At birth / early infancy",
         "imageFile": "kristenT.jpeg",
-        "quote": "You\u2019re constantly balancing protection and independence. Every fall could mean a fracture, but you still want them to have a normal life.",
-        "bio_1": "Kristen is the primary caregiver for her young child diagnosed with osteogenesis imperfecta (OI), a rare genetic disorder characterized by brittle bones and frequent fractures. From infancy, she has navigated repeated hospital visits, surgeries, and ongoing physical therapy. She has become highly knowledgeable about OI management, but the emotional and logistical burden remains constant. She operates in a state of continuous vigilance, balancing safety with her child\u2019s quality of life.",
+        "quote": "You’re constantly balancing protection and independence. Every fall could mean a fracture, but you still want them to have a normal life.",
+        "bio_1": "Kristen is the primary caregiver for her young child diagnosed with osteogenesis imperfecta (OI), a rare genetic disorder characterized by brittle bones and frequent fractures. From infancy, she has navigated repeated hospital visits, surgeries, and ongoing physical therapy. She has become highly knowledgeable about OI management, but the emotional and logistical burden remains constant. She operates in a state of continuous vigilance, balancing safety with her child’s quality of life.",
         "goal1": "Minimize fractures and complications while enabling a normal childhood experience.",
         "goal2": "Coordinate care across orthopedic surgeons, geneticists, and rehabilitation teams.",
         "goal3": "Build long-term independence and resilience for her child.",
         "barrier1": "Constant risk of injury requiring immediate medical intervention.",
         "barrier2": "High logistical burden from frequent appointments, surgeries, and therapy.",
-        "barrier3": "Emotional strain of maintaining vigilance without limiting the child\u2019s development."
+        "barrier3": "Emotional strain of maintaining vigilance without limiting the child’s development."
       },
       "currentState": [
         {
@@ -1217,7 +1528,7 @@
           "medical_self_efficacy": -2,
           "logistical_capacity": -2,
           "narrative_description": "Early fractures lead to rapid escalation into specialist care. Kristen feels shock and fear, trying to understand a rare diagnosis while managing immediate medical needs.",
-          "quote": "We didn\u2019t even know what OI was \u2014 suddenly we were in a world of specialists and uncertainty."
+          "quote": "We didn’t even know what OI was — suddenly we were in a world of specialists and uncertainty."
         },
         {
           "stage_id": "1",
@@ -1247,7 +1558,7 @@
           "inflection_pos": 2,
           "inflection_neg": -3,
           "narrative_description": "Frequent fractures create a repetitive cycle of ER visits, casting, and recovery. Kristen experiences exhaustion and hypervigilance, constantly anticipating the next injury.",
-          "quote": "You\u2019re always waiting for the next break. It never fully leaves your mind."
+          "quote": "You’re always waiting for the next break. It never fully leaves your mind."
         },
         {
           "stage_id": "2",
@@ -1287,7 +1598,7 @@
           "medical_self_efficacy": 4,
           "logistical_capacity": -1,
           "narrative_description": "Kristen navigates constant tradeoffs between protecting her child and enabling normal development. This becomes a persistent emotional tension.",
-          "quote": "You don\u2019t want to hold them back, but you\u2019re always thinking about what could happen."
+          "quote": "You don’t want to hold them back, but you’re always thinking about what could happen."
         },
         {
           "stage_id": "5",
@@ -1301,7 +1612,7 @@
           "medical_self_efficacy": 5,
           "logistical_capacity": 1,
           "narrative_description": "Over time, Kristen becomes highly knowledgeable about OI care. She advocates effectively, coordinates care, and anticipates complications.",
-          "quote": "You learn everything \u2014 medications, signs of fractures, who to call. You have to."
+          "quote": "You learn everything — medications, signs of fractures, who to call. You have to."
         },
         {
           "stage_id": "5",

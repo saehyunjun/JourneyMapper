@@ -1,5 +1,8 @@
 <script>
   export let variant = 'step'; // 'step' | 'stage' | 'stage-vertical'
+  export let layout  = 'horizontal'; // 'horizontal' | 'vertical'
+
+  $: isVertical = layout === 'vertical';
 </script>
 
 {#if variant === 'stage'}
@@ -9,7 +12,13 @@
   <span class="flow-stage-connector--vertical arrow-line vertical" aria-hidden="true"></span>
 
 {:else}
-  <span class="flow-connector arrow-line horizontal" aria-hidden="true"></span>
+  <!-- step connector — direction follows layout -->
+  <span
+    class="flow-connector arrow-line"
+    class:horizontal={!isVertical}
+    class:vertical={isVertical}
+    aria-hidden="true"
+  ></span>
 {/if}
 
 <style>
@@ -25,10 +34,17 @@
   }
 
   .flow-connector {
-    color: var(ink);
+    color: var(--ink-muted, #8090a8);
+  }
+  .flow-connector.horizontal {
     padding: 0 0.12em;
     width: 24px;
     height: 2px;
+  }
+  .flow-connector.vertical {
+    padding: 0.12em 0;
+    width: 2px;
+    height: 28px;
   }
 
   .flow-stage-connector {
@@ -43,7 +59,9 @@
     color: #8090a8;
     padding: 0.2rem 0;
     width: 2px;
-    height: 24px;
+    height: 100%;
+    min-height: 24px;
+    align-self: stretch;
   }
 
   /* ── Dashed line ───────────────────────────────────── */

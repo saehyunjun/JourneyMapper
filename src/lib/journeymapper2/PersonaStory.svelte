@@ -60,6 +60,10 @@
 
   // ── Dynamic screen list ───────────────────────────────────────────────────
   $: SCREENS = [
+    // 0. Intro summary
+    profile.name
+      ? { id: 'intro', label: 'Overview' }
+      : null,
     // 1. Profile hero — needs at least a name or image
     (profile.quote || profile.imageFile)
       ? { id: 'profile-hero', label: 'Profile' }
@@ -207,7 +211,7 @@
     if (v >=  3) return 'Very Positive';
     if (v >=  1) return 'Positive';
     if (v ===  0) return 'Neutral';
-    if (v >= -2) return 'Negative';
+  if (v >= -2) return 'Negative';
     return 'Very Negative';
   }
 
@@ -218,6 +222,17 @@
   }
 
   const firstName = (name) => name?.split(' ')[0] ?? '';
+
+  // Distinct per-category colors for current-state bars
+  const STATE_BAR_COLORS = [
+    '#5B8DB8', // steel blue
+    '#7CB98A', // sage green
+    '#C47E5A', // warm terracotta
+    '#9B7EC8', // muted violet
+    '#C4A84F', // golden amber
+    '#5BADA8', // teal
+  ];
+  const stateBarColor = (i) => STATE_BAR_COLORS[i % STATE_BAR_COLORS.length];
 </script>
 
 <svelte:window on:keydown={onKeydown} />
@@ -226,7 +241,7 @@
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="backdrop" on:click={close} role="presentation" />
+  <div class="backdrop" on:click={close} role="presentation"></div>
 
   <div
     class="story-panel jm-surface"
@@ -236,30 +251,27 @@
   >
 
     <!-- Progress pips -->
-    <div class="story-pips" aria-hidden="true">
+    <div class="flex flex-row gap-1 pt-2 pl-1 pr-2" aria-hidden="true">
       {#each SCREENS as _, i}
-        <div class="pip" class:pip--active={i === screenIdx} class:pip--done={i < screenIdx} />
+        <div class="pip" class:pip--active={i === screenIdx} class:pip--done={i < screenIdx} >
+        </div>
       {/each}
+
     </div>
 
     <!-- Header -->
     <div class="story-header">
-      <div class="flex items-center gap-2">
-        <div class="story-avatar" class:story-avatar--caregiver={persona.type === 'caregiver'}>
-          {#if !imgError && profile.imageFile}
-            <img class="story-avatar-img" src="/assets/profiles/{profile.imageFile}" alt={profile.name} on:error={() => imgError = true} />
-          {:else}
-            <span class="label-heading">{profile.initials ?? '?'}</span>
-          {/if}
-        </div>
-        <div class="flex flex-col">
+      <div class="story-avatar" class:story-avatar--caregiver={persona.type === 'caregiver'}>
+        {#if !imgError && profile.imageFile}
+          <img class="story-avatar-img" src="/assets/profiles/{profile.imageFile}" alt={profile.name} on:error={() => imgError = true} />
+        {:else}
+          <span class="label-heading">{profile.initials ?? '?'}</span>
+        {/if}
+      </div>
+      <div class="flex flex-col items-end">
           <span class="label-uppercase-bold">{profile.name}</span>
           <span class="label-heading">{SCREENS[screenIdx]?.label ?? ''}</span>
-        </div>
       </div>
-      <button class="btn-base-sm" on:click|stopPropagation={close} aria-label="Close story">
-        <IconXRegular />
-      </button>
     </div>
 
     <!-- Invisible click zones -->
@@ -271,18 +283,49 @@
     <div class="click-zone click-zone--right" on:click={advance}> </div>
 
 
+    <!-- ══ SCREEN: INTRO SUMMARY ═══════════════════════════════════════════ -->
+    {#if screen === 'intro'}
+      <div class="story-screen">
+        <div class="content-wrap items-center text-center">
+
+          <!-- Profile image -->
+      <div class="aspect-3/2 object-cover">
+            {#if !imgError && profile.imageFile}
+              <img
+                class="story-avatar-img"
+                src="/assets/profiles/{profile.imageFile}"
+                alt={profile.name}
+                on:error={() => imgError = true}
+              />
+            {:else}
+              <span class="label-heading">{profile.initials ?? '?'}</span>
+            {/if}
+          </div>
+
+          <!-- Narrative -->
+          <p class="text-2xl p-4">
+            {profile.name} is a <span class="underline underline-offset-3">{persona.type ?? 'persona'}</span> 
+            
+            living with <span class="underline underline-offset-3 lowercase">
+              {profile.indication} </span>
+            in    
+            
+            {profile.gender === 'Male' ? 'his' : profile.gender === 'Female' ? 'her' : ' their'} 
+            {profile.age ?? '—'}, who hopes to
+            <span class="underline underline-offset-3 lowercase">{profile.preference ?? '—'}
+            </span>
+            .
+          </p>
+
+        </div>
+      </div>
+
     <!-- ══ SCREEN: PROFILE HERO ══════════════════════════════════════════════
          Image + quote
     ═══════════════════════════════════════════════════════════════════════ -->
-    {#if screen === 'profile-hero'}
+    {:else if screen === 'profile-hero'}
       <div class="story-screen">
-        <div class="bio-hero">
-          {#if !imgError && profile.imageFile}
-            <img class="photo-full" src="/assets/profiles/{profile.imageFile}" alt={profile.name} on:error={() => imgError = true} />
-          {:else}
-            <div class="bio-photo-fallback"><IconUserRegular size={72} /></div>
-          {/if}
-          <div class="bio-scrim" aria-hidden="true" />
+        <div class="persona-profile">
           <div class="bio-overlay">
             <span class="pill-white w-fit px-2">
               {(persona.type ?? 'persona').charAt(0).toUpperCase() + (persona.type ?? 'persona').slice(1)}
@@ -292,9 +335,11 @@
         </div>
 
         {#if profile.quote}
-          <div class="content-wrap">
-            <div class="flex justify-center"><IconQuotesRegular /></div>
-            <blockquote class="pull-quote text-center" style="margin:0">{profile.quote}</blockquote>
+          <div class="content-wrap stats-animation-gradient__gradient--night bg-slate-900 align-middle">
+            <div class="flex flex-col justify-center pt-8 align-middle">
+              <IconQuotesRegular class="text-white mx-auto mb-12 justify-center"/>
+            <blockquote class="text-2xl text-center text-white" style="margin:0">{profile.quote}</blockquote>
+          </div>
           </div>
         {/if}
       </div>
@@ -404,18 +449,24 @@
             <span class="label-lg">Where {firstName(profile.name)} stands today</span>
           </div>
           <div class="flex flex-col gap-4">
-            {#each states as s}
+            {#each states as s, i}
+              {@const color = stateBarColor(i)}
+              {@const leansMax = s.value > 0.5}
+              {@const leansMin = s.value < 0.5}
               <div class="flex flex-col gap-1">
-                <div class="flex justify-between">
-                  <span class="label-heading">{s.label}</span>
-                  <span class="label-heading" style="font-family:var(--font-mono)">{Math.round(s.value * 100)}</span>
-                </div>
+                <span class="label-heading">{s.label}</span>
                 <div class="state-track">
-                  <div class="state-fill" style="width:{s.value * 100}%" />
+                  <div class="state-fill" style="width:{s.value * 100}%;background:{color}" />
                 </div>
                 <div class="flex justify-between">
-                  <span class="label-heading" style="font-size:0.5rem;opacity:0.6">{s.minLabel}</span>
-                  <span class="label-heading" style="font-size:0.5rem;opacity:0.6">{s.maxLabel}</span>
+                  <span
+                    class="label-heading"
+                    style="font-size:0.5rem;{leansMin ? `opacity:1;font-weight:700;color:${color}` : 'opacity:0.45'}"
+                  >{s.minLabel}</span>
+                  <span
+                    class="label-heading"
+                    style="font-size:0.5rem;{leansMax ? `opacity:1;font-weight:700;color:${color}` : 'opacity:0.45'}"
+                  >{s.maxLabel}</span>
                 </div>
               </div>
             {/each}
@@ -485,7 +536,7 @@
         </div>
 
         {#if inflectionStep.quote}
-          <div class="content-wrap">
+          <div class="content-wrap w-3/5">
             <div class="flex justify-center"><IconQuotesRegular /></div>
             <blockquote class="pull-quote text-center" style="margin:0">{inflectionStep.quote}</blockquote>
           </div>
@@ -813,13 +864,12 @@
   }
   .pip {
     flex: 1;
-    height: 2px;
-    border-radius: 2px;
-    background: rgba(49, 47, 40, 0.15);
+    height: .25em;
+    background: var(--panel-dark);
     transition: background 200ms;
   }
-  .pip--done   { background: rgba(49, 47, 40, 0.45); }
-  .pip--active { background: var(--ink, #312F28); }
+  .pip--done   { background: var(--grayblue) }
+  .pip--active { background: var(--orange); }
 
   /* ── Header ───────────────────────────────────────────────────────────── */
   .story-header {

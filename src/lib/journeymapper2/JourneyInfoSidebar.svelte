@@ -5,6 +5,8 @@
   import { selectedIndex, hoveredIndex, hoveredInflectionIndex } from './journeyStore.js';
   import { sentimentToColor, emotionColor, DYAD_BY_ID, SCORE_ALIASES, SENTIMENT_SCALE } from './journeyConfig.js';
   import PersonaProfileCard from './PersonaProfileCard.svelte';
+  import IndexMetricBars from './IndexMetricBars.svelte';
+
 
   import UserRegular       from 'phosphor-icons-svelte/IconUserRegular.svelte';
   import HeartRegular      from 'phosphor-icons-svelte/IconHeartRegular.svelte';
@@ -149,10 +151,10 @@
             {/if}
             {#if profile.preference}
               <div class="flex flex-col">
-                <span class="text-body-sm capitalize">{profile.preference}</span>
                 <span class="label-sm uppercase text-slate-400 flex items-center gap-1">
                   <HeartRegular />Current Goal
                 </span>
+                <span class="text-body-sm capitalize">{profile.preference}</span>
               </div>
             {/if}
           </div>
@@ -313,81 +315,20 @@
         {/key}
       </div>
 
-      <!-- Emotional state — swatches + label crossfade -->
-      <div class="jm-content-col gap-1">
-        <div class="flex flex-col">
-          <span class="text-body-sm capitalize">Emotion</span>
-        </div>
-        {#key displayIndex}
-          <div
-            class="flex items-center gap-2"
-            in:fly={{ x: -6, duration: 200, delay: 60, easing: cubicOut }}
-            out:fade={{ duration: 100 }}
-          >
-            <div class="flex gap-1">
-              {#each emotionSwatches as color, i (i)}
-                <span
-                  class="jm-swatch-circle"
-                  style="background: {color};"
-                  in:fade={{ duration: 180, delay: 60 + i * 30 }}
-                />
-              {/each}
-            </div>
-            <span class="text-body-sm-uppercase">{step.plutchik_score}</span>
-          </div>
-        {/key}
-      </div>
-
       <!-- Index metrics — labels crossfade, bars tween -->
       {#if metrics.length}
         <div class="jm-content-col gap-2">
-          <div class="flex flex-col">
-            <span class="text-body-sm capitalize">Index Metrics</span>
+          <div class="flex items-center gap-1">
+            <span class="label-sm capitalize">Index Metrics</span>
             <ChartLineRegular />
           </div>
-
-          {#each metrics as m, i}
-            {@const tweenedVal = metricVals[i] ?? 0}
-            <div
-              class="jm-content-col gap-1 metric-row-anim"
-              in:fly={{ y: 4, duration: 200, delay: 60 + i * 40, easing: cubicOut }}
-            >
-              <div class="jm-metric-row">
-                <span class="jm-mini-swatch" style="background: {m.color};" />
-                <span class="text-body-sm capitalize">{m.label}</span>
-                {#key displayIndex}
-                  <span
-                    class="label-bold"
-                    style="color: {m.color};"
-                    in:fade={{ duration: 180, delay: 80 + i * 40 }}
-                    out:fade={{ duration: 80 }}
-                  >
-                    {tweenedVal > 0 ? '+' : ''}{tweenedVal.toFixed(1)}
-                  </span>
-                {/key}
-              </div>
-              <!-- Row of 10 squares; active square shifts as tweened value moves -->
-              <div class="score-squares">
-                {#each METRIC_STOPS as stop, si}
-                  {@const activePos = (tweenedVal + 5) / 10 * (METRIC_STOPS.length - 1)}
-                  {@const isActive  = si === Math.round(activePos)}
-                  {@const dist      = Math.abs(si - activePos)}
-                  {@const opacity   = isActive ? 1 : Math.max(0.12, 1 - dist * 0.28)}
-                  {@const squareColor = stop < 0
-                    ? `color-mix(in srgb, #C0392B ${Math.round((Math.abs(stop) / 5) * 100)}%, ${m.color})`
-                    : `color-mix(in srgb, ${m.color} ${Math.round((stop / 5) * 100)}%, #C0392B)`}
-                  <div
-                    class="score-square"
-                    class:score-square--active={isActive}
-                    style="background: {squareColor}; opacity: {opacity};"
-                  />
-                {/each}
-              </div>
-            </div>
-          {/each}
+          <IndexMetricBars
+            {metrics}
+            {metricVals}
+            selectedIndex={displayIndex}
+          />
         </div>
       {/if}
-
       <!-- Narrative — crossfades on step change -->
       {#if step.narrative_description}
         {#key displayIndex}
@@ -435,7 +376,7 @@
   }
   .score-square {
     flex: 1;
-    height: 10px;
+    height: 1.5em;
     transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .score-square--active {

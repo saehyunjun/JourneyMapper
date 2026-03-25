@@ -31,8 +31,20 @@
 
   import personaFile from '$lib/journeymapper2/journeyPersonas.json';
   
+
   const { metrics, personas } = personaFile;
+ 
+ $: filteredPersonas = personas.filter((p) => {
+   if (selectedTherapeuticArea && p.therapeutic_area !== selectedTherapeuticArea) return false;
+   if (selectedIndication      && p.indication       !== selectedIndication)       return false;
+   return true;
+ });
   
+ // Reset active persona when the current one is filtered out
+ $: if (filteredPersonas.length && !filteredPersonas.find((p) => p.id === activePersonaId)) {
+   activePersonaId = filteredPersonas[0].id;
+ }
+   
   /** @type {Record<string, any>} */
   const experienceWheels = personaFile.experienceWheels ?? {};
   // ── Layout toggle ─────────────────────────────────────────────────────
@@ -150,7 +162,7 @@ let emotionSubDrawerOpen = false;
     drawerMode === 'step' && journeyData?.[$selectedIndex]
       ? `${$selectedIndex + 1} / ${journeyData.length}` : '';
 
-  $: drawerWidth = drawerMode === 'persona' ? 460 : (drawerMode === 'step' && selectedWheelData) ? 740 : 520;
+      $: drawerWidth = drawerMode === 'persona' ? 460 : 520;
 
   /** @type {HTMLDivElement | null} */
   let scrollEl = null;
@@ -162,12 +174,13 @@ let emotionSubDrawerOpen = false;
 
   <!-- ── Toolbar ──────────────────────────────────────────────────────── -->
   <div class="toolbar" role="tablist">
-      <DiseaseSelectDropdowns
-      on:change={handleChange}
-    />
-    <div class="flex flex-row gap-2 justify-start">
-
-    <button
+    <DiseaseSelectDropdowns
+    {personas}
+    on:change={handleChange}
+      />
+ 
+ <div class="flex flex-row gap-2 justify-start">
+   <button
       class="btn-nav"
       class:view-tab--active={chartView === 'chart'}
       role="tab"
@@ -175,8 +188,9 @@ let emotionSubDrawerOpen = false;
       on:click={() => chartView = 'chart'}
     >
       <IconChartLineRegular />
-      <span>Journey Sentiment</span>
+      <span class="label-sm">Journey Sentiment</span>
     </button>
+    
     <button
       class="btn-nav"
       class:view-tab--active={chartView === 'flow'}
@@ -185,7 +199,7 @@ let emotionSubDrawerOpen = false;
       on:click={() => chartView = 'flow'}
     >
       <IconFlowArrowRegular />
-      <span >Journey Flow</span>
+      <span class="label-sm">Journey Flow</span>
     </button>
   </div>
   </div>
@@ -201,11 +215,11 @@ let emotionSubDrawerOpen = false;
     <!-- LEFT — persona selector column -->
     <div class="persona-col shrink-0 overflow-y-auto">
       <PersonaTopSelector
-        {personas}
-        {activePersonaId}
-        on:select={handlePersonaSelect}
-        on:story={handlePersonaStory}
-      />
+      personas={filteredPersonas}
+      {activePersonaId}
+      on:select={handlePersonaSelect}
+      on:story={handlePersonaStory}
+    />
     </div>
 
     <!-- MIDDLE — chart / flow, scrolls horizontally -->
@@ -267,20 +281,23 @@ let emotionSubDrawerOpen = false;
 
   <svelte:fragment slot="footer">
     {#if drawerMode === 'step'}
+    <div class="flex flex-col">
       <button
-        class="btn-base"
+        class="btn-sm"
         disabled={$selectedIndex <= 0}
         on:click={() => selectedIndex.update(i => i - 1)}
         aria-label="Previous step"
-      ><CaretLeft /></button>
+        >
+        <CaretLeft />
+        </button>
 
       <button
-        class="btn-base"
+        class="btn-sm"
         disabled={$selectedIndex >= journeyData.length - 1}
         on:click={() => selectedIndex.update(i => i + 1)}
         aria-label="Next step"
-      ><CaretRight /></button>
-
+        ><CaretRight /></button>
+  </div>
     {:else if drawerMode === 'plutchik'}
       <span class="cite">
         Plutchik, R. (1980). <em>Emotion: A Psychoevolutionary Synthesis.</em> Harper & Row.
@@ -308,7 +325,7 @@ let emotionSubDrawerOpen = false;
   <PlutchikContent />
  
   <svelte:fragment slot="footer">
-    <span style="font-size:10px; color:#A08060; font-style:italic;">
+    <span style="cite">
       Plutchik, R. (1980). <em>Emotion: A Psychoevolutionary Synthesis.</em> Harper &amp; Row.
     </span>
   </svelte:fragment>
@@ -317,8 +334,8 @@ let emotionSubDrawerOpen = false;
 <!-- ── Story overlay ─────────────────────────────────────────────────────── -->
 <PersonaStory
   bind:open={storyOpen}
-  {personas}
-  activeIndex={personas.findIndex(p => p.id === activePersonaId)}
+  personas={filteredPersonas}
+  activeIndex={filteredPersonas.findIndex(p => p.id === activePersonaId)}
   originEl={storyOriginEl}
   on:close={() => storyOpen = false}
   on:select={e => { activePersonaId = e.detail.id; }}

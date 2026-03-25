@@ -5,6 +5,8 @@
   import { createEventDispatcher } from 'svelte';
   import { selectedIndex } from './journeyStore.js';
   import ExperienceWheel from './ExperienceWheel.svelte';
+  import IndexMetricBars from './IndexMetricBars.svelte';
+
   import { emotionColor, ratingToLabel, DYAD_BY_ID, SCORE_ALIASES, SENTIMENT_SCALE, sentimentToColor } from './journeyConfig.js';
   import QuotesRegular from 'phosphor-icons-svelte/IconQuotesRegular.svelte';
   import ArrowSquareOutRegular from 'phosphor-icons-svelte/IconArrowSquareOutRegular.svelte';
@@ -71,81 +73,61 @@
   <div class="content-wrap">
 
     <!-- Step name -->
+  <div class="jm-content-row">
+    <!-- Sentiment -->
+    <div class="flex flex-col gap-1 w-9/12 justify-end">
+    <h2 class="heading-sm">
+      {step.stage}
+    </h2>
     <h2 class="heading text-3xl">
       {step.step}
     </h2>
+  </div>
 
+  <div class="flex flex-col w-3/12 gap-2">        
+    <div class="btn-extranote-empty">
+      <div
+        class="w-3 h-3 ring-1 ring-slate-800 shrink-0"
+        style="background: {sentimentColor};">
+      </div>
+      <span class="label uppercase font-semibold">
+        {sentimentLabel}
+      </span>
+    </div>
+  
+  
+
+  <!-- Emotion tag — clickable, opens Plutchik sub-drawer -->  
+    <button
+      class="btn-extranote"
+      on:click={() => dispatch('openEmotionDetail')}
+      aria-label="Learn about {step.plutchik_score} — open emotion detail"
+      title="About Plutchik emotions">
+      <div class="flex flex-row w-fit gap-0">
+        {#each emotionSwatches as color}
+          <span class="w-4 h-4 rounded-full ring-1" style="background: {color};"></span> 
+        {/each}
+        </div>
+        <span class="label uppercase font-semibold">{step.plutchik_score}
+        </span>
+        <ArrowSquareOutRegular class="icon-dark" />
+      </button>
+    </div>
+  </div>
     <!-- ── Sentiment + Emotion row ──────────────────────────────── -->
     <div class="flex flex-row gap-4 w-full justify-between">
-      
-      <!-- Sentiment -->
-      <div class="flex flex-col w-8/12 gap-1">
-        <div class="flex items-center gap-2">
-          <div
-            class="w-4 h-4 ring-1 ring-slate-800 rounded-full shrink-0"
-            style="background: {sentimentColor};">
-          </div>
 
-          <span class="label uppercase font-semibold">{sentimentLabel}</span>
+
+
         </div>
-  
-        <!-- Score squares -->
-        <div class="score-squares">
-          {#each SENTIMENT_SCALE as stopColor, i}
-            {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
-            {@const isActive  = i === Math.round(activePos)}
-            {@const dist      = Math.abs(i - activePos)}
-            {@const opacity   = isActive ? 1 : Math.max(0.12, 1 - dist * 0.1)}
-            <div
-              class="score-square"
-              class:score-square--active={isActive}
-              style="background: {stopColor}; opacity: {opacity};">
-              </div>
-          {/each}
-        </div>
-        <span class="label-sm">Overall Sentiment</span>
-        {#key $selectedIndex}
-        <span
-          class="label-sm"
-          style="color: {sentimentColor};"
-          in:fade={{ duration: 200, delay: 60 }}
-          out:fade={{ duration: 100 }}
-        >
-          {sentimentTweenVal > 0 ? '+' : ''}{sentimentTweenVal.toFixed(1)}
-        </span>
-      {/key}
-      </div>
-
-
-      <!-- Emotion tag — clickable, opens Plutchik sub-drawer -->
-      <div class="emotion-section">
-        <span class="label-sm pb-1">Emotional State</span>
-        <button
-          class="plutchik-tag-btn"
-          on:click={() => dispatch('openEmotionDetail')}
-          aria-label="Learn about {step.plutchik_score} — open emotion detail"
-          title="About Plutchik emotions"
-        >
-          <div class="plutchik-tag-row">
-            {#each emotionSwatches as color}
-              <span class="emotion-swatch-dot" style="background: {color};" />
-            {/each}
-            <span class="label uppercase font-semibold">{step.plutchik_score}</span>
-          </div>
-          <span class="emotion-expand-icon">
-            <ArrowSquareOutRegular size={10} />
-          </span>
-        </button>
-      </div>
-    </div>
 
     <div class="divider"></div>
 
     <!-- ── Step Quote ─────────────────────────────────────────────── -->
     {#if step.quote}
-      <div class="">
-        <QuotesRegular class="quote-icon" weight="fill" />
-        <p class="text-body quote-text">{step.quote}</p>
+      <div class="card-quote ">
+        <QuotesRegular class="quote-icon" />
+        <p class="pull-quote">{step.quote}</p>
       </div>
       <div class="divider"></div>
     {/if}
@@ -162,45 +144,30 @@
 
     <!-- ── Index Metrics ──────────────────────────────────────────── -->
     <div class="metrics-section">
-      <span class="heading-sm">Index Metrics</span>
-      {#each metrics as m, i}
-        {@const tweenedVal = metricVals[i] ?? 0}
-        <div class="metric-row">
-          <div class="metric-label-row">
-            <span class="metric-dot" style="background: {m.color};" />
-            <span class="metric-name">{m.label}</span>
-            {#key $selectedIndex}
-              <span
-                class="metric-value"
-                style="color: {m.color};"
-                in:fade={{ duration: 180, delay: 60 + i * 40 }}
-                out:fade={{ duration: 80 }}
-              >
-                {tweenedVal > 0 ? '+' : ''}{tweenedVal.toFixed(1)}
-              </span>
-            {/key}
+      <div class="jm-content-row-stretch">
+        <span class="label-sm">Sentiment</span>
+        <span class="label uppercase">{sentimentLabel}</span>
+      </div>
+         <!-- Score squares -->
+        <div class="score-squares">
+          {#each SENTIMENT_SCALE as stopColor, i}
+          {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
+          {@const isActive  = i === Math.round(activePos)}
+          {@const dist      = Math.abs(i - activePos)}
+          {@const opacity   = isActive ? 1 : Math.max(0.12, 1 - dist * 0.1)}
+          <div
+              class="score-square"
+              class:score-square--active={isActive}
+              style="background: {stopColor}; opacity: {opacity};">
           </div>
-
-          <!-- Score squares -->
-          <div class="score-squares">
-            {#each METRIC_STOPS as stop, si}
-              {@const activePos = (tweenedVal + 5) / 10 * (METRIC_STOPS.length - 1)}
-              {@const isActive  = si === Math.round(activePos)}
-              {@const dist      = Math.abs(si - activePos)}
-              {@const opacity   = isActive ? 1 : Math.max(0.12, 1 - dist * 0.28)}
-              {@const squareColor = stop < 0
-                ? `color-mix(in srgb, #C0392B ${Math.round((Math.abs(stop) / 5) * 100)}%, ${m.color})`
-                : `color-mix(in srgb, ${m.color} ${Math.round((stop / 5) * 100)}%, #C0392B)`}
-              <div
-                class="score-square"
-                class:score-square--active={isActive}
-                style="background: {squareColor}; opacity: {opacity};"
-              />
-            {/each}
+              {/each}
           </div>
-        </div>
-      {/each}
-    </div>
+    <!-- ── Index Metrics ──────────────────────────────────────────── -->
+    <IndexMetricBars
+      {metrics}
+      {metricVals}
+      selectedIndex={$selectedIndex}
+    />    </div>
 
     <div class="divider"></div>
 
@@ -225,23 +192,16 @@
 
 <style>
 
-  /* ── Sentiment value ─────────────────────────────────────────── */
-  .label-sm {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    font-weight: bold;
-  }
-
   /* ── Score squares (sentiment + metrics) ────────────────────── */
   .score-squares {
     display: flex;
     flex-direction: row;
-    gap: 2px;
+    gap: .25em;
     width: 100%;
   }
   .score-square {
     flex: 1;
-    height: 10px;
+    height: 1.25em;
     filter: saturate(.15);
     opacity: 20%;
     transition: opacity 0.125s cubic-bezier(0.4, 0, 0.2, 1);
@@ -253,101 +213,10 @@
     opacity: 100%;
   }
 
-  /* ── Quote block ─────────────────────────────────────────────── */
-  .quote-block {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 10px 12px;
-    background: #EDE5D8;
-    border-left: 2px solid #DFC3A8;
-    border-radius: 2px;
-  }
-
-  .quote-block :global(.quote-icon) {
-    color: #C4956A;
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-  }
-
-  .quote-text {
-    font-style: italic;
-    color: #7A5A3A;
-  }
-
-  /* ── Emotion section ─────────────────────────────────────────── */
-  .emotion-section {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .plutchik-tag-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    background: #EDE5D8;
-    border: 1px solid #DFC3A8;
-    border-radius: 3px;
-    padding: 6px 8px;
-    cursor: pointer;
-    text-align: left;
-    transition: background 0.15s ease, border-color 0.15s ease;
-  }
-
-  .plutchik-tag-btn:hover {
-    background: #E2D4C0;
-    border-color: #C4956A;
-  }
-
-  .plutchik-tag-btn:focus-visible {
-    outline: 2px solid #C4956A;
-    outline-offset: 2px;
-  }
-
-  .plutchik-tag-row {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .emotion-swatch-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    flex-shrink: 0;
-  }
-
-  .emotion-expand-icon {
-    color: #BFA080;
-    line-height: 1;
-  }
-
   /* ── Metric rows ─────────────────────────────────────────────── */
   .metrics-section { display: flex; flex-direction: column; gap: 14px; }
 
-  .metric-row { display: flex; flex-direction: column; gap: 6px; }
 
-  .metric-label-row { display: flex; align-items: center; gap: 8px; }
-
-  .metric-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    opacity: 0.9;
-  }
-
-  .metric-name { font-size: 11px; color: #7A5A3A; flex: 1; }
-
-  .metric-value {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    font-weight: bold;
-  }
 
   /* ── Experience Wheel section ────────────────────────────────── */
   .wheel-section {

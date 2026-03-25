@@ -121,6 +121,35 @@ function toggle(e) {
           </div>
         </div>
 
+        {#if personaProfile.currentState?.length}
+        <div class="back-metrics">
+          {#each personaProfile.currentState as item}
+      
+            <div class="metric-row">
+              <span class="metric-label">{item.label}</span>
+      
+              <div class="metric-bar-track">
+                <div
+                  class="metric-bar-fill"
+                  style="width: {item.value * 100}%"
+                />
+              </div>
+      
+              <span class="metric-value">
+                {Math.round(item.value * 100)}
+              </span>
+            </div>
+      
+            <!-- THIS is what you're currently missing -->
+            <div class="metric-minmax">
+              <span>{item.minLabel}</span>
+              <span>{item.maxLabel}</span>
+            </div>
+      
+          {/each}
+        </div>
+      {/if}
+
         <button
   class="open-btn"
   on:click={(e) => {
@@ -294,6 +323,17 @@ function toggle(e) {
     gap: 10px;
     flex: 1;
   }
+
+  .metric-minmax {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.55rem;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted, #9a8f80);
+  margin-top: -6px;
+}
 
   .metric-row {
     display: grid;

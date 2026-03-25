@@ -69,10 +69,10 @@
 
   // ── Horizontal fork geometry ───────────────────────────────────────────────
   // Brackets are left/right SVG panels; path cards stack vertically inside.
-  const H_BRACKET_W = 28;
+  const H_BRACKET_W = 50;
   const H_CARD_H    = 90;
   const H_CARD_W    = 160;
-  const H_GAP       = 8;
+  const H_GAP       = 20;
   const H_SVG_H     = H_CARD_H * 2 + H_GAP;
   const H_MID_Y     = H_SVG_H / 2;
 
@@ -182,7 +182,7 @@
               </svg>
 
             {:else}
-              <!-- ══ VERTICAL: path cards side by side (pos left, neg right) ══ -->
+              <!-- ══ VERTICAL: cards side-by-side (pos left, neg right), brackets above/below ══ -->
 
               <!-- Diverge bracket (top) -->
               <svg class="fork-bracket-v" width={V_SVG_W} height={V_BRACKET_H}
@@ -197,7 +197,7 @@
                       x2={V_CARD_W + V_GAP + V_CARD_W/2}  y2={V_BRACKET_H}    stroke={LINE_COLOR} stroke-width="1"/>
               </svg>
 
-              <!-- Path cards -->
+              <!-- Path cards side-by-side (pos left, neg right) -->
               <div class="fork-cards-v" style="gap:{V_GAP}px;">
                 <div class="fork-path-card fork-path-card--pos"
                      class:fork-path-card--hovered={hoveredPathKey === `${step.index}-pos`}
@@ -279,19 +279,22 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     padding: 1em;
     gap: 0;
   }
   .flow-steps-col {
     flex-direction: column;
     align-items: center;
+    padding: 0.75rem 1rem;
+    gap: 0;
   }
 
   /* ══════════════════════════════════════════════════════════════════════
      FORK SLOT — groups the step card + fork as one unit in the flow
   ════════════════════════════════════════════════════════════════════ */
 
-  /* Horizontal: step card on top, fork block below — slot is a column */
+  /* Horizontal: step card on left, fork block to the right — slot is a row */
   .fork-slot {
     display: flex;
     flex-direction: row;
@@ -300,26 +303,26 @@
     flex-shrink: 0;
   }
 
-  /* Vertical: step card on left, fork block to the right — slot is a row */
+  /* Vertical: step card on top, fork block below — slot is a column */
   .fork-slot--vertical {
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
   }
 
   /* Short connecting line between the step card and the fork block */
   .fork-stem {
-    /* Horizontal: short vertical dashed line dropping down */
-    width: 1px;
-    height: 16px;
-    border-left: 1.5px dashed rgba(160,168,184,0.7);
+    /* Horizontal: short horizontal dashed line extending right */
+    width: 16px;
+    height: 1px;
+    border-top: 1.5px dashed rgba(160,168,184,0.7);
     flex-shrink: 0;
   }
   .fork-stem--vertical {
-    /* Vertical: short horizontal dashed line extending right */
-    width: 16px;
-    height: 1px;
-    border-left: none;
-    border-top: 1.5px dashed rgba(160,168,184,0.7);
+    /* Vertical: short vertical dashed line dropping down */
+    width: 1px;
+    height: 16px;
+    border-top: none;
+    border-left: 1.5px dashed rgba(160,168,184,0.7);
     align-self: center;
   }
 
@@ -330,6 +333,7 @@
     align-items: center;
   }
   .fork-body--vertical {
+    /* top bracket → cards row → bottom bracket */
     flex-direction: column;
     align-items: center;
   }

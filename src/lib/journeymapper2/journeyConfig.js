@@ -24,9 +24,9 @@ export function ratingToLabel(val) {
   const n = parseFloat(val);
   if (n >= 4)  return 'Very Positive';
   if (n >= 2)  return 'Positive';
-  if (n >= 1)  return 'Leans Positive';
+  if (n >= 1)  return 'Somewhat Positive';
   if (n === 0) return 'Neutral / Mixed';
-  if (n >= -1) return 'Leans Negative';
+  if (n >= -1) return 'Somewhat Negative';
   if (n >= -3) return 'Negative';
   return 'Very Negative';
 }

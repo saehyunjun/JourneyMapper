@@ -78,9 +78,11 @@
       width={STEP_WIDTH} height={SVG_HEIGHT - 22}
       fill="transparent"
       style="cursor: pointer;"
+      aria-roledescription=""
+
       on:mouseenter={() => hoveredIndex.set(i)}
       on:mouseleave={() => hoveredIndex.set(-1)}
-      on:click={() => selectedIndex.set($selectedIndex === i ? -1 : i)}
-    />
+      on:click={() => selectedIndex.set($selectedIndex === i ? -1 : i)}>
+      </rect>
   {/each}
 </svg>

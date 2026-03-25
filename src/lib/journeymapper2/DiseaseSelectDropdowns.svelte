@@ -5,107 +5,98 @@
     import CaretDownRegular from 'phosphor-icons-svelte/IconCaretDownRegular.svelte';
     import CheckRegular from 'phosphor-icons-svelte/IconCheckRegular.svelte';
   
-    import diseaseList from './diseaseList.json';
-  
     // ── Types ──────────────────────────────────────────────────────────────────
-    type TherapeuticArea = {
-      therapeutic_area: string;
-      indications: string[];
+    type Persona = {
+      id: string;
+      therapeutic_area?: string;
+      indication?: string;
+      [key: string]: unknown;
     };
   
-    // ── Data ───────────────────────────────────────────────────────────────────
-    const therapeuticAreas: TherapeuticArea[] = diseaseList.therapeutic_areas;
+    type SelectOption<T> = { value: T; label: string; disabled?: boolean };
+  
+    function single<T>(s: SelectOption<T> | SelectOption<T>[] | undefined): SelectOption<T> | undefined {
+      if (!s) return undefined;
+      return Array.isArray(s) ? s[0] : s;
+    }
+  
+    // ── Props ──────────────────────────────────────────────────────────────────
+    /** All personas from journeyPersonas.json — options are derived from these */
+    export let personas: Persona[] = [];
   
     const dispatch = createEventDispatcher<{
       change: { therapeuticArea: string | undefined; indication: string | undefined };
     }>();
   
-    // ── Therapeutic Area Select ────────────────────────────────────────────────
-    const taItems = therapeuticAreas.map((a) => ({
-      value: a.therapeutic_area,
-      label: a.therapeutic_area,
+    // ── Derive therapeutic area options ────────────────────────────────────────
+    // All unique TAs present on any persona, sorted alphabetically.
+    // Every TA in this list has at least one persona, so none are ever disabled.
+    $: taItems = [...new Set(
+      personas.map(p => p.therapeutic_area).filter(Boolean) as string[]
+    )].sort().map(ta => ({ value: ta, label: ta, disabled: false }));
+  
+    // ── Derive indication options ───────────────────────────────────────────────
+    // All unique indications across ALL personas, sorted alphabetically.
+    // An indication is disabled if no persona matches both the selected TA (if any)
+    // and that indication — so the user can see what exists but not select orphaned entries.
+    $: allIndications = [...new Set(
+      personas.map(p => p.indication).filter(Boolean) as string[]
+    )].sort();
+  
+    $: indItems = allIndications.map(ind => ({
+      value: ind,
+      label: ind,
+      disabled: !personas.some(p =>
+        p.indication === ind &&
+        (!taSelectedOption || p.therapeutic_area === taSelectedOption.value)
+      ),
     }));
   
+    // ── Therapeutic Area Select ────────────────────────────────────────────────
     const {
-      elements: {
-        trigger: taTrigger,
-        menu: taMenu,
-        option: taOption,
-      },
-      states: {
-        open: taOpen,
-        selected: taSelected,
-      },
-      helpers: { isSelected: taIsSelected },
-    } = createSelect<string>({
-      positioning: null,
-      items: taItems,
-    });
+      elements: { trigger: taTrigger, menu: taMenu, option: taOption },
+      states:   { open: taOpen, selected: taSelected },
+      helpers:  { isSelected: taIsSelected },
+    } = createSelect<string>({ positioning: null });
   
-    // ── Derived State ──────────────────────────────────────────────────────────
-    $: currentArea = therapeuticAreas.find(
-      (a) => a.therapeutic_area === $taSelected?.value
-    );
-  
-    $: currentIndications = currentArea?.indications ?? [];
+    $: taSelectedOption = single($taSelected);
   
     // ── Indication Select ──────────────────────────────────────────────────────
-    $: indItems = currentIndications.map((i) => ({
-      value: i,
-      label: i,
-    }));
-  
     const {
-      elements: {
-        trigger: indTrigger,
-        menu: indMenu,
-        option: indOption,
-      },
-      states: {
-        open: indOpen,
-        selected: indSelected,
-      },
-      helpers: { isSelected: indIsSelected },
-    } = createSelect<string>({
-      positioning: null,
-      items: indItems,
-    });
+      elements: { trigger: indTrigger, menu: indMenu, option: indOption },
+      states:   { open: indOpen, selected: indSelected },
+      helpers:  { isSelected: indIsSelected },
+    } = createSelect<string>({ positioning: null });
   
-    // ── Controlled side-effects ────────────────────────────────────────────────
+    $: indSelectedOption = single($indSelected);
+  
+    // ── Side-effects ───────────────────────────────────────────────────────────
     let prevTA: string | undefined;
     let prevInd: string | undefined;
   
-    $: if ($taSelected?.value !== prevTA) {
-      prevTA = $taSelected?.value;
+    $: if (taSelectedOption?.value !== prevTA) {
+      prevTA = taSelectedOption?.value;
       indSelected.set(undefined);
-  
-      dispatch('change', {
-        therapeuticArea: prevTA,
-        indication: undefined,
-      });
+      dispatch('change', { therapeuticArea: prevTA, indication: undefined });
     }
   
-    $: if ($indSelected?.value !== prevInd) {
-      prevInd = $indSelected?.value;
-  
-      dispatch('change', {
-        therapeuticArea: $taSelected?.value,
-        indication: prevInd,
-      });
+    $: if (indSelectedOption?.value !== prevInd) {
+      prevInd = indSelectedOption?.value;
+      dispatch('change', { therapeuticArea: taSelectedOption?.value, indication: prevInd });
     }
   </script>
   
   <div class="selector-group">
   
-    <!-- ── Therapeutic Area ───────────────────────────────────────────────── -->
+    <!-- ── Therapeutic Area ─────────────────────────────────────────────────── -->
     <div class="selector-field">
       <button
         class="selector-trigger btn-base"
         use:melt={$taTrigger}
         aria-label="Select therapeutic area"
       >
-        <span class="label-sm" class:selector-value--placeholder={!$taSelected}>
-          {$taSelected?.label ?? 'Therapeutic area'}
+        <span class="label-sm" class:selector-value--placeholder={!taSelectedOption}>
+          {taSelectedOption?.label ?? 'Therapeutic area'}
         </span>
         <span class="selector-caret" class:selector-caret--open={$taOpen}>
           <CaretDownRegular class="h-4" />
@@ -134,20 +125,20 @@
       {/if}
     </div>
   
-    <!-- ── Indication ─────────────────────────────────────────────────────── -->
+    <!-- ── Indication ───────────────────────────────────────────────────────── -->
     <div class="selector-field">
       <button
         class="selector-trigger btn-base"
-        class:selector-trigger--disabled={!$taSelected}
+        class:selector-trigger--disabled={!taSelectedOption}
         use:melt={$indTrigger}
-        disabled={!$taSelected}
+        disabled={!taSelectedOption}
         aria-label="Select indication"
       >
-        <span class="label-sm" class:selector-value--placeholder={!$indSelected}>
-          {#if !$taSelected}
-            Select therapeutic area
+        <span class="label-sm" class:selector-value--placeholder={!indSelectedOption}>
+          {#if !taSelectedOption}
+            Indication
           {:else}
-            {$indSelected?.label ?? 'Indication…'}
+            {indSelectedOption?.label ?? 'Indication…'}
           {/if}
         </span>
         <span class="selector-caret" class:selector-caret--open={$indOpen}>
@@ -165,6 +156,7 @@
             <div
               class="selector-item"
               class:selector-item--selected={$indIsSelected(item.value)}
+              class:selector-item--disabled={item.disabled}
               use:melt={$indOption(item)}
             >
               <span class="selector-item-label label-lg">{item.label}</span>
@@ -249,12 +241,18 @@
       transition: background 120ms ease;
     }
   
-    .selector-item:hover {
+    .selector-item:hover:not(.selector-item--disabled) {
       background: var(--card);
     }
   
     .selector-item--selected {
       background: rgba(35, 171, 171, 0.1);
+    }
+  
+    .selector-item--disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
     }
   
     .selector-item-label {

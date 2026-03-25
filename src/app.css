@@ -66,7 +66,8 @@
   h1, h2, h3, h4, h5, h6,
   .heading, .text-heading, .nav-title, .subheading {
     font-family: var(--font-heading);
-    font-weight: 500;
+    color: var(--grayblue);
+    font-weight: 600;
     font-size: 2em;
     line-height: 1.2;
     text-transform: uppercase;
@@ -97,6 +98,15 @@
     text-transform: capitalize;
   }
 
+  
+
+  .br {
+    content: "";
+    margin: 2em;
+    display: block;
+    font-size: 24%;  
+  }
+
   .pull-quote { 
     font-family: var(--font-heading); 
     line-height: 115%;
@@ -117,6 +127,16 @@
     text-wrap: balance;
   }
 
+  .stats-animation-gradient__gradient--night {
+    background-color: var(--bluegray);
+    background-image: radial-gradient(155.66% 78.1% at 50% 104.07%, #afffea 1.11%, #6763e4 22.58%, #332496 42.92%, #29227d 61.78%, #1e2064 80.71%, #141e4b 100%);
+    bottom: 0;
+    height: 100%;
+    left: calc(50% - 300px);
+    opacity: 1;
+    right: auto;
+    top: auto;
+  }
 
   .text-body-sm { 
     font-family: var(--font-body); 
@@ -159,7 +179,7 @@
   .label-heading {
     font-family: var(--font-heading);
     font-size: 0.725em;
-    color: #73726c;
+    color: var(--grayblue);
     font-weight: 600;
     text-transform: uppercase;
   }
@@ -317,6 +337,25 @@
     padding-bottom: 1em;
   }
 
+  .icon-dark {
+    color: var(--grayblue);
+    line-height: 1;
+    height: 1em;
+    width: 1em;
+  }
+
+  .quote-icon {
+    color: var(--grayblue);
+    line-height: 1;
+    height: 2em;
+    width: 2em;
+    color: var(--bluegray);
+    background-color: var(--panel-dark);
+    border-radius: 100em;
+    padding: .5em;
+    margin-bottom: 1em;
+  }
+
   .even-col { display: flex; flex-direction: column; }
 
   /* Nav / title bars */
@@ -368,7 +407,8 @@
     padding-left: 0.75rem;
     padding-right: 0.825rem;
   
-    font-size: 0.875rem; /* text-sm */
+    font-size: 0.875em; /* text-sm */
+    font-family: var(--font-heading);
   
     border-radius: 100rem; /* rounded-lg */
   
@@ -418,7 +458,7 @@
   }
   
   /* hover */
-  .btn-base:hover, .btn-nav:hover, .btn-base-sm:hover {
+  .btn-base:hover, .btn-extranote:hover, .btn-nav:hover, .btn-base-sm:hover {
     background: var(--lightorange);
     color: var(--orange);
   } 
@@ -458,6 +498,79 @@
       opacity: 0.25;
       cursor: not-allowed;
     }
+
+    .btn-extranote {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+      align-items: center;
+      justify-content: center;
+    
+      user-select: none;
+      cursor: pointer;
+  
+      background-color: var(--panel);
+      color: #161616;
+      border: .25px solid var(--lightgrayblue);
+  
+      box-shadow:
+      0px 0px 0px 1px rgba(0, 0, 0, 0.08),
+      0px 1px 2px -1px rgba(0, 0, 0, 0.08);
+    
+      min-width: 2rem; /* min-w-16 */
+      height: 2.25rem; /* h-9 */
+      padding-left: 0.25rem;
+      padding-right: 0.3rem;
+    
+      font-size: 0.875rem; /* text-sm */
+    
+      border-radius: 100em; /* rounded-lg */
+    
+      will-change: transform;
+    
+      transition:
+        transform 200ms ease,
+        color 500ms ease,
+        background-color 200ms ease,
+        box-shadow 200ms ease;
+    }
+
+    .btn-extranote-empty {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+      align-items: center;
+      justify-content: center;
+    
+      user-select: none;
+      cursor: pointer;
+  
+      color: #161616;
+
+    
+      min-width: 2rem; /* min-w-16 */
+      height: 2.25rem; /* h-9 */
+      padding-left: 0.75rem;
+      padding-right: 0.8rem;
+    
+      font-size: 0.875rem; /* text-sm */
+    
+      border-radius: 100em; /* rounded-lg */
+    
+      will-change: transform;
+    
+      transition:
+        transform 200ms ease,
+        color 500ms ease,
+        background-color 200ms ease,
+        box-shadow 200ms ease;
+    }
+
+    .btn-extranote:hover {
+      background: var(--lightgrayblue);
+      border: .45px solid var(--grayblue);
+      color: var(--grayblue);
+    } 
 
     /* ── CTA button ───────────────────────────────────────────────────── */
     .open-btn {
@@ -511,7 +624,7 @@
     padding: 0.25em;
     font-weight: 800;
     background-color: var(--panel-mid);
-    border: .25px solid var(--lightgrayblue);
+    border: .125px solid var(--grayblue);
     color:#161616;
     cursor: pointer;
     font-size: .625em;
@@ -528,6 +641,23 @@
     gap: 1em;
     border: 1px solid #9898c8;
     border-radius: 20px;
+  }
+  
+  .card-quote {
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    width: 15em;
+    padding: .25em 1em 1.25em 1em;
+    border: 1px solid var(--lightgrayblue);
+    box-shadow:    0px 10px 0 -10px rgba(0, 0, 0, 0.02),
+    0px 1px 2px -12px rgba(0, 0, 0, 0.08),
+    0px 2px 12px 0px rgba(0, 0, 0, 0.06);
+    align-items: middle;
+    justify-content: center;
+    cursor: pointer;
+    gap: 1em;
+    border-radius: .5em;
   }
 
   .card-lg {
@@ -769,7 +899,14 @@
   .label-sm {
     font-size: .625em;
     font-weight: 800;
-    color: var(--ink);
+    font-family: var(--font-heading);
+    text-align: start;
+    text-transform: uppercase;
+  }
+
+  .label-rotated {
+    font-size: .625em;
+    font-weight: 800;
     font-family: var(--font-heading);
     text-align: start;
     text-transform: uppercase;
@@ -874,7 +1011,7 @@ color: var(--card);
 
 
   .content-wrap {
-    padding: 2em;
+    padding: 2em 1em 1em 2em;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -954,7 +1091,7 @@ color: var(--card);
     display: flex;
     flex-direction: row;
     width: 100%;
-    align-content: start;
+    align-content: middle;
     justify-items: left;
     justify-content: space-between;
   }
@@ -1062,7 +1199,6 @@ color: var(--card);
   .divider {
     height: .5px;
     background-color: var(--grayblue);
-    width: 100%;
     align-items: center;
     justify-self: center;
     margin: 0 -2em;

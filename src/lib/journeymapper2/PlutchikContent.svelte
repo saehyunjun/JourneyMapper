@@ -78,12 +78,12 @@
   
     <!-- Intro -->
     <div class="intro-block">
-      <p class="body-text">
+      <p class="text-body">
         Robert Plutchik's psychoevolutionary theory (1980) proposes <strong>8 primary emotions</strong> arranged
         in opposing pairs. Emotions vary by <em>intensity</em> (inner = mild, outer = intense) and combine
         to form <em>dyads</em> — blended emotions that describe complex affective states.
       </p>
-      <p class="body-text">
+      <p class="text-body">
         In this journey map, each step is tagged with a Plutchik emotion or dyad derived from
         qualitative patient narratives. These scores inform the <strong>Overall Sentiment</strong> track
         and the emotional state metric.
@@ -147,7 +147,7 @@
   
     <!-- Scoring -->
     <div class="section-heading">Scoring in This Map</div>
-    <p class="body-text">
+    <p class="text-body">
       Each Plutchik tag is translated to a <strong>−5 to +5 sentiment score</strong> reflecting the
       valence and intensity of the emotion at that journey step. Positive emotions (joy, trust, anticipation)
       trend above zero; negative emotions (grief, alarm, sadness) trend below. Neutral or ambivalent
@@ -165,7 +165,7 @@
     }
   
     /* ── Type ───────────────────────────────────────────────────── */
-    .body-text {
+    .text-body {
       font-family: 'DM Sans', sans-serif;
       font-size: 11px;
       color: #7A5A3A;
@@ -173,8 +173,8 @@
       margin: 0;
     }
   
-    .body-text strong { color: #5A3E28; font-weight: 600; }
-    .body-text em     { font-style: italic; }
+    .text-body strong { color: #5A3E28; font-weight: 600; }
+    .text-body em     { font-style: italic; }
   
     .section-heading {
       font-family: 'DM Sans', sans-serif;

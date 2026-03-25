@@ -25,7 +25,7 @@
   // ── Bar layout ────────────────────────────────────────────────────────────
   // Leave a small gutter on each side of the column so bars don't crowd dividers
   const COL_GUTTER   = 24; // px total inset per column (split left/right)
-  const BAR_GAP      = 12;  // px gap between bars within a group
+  const BAR_GAP      = 24;  // px gap between bars within a group
 
   /**
    * Given the number of metrics and the step column width, compute the width
@@ -182,7 +182,7 @@
         width={rect.width}
         height={rect.height}
         fill={m.color}
-        opacity={isActive ? 0.88 : 0.54}
+        opacity={isActive ? 0.88 : 0.15}
         pointer-events="none"
       />
 
@@ -195,7 +195,7 @@
           y2={rect.y}
           stroke={m.color}
           stroke-width="1.5"
-          opacity={isActive ? 1 : 0.925}
+          opacity={isActive ? 1 : 0.325}
           pointer-events="none"
         />
       {/if}

@@ -45,8 +45,8 @@
   >
 
   {#if $$slots.footer}
-  <div class="drawer-nav pt-2">
-    <button class="btn-sm" on:click={close} aria-label="Close panel">
+  <div class="flex flex-col h-full bg-[#DBDFD3] ring-1 ring-slate-400 shadow-2xl">
+    <button class="btn-sm bg-[#FF8341]" on:click={close} aria-label="Close panel">
       <X />
     </button>
     <slot name="footer" />
@@ -81,20 +81,5 @@
     0px 1px 2px -1px rgba(0, 0, 0, 0.08),
     0px 2px 4px 0px rgba(0, 0, 0, 0.06);
     overflow: hidden;
-  }
-  /* ── Footer ─────────────────────────────────────────────────── */
-  .drawer-nav {
-    display: flex;
-    flex-direction: column;
-    gap:0;
-    align-items: start;
-    justify-content: start;
-    background-color: #EAEFF8;
-    border-right: .5px solid ##EAEFF8;
-    padding: 0 .25em 0 .25em;
-    box-shadow: 
-      0px 0px 0px 1px rgba(0, 0, 0, 0.08),
-      0px 1px 2px -1px rgba(0, 0, 0, 0.08),
-      0px 2px 4px 0px rgba(0, 0, 0, 0.06);
   }
 </style>
