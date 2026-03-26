@@ -234,17 +234,18 @@ let emotionSubDrawerOpen = false;
       <JourneyFlowDiagram data={journeyData} {layout} />
       </div>
       {:else}
-      <div class="toolbar px-4 py-2 w-full">
+      <div class="px-4 py-2 w-full sticky">
         <h3 class="heading-sm">Sentiment</h3>
       </div>
         <JourneyStages data={journeyData} />
         <JourneySteps  data={journeyData} />
         <JourneySentiment data={journeyData} />
         <div class="spacer"></div>
-          <div class="toolbar px-4 py-2 w-full">
-        <h3 class="heading-sm">Sentiment Drivers</h3>
-      </div>
-
+    
+    <div class="px-4 py-2 w-full">
+      <h3 class="heading-sm">
+        Sentiment Drivers</h3>
+    </div>
         <JourneyIndexBars data={journeyData} {metrics} />
         <JourneyLegend items={metrics} />
       {/if}

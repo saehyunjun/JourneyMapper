@@ -53,9 +53,9 @@ function toggle(e) {
 
     <!-- ── FRONT ─────────────────────────────────────────────────── -->
     <div class="card-face card-front" aria-hidden={flipped}>
-      <div class="persona-card-gradient"></div>
-      <div class="persona-card-shimmer"></div>
-      {#if !imgError}
+    
+      <div class="persona-card-gradient">
+        {#if !imgError}
         <img
           class="card-photo"
           src="/assets/profiles/{personaProfile.imageFile}"
@@ -67,22 +67,27 @@ function toggle(e) {
           {personaProfile.initials}
         </div>
       {/if}
+      </div>
+      <div class="persona-card-shimmer"></div>
+     
+      
 
       <!-- gradient + name -->
-      <div class="card-gradient" />
-
-      <div class="card-front-footer">
-        <span class="card-name">{personaProfile.name}</span>
+      <div class="card-gradient">
       </div>
-
-      <div class="card-role-pill">
-        <span class="pill-white">{personaProfile.role}</span>
-      </div>
-
       <!-- flip hint -->
+        <div class="biobar">
+      <span class="label-lg">
+        {personaProfile.name}
+      </span>
+        
+      <span class="pill text-slate-800">
+          {personaProfile.role}</span>
+      </div>
+      
       <div class="flip-hint">
-          <!-- Phosphor "ArrowsClockwise" regular -->
-          <RotateClockwise class="text-white" />
+        <!-- Phosphor "ArrowsClockwise" regular -->
+        <RotateClockwise class="text-white" />
       </div>
 
     </div>
@@ -170,7 +175,7 @@ function toggle(e) {
 <style>
   /* ── Scene: holds the perspective so preserve-3d works correctly ──── */
   .card-scene {
-    height: 225px;
+    height: 300px;
     cursor: pointer;
     flex-shrink: 0;
   }
@@ -185,52 +190,6 @@ function toggle(e) {
   .card-scene:hover .card-body.is-flipped {
     transform: rotateY(180deg) translateY(-10px);
   }
-
-  /* ── Card body: the thing that actually rotates ───────────────────── */
-  .card-body {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-
-    transform-style: preserve-3d;
-    transition:
-      transform 0.55s cubic-bezier(0.45, 0.05, 0.55, 0.95),
-      box-shadow 0.25s ease;
-
-    box-shadow: 
-    0 10px 20px -12px rgba(50, 50, 93, 0.125), 
-    0 18px 18px -8px rgba(0, 0, 0, 0.25);
-    will-change: transform;
-  }
-
-  .card-body.is-flipped {
-    transform: rotateY(180deg);
-  }
-
-  /* ── Shared face styles ───────────────────────────────────────────── */
-  .card-face {
-    position: absolute;
-    inset: 0;
-    border-radius: 8px;
-    overflow: hidden;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  /* ── FRONT ────────────────────────────────────────────────────────── */
-  .card-front {
-    background: #1a1a1a;
-  }
-
-  .card-photo {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
 
   /* Gradient overlay for legibility */
   .card-gradient {
@@ -253,24 +212,6 @@ function toggle(e) {
     right: 0;
     padding: 16px 18px;
   }
-
-  .card-name {
-    font-family: var(--font-heading);
-    font-size: 1.6rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    color: #fff;
-    line-height: 1.1;
-    display: block;
-  }
-
-  .card-role-pill {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 2;
-  }
-
   /* Flip hint icon — fades out once flipped (via parent class) */
   .flip-hint {
     position: absolute;

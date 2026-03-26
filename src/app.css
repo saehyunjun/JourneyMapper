@@ -18,6 +18,7 @@
   /* Core palette */
   --ink: #312F28;
   --gray: #707070;
+  --graybluedark: #294457;
   --grayblue: #446079;
   --midgrayblue: #6a99c2;
   --lightgrayblue: #E7EDED;
@@ -36,7 +37,7 @@
   --red: #ff0000;
 
   /* Common strokes/shadows */
-  --stroke: 2px solid #1a1a1a;
+  --stroke: 1px solid var(--midgrayblue);
   --hairline: 0.5px solid var(--ink);
   --shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
 
@@ -96,7 +97,6 @@
   .heading-md {
     font-size: 1.25em;
     text-wrap: balance;
-    color: var(--ink);
   }
 
   .heading-serif {
@@ -142,7 +142,7 @@
   .text-body { 
     font-family: var(--font-body); 
     line-height: 135%;
-    font-size: 1.125em;
+    font-size: 1em;
     text-transform:inherit;
     color: var(--ink);
     text-wrap: balance;
@@ -370,6 +370,28 @@
     line-height: 1;
     height: 1em;
     width: 1em;
+  }
+
+  .icon-toolbar {
+    height: 2em;
+    width: 2em;
+    
+    background-color: var(--panel-mid);
+    border-radius: 100em;
+    padding: .325em;
+
+    color: var(--grayblue);
+  }
+
+  .icon-toolbar-dark {
+    height: 2em;
+    width: 2em;
+    
+    background-color: var(--grayblue);
+    border-radius: 100em;
+    padding: .325em;
+
+    color: var(--lightgrayblue);
   }
 
   .quote-icon {
@@ -668,6 +690,50 @@
   }
 
 
+  /* ── Card body: the thing that actually rotates ───────────────────── */
+  .card-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--panel-dark);
+    border-radius: 10px;
+
+    transform-style: preserve-3d;
+    transition:
+      transform 0.55s cubic-bezier(0.45, 0.05, 0.55, 0.95),
+      box-shadow 0.25s ease;
+
+    box-shadow: 
+    0 10px 20px -12px rgba(50, 50, 93, 0.125), 
+    0 18px 18px -8px rgba(0, 0, 0, 0.25);
+    will-change: transform;
+  }
+
+  .card-body.is-flipped {
+    transform: rotateY(180deg);
+  }
+
+  /* ── Shared face styles ───────────────────────────────────────────── */
+  .card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: .5em;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+
+  .card-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+
   .card {
     background: var(--card);
     display: flex;
@@ -686,7 +752,6 @@
     flex-direction: column;
     width: fit-content;
     max-width: 20em;
-    aspect-ratio: 3/2;
     border: .25px solid var(--gray);
     box-shadow:    
     0px 1px 2px -12px rgba(0, 0, 0, 0.08),
@@ -699,13 +764,13 @@
 
 .detail-bar {
 display: flex;
-flex-direction: row;
-align-items: center;
+flex-direction: column;
+align-items: start;
 justify-content: space-between;
 gap: .5em;
 width: 100%;
-background-color: var(--panel-dark);
-padding: .25em .5em .25em 1em;
+background-color: var(--orange);
+padding: 1.25em .5em 1.25em 1em;
 box-shadow: 
 0 2px -5px 10 rgba(60, 64, 43, 0.12);
 border-bottom: .5px solid var(--panel-mid);
@@ -771,13 +836,14 @@ color: var(--grayblue);
   }
 
   .pill {
-    font-family: var(--font-body);
+    font-family: var(--font-heading);
     font-size: 0.625em;
     font-weight: 400;
     width:fit-content;
     height: fit-content;
     text-transform: uppercase;
     border-radius: 20px;
+    border: 1px solid var(--teal);
     align-items: center;
     justify-content: center;
     padding: .325em .825em .325em .725em;
@@ -834,6 +900,8 @@ color: var(--grayblue);
     position: fixed;
     pointer-events: none;
     z-index: 300;
+    display: flex;
+    flex-direction: column;
 
     background: var(--paper);
     border: var(--stroke);
@@ -841,6 +909,23 @@ color: var(--grayblue);
 
     width: 420px;
     padding: 16px 18px 14px;
+    transition: left 60ms linear, top 60ms linear;
+  }
+
+  .tooltip-sm {
+    position: fixed;
+    pointer-events: none;
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+
+    background: var(--paper);
+    border: var(--stroke);
+    box-shadow: var(--shadow);
+
+    width: 300px;
+    padding: 1em;
     transition: left 60ms linear, top 60ms linear;
   }
 
@@ -998,21 +1083,100 @@ color: var(--grayblue);
   cursor: pointer;
 }
 
+.biobar {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5em;
+  width: 100%;
+  
+  background-color: var(--paper);
+  border-bottom: 1px solid (--teal);
+  
+  color: var(--lightgrayblue);
+  font-size: .725em;
+  padding: .25em 1em;
+  }
+
 .toolbar {
 display: flex;
+position: rel;
 flex-direction: row;
 align-items: center;
 justify-content: space-between;
 gap: .5em;
 width: 100%;
+
 background-color: var(--panel);
 box-shadow: 
 0 2px -5px 10 rgba(60, 64, 43, 0.12);
-border-bottom: .5px solid var(--panel-mid);
+
+padding: .5em 1em;
+
+border-bottom: 2.5px solid var(--orange);
 border-top: .5px solid var(--panel-mid);
 color: var(--card);
 }
 
+.toolbar-sm {
+display: flex;
+position: relative;
+flex-direction: row;
+align-items: center;
+justify-content: left;
+gap: .5em;
+width: 100%;
+
+background-color: var(--graybluedark);
+border-radius: 100em;
+
+color: var(--lightgrayblue);
+font-size: .725em;
+padding: .25em 1em;
+}
+
+.toolbar-sm-light {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  gap: .5em;
+  width: 100%;
+  border-radius: 10em;
+  
+  background-color: var(--lightgrayblue);
+  
+  color: var(--graybluedark);
+  font-size: .725em;
+  padding: .25em 1em;
+  }
+
+  .toolbar-sm-white {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+  
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    gap: .5em;
+    width: 100%;
+    border-radius: 10em;
+    
+    border: 2.25px solid var(--lightgrayblue);
+    
+    background-color: var(--paper);
+    
+    color: var(--graybluedark);
+    font-size: .725em;
+    padding: .25em 1em;
+    }
+  
 
 .toolbar-light {
   display: flex;
@@ -1303,16 +1467,6 @@ color: var(--card);
     text-transform: uppercase;
   }
   
-  /* ---------- Tooltip: positioning only ---------- */
-  
-  .tooltip {
-    position: fixed;
-    pointer-events: none;
-    z-index: 990;
-    padding: 10px 12px 12px;
-    background-color: var(--panel);
-    transition: left 60ms linear, top 60ms linear;
-  }
   
   .divider {
     height: .5px;
@@ -1378,7 +1532,7 @@ color: var(--card);
     overflow-x: hidden;
     flex-shrink: 0;
     scrollbar-width: thin;
-    border-left: .5px solid var(--lightgrayblue);
+    border-left: 1.5px solid var(--panel-dark);
     box-shadow: 
     0 2px 12px -10px rgba(0,0,0,0.15)
     0 20px 20px 10px rgba(0,0,0,0.25);
@@ -1397,7 +1551,7 @@ color: var(--card);
       justify-content: top;
       align-content: center;
       scrollbar-width: thin;
-      border-right: 1px solid var(--card);
+      border-right: 2px solid var(--panel-dark);
       padding: 2em .5em 0 .5em;
       background-color: var(--panel);
       scrollbar-color: (--orange) transparent;

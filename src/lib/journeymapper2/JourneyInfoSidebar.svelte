@@ -8,7 +8,7 @@
   import IndexMetricBars from './IndexMetricBars.svelte';
 
 
-  import UserRegular       from 'phosphor-icons-svelte/IconUserRegular.svelte';
+  import UserBold       from 'phosphor-icons-svelte/IconUserBold.svelte';
   import HeartRegular      from 'phosphor-icons-svelte/IconHeartRegular.svelte';
   import BriefcaseRegular  from 'phosphor-icons-svelte/IconBriefcaseRegular.svelte';
   import CalendarRegular   from 'phosphor-icons-svelte/IconCalendarRegular.svelte';
@@ -119,19 +119,22 @@
         in:fly={{ y: 8, duration: 220, easing: cubicOut }}>
 
         <!-- Bio + Goals — collapse when a step is active -->
-        <div class="bio-goals-wrap" class:bio-goals-wrap--hidden={displayIndex >= 0}>
+        <div class="bio-goals-wrap pt-4" class:bio-goals-wrap--hidden={displayIndex >= 0}>
 
           <PersonaProfileCard personaProfile={activePersona.profile} />
 
           <!-- Quick fields -->
           <div class="flex flex-col gap-2">
             {#if profile.age}
-              <div class="flex flex-col">
-                <span class="label-sm uppercase text-slate-400 flex items-center gap-1">
-                  <UserRegular />Age Range
-                </span>
-                <span class="text-body-sm capitalize">{profile.age}</span>
+                <div class="toolbar-sm-white align-middle">
+                  <div class="flex flex-row gap-1">
+                    <UserBold class="icon-toolbar-dark"/>
+                    <div class="flex flex-col">
+                    <span class="label-sm">Age Range</span>
+                  <span class="font-semibold capitalize">{profile.age}</span>
+                </div>
               </div>
+                </div>
             {/if}
             {#if profile.occupation}
               <div class="flex flex-col">
@@ -168,7 +171,9 @@
           {#if profile.goal1 || profile.goal2 || profile.goal3}
             <div class="jm-content-col gap-2">
               <div class="flex flex-col">
-                <span class="label-sm uppercase text-slate-400">Goals</span>
+                <span class="label-sm uppercase text-slate-400">Goals
+                  
+                </span>
               </div>
               {#each [profile.goal1, profile.goal2, profile.goal3].filter(Boolean) as goal}
                 <div class="flex items-start gap-1">
@@ -302,21 +307,13 @@
       {/if}
 
 
+      <div class="flex flex-col mt-12">
       <!-- Sentiment — row of colored squares, active square highlighted -->
-      <div class="jm-content-col gap-1 mt-2">
-        <div class="flex flex-row w-full justify-between">
-          <span class="heading-sm">Sentiment</span>
+      <span class="heading-sm">Sentiment</span>
+      <div class="toolbar-sm-light">
         {#key displayIndex}
-        <span
-          class="pill uppercase font-semibold"
-          style="border: 1px solid {sentimentColor};"
-          in:fade={{ duration: 200, delay: 100 }}
-          out:fade={{ duration: 100 }}
-        >
-          {sentimentLabel($sentimentTween)}
-        </span>
+     
       {/key}
-        </div>
         <div class="score-squares">
           {#each SENTIMENT_SCALE as stopColor, i}
             {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
@@ -330,6 +327,14 @@
             />
           {/each}
         </div>
+        <span
+        class="pill uppercase font-semibold"
+        style="border: 1px solid {sentimentColor};"
+        in:fade={{ duration: 200, delay: 100 }}
+        out:fade={{ duration: 100 }}
+      >
+        {sentimentLabel($sentimentTween)}
+      </span>
       </div>
 
       <!-- Index metrics — labels crossfade, bars tween -->
@@ -346,7 +351,9 @@
           />
         </div>
       {/if}
-    {/if}
+    </div>
+      {/if}
+    
   </div>
 
 </aside>
@@ -357,7 +364,6 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 600px;
     opacity: 1;
     overflow: hidden;
     transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -372,7 +378,7 @@
   .score-squares {
     display: flex;
     flex-direction: row;
-    gap: 2px;
+    gap: 1.725px;
     width: 100%;
   }
   .score-square {
@@ -381,9 +387,8 @@
     transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .score-square--active {
-    outline: 1.5px solid rgba(0, 0, 0, 0.55);
+    outline: 1px solid var(--ink);
     outline-offset: 1px;
-    border-radius: 1px;
   }
 
   /* ── Inflection path cards ───────────────────────────────────── */
