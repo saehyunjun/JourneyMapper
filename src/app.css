@@ -32,7 +32,7 @@
   --panel-dark: #E7E5E2;
   --card: #F4F5F3;
 
-  /* Brand / accents */
+  /* Brand / accents */ 
   --teal: #23abab;
   --red: #ff0000;
   --lightred: #FB8809;
@@ -164,6 +164,17 @@
     top: auto;
   }
 
+  .stats-animation-gradient__gradient--bright {
+    background-color: var(--white);
+    background-image: radial-gradient(1655px 1133px at 50% calc(100% + 69px), #fcfdfe 1.11%, #6763e4 28.73%, #453bb3 45.76%, #29227d 63.37%, #1e2064 78.67%, #141e4b 100%);
+    bottom: 0;
+    height: 100%;
+    left: calc(50% - 300px);
+    opacity: 1;
+    right: auto;
+    top: auto;
+  }
+
   .text-body-sm { 
     font-family: var(--font-body); 
     line-height: 125%;
@@ -186,9 +197,8 @@
 
   .caption-lg, .label-lg {
     font-family: var(--font-heading);
-    font-size: 1.25em;
+    font-size: 2.25em;
     font-weight: 400;
-    color: var(--ink);
     text-transform: uppercase;
   }
 
@@ -262,7 +272,7 @@
 
 .persona-avatar:hover {
   transform: scale(1.08);
-  border-color: #FF4A4A;
+  outline: 2.5px solid var(--orange);
   transition-duration: 400ms;
   transition-behavior: var(--ease-standard);
 }
@@ -382,8 +392,8 @@
   .icon-toolbar {
     height: 2em;
     width: 2em;
-    
-    background-color: var(--panel-mid);
+    font-size: .825em;
+
     border-radius: 100em;
     padding: .325em;
 
@@ -391,14 +401,17 @@
   }
 
   .icon-toolbar-dark {
-    height: 2em;
-    width: 2em;
+    height: 2.25em;
+    width: 2.25em;
+    font-size: 1.1em;
     
     background-color: var(--grayblue);
     border-radius: 100em;
-    padding: .325em;
+    padding: .25em;
 
     color: var(--lightgrayblue);
+    outline: 2.5px solid var(--grayblue);
+    outline-offset: 1px;
   }
 
   .quote-icon {
@@ -468,7 +481,7 @@
     font-family: var(--font-heading);
   
     border-radius: 100rem; /* rounded-lg */
-    border: 1.5px solid var(--panel-mid);
+    border: 2.5px solid var(--panel);
   
     will-change: transform;
   
@@ -500,7 +513,7 @@
   
     min-width: 2rem; /* min-w-16 */
     height: 2.25rem; /* h-9 */
-    padding-left: 0.75rem;
+    padding-left: 0.35rem;
     padding-right: 0.825rem;
   
     font-size: 0.875rem; /* text-sm */
@@ -519,13 +532,16 @@
   
   /* hover */
   .btn-base:hover, .btn-extranote:hover, .btn-nav:hover, .btn-base-sm:hover {
-    background: var(--lightorange);
+    background: var(--panel-dark);
     color: var(--orange);
     border: 2px solid var(--teal);
+    box-shadow:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.08);
   } 
   
 /* active */
-  .btn-base:active, .btn-nav:active, .layout-btn:active {
+.btn-base:active, .btn-nav:active, .layout-btn:active {
   border: 1.5px solid var(--teal);
   color: var(--orange);
   box-shadow: 
@@ -535,25 +551,27 @@
   transition:       
   transform 200ms ease,
   color 500ms ease-in-out,
-  background-color 200ms ease,
+  background-color 500ms ease,
   box-shadow 200ms ease;
 }
 
-    .view-tab--active {
-      background-color: var(--orange);
-      color: snow;
-    
-      box-shadow:
-        0 2px 6px rgba(0,0,0,0.15),
-        0 0 0 1px rgba(0,0,0,0.1);
-    }
+.view-tab--active {
+  background-color: var(--lightorange);
+  border: 2px solid var(--orange);
+  color: var(--orange);
+
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.15),
+    0 0 0 1px rgba(0,0,0,0.1);
+}
 
 
-    .layout-btn--active {
-      background: var(--teal);
-      color: white;
-    }
-    
+.layout-btn--active {
+  background: var(--teal);
+  color: var(--paper);
+  border:2.5px solid var(--panel-dark);
+}
+
     /* disabled */
     .btn-base:disabled {
       opacity: 0.25;
@@ -860,24 +878,21 @@ color: var(--grayblue);
 }
 
   .pill-white {
-    display: flex;
-    flex-direction: row;
-    font-family: var(--font-mono);
-    font-size: 0.625em;
-    font-weight: 400;
-    text-transform: uppercase;
-    color: var(--ink); 
-
-    border: 1.25px solid #e8e5de;
-    background-color: var(--panel, 50%);
-    
-    width: fit-content;
-    border-radius: 100px;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: .325em .6725em .325em .325em;
+    padding: 3px 8px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 0.725em;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--panel);
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
-
 
   .pill-sm {
     display: flex;
@@ -1153,7 +1168,7 @@ display: flex;
 position: relative;
 flex-direction: row;
 align-items: center;
-justify-content: left;
+justify-content: space-between;
 gap: .5em;
 width: 100%;
 
@@ -1161,7 +1176,7 @@ background-color: var(--graybluedark);
 border-radius: 100em;
 
 color: var(--lightgrayblue);
-font-size: .725em;
+font-size: .825em;
 padding: .25em 1em;
 }
 
@@ -1180,8 +1195,28 @@ padding: .25em 1em;
   background-color: var(--lightgrayblue);
   
   color: var(--graybluedark);
+  font-size: .825em;
+  padding: .25em 1em .25em .125em;
+  }
+
+.toolbar-sm-light-left {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+
+  align-items: center;
+  align-content: center;
+  justify-content: start;
+  gap: 1em;
+  width: 100%;
+
+  border-radius: 10em;
+  
+  background-color: var(--lightgrayblue);
+  
+  color: var(--graybluedark);
   font-size: .725em;
-  padding: .25em 1em;
+  padding: .25em 1em .25em .5em;
   }
 
   .toolbar-sm-white {
@@ -1196,12 +1231,13 @@ padding: .25em 1em;
     width: 100%;
     
     border: 2.25px solid var(--lightgrayblue);
+    border-radius: 10em;
     
-    background-color: var(--paper);
     
     color: var(--graybluedark);
     font-size: .725em;
-    padding: .25em 1em;
+    font-weight: 800;
+    padding: .25em;
     }
   
 
@@ -1355,6 +1391,15 @@ padding: .25em 1em;
     flex-direction: column;
   }
   
+
+  .detail-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      padding: .25em 1em 0 1em;
+      width: 100%;
+    }
+
   .jm-hero {
     display: grid;
     grid-template-columns: 1fr 1.25fr;

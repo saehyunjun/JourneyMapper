@@ -1,10 +1,10 @@
 <script>
     import { fade, fly } from 'svelte/transition';
     import { cubicOut } from 'svelte/easing';
-    import SmileyBlank  from 'phosphor-icons-svelte/IconSmileyBlankBold.svelte';
-    import CalenderDots from 'phosphor-icons-svelte/IconCalendarDotsBold.svelte';
-    import HandHeart    from 'phosphor-icons-svelte/IconHandHeartBold.svelte';
-    import Aclepius     from 'phosphor-icons-svelte/IconAsclepiusBold.svelte';
+    import SmileyBlank  from 'phosphor-icons-svelte/IconSmileyBlankRegular.svelte';
+    import CalenderDots from 'phosphor-icons-svelte/IconCalendarDotsRegular.svelte';
+    import HandHeart    from 'phosphor-icons-svelte/IconHandHeartRegular.svelte';
+    import Aclepius     from 'phosphor-icons-svelte/IconAsclepiusRegular.svelte';
     import { metricScoreLabel } from './journeyConfig.js';
   
     /**
@@ -77,20 +77,20 @@
           <div class="flex flex-col gap-2">
   
             <!-- ── Label row ──────────────────────────────────────────── -->
-            <div class="jm-content-row align-middle w-full">
+            <div class="toolbar-sm-light">
               <div class="flex flex-row gap-2 w-full items-center justify-between">
   
                 <div class="flex flex-row gap-2 align-middle items-center">
                   {#if IconComponent}
-                    <span class="imb-icon" 
-                    style="color: {m.color};">
-                      <svelte:component this={IconComponent} class="h-4" />
-                    </span>
+                      <svelte:component this={IconComponent} class="icon-toolbar-dark"
+                      style=
+                      "background-color: {m.color};
+                      outline: 2.5px solid {m.color};" />
                   {:else}
                     <div class="w-2 h-2 ring-1" 
                     style="background: {m.color};"></div>
                   {/if}
-                  <span class="text-body-sm">{m.label}</span>
+                  <span class="heading-sm">{m.label}</span>
                 </div>
   
             <!-- ── Qualitative label ───────────────────────────────────── -->

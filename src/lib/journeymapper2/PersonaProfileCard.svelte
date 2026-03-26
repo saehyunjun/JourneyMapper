@@ -1,11 +1,8 @@
 <script>
   import { RotateClockwise } from "carbon-icons-svelte";
-  import UserBold          from 'phosphor-icons-svelte/IconUserBold.svelte';
-  import BriefcaseRegular  from 'phosphor-icons-svelte/IconBriefcaseRegular.svelte';
-  import CalendarRegular   from 'phosphor-icons-svelte/IconCalendarRegular.svelte';
-  import HeartRegular      from 'phosphor-icons-svelte/IconHeartRegular.svelte';
 
   export let personaProfile = {};
+  export let currentState = [];
   export let onOpenDetails = () => {};
 
 function toggle(e) {
@@ -29,6 +26,12 @@ function toggle(e) {
   let hovered = false;
   let mouseX  = 0;
   let mouseY  = 0;
+
+  // Distinct per-category colors — matches PersonaStory
+  const STATE_BAR_COLORS = [
+    '#5B8DB8', '#7CB98A', '#C47E5A', '#9B7EC8', '#C4A84F', '#5BADA8',
+  ];
+  const stateBarColor = (i) => STATE_BAR_COLORS[i % STATE_BAR_COLORS.length];
 
   const TIP_W    = 300;
   const OFFSET_X = 16;
@@ -100,99 +103,35 @@ function toggle(e) {
           <span class="pill-white">{personaProfile.role}</span>
         </div>
 
-        <!-- Quick profile fields -->
-        <div class="">
-          {#if personaProfile.age}
-            <div class="jm-content-row">
-              <UserBold class="back-profile-icon" />
-              <div class="back-profile-text">
-                <span class="metric-label">Age Range</span>
-                <span class="back-profile-value">{personaProfile.age}</span>
-              </div>
-            </div>
-          {/if}
-          {#if personaProfile.occupation}
-            <div class="jm-content-row">
-              <BriefcaseRegular class="back-profile-icon" />
-              <div class="back-profile-text">
-                <span class="metric-label">Occupation</span>
-                <span class="back-profile-value">{personaProfile.occupation}</span>
-              </div>
-            </div>
-          {/if}
-          {#if personaProfile.diagnosed}
-            <div class="jm-content-row">
-              <CalendarRegular class="back-profile-icon" />
-              <div class="back-profile-text">
-                <span class="metric-label">Diagnosed</span>
-                <span class="back-profile-value">{personaProfile.diagnosed}</span>
-              </div>
-            </div>
-          {/if}
-          {#if personaProfile.preference}
-            <div class="jm-content-row">
-              <HeartRegular class="back-profile-icon" />
-              <div class="back-profile-text">
-                <span class="metric-label">Current Goal</span>
-                <span class="back-profile-value">{personaProfile.preference}</span>
-              </div>
-            </div>
-          {/if}
-        </div>
-
         <div class="back-metrics">
-          <div class="metric-row">
-            <span class="metric-label">Medical Understanding</span>
-            <div class="metric-bar-track">
-              <div class="metric-bar-fill" style="width: {(personaProfile.medicalUnderstanding / 10) * 100}%" />
+        {#if currentState.length}
+          <div class="back-state-bars">
+            <div class="flex flex-col gap-2">
+              {#each currentState as s, i}
+                {@const color = stateBarColor(i)}
+                {@const leansMax = s.value > 0.5}
+                {@const leansMin = s.value < 0.5}
+                <div class="flex flex-col gap-1">
+                  <span class="label-xs">{s.label}</span>
+                  <div class="sentiment-track">
+                    <div class="sentiment-fill" style="width:{s.value * 100}%;background:{color}"></div>
+                  </div>
+                  <div class="flex justify-between">
+                    <span
+                      class="label-sm"
+                      style="{leansMin ? `opacity:1;font-weight:800;color:${color}` : 'font-weight:400;opacity:0.45'}"
+                    >{s.minLabel}</span>
+                    <span
+                      class="label-sm"
+                      style="{leansMax ? `opacity:1;font-weight:800;color:${color}` : 'font-weight:400;opacity:0.45'}"
+                    >{s.maxLabel}</span>
+                  </div>
+                </div>
+              {/each}
             </div>
-            <span class="metric-value">{personaProfile.medicalUnderstanding}</span>
           </div>
-          <div class="metric-row">
-            <span class="metric-label">Trust in Providers</span>
-            <div class="metric-bar-track">
-              <div class="metric-bar-fill" style="width: {(personaProfile.trust / 10) * 100}%" />
-            </div>
-            <span class="metric-value">{personaProfile.trust}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">Logistical Capacity</span>
-            <div class="metric-bar-track">
-              <div class="metric-bar-fill" style="width: {(personaProfile.logisticalCapacity / 10) * 100}%" />
-            </div>
-            <span class="metric-value">{personaProfile.logisticalCapacity}</span>
-          </div>
-        </div>
-
-        {#if personaProfile.currentState?.length}
-        <div class="back-metrics pt-8">
-          {#each personaProfile.currentState as item}
-      
-            <div class="metric-row">
-              <span class="metric-label">{item.label}</span>
-      
-              <div class="metric-bar-track">
-                <div
-                  class="metric-bar-fill"
-                  style="width: {item.value * 100}%"
-                />
-              </div>
-      
-              <span class="metric-value">
-                {Math.round(item.value * 100)}
-              </span>
-            </div>
-      
-            <!-- THIS is what you're currently missing -->
-            <div class="metric-minmax">
-              <span>{item.minLabel}</span>
-              <span>{item.maxLabel}</span>
-            </div>
-      
-          {/each}
-        </div>
-      {/if}
-
+        {/if}
+      </div>
         <button
   class="open-btn"
   on:click={(e) => {
@@ -288,139 +227,27 @@ function toggle(e) {
     line-height: 1.2;
   }
 
-  /* ── Back profile fields (age, occupation, diagnosed, goal) ──── */
-  .jm-content-rows {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .jm-content-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-  }
-
-  .back-profile-icon {
-    flex-shrink: 0;
-    width: 12px;
-    height: 12px;
-    margin-top: 1px;
-    color: var(--text-muted, #6b6050);
-  }
-
-  .back-profile-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    min-width: 0;
-  }
-
-  .back-profile-value {
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--text, #1a1a1a);
-    text-transform: capitalize;
-    line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
   /* ── Metric rows ──────────────────────────────────────────────────── */
   .back-metrics {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding: .25em;
     flex: 1;
   }
 
-  .metric-minmax {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.55rem;
-  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted, #9a8f80);
-  margin-top: -6px;
-}
-
-  .metric-row {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .metric-label {
-    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-    font-size: 0.6rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: var(--text-muted, #6b6050);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .metric-bar-track {
-    width: 52px;
+  .state-track {
     height: 4px;
     border-radius: 2px;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0,0,0,0.1);
     overflow: hidden;
-    flex-shrink: 0;
   }
 
-  .metric-bar-fill {
+  .state-fill {
     height: 100%;
     border-radius: 2px;
-    background: #c4956a;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
   }
 
-  .metric-value {
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: var(--text, #1a1a1a);
-    width: 14px;
-    text-align: right;
-    flex-shrink: 0;
-  }
-
-  /* ── Pills ────────────────────────────────────────────────────────── */
-  :global(.pill-white) {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 8px;
-    border-radius: 100px;
-    background: rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
-  .pill-dark {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 8px;
-    border-radius: 100px;
-    background: rgba(0, 0, 0, 0.08);
-    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-muted, #6b6050);
-    white-space: nowrap;
-  }
 
 </style>

@@ -28,9 +28,4 @@
 </JourneyGrid>
 
 <style>
-  .section-label {
-    padding: 4px 12px;
-    border-top: 1px solid #DFC3A8;
-    border-bottom: 1px solid #DFC3A8;
-  }
 </style>

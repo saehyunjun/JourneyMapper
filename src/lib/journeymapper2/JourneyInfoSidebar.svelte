@@ -11,7 +11,10 @@
   import ArrowRightRegular from 'phosphor-icons-svelte/IconArrowRightRegular.svelte';
   import ArrowUpRegular    from 'phosphor-icons-svelte/IconArrowUpRegular.svelte';
   import ArrowDownRegular  from 'phosphor-icons-svelte/IconArrowDownRegular.svelte';
+  import HeartHalf from 'phosphor-icons-svelte/IconHeartHalfRegular.svelte';
   import LightbulbRegular  from 'phosphor-icons-svelte/IconLightbulbRegular.svelte';
+  import Flag from 'phosphor-icons-svelte/IconFlagBannerFill.svelte';
+  import Barricade from 'phosphor-icons-svelte/IconBarricadeFill.svelte';
   import ChartLineRegular  from 'phosphor-icons-svelte/IconChartLineRegular.svelte';
   import MapPinRegular     from 'phosphor-icons-svelte/IconMapPinRegular.svelte';
 
@@ -106,18 +109,19 @@
 
 <aside class="sticky-panel flex flex-col overflow-y-auto overflow-x-hidden h-full" aria-label="Persona & step details">
 
+
   <!-- ═══════════════════════════════════════════════════════════════
        SECTION 1 — PERSONA BIO
   ════════════════════════════════════════════════════════════════ -->
   {#if activePersona}
     {#key activePersona.id}
-      <div class="flex flex-col gap-3 px-4 pt-1 pb-4"
+      <div class="flex flex-col gap-3 px-2 pt-1 pb-4"
         in:fly={{ y: 8, duration: 220, easing: cubicOut }}>
 
         <!-- Bio + Goals — collapse when a step is active -->
         <div class="bio-goals-wrap pt-4" class:bio-goals-wrap--hidden={displayIndex >= 0}>
-
-          <PersonaProfileCard personaProfile={activePersona.profile} />
+        
+          <PersonaProfileCard personaProfile={activePersona.profile} currentState={activePersona.currentState ?? []} />
 
           {#if profile.bio}
             <div class="border-bottom pt-2">
@@ -127,15 +131,15 @@
 
           {#if profile.goal1 || profile.goal2 || profile.goal3}
             <div class="jm-content-col gap-2">
-              <div class="flex flex-col">
-                <span class="label-sm uppercase text-slate-400">
+              <div class="toolbar-sm-light-left">
+                <Flag class="icon-toolbar-dark" />
+                <span class="label-sm uppercase text-slate-600">
                   Goals
-                  
                 </span>
               </div>
               {#each [profile.goal1, profile.goal2, profile.goal3].filter(Boolean) as goal}
-                <div class="flex items-start gap-1">
-                  <ArrowRightRegular class="h-4 mt-0.5 shrink-0" />
+              <div class="flex flex-row align-top gap-4">
+                <ArrowRightRegular class="text-lg" />
                   <span class="text-body-sm">{goal}</span>
                 </div>
               {/each}
@@ -144,15 +148,18 @@
 
           {#if profile.goal1 || profile.barrier2 || profile.barrier3}
             <div class="jm-content-col gap-2">
-              <div class="flex flex-col">
-                <span class="label-sm uppercase">
+              <div class="toolbar-sm-light-left">
+                <Barricade class="icon-toolbar-dark" 
+                style="background-color:var(--red); outline: 2.5px solid var(--red)"/>
+         
+                <span class="label-sm uppercase text-slate-600">
                   Barriers
                   
                 </span>
               </div>
               {#each [profile.barrier1, profile.barrier2, profile.barrier3].filter(Boolean) as barrier}
-                <div class="flex items-start gap-1">
-                  <ArrowRightRegular class="h-4 mt-0.5 shrink-0" />
+                <div class="flex flex-row align-top gap-4">
+                  <ArrowRightRegular class="text-lg" />
                   <span class="text-body-sm">{barrier}</span>
                 </div>
               {/each}
@@ -284,30 +291,40 @@
 
       <div class="flex flex-col mt-12">
       <!-- Sentiment — row of colored squares, active square highlighted -->
-      <div class="jm-content-row align-middle w-full mb-2">          
-      <span class="heading-sm">
-        Overall Sentiment
-      </span>
+      <span class="heading-sm mb-2">Sentiment Drivers</span>
+
+      <div class="toolbar-sm-light">          
+      <div class="flex flex-row gap-2 w-full items-center justify-between">
+        <div class="flex flex-row gap-2 align-middle items-center">
+
+          <HeartHalf class="icon-toolbar-dark" style-="outline: "/>
+
+          <span class="heading-sm">
+            Overall Sentiment
+          </span>
+      </div>
       {#key displayIndex}
       <span
         class="pill uppercase font-semibold"
-        style="border: 1px solid {sentimentColor};"
+        style="border: 1.5px solid {sentimentColor};"
         in:fly={{ y: 6, duration: 200 }}
         out:fade={{ duration: 100 }}
       >
         {sentimentLabel($sentimentTween)}
       </span>
     {/key}
+  </div>
+
     </div>
 
-      <div class="toolbar-sm-white">          
+      <div class="flex flex-row gap-1 mt-2">          
         {#each SENTIMENT_SCALE as stopColor, i}
             {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
             {@const isActive  = i === Math.round(activePos)}
             {@const dist      = Math.abs(i - activePos)}
             {@const opacity   = isActive ? 1 : Math.max(0.12, 1 - dist * 0.28)}
             <div
-              class="jm-swatch-lg"
+              class="jm-emotion"
               class:score-square--active={isActive}
               style="background: {stopColor}; opacity: {opacity};"></div>
           {/each}
@@ -317,7 +334,6 @@
       {#if metrics.length}
         <div class="flex flex-col mt-8">
           <div class="flex items-center gap-1 mb-2">
-            <span class="heading-sm">Index Metrics</span>
           </div>
           <IndexMetricBars
             {metrics}

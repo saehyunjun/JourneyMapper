@@ -96,7 +96,7 @@
     <line
       x1={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y1={TOP_PADDING}
       x2={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y2={TOP_PADDING + GRID_HEIGHT}
-      stroke={isHovered ? "#F9564E" : "#CACCB7"}
+      stroke={isHovered ? "#707070" : "#CACCB7"}
       stroke-width= {isHovered ? 3 : 1}
       opacity={isZoomed ? 0.9 : isHovered ? 0.85 : 1}
       pointer-events="none"
@@ -129,7 +129,7 @@
 <style>
   .journey-svg {
     display: block;
-    background: #fff;
+    background: var(--paper);
     z-index: 1;
   }
 </style>

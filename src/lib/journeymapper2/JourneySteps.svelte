@@ -123,7 +123,7 @@
       <rect
         x={LEFT_AXIS_WIDTH + i * STEP_WIDTH}
         width={STEP_WIDTH} height={svgHeight}
-        fill="#F9564E" opacity="0.8"
+        fill="#F9564E" opacity="0.25"
         pointer-events="none"
       />
     {/if}

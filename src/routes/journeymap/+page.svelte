@@ -191,7 +191,10 @@ let emotionSubDrawerOpen = false;
       aria-selected={chartView === 'chart'}
       on:click={() => chartView = 'chart'}
     >
-      <IconChartLineRegular />
+      <IconChartLineRegular   
+      class="icon-toolbar"
+      style="background: var(--orange);
+      color:var(--lightorange);" />
       <span class="label-sm">Journey Sentiment</span>
     </button>
     
@@ -202,7 +205,10 @@ let emotionSubDrawerOpen = false;
       aria-selected={chartView === 'flow'}
       on:click={() => chartView = 'flow'}
     >
-      <IconFlowArrowRegular />
+      <IconFlowArrowRegular 
+      class="icon-toolbar"
+      style="background: var(--orange);
+      color:var(--lightorange);" />
       <span class="label-sm">Journey Flow</span>
     </button>
   </div>
@@ -234,9 +240,10 @@ let emotionSubDrawerOpen = false;
       <JourneyFlowDiagram data={journeyData} {layout} />
       </div>
       {:else}
-      <div class="px-4 py-2 w-full sticky">
+      <div class="px-4 py-2 w-full relative">
         <h3 class="heading-sm">Sentiment</h3>
       </div>
+      
         <JourneyStages data={journeyData} />
         <JourneySteps  data={journeyData} />
         <JourneySentiment data={journeyData} />
@@ -246,9 +253,10 @@ let emotionSubDrawerOpen = false;
       <h3 class="heading-sm">
         Sentiment Drivers</h3>
     </div>
+  
         <JourneyIndexBars data={journeyData} {metrics} />
+        {/if}
         <JourneyLegend items={metrics} />
-      {/if}
 
     </div>
 

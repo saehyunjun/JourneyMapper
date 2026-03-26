@@ -21,7 +21,7 @@
   export let metrics = [];
   /** Optional experience wheel data — renders below metrics when present */
   export let wheelData = /** @type {any} */ (null);
-  export let illustrationSrc = 'illustrations/Regression1.jpeg';
+  export let illustrationSrc = '/static/illustrations/Regression1.jpeg';
  
   const TWEEN_OPTS = { duration: 400, easing: cubicInOut };
 
@@ -144,8 +144,8 @@
   <div class="content-wrap">
 
     <!-- Top meta bar -->
-    <div class="toolbar-light py-2">
-      <div class="btn-extranote-empty ml-2">
+    <div class="toolbar-light p-2">
+      <div class="btn-extranote-empty">
         <div
           class="w-3 h-3 ring-1 ring-slate-500"
           style="background-color: {sentimentColor}"
@@ -173,7 +173,7 @@
 
     <!-- Illustration -->
     {#key illustrationSrc}
-      <div class="step-illustration h-50" in:fade={{ duration: 300 }}>
+      <div class="step-illustration h-35" in:fade={{ duration: 300 }}>
         {#if !imgError}
           <img
             src={illustrationSrc}
@@ -182,23 +182,23 @@
             on:error={() => (imgError = true)}
           />
         {:else}
-          <div class="step-illustration__fallback stats-animation-gradient__gradient--night bg-slate-900"></div>
+          <div class="step-illustration__fallback stats-animation-gradient__gradient--bright bg-slate-900 pt-8">
+            <div class="flex flex-col px-4">
+              <span class="label-sm text-white">{step.stage}</span>
+              <h2 class="label-lg text-white">{step.step}</h2>
+            </div>
+          </div>
         {/if}
       </div>
     {/key}
 
-    <!-- Step header -->
-    <div class="step-header">
-      <span class="heading-sm">{step.stage}</span>
-      <h2 class="heading">{step.step}</h2>
-    </div>
-
+  
+    <div class="detail-section">
     <!-- Narrative -->
     {#if step.narrative_description}
-      <div class="step-copy">
         <p class="text-body">{step.narrative_description}</p>
-      </div>
     {/if}
+    </div>
 
     <!-- Quote -->
     {#if step.quote}
@@ -323,6 +323,7 @@
     </section>
   </div>
 
+
   {#if wheelData}
     <div class="wheel-section">
       <div class="wheel-section-label">
@@ -341,25 +342,6 @@
   .content-wrap {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-.step-header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  padding: 0 1rem;
-}
-
-.step-copy {
-  padding: 0 1rem;
-}
-
-.detail-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.875rem;
-  width: 100%;
 }
 
 .quote-block {
@@ -369,7 +351,6 @@
   margin-left: 2rem;
   padding: 1.25rem 1.5rem;
 }
-
 
 .sentiment-row {
   display: grid;
