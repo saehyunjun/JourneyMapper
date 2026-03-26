@@ -30,7 +30,7 @@
 </script>
 
 <!-- ── Flow diagram ──────────────────────────────────────────────────────── -->
-<div class="body">
+<div class="body-dotted">
 <div
   class="flow-diagram-scroll shared-scroll"
   class:flow-diagram-scroll--vertical={isVertical}
@@ -111,13 +111,6 @@
     padding: 1rem 1.25rem 1.25rem;
   }
 
-
-  .body {
-  background-size: 25px 25px;
-  background-image: radial-gradient(circle, var(--midgrayblue) 1px, rgba(0, 0, 0, 0) 1px);
-  z-index: 1;
-}
-
   .flow-diagram-scroll--vertical {
     overflow-x: visible;
     overflow-y: auto;
@@ -128,8 +121,8 @@
     display: flex;
     flex-direction: row;
     align-items: middle;
+    height: max-content;
     gap: 0.25rem;
-    width: max-content;
   }
 
   /* ── VERTICAL: column of stage rows ──────────────────────────────────── */

@@ -1,5 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import StateBarList      from './StateBarList.svelte';
+
   import UserRegular from 'phosphor-icons-svelte/IconPlusCircleRegular.svelte';
 
   const dispatch = createEventDispatcher();
@@ -9,6 +11,8 @@
 
   /** ID of the currently active persona */
   export let activePersonaId = '';
+  export let currentState = [];
+
 
   /** @type {Record<string, boolean>} */
   let imgErrors = {};
@@ -145,6 +149,14 @@
         <p class="body-text text-sm">{hp.profile.bio_1}</p>
       {/if}
 
+
+      {#if currentState.length}
+      <div class="back-state-bars">
+        <StateBarList states={currentState} />
+      </div>
+      {/if}
+
+
       <!-- Key fields -->
       <div class="flex flex-col gap-4 mt-8">
         {#each getTooltipFields(hp) as [key, val]}
@@ -167,6 +179,12 @@
   position: relative;
   display: inline-flex;
 }
+  /* ── Current-state bars (story-style, colored per row) ───────────── */
+  .back-state-bars {
+    padding-top: 8px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+ 
 
 /* ── P / C type badge ───────────────────────────────────────────────── */
 .type-badge {

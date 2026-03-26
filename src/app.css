@@ -70,6 +70,16 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+
+
+  .body-dotted {
+    background-size: 25px 25px;
+    background-image: 
+    radial-gradient(circle, var(--midgrayblue) .25px, rgba(0, 0, 0, 0) 1px);
+    z-index: 1;
+  }
+  
+
   h1, h2, h3, h4, h5, h6,
   .heading, .text-heading, .nav-title, .subheading {
     font-family: var(--font-heading);
@@ -414,6 +424,20 @@
     outline-offset: 1px;
   }
 
+  .icon-toolbar-dark-sm {
+    height: 1.725em;
+    width: 1.725em;
+    font-size: .825em;
+    
+    background-color: var(--teal);
+    border-radius: 100em;
+    padding: .25em;
+
+    color: var(--lightgrayblue);
+    outline: 1.5px solid var(--teal);
+    outline-offset: 1px;
+  }
+
   .quote-icon {
     color: var(--grayblue);
     line-height: 1;
@@ -580,7 +604,7 @@
 
     .btn-extranote {
       display: flex;
-      flex-direction: c;
+      flex-direction: row;
       gap: 1em;
       align-items: center;
       justify-content: center;
@@ -717,6 +741,26 @@
     transition: background 0.25s ease, border-color 0.15s ease-in;
   }
 
+  .speech-bubble {
+    position: relative;
+    background: #ebfdff;
+    border-radius: .4em;
+  }
+  
+  .speech-bubble:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 0;
+    height: 0;
+    border: 1.594em solid transparent;
+    max-width: 10em;
+    border-bottom: 0;
+    border-left: 0;
+    margin-left: -0.797em;
+    margin-bottom: -1.594em;
+  }
 
   /* ── Card body: the thing that actually rotates ───────────────────── */
   .card-body {
@@ -1196,7 +1240,7 @@ padding: .25em 1em;
   
   color: var(--graybluedark);
   font-size: .825em;
-  padding: .25em 1em .25em .125em;
+  padding: .25em 1em .25em .25em;
   }
 
 .toolbar-sm-light-left {
@@ -1276,6 +1320,7 @@ padding: .25em 1em;
     justify-content: space-between;
     padding: .25em 3.5em .25em 1em;
     margin-left: 2em;
+    margin-top: 2em;
 
     height: fit-content;
     gap: .5em;
@@ -1295,6 +1340,16 @@ padding: .25em 1em;
     border: 1px solid var(--panel-dark)
 
     }
+
+
+.content-padding {
+  display:flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 1em 0 2.5em;
+}
 
 .toolbar-col {
   display: flex;

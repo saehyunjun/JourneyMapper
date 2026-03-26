@@ -88,11 +88,11 @@
   {/each}
 
   
-
   <!-- ── Vertical column dividers ──────────────────────────────────────── -->
   {#each data as _step, i}
     {@const isZoomed  = $zoomedIndex  === i}
     {@const isHovered = $hoveredIndex === i}
+    
     <line
       x1={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y1={TOP_PADDING}
       x2={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y2={TOP_PADDING + GRID_HEIGHT}

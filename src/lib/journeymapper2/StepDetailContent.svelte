@@ -5,6 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import { selectedIndex } from './journeyStore.js';
   import ExperienceWheel from './ExperienceWheel.svelte';
+  import JourneySubDrawer from './JourneySubDrawer.svelte';
 
   import { emotionColor, ratingToLabel, DYAD_BY_ID, SCORE_ALIASES, SENTIMENT_SCALE, sentimentToColor, metricScoreLabel } from './journeyConfig.js';
   import QuotesRegular from 'phosphor-icons-svelte/IconQuotesRegular.svelte';
@@ -14,14 +15,18 @@
   import CalenderDots from 'phosphor-icons-svelte/IconCalendarDotsBold.svelte';
   import HandHeart    from 'phosphor-icons-svelte/IconHandHeartBold.svelte';
   import Aclepius     from 'phosphor-icons-svelte/IconAsclepiusBold.svelte';
+  import ChartDonutRegular from 'phosphor-icons-svelte/IconChartDonutRegular.svelte';
  
   const dispatch = createEventDispatcher();
  
   export let data    = [];
   export let metrics = [];
-  /** Optional experience wheel data — renders below metrics when present */
+  /** Optional experience wheel data — opens in sub-drawer when present */
   export let wheelData = /** @type {any} */ (null);
   export let illustrationSrc = '/static/illustrations/Regression1.jpeg';
+
+  /** Controls the Experience Wheel sub-drawer */
+  let wheelDrawerOpen = false;
  
   const TWEEN_OPTS = { duration: 400, easing: cubicInOut };
 
@@ -140,6 +145,7 @@
   let imgError = false;
   $: if (illustrationSrc) imgError = false;
 </script>
+
 {#if step}
   <div class="content-wrap">
 
@@ -147,7 +153,7 @@
     <div class="toolbar-light p-2">
       <div class="btn-extranote-empty">
         <div
-          class="w-3 h-3 ring-1 ring-slate-500"
+          class="jm-swatch"
           style="background-color: {sentimentColor}"
         ></div>
         <span class="label uppercase font-semibold">
@@ -173,7 +179,7 @@
 
     <!-- Illustration -->
     {#key illustrationSrc}
-      <div class="step-illustration h-35" in:fade={{ duration: 300 }}>
+      <div class="h-fit" in:fade={{ duration: 300 }}>
         {#if !imgError}
           <img
             src={illustrationSrc}
@@ -188,12 +194,29 @@
               <h2 class="label-lg text-white">{step.step}</h2>
             </div>
           </div>
+          
+          <div class="section-bar">
+            <span>Journey Narrative</span>
+                {#if wheelData}
+                    <button
+                      class="btn-extranote pl-2"
+                      on:click={() => (wheelDrawerOpen = true)}
+                      aria-label="Open experience wheel for {step.step}"
+                    >
+                      <span class="label font-semibold">View Experience Wheel</span>
+                      <ArrowSquareOutRegular class="icon-toolbar-dark-sm" />
+                    </button>
+                  {/if}
+              </div>  
         {/if}
       </div>
     {/key}
 
+
+
+ 
   
-    <div class="detail-section">
+    <div class="content-padding">
     <!-- Narrative -->
     {#if step.narrative_description}
         <p class="text-body">{step.narrative_description}</p>
@@ -215,6 +238,7 @@
         </div>
       </section>
     {/if}
+    
 
     <!-- Sentiment -->
     <section class="detail-section">
@@ -222,13 +246,13 @@
         <span>Sentiment</span>
       </div>
 
-      <div class="sentiment-row">
-        <div class="score-squares">
+      <div class="content-padding">
+        <div class="flex flex-row gap-1">
           {#each SENTIMENT_SCALE as stopColor, i}
             {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
             {@const isActive  = i === Math.round(activePos)}
             <div
-              class="jm-swatch score-square"
+              class="jm-swatch-lg"
               class:score-square--active={isActive}
               style="background: {stopColor}; opacity: {isActive ? 1 : 0.2};"
             ></div>
@@ -322,22 +346,25 @@
       </div>
     </section>
   </div>
-
-
-  {#if wheelData}
-    <div class="wheel-section">
-      <div class="wheel-section-label">
-        <span class="wheel-icon" aria-hidden="true">◎</span>
-        Experience Wheel
-      </div>
-      <ExperienceWheel
-        data={wheelData}
-        stepName={step.step}
-        stageName={step.stage}
-      />
-    </div>
-  {/if}
 {/if}
+
+<!-- Experience Wheel Sub-Drawer -->
+{#if wheelData && step}
+  <JourneySubDrawer
+    bind:open={wheelDrawerOpen}
+    eyebrow={step.stage}
+    title="Experience Wheel"
+    width={480}
+    on:close={() => (wheelDrawerOpen = false)}
+  >
+    <ExperienceWheel
+      data={wheelData}
+      stepName={step.step}
+      stageName={step.stage}
+    />
+  </JourneySubDrawer>
+{/if}
+
 <style>
   .content-wrap {
   display: flex;
@@ -352,30 +379,10 @@
   padding: 1.25rem 1.5rem;
 }
 
-.sentiment-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
-  align-items: center;
-  padding: 0 2rem;
-}
-
 .sentiment-pill {
   white-space: nowrap;
 }
 
-.score-squares {
-  display: flex;
-  flex-direction: row;
-  gap: 0.25em;
-  min-width: 0;
-}
-
-.score-square {
-  flex: 1;
-  height: 1.5em;
-  transition: opacity 0.125s cubic-bezier(0.4, 0, 0.2, 1);
-}
 
 .score-square--active {
   outline: 1.5px solid var(--grayblue);
@@ -397,7 +404,7 @@
     grid-template-columns: 1fr;
   }
 
-  .sentiment-row {
+  .content-padding {
     grid-template-columns: 1fr;
   }
 }
@@ -458,13 +465,10 @@
   cursor: help;
 }
 
-
-.wheel-section {
-  border-top: 1px solid #DFC3A8;
-}
-
-.wheel-icon {
-  font-size: 11px;
-  color: #C4956A;
+.wheel-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0 2rem;
 }
 </style>
