@@ -163,8 +163,9 @@
 {/if}
 
 {#if step}
+
   <div class="content-wrap">
-    <div class="toolbar py-2">        
+    <div class="toolbar-light py-2">        
       <div class="btn-extranote-empty ml-2">
         <div class="w-3 h-3 ring-1 ring-slate-500" 
         style="background-color: {sentimentColor}">
@@ -207,24 +208,24 @@
       </div>
     {/key}
  
-    <div class="flex flex-col gap-4 w-full pb-2">
-      <div class="toolbar-dark px-4 h-20">
-        <h2 class="heading text-3xl text-slate-50">{step.step}</h2> 
-        <h3 class="heading-xs text-slate-50">{step.stage}</h3>
-      </div>
+      <div class="toolbar">
+        <div class="flex flex-col gap-1">
+          <span class="heading-sm">{step.stage}</span>
+          <h2 class="heading">{step.step}</h2> 
+        </div>
+    </div>
       <!-- ── Narrative description ──────────────────────────────────── -->
       {#if step.narrative_description}
         <div class="jm-content-col pl-4">
           <p class="text-body">{step.narrative_description}</p>
         </div>
       {/if}
-    </div>
 
     <!-- ── Step Quote ─────────────────────────────────────────────── -->
     {#if step.quote}
       <div class="flex flex-col gap-4 w-full mt-4 pb-4">
-        <div class="toolbar py-2 px-4">
-          <h2 class="heading-xs">Key Quotes</h2>
+        <div class="section-bar w-full">
+          <span>Key Quotes</span>
         </div>
         <div class="card-quote ml-8">
           <p class="pull-quote p-8 text-slate-800 text-pretty">
@@ -236,8 +237,8 @@
 
     <!-- ── Index Metrics ──────────────────────────────────────────── -->
     <div class="flex flex-col gap-4 w-full">
-      <div class="toolbar py-2 px-4">
-        <h3 class="heading-sm">Sentiment</h3>
+      <div class="section-bar">
+        <span>Sentiment</span>
       </div>
       <div class="flex flex-row pl-8">
         <!-- Overall sentiment score squares -->
@@ -246,9 +247,9 @@
             {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
             {@const isActive  = i === Math.round(activePos)}
             {@const dist      = Math.abs(i - activePos)}
-            {@const opacity   = isActive ? 1 : Math.max(0.12, 1 - dist * 0.1)}
+            {@const opacity   = isActive ? 1 : .2}
             <div
-              class="score-square"
+              class="jm-swatch"
               class:score-square--active={isActive}
               style="background: {stopColor}; opacity: {opacity};">
             </div>
@@ -259,9 +260,6 @@
         </span>
       </div>
 
-      <div class="toolbar py-2 px-4">
-        <h3 class="heading-sm">Sentiment Drivers</h3>
-      </div>
 
       <!-- ── Metric cards — mirrors IndexMetricBars, squares are tooltip trigger ── -->
       <div class="flex flex-col px-8">
@@ -313,12 +311,13 @@
                     on:mouseenter={hasExplainer ? (e) => onSquareEnter(e, m.key) : undefined}
                     on:mousemove={hasExplainer  ? onSquareMove : undefined}
                     on:mouseleave={hasExplainer ? onSquareLeave : undefined}
+                    role="dialog"
                   >
                     {#each STOPS as _stop, si}
                       {@const opacity  = squareOpacity(si, activePos)}
                       {@const isActive = si === Math.round(activePos)}
                       <div
-                        class="jm-swatch-lg"
+                        class="jm-swatch-round-sm"
                         class:imb-square--active={isActive}
                         style="background: {ramp[si]}; opacity: {opacity};"
                       ></div>

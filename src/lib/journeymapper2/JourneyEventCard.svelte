@@ -75,7 +75,7 @@
     let mouseX   = 0;
     let mouseY   = 0;
   
-    const TIP_W    = 260;
+    const TIP_W    = 320;
     const TIP_H    = 80;   // conservative estimate; real height varies
     const OFFSET_X = 12;
     const OFFSET_Y = 10;
@@ -111,10 +111,13 @@
       aria-label="{type}: {displayLabel}"
       type="button"
     >
-      <span class="event-pill__icon" aria-hidden="true">
-        <svelte:component this={Icon} size={12} weight="regular" />
+      <span class="event-pill__icon" 
+          class:event-icon--pos={isPos}
+          class:event-icon--neg={!isPos}
+          aria-hidden="true">
+        <svelte:component this={Icon} class="text-2xl p-1"  />
       </span>
-      <span class="event-pill__label heading-sm">{displayShortLabel}</span>
+      <span class="label-sm">{displayShortLabel}</span>
     </button>
   
   <!-- ─────────────────────────────────────────────────────────────────────────
@@ -140,7 +143,7 @@
           class:event-card__icon-badge--neg={!isPos}
           aria-hidden="true"
         >
-          <svelte:component this={Icon} size={18} weight="regular" />
+          <svelte:component this={Icon} class="text-2xl p-1"/>
         </div>
   
         <span
@@ -156,15 +159,15 @@
       <div
         class="event-card__rule"
         class:event-card__rule--pos={isPos}
-        class:event-card__rule--neg={!isPos}
-      />
+        class:event-card__rule--neg={!isPos}>
+        </div>
   
       <!-- Label -->
       <p class="event-card__label label-lg">{displayLabel}</p>
   
       <!-- Description (optional) -->
       {#if description}
-        <p class="event-card__description text-body-sm">{description}</p>
+        <p class="text-body-sm">{description}</p>
       {/if}
   
     </button>
@@ -175,39 +178,42 @@
   ───────────────────────────────────────────────────────────────────────────── -->
   {#if hovered && tooltip}
     <div
-      class="event-tooltip jm-surface"
+      class="tooltip"
       class:event-tooltip--pos={isPos}
       class:event-tooltip--neg={!isPos}
-      style="left:{tipX}px; top:{tipY}px; width:{TIP_W}px;"
+      style="left:{tipX}px; top:{tipY}px; 
+      width:{TIP_W}px;"
       role="tooltip"
       aria-live="polite"
     >
-      <!-- Header: icon + type kicker + label -->
-      <div class="event-tooltip__header">
         <div
-          class="event-tooltip__badge"
-          class:event-tooltip__badge--pos={isPos}
-          class:event-tooltip__badge--neg={!isPos}
-          aria-hidden="true"
+        class="event-pill__icon w-fit h-fit absolute top-2 right-2"
+        class:event-icon--pos ={isPos}
+        class:event-icon--neg={!isPos}
+        aria-hidden="true"
         >
-          <svelte:component this={Icon} size={13} weight="regular" />
+        <svelte:component this={Icon} class="text-2xl p-1" />
         </div>
+      <!-- Header: icon + type kicker + label -->
+      <div class="flex flex-row max-h-8 justify-between align-bottom h-fit pb-2 mb-2">
         <span
-          class="event-tooltip__kicker jm-kicker"
-          class:event-tooltip__kicker--pos={isPos}
-          class:event-tooltip__kicker--neg={!isPos}
+          class="label-xs"
+          class:event-card__type-kicker--pos={isPos}
+          class:event-card__type-kicker--neg={!isPos}
         >{type}</span>
+
       </div>
   
-      <p class="event-tooltip__label label-lg">{displayLabel}</p>
+      <h3 class="label mb-2">{displayLabel}</h3>
   
       <div
         class="event-tooltip__rule"
         class:event-tooltip__rule--pos={isPos}
-        class:event-tooltip__rule--neg={!isPos}
-      />
+        class:event-tooltip__rule--neg={!isPos}>
+    </div>
   
-      <p class="event-tooltip__body text-body-sm">{tooltip}</p>
+      <p class="text-body-sm">
+        {tooltip}</p>
     </div>
   {/if}
   
@@ -217,7 +223,7 @@
     .event-card {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 1em;
   
       width: 100%;
       padding: 14px 16px;
@@ -257,19 +263,44 @@
   
     /* Negative — red accent */
     .event-card--neg {
-      border-color: #c0392b;
-      background: #fff5f4;
+      border-color: #fff5f4;
+      background: #c0392b;
     }
   
     .event-card--neg:hover {
       background: #ffe8e5;
     }
+    .event-icon {
+      height: 2em;
+      width: 2em;
+    
+      align-items: center;
+      justify-content: center;
+    }
+
+        /* Positive — green accent */
+    .event-icon--pos {
+      background: #1a7a4a;
+      color: #e3f7ec;
+      border-radius: 100em;
+    }
+  
+  
+    /* Negative — red accent */
+    .event-icon--neg {
+      border-color: #fff5f4;
+      border-radius: 100em;
+      background: #c0392b;
+      color: #f5b4ae;
+    }
+  
+
   
     /* ── Header ────────────────────────────────────────────────────────────── */
     .event-card__header {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 2em;
     }
   
     /* Icon badge */
@@ -303,8 +334,7 @@
       width: 100%;
     }
   
-    .event-card__rule--pos { background: #a3dfc0; }
-    .event-card__rule--neg { background: #f5b4ae; }
+
   
     /* ── Text ──────────────────────────────────────────────────────────────── */
     .event-card__label {
@@ -313,17 +343,11 @@
       line-height: 1.3;
     }
   
-    .event-card__description {
-      margin: 0;
-      color: #4a4a44;
-      line-height: 1.45;
-    }
-  
     /* ── COMPACT PILL ──────────────────────────────────────────────────────── */
     .event-pill {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: .725em;
   
       padding: 3px 7px 3px 5px;
       border-radius: 100px;
@@ -350,14 +374,12 @@
     .event-pill--pos {
       background: #d4f5e3;
       border-color: #2d9e62;
-      color: #0c4a2a;
     }
   
     /* Negative pill */
     .event-pill--neg {
       background: #fde4e1;
       border-color: #d9382a;
-      color: #6b1a12;
     }
   
     .event-pill__icon {
@@ -366,12 +388,6 @@
       flex-shrink: 0;
     }
   
-    .event-pill__label {
-      /* Inherits heading-sm from app.css */
-      font-size: 0.6rem;
-      letter-spacing: 0.07em;
-      line-height: 1;
-    }
   
     /* ── TOOLTIP ───────────────────────────────────────────────────────────── */
     .event-tooltip {
@@ -427,32 +443,5 @@
       background: #ffd8d4;
       color: #8b1a10;
     }
-  
-    .event-tooltip__kicker {
-      /* jm-kicker from app.css, color overridden below */
-      margin-bottom: 0;
-    }
-  
-    .event-tooltip__kicker--pos { color: #0f5c32; }
-    .event-tooltip__kicker--neg { color: #8b1a10; }
-  
-    .event-tooltip__label {
-      margin: 0;
-      color: var(--ink);
-      line-height: 1.25;
-    }
-  
-    .event-tooltip__rule {
-      height: 1px;
-      width: 100%;
-    }
-  
-    .event-tooltip__rule--pos { background: #a3dfc0; }
-    .event-tooltip__rule--neg { background: #f5b4ae; }
-  
-    .event-tooltip__body {
-      margin: 0;
-      color: #4a4a44;
-      line-height: 1.5;
-    }
+
   </style>

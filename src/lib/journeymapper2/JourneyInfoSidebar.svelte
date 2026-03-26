@@ -271,16 +271,17 @@
       {#key displayIndex}
         <div
           class="flex flex-row w-full justify-between"
-          in:fly={{ y: 8, duration: 220, delay: 40, easing: cubicOut }}
-          out:fade={{ duration: 120 }}
-        >
+          in:fly={{ y: 12, duration: 460, easing: cubicOut }}
+          out:fade={{ duration: 1000, easing: cubicInOut}}        
+          >
         <div class="flex flex-col">
           <div class="step-circles mb-4">
             {#each data as _, i}
               <div
                 class="step-circle"
                 class:step-circle--active={i === displayIndex}
-                class:step-circle--complete={i < displayIndex}>
+                class:step-circle--complete={i < displayIndex}
+                style="--i:{i}">
               </div>
             {/each}
           </div>
@@ -295,7 +296,7 @@
         {#key displayIndex}
           <div
             class="gap-1"
-            in:fly={{ y: 6, duration: 220, delay: 100, easing: cubicOut }}
+            in:fade={{ y: 6, duration: 220, delay: 300, easing: cubicInOut }}
             out:fade={{ duration: 120 }}
           >
             <div class="flex flex-col">
@@ -309,32 +310,31 @@
 
       <div class="flex flex-col mt-12">
       <!-- Sentiment — row of colored squares, active square highlighted -->
-      <span class="heading-sm">Sentiment</span>
-      <div class="toolbar-sm-light">
-        {#key displayIndex}
-     
-      {/key}
-        <div class="score-squares">
-          {#each SENTIMENT_SCALE as stopColor, i}
+      <div class="jm-content-row align-middle w-full mb-2">          
+      <span class="heading-sm">Overall Sentiment</span>
+      {#key displayIndex}
+      <span
+        class="pill uppercase font-semibold"
+        style="border: 1px solid {sentimentColor};"
+        in:fly={{ y: 6, duration: 200 }}
+        out:fade={{ duration: 100 }}
+      >
+        {sentimentLabel($sentimentTween)}
+      </span>
+    {/key}
+    </div>
+
+      <div class="flex flex-row gap-1 justify-start">          
+        {#each SENTIMENT_SCALE as stopColor, i}
             {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
             {@const isActive  = i === Math.round(activePos)}
             {@const dist      = Math.abs(i - activePos)}
             {@const opacity   = isActive ? 1 : Math.max(0.12, 1 - dist * 0.28)}
             <div
-              class="score-square"
+              class="jm-swatch-lg"
               class:score-square--active={isActive}
-              style="background: {stopColor}; opacity: {opacity};"
-            />
+              style="background: {stopColor}; opacity: {opacity};"></div>
           {/each}
-        </div>
-        <span
-        class="pill uppercase font-semibold"
-        style="border: 1px solid {sentimentColor};"
-        in:fade={{ duration: 200, delay: 100 }}
-        out:fade={{ duration: 100 }}
-      >
-        {sentimentLabel($sentimentTween)}
-      </span>
       </div>
 
       <!-- Index metrics — labels crossfade, bars tween -->
@@ -359,21 +359,24 @@
 </aside>
 
 <style>
-  /* ── Bio + Goals collapse animation ─────────────────────────── */
-  .bio-goals-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    opacity: 1;
-    overflow: hidden;
-    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity    0.2s ease;
-  }
-  .bio-goals-wrap--hidden {
-    max-height: 0;
-    opacity: 0;
-  }
+.bio-goals-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 1;
+  overflow: hidden;
+  max-height: 800px;
+  transition:
+    max-height 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 200ms ease,
+    transform 200ms ease;
+}
 
+.bio-goals-wrap--hidden {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+}
   /* ── Score squares (sentiment + index metrics) ──────────────── */
   .score-squares {
     display: flex;
@@ -382,14 +385,18 @@
     width: 100%;
   }
   .score-square {
-    flex: 1;
-    height: 1.5em;
-    transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .score-square--active {
-    outline: 1px solid var(--ink);
-    outline-offset: 1px;
-  }
+  flex: 1;
+  height: 1.5em;
+  transition:
+    opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.score-square--active {
+  outline: 1px solid var(--ink);
+  outline-offset: 1px;
+  transform: scaleY(1.15);
+}
 
   /* ── Inflection path cards ───────────────────────────────────── */
   .infl-path {

@@ -82,11 +82,13 @@
   
                 <div class="flex flex-row gap-2 align-middle items-center">
                   {#if IconComponent}
-                    <span class="imb-icon" style="color: {m.color};">
-                      <svelte:component this={IconComponent} size={14} />
+                    <span class="imb-icon" 
+                    style="color: {m.color};">
+                      <svelte:component this={IconComponent} class="h-4" />
                     </span>
                   {:else}
-                    <div class="w-2 h-2 ring-1" style="background: {m.color};"></div>
+                    <div class="w-2 h-2 ring-1" 
+                    style="background: {m.color};"></div>
                   {/if}
                   <span class="text-body-sm">{m.label}</span>
                 </div>
@@ -112,10 +114,11 @@
                 {@const opacity  = squareOpacity(si, activePos)}
                 {@const isActive = si === Math.round(activePos)}
                 <div
-                  class="jm-swatch-lg"
+                  class="jm-swatch-round"
                   class:imb-square--active={isActive}
                   class:jm-swatch--compact={compact}
-                  style="background: {ramp[si]}; opacity: {opacity};"></div>
+                  style="background: {ramp[si]}; 
+                  opacity: {opacity};"></div>
               {/each}
             </div>
               {#key selectedIndex}
@@ -175,11 +178,6 @@
       opacity: 0.85;
     }
 
-    .jm-swatch--compact {
-        width: 1em;
-        height: 1em;
-    }
-  
     .imb-square--active {
       outline: 1.15px solid var(--grayblue);
       outline-offset: 1px;

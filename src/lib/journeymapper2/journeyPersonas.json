@@ -603,7 +603,15 @@
         "age": "mid-20s",
         "gender": "Female",
         "occupation": "on medical leave",
-        "caregiver": "Mother (primary), Partner (secondary)",
+        "current_treatments": [
+          "Rituximab",
+          "Cyclophosphamide"
+        ],
+        "past_treatments": [
+          "Corticosteroids, IVIg"
+        ],
+        "caregiver": [
+          "Mother (primary), Partner (secondary)"],
         "preference": "find a clinical trial",
         "diagnosed": "14 months ago",
         "distance to care": "100+ miles",

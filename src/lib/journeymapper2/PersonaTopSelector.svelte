@@ -69,9 +69,8 @@
     const prof = p.profile ?? {};
     return [
       ['Age',        prof.age],
-      ['Occupation', prof.occupation],
-      ['Diagnosed',  prof.diagnosed],
-      ['Current Status', prof.preference],
+      ['Current Treatment', prof.current_treatments],
+      ['Current Goal', prof.preference],
     ].filter(([, val]) => val != null && val !== '');
   }
 </script>
@@ -119,27 +118,29 @@
       </div>
     {/each}
   </div>
-</div>
-
+</div>  
 <!-- ── Persona bio tooltip ──────────────────────────────────────────────── -->
 {#if hoveredId}
   {@const hp = personas.find((p) => p.id === hoveredId)}
   {#if hp}
+    {@const isHpCaregiver = hp.type?.toLowerCase().includes('caregiver')}
     <div
       class="persona-top-tooltip jm-surface"
-      style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px;"
+      style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px; border-color: {isHpCaregiver ? 'var(--color-amber-500, #f59e0b)' : 'var(--teal, #23abab)'};"
       role="tooltip"
       aria-live="polite"
     >
       <!-- Header row -->
-      <div class="jm-section-bar" style="margin-bottom: 8px;">
-        <span class="text-body-lg">{hp.profile.name}</span>
+      <div class="biobar"      
+      style="background-color: {isHpCaregiver ? 'var(--color-amber-500, #f59e0b)' : 'var(--teal, #23abab)'};">
+        <h3 class="heading-md text-slate-50">{hp.profile.name}</h3>
         {#if hp.type}
-          <span class="pill-sm">{hp.type}</span>
+          <span class="pill-white">{hp.type}</span>
         {/if}
       </div>
 
       <!-- Bio excerpt -->
+      <div class="content-col">
       {#if hp.profile.bio_1}
         <p class="body-text text-sm">{hp.profile.bio_1}</p>
       {/if}
@@ -148,14 +149,16 @@
       <div class="flex flex-col gap-4 mt-8">
         {#each getTooltipFields(hp) as [key, val]}
           <div class="tip-field-row">
-            <span class="label-sm">{key}</span>
-            <span class="label font-bold">{val}</span>
+            <span class="label-heading">{key}</span>
+            <span class="label capitalize">{val}</span>
           </div>
         {/each}
       </div>
     </div>
+  </div>
   {/if}
 {/if}
+
 
 <style>
 
@@ -197,8 +200,9 @@
 
 /* Active state: solid ring */
   .persona-avatar--active {
-    border: 4px solid var(--teal, #23abab);
+    outline: 4px solid var(--teal, #23abab);
     filter: saturate(1);
+    margin-bottom: .25em;
   }
 
   .persona-photo {
@@ -208,21 +212,14 @@
     border-radius: 50%;
     display: block;
   }
-  /* ── Tooltip ────────────────────────────────────────────────────────── */
+  /* ── Tooltip ────────────────────────────────────────────────────────── */ 
   .persona-top-tooltip {
-    position: fixed;
-    pointer-events: none;
-    min-width: 425px;
-    z-index: 500;
-    padding: 12px 14px 14px;
-    transition: left 50ms linear, top 50ms linear;
-  }
-
-  .tip-field-row {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--color-stone-200);
-    align-items: baseline;
-    gap: 6px;
-  }
+      position: fixed;
+      pointer-events: none;
+      min-width: 425px;
+      z-index: 500;
+      border: 2px solid transparent;
+      transition: left 50ms linear, top 50ms linear, border-color 150ms ease;
+    }
+  
 </style>
