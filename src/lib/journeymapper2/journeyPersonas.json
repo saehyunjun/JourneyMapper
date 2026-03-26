@@ -1353,7 +1353,7 @@
       "profile": {
         "initials": "MW",
         "name": "Maggie W.",
-        "role": "Caregiver",
+        "role": "patient",
         "age": "mid-40s",
         "gender": "Female",
         "occupation": "Retired",
@@ -1778,7 +1778,7 @@
       "profile": {
         "initials": "KT",
         "name": "Kristen T.",
-        "role": "Caregiver (Mother)",
+        "role": "Caregiver",
         "age": "mid-30s",
         "gender": "Female",
         "occupation": "Part-time / caregiver",

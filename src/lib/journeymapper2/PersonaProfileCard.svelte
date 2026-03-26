@@ -53,9 +53,9 @@ function toggle(e) {
 
     <!-- ── FRONT ─────────────────────────────────────────────────── -->
     <div class="card-face card-front" aria-hidden={flipped}>
-    
-      <div class="persona-card-gradient">
-        {#if !imgError}
+      <div class="card-gradient">
+
+          {#if !imgError}
         <img
           class="card-photo"
           src="/assets/profiles/{personaProfile.imageFile}"
@@ -67,39 +67,33 @@ function toggle(e) {
           {personaProfile.initials}
         </div>
       {/if}
-      </div>
-      <div class="persona-card-shimmer"></div>
-     
+    </div>
+    
       
 
       <!-- gradient + name -->
       <div class="card-gradient">
       </div>
       <!-- flip hint -->
-        <div class="biobar">
-      <span class="label-lg">
-        {personaProfile.name}
-      </span>
-        
-      <span class="pill text-slate-800">
-          {personaProfile.role}</span>
+      <div class="biobar">
+      <div class="bioname">
+      <h3 class="text-sm text-white">{personaProfile.name}</h3>
+    </div>
+        <span class="pill-white">{personaProfile.role}</span>
       </div>
-      
       <div class="flip-hint">
         <!-- Phosphor "ArrowsClockwise" regular -->
         <RotateClockwise class="text-white" />
       </div>
-
     </div>
+
 
     <!-- ── BACK ──────────────────────────────────────────────────── -->
     <div class="card-face card-back" aria-hidden={!flipped}>
-
-      <div class="card-back-inner">
-
-        <div class="back-header">
-          <span class="back-name">{personaProfile.name}</span>
-          <span class="pill-dark">{personaProfile.role}</span>
+      <div class="flex flex-col w-full gap-2">
+        <div class="biobar">
+          <h3 class="text-sm text-white">{personaProfile.name}</h3>
+          <span class="pill-white">{personaProfile.role}</span>
         </div>
 
         <div class="back-metrics">
@@ -127,7 +121,7 @@ function toggle(e) {
         </div>
 
         {#if personaProfile.currentState?.length}
-        <div class="back-metrics">
+        <div class="back-metrics pt-8">
           {#each personaProfile.currentState as item}
       
             <div class="metric-row">
@@ -234,13 +228,6 @@ function toggle(e) {
     align-items: stretch;
   }
 
-  .card-back-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding: 20px 18px 18px;
-    width: 100%;
-  }
 
   .back-header {
     display: flex;

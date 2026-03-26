@@ -250,7 +250,8 @@
   width: 84px;
   height: 84px;
   border-radius: 50%;
-  border: 1px solid var(--color-slate-500);
+  border: 2px solid var(--panel-dark);
+
   overflow: visible;
   border: 2px solid transparent;
   cursor: pointer;
@@ -1087,18 +1088,19 @@ color: var(--grayblue);
   display: flex;
   position: relative;
   flex-direction: row;
-  align-items: center;
+align-items: center;
   justify-content: space-between;
   gap: .5em;
   width: 100%;
   
-  background-color: var(--paper);
+  padding: .25em 1em .25em .825em;
+  background-color: var(--orange);
   border-bottom: 1px solid (--teal);
   
   color: var(--lightgrayblue);
   font-size: .725em;
-  padding: .25em 1em;
   }
+
 
 .toolbar {
 display: flex;
