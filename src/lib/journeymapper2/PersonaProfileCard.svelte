@@ -1,5 +1,9 @@
 <script>
   import { RotateClockwise } from "carbon-icons-svelte";
+  import UserBold          from 'phosphor-icons-svelte/IconUserBold.svelte';
+  import BriefcaseRegular  from 'phosphor-icons-svelte/IconBriefcaseRegular.svelte';
+  import CalendarRegular   from 'phosphor-icons-svelte/IconCalendarRegular.svelte';
+  import HeartRegular      from 'phosphor-icons-svelte/IconHeartRegular.svelte';
 
   export let personaProfile = {};
   export let onOpenDetails = () => {};
@@ -94,6 +98,46 @@ function toggle(e) {
         <div class="biobar">
           <h3 class="text-sm text-white">{personaProfile.name}</h3>
           <span class="pill-white">{personaProfile.role}</span>
+        </div>
+
+        <!-- Quick profile fields -->
+        <div class="">
+          {#if personaProfile.age}
+            <div class="jm-content-row">
+              <UserBold class="back-profile-icon" />
+              <div class="back-profile-text">
+                <span class="metric-label">Age Range</span>
+                <span class="back-profile-value">{personaProfile.age}</span>
+              </div>
+            </div>
+          {/if}
+          {#if personaProfile.occupation}
+            <div class="jm-content-row">
+              <BriefcaseRegular class="back-profile-icon" />
+              <div class="back-profile-text">
+                <span class="metric-label">Occupation</span>
+                <span class="back-profile-value">{personaProfile.occupation}</span>
+              </div>
+            </div>
+          {/if}
+          {#if personaProfile.diagnosed}
+            <div class="jm-content-row">
+              <CalendarRegular class="back-profile-icon" />
+              <div class="back-profile-text">
+                <span class="metric-label">Diagnosed</span>
+                <span class="back-profile-value">{personaProfile.diagnosed}</span>
+              </div>
+            </div>
+          {/if}
+          {#if personaProfile.preference}
+            <div class="jm-content-row">
+              <HeartRegular class="back-profile-icon" />
+              <div class="back-profile-text">
+                <span class="metric-label">Current Goal</span>
+                <span class="back-profile-value">{personaProfile.preference}</span>
+              </div>
+            </div>
+          {/if}
         </div>
 
         <div class="back-metrics">
@@ -244,6 +288,45 @@ function toggle(e) {
     line-height: 1.2;
   }
 
+  /* ── Back profile fields (age, occupation, diagnosed, goal) ──── */
+  .jm-content-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .jm-content-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .back-profile-icon {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    margin-top: 1px;
+    color: var(--text-muted, #6b6050);
+  }
+
+  .back-profile-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+  }
+
+  .back-profile-value {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text, #1a1a1a);
+    text-transform: capitalize;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   /* ── Metric rows ──────────────────────────────────────────────────── */
   .back-metrics {
     display: flex;
@@ -299,7 +382,6 @@ function toggle(e) {
   }
 
   .metric-value {
-    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
     font-size: 0.65rem;
     font-weight: 600;
     color: var(--text, #1a1a1a);

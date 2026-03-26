@@ -35,6 +35,11 @@
   /* Brand / accents */
   --teal: #23abab;
   --red: #ff0000;
+  --lightred: #FB8809;
+  
+  --green: #599077;
+  --midgreen: #7DBFA7;
+  --lightgreen: 
 
   /* Common strokes/shadows */
   --stroke: 1px solid var(--midgrayblue);
@@ -463,6 +468,7 @@
     font-family: var(--font-heading);
   
     border-radius: 100rem; /* rounded-lg */
+    border: 1.5px solid var(--panel-mid);
   
     will-change: transform;
   
@@ -505,7 +511,7 @@
   
     transition:
       transform 200ms ease,
-      color 500ms ease,
+      color 200ms ease,
       background-color 200ms ease,
       box-shadow 200ms ease;
   }
@@ -515,23 +521,23 @@
   .btn-base:hover, .btn-extranote:hover, .btn-nav:hover, .btn-base-sm:hover {
     background: var(--lightorange);
     color: var(--orange);
-    border: 2px solid (--teal);
+    border: 2px solid var(--teal);
   } 
   
-    /* active */
-     .btn-base:active, .btn-nav:active, .layout-btn:active {
-      border: .5px solid var(--brightorange);
-      color: #fff;
-      box-shadow: 
-      0 1px -3px rgba(0, 0, 0, 0.12),
-      0 0 0 -1px rgba(0, 0, 0, 0.06) ;
+/* active */
+  .btn-base:active, .btn-nav:active, .layout-btn:active {
+  border: 1.5px solid var(--teal);
+  color: var(--orange);
+  box-shadow: 
+  0 1px -3px rgba(0, 0, 0, 0.12),
+  0 0 0 -1px rgba(0, 0, 0, 0.06) ;
 
-      transition:       
-      transform 200ms ease,
-      color 500ms ease-in-out,
-      background-color 200ms ease,
-      box-shadow 200ms ease;
-    }
+  transition:       
+  transform 200ms ease,
+  color 500ms ease-in-out,
+  background-color 200ms ease,
+  box-shadow 200ms ease;
+}
 
     .view-tab--active {
       background-color: var(--orange);
@@ -833,7 +839,7 @@ color: var(--grayblue);
     object-fit: cover;
   }
 
-  .photo-profile {
+  .photo- file {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -876,8 +882,8 @@ color: var(--grayblue);
   .pill-sm {
     display: flex;
     flex-direction: row;
-    font-family: var(--font-mono);
-    font-size: 0.625em;
+    font-family: var(--font-heading);
+    font-size: 0.525em;
     font-weight: 800;
     text-transform: uppercase;
     color: var(--gray); 
@@ -887,7 +893,7 @@ color: var(--grayblue);
     justify-content: center;
     width: fit-content;
     height: fit-content;
-    padding:.45em .325em .45em .25em;
+    padding:.325em .625em .3em .625em;
   }
 
   .header-row {
@@ -896,7 +902,7 @@ color: var(--grayblue);
     justify-content: space-between;
     width: 100%;
     align-items: baseline;
-    border-bottom: 1px solid var(--ink);
+    border-bottom: .5px solid var(--ink);
     padding-bottom: .25em;
   }
   /* ---------------------------------------------------------------------- */
@@ -1389,6 +1395,7 @@ padding: .25em 1em;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
+    border-radius: 10em;
     padding: 0.3rem 0.65rem;
   }
 
@@ -1453,8 +1460,9 @@ padding: .25em 1em;
   .jm-emotion {
     display: flex;
     align-items: center;
-    gap: 10px;
-    min-height: 28px;
+    height: .725em;
+    width:7.5em;
+    border: 1px solid var(--grayblue)
   }
   
   .jm-dot {
@@ -1478,6 +1486,7 @@ padding: .25em 1em;
     border: .25px solid var(--ink);
     height: 2.5em;
     width: 2.5em;
+    aspect-ratio: 1;
     overflow: hidden;
     transition:
     opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -1583,13 +1592,17 @@ padding: .25em 1em;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
-    width: 225px;
+    width: 250px;
     min-height: 7.5em;
     padding-bottom: 2em;
-    border: 0.5px solid var(--ink);
-    border-bottom-width:7.5px;
+
     cursor: pointer;
     text-align: left;
+
+    background-color: var(--paper);
+    border: 1.25px solid var(--grayblue);
+    border-radius: 0 0 .25em .25em;
+
     box-shadow: rgba(0, 0, 0, 0.15) 0 2px 12px;
     box-shadow: rgba(55, 39, 37, 0.05) 0 10px 20px -10px;
     transition: background-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
@@ -1597,15 +1610,17 @@ padding: .25em 1em;
 
   .card-sm:hover,
   .card-sm--hovered {
-    background-color: #eaeff8;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1), 0 0 0 1px rgba(63,115,255,0.18);
+    background-color: var(--panel);
+    box-shadow: 
+    0 2px -10px rgba(0,0,0,0.1), 
+    0 0 0 10px rgba(63,115,255,0.18);
     transform: translateY(-1px);
     z-index: 1;
   }
 
   .card-sm--selected {
     background-color: var(--card, #fffff0);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.14), 0 0 0 2px #3f73ff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.14), 0 0 0 2px;
     z-index: 2;
   }
 

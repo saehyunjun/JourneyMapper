@@ -140,50 +140,30 @@
   let imgError = false;
   $: if (illustrationSrc) imgError = false;
 </script>
-
-<!-- ── Metric explainer tooltip ──────────────────────────────────────────── -->
-{#if tooltipText && tooltipMetric}
-  <div
-    class="tooltip-sm jm-surface"
-    style="left: {tooltipX}px; top: {tooltipY}px;
-    border: 1px solid {tooltipMetric.color};"
-    transition:fade={{ duration: 100 }}
-    role="tooltip"
-  >
-    <div
-      class="flex flex-row w-full gap-2"
-    >
-      <span class="label-heading" 
-      style= "color:{tooltipMetric.color}"
-      >
-      {tooltipMetric.label}</span>
-    </div>
-    <p class="text-body">{tooltipText}</p>
-  </div>
-{/if}
-
 {#if step}
-
   <div class="content-wrap">
-    <div class="toolbar-light py-2">        
+
+    <!-- Top meta bar -->
+    <div class="toolbar-light py-2">
       <div class="btn-extranote-empty ml-2">
-        <div class="w-3 h-3 ring-1 ring-slate-500" 
-        style="background-color: {sentimentColor}">
-        </div>
+        <div
+          class="w-3 h-3 ring-1 ring-slate-500"
+          style="background-color: {sentimentColor}"
+        ></div>
         <span class="label uppercase font-semibold">
           {sentimentLabel}
         </span>
       </div>
 
-      <!-- Emotion tag — clickable, opens Plutchik sub-drawer -->  
       <button
         class="btn-extranote"
         on:click={() => dispatch('openEmotionDetail')}
         aria-label="Learn about {step.plutchik_score} — open emotion detail"
-        title="About Plutchik emotions">
+        title="About Plutchik emotions"
+      >
         <div class="flex flex-row w-fit gap-0">
           {#each emotionSwatches as color}
-            <span class="w-2 h-2 rounded-full ring-1" style="background: {color};"></span> 
+            <span class="w-2 h-2 rounded-full ring-1" style="background: {color};"></span>
           {/each}
         </div>
         <span class="label uppercase font-semibold">{step.plutchik_score}</span>
@@ -191,7 +171,7 @@
       </button>
     </div>
 
-    <!-- ── Step illustration ──────────────────────────────────────── -->
+    <!-- Illustration -->
     {#key illustrationSrc}
       <div class="step-illustration h-50" in:fade={{ duration: 300 }}>
         {#if !imgError}
@@ -202,67 +182,72 @@
             on:error={() => (imgError = true)}
           />
         {:else}
-          <div class="step-illustration__fallback stats-animation-gradient__gradient--night bg-slate-900">
-          </div>
+          <div class="step-illustration__fallback stats-animation-gradient__gradient--night bg-slate-900"></div>
         {/if}
       </div>
     {/key}
- 
-      <div class="toolbar">
-        <div class="flex flex-col gap-1">
-          <span class="heading-sm">{step.stage}</span>
-          <h2 class="heading">{step.step}</h2> 
-        </div>
-    </div>
-      <!-- ── Narrative description ──────────────────────────────────── -->
-      {#if step.narrative_description}
-        <div class="jm-content-col pl-4">
-          <p class="text-body">{step.narrative_description}</p>
-        </div>
-      {/if}
 
-    <!-- ── Step Quote ─────────────────────────────────────────────── -->
-    {#if step.quote}
-      <div class="flex flex-col gap-4 w-full mt-4 pb-4">
-        <div class="section-bar w-full">
-          <span>Key Quotes</span>
-        </div>
-        <div class="card-quote ml-8">
-          <p class="pull-quote p-8 text-slate-800 text-pretty">
-            &ldquo;{step.quote}&rdquo;
-          </p>
-        </div>
+    <!-- Step header -->
+    <div class="step-header">
+      <span class="heading-sm">{step.stage}</span>
+      <h2 class="heading">{step.step}</h2>
+    </div>
+
+    <!-- Narrative -->
+    {#if step.narrative_description}
+      <div class="step-copy">
+        <p class="text-body">{step.narrative_description}</p>
       </div>
     {/if}
 
-    <!-- ── Index Metrics ──────────────────────────────────────────── -->
-    <div class="flex flex-col gap-4 w-full">
+    <!-- Quote -->
+    {#if step.quote}
+      <section class="detail-section">
+        <div class="section-bar w-full">
+          <span>Key Quote</span>
+        </div>
+
+        <div class="card-quote quote-block">
+          <QuotesRegular class="quote-icon" />
+          <p class="pull-quote text-slate-800 text-pretty">
+            &ldquo;{step.quote}&rdquo;
+          </p>
+        </div>
+      </section>
+    {/if}
+
+    <!-- Sentiment -->
+    <section class="detail-section">
       <div class="section-bar">
         <span>Sentiment</span>
       </div>
-      <div class="flex flex-row pl-8">
-        <!-- Overall sentiment score squares -->
-        <div class="score-squares flex-2/3">
+
+      <div class="sentiment-row">
+        <div class="score-squares">
           {#each SENTIMENT_SCALE as stopColor, i}
             {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
             {@const isActive  = i === Math.round(activePos)}
-            {@const dist      = Math.abs(i - activePos)}
-            {@const opacity   = isActive ? 1 : .2}
             <div
-              class="jm-swatch"
+              class="jm-swatch score-square"
               class:score-square--active={isActive}
-              style="background: {stopColor}; opacity: {opacity};">
-            </div>
+              style="background: {stopColor}; opacity: {isActive ? 1 : 0.2};"
+            ></div>
           {/each}
         </div>
-        <span class="pill ml-12 mr-2" style="background-color:{sentimentColor}">
+
+        <span class="pill sentiment-pill" style="background-color:{sentimentColor}">
           {sentimentLabel}
         </span>
       </div>
+    </section>
 
+    <!-- Metrics -->
+    <section class="detail-section">
+      <div class="section-bar">
+        <span>Index Metrics</span>
+      </div>
 
-      <!-- ── Metric cards — mirrors IndexMetricBars, squares are tooltip trigger ── -->
-      <div class="flex flex-col px-8">
+      <div class="metrics-wrap">
         <div class="imb-grid">
           {#each metrics as m, i}
             {@const tweenedVal    = metricVals[i] ?? 0}
@@ -275,76 +260,69 @@
               class="imb-card"
               in:fly={{ y: 4, duration: 200, delay: 60 + i * 40, easing: cubicOut }}
             >
-              <div class="flex flex-col gap-2">
-
-                <!-- ── Label row ──────────────────────────────────────────── -->
-                <div class="jm-content-row align-middle w-full">
-                  <div class="flex flex-row gap-2 w-full items-center justify-between">
-                    <div class="flex flex-row gap-2 align-middle items-center">
-                      {#if IconComponent}
-                        <span class="imb-icon" style="color: {m.color};">
-                          <svelte:component this={IconComponent} size={14} />
-                        </span>
-                      {:else}
-                        <div class="w-2 h-2 ring-1" style="background: {m.color};"></div>
-                      {/if}
-                      <span class="text-body-sm">{m.label}</span>
-                    </div>
-                    {#key $selectedIndex}
-                      <span
-                        class="pill font-semibold"
-                        style="border: 1px solid {m.color}; color: {m.color}"
-                        in:fade={{ duration: 200, delay: 80 + i * 40 }}
-                        out:fade={{ duration: 80 }}
-                      >
-                        {metricScoreLabel(m.key, tweenedVal)}
-                      </span>
-                    {/key}
-                  </div>
-                </div>
-
-                <!-- ── Squares — hover triggers metric explainer tooltip ── -->
-                <div class="flex flex-row w-full justify-between">
-                  <div
-                    class="flex flex-row gap-1"
-                    class:imb-squares--interactive={hasExplainer}
-                    on:mouseenter={hasExplainer ? (e) => onSquareEnter(e, m.key) : undefined}
-                    on:mousemove={hasExplainer  ? onSquareMove : undefined}
-                    on:mouseleave={hasExplainer ? onSquareLeave : undefined}
-                    role="dialog"
-                  >
-                    {#each STOPS as _stop, si}
-                      {@const opacity  = squareOpacity(si, activePos)}
-                      {@const isActive = si === Math.round(activePos)}
-                      <div
-                        class="jm-swatch-round-sm"
-                        class:imb-square--active={isActive}
-                        style="background: {ramp[si]}; opacity: {opacity};"
-                      ></div>
-                    {/each}
-                  </div>
-                  {#key $selectedIndex}
-                    <span
-                      class="label"
-                      style="color: {m.color};"
-                      in:fade={{ duration: 180, delay: 60 + i * 40 }}
-                      out:fade={{ duration: 80 }}
-                    >
-                      {tweenedVal > 0 ? '+' : ''}{tweenedVal.toFixed(1)}
+              <div class="imb-card-header">
+                <div class="imb-card-title">
+                  {#if IconComponent}
+                    <span class="imb-icon" style="color: {m.color};">
+                      <svelte:component this={IconComponent} size={14} />
                     </span>
-                  {/key}
+                  {:else}
+                    <div class="w-2 h-2 ring-1" style="background: {m.color};"></div>
+                  {/if}
+                  <span class="text-body-sm">{m.label}</span>
                 </div>
 
+                {#key $selectedIndex}
+                  <span
+                    class="pill font-semibold"
+                    style="border: 1px solid {m.color}; color: {m.color}"
+                    in:fade={{ duration: 200, delay: 80 + i * 40 }}
+                    out:fade={{ duration: 80 }}
+                  >
+                    {metricScoreLabel(m.key, tweenedVal)}
+                  </span>
+                {/key}
+              </div>
+
+              <div class="imb-card-scale">
+                <div
+                  class="imb-squares"
+                  class:imb-squares--interactive={hasExplainer}
+                  on:mouseenter={hasExplainer ? (e) => onSquareEnter(e, m.key) : undefined}
+                  on:mousemove={hasExplainer ? onSquareMove : undefined}
+                  on:mouseleave={hasExplainer ? onSquareLeave : undefined}
+                  role="group"
+                  aria-label="{m.label} scale"
+                >
+                  {#each STOPS as _stop, si}
+                    {@const opacity  = squareOpacity(si, activePos)}
+                    {@const isActive = si === Math.round(activePos)}
+                    <div
+                      class="jm-swatch-round-sm"
+                      class:imb-square--active={isActive}
+                      style="background: {ramp[si]}; opacity: {opacity};"
+                    ></div>
+                  {/each}
+                </div>
+
+                {#key $selectedIndex}
+                  <span
+                    class="label imb-value"
+                    style="color: {m.color};"
+                    in:fade={{ duration: 180, delay: 60 + i * 40 }}
+                    out:fade={{ duration: 80 }}
+                  >
+                    {tweenedVal > 0 ? '+' : ''}{tweenedVal.toFixed(1)}
+                  </span>
+                {/key}
               </div>
             </div>
           {/each}
         </div>
       </div>
-
-    </div>
+    </section>
   </div>
 
-  <!-- ── Experience Wheel — renders flush below when data is available ── -->
   {#if wheelData}
     <div class="wheel-section">
       <div class="wheel-section-label">
@@ -359,95 +337,153 @@
     </div>
   {/if}
 {/if}
-
-
 <style>
+  .content-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
-  /* ── Score squares (overall sentiment row) ───────────────────── */
-  .score-squares {
-    display: flex;
-    flex-direction: row;
-    gap: .25em;
-  }
-  .score-square {
-    flex: 1;
-    height: 1.5em;
-    filter: saturate(.15);
-    opacity: 20%;
-    transition: opacity 0.125s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .score-square--active {
-    outline: 1.5px solid var(--grayblue);
-    outline-offset: 2px;
-    filter: saturate(1);
-    opacity: 100%;
-  }
+.step-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0 1rem;
+}
 
-  /* ── IndexMetricBars styles (mirrored) ───────────────────────── */
+.step-copy {
+  padding: 0 1rem;
+}
+
+.detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  width: 100%;
+}
+
+.quote-block {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin-left: 2rem;
+  padding: 1.25rem 1.5rem;
+}
+
+
+.sentiment-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.sentiment-pill {
+  white-space: nowrap;
+}
+
+.score-squares {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25em;
+  min-width: 0;
+}
+
+.score-square {
+  flex: 1;
+  height: 1.5em;
+  transition: opacity 0.125s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.score-square--active {
+  outline: 1.5px solid var(--grayblue);
+  outline-offset: 2px;
+}
+
+.metrics-wrap {
+  padding: 0 2rem;
+}
+
+.imb-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 1.5rem;
+}
+
+@media (max-width: 480px) {
   .imb-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2em;
+    grid-template-columns: 1fr;
   }
 
-  @media (max-width: 480px) {
-    .imb-grid { grid-template-columns: 1fr; }
+  .sentiment-row {
+    grid-template-columns: 1fr;
   }
+}
 
-  .imb-icon {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    opacity: 0.85;
-  }
+.imb-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
 
-  .imb-square--active {
-    outline: 1.15px solid var(--grayblue);
-    outline-offset: 1px;
-    opacity: 100%;
-    filter: saturate(1);
-  }
+.imb-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
 
-  /* ── Squares interactive state ───────────────────────────────── */
-  .imb-squares--interactive {
-    cursor: help;
-  }
+.imb-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
 
-  /* ── Metric explainer tooltip ────────────────────────────────── */
-  .metric-explainer-tooltip {
-    position: fixed;
-    z-index: 9999;
-    width: 248px;
-    pointer-events: none;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow:
-      0 4px 16px rgba(90, 62, 40, 0.16),
-      0 1px 3px  rgba(90, 62, 40, 0.10);
-  }
+.imb-card-scale {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+}
 
-  .tooltip-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+.imb-squares {
+  display: flex;
+  gap: 0.25rem;
+  min-width: 0;
+}
 
-  .tooltip-body {
-    padding: 8px 10px 10px;
-    margin: 0;
-    font-size: 11px;
-    line-height: 1.55;
-    color: #5A3E28;
-  }
+.imb-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
 
-  /* ── Experience Wheel section ────────────────────────────────── */
-  .wheel-section {
-    border-top: 1px solid #DFC3A8;
-  }
+.imb-value {
+  white-space: nowrap;
+}
 
-  .wheel-icon {
-    font-size: 11px;
-    color: #C4956A;
-  }
+.imb-square--active {
+  outline: 1.15px solid var(--grayblue);
+  outline-offset: 1px;
+  opacity: 100%;
+  filter: saturate(1);
+}
+
+.imb-squares--interactive {
+  cursor: help;
+}
+
+
+.wheel-section {
+  border-top: 1px solid #DFC3A8;
+}
+
+.wheel-icon {
+  font-size: 11px;
+  color: #C4956A;
+}
 </style>

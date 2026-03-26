@@ -8,10 +8,6 @@
   import IndexMetricBars from './IndexMetricBars.svelte';
 
 
-  import UserBold       from 'phosphor-icons-svelte/IconUserBold.svelte';
-  import HeartRegular      from 'phosphor-icons-svelte/IconHeartRegular.svelte';
-  import BriefcaseRegular  from 'phosphor-icons-svelte/IconBriefcaseRegular.svelte';
-  import CalendarRegular   from 'phosphor-icons-svelte/IconCalendarRegular.svelte';
   import ArrowRightRegular from 'phosphor-icons-svelte/IconArrowRightRegular.svelte';
   import ArrowUpRegular    from 'phosphor-icons-svelte/IconArrowUpRegular.svelte';
   import ArrowDownRegular  from 'phosphor-icons-svelte/IconArrowDownRegular.svelte';
@@ -123,45 +119,6 @@
 
           <PersonaProfileCard personaProfile={activePersona.profile} />
 
-          <!-- Quick fields -->
-          <div class="flex flex-col gap-2">
-            {#if profile.age}
-                <div class="toolbar-sm-white align-middle">
-                  <div class="flex flex-row gap-1">
-                    <UserBold class="icon-toolbar-dark"/>
-                    <div class="flex flex-col">
-                    <span class="label-sm">Age Range</span>
-                  <span class="font-semibold capitalize">{profile.age}</span>
-                </div>
-              </div>
-                </div>
-            {/if}
-            {#if profile.occupation}
-              <div class="flex flex-col">
-                <span class="label-sm uppercase text-slate-400 flex items-center gap-1">
-                  <BriefcaseRegular />Occupation
-                </span>
-                <span class="text-body-sm capitalize">{profile.occupation}</span>
-              </div>
-            {/if}
-            {#if profile.diagnosed}
-              <div class="flex flex-col">
-                <span class="label-sm uppercase text-slate-400 flex items-center gap-1">
-                  <CalendarRegular />Diagnosed
-                </span>
-                <span class="text-body-sm capitalize">{profile.diagnosed}</span>
-              </div>
-            {/if}
-            {#if profile.preference}
-              <div class="flex flex-col">
-                <span class="label-sm uppercase text-slate-400 flex items-center gap-1">
-                  <HeartRegular />Current Goal
-                </span>
-                <span class="text-body-sm capitalize">{profile.preference}</span>
-              </div>
-            {/if}
-          </div>
-
           {#if profile.bio}
             <div class="border-bottom pt-2">
               <p class="text-body-sm">{profile.bio}</p>
@@ -171,19 +128,36 @@
           {#if profile.goal1 || profile.goal2 || profile.goal3}
             <div class="jm-content-col gap-2">
               <div class="flex flex-col">
-                <span class="label-sm uppercase text-slate-400">Goals
+                <span class="label-sm uppercase text-slate-400">
+                  Goals
                   
                 </span>
               </div>
               {#each [profile.goal1, profile.goal2, profile.goal3].filter(Boolean) as goal}
                 <div class="flex items-start gap-1">
-                  <ArrowRightRegular size={10} class="mt-0.5 shrink-0" />
+                  <ArrowRightRegular class="h-4 mt-0.5 shrink-0" />
                   <span class="text-body-sm">{goal}</span>
                 </div>
               {/each}
             </div>
           {/if}
 
+          {#if profile.goal1 || profile.barrier2 || profile.barrier3}
+            <div class="jm-content-col gap-2">
+              <div class="flex flex-col">
+                <span class="label-sm uppercase">
+                  Barriers
+                  
+                </span>
+              </div>
+              {#each [profile.barrier1, profile.barrier2, profile.barrier3].filter(Boolean) as barrier}
+                <div class="flex items-start gap-1">
+                  <ArrowRightRegular class="h-4 mt-0.5 shrink-0" />
+                  <span class="text-body-sm">{barrier}</span>
+                </div>
+              {/each}
+            </div>
+          {/if}
         </div><!-- /bio-goals-wrap -->
       </div>
     {/key}
@@ -311,7 +285,9 @@
       <div class="flex flex-col mt-12">
       <!-- Sentiment — row of colored squares, active square highlighted -->
       <div class="jm-content-row align-middle w-full mb-2">          
-      <span class="heading-sm">Overall Sentiment</span>
+      <span class="heading-sm">
+        Overall Sentiment
+      </span>
       {#key displayIndex}
       <span
         class="pill uppercase font-semibold"
@@ -324,7 +300,7 @@
     {/key}
     </div>
 
-      <div class="flex flex-row gap-1 justify-start">          
+      <div class="toolbar-sm-white">          
         {#each SENTIMENT_SCALE as stopColor, i}
             {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
             {@const isActive  = i === Math.round(activePos)}

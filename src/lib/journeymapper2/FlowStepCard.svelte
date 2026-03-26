@@ -11,8 +11,6 @@
 
   /** The stage accent color (hex) for border and index label */
   export let stageColor = '#6b7280';
-  export let hideHeader = false;
-  export let layout = 'horizontal';
 
   function handleClick() {
     selectedIndex.update(i => i === step.index ? -1 : step.index);
@@ -44,7 +42,6 @@
     class="card-sm"
     class:flow-step-card--hovered={$hoveredIndex === step.index}
     class:flow-step-card--selected={$selectedIndex === step.index}
-    style="border-bottom-color:{stageColor};"
     on:mouseenter={() => { hoveredIndex.set(step.index); hoveredInflectionIndex.set(-1); }}
     on:mouseleave={() => hoveredIndex.set(-1)}
     on:click={handleClick}
@@ -52,14 +49,14 @@
   >
     <span class="flex flex-row w-full justify-between -my-1">
       <div
-        class="w-16 h-2 ring-1"
+        class="jm-emotion -mx-1"
         style="background-color:{sentimentToColor(d?.sentiment)};"
         aria-label="Sentiment: {d?.sentiment}"
       ></div>
 
       <!-- Emotion swatches -->
       {#if emotionSwatches.length}
-        <div class="flex flex-row" aria-label="Emotion: {d?.plutchik_score}">
+        <div class="flex flex-row -mx-1" aria-label="Emotion: {d?.plutchik_score}">
           {#each emotionSwatches as color}
             <div class="w-3 h-3 rounded-full ring-1"
                  style="background:{color};">
@@ -70,7 +67,7 @@
     </span>
 
     <div class="flex flex-row p-2">
-      <span class="text-body-lg">
+      <span class="text-body">
         {step.step}
       </span>
     </div>
@@ -103,10 +100,10 @@
   {#if infl}
     <div class="flow-inflection-connector" aria-hidden="true"></div>
     <div
-      class="card-sm bg-slate-100"
+      class="card"
       class:flow-inflection-card--hovered={$hoveredInflectionIndex === step.index}
       class:flow-inflection-card--selected={$selectedIndex === step.index}
-      style="border-bottom-color:{stageColor};"
+      style="border-color:{stageColor};"
       role="region"
       aria-label="Inflection point: {d?.step}"
       on:mouseenter={() => { hoveredInflectionIndex.set(step.index); hoveredIndex.set(-1); }}
@@ -128,8 +125,9 @@
   .flow-step-slot {
     display: flex;
     flex-direction: column;
-    align-items: center;
-  }
+    align-items: top;
+    justify-content: center;
+  } 
 
   /* ── Event cluster ─────────────────────────────────────────────────────── */
 
@@ -153,30 +151,14 @@
 
   /* ── Inflection ────────────────────────────────────────────────────────── */
   .flow-inflection-connector {
-    width: 1px;
+    width: 2px;
     height: 20px;
     border-left: 1.5px dashed #a0a8b8;
     flex-shrink: 0;
   }
 
-  .flow-inflection-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-    padding: 0.25em 0.525em;
-    width: 180px;
-    min-height: 55px;
-    background-color: var(--paper);
-    border: 0.5px solid #c8cdd8;
-    border-bottom-width: 3px;
-    cursor: pointer;
-    text-align: left;
-    transition: background-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
-  }
-
   .flow-inflection-card--hovered {
-    background-color: #eaeff8;
+    background-color: var(--panel);
     box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 0 0 1px rgba(63,115,255,0.18);
   }
 
@@ -191,45 +173,4 @@
     font-style: italic;
   }
 
-  /* ── Unused legacy classes (kept for safety) ───────────────────────────── */
-  .flow-step-top-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .sentiment-bar {
-    display: block;
-    width: 1.5rem;
-    height: 0.375rem;
-    border-radius: 1px;
-    flex-shrink: 0;
-  }
-
-  .emotion-swatches {
-    display: flex;
-    flex-direction: row;
-    gap: 2px;
-    margin-top: auto;
-    padding-top: 0.2rem;
-  }
-
-  .emotion-swatch {
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    flex-shrink: 0;
-  }
-
-  .infl-placeholder-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.25rem;
-  }
 </style>

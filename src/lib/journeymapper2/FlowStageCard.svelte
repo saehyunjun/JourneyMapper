@@ -65,7 +65,7 @@
   // ── Colours ────────────────────────────────────────────────────────────────
   const POS_COLOR  = '#23abab';
   const NEG_COLOR  = '#e05c5c';
-  const LINE_COLOR = 'rgba(160,168,184,0.7)';
+  const LINE_COLOR = "var(--midgrayblue)";
 
   // ── Horizontal fork geometry ───────────────────────────────────────────────
   // Brackets are left/right SVG panels; path cards stack vertically inside.
@@ -79,7 +79,7 @@
   // ── Vertical fork geometry ─────────────────────────────────────────────────
   // Brackets are top/bottom SVG panels; path cards are placed side-by-side.
   const V_BRACKET_H = 28;
-  const V_CARD_W    = 160;
+  const V_CARD_W    = 250;
   const V_CARD_H    = 100;
   const V_GAP       = 8;
   const V_SVG_W     = V_CARD_W * 2 + V_GAP;
@@ -115,7 +115,7 @@
           <FlowStepCard {step} {data} {stageColor} {layout} />
 
           <!-- Short connector from step card into the fork -->
-          <div class="fork-stem" class:fork-stem--vertical={isVertical} aria-hidden="true" />
+          <div class="fork-stem" class:fork-stem--vertical={isVertical} aria-hidden="true" ></div>
 
           <!-- Fork block: diverge bracket · path cards · converge bracket -->
           <div class="fork-body" class:fork-body--vertical={isVertical}>
@@ -140,7 +140,8 @@
               <div class="fork-cards-h" style="gap:{H_GAP}px;">
                 <div class="fork-path-card fork-path-card--pos"
                      class:fork-path-card--hovered={hoveredPathKey === `${step.index}-pos`}
-                     style="border-color:{POS_COLOR}44; width:{H_CARD_W}px; min-height:{H_CARD_H}px;"
+                     style="border: 2px solid {POS_COLOR}80; 
+                     width:{H_CARD_W}px; min-height:{H_CARD_H}px;"
                      role="button"
                      tabindex="0"
                      aria-label="Open positive inflection path"
@@ -148,13 +149,20 @@
                      on:mouseleave={handlePathMouseLeave}
                      on:click={() => handlePathClick(step.index, 'positive')}
                      on:keydown={e => e.key === 'Enter' && handlePathClick(step.index, 'positive')}>
-                  <span class="fork-path-tag" style="color:{POS_COLOR}; background:{POS_COLOR}18;">↑ Positive</span>
-                  {#if pos?.label}<span class="fork-path-label">{pos.label}</span>{/if}
-                  {#if pos?.outcome}<p class="fork-path-outcome">{pos.outcome}</p>{/if}
+                
+                <span class="pill-sm" 
+                  style="border: 1px solid {POS_COLOR};
+                  color: {POS_COLOR}">
+                   Positive</span>
+                  {#if pos?.label}
+                  <span class="fork-path-label">{pos.label}</span>{/if}
+                  {#if pos?.outcome}
+                  <p class="fork-path-outcome">{pos.outcome}</p>{/if}
                 </div>
+
                 <div class="fork-path-card fork-path-card--neg"
                      class:fork-path-card--hovered={hoveredPathKey === `${step.index}-neg`}
-                     style="border-color:{NEG_COLOR}44; width:{H_CARD_W}px; min-height:{H_CARD_H}px;"
+                     style="border:2px solid {NEG_COLOR}80; width:{H_CARD_W}px; min-height:{H_CARD_H}px;"
                      role="button"
                      tabindex="0"
                      aria-label="Open negative inflection path"
@@ -162,9 +170,20 @@
                      on:mouseleave={handlePathMouseLeave}
                      on:click={() => handlePathClick(step.index, 'negative')}
                      on:keydown={e => e.key === 'Enter' && handlePathClick(step.index, 'negative')}>
-                  <span class="fork-path-tag" style="color:{NEG_COLOR}; background:{NEG_COLOR}18;">↓ Negative</span>
-                  {#if neg?.label}<span class="fork-path-label">{neg.label}</span>{/if}
-                  {#if neg?.outcome}<p class="fork-path-outcome">{neg.outcome}</p>{/if}
+
+                  <span class="pill-sm" 
+                  style="border: 1px solid {NEG_COLOR}; 
+                  color: {NEG_COLOR};">Negative
+                  </span>
+                {#if neg?.label}
+                    <span class="fork-path-label">                    
+                    {neg.label}
+                  </span>{/if}
+                  
+                  {#if neg?.outcome}
+                  <p class="text-body-sm">
+                    {neg.outcome}</p>
+                  {/if}
                 </div>
               </div>
 
@@ -270,7 +289,10 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    align-items: top;
+    justify-content: start;
   }
+
   .flow-stage--vertical { gap: 0; }
   .flow-stage-count { opacity: 0.8; }
 
@@ -279,14 +301,15 @@
     display: flex;
     flex-direction: row;
     align-items: top;
-    justify-content: flex-start;
     padding: 1em;
     gap: 0;
   }
+  
   .flow-steps-col {
     flex-direction: column;
     align-items: center;
     padding: 0.75rem 1rem;
+    width: 100%;
     gap: 0;
   }
 
@@ -306,7 +329,7 @@
   /* Vertical: step card on top, fork block below — slot is a column */
   .fork-slot--vertical {
     flex-direction: column;
-    align-items: center;
+    align-items: top;
   }
 
   /* Short connecting line between the step card and the fork block */
@@ -372,6 +395,7 @@
     display: flex;
     flex-direction: column;
     gap: 3px;
+    z-index: 99;
     overflow: hidden;
     flex-shrink: 0;
     box-sizing: border-box;
@@ -381,39 +405,29 @@
   .fork-path-card:hover,
   .fork-path-card--hovered {
     transform: translateY(-1px);
-    filter: brightness(0.97);
+    filter: brightness(1);
   }
-  .fork-path-card--pos { background: rgba(35,171,171,0.05); }
+  .fork-path-card--pos { background: var(--color-green-50); }
   .fork-path-card--pos:hover,
   .fork-path-card--pos.fork-path-card--hovered {
-    background: rgba(35,171,171,0.11);
-    box-shadow: 0 0 0 1.5px rgba(35,171,171,0.35), 0 2px 6px rgba(35,171,171,0.15);
+    
+    background: var(--color-green-100);
+    
+    box-shadow: 0 0 0 1.5px rgba(35,171,171,0), 
+    0 2px 6px rgba(35,171,171,0.15);
   }
-  .fork-path-card--neg { background: rgba(224,92,92,0.05);  }
+  .fork-path-card--neg { background: var(--lightorange) }
   .fork-path-card--neg:hover,
   .fork-path-card--neg.fork-path-card--hovered {
-    background: rgba(224,92,92,0.11);
-    box-shadow: 0 0 0 1.5px rgba(224,92,92,0.35), 0 2px 6px rgba(224,92,92,0.15);
+    
+    background: var(--color-red-200);
+    
+    box-shadow: 
+    0 0 0 1.5px rgba(224,92,92,0.35),
+     0 2px 6px rgba(224,92,92,0.15);
   }
 
-  .fork-path-tag {
-    font-size: 0.5rem;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    font-family: var(--font-mono);
-    padding: 1px 5px;
-    border-radius: 3px;
-    width: fit-content;
-    flex-shrink: 0;
-  }
-  .fork-path-label {
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--ink, #312F28);
-    line-height: 1.2;
-    flex-shrink: 0;
-  }
+
   .fork-path-outcome {
     font-size: 0.58rem;
     color: var(--ink-muted, #73726c);
@@ -421,7 +435,6 @@
     margin: 0;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
   }
 </style>

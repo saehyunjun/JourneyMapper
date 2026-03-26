@@ -30,6 +30,7 @@
 </script>
 
 <!-- ── Flow diagram ──────────────────────────────────────────────────────── -->
+<div class="body">
 <div
   class="flow-diagram-scroll shared-scroll"
   class:flow-diagram-scroll--vertical={isVertical}
@@ -100,14 +101,22 @@
   {/if}
 
 </div>
-
+</div>
 <style>
   /* ── Scroll wrapper ───────────────────────────────────────────────────── */
   .flow-diagram-scroll {
     overflow-x: auto;
     overflow-y: visible;
+    z-index:999;
     padding: 1rem 1.25rem 1.25rem;
   }
+
+
+  .body {
+  background-size: 25px 25px;
+  background-image: radial-gradient(circle, var(--midgrayblue) 1px, rgba(0, 0, 0, 0) 1px);
+  z-index: 1;
+}
 
   .flow-diagram-scroll--vertical {
     overflow-x: visible;

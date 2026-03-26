@@ -87,7 +87,7 @@
 
     <div class="header-row">
       <p class="label-sm font-bold">{step.step}</p>
-      <span class="label-sm text-right">{step.stage}</span>
+      <span class="label-xs text-right">{step.stage}</span>
     </div>
 
 
@@ -97,7 +97,7 @@
         <span class="tip-quote-icon" aria-hidden="true">
           <QuotesRegular class="h-12" />
         </span>
-        <p class="pull-quote">{step.quote}</p>
+        <p class="pull-quote-sm">{step.quote}</p>
       </div>
     {/if}
 
@@ -114,13 +114,13 @@
           style="background:{sentimentColor}">
           </span>
           
-          <div class="jm-content-col mt-1">
-          <span class="text-body-sm font-semibold">
+        <div class="jm-content-col mt-1">
+          <span class="label-sm">
             {sentimentLabel}
           </span>
-        <span class="label-xs">
-          Overall Sentiment
-        </span>
+          <span class="label-xs">
+            Overall Sentiment
+          </span>
       </div>
         </div>
       </div>

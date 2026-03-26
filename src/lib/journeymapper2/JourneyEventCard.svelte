@@ -388,24 +388,7 @@
       flex-shrink: 0;
     }
   
-  
-    /* ── TOOLTIP ───────────────────────────────────────────────────────────── */
-    .event-tooltip {
-      position: fixed;
-      pointer-events: none;
-      z-index: 500;
-  
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-  
-      padding: 10px 12px 12px;
-      border-radius: 6px;
-      border-width: 1.5px;
-      border-style: solid;
-  
-      transition: left 50ms linear, top 50ms linear;
-    }
+ 
   
     .event-tooltip--pos {
       border-color: #1a7a4a;
@@ -417,31 +400,5 @@
       background: #fff8f7;
     }
   
-    /* Tooltip header row */
-    .event-tooltip__header {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-  
-    .event-tooltip__badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      border-radius: 5px;
-      flex-shrink: 0;
-    }
-  
-    .event-tooltip__badge--pos {
-      background: #c6f0d8;
-      color: #0f5c32;
-    }
-  
-    .event-tooltip__badge--neg {
-      background: #ffd8d4;
-      color: #8b1a10;
-    }
 
   </style>
