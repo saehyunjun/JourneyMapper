@@ -8,9 +8,9 @@
   import JourneySubDrawer from './JourneySubDrawer.svelte';
 
   import { emotionColor, ratingToLabel, DYAD_BY_ID, SCORE_ALIASES, SENTIMENT_SCALE, sentimentToColor, metricScoreLabel } from './journeyConfig.js';
+  
   import QuotesRegular from 'phosphor-icons-svelte/IconQuotesRegular.svelte';
   import ArrowSquareOutRegular from 'phosphor-icons-svelte/IconArrowSquareOutRegular.svelte';
-  import ArrowElbowDownRight from "phosphor-icons-svelte/IconArrowElbowDownRightDuotone.svelte";
   import SmileyBlank  from 'phosphor-icons-svelte/IconSmileyBlankBold.svelte';
   import Scroll from 'phosphor-icons-svelte/IconScrollRegular.svelte';
   import IconHeartHalfRegular from 'phosphor-icons-svelte/IconHeartHalfRegular.svelte';
@@ -19,7 +19,6 @@
   import CalenderDots from 'phosphor-icons-svelte/IconCalendarDotsBold.svelte';
   import HandHeart    from 'phosphor-icons-svelte/IconHandHeartBold.svelte';
   import Aclepius     from 'phosphor-icons-svelte/IconAsclepiusBold.svelte';
-  import ChartDonutRegular from 'phosphor-icons-svelte/IconChartDonutRegular.svelte';
  
   const dispatch = createEventDispatcher();
  
@@ -222,8 +221,6 @@
 
 
 
- 
-  
     <div class="content-padding">
     <!-- Narrative -->
     {#if step.narrative_description}

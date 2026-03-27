@@ -72,12 +72,12 @@
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 201;
+    z-index: 999;
     width: 70vw;
     display: flex;
     flex-direction: column;
     background: var(--paper);
-    overflow-y: scroll;
+    overflow-y: auto;
     border-left: 2.5px solid var(--panel);
     box-shadow: 
     0px 0px 0px 1px rgba(0, 0, 0, 0.08),

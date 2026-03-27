@@ -107,7 +107,7 @@
   }
 </script>
 
-<aside class="sticky-panel flex flex-col overflow-y-auto overflow-x-hidden h-full" aria-label="Persona & step details">
+<aside class="sticky-panel" aria-label="Persona & step details">
 
 
   <!-- ═══════════════════════════════════════════════════════════════
@@ -115,11 +115,12 @@
   ════════════════════════════════════════════════════════════════ -->
   {#if activePersona}
     {#key activePersona.id}
-      <div class="flex flex-col gap-3 px-2 pt-1 pb-4"
+      <div class="flex flex-col gap-3 px-2 pb-4"
         in:fly={{ y: 8, duration: 220, easing: cubicOut }}>
 
         <!-- Bio + Goals — collapse when a step is active -->
-        <div class="bio-goals-wrap pt-4" class:bio-goals-wrap--hidden={displayIndex >= 0}>
+        <div class="bio-goals-wrap pt-2" 
+        class:bio-goals-wrap--hidden={displayIndex >= 0}>
         
           <PersonaProfileCard 
           personaProfile={activePersona.profile} 
@@ -181,7 +182,7 @@
   {#if showInflPanel && inflDetail}
     {#key $hoveredInflectionIndex}
       <div
-        class="flex flex-col gap-3 px-4 py-3 border-top"
+        class="flex flex-col gap-3 px-2 border-top"
         in:fly={{ y: 6, duration: 180, easing: cubicOut }}
       >
         <!-- Step name + description -->
@@ -321,7 +322,7 @@
 
     </div>
 
-      <div class="flex flex-row gap-1 mt-2">          
+      <div class="flex flex-row gap-1">          
         {#each SENTIMENT_SCALE as stopColor, i}
             {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
             {@const isActive  = i === Math.round(activePos)}

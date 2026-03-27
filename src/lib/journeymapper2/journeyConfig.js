@@ -65,8 +65,8 @@ const METRIC_SCORE_LABELS = {
   ],
   medical_self_efficacy: [
     'Helpless',            // −5
-    'Very Low Efficacy',
-    'Low Efficacy',
+    'Very Low',
+    'Low',
     'Unsure',
     'Neutral',
     'Some Agency',

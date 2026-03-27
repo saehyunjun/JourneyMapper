@@ -12,23 +12,25 @@
   $: ec             = data?.emotional_context ?? {};
   $: inflection     = data?.inflection_analysis ?? {};
   $: sponsorActions = data?.sponsor_actions ?? [];
+  $: makeOrBreak = data?.sponsor_make_or_break ?? [];
 
   const CX = 240, CY = 240;
   const RING_INNER = 50;
   const RING_OUTER = 100;
 
-  let hoveredTp = null;
+  const PHASES = [
+    { label: 'BEFORE', startDeg: 180, endDeg: 30 },
+    { label: 'DURING', startDeg: 330, endDeg: 90 },
+    { label: 'AFTER',  startDeg: 90,  endDeg: 210 }
+  ];
 
-  // NEW: DOM refs
+  const PHASE_COLORS = ['#7DBFA7', '#EDCAAA', '#DFC3A8'];
+
+  let hoveredTp = null;
   let containerEl;
   let nodeRefs = [];
 
-  function textAnchor(deg) {
-  const cos = Math.cos(degToRad(deg));
-  if (cos > 0.3) return 'start';
-  if (cos < -0.3) return 'end';
-  return 'middle';
-}
+  $: nodeRefs = new Array(touchpoints.length);
 
   function degToRad(d) { return (d * Math.PI) / 180; }
 
@@ -37,9 +39,12 @@
     return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad) };
   }
 
-  $: tpAngles = touchpoints.map((_, i) =>
-    -90 + (360 / Math.max(touchpoints.length, 1)) * i
-  );
+  function textAnchor(deg) {
+    const cos = Math.cos(degToRad(deg));
+    if (cos > 0.3) return 'start';
+    if (cos < -0.3) return 'end';
+    return 'middle';
+  }
 
   function sentimentColor(s) {
     if (s === 'negative') return '#C0483B';
@@ -54,167 +59,205 @@
 
   $: primaryColor = primaryEmotionColor(ec.primary_emotion);
 
-  // NEW: DOM-based tooltip positioning
+  // ✅ Phase-based angle calculation
+  $: tpAngles = (() => {
+    const groups = { before: [], during: [], after: [] };
+
+    touchpoints.forEach((tp, i) => {
+      const key = tp.phase || 'during';
+      groups[key]?.push({ tp, i });
+    });
+
+    const angles = new Array(touchpoints.length);
+
+    PHASES.forEach((phaseDef) => {
+      const key = phaseDef.label.toLowerCase();
+      const items = groups[key] || [];
+
+      if (!items.length) return;
+
+      let start = phaseDef.startDeg;
+      let end = phaseDef.endDeg;
+      if (end <= start) end += 360;
+
+      const span = end - start;
+
+      items.forEach((item, j) => {
+        const t = (j + 0.5) / items.length;
+        const deg = start + t * span;
+        angles[item.i] = deg % 360;
+      });
+    });
+
+    return angles;
+  })();
+
+  function phaseArcFill(ri, ro, startDeg, endDeg) {
+    let end = endDeg;
+    if (end <= startDeg) end += 360;
+
+    const large = (end - startDeg) > 180 ? 1 : 0;
+
+    const s  = polar(ri, startDeg);
+    const e  = polar(ri, end % 360);
+    const so = polar(ro, startDeg);
+    const eo = polar(ro, end % 360);
+
+    return `
+      M ${so.x} ${so.y}
+      A ${ro} ${ro} 0 ${large} 1 ${eo.x} ${eo.y}
+      L ${e.x} ${e.y}
+      A ${ri} ${ri} 0 ${large} 0 ${s.x} ${s.y}
+      Z
+    `;
+  }
+
+  // Tooltip positioning
   $: tooltipPos = (() => {
     if (hoveredTp === null || !containerEl || !nodeRefs[hoveredTp]) return null;
 
     const nodeRect = nodeRefs[hoveredTp].getBoundingClientRect();
     const containerRect = containerEl.getBoundingClientRect();
 
-    const TOOLTIP_W = 320;
-    const TOOLTIP_H = 140;
-    const OFFSET = 12;
+    const W = 320, H = 140, OFFSET = 12;
 
     let x = nodeRect.right - containerRect.left + OFFSET;
-    let y = nodeRect.top - containerRect.top + nodeRect.height / 2 - TOOLTIP_H / 2;
+    let y = nodeRect.top - containerRect.top + nodeRect.height / 2 - H / 2;
 
-    if (x + TOOLTIP_W > containerRect.width) {
-      x = nodeRect.left - containerRect.left - TOOLTIP_W - OFFSET;
+    if (x + W > containerRect.width) {
+      x = nodeRect.left - containerRect.left - W - OFFSET;
     }
 
-    y = Math.max(8, Math.min(y, containerRect.height - TOOLTIP_H - 8));
+    y = Math.max(8, Math.min(y, containerRect.height - H - 8));
 
     return { x, y };
   })();
 </script>
 
-<div class="wheel-wrap">
+  <!-- Legend -->
+  <div class="toolbar-sm-light-left">
+    <div class="pill gap-2">
+      <Smiley class="icon-toolbar-dark-sm"/>
+      <span class="label-sm">Positive Experience Opportunity</span>
+    </div>
 
-  <!-- SVG -->
+    <div class="pill gap-2" 
+    style="border-color: var(--red)">
+      <ArrowsOutVertical class="icon-toolbar-red-sm"/>
+      <span class="label-sm">Make-or-Break Moment</span>
+    </div>
+
+    <div class="pill gap-2"
+      style="border-color: var(--orange)">
+      <Question class="icon-toolbar-light-sm"/>
+      <span class="label-sm"
+      style="color: var(--orange)">
+      Info gaps</span>
+    </div>
+  </div>
+
+<div class="wheel-wrap">
   <div class="wheel-svg-wrap" bind:this={containerEl}>
     <svg viewBox="0 0 480 480" class="wheel-svg">
 
+      <!-- Phase arcs -->
+      {#each PHASES as phase, i}
+        <path
+          d={phaseArcFill(RING_INNER, RING_OUTER, phase.startDeg, phase.endDeg)}
+          fill={PHASE_COLORS[i]}
+          opacity="0.25"
+        />
+      {/each}
+
+      <!-- Nodes -->
       {#each touchpoints as tp, i}
-      {@const deg = tpAngles[i]}
-      {@const nodePt = polar((RING_INNER + RING_OUTER)/2, deg)}
-      {@const sc = sentimentColor(tp.sentiment)}
-    
-      {@const outerEdge = polar(RING_OUTER + 4, deg)}
-      {@const labelStart = polar(RING_OUTER + 28, deg)}
-      {@const labelPt = polar(RING_OUTER + 60, deg)}
-    
-      <!-- connector line -->
-      <line
-        x1={outerEdge.x}
-        y1={outerEdge.y}
-        x2={labelStart.x}
-        y2={labelStart.y}
-        stroke="var(--ink)"
-        stroke-width="0.75"
-        opacity="0.6"
-      />
-    
-      <!-- node -->
-      <circle
-        bind:this={nodeRefs[i]}
-        cx={nodePt.x}
-        cy={nodePt.y}
-        r={hoveredTp === i ? 14 : 10}
-        fill="var(--midgrayblue)"
-        on:mouseenter={() => hoveredTp = i}
-        on:mouseleave={() => hoveredTp = null}
-      />
-    
-    <foreignObject
-    x={labelPt.x - 39}
-    y={labelPt.y - 10}
-    width="55"
-    height="40"
-    style="pointer-events: none; overflow: visible;"
-  >
-    <div
-      xmlns="http://www.w3.org/1999/xhtml"
-      class="label-sm"
-      style="
-        width: 120px;
-        max-width: 140px;
-        text-align: {textAnchor(deg)};
-        line-height: 1.05;
-        background-color: var(--lightgrayblue);
-        padding: .5em;
-        word-break: break-word;
-        overflow-wrap: break-word;
-      "
-    >
-      {tp.moment}
-    </div>
-  </foreignObject>
-    {/each}
+        {@const deg = tpAngles[i]}
+        {@const nodePt = polar((RING_INNER + RING_OUTER)/2, deg)}
+        {@const outerEdge = polar(RING_OUTER + 4, deg)}
+        {@const labelPt = polar(RING_OUTER + 60, deg)}
+
+        <line
+          x1={outerEdge.x}
+          y1={outerEdge.y}
+          x2={labelPt.x}
+          y2={labelPt.y}
+          stroke="var(--ink)"
+          stroke-width="0.75"
+          opacity="0.5"
+        />
+
+        <circle
+          bind:this={nodeRefs[i]}
+          cx={nodePt.x}
+          cy={nodePt.y}
+          r={hoveredTp === i ? 10 : 8}
+          fill="var(--midgrayblue)"
+          cursor="pointer"
+          on:mouseenter={() => hoveredTp = i}
+          on:mouseleave={() => hoveredTp = null}>
+        </circle>
+
+        <foreignObject
+          x={labelPt.x - 20}
+          y={labelPt.y - 10}
+          width="120"
+          height="100"
+          style="pointer-events:none;"
+        >
+          <div
+            xmlns="http://www.w3.org/1999/xhtml"
+            class="text-xs p-1"
+            style="
+              max-width:140px;
+              text-align:{textAnchor(deg)};
+              word-break:break-word;
+            "
+          >
+            {tp.moment}
+          </div>
+        </foreignObject>
+      {/each}
 
       <circle cx={CX} cy={CY} r={RING_INNER} fill="var(--panel)" />
-
-
-      <text x={CX} y={CY + 10} text-anchor="middle" class="label-sm">
-        {stageName}
-      </text>
     </svg>
 
     <!-- Tooltip -->
     {#if hoveredTp !== null && tooltipPos}
       {@const tp = touchpoints[hoveredTp]}
-
-      <div
-        class="tooltip jm-surface"
-        style="left:{tooltipPos.x}px; top:{tooltipPos.y}px;"
-      >
-        <div class="pill w-fit">
-          {tp.type?.replace(/_/g, ' ')}
+      <div class="tooltip jm-surface" style="left:{tooltipPos.x}px; top:{tooltipPos.y}px;">
+        
+        <div class="pill">
+          <span class="label-sm">{tp.type?.replace(/_/g,' ')}</span>
         </div>
 
-        <div class="label">
-          {tp.moment}
-        </div>
+        <h3 class="label uppercase">{tp.moment}</h3>
 
         <div class="divider"></div>
 
         {#if tp.positive_design_opportunity}
           <div class="jm-content-row">
             <Smiley class="icon-toolbar-dark-sm"/>
-            <span class="text-body">
-              {tp.positive_design_opportunity}
-            </span>
+            <p class="text-body-sm">{tp.positive_design_opportunity}</p>
           </div>
         {/if}
 
         {#if tp.data_needed}
           <div class="jm-content-row">
             <Question class="icon-toolbar-light-sm"/>
-            <span class="text-body">
-              {tp.data_needed}
-            </span>
+            <p class="text-body-sm">{tp.data_needed}</p>
           </div>
         {/if}
 
         {#if tp.make_or_break}
           <div class="jm-content-row">
             <ArrowsOutVertical class="icon-toolbar-dark-sm"/>
-            <span class="text-body">
-              Make-or-break moment
-            </span>
+            <p class="text-body-sm">Make-or-break moment</p>
           </div>
         {/if}
       </div>
     {/if}
   </div>
-
-  <!-- Legend -->
-  <div class="jm-content-row gap-2 px-2">
-    <div class="pill gap-2">
-      <Smiley class="icon-toolbar-dark-sm"/>
-      <span class="label-sm">Positive</span>
-    </div>
-
-    <div class="pill gap-2">
-      <ArrowsOutVertical class="icon-toolbar-dark-sm"/>
-      <span class="label-sm">Inflection</span>
-    </div>
-
-    <div class="pill gap-2">
-      <Question class="icon-toolbar-light-sm"/>
-      <span class="label-sm">Info gaps</span>
-    </div>
-  </div>
-
+</div>
   <!-- Inflection -->
   <div class="detail-section">
     <div class="jm-section-bar">
@@ -280,7 +323,7 @@
     </div>
   </div>
 
-</div>
+
 
 <style>
   .wheel-wrap {
@@ -292,8 +335,8 @@
   .wheel-svg-wrap {
     position: relative;
     display: flex;
-    background-color: var(--lightgrayblue);
     justify-content: center;
+    background: var(--lightgrayblue);
   }
 
   .wheel-svg {
@@ -303,27 +346,8 @@
 
   .tooltip {
     position: absolute;
-    pointer-events: none;
     z-index: 300;
-
-    width: 500px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-
+    width: 320px;
     padding: 12px;
-
-    opacity: 0;
-    transform: translateY(4px);
-
-    transition:
-      opacity 120ms ease,
-      transform 120ms var(--ease-smooth);
-  }
-
-  .tooltip[style] {
-    opacity: 1;
-    transform: translateY(0);
   }
 </style>

@@ -47,7 +47,7 @@
      */
     function buildRamp(baseColor) {
       return STOPS.map((_, si) => {
-        const pct = Math.round(10 + (si / (STOPS.length - 1)) * 90);
+        const pct = Math.round(10 + (si / (STOPS.length - 1)) * 45);
         return `color-mix(in srgb, ${baseColor} ${pct}%, white)`;
       });
     }
@@ -58,7 +58,7 @@
      */
     function squareOpacity(si, activePos) {
       const dist = Math.abs(si - activePos);
-      return si === Math.round(activePos) ? 1 : Math.max(0.12, 1 - dist * 0.28);
+      return si === Math.round(activePos) ? 1 : Math.max(0.2, 1 - dist * 0.75);
     }
   </script>
   
@@ -115,7 +115,7 @@
                 {@const isActive = si === Math.round(activePos)}
                 <div
                   class="jm-swatch-round"
-                  class:imb-square--active={isActive}
+                  class:jm-swatch--active={isActive}
                   class:jm-swatch--compact={compact}
                   style="background: {ramp[si]}; 
                   opacity: {opacity};"></div>
@@ -170,16 +170,8 @@
       }
     }
   
-    /* ── Metric icon ─────────────────────────────────────────────── */
-    .imb-icon {
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-      opacity: 0.85;
-    }
-
-    .imb-square--active {
-      outline: 1.15px solid var(--grayblue);
+    .jm-swatch--active {
+      outline: 2.15px solid var(--teal);
       outline-offset: 1px;
       opacity: 100%;
       filter: saturate(1);

@@ -231,6 +231,7 @@
     top: auto;
   }
 
+  
   .text-body-sm { 
     font-family: var(--font-body); 
     line-height: 125%;
@@ -243,6 +244,12 @@
     font-size: 1.125em;
     letter-spacing: -.25px;
 
+  }
+
+  .caption {
+    font-family: var(--font-sans);
+    font-size: 0.725em;
+    color: var(--ink);
   }
 
   .caption, .label, small, figcaption, .text-mono {
@@ -488,13 +495,13 @@
     width: 1.725em;
     font-size: .825em;
     
-    background-color: var(--lightorange);
+    background-color: var(--orange);
     border-radius: 100em;
     padding: .25em;
 
-    color: var(--orange);
-    outline: 2.5px solid var(--lightorange);
-    outline-offset: .5px;
+    color: var(--lightorange);
+    outline: 2.5px solid var(--orange);
+    outline-offset: 1px;
   }
 
   .icon-toolbar-dark-sm {
@@ -507,7 +514,22 @@
     padding: .25em;
 
     color: var(--lightgrayblue);
-    outline: 1.5px solid var(--teal);
+    outline: 2.5px solid var(--teal);
+    outline-offset: 1px;
+  }
+
+
+  .icon-toolbar-red-sm {
+    height: 1.725em;
+    width: 1.725em;
+    font-size: .825em;
+    
+    background-color: var(--red);
+    border-radius: 100em;
+    padding: .25em;
+
+    color: var(--paper);
+    outline: 2.5px solid var(--red);
     outline-offset: 1px;
   }
 
@@ -1036,6 +1058,7 @@ color: var(--grayblue);
     display: flex;
     flex-direction: row;
     row-gap: 2;
+    background-color: var(--paper);
 
     font-family: var(--font-heading);
     font-size: 0.825em;
@@ -1047,10 +1070,10 @@ color: var(--grayblue);
     text-transform: uppercase;
     border-radius: 20px;
     
-    border: 1.25px solid var(--teal);
+    border: 1.725px solid var(--teal);
     align-items: center;
     justify-content: space-between;
-    padding: .325em .5em .25em .425em;
+    padding: .325em .725em .35em .325em;
 }
 
   .pill-white {
@@ -1068,6 +1091,13 @@ color: var(--grayblue);
     text-transform: uppercase;
     color: var(--panel);
     border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+
+  .pill:hover {
+    background-color: var(--lightgrayblue);
+    transition:cubic-bezier(1, 0, 0, 1);
+    cursor: pointer;
   }
 
   .pill-sm {
@@ -1875,14 +1905,14 @@ padding: .25em 1em;
     top: 0;
     width: 12.5%; /* 1/6 screen */
     min-width: 320px;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
     flex-shrink: 0;
     scrollbar-width: thin;
-    border-left: 1.5px solid var(--panel-dark);
+    border-left: 2.5px solid var(--panel-dark);
 
     box-shadow: 
     0 2px 12px -10px rgba(0,0,0,0.15)

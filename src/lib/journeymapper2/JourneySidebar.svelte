@@ -138,7 +138,8 @@
                   {#if section.component}
                     <svelte:component this={section.component} {...(section.props ?? {})} />
                   {:else if section.content}
-                    <p class="section-placeholder">{section.content}</p>
+                    <p class="section-placeholder">
+                      {section.content}</p>
                   {/if}
                 </div>
               {/if}
@@ -164,7 +165,7 @@
               {#if section.icon}
                 <span class="rail-icon" aria-hidden="true">{section.icon}</span>
               {:else}
-                <span class="rail-dot" />
+                <span class="rail-dot"></span>
               {/if}
             </button>
           {/each}
@@ -189,9 +190,7 @@
       display: flex;
       flex-direction: column;
       min-height: 100%;
-      background: #F4EFE5;
-      border-right: 1px solid #5E5E5E;
-      font-family: 'IBM Plex Sans', sans-serif;
+
       transition: width 280ms cubic-bezier(0.4, 0, 0.2, 1);
       overflow: hidden;
       flex-shrink: 0;
@@ -208,24 +207,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 8px;
-      height: 40px;
-      background: #EDE5D8;
+      background: var(--panel);
       border-bottom: .5px dotted #5E5E5E;
       flex-shrink: 0;
       gap: 8px;
-    }
-  
-    .sidebar-title {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #A08060;
-      white-space: nowrap;
-      overflow: hidden;
-      flex: 1;
     }
   
     /* ── Toggle button ─────────────────────────────────────────────────────── */
@@ -263,7 +248,7 @@
       inset: 0;
       overflow-y: auto;
       overflow-x: hidden;
-      padding: 10px 0;
+      padding: .25em;
     }
   
     /* Subtle scrollbar */
@@ -281,7 +266,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 9px 14px;
       background: none;
       border: none;
       cursor: pointer;
@@ -301,14 +285,7 @@
       opacity: 0.75;
     }
   
-    .section-label {
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: #7A5A3A;
-      flex: 1;
-    }
+ 
   
     .chevron {
       color: #BFA080;
@@ -321,17 +298,9 @@
     }
   
     .section-body {
-      padding: 8px 14px 14px;
-      background: #FAF7F2;
-      border-top: 1px solid #EDE5D8;
+     background-color: (--panel);
     }
   
-    .section-placeholder {
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: 1em;
-      color: #A08060;
-      margin: 0;
-    }
   
     /* ── Collapsed rail ─────────────────────────────────────────────────────── */
     .rail-icons {

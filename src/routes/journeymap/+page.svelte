@@ -165,6 +165,7 @@ let emotionSubDrawerOpen = false;
     drawerMode === 'step' && journeyData?.[$selectedIndex]
       ? `${$selectedIndex + 1} / ${journeyData.length}` : '';
 
+
   /** @type {HTMLDivElement | null} */
   let scrollEl = null;
 </script>
