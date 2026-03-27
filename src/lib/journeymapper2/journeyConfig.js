@@ -96,7 +96,7 @@ export const STAGE_COLORS = [
   '#468A85ff', // Teal Green
   '#699D97ff', // Light TG
   '#28B798', // Warren Green
-  '#55FFDA', // Mint Green  
+  '#7DBFA7', // Mint Green  
   '#5830A2', // Purple
   '#341967', // Dark Purple  
 ]

@@ -130,7 +130,7 @@
 
           {#if profile.bio}
             <div class="border-bottom pt-2">
-              <p class="text-body-sm">{profile.bio}</p>
+              <p class="text-body">{profile.bio}</p>
             </div>
           {/if}
 
@@ -271,7 +271,7 @@
               </div>
             {/each}
           </div>
-          <span class="heading-sm">{step.stage}</span>
+          <p class="label-sm uppercase">{step.stage}</p>
           <p class="heading-serif">{step.step}</p>
         </div>
       </div>
@@ -286,7 +286,9 @@
             out:fade={{ duration: 120 }}
           >
             <div class="flex flex-col">
-              <span class="heading-sm">Narrative</span>
+              <span class="label-sm">
+                Narrative
+              </span>
             </div>
             <p class="text-body-sm">{step.narrative_description}</p>
           </div>
@@ -296,7 +298,7 @@
 
       <div class="flex flex-col mt-12">
       <!-- Sentiment — row of colored squares, active square highlighted -->
-      <span class="heading-sm mb-2">Sentiment Drivers</span>
+      <span class="label-sm mb-2">Sentiment Drivers</span>
 
       <div class="toolbar-sm-light">          
       <div class="flex flex-row gap-2 w-full items-center justify-between">
@@ -304,14 +306,15 @@
 
           <HeartHalf class="icon-toolbar-dark"/>
 
-          <span class="heading-sm">
+          <span class="label-sm">
             Overall Sentiment
           </span>
       </div>
       {#key displayIndex}
       <span
         class="pill uppercase font-semibold"
-        style="border: 1.5px solid {sentimentColor};"
+        style="border: 1.5px solid {sentimentColor};
+        color: {sentimentColor}"
         in:fly={{ y: 6, duration: 200 }}
         out:fade={{ duration: 100 }}
       >
@@ -322,14 +325,14 @@
 
     </div>
 
-      <div class="flex flex-row gap-1">          
+      <div class="flex flex-row gap-1 mt-2">          
         {#each SENTIMENT_SCALE as stopColor, i}
             {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
             {@const isActive  = i === Math.round(activePos)}
             {@const dist      = Math.abs(i - activePos)}
-            {@const opacity   = isActive ? 1 : Math.max(0.12, 1 - dist * 0.28)}
+            {@const opacity   = isActive ? 1 : Math.max(0.12, 1 - dist * 0.8)}
             <div
-              class="jm-emotion"
+              class="jm-swatch-md"
               class:score-square--active={isActive}
               style="background: {stopColor}; opacity: {opacity};"></div>
           {/each}
@@ -390,8 +393,9 @@
 }
 
 .score-square--active {
-  outline: 1px solid var(--ink);
+  outline: 2px solid var(--grayblue);
   outline-offset: 1px;
+  filter: saturate(1.5);
   transform: scaleY(1.15);
 }
 

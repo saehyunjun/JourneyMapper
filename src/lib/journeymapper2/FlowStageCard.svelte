@@ -156,8 +156,6 @@
                    Positive</span>
                   {#if pos?.label}
                   <span class="fork-path-label">{pos.label}</span>{/if}
-                  {#if pos?.outcome}
-                  <p class="fork-path-outcome">{pos.outcome}</p>{/if}
                 </div>
 
                 <div class="fork-path-card fork-path-card--neg"
@@ -173,17 +171,13 @@
 
                   <span class="pill-sm" 
                   style="border: 1px solid {NEG_COLOR}; 
-                  color: {NEG_COLOR};">Negative
+                  color: {NEG_COLOR};">
+                  Negative
                   </span>
                 {#if neg?.label}
                     <span class="fork-path-label">                    
                     {neg.label}
                   </span>{/if}
-                  
-                  {#if neg?.outcome}
-                  <p class="text-body-sm">
-                    {neg.outcome}</p>
-                  {/if}
                 </div>
               </div>
 
@@ -300,9 +294,9 @@
   .flow-steps-row {
     display: flex;
     flex-direction: row;
-    align-items: top;
-    padding: 1em;
-    gap: 0;
+    min-height: 32.5vh;
+    align-items: center;
+    gap: 1em;
   }
   
   .flow-steps-col {

@@ -375,7 +375,7 @@
           "logistical_capacity": -1,
           "narrative_description": "As symptoms continue progressing, Karl feels discouraged and confused. The lack of clarity lowers her confidence in her own understanding and in the care pathway.",
           "inflection_detail": {
-            "label": "Care Pathway Fork",
+            "label": "Care Pathway",
             "description": "Worsening symptoms with no clear explanation force a decision: continue with the current provider and wait, or escalate toward specialist care. The choice made here directly determines how long Karl remains undiagnosed.",
             "risk_level": "high",
             "dropout_risk": "moderate",

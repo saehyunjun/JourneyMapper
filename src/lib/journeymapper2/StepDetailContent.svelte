@@ -7,7 +7,7 @@
   import ExperienceWheel from './ExperienceWheel.svelte';
   import JourneySubDrawer from './JourneySubDrawer.svelte';
 
-  import { emotionColor, ratingToLabel, DYAD_BY_ID, SCORE_ALIASES, SENTIMENT_SCALE, sentimentToColor, metricScoreLabel } from './journeyConfig.js';
+  import { emotionColor, ratingToLabel, DYAD_BY_ID, SCORE_ALIASES, SENTIMENT_SCALE, sentimentToColor, metricScoreLabel, buildStageColorMap } from './journeyConfig.js';
   
   import QuotesRegular from 'phosphor-icons-svelte/IconQuotesRegular.svelte';
   import ArrowSquareOutRegular from 'phosphor-icons-svelte/IconArrowSquareOutRegular.svelte';
@@ -103,6 +103,10 @@
  
   $: step = $selectedIndex >= 0 ? data[$selectedIndex] : null;
   $: sentimentLabel = step ? ratingToLabel(step.sentiment) : '';
+
+  // ── Stage color ───────────────────────────────────────────────────────
+  $: stageColorMap = buildStageColorMap(data);
+  $: stageColor = (step && stageColorMap[step.stage_id]) ? stageColorMap[step.stage_id] : 'var(--jm-icon-dark, #3a3a3a)';
  
   $: emotionSwatches = (() => {
     if (!step) return [];
@@ -155,7 +159,8 @@
   <div class="content-wrap">
 
     <!-- Top meta bar -->
-    <div class="toolbar p-2">
+    <div class="toolbar p-2"
+    style="border-bottom: 2.5px solid {stageColor}">
       <div class="btn-extranote-empty">
         <div
           class="jm-swatch"
@@ -196,7 +201,9 @@
           <div class="step-illustration__fallback stats-animation-gradient__gradient--bright pt-8">
             <div class="flex flex-col px-4">
               <span class="label-sm text-white">{step.stage}</span>
-              <h2 class="label-lg text-white">{step.step}</h2>
+              <h2 class="heading-serif"
+              style="color:var(--lightgrayblue); 
+              font-size:2.5em">{step.step}</h2>
             </div>
         </div>
           
@@ -206,8 +213,8 @@
       
       <div class="header-row">
           <div class="flex flex-row gap-8 align-center">
-          <Scroll class="icon-toolbar-dark-md" />
-          <h3 class="text-body my-auto">Journey Narrative</h3>
+          <Scroll class="icon-header" style="background-color: {stageColor}; outline-color: {stageColor};" />
+          <h3 class="label uppercase my-auto">Journey Narrative</h3>
           </div>
           
           {#if wheelData}
@@ -230,18 +237,39 @@
           </button>
             {/if}
           </div>  
+          
+  <div class="content-padding">
 
-
-
-    <div class="content-padding">
+    <div class="flex flex-col w-2/3">
     <!-- Narrative -->
-    {#if step.narrative_description}
-        <p class="text-body">{step.narrative_description}</p>
-    {/if}
+      {#if step.narrative_description}
+          <p class="text-body">{step.narrative_description}</p>
+      {/if}
+    </div>
+
+    <div class="flex flex-col gap-2 w-1/3">
+      <span class="pill" 
+      style="border-color:{sentimentColor}; color:{sentimentColor}">
+        {sentimentLabel}
+      </span>
+      <div class="flex flex-row gap-1">
+        {#each SENTIMENT_SCALE as stopColor, i}
+          {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
+          {@const isActive  = i === Math.round(activePos)}
+          <div
+            class="jm-swatch"
+            class:score-square--active={isActive}
+            style="background: {stopColor}; opacity: {isActive ? 1 : 0.2};"
+          ></div>
+        {/each}
+      </div>
+
+     
+    </div>
   </div>
   
   <div class="section-bar">
-    <QuotesRegular class="icon-toolbar-dark-md" />
+    <QuotesRegular class="icon-toolbar-dark-md" style="background-color: {stageColor}; outline-color: {stageColor};" />
     <span>Key Quote</span>
   </div>
 
@@ -250,7 +278,7 @@
       <section class="detail-section">
         <div class="content-padding">
         <div class="card-quote quote-block">
-          <QuotesRegular class="quote-icon" />
+          <QuotesRegular class="quote-icon" style="background-color: {stageColor}; outline-color: {stageColor};" />
           <p class="pull-quote text-slate-800 text-pretty">
             &ldquo;{step.quote}&rdquo;
           </p>
@@ -260,36 +288,10 @@
     {/if}
     
 
-    <!-- Sentiment -->
-    <section class="detail-section">
-      <div class="section-bar">
-        <IconHeartHalfRegular class="icon-toolbar-dark-md"/>
-        <span>Sentiment</span>
-      </div>
-
-      <div class="content-padding">
-        <div class="flex flex-row gap-1">
-          {#each SENTIMENT_SCALE as stopColor, i}
-            {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
-            {@const isActive  = i === Math.round(activePos)}
-            <div
-              class="jm-swatch-lg"
-              class:score-square--active={isActive}
-              style="background: {stopColor}; opacity: {isActive ? 1 : 0.2};"
-            ></div>
-          {/each}
-        </div>
-
-        <span class="pill sentiment-pill" style="background-color:{sentimentColor}">
-          {sentimentLabel}
-        </span>
-      </div>
-    </section>
-
     <!-- Metrics -->
     <section class="detail-section">
       <div class="section-bar">
-        <IconDiamondsFourRegular class="icon-toolbar-dark-md"/>
+        <IconDiamondsFourRegular class="icon-toolbar-dark-md" style="background-color: {stageColor}; outline-color: {stageColor};"/>
         <span>Index Metrics</span>
       </div>
 
@@ -415,7 +417,7 @@
 .imb-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem 1.5rem;
+  gap: 2.25rem 4.25rem;
 }
 
 @media (max-width: 480px) {
@@ -484,10 +486,4 @@
   cursor: help;
 }
 
-.wheel-entry {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 0 2rem;
-}
 </style>

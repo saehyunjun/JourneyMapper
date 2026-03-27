@@ -39,7 +39,7 @@
   
   --green: #599077;
   --midgreen: #7DBFA7;
-  --lightgreen: 
+  --lightgreen: #55FFDA;
 
   /* Common strokes/shadows */
   --stroke: 1px solid var(--midgrayblue);
@@ -118,9 +118,14 @@
 
   .heading-serif {
     font-family: var(--font-heading-serif);
-    font-weight: 500;
+    font-style: italic;
+    font-weight: 800;
+    
     font-size: 1em;
     line-height: 1.2;
+    
+    color: var(--grayblue);
+    
     text-wrap: balance;
     text-transform: capitalize;
   }
@@ -184,9 +189,8 @@
     line-height: 115%;
     font-size: 1.2em;
     font-weight: 600;
-    text-transform:inherit;
-    color: var(--ink);
-    text-wrap: pretty;
+    color: var(--grayblue);
+    text-wrap: balance;
   }
 
 
@@ -255,7 +259,8 @@
   .caption, .label, small, figcaption, .text-mono {
     font-family: var(--font-heading);
     font-size: 0.8725em;
-    color: var(--ink);
+    font-weight: 600;
+    color: var(--graybluedark);
   }
 
   .caption-lg, .label-lg {
@@ -548,6 +553,20 @@
     outline-offset: 1px;
   }
 
+
+  .icon-header {
+    height: 100%;
+    width: 5em;
+    font-size: 0.875em;
+    
+    background-color: var(--green);
+    border-radius: 0 0 5em 0;
+    padding: .35em 2em .25em 1em;
+
+    color: var(--paper);
+  }
+
+
   .quote-icon {
     color: var(--grayblue);
     line-height: 1;
@@ -736,9 +755,9 @@
       padding-left: 0.25rem;
       padding-right: 0.3rem;
     
-      font-size: 0.875rem; /* text-sm */
+      font-size: 0.725rem; /* text-sm */
     
-      border-radius: 100em; /* rounded-lg */
+
     
       will-change: transform;
     
@@ -762,7 +781,6 @@
   
       background-color: var(--orange);
       color: var(--paper);
-      border: .5px solid var(--brightorange);
   
       box-shadow:
       0px 0px 0px 1px rgba(0, 0, 0, 0.08),
@@ -774,10 +792,8 @@
       padding: 0.35em .25em .325em 1em;
 
       font-size: 0.825rem; /* text-sm */
-      text-transform: uppercase;
+      text-transform: capitalize;
       align-content: center;
-    
-      border-radius: 100em; /* rounded-lg */
     
       will-change: transform;
     
@@ -798,7 +814,7 @@
       user-select: none;
       cursor: pointer;
     
-      font-size: 0.875rem; /* text-sm */
+      font-size: 0.75rem; /* text-sm */
     
       border-radius: 100em; /* rounded-lg */
     
@@ -812,9 +828,9 @@
     }
 
     .btn-extranote:hover,  .btn-extranote-orange:hover {
-      background: var(--lightgreen);
-      border: 4px solid (var(--green));      
-      color: var(--grayblue);
+      background: var(--grayblue);
+      border: 4px solid (var(--midgrayblue));      
+      color: var(--midgrayblue);
     } 
 
     /* ── CTA button ───────────────────────────────────────────────────── */
@@ -1077,8 +1093,8 @@ color: var(--grayblue);
     
     border: 1.725px solid var(--teal);
     align-items: center;
-    justify-content: space-between;
-    padding: .325em .725em .35em .325em;
+    justify-content: center;
+    padding: .325em .525em .35em .45em;
 }
 
 .pill-label {
@@ -1104,17 +1120,16 @@ color: var(--grayblue);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: .25em .35em .3em .45em;
+    padding: .2em .35em .225em .325em;
     border-radius: 100px;
     background: rgba(255, 255, 255, 0.22);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
 
     font-family: var(--font-heading);
-    font-size: 0.725em;
+    font-size: 0.625em;
     
-    font-weight: 800;
-    letter-spacing: 0.06em;
+    font-weight: 600;
     text-transform: uppercase;
     color: var(--panel);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -1159,7 +1174,6 @@ color: var(--grayblue);
     font-weight: 600;
     border-bottom: .5px solid var(--panel);
     
-    padding: .25em 1em .3em 1em;
   }
   /* ---------------------------------------------------------------------- */
   /* Journey tooltip (ported from the component styles)                       */
@@ -1497,24 +1511,21 @@ padding: .25em 1em;
     padding: .25em;
     }
   
+.toolbar-sm-empty {
+  display: flex;
+  position: relative;
+  flex-direction: row;
 
-    .toolbar-sm-empty {
-      display: flex;
-      position: relative;
-      flex-direction: row;
-    
-      align-items: center;
-      align-content: center;
-      justify-content: start;
-      gap: .5em;
-      width: 100%;
-      
-      color: var(--graybluedark);
-      font-size: 1em;
-      font-weight: 800;
-      }
-    
-
+  align-items: center;
+  align-content: center;
+  justify-content: start;
+  gap: .5em;
+  width: 100%;
+  
+  color: var(--graybluedark);
+  font-size: 1em;
+  font-weight: 800;
+  }
 
 .toolbar-light {
   display: flex;
@@ -1576,16 +1587,15 @@ padding: .25em 1em;
   display:flex;
   flex-direction: row;
   gap: 1rem;
-  margin-bottom: 2.25em;
-  margin-left: 2.25em;
-
+  margin-bottom: 1.25em;
+  
   z-index: 1;
   
   width: 100%;
   align-items: center;
   justify-content: space-between;
   
-  padding: 2em 2em 2em 1.25em;
+  padding: .725em 1em 1.25em 2.25em;
   text-wrap: balance;
 }
 
@@ -1830,6 +1840,19 @@ padding: .25em 1em;
     transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   
+  .jm-swatch-md {
+    display: inline-flex;
+    border: .25px solid var(--ink);
+    height: 1.725em;
+    width: 1.725em;
+    aspect-ratio: 1;
+    overflow: hidden;
+    transition:
+    opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+
   .jm-swatch-round {
     display: inline-flex;
     border: .25px solid var(--ink);
@@ -1910,7 +1933,6 @@ padding: .25em 1em;
     background-color: var(--grayblue);
     align-items: center;
     justify-self: center;
-    margin: 0 -2em;
   }
 
   .border-top {
@@ -2194,7 +2216,7 @@ padding: .25em 1em;
 
   /* ── Sentiment bar ───────────────────────────────────────────── */
   .sentiment-track {
-    height: 5px;
+    height: .725em;
     border-radius: 2px;
     background: rgba(0, 0, 0, 0.08);
     overflow: hidden;

@@ -1,6 +1,6 @@
 <script>
   import { hoveredIndex, hoveredInflectionIndex } from './journeyStore.js';
-  import { ratingToLabel, emotionColor, plutchikScoreToColor, DYAD_BY_ID, SCORE_ALIASES, sentimentToColor } from './journeyConfig.js';
+  import { ratingToLabel, emotionColor, buildStageColorMap, plutchikScoreToColor, DYAD_BY_ID, SCORE_ALIASES, sentimentToColor } from './journeyConfig.js';
 
   import QuotesRegular from "phosphor-icons-svelte/IconQuotesRegular.svelte";
   import IconArrowsOutLineVerticalRegular from 'phosphor-icons-svelte/IconArrowsOutLineVerticalRegular.svelte';
@@ -30,6 +30,10 @@
   $: step = activeIndex >= 0 ? data[activeIndex] : null;
 
   $: isInflection = $hoveredIndex < 0 && $hoveredInflectionIndex >= 0;
+
+    // ── Stage color ───────────────────────────────────────────────────────
+    $: stageColorMap = buildStageColorMap(data);
+    $: stageColor = (step && stageColorMap[step.stage_id]) ? stageColorMap[step.stage_id] : 'var(--jm-icon-dark, #3a3a3a)';
 
   // ── Sentiment label and color ──────────────────────────────────────────────
   $: sentimentVal   = step ? parseFloat(step.sentiment) : 0;
@@ -70,7 +74,8 @@
 {#if step}
   <div
     class="tooltip jm-surface flex flex-col gap-2"
-    style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px;"
+    style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px; 
+    border: 2px solid {stageColor}"
     role="tooltip"
     aria-live="polite"
   >
@@ -85,10 +90,19 @@
     {/if}
     
 
-    <div class="header-row">
-      <p class="label-sm font-bold">{step.step}</p>
-      <span class="label-xs text-right">{step.stage}</span>
+    <div class="toolbar-sm-empty">
+      <div class="flex flex-col gap-1">
+        <span class="label-xs"
+        style="color: {stageColor}">
+        {step.stage}</span>
+      
+        <p class="heading-serif">
+          {step.step}</p>
     </div>
+    </div>
+
+    <div class="divider"></div>
+
 
 
     <!-- ── Quote ──────────────────────────────────────────────────────── -->
@@ -97,25 +111,23 @@
         <span class="tip-quote-icon" aria-hidden="true">
           <QuotesRegular class="h-12" />
         </span>
-        <p class="pull-quote-sm">{step.quote}</p>
+        <p class="pull-quote">{step.quote}</p>
       </div>
     {/if}
-
-
     <!-- ── Sentiment + Emotion ────────────────────────────────────────── -->
 
   <div class="jm-content-row-divider">
       <div class="flex flex-row">
 
       <!-- Sentiment -->
-       <div class ="jm-content-col">
+       <div class ="toolbar-sm-empty">
         <div class="flex flex-col">
           <span class="w-full h-2 ring-1" 
           style="background:{sentimentColor}">
           </span>
           
         <div class="jm-content-col mt-1">
-          <span class="text-body-sm font-semibold">
+          <span class="label-sm uppercase">
             {sentimentLabel}
           </span>
           <span class="label-xs">

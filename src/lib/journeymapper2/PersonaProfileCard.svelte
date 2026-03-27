@@ -88,11 +88,17 @@
         <div class="bioname">
           <h3 class="text-sm text-white">{personaProfile.name}</h3>
         </div>
-        <span class="pill-white">{personaProfile.role}</span>
       </div>
 
       <!-- flip hint -->
       <div class="flip-hint">
+        <div class="flex flex-row gap-1">
+          <span class="pill-white">{personaProfile.role}</span>
+          <span class="pill-white">{personaProfile.age}</span>
+          <span class="pill-white"
+          style="background-color: {accentColor}">
+          {personaProfile.preference}</span>
+        </div>
         <ArrowCounterClockwiseRegular class="text-white" />
       </div>
     </div>
@@ -238,8 +244,14 @@
   /* Flip hint icon — fades out once flipped */
   .flip-hint {
     position: absolute;
-    bottom: 14px;
-    right: 14px;
+    bottom: .5em;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0 .5em 0 .5em;
+    align-items: center;
+    justify-content: space-between;
+
     color: rgba(255, 255, 255, 0.55);
     transition: opacity 0.2s;
     pointer-events: none;
