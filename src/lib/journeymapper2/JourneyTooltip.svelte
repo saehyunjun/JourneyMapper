@@ -1,151 +1,268 @@
-<script>
-  import { hoveredIndex, hoveredInflectionIndex } from './journeyStore.js';
-  import { ratingToLabel, emotionColor, plutchikScoreToColor, DYAD_BY_ID, SCORE_ALIASES, sentimentToColor } from './journeyConfig.js';
+<script lang="ts">
+  import { PLUTCHIK_EMOTIONS } from './journeyConfig.js';
+  import ArrowsOutVertical from 'phosphor-icons-svelte/IconArrowsOutLineVerticalRegular.svelte'; 
+  import Smiley from 'phosphor-icons-svelte/IconSmileyRegular.svelte';
+  import Question from 'phosphor-icons-svelte/IconQuestionRegular.svelte';
 
-  import QuotesRegular from "phosphor-icons-svelte/IconQuotesRegular.svelte";
-  import IconArrowsOutLineVerticalRegular from 'phosphor-icons-svelte/IconArrowsOutLineVerticalRegular.svelte';
+  export let data = null;
+  export let stepName = '';
+  export let stageName = '';
 
-  export let data    = [];
-  export let metrics = [];
+  $: touchpoints    = data?.touchpoints ?? [];
+  $: ec             = data?.emotional_context ?? {};
+  $: inflection     = data?.inflection_analysis ?? {};
+  $: sponsorActions = data?.sponsor_actions ?? [];
 
-  /** The scrollable container element — used for edge-flip calculations */
-  export let anchorEl = null;
+  const CX = 240, CY = 240;
+  const RING_INNER = 120;
+  const RING_OUTER = 140;
 
-  // ── Cursor tracking ────────────────────────────────────────────────────────
-  let mouseX = 0;
-  let mouseY = 0;
+  const PHASES = [
+    { label: 'BEFORE', startDeg: 180, endDeg: 30 },
+    { label: 'DURING', startDeg: 330, endDeg: 90  },
+    { label: 'AFTER',  startDeg: 90,  endDeg: 210 },
+  ];
 
-  function onMouseMove(e) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+  function degToRad(d) { return (d * Math.PI) / 180; }
+
+  function polar(r, deg) {
+    const rad = degToRad(deg);
+    return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad) };
   }
 
-  // ── Resolve which step to show ─────────────────────────────────────────────
-  $: activeIndex = $hoveredIndex >= 0
-    ? $hoveredIndex
-    : $hoveredInflectionIndex >= 0
-      ? $hoveredInflectionIndex
-      : -1;
+  function phaseArcFill(ri, ro, startDeg, endDeg) {
+    let end = endDeg;
+    if (end <= startDeg) end += 360;
+    const large = (end - startDeg) > 180 ? 1 : 0;
+    const s  = polar(ri, startDeg);
+    const e  = polar(ri, end % 360);
+    const so = polar(ro, startDeg);
+    const eo = polar(ro, end % 360);
+    return `M ${so.x} ${so.y} A ${ro} ${ro} 0 ${large} 1 ${eo.x} ${eo.y} L ${e.x} ${e.y} A ${ri} ${ri} 0 ${large} 0 ${s.x} ${s.y} Z`;
+  }
 
-  $: step = activeIndex >= 0 ? data[activeIndex] : null;
+  $: tpAngles = touchpoints.map((_, i) =>
+    -90 + (360 / Math.max(touchpoints.length, 1)) * i
+  );
 
-  $: isInflection = $hoveredIndex < 0 && $hoveredInflectionIndex >= 0;
+  function sentimentColor(s) {
+    if (s === 'negative') return '#C0483B';
+    if (s === 'leans_negative') return '#D4906C';
+    if (s === 'neutral_to_negative') return '#C8902A';
+    if (s === 'mixed') return '#A08060';
+    if (s === 'positive') return '#4a9e7f';
+    return '#BFA080';
+  }
 
-  // ── Sentiment label and color ──────────────────────────────────────────────
-  $: sentimentVal   = step ? parseFloat(step.sentiment) : 0;
-  $: sentimentLabel = step ? ratingToLabel(step.sentiment) : '';
-  $: sentimentColor = step ? sentimentToColor(step.sentiment) : '#BFA080';
+  function textAnchor(deg) {
+    const cos = Math.cos(degToRad(deg));
+    if (cos > 0.2) return 'start';
+    if (cos < -0.2) return 'end';
+    return 'middle';
+  }
 
-  // ── Plutchik dyad squares ──────────────────────────────────────────────────
-  $: emotionSwatches = (() => {
-    if (!step) return [];
-    const raw  = step.plutchik_score?.toLowerCase().trim() ?? '';
-    const dyad = DYAD_BY_ID[raw];
-    if (dyad) return dyad.primary.map(pid => emotionColor(pid));
-    const id = SCORE_ALIASES[raw] ?? raw;
-    return [emotionColor(id)];
+  function primaryEmotionColor(id) {
+    const e = PLUTCHIK_EMOTIONS?.find(em => em.id === id);
+    return e?.color ?? '#DFC3A8';
+  }
+
+  $: primaryColor = primaryEmotionColor(ec.primary_emotion);
+
+  let hoveredTp = null;
+
+  const TOOLTIP_W = 320;
+  const TOOLTIP_H = 120;
+  const TOOLTIP_PAD = 10;
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+  $: tooltipPos = (() => {
+    if (hoveredTp === null) return null;
+    const deg = tpAngles[hoveredTp];
+    const anchor = polar(RING_OUTER + 70, deg);
+
+    const dx = Math.cos(degToRad(deg)) >= 0 ? 14 : -TOOLTIP_W - 14;
+    const dy = -TOOLTIP_H / 2;
+
+    const x0 = anchor.x + dx;
+    const y0 = anchor.y + dy;
+
+    return {
+      x: clamp(x0, TOOLTIP_PAD, 480 - TOOLTIP_W - TOOLTIP_PAD),
+      y: clamp(y0, TOOLTIP_PAD, 480 - TOOLTIP_H - TOOLTIP_PAD)
+    };
   })();
-
-  // ── Quote ──────────────────────────────────────────────────────────────────
-  $: hasQuote = !!(step?.quote?.trim());
-
-  // ── Tooltip dimensions ─────────────────────────────────────────────────────
-  const TIP_W    = 375;
-  const TIP_H    = 40 + metrics.length * 28 + 80;
-  const OFFSET_X = 14;
-  const OFFSET_Y = 8;
-
-  $: vpW = typeof window !== 'undefined' ? window.innerWidth  : 9999;
-  $: vpH = typeof window !== 'undefined' ? window.innerHeight : 9999;
-
-  $: flipLeft = mouseX + OFFSET_X + TIP_W > vpW - 12;
-  $: flipUp   = mouseY + OFFSET_Y + TIP_H > vpH - 12;
-
-  $: tipX = flipLeft ? mouseX - TIP_W - OFFSET_X : mouseX + OFFSET_X;
-  $: tipY = flipUp   ? mouseY - TIP_H - OFFSET_Y : mouseY + OFFSET_Y;
 </script>
 
-<svelte:window on:mousemove={onMouseMove} />
+<div class="wheel-wrap">
 
-{#if step}
-  <div
-    class="tooltip jm-surface flex flex-col gap-2"
-    style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px;"
-    role="tooltip"
-    aria-live="polite"
-  >
+  <!-- SVG unchanged -->
+  <div class="wheel-svg-wrap">
+    <svg viewBox="0 0 480 480" class="wheel-svg">
+      {#each PHASES as phase, pi}
+        <path d={phaseArcFill(RING_INNER, RING_OUTER, phase.startDeg, phase.endDeg)}
+          fill={['#7DBFA7','#EDCAAA','#DFC3A8'][pi]} opacity="0.7"/>
+      {/each}
 
-    <!-- ── Header ─────────────────────────────────────────────────────── -->
-    {#if isInflection}
-    <div class="flex flex-row w-full justify-end">
-    <span class="pill-sm">
-      <IconArrowsOutLineVerticalRegular />
-      Inflection Point</span>
-    </div>
+      <circle cx={CX} cy={CY} r={RING_OUTER} fill="var(--panel-dark)" stroke="var(--panel-mid)" stroke-width="2.25"/>
+
+      {#each touchpoints as tp, i}
+        {@const deg = tpAngles[i]}
+        {@const nodePt = polar((RING_INNER + RING_OUTER)/2, deg)}
+        {@const sc = sentimentColor(tp.sentiment)}
+
+        <circle
+          cx={nodePt.x}
+          cy={nodePt.y}
+          r={hoveredTp === i ? 14 : 10}
+          fill={sc}
+          on:mouseenter={() => hoveredTp = i}
+          on:mouseleave={() => hoveredTp = null}
+        />
+      {/each}
+
+      <circle cx={CX} cy={CY} r={RING_INNER} fill="var(--paper)"/>
+      <text x={CX} y={CY - 10} text-anchor="middle" class="label">{stepName}</text>
+      <text x={CX} y={CY + 10} text-anchor="middle" class="label-sm">{stageName}</text>
+    </svg>
+
+    {#if hoveredTp !== null && tooltipPos}
+      {@const tp = touchpoints[hoveredTp]}
+      <div class="tooltip jm-surface" style="left:{tooltipPos.x}px; top:{tooltipPos.y}px;">
+        <div class="pill">{tp.type}</div>
+        <div class="label">{tp.moment}</div>
+        <div class="divider"></div>
+
+        {#if tp.positive_design_opportunity}
+          <div class="jm-content-row">
+            <Smiley class="icon-toolbar-dark-sm"/>
+            <span class="text-body">{tp.positive_design_opportunity}</span>
+          </div>
+        {/if}
+
+        {#if tp.data_needed}
+          <div class="jm-content-row">
+            <Question class="icon-toolbar-light-sm"/>
+            <span class="text-body">{tp.data_needed}</span>
+          </div>
+        {/if}
+
+        {#if tp.make_or_break}
+          <div class="jm-content-row">
+            <ArrowsOutVertical class="icon-toolbar-dark-sm"/>
+            <span class="text-body">Make-or-break moment</span>
+          </div>
+        {/if}
+      </div>
     {/if}
-    
+  </div>
 
-    <div class="header-row">
-      <p class="label-sm font-bold">{step.step}</p>
-      <span class="label-xs text-right">{step.stage}</span>
+  <div class="jm-content-row gap-2 px-2">
+    <div class="pill gap-2">
+      <Smiley class="icon-toolbar-dark-sm"/>
+      <span class="label-sm">Positive</span>
     </div>
-
-
-    <!-- ── Quote ──────────────────────────────────────────────────────── -->
-    {#if hasQuote}
-      <div class="flex flex-col justify-center">
-        <span class="tip-quote-icon" aria-hidden="true">
-          <QuotesRegular class="h-12" />
+  
+    <div class="pill gap-2">
+      <ArrowsOutVertical class="icon-toolbar-dark-sm"/>
+      <span class="label-sm">Inflection</span>
+    </div>
+  
+    <div class="pill gap-2">
+      <Question class="icon-toolbar-light-sm"/>
+      <span class="label-sm">Info gaps</span>
+    </div>
+  </div>
+  
+  <!-- INFLECTION SECTION -->
+  <div class="detail-section">
+  
+    <div class="jm-section-bar">
+      <span class="label-uppercase-bold">Inflection Analysis</span>
+    </div>
+  
+    <!-- Metrics -->
+    <div class="jm-content-col gap-2">
+  
+      <div class="jm-content-row-divider-sm">
+        <span class="label-sm">Risk level</span>
+        <span class="pill">{inflection.risk_level}</span>
+      </div>
+  
+      <div class="jm-content-row-divider-sm">
+        <span class="label-sm">Dropout risk</span>
+        <span class="pill">{inflection.dropout_risk}</span>
+      </div>
+  
+      <div class="jm-content-col gap-1">
+        <span class="label-sm uppercase">Trial perception</span>
+        <span class="text-body">
+          {inflection.trial_perception_shift?.replace(/_/g, ' ')}
         </span>
-        <p class="pull-quote-sm">{step.quote}</p>
+      </div>
+  
+    </div>
+  
+    <!-- Opportunities -->
+    {#if inflection.sponsor_opportunity_category?.length}
+      <div class="jm-content-col gap-1">
+        <span class="label-sm uppercase">Opportunities</span>
+  
+        <div class="jm-content-row gap-1 flex-wrap">
+          {#each inflection.sponsor_opportunity_category as cat}
+            <span class="pill-sm">
+              {cat.replace(/_/g, ' ')}
+            </span>
+          {/each}
+        </div>
       </div>
     {/if}
-
-
-    <!-- ── Sentiment + Emotion ────────────────────────────────────────── -->
-
-  <div class="jm-content-row-divider">
-      <div class="flex flex-row">
-
-      <!-- Sentiment -->
-       <div class ="jm-content-col">
-        <div class="flex flex-col">
-          <span class="w-full h-2 ring-1" 
-          style="background:{sentimentColor}">
-          </span>
-          
-        <div class="jm-content-col mt-1">
-          <span class="label-sm">
-            {sentimentLabel}
-          </span>
-          <span class="label-xs">
-            Overall Sentiment
-          </span>
-      </div>
-        </div>
-      </div>
-      </div>
-
-      <!-- Emotion / Plutchik -->
-      <div class="flex flex-col gap-1">
-        <div class="flex flex-col">
-          <div class="flex">
-            {#each emotionSwatches as color}
-              <span class="w-3 h-3 ring-1 rounded-full" style="background:{color}">
-              </span>
-            {/each}
+  
+  </div>
+  
+  <!-- SPONSOR ACTIONS -->
+  <div class="detail-section">
+  
+    <div class="jm-section-bar">
+      <span class="label-uppercase-bold">Sponsor Actions</span>
+    </div>
+  
+    <div class="jm-content-col gap-3">
+  
+      {#each sponsorActions as action}
+        <div class="jm-surface content-col gap-2">
+  
+          <div class="jm-content-row">
+            <span class="label-xs">{action.category}</span>
+            <span class="label-xs">⏱ {action.timing}</span>
           </div>
-          
-          <div class="jm-content-col mt-1">
-            <span class="text-body-sm font-semibold capitalize">
-            {step.plutchik_score}
-          </span>
-          <span class="label-xs">Emotion</span>
+  
+          <div class="text-body">
+            {action.action}
           </div>
+  
         </div>
-      </div>
+      {/each}
+  
+    </div>
+  
   </div>
   </div>
-{/if}
+
 <style>
+  .wheel-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .wheel-svg-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .wheel-svg {
+    max-width: 600px;
+  }
 </style>

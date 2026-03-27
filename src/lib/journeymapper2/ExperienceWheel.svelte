@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { PLUTCHIK_EMOTIONS } from './journeyConfig.js';
     import ArrowsOutVertical from 'phosphor-icons-svelte/IconArrowsOutLineVerticalRegular.svelte'; 
     import Smiley from 'phosphor-icons-svelte/IconSmileyRegular.svelte';
@@ -19,7 +19,7 @@
     const RING_OUTER = 140;
   
     const PHASES = [
-      { label: 'BEFORE', startDeg: 210, endDeg: 330 },
+      { label: 'BEFORE', startDeg: 180, endDeg: 30 },
       { label: 'DURING', startDeg: 330, endDeg: 90  },
       { label: 'AFTER',  startDeg: 90,  endDeg: 210 },
     ];
@@ -67,7 +67,7 @@
       return '#BFA080';
     }
   
-    const PHASE_COLORS = ['#F1DDCB', '#EDCAAA', '#DFC3A8'];
+    const PHASE_COLORS = ['#7DBFA7', '#EDCAAA', '#DFC3A8'];
   
     /** @param {number} deg */
     function textAnchor(deg) {
@@ -92,7 +92,7 @@
      * Tooltip positioning (absolute overlay so it doesn't affect layout)
      * We position within the 480x480 viewBox coordinate space.
      */
-    const TOOLTIP_W = 210;   // keep in sync with CSS max-width/width
+    const TOOLTIP_W = 320;   // keep in sync with CSS max-width/width
     const TOOLTIP_H = 120;   // rough clamp height; OK for compact content
     const TOOLTIP_PAD = 10;
   
@@ -123,19 +123,8 @@
   </script>
   
   <div class="wheel-wrap">
-    <div class="spacer-sm" />
-    <div class="jm-content-grid-3">
-      <div class="legend-item"><Smiley />
-        <span class="label-sm">Positive design opportunity</span></div>
-      
-        <div class="legend-item"><ArrowsOutVertical />
-          <span class="label-sm">Make-or-break moment</span></div>
-      <div class="legend-item">
-        <Question />
-        <span class="label-sm">Information gaps</span></div>
-    </div>
-    <div class="divider" />
   
+
     <div class="wheel-svg-wrap">
       <svg viewBox="0 0 480 480" width="100%" class="wheel-svg" overflow="visible">
         {#each PHASES as phase, pi}
@@ -143,13 +132,11 @@
             d={phaseArcFill(RING_INNER, RING_OUTER, phase.startDeg, phase.endDeg)}
             fill={PHASE_COLORS[pi]}
             opacity="0.7"
-            stroke="#fff"
             stroke-width="0.5"
           />
         {/each}
   
-        <circle cx={CX} cy={CY} r={RING_OUTER} fill="none" stroke="#DFC3A8" stroke-width="1.25" />
-        <circle cx={CX} cy={CY} r={RING_INNER} fill="none" stroke="#DFC3A8" stroke-width="0.75" />
+        <circle cx={CX} cy={CY} r={RING_OUTER} fill="var(--panel-dark)" stroke="var(--panel-mid)" stroke-width="2.25" />
   
         {#each PHASES as phase}
           {@const pi = polar(RING_INNER, phase.startDeg)}
@@ -175,7 +162,7 @@
           <line
             x1={outerEdge.x} y1={outerEdge.y}
             x2={labelStart.x} y2={labelStart.y}
-            stroke={isHovered ? sc : '#DFC3A8'}
+            stroke={isHovered ? sc : 'var(--ink)'}
             stroke-width={isHovered ? 1.5 : 0.75}
             opacity="0.7"
           />
@@ -186,14 +173,13 @@
             r={isHovered ? 14 : 10}
             fill={sc}
             opacity={isHovered ? 1 : 0.82}
-            stroke="#F4EFE5"
+            stroke="var(--panel-dark)"
             stroke-width="2"
             role="button"
             aria-label={tp.moment}
             style="transition: r 0.15s, opacity 0.15s; cursor: pointer;"
             on:mouseenter={() => hoveredTp = i}
-            on:mouseleave={() => hoveredTp = null}
-          />
+            on:mouseleave={() => hoveredTp = null}></circle>
   
           {#if tp.make_or_break}
             <text x={nodePt.x} y={nodePt.y + 1} text-anchor="middle" dominant-baseline="middle" class="node-icon" pointer-events="none">◀</text>
@@ -211,7 +197,7 @@
           >
             <div
               xmlns="http://www.w3.org/1999/xhtml"
-              class="tp-label"
+              class="label-sm"
               style="text-align: {textAnchor(deg)}; color: {isHovered ? '#5A3E28' : '#8A6A4A'}; font-weight: {isHovered ? '500' : '400'};"
             >
               {tp.moment}
@@ -219,13 +205,17 @@
           </foreignObject>
         {/each}
   
-        <circle cx={CX} cy={CY} r={RING_INNER - 10} fill="#EDE5D8" stroke="#DFC3A8" stroke-width="1.5" />
-        <circle cx={CX} cy={CY} r={RING_INNER - 14} fill="none" stroke={primaryColor} stroke-width="3" opacity="0.35" />
+        <circle cx={CX} cy={CY} r={RING_INNER} 
+        fill="var(--paper)" stroke="var(--panel-dark)" stroke-width="2.2" />
   
         <text x={CX} y={CY - 22} text-anchor="middle" class="center-step">{stepName}</text>
+
         <text x={CX} y={CY - 6}  text-anchor="middle" class="center-stage">{stageName}</text>
         <rect x={CX - 36} y={CY + 2} width="72" height="16" rx="2" fill={primaryColor} opacity="0.25" />
-        <text x={CX} y={CY + 13} text-anchor="middle" class="center-emotion" style="fill: {primaryColor};">{ec.primary_emotion ?? ''}</text>
+        
+        <text x={CX} y={CY + 13} text-anchor="middle" class="center-emotion" style="fill: {primaryColor};">{ec.primary_emotion ?? ''}
+
+        </text>
         <text x={CX} y={CY + 34} text-anchor="middle" class="center-score">{(ec.emotional_valence ?? 0) >= 0 ? '+' : ''}{ec.emotional_valence ?? ''}</text>
         <text x={CX} y={CY + 47} text-anchor="middle" class="center-score-label">overall valence</text>
       </svg>
@@ -233,10 +223,10 @@
       {#if hoveredTp !== null && tooltipPos}
         {@const tp = touchpoints[hoveredTp]}
         <div
-          class="tp-tooltip tp-tooltip--floating"
+          class="tooltip jm-surface"
           style="left: {tooltipPos.x}px; top: {tooltipPos.y}px;"
         >
-          <div class="pill-white w-fit">{tp.type.replace(/_/g, ' ')}</div>
+          <div class="pill w-fit">{tp.type.replace(/_/g, ' ')}</div>
           <div class="label">{tp.moment}</div>
           <div class="tooltip-divider"></div>
   
@@ -263,25 +253,48 @@
         </div>
       {/if}
     </div>
-  
-    <div class="bottom-panels">
-      <div class="jm-content-col gap-4">
-        <div class="label-lg">Inflection Analysis</div>
-        <div class="jm-content-row">
-          <span class="label-sm">Risk level</span>
-          <span class="label risk-badge risk-{inflection.risk_level}">{inflection.risk_level}</span>
+    <div class="grid grid-cols-3 gap-2">
+      <div class="pill gap-2">
+        <Smiley class="icon-toolbar-dark" />
+        <span class="label">Positive design opportunity</span>
         </div>
-        <div class="panel-row">
+        
+        <div class="pill gap-2">
+          <ArrowsOutVertical class="icon-toolbar-dark"/>
+          <span class="label">Make-or-break moment</span></div>
+        
+          <div class="pill gap-2">
+          <Question class="icon-toolbar-dark"/>
+          <span class="label">Information gaps</span>
+        </div>
+        </div>
+
+    <span class="label-lg uppercase">
+      Inflection Analysis</span>
+    
+      <div class="jm-content-col">
+         <div class="toolbar-light">
+          <span class="label uppercase">Risk level</span>
+          <span class="pill label risk-{inflection.risk_level}">{inflection.risk_level}</span>
+        </div>
+
+        <div class="toolbar-light">          
           <span class="label-sm">Dropout risk</span>
-          <span class="label capitalize">{inflection.dropout_risk}</span>
+          <span class="pill uppercase text-slate-800">{inflection.dropout_risk}</span>
         </div>
+        
         <div class="panel-row panel-row--col">
-          <span class="label-sm">Trial perception</span>
-          <span class="text-body">{inflection.trial_perception_shift?.replace(/_/g, ' ')}</span>
+          <span class="label uppercase">
+            Trial perception</span>
+          <span class="text-body">
+            {inflection.trial_perception_shift?.replace(/_/g, ' ')}
+          </span>
         </div>
+
         {#if inflection.sponsor_opportunity_category?.length}
           <div class="panel-row panel-row--col">
-            <span class="panel-key">Opportunities</span>
+            <span class="label uppercase">
+              Opportunities</span>
             <div class="tag-list">
               {#each inflection.sponsor_opportunity_category as cat}
                 <span class="text-body">{cat.replace(/_/g, ' ')}</span>
@@ -289,7 +302,7 @@
             </div>
           </div>
         {/if}
-      </div>
+
   
       <div class="panel">
         <div class="panel-heading">Sponsor Actions</div>
@@ -304,69 +317,26 @@
     </div>
   </div>
   
+  
   <style>
     .wheel-wrap { display: flex; flex-direction: column; overflow-y: scroll;}
   
-    .wheel-legend { display: flex; flex-wrap: wrap; gap: 12px; padding: 10px 16px; background: #F4EFE5; border-bottom: 1px solid #EDE5D8; }
-    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 1em; color: #161616; }
-    .icon-smiley { color: #4a9e7f; font-size: 13px; }
-    .icon-mob    { color: #C4956A; font-size: 11px; }
-    .icon-info   { color: #3a7fc1; font-size: 11px; }
-  
+
     .wheel-svg-wrap {
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 16px 12px 8px;
+      padding: 1em;
       position: relative; /* required for absolute tooltip positioning */
       gap: 12px;
     }
-    .wheel-svg { display: block; overflow: visible; max-width: 600px; }
+
+    .wheel-svg { 
+      display: block; overflow: visible; max-width: 600px; }
   
-    :global(.phase-label)        { font-family: 'IBM Plex Sans', monospace; font-size: 5px; font-weight: 700; letter-spacing: 0.1em; fill: #8A6A4A; }
-    :global(.node-icon)          { font-size: 8px; fill: #F4EFE5; font-weight: bold; }
-    :global(.data-icon)          { font-size: 7px; fill: #3a7fc1; }
-    :global(.center-step)        { font-family: 'Space Mono', monospace; font-size: 8.5px; fill: #5A3E28; font-weight: 700; }
-    :global(.center-stage)       { font-family: 'DM Sans', sans-serif; font-size: 7px; text-transform: uppercase; letter-spacing: 0.08em; fill: #A08060; }
-    :global(.center-emotion)     { font-family: 'Space Mono', monospace; font-size: 7.5px; text-transform: capitalize; letter-spacing: 0.05em; }
-    :global(.center-score)       { font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; fill: #5A3E28; }
-    :global(.center-score-label) { font-family: 'DM Sans', sans-serif; font-size: 6.5px; text-transform: uppercase; letter-spacing: 0.08em; fill: #BFA080; }
-    :global(.tp-label)           { font-family: 'DM Sans', sans-serif; font-size: 8.5px; line-height: 1.3; white-space: normal; }
-  
-    .tp-tooltip {
-      background: #F4EFE5;
-      border: 1px solid #DFC3A8;
-      border-radius: 4px;
-      padding: 10px 12px;
-      box-shadow: 0 4px 16px rgba(90,62,40,0.12);
-      min-width: 180px;
-      max-width: 210px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-  
-    /* Floating tooltip: removed from layout so it won't displace the SVG */
-    .tp-tooltip--floating {
-      position: absolute;
-      z-index: 10;
-      width: 210px;
-      max-width: 210px;
-      pointer-events: none; /* avoids hover flicker and accidental capture */
-    }
-  
-    .tooltip-moment { font-family: 'Space Mono', monospace; font-size: 1em; color: #5A3E28; line-height: 1.25; }
-    .tooltip-type   { font-size: 7.5px; text-transform: uppercase; letter-spacing: 0.08em; color: #BFA080; }
-    .tooltip-divider{ height: 1px; background: #DFC3A8; margin: 2px 0; }
-    .tooltip-row    { display: flex; gap: 5px; align-items: flex-start; }
-    .tooltip-icon   { font-size: 11px; flex-shrink: 0; margin-top: 1px; }
-    .tooltip-icon.smiley { color: #4a9e7f; }
-    .tooltip-icon.info   { color: #3a7fc1; }
-    .tooltip-icon.mob    { color: #C4956A; }
-    .tooltip-text   { font-size: 1em; color: #7A5A3A; line-height: 1.1; }
-    .tooltip-mob    { display: flex; gap: 5px; align-items: center; font-size: 10.5px; color: #161616; font-family: 'IBM Plex Sans', monospace; font-weight: 500; }
-  
+
     .bottom-panels { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #DFC3A8; }
+
     .panel { padding: 12px 14px; display: flex; flex-direction: column; gap: 7px; border-right: 1px solid #DFC3A8; }
     .panel:last-child { border-right: none; }
     .panel-heading { font-family: 'DM Sans', sans-serif; font-size: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: #BFA080; padding-bottom: 4px; border-bottom: 1px solid #EDE5D8; }

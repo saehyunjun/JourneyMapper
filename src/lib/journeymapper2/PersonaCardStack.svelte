@@ -124,9 +124,10 @@
     {#key activePersona.id}
     
     <div class="active-card-wrap">
-    <PersonaProfileCard
-    personaProfile={activePersona.profile}
-    onOpenDetails={onOpenDetails}
+      <PersonaProfileCard
+      personaProfile={activePersona.profile}
+      personaType={activePersona.type}
+      onOpenDetails={onOpenDetails}
     />
     </div>
     

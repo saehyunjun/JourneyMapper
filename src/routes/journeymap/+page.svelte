@@ -162,11 +162,8 @@ let emotionSubDrawerOpen = false;
 
   $: drawerTitle =
     drawerMode === 'plutchik' ? "Plutchik's Wheel of Emotions" :
-    drawerMode === 'persona'  ? (activePersona?.profile?.name ?? '') :
     drawerMode === 'step' && journeyData?.[$selectedIndex]
       ? `${$selectedIndex + 1} / ${journeyData.length}` : '';
-
-      $: drawerWidth = drawerMode === 'persona' ? 460 : 520;
 
   /** @type {HTMLDivElement | null} */
   let scrollEl = null;
@@ -279,7 +276,6 @@ let emotionSubDrawerOpen = false;
   bind:open={drawerOpen}
   eyebrow={drawerEyebrow}
   title={drawerTitle}
-  width={drawerWidth}
   on:close={handleDrawerClose}
 >
   {#if drawerMode === 'step'}
@@ -341,7 +337,6 @@ let emotionSubDrawerOpen = false;
   bind:open={emotionSubDrawerOpen}
   eyebrow="Methodology"
   title="Plutchik's Wheel of Emotions"
-  width={380}
   on:close={() => (emotionSubDrawerOpen = false)}
 >
   <PlutchikContent />

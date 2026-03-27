@@ -121,7 +121,11 @@
         <!-- Bio + Goals — collapse when a step is active -->
         <div class="bio-goals-wrap pt-4" class:bio-goals-wrap--hidden={displayIndex >= 0}>
         
-          <PersonaProfileCard personaProfile={activePersona.profile} currentState={activePersona.currentState ?? []} />
+          <PersonaProfileCard 
+          personaProfile={activePersona.profile} 
+          currentState={activePersona.currentState ?? []} 
+          personaType={activePersona.type}
+          />
 
           {#if profile.bio}
             <div class="border-bottom pt-2">
@@ -267,7 +271,7 @@
             {/each}
           </div>
           <span class="heading-sm">{step.stage}</span>
-          <p class="heading-md">{step.step}</p>
+          <p class="heading-serif">{step.step}</p>
         </div>
       </div>
       {/key}

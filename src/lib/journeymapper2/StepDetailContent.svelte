@@ -183,7 +183,7 @@
 
     <!-- Illustration -->
     {#key illustrationSrc}
-      <div class="h-40" in:fade={{ duration: 300 }}>
+      <div class="h-40 mb-4" in:fade={{ duration: 300 }}>
         {#if !imgError}
           <img
             src={illustrationSrc}
@@ -192,7 +192,7 @@
             on:error={() => (imgError = true)}
           />
         {:else}
-          <div class="step-illustration__fallback stats-animation-gradient__gradient--bright bg-slate-900 pt-8">
+          <div class="step-illustration__fallback stats-animation-gradient__gradient--bright pt-8">
             <div class="flex flex-col px-4">
               <span class="label-sm text-white">{step.stage}</span>
               <h2 class="label-lg text-white">{step.step}</h2>
@@ -201,7 +201,7 @@
           
         {/if}
       </div>
-      <div class="section-bar" style="justify-content:space-between; padding-right:2.5em">
+      <div class="section-bar">
           <div class="flex flex-row gap-8 align-middle">
           <Scroll class="icon-toolbar-dark-md" />
           <span class="my-auto">Journey Narrative</span>
@@ -367,7 +367,7 @@
     bind:open={wheelDrawerOpen}
     eyebrow={step.stage}
     title="Experience Wheel"
-    width={550}
+    width={650}
     on:close={() => (wheelDrawerOpen = false)}
   >
     <ExperienceWheel
@@ -379,10 +379,7 @@
 {/if}
 
 <style>
-  .content-wrap {
-  display: flex;
-  flex-direction: column;
-}
+
 
 .quote-block {
   display: flex;

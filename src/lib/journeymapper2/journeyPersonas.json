@@ -617,8 +617,8 @@
         "distance to care": "100+ miles",
         "imageFile": "CandaceD.jpg",
         "quote": "There were months I don't remember at all. I had to learn who I was again \u2014 and now I'm trying to figure out if there's something that can actually stop this from coming back.",
-        "bio_1": "Candace was a second-year PhD candidate when she experienced what her family described as a psychiatric break \u2014 erratic behavior, paranoia, and seizure-like episodes that escalated over several weeks. After hospitalization, she was diagnosed with anti-NMDA receptor encephalitis.",
-        "bio_2": "She spent nearly four months inpatient, including three weeks in the ICU. Now in partial recovery, Candace manages residual cognitive fatigue, word-finding difficulties, and anxiety that she and her care team attribute to post-encephalitis syndrome. She has resumed light coursework but is not yet back to full academic capacity. She is highly motivated to understand her disease and advocates for herself in clinical settings, though she sometimes struggles with memory and processing speed during complex conversations.",
+        "bio_1": "Candace was a second-year PhD candidate when she experienced what her family described as a psychiatric break \u2014  involving paranoia and seizure-like episodes which escalated over several weeks. ",
+        "bio_2": "Candace spent nearly four months inpatient, including three weeks in the ICU. Now in partial recovery, Candace manages residual cognitive fatigue, word-finding difficulties, and anxiety that she and her care team attribute to post-encephalitis syndrome. She has resumed light coursework but is not yet back to full academic capacity. She is highly motivated to understand her disease and advocates for herself in clinical settings, though she sometimes struggles with memory and processing speed during complex conversations.",
         "goal1": "Achieve full cognitive recovery and return to her doctoral program without permanent academic setback.",
         "goal2": "Reduce relapse risk and understand whether maintenance immunotherapy or a clinical trial offers better long-term protection.",
         "goal3": "Rebuild a sense of identity and continuity after a period of significant memory loss and personality disruption.",
@@ -1706,7 +1706,7 @@
               {
                 "id": "path_neg",
                 "direction": "negative",
-                "label": "Emotional Withdrawal and Disengagement",
+                "label": "Emotional Withdrawal & Disengagement",
                 "outcome": "Without structured support, grief dominates. Karl delays follow-up appointments, withdraws from her caregiver network, and is unlikely to engage with trial options for 12+ months.",
                 "sentiment_delta": -2,
                 "key_driver": "Information overload at point of diagnosis, lack of emotional scaffolding, and unaddressed logistical concerns."

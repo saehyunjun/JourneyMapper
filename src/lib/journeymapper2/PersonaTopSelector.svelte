@@ -1,66 +1,59 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import StateBarList      from './StateBarList.svelte';
-
+  import StateBarList from './StateBarList.svelte';
   import UserRegular from 'phosphor-icons-svelte/IconPlusCircleRegular.svelte';
 
   const dispatch = createEventDispatcher();
 
-  /** Array of persona objects from journeyPersonas.json */
   export let personas = [];
-
-  /** ID of the currently active persona */
   export let activePersonaId = '';
   export let currentState = [];
-
 
   /** @type {Record<string, boolean>} */
   let imgErrors = {};
 
-  /** @type {string | null} Persona ID whose tooltip is currently showing */
+  /** @type {string | null} */
   let hoveredId = null;
 
-  /** Tooltip anchor position */
   let tipX = 0;
   let tipY = 0;
 
   const TIP_W = 200;
 
   /**
-   * @param {string} id
-   * @param {MouseEvent} e
+   * Returns the accent color for a persona based on its type.
+   * @param {object} p
+   * @returns {string}
    */
+  function personaColor(p) {
+    return p.type?.toLowerCase().includes('caregiver')
+      ? 'var(--orange)'
+      : 'var(--teal, #23abab)';
+  }
+
   function selectPersona(id, e) {
     if (id === activePersonaId) {
-      // Already active — open the story overlay, anchored to this button
       dispatch('story', { id, originEl: e.currentTarget });
     } else {
       dispatch('select', { id });
     }
   }
 
-  /**
-   * @param {string} id
-   * @param {MouseEvent} e
-   */
   function handleMouseEnter(id, e) {
     hoveredId = id;
     positionTip(e);
     dispatch('hover', { id });
   }
 
-  /** @param {MouseEvent} e */
   function handleMouseMove(e) {
     if (hoveredId) positionTip(e);
   }
 
-  /** @param {string} id */
   function handleMouseLeave(id) {
     hoveredId = null;
     dispatch('leave', { id });
   }
 
-  /** @param {MouseEvent} e */
   function positionTip(e) {
     const vw = window.innerWidth;
     const rawX = e.clientX + 14;
@@ -68,7 +61,6 @@
     tipY = e.clientY - 12;
   }
 
-  /** @param {object} p — full persona object */
   function getTooltipFields(p) {
     const prof = p.profile ?? {};
     return [
@@ -84,11 +76,13 @@
   <div class="flex flex-col gap-4 py-2 align-middle justify-center">
     {#each personas as p (p.id)}
       {@const active = p.id === activePersonaId}
+      {@const accentColor = personaColor(p)}
       <div class="flex flex-col items-center align-middle justify-center">
         <div class="avatar-wrapper">
           <button
             class="persona-avatar"
             class:persona-avatar--active={active}
+            style={active ? `--persona-accent: ${accentColor};` : ''}
             on:click={(e) => selectPersona(p.id, e)}
             on:mouseenter={(e) => handleMouseEnter(p.id, e)}
             on:mouseleave={() => handleMouseLeave(p.id)}
@@ -118,11 +112,16 @@
             >{isCaregiver ? 'C' : 'P'}</span>
           {/if}
         </div>
-        <span class="label-sm">{p.profile.name}</span>
+        <span 
+          class="persona-name"
+          class:persona-name--active={active}>
+          {p.profile.name}
+        </span>
       </div>
     {/each}
   </div>
-</div>  
+</div>
+
 <!-- ── Persona bio tooltip ──────────────────────────────────────────────── -->
 {#if hoveredId}
   {@const hp = personas.find((p) => p.id === hoveredId)}
@@ -134,93 +133,89 @@
       role="tooltip"
       aria-live="polite"
     >
-      <!-- Header row -->
       <div class="biobar"      
-      style="background-color: {isHpCaregiver ? 'var(--color-amber-500, #f59e0b)' : 'var(--teal, #23abab)'};">
+        style="background-color: {isHpCaregiver ? 'var(--color-amber-500, #f59e0b)' : 'var(--teal, #23abab)'};">
         <h3 class="heading-md text-slate-50">{hp.profile.name}</h3>
         {#if hp.type}
           <span class="pill-white">{hp.type}</span>
         {/if}
       </div>
 
-      <!-- Bio excerpt -->
       <div class="content-col">
-      {#if hp.profile.bio_1}
-        <p class="body-text text-sm">{hp.profile.bio_1}</p>
-      {/if}
+        {#if hp.profile.bio_1}
+          <p class="body-text text-sm">{hp.profile.bio_1}</p>
+        {/if}
 
-
-      {#if currentState.length}
-      <div class="back-state-bars">
-        <StateBarList states={currentState} />
-      </div>
-      {/if}
-
-
-      <!-- Key fields -->
-      <div class="flex flex-col gap-4 mt-8">
-        {#each getTooltipFields(hp) as [key, val]}
-          <div class="tip-field-row">
-            <span class="label-heading">{key}</span>
-            <span class="label capitalize">{val}</span>
+        {#if currentState.length}
+          <div class="back-state-bars">
+            <StateBarList states={currentState} />
           </div>
-        {/each}
+        {/if}
+
+        <div class="flex flex-col gap-4 mt-8">
+          {#each getTooltipFields(hp) as [key, val]}
+            <div class="tip-field-row">
+              <span class="label-heading">{key}</span>
+              <span class="label capitalize">{val}</span>
+            </div>
+          {/each}
+        </div>
       </div>
     </div>
-  </div>
   {/if}
 {/if}
 
 
 <style>
+  .avatar-wrapper {
+    position: relative;
+    display: inline-flex;
+  }
 
-  /* ── Avatar wrapper (positions the badge) ──────────────────────────── */
-.avatar-wrapper {
-  position: relative;
-  display: inline-flex;
-}
-  /* ── Current-state bars (story-style, colored per row) ───────────── */
   .back-state-bars {
     padding-top: 8px;
     border-top: 1px solid rgba(0,0,0,0.08);
   }
- 
 
-/* ── P / C type badge ───────────────────────────────────────────────── */
-.type-badge {
-  position: absolute;
-  bottom: 1px;
-  right: 1px;
-  width: 2.25em;
-  height: 2.25em;
-  border-radius: 50%;
-  padding: .25em .25em .15em .25em;
+  .type-badge {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    width: 2.25em;
+    height: 2.25em;
+    border-radius: 50%;
+    padding: .25em .25em .15em .25em;
+    background: var(--teal, #23abab);
+    color: var(--paper);
+    font-weight: 400;
+    font-size: .625em;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    letter-spacing: 0;
+    border: 1.5px solid var(--color-surface, #fff);
+    pointer-events: none;
+    user-select: none;
+  }
 
-  background: var(--teal, #23abab);
-  color: var(--paper);
-  
-  font-weight: 800;
-  font-size: .625em;
-  
-  text-align: center;
-  align-content: center;
-  justify-content: center;
+  .type-badge--caregiver {
+    background: var(--orange);
+  }
 
-  letter-spacing: 0;
-  border: 1.5px solid var(--color-surface, #fff);
-  pointer-events: none;
-  user-select: none;
-}
+  .persona-name {
+    font-family: var(--font-heading);
+    font-size: .725em;
+    text-transform: uppercase;
+    color: var(--darkbluegray);
+    opacity: 50%;
+    font-weight: 400;
+    margin-top: .25em;
+  }
 
-.type-badge--caregiver {
-  background: var(--orange);
-}
-
-/* Active state: solid ring */
-  .persona-avatar--active {
-    outline: 4px solid var(--teal, #23abab);
-    filter: saturate(1);
-    margin-bottom: .25em;
+  .persona-name--active {
+    opacity: 100%;
+    font-weight: 800;
+    color: var(--darkgray);
   }
 
   .persona-photo {
@@ -230,14 +225,19 @@
     border-radius: 50%;
     display: block;
   }
-  /* ── Tooltip ────────────────────────────────────────────────────────── */ 
+
+  /* Active outline picks up --persona-accent, falls back to teal */
+  .persona-avatar--active {
+    outline: 3.5px solid var(--persona-accent, var(--teal, #23abab));
+    outline-offset: 2px;
+  }
+
   .persona-top-tooltip {
-      position: fixed;
-      pointer-events: none;
-      min-width: 425px;
-      z-index: 500;
-      border: 2px solid transparent;
-      transition: left 50ms linear, top 50ms linear, border-color 150ms ease;
-    }
-  
+    position: fixed;
+    pointer-events: none;
+    min-width: 425px;
+    z-index: 500;
+    border: 2.5px solid transparent;
+    transition: left 50ms linear, top 50ms linear, border-color 150ms ease;
+  }
 </style>

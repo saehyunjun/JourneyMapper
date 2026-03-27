@@ -2,13 +2,14 @@
   import { RotateClockwise } from "carbon-icons-svelte";
 
   export let personaProfile = {};
+  export let personaType = '';        // ← new: pass p.type from parent
   export let currentState = [];
   export let onOpenDetails = () => {};
 
-function toggle(e) {
-  if (e?.target?.closest?.('.open-btn')) return;
-  flipped = !flipped;
-}
+  function toggle(e) {
+    if (e?.target?.closest?.('.open-btn')) return;
+    flipped = !flipped;
+  }
 
   let flipped = false;
   let imgError = false;
@@ -21,6 +22,10 @@ function toggle(e) {
     e.stopPropagation();
     onOpenDetails();
   }
+
+  // ── Accent color ─────────────────────────────────────────────────────────
+  $: isCaregiver = personaType?.toLowerCase().includes('caregiver');
+  $: accentColor = isCaregiver ? 'var(--orange)' : 'var(--teal, #23abab)';
 
   // ── Bio tooltip ───────────────────────────────────────────────────────────
   let hovered = false;
@@ -39,10 +44,10 @@ function toggle(e) {
 
   function onMouseMove(e) { mouseX = e.clientX; mouseY = e.clientY; }
 
-  $: vpW     = typeof window !== 'undefined' ? window.innerWidth  : 9999;
+  $: vpW      = typeof window !== 'undefined' ? window.innerWidth : 9999;
   $: flipLeft = mouseX + OFFSET_X + TIP_W > vpW - 12;
-  $: tipX    = flipLeft ? mouseX - TIP_W - OFFSET_X : mouseX + OFFSET_X;
-  $: tipY    = mouseY + OFFSET_Y;
+  $: tipX     = flipLeft ? mouseX - TIP_W - OFFSET_X : mouseX + OFFSET_X;
+  $: tipY     = mouseY + OFFSET_Y;
 </script>
 
 <svelte:window on:mousemove={onMouseMove} />
@@ -50,9 +55,10 @@ function toggle(e) {
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="card-scene"
-  on:click={flip}
+  on:click={toggle}
   on:mouseenter={() => (hovered = true)}
   on:mouseleave={() => (hovered = false)}
+  style="--accent: {accentColor};"
   title="Click to flip"
 >
   <div class="card-body" class:is-flipped={flipped}>
@@ -60,39 +66,36 @@ function toggle(e) {
     <!-- ── FRONT ─────────────────────────────────────────────────── -->
     <div class="card-face card-front" aria-hidden={flipped}>
       <div class="card-gradient">
-
-          {#if !imgError}
-        <img
-          class="card-photo"
-          src="/assets/profiles/{personaProfile.imageFile}"
-          alt={personaProfile.name}
-          on:error={() => (imgError = true)}
-        />
-      {:else}
-        <div class="card-initials">
-          {personaProfile.initials}
-        </div>
-      {/if}
-    </div>
-    
-      
+        {#if !imgError}
+          <img
+            class="card-photo"
+            src="/assets/profiles/{personaProfile.imageFile}"
+            alt={personaProfile.name}
+            on:error={() => (imgError = true)}
+          />
+        {:else}
+          <div class="card-initials">
+            {personaProfile.initials}
+          </div>
+        {/if}
+      </div>
 
       <!-- gradient + name -->
-      <div class="card-gradient">
-      </div>
-      <!-- flip hint -->
+      <div class="card-gradient"></div>
+
+      <!-- biobar -->
       <div class="biobar">
-      <div class="bioname">
-      <h3 class="text-sm text-white">{personaProfile.name}</h3>
-    </div>
+        <div class="bioname">
+          <h3 class="text-sm text-white">{personaProfile.name}</h3>
+        </div>
         <span class="pill-white">{personaProfile.role}</span>
       </div>
+
+      <!-- flip hint -->
       <div class="flip-hint">
-        <!-- Phosphor "ArrowsClockwise" regular -->
         <RotateClockwise class="text-white" />
       </div>
     </div>
-
 
     <!-- ── BACK ──────────────────────────────────────────────────── -->
     <div class="card-face card-back" aria-hidden={!flipped}>
@@ -103,37 +106,35 @@ function toggle(e) {
         </div>
 
         <div class="back-metrics">
-        {#if currentState.length}
-          <div class="back-state-bars">
-            <div class="flex flex-col gap-2">
-              {#each currentState as s, i}
-                {@const color = stateBarColor(i)}
-                {@const leansMax = s.value > 0.5}
-                {@const leansMin = s.value < 0.5}
-                <div class="flex flex-col gap-1">
-                  <span class="label-xs">{s.label}</span>
-                  <div class="sentiment-track">
-                    <div class="sentiment-fill" style="width:{s.value * 100}%;background:{color}"></div>
+          {#if currentState.length}
+            <div class="back-state-bars">
+              <div class="flex flex-col gap-2">
+                {#each currentState as s, i}
+                  {@const color = stateBarColor(i)}
+                  {@const leansMax = s.value > 0.5}
+                  {@const leansMin = s.value < 0.5}
+                  <div class="flex flex-col gap-1">
+                    <span class="label-xs">{s.label}</span>
+                    <div class="sentiment-track">
+                      <div class="sentiment-fill" style="width:{s.value * 100}%;background:{color}"></div>
+                    </div>
+                    <div class="flex justify-between">
+                      <span
+                        class="label-sm"
+                        style="{leansMin ? `opacity:1;font-weight:800;color:${color}` : 'font-weight:400;opacity:0.45'}"
+                      >{s.minLabel}</span>
+                      <span
+                        class="label-sm"
+                        style="{leansMax ? `opacity:1;font-weight:800;color:${color}` : 'font-weight:400;opacity:0.45'}"
+                      >{s.maxLabel}</span>
+                    </div>
                   </div>
-                  <div class="flex justify-between">
-                    <span
-                      class="label-sm"
-                      style="{leansMin ? `opacity:1;font-weight:800;color:${color}` : 'font-weight:400;opacity:0.45'}"
-                    >{s.minLabel}</span>
-                    <span
-                      class="label-sm"
-                      style="{leansMax ? `opacity:1;font-weight:800;color:${color}` : 'font-weight:400;opacity:0.45'}"
-                    >{s.maxLabel}</span>
-                  </div>
-                </div>
-              {/each}
+                {/each}
+              </div>
             </div>
-          </div>
-        {/if}
+          {/if}
+        </div>
       </div>
-
-      </div>
-
     </div>
 
   </div>
@@ -149,7 +150,6 @@ function toggle(e) {
 
   /* ── Outer lift on hover — isolated from the flip ────────────────── */
   .card-scene:hover .card-body {
-    /* only lift when NOT mid-flip */
     transform: translateY(-5px);
     box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.3);
   }
@@ -158,16 +158,71 @@ function toggle(e) {
     transform: rotateY(180deg) translateY(-10px);
   }
 
+  /* ── Card body ────────────────────────────────────────────────────── */
+  .card-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    border: 2.5px solid var(--accent, var(--teal, #23abab));
+    transform-style: preserve-3d;
+    transition:
+      transform 0.55s cubic-bezier(0.45, 0.05, 0.55, 0.95),
+      box-shadow 0.25s ease;
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.3);
+    will-change: transform;
+  }
+
+  .card-body.is-flipped {
+    transform: rotateY(180deg);
+  }
+
+  /* ── Shared face styles ───────────────────────────────────────────── */
+  .card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px; /* slightly inset from card-body border */
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* ── FRONT ────────────────────────────────────────────────────────── */
+  .card-front {
+    background: #1a1a1a;
+  }
+
+  .card-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-initials {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 36px;
+    background: var(--card, #2a2a2a);
+    color: #fff;
+  }
+
   /* Gradient overlay for legibility */
   .card-gradient {
     position: absolute;
     inset: 0;
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.68) 0%,
+      rgba(10, 10, 10, 0.9) 0%,
+      rgba(10, 10, 10, 0.8) 20%,
       rgba(0, 0, 0, 0.20) 40%,
       rgba(0, 0, 0, 0.10) 65%,
-      rgba(20, 20, 20, 0.30) 100%
+      rgba(20, 20, 10, 0.10) 100%
     );
     pointer-events: none;
   }
@@ -179,7 +234,8 @@ function toggle(e) {
     right: 0;
     padding: 16px 18px;
   }
-  /* Flip hint icon — fades out once flipped (via parent class) */
+
+  /* Flip hint icon — fades out once flipped */
   .flip-hint {
     position: absolute;
     bottom: 14px;
@@ -200,7 +256,6 @@ function toggle(e) {
     display: flex;
     align-items: stretch;
   }
-
 
   .back-header {
     display: flex;
@@ -239,5 +294,8 @@ function toggle(e) {
     transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
   }
 
-
+  /* ── Biobar accent ────────────────────────────────────────────────── */
+  :global(.card-scene .biobar) {
+    background-color: var(--accent, var(--teal, #23abab));
+  }
 </style>
