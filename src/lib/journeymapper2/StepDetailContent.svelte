@@ -184,7 +184,7 @@
 
     <!-- Illustration -->
     {#key illustrationSrc}
-      <div class="h-40 mb-4" in:fade={{ duration: 300 }}>
+      <div class="h-40" in:fade={{ duration: 300 }}>
         {#if !imgError}
           <img
             src={illustrationSrc}
@@ -202,10 +202,12 @@
           
         {/if}
       </div>
+      {/key}
+      
       <div class="header-row">
-          <div class="flex flex-row gap-8 align-middle">
+          <div class="flex flex-row gap-8 align-center">
           <Scroll class="icon-toolbar-dark-md" />
-          <span class="">Journey Narrative</span>
+          <h3 class="text-body my-auto">Journey Narrative</h3>
           </div>
           
           {#if wheelData}
@@ -228,7 +230,6 @@
           </button>
             {/if}
           </div>  
-    {/key}
 
 
 

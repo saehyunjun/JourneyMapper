@@ -135,6 +135,10 @@
   .event-connector {
     width: 1px;
     height: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
     border-left: 1.5px dashed rgba(160, 168, 184, 0.6);
     flex-shrink: 0;
   }

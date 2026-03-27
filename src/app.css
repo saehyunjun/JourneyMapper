@@ -1148,12 +1148,18 @@ color: var(--grayblue);
     display: flex;
     gap: 1em;
     flex-direction: row;
-    justify-content: space-between;
+    
     width: 100%;
-    align-items: baseline;
-    background-color: var(--panel);
+    
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--lightgrayblue);
+    color: var(--grayblue);
+    font-weight: 600;
     border-bottom: .5px solid var(--panel);
-    padding-bottom: .25em;
+    
+    padding: .25em 1em .3em 1em;
   }
   /* ---------------------------------------------------------------------- */
   /* Journey tooltip (ported from the component styles)                       */
