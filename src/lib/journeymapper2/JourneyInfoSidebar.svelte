@@ -297,7 +297,7 @@
       <div class="flex flex-row gap-2 w-full items-center justify-between">
         <div class="flex flex-row gap-2 align-middle items-center">
 
-          <HeartHalf class="icon-toolbar-dark" style-="outline: "/>
+          <HeartHalf class="icon-toolbar-dark"/>
 
           <span class="heading-sm">
             Overall Sentiment

@@ -48,19 +48,16 @@
     aria-label={title || 'Detail panel'}
   >
     <!-- Header -->
-    <div class="sub-header">
-      <button class="btn-base back-btn" on:click={close} aria-label="Close panel">
-        <ArrowLeftRegular />
-      </button>
-      <div class="sub-header-text">
+    <div class="header-row pl-2">
+      <div class="flex flex-col">
         {#if eyebrow}
-          <span class="jm-kicker">{eyebrow}</span>
-        {/if}
         {#if title}
-          <span class="label-bold">{title}</span>
+          <span class="label-sm ">{title}</span>
+        {/if}
+          <span class="label uppercase">{eyebrow}</span>
         {/if}
       </div>
-      <button class="btn-base" on:click={close} aria-label="Close panel">
+      <button class="btn-sm" on:click={close} aria-label="Close panel">
         <XRegular />
       </button>
     </div>
@@ -99,23 +96,11 @@
     display: flex;
     flex-direction: column;
     background: #FAF8F4;
-    border-left: 0.5px solid #DFC3A8;
+    border-left: 0.5px solid var(--panel-dark);
     box-shadow:
       -4px 0 24px rgba(90, 62, 40, 0.10),
       0px 0px 0px 1px rgba(0, 0, 0, 0.06);
     overflow: hidden;
-  }
-
-  /* ── Header ──────────────────────────────────────────────────── */
-  .sub-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 12px;
-    background: #F0E8DC;
-    border-bottom: 0.5px solid #DFC3A8;
-    flex-shrink: 0;
   }
 
   .sub-header-text {
@@ -124,10 +109,6 @@
     gap: 1px;
     flex: 1;
     min-width: 0;
-  }
-
-  .back-btn {
-    flex-shrink: 0;
   }
 
   /* ── Body ────────────────────────────────────────────────────── */

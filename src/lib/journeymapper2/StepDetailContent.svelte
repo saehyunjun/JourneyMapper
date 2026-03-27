@@ -12,6 +12,10 @@
   import ArrowSquareOutRegular from 'phosphor-icons-svelte/IconArrowSquareOutRegular.svelte';
   import ArrowElbowDownRight from "phosphor-icons-svelte/IconArrowElbowDownRightDuotone.svelte";
   import SmileyBlank  from 'phosphor-icons-svelte/IconSmileyBlankBold.svelte';
+  import Scroll from 'phosphor-icons-svelte/IconScrollRegular.svelte';
+  import IconHeartHalfRegular from 'phosphor-icons-svelte/IconHeartHalfRegular.svelte';
+  import IconDiamondsFourRegular from 'phosphor-icons-svelte/IconDiamondsFourRegular.svelte'
+
   import CalenderDots from 'phosphor-icons-svelte/IconCalendarDotsBold.svelte';
   import HandHeart    from 'phosphor-icons-svelte/IconHandHeartBold.svelte';
   import Aclepius     from 'phosphor-icons-svelte/IconAsclepiusBold.svelte';
@@ -179,7 +183,7 @@
 
     <!-- Illustration -->
     {#key illustrationSrc}
-      <div class="h-fit" in:fade={{ duration: 300 }}>
+      <div class="h-40" in:fade={{ duration: 300 }}>
         {#if !imgError}
           <img
             src={illustrationSrc}
@@ -193,23 +197,27 @@
               <span class="label-sm text-white">{step.stage}</span>
               <h2 class="label-lg text-white">{step.step}</h2>
             </div>
-          </div>
+        </div>
           
-          <div class="section-bar">
-            <span>Journey Narrative</span>
-                {#if wheelData}
-                    <button
-                      class="btn-extranote pl-2"
-                      on:click={() => (wheelDrawerOpen = true)}
-                      aria-label="Open experience wheel for {step.step}"
-                    >
-                      <span class="label font-semibold">View Experience Wheel</span>
-                      <ArrowSquareOutRegular class="icon-toolbar-dark-sm" />
-                    </button>
-                  {/if}
-              </div>  
         {/if}
       </div>
+      <div class="section-bar" style="justify-content:space-between; padding-right:2.5em">
+          <div class="flex flex-row gap-8 align-middle">
+          <Scroll class="icon-toolbar-dark-md" />
+          <span class="my-auto">Journey Narrative</span>
+          </div>
+          
+          {#if wheelData}
+                <button
+                  class="btn-extranote-orange pl-2"
+                  on:click={() => (wheelDrawerOpen = true)}
+                  aria-label="Open experience wheel for {step.step}"
+                >
+                  <span class="">View Experience Wheel</span>
+                  <ArrowSquareOutRegular class="icon-toolbar-light-sm" />
+                </button>
+              {/if}
+          </div>  
     {/key}
 
 
@@ -221,20 +229,23 @@
     {#if step.narrative_description}
         <p class="text-body">{step.narrative_description}</p>
     {/if}
-    </div>
+  </div>
+  
+  <div class="section-bar">
+    <QuotesRegular class="icon-toolbar-dark-md" />
+    <span>Key Quote</span>
+  </div>
 
     <!-- Quote -->
     {#if step.quote}
       <section class="detail-section">
-        <div class="section-bar w-full">
-          <span>Key Quote</span>
-        </div>
-
+        <div class="content-padding">
         <div class="card-quote quote-block">
           <QuotesRegular class="quote-icon" />
           <p class="pull-quote text-slate-800 text-pretty">
             &ldquo;{step.quote}&rdquo;
           </p>
+        </div>
         </div>
       </section>
     {/if}
@@ -243,6 +254,7 @@
     <!-- Sentiment -->
     <section class="detail-section">
       <div class="section-bar">
+        <IconHeartHalfRegular class="icon-toolbar-dark-md"/>
         <span>Sentiment</span>
       </div>
 
@@ -268,6 +280,7 @@
     <!-- Metrics -->
     <section class="detail-section">
       <div class="section-bar">
+        <IconDiamondsFourRegular class="icon-toolbar-dark-md"/>
         <span>Index Metrics</span>
       </div>
 
@@ -354,7 +367,7 @@
     bind:open={wheelDrawerOpen}
     eyebrow={step.stage}
     title="Experience Wheel"
-    width={480}
+    width={550}
     on:close={() => (wheelDrawerOpen = false)}
   >
     <ExperienceWheel

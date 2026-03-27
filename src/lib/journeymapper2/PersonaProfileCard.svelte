@@ -131,15 +131,6 @@ function toggle(e) {
           </div>
         {/if}
       </div>
-        <button
-  class="open-btn"
-  on:click={(e) => {
-    e.stopPropagation();
-    onOpenDetails(persona);
-  }}
->
-  Open Details
-</button>
 
       </div>
 
