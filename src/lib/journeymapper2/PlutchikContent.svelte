@@ -1,4 +1,8 @@
 <script>
+    import IconArrowRightBold from 'phosphor-icons-svelte/IconArrowRightBold.svelte';
+    import IconArrowsLeftRightBold from 'phosphor-icons-svelte/IconArrowsLeftRightBold.svelte';
+
+
     const primaryEmotions = [
       {
         name: 'Joy',
@@ -92,68 +96,82 @@
   
   
     <!-- Primary emotions -->
-    <div class="section-heading">8 Primary Emotions</div>
+    <h2 class="heading-sm">The Eight Primary Emotions</h2>
     <div class="emotions-grid">
       {#each primaryEmotions as e}
-        <div class="emotion-card">
-          <div class="emotion-header">
-            <span class="emotion-swatch" style="background: {e.color};" />
-            <span class="emotion-name">{e.name}</span>
-            <span class="emotion-opp">↔ {e.opposite}</span>
+        <div class="card-body">
+          <div class="toolbar-sm-empty">
+            <span class="jm-swatch-round" style="background: {e.color};"> </span>
+            <span class="label uppercase">{e.name}</span>
+            <IconArrowsLeftRightBold class="text-sm" />
+            <span class="label uppercase font-medium"> {e.opposite}</span>
           </div>
-          <div class="emotion-intensities">
+          <p class="text-body-sm">{e.description}</p>
+          <div class="toolbar-sm-empty mt-2">
             {#each e.intensity as level, idx}
               <span
-                class="intensity-chip"
-                style="opacity: {0.45 + idx * 0.275}; background: {e.color};"
+                class="pill-label"
+                style="opacity: {0.45 + idx * 0.275}; background: {e.color}; color:var(--ink)"
               >{level}</span>
             {/each}
           </div>
-          <p class="emotion-desc">{e.description}</p>
           {#if e.journeyExamples.length}
-            <div class="journey-tags">
-              <span class="tags-label">In this journey:</span>
+            <div class="toolbar-sm-empty mt-8 pt-2"
+            style="border-top: 1px solid var(--panel-dark)">
+              <span class="text-body">In this journey:</span>
+              <div class="flex flex-row gap-1">
               {#each e.journeyExamples as ex}
-                <span class="journey-tag">{ex}</span>
+                <span class="pill-sm"
+                style="background: {e.color}; color:var(--ink); font-size:.525em font-weight:400">{ex}</span>
               {/each}
+              </div>
             </div>
           {/if}
         </div>
       {/each}
     </div>
   
-    <div class="divider" />
   
     <!-- Dyads -->
-    <div class="section-heading">Dyads Used in This Journey</div>
-    <p class="sub-note">Dyads are blended emotions formed when two adjacent primary emotions combine.</p>
-    <div class="dyads-list">
+  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-1 mb-4">
+    <h3 class="heading-sm uppercase">Dyads Used in This Journey</h3>
+    <p class="text-body">Dyads are blended emotions formed when two adjacent primary emotions combine.</p>
+  </div>
+    
+    <div class="flex flex-col gap-2">
       {#each dyads as d}
-        <div class="dyad-row">
-          <span class="dyad-swatch" style="background: {d.color};" />
-          <div class="dyad-content">
-            <div class="dyad-name-row">
-              <span class="dyad-name">{d.name}</span>
-              <span class="dyad-components">{d.components[0]} + {d.components[1]}</span>
-            </div>
-            <p class="dyad-note">{d.note}</p>
+        <div class="flex flex-row gap-2 align-middle">
+          <span class="jm-swatch-lg" 
+          style="background: {d.color};"></span>
+          
+          <div class="flex flex-col align-bottom">
+            <div class="flex flex-row gap-2 align-bottom justify-start">
+              <span class="label uppercase my-auto">
+                {d.components[0]} + {d.components[1]}</span>
+            <IconArrowRightBold class="text-sm" />
+            <span class="label uppercase">{d.name}</span>
+          </div>
+            <p class="text-body-sm">{d.note}</p>
           </div>
         </div>
       {/each}
     </div>
-  
-    <div class="divider" />
+  </div>
   
     <!-- Scoring -->
-    <div class="section-heading">Scoring in This Map</div>
+  <div class="flex flex-col gap-2">
+    <div class="heading-sm uppercase"
+    >Scoring in This Map</div>
     <p class="text-body">
       Each Plutchik tag is translated to a <strong>−5 to +5 sentiment score</strong> reflecting the
       valence and intensity of the emotion at that journey step. Positive emotions (joy, trust, anticipation)
       trend above zero; negative emotions (grief, alarm, sadness) trend below. Neutral or ambivalent
       states (surprise, some dyads) sit near zero.
     </p>
-  
+
   </div>
+</div>
   
   <style>
     .content-wrap {
@@ -162,46 +180,7 @@
       flex-direction: column;
       gap: 18px;
     }
-  
-    /* ── Type ───────────────────────────────────────────────────── */
-    .text-body {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      color: #7A5A3A;
-      line-height: 1.7;
-      margin: 0;
-    }
-  
-    .text-body strong { color: #5A3E28; font-weight: 600; }
-    .text-body em     { font-style: italic; }
-  
-    .section-heading {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 9px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #A08060;
-      margin-bottom: 2px;
-    }
-  
-    .sub-note {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 10px;
-      color: #BFA080;
-      font-style: italic;
-      margin: 0 0 6px;
-      line-height: 1.5;
-    }
-  
-    .divider {
-      height: 1px;
-      background: #DFC3A8;
-      margin: 0 -20px;
-    }
-  
-    /* ── Intro ──────────────────────────────────────────────────── */
-    .intro-block { display: flex; flex-direction: column; gap: 10px; }
+
   
     /* ── Emotion cards ──────────────────────────────────────────── */
     .emotions-grid {
@@ -209,120 +188,8 @@
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
+
   
-    .emotion-card {
-      background: #EDE5D8;
-      border: 1px solid #DFC3A8;
-      border-radius: 3px;
-      padding: 10px 10px 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+ 
   
-    .emotion-header { display: flex; align-items: center; gap: 7px; }
-  
-    .emotion-swatch {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-  
-    .emotion-name {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      font-weight: 700;
-      color: #5A3E28;
-      flex: 1;
-    }
-  
-    .emotion-opp {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 8px;
-      color: #BFA080;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-    }
-  
-    .emotion-intensities { display: flex; gap: 4px; flex-wrap: wrap; }
-  
-    .intensity-chip {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 8px;
-      color: #3A2010;
-      padding: 2px 6px;
-      border-radius: 20px;
-      white-space: nowrap;
-      letter-spacing: 0.03em;
-    }
-  
-    .emotion-desc {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 9.5px;
-      color: #8A6A4A;
-      line-height: 1.55;
-      margin: 0;
-    }
-  
-    .journey-tags { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
-  
-    .tags-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #BFA080;
-      flex-shrink: 0;
-    }
-  
-    .journey-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 7.5px;
-      color: #7A5A3A;
-      background: #F4EFE5;
-      border: 1px solid #DFC3A8;
-      border-radius: 2px;
-      padding: 2px 5px;
-      white-space: nowrap;
-    }
-  
-    /* ── Dyads ──────────────────────────────────────────────────── */
-    .dyads-list { display: flex; flex-direction: column; gap: 10px; }
-  
-    .dyad-row { display: flex; align-items: flex-start; gap: 10px; }
-  
-    .dyad-swatch {
-      width: 28px; height: 28px;
-      border-radius: 3px;
-      flex-shrink: 0;
-      margin-top: 2px;
-      opacity: 0.85;
-    }
-  
-    .dyad-content { flex: 1; display: flex; flex-direction: column; gap: 3px; }
-  
-    .dyad-name-row { display: flex; align-items: baseline; gap: 8px; }
-  
-    .dyad-name {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      font-weight: 700;
-      color: #5A3E28;
-      text-transform: capitalize;
-    }
-  
-    .dyad-components {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 9px;
-      color: #BFA080;
-      letter-spacing: 0.03em;
-    }
-  
-    .dyad-note {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 10px;
-      color: #8A6A4A;
-      margin: 0;
-      line-height: 1.55;
-    }
   </style>

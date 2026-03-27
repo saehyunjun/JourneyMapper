@@ -63,10 +63,12 @@
   let tooltipX = 0;
   let tooltipY = 0;
 
-  /**
-   * @param {MouseEvent} e
-   * @param {string} key
-   */
+  let emotionSubDrawerOpen = false;
+ 
+ function openEmotionDetail() {
+   emotionSubDrawerOpen = true;
+ }
+ 
   function onSquareEnter(e, key) {
     hoveredMetricKey = key;
     positionTooltip(e);
@@ -153,7 +155,7 @@
   <div class="content-wrap">
 
     <!-- Top meta bar -->
-    <div class="toolbar-light p-2">
+    <div class="toolbar p-2">
       <div class="btn-extranote-empty">
         <div
           class="jm-swatch"
@@ -200,10 +202,10 @@
           
         {/if}
       </div>
-      <div class="section-bar">
+      <div class="header-row">
           <div class="flex flex-row gap-8 align-middle">
           <Scroll class="icon-toolbar-dark-md" />
-          <span class="my-auto">Journey Narrative</span>
+          <span class="">Journey Narrative</span>
           </div>
           
           {#if wheelData}
@@ -213,9 +215,18 @@
                   aria-label="Open experience wheel for {step.step}"
                 >
                   <span class="">View Experience Wheel</span>
-                  <ArrowSquareOutRegular class="icon-toolbar-light-sm" />
+                  <ArrowSquareOutRegular class="icon-toolbar-light-sm"
+                  style= "background-color: var(--lightorange); color: var(--orange)" />
                 </button>
-              {/if}
+            {:else}
+            <button
+            class="btn-extranote pl-2 hover:cursor-not-allowed saturate-20 opacity-50"
+            aria-label="Open experience wheel for {step.step}"
+          >
+            <span class="">View Experience Wheel</span>
+            <ArrowSquareOutRegular class="icon-toolbar-light-sm" />
+          </button>
+            {/if}
           </div>  
     {/key}
 

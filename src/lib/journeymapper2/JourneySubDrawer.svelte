@@ -80,8 +80,8 @@
   .sub-scrim {
     position: fixed;
     inset: 0;
-    background: rgba(30, 20, 10, 0.8);
-    z-index: 202;
+    background: rgba(30, 20, 10, 0.825);
+    z-index: 9998;
     cursor: pointer;
   }
 
@@ -91,14 +91,14 @@
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 203;
+    z-index: 9999;
     display: flex;
     flex-direction: column;
     background: var(--paper);
-    border-left: 2.5px solid var(--panel);
+    border-left: 2.5px solid var(--panel-dark);
     box-shadow:
       -4px 0 24px rgba(90, 62, 40, 0.10),
-      0px 0px 0px 1px rgba(0, 0, 0, 0.06);
+      0px 0px 0px 1px rgba(0, 0, 0, 0.10);
     overflow: hidden;
   }
 
