@@ -919,12 +919,6 @@
     .journey-stage-hero { background: #1e2c2c; }
     .journey-stage-hero--final { background: #1e1e2c; }
 
-    .photo-full {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: top center;
-      display: block;
-    }
     .bio-photo-fallback {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;

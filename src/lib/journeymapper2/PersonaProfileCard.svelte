@@ -1,5 +1,5 @@
 <script>
-  import { RotateClockwise } from "carbon-icons-svelte";
+  import ArrowCounterClockwiseRegular from "phosphor-icons-svelte/IconArrowCounterClockwiseRegular.svelte";
 
   export let personaProfile = {};
   export let personaType = '';        // ← new: pass p.type from parent
@@ -93,7 +93,7 @@
 
       <!-- flip hint -->
       <div class="flip-hint">
-        <RotateClockwise class="text-white" />
+        <ArrowCounterClockwiseRegular class="text-white" />
       </div>
     </div>
 

@@ -14,8 +14,8 @@
   $: sponsorActions = data?.sponsor_actions ?? [];
 
   const CX = 240, CY = 240;
-  const RING_INNER = 120;
-  const RING_OUTER = 140;
+  const RING_INNER = 50;
+  const RING_OUTER = 100;
 
   let hoveredTp = null;
 
@@ -115,17 +115,30 @@
         on:mouseleave={() => hoveredTp = null}
       />
     
-      <!-- label -->
-      <text
-        x={labelPt.x}
-        y={labelPt.y}
-        text-anchor={textAnchor(deg)}
-        dominant-baseline="middle"
-        class="label-sm"
-        style="pointer-events: none;"
-      >
-        {tp.moment}
-      </text>
+    <foreignObject
+    x={labelPt.x - 39}
+    y={labelPt.y - 10}
+    width="55"
+    height="40"
+    style="pointer-events: none; overflow: visible;"
+  >
+    <div
+      xmlns="http://www.w3.org/1999/xhtml"
+      class="label-sm"
+      style="
+        width: 120px;
+        max-width: 140px;
+        text-align: {textAnchor(deg)};
+        line-height: 1.05;
+        background-color: var(--lightgrayblue);
+        padding: .5em;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      "
+    >
+      {tp.moment}
+    </div>
+  </foreignObject>
     {/each}
 
       <circle cx={CX} cy={CY} r={RING_INNER} fill="var(--panel)" />
@@ -279,12 +292,13 @@
   .wheel-svg-wrap {
     position: relative;
     display: flex;
-    background-color: var(--panel-mid);
+    background-color: var(--lightgrayblue);
     justify-content: center;
   }
 
   .wheel-svg {
-    max-width: 600px;
+    max-width: 720px;
+    overflow: visible;
   }
 
   .tooltip {
