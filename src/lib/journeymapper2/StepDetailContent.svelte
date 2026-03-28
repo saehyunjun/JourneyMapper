@@ -172,7 +172,7 @@
       </div>
 
       <button
-        class="btn-extranote"
+        class="btn-nav"
         on:click={() => dispatch('openEmotionDetail')}
         aria-label="Learn about {step.plutchik_score} — open emotion detail"
         title="About Plutchik emotions"

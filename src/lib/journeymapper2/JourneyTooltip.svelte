@@ -90,24 +90,25 @@
     {/if}
     
 
-    <div class="toolbar-sm-empty">
-      <div class="flex flex-col gap-1">
+    <div class="toolbar-sm-empty"
+      style="background-color: {stageColor};">
+      <div class="flex flex-col gap-1 p-2">
         <span class="label-xs"
-        style="color: {stageColor}">
+        style="color: var(--paper)">
         {step.stage}</span>
       
-        <p class="heading-serif">
-          {step.step}</p>
+        <h3 class="heading-serif"
+        style="color: var(--paper)">
+          {step.step}</h3>
     </div>
     </div>
 
-    <div class="divider"></div>
 
 
 
     <!-- ── Quote ──────────────────────────────────────────────────────── -->
     {#if hasQuote}
-      <div class="flex flex-col justify-center">
+      <div class="flex flex-col justify-center px-2">
         <span class="tip-quote-icon" aria-hidden="true">
           <QuotesRegular class="h-12" />
         </span>
