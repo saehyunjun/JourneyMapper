@@ -30,21 +30,20 @@
   </div>
   
   <style>
-    .screen {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 0 8px;
-      /* Gradient from bottom — text always readable */
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.92) 0%,
-        rgba(0,0,0,0.7) 40%,
-        rgba(0,0,0,0.1) 100%
-      );
-    }
+     .screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 0 8px;
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0,0.92) 0%,
+      rgba(0,0,0,0.7) 40%,
+      rgba(0,0,0,0.1) 100%
+    ), #0f0d0b;  /* ← add solid base color */
+  }
   
     .screen-inner {
       display: flex;

@@ -143,18 +143,25 @@
       component: QuoteScreen,
       props: { profile, accent: accentColor }
     },
+    
     'event-1': {
       component: BaseStoryScreen,
       props: { title: 'How It Began', content: profile?.bio_1, accent: accentColor }
     },
+    
     themes: {
       component: ThemesScreen,
       props: { themes, profile, accent: accentColor }
     },
+
     bio2: {
-      component: BaseStoryScreen,
-      props: { title: `How ${firstName(profile?.name)} navigates care`, content: profile?.bio_2, accent: accentColor }
-    },
+  component: BaseStoryScreen,
+  props: { 
+    title: `How ${firstName(profile?.name)} navigates care`, 
+    content: profile?.bio_2, 
+    accent: accentColor 
+  }
+},
     'current-state': {
       component: CurrentStateScreen,
       props: { states, accent: accentColor }
@@ -233,7 +240,8 @@
   >
 
     <!-- ── Progress bars ─────────────────────────────────────────────── -->
-    <div class="story-progress" onmouseenter={() => { paused = true; cancelAnimationFrame(rafId); }} onmouseleave={() => { paused = false; startProgress(); }}>
+    <div class="story-progress" 
+    onmouseenter={() => { paused = true; cancelAnimationFrame(rafId); }} onmouseleave={() => { paused = false; startProgress(); }}>
       {#each STORY_FLOW as _, i}
         <div class="progress-track" onclick={(e) => { e.stopPropagation(); goTo(i); }}>
           <div
