@@ -68,7 +68,6 @@
   </div>
 </div>
 
-<div class="jm-rule" />
 
 <!-- ── Metrics ─────────────────────────────────────────────── -->
 <div class="sidebar-block">

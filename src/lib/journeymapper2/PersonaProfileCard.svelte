@@ -255,11 +255,8 @@
     color: rgba(255, 255, 255, 0.55);
     transition: opacity 0.2s;
     pointer-events: none;
-  }
+}
 
-  .card-body.is-flipped .flip-hint {
-    opacity: 0;
-  }
 
   /* ── BACK ─────────────────────────────────────────────────────────── */
   .card-back {

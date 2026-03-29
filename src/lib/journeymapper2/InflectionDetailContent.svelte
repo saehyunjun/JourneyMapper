@@ -77,13 +77,14 @@
     <div class="content-wrap">
   
       <!-- ── Step context header ────────────────────────────────────────── -->
-      <div class="step-header">
-        <div class="flex flex-row align-middle gap-2">
+      <div class="header">
+        <div class="toolbar-white">
           <IconArrowsOutLineVerticalRegular />
-          <span class="jm-kicker">Inflection Point</span>
         </div>
-        <h2 class="jm-title">{step.step}</h2>
-        <span class="stage-label">{step.stage}</span>
+        <span class="label-sm text-white">{step.stage}</span>
+        <h2 class="heading-serif"
+        style="color:var(--lightgrayblue); 
+        font-size:2.5em">{step.step}</h2>
       </div>
   
       <div class="divider"></div>
@@ -124,12 +125,12 @@
               <IconArrowUpRegular />↑ Positive
             {:else}
               <IconArrowDownRegular />↓ Negative
-            {/if}
+            {/if}``
           </span>
   
           <!-- Label + outcome -->
           <div class="jm-content-col">
-            <span class="path-label">{activePath.label}</span>
+            <span class="label-sm uppercase">{activePath.label}</span>
             {#if activePath.outcome}
               <p class="text-body">{activePath.outcome}</p>
             {/if}
@@ -138,7 +139,7 @@
           <!-- Sentiment shift -->
           {#if activePath.sentiment_shift}
             <div class="jm-section-bar mt-2">
-              <span class="jm-kicker">Sentiment shift</span>
+              <span class="label-sm uppercase">Sentiment shift</span>
             </div>
             <p class="text-body">{humanise(activePath.sentiment_shift)}</p>
           {/if}
@@ -146,7 +147,7 @@
           <!-- Barriers -->
           {#if activePath.barriers?.length}
             <div class="jm-section-bar mt-2">
-              <span class="jm-kicker">Barriers</span>
+              <span class="label-sm uppercase">Barriers</span>
             </div>
             <ul class="tag-list">
               {#each activePath.barriers as b}
@@ -158,7 +159,7 @@
           <!-- Enablers -->
           {#if activePath.enablers?.length}
             <div class="jm-section-bar mt-2">
-              <span class="jm-kicker">Enablers</span>
+              <span class="label-sm uppercase">Enablers</span>
             </div>
             <ul class="tag-list">
               {#each activePath.enablers as e}
@@ -182,7 +183,7 @@
             {otherDirection === 'positive' ? '↑' : '↓'}
             {otherDirection === 'positive' ? 'Positive' : 'Negative'}
           </span>
-          <span class="other-path-label">{otherPath.label}</span>
+          <span class="other-label-sm uppercase">{otherPath.label}</span>
           <span class="other-path-cta">View →</span>
         </button>
       {/if}
@@ -194,14 +195,14 @@
         <div class="jm-content-col gap-3">
           <div class="flex flex-row items-center gap-2">
             <IconWarningRegular />
-            <span class="jm-kicker">Inflection Analysis</span>
+            <span class="label-sm uppercase">Inflection Analysis</span>
           </div>
   
           <!-- Risk + Dropout row -->
           <div class="analysis-row">
             {#if analysis.risk_level}
               <div class="analysis-cell">
-                <span class="jm-kicker">Risk level</span>
+                <span class="label-sm uppercase">Risk level</span>
                 <span class="risk-badge" style="color:{riskColor(analysis.risk_level)}; border-color:{riskColor(analysis.risk_level)}44; background:{riskColor(analysis.risk_level)}12;">
                   {humanise(analysis.risk_level)}
                 </span>
@@ -209,7 +210,7 @@
             {/if}
             {#if analysis.dropout_risk}
               <div class="analysis-cell">
-                <span class="jm-kicker">Dropout risk</span>
+                <span class="label-sm uppercase">Dropout risk</span>
                 <span class="label capitalize">{humanise(analysis.dropout_risk)}</span>
               </div>
             {/if}
@@ -218,7 +219,7 @@
           <!-- Trial perception shift -->
           {#if analysis.trial_perception_shift}
             <div class="jm-content-col">
-              <span class="jm-kicker">Trial perception</span>
+              <span class="label-sm uppercase">Trial perception</span>
               <p class="text-body">{humanise(analysis.trial_perception_shift)}</p>
             </div>
           {/if}
@@ -226,7 +227,7 @@
           <!-- Sponsor opportunity categories -->
           {#if analysis.sponsor_opportunity_category?.length}
             <div class="jm-content-col">
-              <span class="jm-kicker">Sponsor opportunity</span>
+              <span class="label-sm uppercase">Sponsor opportunity</span>
               <ul class="tag-list">
                 {#each analysis.sponsor_opportunity_category as cat}
                   <li class="tag-item tag-item--neutral">{humanise(cat)}</li>
@@ -238,7 +239,7 @@
           <!-- Convergent metrics -->
           {#if analysis.convergent_metrics?.length}
             <div class="jm-content-col">
-              <span class="jm-kicker">Convergent metrics</span>
+              <span class="label-sm uppercase">Convergent metrics</span>
               <ul class="tag-list">
                 {#each analysis.convergent_metrics as m}
                   <li class="tag-item tag-item--neutral">{humanise(m)}</li>
@@ -256,7 +257,7 @@
         <div class="jm-content-col gap-3">
           <div class="flex flex-row items-center gap-2">
             <IconLightbulbRegular />
-            <span class="jm-kicker">Sponsor Actions</span>
+            <span class="label-sm uppercase">Sponsor Actions</span>
           </div>
   
           {#each sponsorActions as action}
@@ -278,8 +279,8 @@
   
       <div class="emotion-row">
         <div class="jm-content-col">
-          <span class="jm-kicker">Emotion</span>
-          <div class="flex flex-row items-center gap-2 mt-1">
+          <span class="label-sm uppercase">Emotion</span>
+          <div class="flex flex-row items-center mt-1">
             {#each emotionSwatches as color}
               <span class="jm-swatch-circle" style="background:{color};"></span>
             {/each}
@@ -288,11 +289,11 @@
         </div>
   
         <div class="jm-content-col">
-          <span class="jm-kicker">Overall Sentiment</span>
-          <div class="flex flex-row items-center gap-2 mt-1">
-            <span class="sentiment-dot" style="background:{sentimentToColor(step.sentiment)};"></span>
-            <span class="label" style="color:{sentimentToColor(step.sentiment)}">{sentimentLabel}</span>
-            <span class="sentiment-score">{parseFloat(step.sentiment) > 0 ? '+' : ''}{step.sentiment}</span>
+          <span class="label-sm uppercase">Overall Sentiment</span>
+          <div class="flex flex-row items-center align-center gap-2">
+            <span class="jm-swatch" style="background:{sentimentToColor(step.sentiment)};"></span>
+            <span class="label-sm" style="color:{sentimentToColor(step.sentiment)}">{sentimentLabel}</span>
+          
           </div>
         </div>
       </div>
@@ -384,7 +385,7 @@
       gap: 0.25rem;
     }
   
-    .path-label {
+    .label-sm uppercase {
       font-size: 0.9rem;
       font-weight: 600;
       color: var(--ink, #312F28);
@@ -421,7 +422,7 @@
       flex-shrink: 0;
     }
   
-    .other-path-label {
+    .other-label-sm uppercase {
       flex: 1;
       font-size: 0.75rem;
       font-weight: 500;
@@ -528,21 +529,6 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
-    }
-  
-    .sentiment-dot {
-      width: 0.85rem;
-      height: 0.85rem;
-      border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.15);
-      flex-shrink: 0;
-      display: inline-block;
-    }
-  
-    .sentiment-score {
-      font-family: var(--font-mono, 'Space Mono', monospace);
-      font-size: 0.7rem;
-      color: var(--ink-muted, #73726c);
     }
   
     .mt-1 { margin-top: 0.25rem; }

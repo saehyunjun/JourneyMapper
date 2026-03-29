@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+
+
   import JourneyLayoutToggle from '$lib/journeymapper2/JourneyLayoutToggle.svelte';
   import JourneyIndexBars from '$lib/journeymapper2/JourneyIndexBars.svelte';
   import JourneyLegend        from '$lib/journeymapper2/JourneyLegend.svelte';
@@ -69,7 +72,7 @@
   let storyOriginEl = null;
 
   // ── Active persona ────────────────────────────────────────────────────
-  let activePersonaId = personas[0].id;
+  let activePersonaId = personas?.[0]?.id ?? null;
   /** @type {any} */
   $: activePersona  = personas.find((p) => p.id === activePersonaId) ?? personas?.[0] ?? null;
   /** @type {any[]} */

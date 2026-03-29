@@ -200,10 +200,22 @@
     font-size: 24%;  
   }
 
+  .story-text { 
+    font-family: var(--font-sans); 
+    line-height: 125%;
+    font-size: 1em;
+    font-weight: 600;
+    
+    color: var(--ink);
+    mix-blend-mode: darken;
+    
+    text-wrap: balance;
+  }
+  
   .pull-quote { 
     font-family: var(--font-heading); 
-    line-height: 115%;
-    font-size: 1.2em;
+    line-height: 125%;
+    font-size: 1.125em;
     font-weight: 600;
     color: var(--grayblue);
     text-wrap: balance;
@@ -213,10 +225,10 @@
   .pull-quote-lg { 
     font-family: var(--font-heading); 
     line-height: 115%;
-    font-size: 2.725em;
+    font-size: 2em;
     font-weight: 400;
     text-transform:inherit;
-    color: var(--ink);
+    width: 80%;
     text-wrap:balance;
   }
 
@@ -1030,6 +1042,35 @@
     gap: 1em;
   }
 
+
+  /* ── Shell ──────────────────────────────────────────────────── */
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    overflow-y: auto;
+    border-left: 2.5px solid var(--panel);
+    box-shadow: 
+    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.08),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+
+
+.drawer-body {
+  flex: 1;          /* fill remaining width after the nav strip */
+  min-height: 0;    /* allow flex child to shrink below content height */
+  overflow-y: auto; /* enable vertical scroll */
+}
+
+
 .detail-bar {
 display: flex;
 flex-direction: column;
@@ -1093,6 +1134,8 @@ color: var(--grayblue);
     width: 100%;
     height: 100%;
     max-height: 300px;
+    aspect-ratio: 3 / 2;
+    
     border-radius: 2em;
     object-fit: cover;
   }
@@ -1145,7 +1188,9 @@ color: var(--grayblue);
 }
 
   .pill-white {
-    display: inline-flex;
+    display: flex;
+    flex-direction: row;
+
     align-items: center;
     justify-content: center;
     padding: .2em .35em .225em .325em;
@@ -1174,17 +1219,17 @@ color: var(--grayblue);
     display: flex;
     flex-direction: row;
     font-family: var(--font-sans);
-    font-size: 0.525em;
-    font-weight: 800;
+    font-size: 0.625em;
+    font-weight: 600;
     text-transform: uppercase;
     color: var(--gray); 
-    border: .5px solid var(--gray);
-    border-radius: 20px;
+    border: .325px solid var(--gray);
+    border-radius: 100em;
     align-items: center;
     justify-content: center;
     width: fit-content;
     height: fit-content;
-    padding:.325em .625em .3em .625em;
+    padding:.3em .625em .325em .625em;
   }
 
   .header-row {
@@ -1212,6 +1257,8 @@ color: var(--grayblue);
     z-index: 300;
     display: flex;
     flex-direction: column;
+
+    padding: 1em;
 
     background: var(--paper);
     border: var(--stroke);
@@ -1668,15 +1715,7 @@ padding: .25em 1em;
     transform: scale(1.4);
     opacity: 1;
   }
-/* Stage headers (JourneyStages.svelte) */
-.jm-stage-topbar {
-  shape-rendering: crispEdges;
-}
-
-.jm-stage-label {
-  pointer-events: none; /* keeps stage labels from interfering with hover/click hit-rects */
-}
-/* ---------- Journey UI primitives (reusable) ---------- */
+/* Stage --- Journey UI primitives (reusable) ---------- */
 
 .jm-surface {
     background: var(--paper, #f4efe5);
@@ -1693,13 +1732,6 @@ padding: .25em 1em;
     color: #3b3b3b;
     font-weight: 700;
     margin-bottom: 1em;
-  }
-  
-  .jm-title {
-    font-size: 2em;
-    font-weight: 500;
-    line-height: 1.15;
-    color: #111;
   }
   
   .jm-rule {
@@ -1722,6 +1754,23 @@ padding: .25em 1em;
     display: flex;
     flex-direction: column;
   }
+
+  
+  /* ── Story screen ─────────────────────────────────────────────────────── */
+  .story-screen {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    position: relative;
+    z-index: 1;
+    padding: 1em;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    transition: background 300ms ease;
+  }
+
   
 
   .detail-section {

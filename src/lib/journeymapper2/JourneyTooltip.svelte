@@ -91,14 +91,14 @@
     
 
     <div class="toolbar-sm-empty"
-      style="background-color: {stageColor};">
+      style="border-bottom: 2.5px solid {stageColor};">
       <div class="flex flex-col gap-1 p-2">
         <span class="label-xs"
-        style="color: var(--paper)">
+        style="color: var(--grayblue)">
         {step.stage}</span>
       
         <h3 class="heading-serif"
-        style="color: var(--paper)">
+        style="color: var(--grayblue)">
           {step.step}</h3>
     </div>
     </div>

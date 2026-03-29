@@ -161,15 +161,25 @@
     <!-- Top meta bar -->
     <div class="toolbar p-2"
     style="border-bottom: 2.5px solid {stageColor}">
-      <div class="btn-extranote-empty">
-        <div
-          class="jm-swatch"
-          style="background-color: {sentimentColor}"
-        ></div>
-        <span class="label uppercase font-semibold">
-          {sentimentLabel}
-        </span>
-      </div>
+        <div class="flex flex-row gap-2 align-center items-center">
+          <div class="flex flex-row">
+            {#each SENTIMENT_SCALE as stopColor, i}
+              {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
+              {@const isActive  = i === Math.round(activePos)}
+              <div
+                class="jm-swatch"
+                class:score-square--active={isActive}
+                style="background: {stopColor}; opacity: {isActive ? 1 : 0.2};"
+              >
+              </div>
+            {/each}
+          </div>
+          <span class="pill-sm" 
+          style="background-color:{sentimentColor}; color:var(--ink)">
+            {sentimentLabel}
+          </span>
+         
+        </div>
 
       <button
         class="btn-nav"
@@ -247,25 +257,7 @@
       {/if}
     </div>
 
-    <div class="flex flex-col gap-2 w-1/3">
-      <span class="pill" 
-      style="border-color:{sentimentColor}; color:{sentimentColor}">
-        {sentimentLabel}
-      </span>
-      <div class="flex flex-row gap-1">
-        {#each SENTIMENT_SCALE as stopColor, i}
-          {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
-          {@const isActive  = i === Math.round(activePos)}
-          <div
-            class="jm-swatch"
-            class:score-square--active={isActive}
-            style="background: {stopColor}; opacity: {isActive ? 1 : 0.2};"
-          ></div>
-        {/each}
-      </div>
-
-     
-    </div>
+  
   </div>
   
   <div class="section-bar">
@@ -322,7 +314,7 @@
 
                 {#key $selectedIndex}
                   <span
-                    class="pill font-semibold"
+                    class="pill-white"
                     style="border: 1px solid {m.color}; color: {m.color}"
                     in:fade={{ duration: 200, delay: 80 + i * 40 }}
                     out:fade={{ duration: 80 }}
@@ -369,6 +361,22 @@
         </div>
       </div>
     </section>
+  </div>
+{/if}
+
+<!-- Index Metric Tooltip -->
+{#if tooltipMetric}
+  <div
+    class="tooltip"
+    style="position: fixed; left: {tooltipX}px; top: {tooltipY}px; z-index: 9999; pointer-events: none;"
+    transition:fade={{ duration: 120 }}
+  >
+    <span class="label font-semibold" style="color: {tooltipMetric.color};">
+      {tooltipMetric.label}
+    </span>
+    {#if tooltipText}
+      <p class="text-body-sm mt-1">{tooltipText}</p>
+    {/if}
   </div>
 {/if}
 

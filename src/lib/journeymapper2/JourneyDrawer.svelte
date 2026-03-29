@@ -62,27 +62,3 @@
   </aside>
 {/if}
 
-<style>
-  /* ── Backdrop ───────────────────────────────────────────────── */
-
-
-  /* ── Shell ──────────────────────────────────────────────────── */
-  .drawer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 999;
-    width: 70vw;
-    display: flex;
-    flex-direction: column;
-    background: var(--paper);
-    overflow-y: auto;
-    border-left: 2.5px solid var(--panel);
-    box-shadow: 
-    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
-    0px 1px 2px -1px rgba(0, 0, 0, 0.08),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.06);
-    overflow: hidden;
-  }
-</style>
