@@ -1,9 +1,14 @@
 <script>
-  /** @type {Record<string, any>} */
-  export let personaProfile = {};
+  /** Full persona object — component reads persona.profile internally */
+  let { persona = {} } = $props();
 
-  let flipped = false;
-  let imgError = false;
+  let profile = $derived(persona?.profile ?? {});
+
+  let flipped = $state(false);
+  let imgError = $state(false);
+
+  // Reset image error when persona changes
+  $effect(() => { if (persona) imgError = false; });
 
   function flip() {
     flipped = !flipped;
@@ -12,10 +17,9 @@
 
 <button
   class="persona-card"
-  on:click={flip}
-  aria-label="Open {personaProfile.name} persona profile"
+  onclick={flip}
+  aria-label="Open {profile.name} persona profile"
 >
-
   <div class="persona-card-inner" class:flipped={flipped}>
 
     <!-- FRONT -->
@@ -24,69 +28,57 @@
       {#if !imgError}
         <img
           class="persona-card-img"
-          src="/assets/profiles/{personaProfile.imageFile}"
-          alt={personaProfile.name}
-          on:error={() => (imgError = true)}
+          src="/assets/profiles/{profile.imageFile}"
+          alt={profile.name}
+          onerror={() => (imgError = true)}
         />
       {:else}
         <div class="persona-card-fallback">
-          {personaProfile.initials}
+          {profile.initials}
         </div>
       {/if}
 
       <div class="persona-card-overlay">
-        <span class="persona-card-title">
-          {personaProfile.name}
-        </span>
+        <span class="persona-card-title">{profile.name}</span>
       </div>
 
       <div class="persona-card-overlay-pill">
-        <span class="pill-white">
-          {personaProfile.role}
-        </span>
+        <span class="pill-white">{profile.role}</span>
       </div>
 
     </div>
 
-
     <!-- BACK -->
     <div class="persona-card-face persona-card-back">
-
       <div class="persona-back-content">
 
         <div class="persona-back-header">
-          <span class="persona-back-name">
-            {personaProfile.name}
-          </span>
-          <span class="pill-white">
-            {personaProfile.role}
-          </span>
+          <span class="persona-back-name">{profile.name}</span>
+          <span class="pill-white">{profile.role}</span>
         </div>
 
         <div class="persona-back-section">
           <span class="label-uppercase">Medical Understanding</span>
-          <span>{personaProfile.medicalUnderstanding}/10</span>
+          <span>{profile.medicalUnderstanding}/10</span>
         </div>
 
         <div class="persona-back-section">
           <span class="label-uppercase">Emotional State</span>
-          <span>{personaProfile.emotionalValence}/10</span>
+          <span>{profile.emotionalValence}/10</span>
         </div>
 
         <div class="persona-back-section">
           <span class="label-uppercase">Logistical Capacity</span>
-          <span>{personaProfile.logisticalCapacity}/10</span>
+          <span>{profile.logisticalCapacity}/10</span>
         </div>
 
         <div class="persona-back-section">
           <span class="label-uppercase">Trust in Providers</span>
-          <span>{personaProfile.trust}/10</span>
+          <span>{profile.trust}/10</span>
         </div>
 
       </div>
-
     </div>
 
   </div>
-
 </button>

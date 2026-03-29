@@ -1,30 +1,28 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import StateBarList from './StateBarList.svelte';
   import UserRegular from 'phosphor-icons-svelte/IconPlusCircleRegular.svelte';
 
-  const dispatch = createEventDispatcher();
-
-  export let personas = [];
-  export let activePersonaId = '';
-  export let currentState = [];
+  let {
+    personas = [],
+    activePersonaId = '',
+    currentState = [],
+    onselect = undefined,
+    onstory = undefined,
+    onhover = undefined,
+    onleave = undefined,
+  } = $props();
 
   /** @type {Record<string, boolean>} */
-  let imgErrors = {};
+  let imgErrors = $state({});
 
   /** @type {string | null} */
-  let hoveredId = null;
+  let hoveredId = $state(null);
 
-  let tipX = 0;
-  let tipY = 0;
+  let tipX = $state(0);
+  let tipY = $state(0);
 
   const TIP_W = 200;
 
-  /**
-   * Returns the accent color for a persona based on its type.
-   * @param {object} p
-   * @returns {string}
-   */
   function personaColor(p) {
     return p.type?.toLowerCase().includes('caregiver')
       ? 'var(--orange)'
@@ -33,16 +31,16 @@
 
   function selectPersona(id, e) {
     if (id === activePersonaId) {
-      dispatch('story', { id, originEl: e.currentTarget });
+      onstory?.({ id, originEl: e.currentTarget });
     } else {
-      dispatch('select', { id });
+      onselect?.(id);
     }
   }
 
   function handleMouseEnter(id, e) {
     hoveredId = id;
     positionTip(e);
-    dispatch('hover', { id });
+    onhover?.({ id });
   }
 
   function handleMouseMove(e) {
@@ -51,7 +49,7 @@
 
   function handleMouseLeave(id) {
     hoveredId = null;
-    dispatch('leave', { id });
+    onleave?.({ id });
   }
 
   function positionTip(e) {
@@ -64,15 +62,15 @@
   function getTooltipFields(p) {
     const prof = p.profile ?? {};
     return [
-      ['Age',        prof.age],
+      ['Age',               prof.age],
       ['Current Treatment', prof.current_treatments],
-      ['Current Goal', prof.preference],
+      ['Current Goal',      prof.preference],
     ].filter(([, val]) => val != null && val !== '');
   }
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="sticky-panel-left" aria-label="Persona selector" on:mousemove={handleMouseMove}>
+<div class="sticky-panel-left" aria-label="Persona selector" onmousemove={handleMouseMove}>
   <div class="flex flex-col gap-4 py-2 align-middle justify-center">
     {#each personas as p (p.id)}
       {@const active = p.id === activePersonaId}
@@ -83,9 +81,9 @@
             class="persona-avatar"
             class:persona-avatar--active={active}
             style={active ? `--persona-accent: ${accentColor};` : ''}
-            on:click={(e) => selectPersona(p.id, e)}
-            on:mouseenter={(e) => handleMouseEnter(p.id, e)}
-            on:mouseleave={() => handleMouseLeave(p.id)}
+            onclick={(e) => selectPersona(p.id, e)}
+            onmouseenter={(e) => handleMouseEnter(p.id, e)}
+            onmouseleave={() => handleMouseLeave(p.id)}
             aria-pressed={active}
             aria-label="Select {p.profile.name}"
           >
@@ -94,7 +92,7 @@
                 src="/assets/profiles/{p.profile.imageFile}"
                 alt={p.profile.name}
                 class="persona-photo"
-                on:error={() => {
+                onerror={() => {
                   imgErrors[p.id] = true;
                   imgErrors = { ...imgErrors };
                 }}
@@ -112,7 +110,7 @@
             >{isCaregiver ? 'C' : 'P'}</span>
           {/if}
         </div>
-        <span 
+        <span
           class="persona-name"
           class:persona-name--active={active}>
           {p.profile.name}
@@ -122,7 +120,7 @@
   </div>
 </div>
 
-<!-- ── Persona bio tooltip ──────────────────────────────────────────────── -->
+<!-- Persona bio tooltip -->
 {#if hoveredId}
   {@const hp = personas.find((p) => p.id === hoveredId)}
   {#if hp}
@@ -133,7 +131,7 @@
       role="tooltip"
       aria-live="polite"
     >
-      <div class="biobar"      
+      <div class="biobar"
         style="background-color: {isHpCaregiver ? 'var(--color-amber-500, #f59e0b)' : 'var(--teal, #23abab)'};">
         <h3 class="heading-md text-slate-50">{hp.profile.name}</h3>
         {#if hp.type}
@@ -164,7 +162,6 @@
     </div>
   {/if}
 {/if}
-
 
 <style>
   .avatar-wrapper {
@@ -226,7 +223,6 @@
     display: block;
   }
 
-  /* Active outline picks up --persona-accent, falls back to teal */
   .persona-avatar--active {
     outline: 3.5px solid var(--persona-accent, var(--teal, #23abab));
     outline-offset: 2px;

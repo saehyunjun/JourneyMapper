@@ -1,27 +1,21 @@
 <script>
   import { fly, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
-  import { createEventDispatcher } from 'svelte';
   import XRegular from 'phosphor-icons-svelte/IconXRegular.svelte';
-  import ArrowLeftRegular from 'phosphor-icons-svelte/IconArrowLeftRegular.svelte';
 
-  const dispatch = createEventDispatcher();
+  let {
+    open = $bindable(false),
+    eyebrow = '',
+    title = '',
+    width = 550,
+    onclose = undefined,
+    children,
+    footer = undefined,
+  } = $props();
 
-  /** Controls visibility */
-  export let open = false;
-
-  /** Short uppercase kicker above the title */
-  export let eyebrow = '';
-
-  /** Main title shown in the header */
-  export let title = '';
-
-  /** Pixel width of this sub-drawer */
-  export let width = 550;
-
-  export function close() {
+  function close() {
     open = false;
-    dispatch('close');
+    onclose?.();
   }
 
   function onKeydown(e) {
@@ -29,54 +23,54 @@
   }
 </script>
 
-<svelte:window on:keydown={onKeydown} />
+<svelte:window onkeydown={onKeydown} />
 
 {#if open}
-  <!-- Scrim sits between primary drawer (z-201) and this panel (z-202) -->
+  <!-- Scrim sits between primary drawer (z-201) and this panel -->
   <div
     class="sub-scrim"
     transition:fade={{ duration: 180 }}
-    on:click={close}
-    aria-hidden="true"></div>
+    onclick={close}
+    aria-hidden="true"
+  ></div>
 
   <aside
     class="sub-drawer"
     style="width: 65vw;"
     transition:fly={{ x: width, duration: 300, easing: cubicOut }}
-    role="complementary-drawer"
+    role="complementary"
     aria-label={title || 'Detail panel'}
   >
     <!-- Header -->
     <div class="toolbar pl-2">
       <div class="flex flex-col">
         {#if eyebrow}
-        {#if title}
-          <span class="label-sm ">{title}</span>
-        {/if}
+          {#if title}
+            <span class="label-sm">{title}</span>
+          {/if}
           <span class="label uppercase">{eyebrow}</span>
         {/if}
       </div>
-      <button class="btn-sm" on:click={close} aria-label="Close panel">
+      <button class="btn-sm" onclick={close} aria-label="Close panel">
         <XRegular />
       </button>
     </div>
 
     <!-- Scrollable body -->
     <div class="sub-body">
-      <slot />
+      {@render children?.()}
     </div>
 
     <!-- Optional footer -->
-    {#if $$slots.footer}
+    {#if footer}
       <div class="sub-footer">
-        <slot name="footer" />
+        {@render footer()}
       </div>
     {/if}
   </aside>
 {/if}
 
 <style>
-  /* ── Scrim ───────────────────────────────────────────────────── */
   .sub-scrim {
     position: fixed;
     inset: 0;
@@ -85,7 +79,6 @@
     cursor: pointer;
   }
 
-  /* ── Shell ───────────────────────────────────────────────────── */
   .sub-drawer {
     position: fixed;
     top: 0;
@@ -102,11 +95,9 @@
     overflow: hidden;
   }
 
-  /* ── Body ────────────────────────────────────────────────────── */
   .sub-body {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
   }
-
 </style>
