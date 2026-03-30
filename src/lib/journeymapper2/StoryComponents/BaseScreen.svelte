@@ -21,7 +21,7 @@
   
       {#if content}
         <div class="screen-content">
-          <p class="text-body text-white">{@html content}</p>
+          <p class="text-body">{@html content}</p>
         </div>
       {/if}
   
@@ -39,9 +39,9 @@
     padding: 0 0 8px;
     background: linear-gradient(
       to top,
-      rgba(0,0,0,0.92) 0%,
-      rgba(0,0,0,0.7) 40%,
-      rgba(0,0,0,0.1) 100%
+      var(--green) 0%,
+      var(--midgreen) 40%,
+      var(--green) 100%
     ), #0f0d0b;  /* ← add solid base color */
   }
   
@@ -55,15 +55,13 @@
     .screen-kicker {
       display: inline-flex;
       width: fit-content;
-      font-family: var(--font-mono, monospace);
-      font-size: 0.65em;
+      font-size: 0.825em;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 3px 10px;
       border-radius: 20px;
       border: 1px solid;
-      background: rgba(255,255,255,0.04);
     }
   
   

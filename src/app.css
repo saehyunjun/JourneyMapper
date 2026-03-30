@@ -1544,7 +1544,6 @@ padding: .25em 1em;
   background-color: var(--lightgrayblue);
   
   color: var(--darkgrayblue);
-  font-size: .825em;
   padding: .25em 1em .25em .25em;
   }
 
@@ -1564,7 +1563,6 @@ padding: .25em 1em;
   background-color: var(--lightgrayblue);
   
   color: var(--darkgrayblue);
-  font-size: .725em;
   padding: .25em 1em .25em .5em;
   }
 
@@ -1600,7 +1598,6 @@ padding: .25em 1em;
     
     
     color: var(--darkgrayblue);
-    font-size: .725em;
     font-weight: 800;
     padding: .25em;
     }
@@ -1617,7 +1614,6 @@ padding: .25em 1em;
   width: 100%;
   
   color: var(--darkgrayblue);
-  font-size: 1em;
   font-weight: 800;
   }
 
@@ -1903,7 +1899,8 @@ padding: .25em 1em;
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 2em;
+    gap: 1em;
+
   }
 
   

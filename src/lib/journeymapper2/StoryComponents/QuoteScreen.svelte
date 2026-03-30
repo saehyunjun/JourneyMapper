@@ -9,9 +9,7 @@
     <div class="screen-inner">
       <span class="screen-label" style="color: {accent};">Key Quote</span>
   
-      <div class="quote-mark" style="color: {accent};">&ldquo;</div>
-  
-      <p class="quote-text">
+      <p class="pull-quote-lg">
         {profile?.quote ?? 'No quote available.'}
       </p>
   
@@ -29,7 +27,6 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(160deg, #0f0d0b 0%, #1a1410 100%);
     }
   
     .screen-glow {
@@ -55,25 +52,7 @@
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
-  
-    .quote-mark {
-      font-family: var(--font-serif, Georgia, serif);
-      font-size: 4rem;
-      line-height: 0.7;
-      opacity: 0.6;
-      margin-bottom: -4px;
-    }
-  
-    .quote-text {
-      font-family: var(--font-serif, Georgia, serif);
-      font-size: clamp(1.05rem, 3.5vw, 1.35rem);
-      line-height: 1.55;
-      color: rgba(255,255,255,0.92);
-      font-style: italic;
-      letter-spacing: -0.01em;
-      margin: 0;
-    }
-  
+
     .quote-attribution {
       margin-top: 8px;
       padding-top: 12px;

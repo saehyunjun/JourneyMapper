@@ -40,7 +40,7 @@
   let inflectionStep = $derived(steps?.find(s => s.inflection) ?? null);
   let finalStep      = $derived(steps?.[steps.length - 1] ?? null);
   let isCaregiver    = $derived(persona?.type?.toLowerCase().includes('caregiver') ?? false);
-  let accentColor    = $derived(isCaregiver ? 'var(--orange)' : 'var(--purple, #23abab)');
+  let accentColor    = $derived(isCaregiver ? 'var(--gold)' : 'var(--purple, #23abab)');
 
   /** Highlight durations + clinical terms in a bio/narrative string */
   function h(text = '') {
@@ -154,7 +154,7 @@
     intro: {
       component: BaseStoryScreen,
       props: { title: profile?.name, 
-        content: `<span class="pull-quote">${h(profile?.tagline)}</span>`, accent: accentColor }
+        content: `<span class="pull-quote-lg">${h(profile?.tagline)}</span>`, accent: accentColor }
     },
     'key-quote': {
       component: QuoteScreen,
