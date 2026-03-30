@@ -263,7 +263,7 @@
   }
 
   .selector-check {
-    color: var(--teal);
+    color: var(--purple);
     display: flex;
     align-items: center;
     flex-shrink: 0;

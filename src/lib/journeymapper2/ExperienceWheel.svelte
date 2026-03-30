@@ -261,7 +261,7 @@
   <!-- Inflection -->
   <div class="detail-section">
     <div class="jm-section-bar">
-      <span class="label-uppercase-bold">Inflection Analysis</span>
+      <span class="label-sm">Inflection Analysis</span>
     </div>
 
     <div class="jm-content-col gap-2">
@@ -300,9 +300,9 @@
   </div>
 
   <!-- Actions -->
-  <div class="detail-section">
+<div class="detail-section">
     <div class="jm-section-bar">
-      <span class="label-uppercase-bold">Sponsor Actions</span>
+      <span class="label-sm">Sponsor Actions</span>
     </div>
 
     <div class="jm-content-col gap-3">

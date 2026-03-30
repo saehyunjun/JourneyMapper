@@ -1,121 +1,121 @@
 <script>
-    let { states = [], accent = 'var(--teal)' } = $props();
-  </script>
-  
-  <div class="screen">
-    <div class="screen-inner">
-  
-      <span class="screen-label" style="color: {accent};">Right Now</span>
-      <h2 class="screen-title">Current State</h2>
-  
-      <div class="states-list">
-        {#each states as s, i}
-          <div class="state-row" style="animation-delay: {i * 70}ms;">
-            <div class="state-header">
-              <span class="state-label">{s.label}</span>
-              <span class="state-value" style="color: {s.color ?? accent};">{s.value}</span>
-            </div>
-            <div class="state-track">
-              <div
-                class="state-fill"
-                style="width:{((s.value + 5) / 10) * 100}%; background: {s.color ?? accent};"
-              ></div>
-            </div>
+  let { states = [], accent = 'var(--purple)' } = $props();
+</script>
+
+<div class="screen">
+  <div class="screen-inner">
+
+    <span class="screen-label" style="color: {accent};">Right Now</span>
+    <h2 class="screen-title">Current State</h2>
+
+    <div class="states-list">
+      {#each states as s, i}
+        <div class="state-row" style="animation-delay: {i * 70}ms;">
+          <div class="state-header">
+            <span class="state-label">{s.label}</span>
+            <span class="state-value" style="color: {s.color ?? accent};">{Math.round(s.value * 100)}%</span>
           </div>
-        {/each}
-      </div>
-  
+          <div class="state-track">
+            <div
+              class="state-fill"
+              style="width:{s.value * 100}%; background: {s.color ?? accent};"
+            ></div>
+          </div>
+        </div>
+      {/each}
     </div>
+
   </div>
-  
-  <style>
-    .screen {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding-bottom: 8px;
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.95) 0%,
-        rgba(0,0,0,0.72) 50%,
-        rgba(0,0,0,0.12) 100%
-      );
-    }
-  
-    .screen-inner {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      padding: 20px 22px 10px;
-    }
-  
-    .screen-label {
-      font-family: var(--font-mono, monospace);
-      font-size: 0.65em;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-  
-    .screen-title {
-      font-family: var(--font-serif, Georgia, serif);
-      font-size: clamp(1.3rem, 4.5vw, 1.7rem);
-      font-weight: 600;
-      line-height: 1.25;
-      color: rgba(255,255,255,0.97);
-      letter-spacing: -0.02em;
-      margin: 0;
-    }
-  
-    .states-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-  
-    .state-row {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      animation: fadeUp 320ms ease both;
-    }
-  
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-  
-    .state-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-  
-    .state-label {
-      font-size: 0.75em;
-      font-weight: 500;
-      color: rgba(255,255,255,0.65);
-    }
-  
-    .state-value {
-      font-family: var(--font-mono, monospace);
-      font-size: 0.75em;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-  
-    .state-track {
-      height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-  
-    .state-fill {
-      height: 100%;
-      border-radius: 4px;
-      transition: width 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-  </style>
+</div>
+
+<style>
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 8px;
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0,0.95) 0%,
+      rgba(0,0,0,0.72) 50%,
+      rgba(0,0,0,0.12) 100%
+    );
+  }
+
+  .screen-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px 22px 10px;
+  }
+
+  .screen-label {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.65em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .screen-title {
+    font-family: var(--font-serif, Georgia, serif);
+    font-size: clamp(1.3rem, 4.5vw, 1.7rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: rgba(255,255,255,0.97);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .states-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .state-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    animation: fadeUp 320ms ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .state-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .state-label {
+    font-size: 0.75em;
+    font-weight: 500;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .state-value {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .state-track {
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .state-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+</style>

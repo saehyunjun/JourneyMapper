@@ -1,5 +1,5 @@
 <script>
-    let { profile = {}, accent = 'var(--teal)' } = $props();
+    let { profile = {}, accent = 'var(--purple)' } = $props();
   </script>
   
   <div class="screen">

@@ -28,11 +28,7 @@
     <ArrowDown class="w-4" />
   </button>
 </div>
-  
+
   <style>
 
-  :global(.layout-btn--active) {
-    background: var(--teal);
-    color: white;
-  }
   </style>

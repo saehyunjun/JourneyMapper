@@ -6,9 +6,10 @@
   import QuoteScreen      from './StoryComponents/QuoteScreen.svelte';
   import ThemesScreen     from './StoryComponents/ThemeScreen.svelte';
   import BaseStoryScreen  from './StoryComponents/BaseScreen.svelte';
-
   import CurrentStateScreen from './StoryComponents/CurrentStateScreen.svelte';
+
   import XRegular         from 'phosphor-icons-svelte/IconXRegular.svelte';
+  import { highlightAll } from '$lib/journeymapper2/textUtils.js';
   import CaretLeftRegular from 'phosphor-icons-svelte/IconCaretLeftRegular.svelte';
   import CaretRightRegular from 'phosphor-icons-svelte/IconCaretRightRegular.svelte';
 
@@ -21,15 +22,30 @@
   } = $props();
 
   // ── Derived persona data ──────────────────────────────────────────────
-  let profile        = $derived(persona?.profile ?? {});
-  let themes         = $derived(persona?.themes ?? []);
-  let states         = $derived(persona?.current_state ?? []);
-  let goals          = $derived(persona?.goals ?? []);
-  let barriers       = $derived(persona?.barriers ?? []);
+  let profile  = $derived(persona?.profile ?? {});
+
+  // JSON uses camelCase keys and flat goal/barrier fields
+  let states   = $derived(persona?.currentState ?? persona?.current_state ?? []);
+  let themes   = $derived(persona?.discussionThemes ?? persona?.themes ?? []);
+
+  let goals = $derived((() => {
+    const p = persona?.profile ?? {};
+    return [p.goal1, p.goal2, p.goal3].filter(Boolean);
+  })());
+
+  let barriers = $derived((() => {
+    const p = persona?.profile ?? {};
+    return [p.barrier1, p.barrier2, p.barrier3].filter(Boolean);
+  })());
   let inflectionStep = $derived(steps?.find(s => s.inflection) ?? null);
   let finalStep      = $derived(steps?.[steps.length - 1] ?? null);
   let isCaregiver    = $derived(persona?.type?.toLowerCase().includes('caregiver') ?? false);
-  let accentColor    = $derived(isCaregiver ? 'var(--orange)' : 'var(--teal, #23abab)');
+  let accentColor    = $derived(isCaregiver ? 'var(--orange)' : 'var(--purple, #23abab)');
+
+  /** Highlight durations + clinical terms in a bio/narrative string */
+  function h(text = '') {
+    return highlightAll(text ?? '');
+  }
 
   function firstName(name) {
     return name?.split(' ')?.[0] ?? '';
@@ -137,60 +153,54 @@
   let SCREEN_REGISTRY = $derived({
     intro: {
       component: BaseStoryScreen,
-      props: { title: profile?.name, content: `<span class="pull-quote">${profile?.tagline ?? ''}</span>`, accent: accentColor }
+      props: { title: profile?.name, 
+        content: `<span class="pull-quote">${h(profile?.tagline)}</span>`, accent: accentColor }
     },
     'key-quote': {
       component: QuoteScreen,
       props: { profile, accent: accentColor }
     },
-    
     'event-1': {
       component: BaseStoryScreen,
-      props: { title: 'How It Began', content: profile?.bio_1, accent: accentColor }
+      props: { title: 'How It Began', content: h(profile?.bio_1), accent: accentColor }
     },
-    
     themes: {
       component: ThemesScreen,
       props: { themes, profile, accent: accentColor }
     },
-
     bio2: {
-  component: BaseStoryScreen,
-  props: { 
-    title: `How ${firstName(profile?.name)} navigates care`, 
-    content: profile?.bio_2, 
-    accent: accentColor 
-  }
-},
+      component: BaseStoryScreen,
+      props: { title: `How ${firstName(profile?.name)} navigates care`, content: h(profile?.bio_2), accent: accentColor }
+    },
     'current-state': {
       component: CurrentStateScreen,
       props: { states, accent: accentColor }
     },
     goal: {
       component: BaseStoryScreen,
-      props: { title: `${firstName(profile?.name)}'s Goals`, content: goals?.map(g => `• ${g}`).join('<br/>'), accent: accentColor }
+      props: { title: `${firstName(profile?.name)}'s Goals`, content: h(goals?.map(g => `• ${g}`).join('<br/>')), accent: accentColor }
     },
     barrier: {
       component: BaseStoryScreen,
-      props: { title: 'Barriers', content: barriers?.map(b => `• ${b}`).join('<br/>'), accent: accentColor }
+      props: { title: 'Barriers', content: h(barriers?.map(b => `• ${b}`).join('<br/>')), accent: accentColor }
     },
     'inflection-lead': {
       component: BaseStoryScreen,
-      props: { kicker: 'Inflection Point', title: inflectionStep?.step, meta: inflectionStep?.stage, content: inflectionStep?.quote, accent: accentColor }
+      props: { kicker: 'Inflection Point', title: inflectionStep?.step, meta: inflectionStep?.stage, content: h(inflectionStep?.quote), accent: accentColor }
     },
     'inflection-data': {
       component: BaseStoryScreen,
-      props: { title: 'What happens here', content: inflectionStep?.narrative_description, accent: accentColor }
+      props: { title: 'What happens here', content: h(inflectionStep?.narrative_description), accent: accentColor }
     },
     'inflection-detail': {
       component: BaseStoryScreen,
-      props: { title: inflectionStep?.inflection_detail?.label, content: inflectionStep?.inflection_detail?.description, accent: accentColor }
+      props: { title: inflectionStep?.inflection_detail?.label, content: h(inflectionStep?.inflection_detail?.description), accent: accentColor }
     },
     'path-pos': {
       component: BaseStoryScreen,
       props: {
         title: 'Best Case Path',
-        content: inflectionStep?.inflection_detail?.paths?.filter(p => p.direction === 'positive')?.map(p => p.outcome)?.join('<br/><br/>'),
+        content: h(inflectionStep?.inflection_detail?.paths?.filter(p => p.direction === 'positive')?.map(p => p.outcome)?.join('<br/><br/>')),
         accent: accentColor
       }
     },
@@ -198,17 +208,17 @@
       component: BaseStoryScreen,
       props: {
         title: 'Risk Path',
-        content: inflectionStep?.inflection_detail?.paths?.filter(p => p.direction === 'negative')?.map(p => p.outcome)?.join('<br/><br/>'),
+        content: h(inflectionStep?.inflection_detail?.paths?.filter(p => p.direction === 'negative')?.map(p => p.outcome)?.join('<br/><br/>')),
         accent: accentColor
       }
     },
     'final-lead': {
       component: BaseStoryScreen,
-      props: { kicker: 'Outcome', title: finalStep?.step, meta: finalStep?.stage, content: finalStep?.quote, accent: accentColor }
+      props: { kicker: 'Outcome', title: finalStep?.step, meta: finalStep?.stage, content: h(finalStep?.quote), accent: accentColor }
     },
     'final-data': {
       component: BaseStoryScreen,
-      props: { title: 'Final State', content: finalStep?.narrative_description, accent: accentColor }
+      props: { title: 'Final State', content: h(finalStep?.narrative_description), accent: accentColor }
     },
   });
 
@@ -240,12 +250,29 @@
   >
 
     <!-- ── Progress bars ─────────────────────────────────────────────── -->
-    <div class="story-progress" 
-    onmouseenter={() => { paused = true; cancelAnimationFrame(rafId); }} onmouseleave={() => { paused = false; startProgress(); }}>
+    <div
+      class="story-progress"
+      role="tablist"
+      aria-label="Story slides"
+      onmouseenter={() => { paused = true; cancelAnimationFrame(rafId); }}
+      onmouseleave={() => { paused = false; startProgress(); }}
+    >
       {#each STORY_FLOW as _, i}
-        <div class="progress-track" onclick={(e) => { e.stopPropagation(); goTo(i); }}>
+        <div
+          class="progress-track"
+          role="tab"
+          aria-selected={i === screenIndex}
+          aria-label="Slide {i + 1} of {STORY_FLOW.length}"
+          tabindex={i === screenIndex ? 0 : -1}
+          onclick={(e) => { e.stopPropagation(); goTo(i); }}
+        >
           <div
             class="progress-fill"
+            role="progressbar"
+            aria-valuenow={i < screenIndex ? 100 : i === screenIndex ? Math.round(progress * 100) : 0}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-hidden="true"
             style="
               width: {i < screenIndex ? 100 : i === screenIndex ? progress * 100 : 0}%;
               background: {accentColor};
@@ -256,10 +283,14 @@
     </div>
 
     <!-- ── Story header ──────────────────────────────────────────────── -->
-    <div class="story-header">
+    <header class="story-header">
       <!-- Avatar + name -->
-      <div class="story-avatar-row">
-        <div class="story-avatar-ring" style="border-color: {accentColor};">
+      <div class="story-avatar-row" role="group" aria-label="Persona identity">
+        <div
+          class="story-avatar-ring"
+          style="border-color: {accentColor};"
+          aria-hidden="true"
+        >
           {#if !imgError && profile?.imageFile}
             <img
               src="/assets/profiles/{profile.imageFile}"
@@ -268,7 +299,7 @@
               onerror={() => (imgError = true)}
             />
           {:else}
-            <span class="story-avatar-initials">{profile?.initials ?? '?'}</span>
+            <span class="story-avatar-initials" aria-hidden="true">{profile?.initials ?? '?'}</span>
           {/if}
         </div>
         <div class="story-persona-meta">
@@ -281,12 +312,18 @@
 
       <!-- Close -->
       <button class="story-close" onclick={close} aria-label="Close story">
-        <XRegular size={18} />
+        <XRegular size={18} aria-hidden="true" />
       </button>
-    </div>
+    </header>
 
     <!-- ── Screen content ────────────────────────────────────────────── -->
-    <div class="story-content">
+    <div
+      class="story-content"
+      role="region"
+      aria-label="Slide {screenIndex + 1} of {STORY_FLOW.length}: {screen}"
+      aria-live="polite"
+      aria-atomic="true"
+    >
       {#key screenIndex}
         <div
           class="story-screen-wrap"
@@ -296,7 +333,7 @@
           {#if currentDef}
             <svelte:component this={currentDef.component} {...currentDef.props} />
           {:else}
-            <div class="story-unknown">Unknown screen: {screen}</div>
+            <div class="story-unknown" role="alert">Unknown screen: {screen}</div>
           {/if}
         </div>
       {/key}
@@ -307,36 +344,36 @@
       class="tap-zone tap-zone--left"
       onclick={(e) => { e.stopPropagation(); prev(); }}
       disabled={screenIndex === 0}
-      aria-label="Previous"
+      aria-label="Go to previous slide"
     ></button>
     <button
       class="tap-zone tap-zone--right"
       onclick={(e) => { e.stopPropagation(); next(); }}
-      aria-label="Next"
+      aria-label={screenIndex === STORY_FLOW.length - 1 ? 'Close story' : 'Go to next slide'}
     ></button>
 
-    <!-- ── Nav buttons (visible on hover) ───────────────────────────── -->
-    <div class="story-nav">
+    <!-- ── Nav buttons ───────────────────────────────────────────────── -->
+    <nav class="story-nav" aria-label="Story navigation">
       <button
         class="story-nav-btn"
         onclick={(e) => { e.stopPropagation(); prev(); }}
         disabled={screenIndex === 0}
         aria-label="Previous slide"
       >
-        <CaretLeftRegular class="text-sm"/>
+        <CaretLeftRegular size={16} aria-hidden="true" />
       </button>
       <button
         class="story-nav-btn"
         onclick={(e) => { e.stopPropagation(); next(); }}
-        aria-label="Next slide"
+        aria-label={screenIndex === STORY_FLOW.length - 1 ? 'Finish story' : 'Next slide'}
       >
         {#if screenIndex === STORY_FLOW.length - 1}
           Done
         {:else}
-          <CaretRightRegular class="text-sm"/>
+          <CaretRightRegular size={16} aria-hidden="true" />
         {/if}
       </button>
-    </div>
+    </nav>
 
   </div>
 {/if}

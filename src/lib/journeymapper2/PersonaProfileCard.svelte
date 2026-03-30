@@ -25,7 +25,7 @@
 
   // ── Accent color ─────────────────────────────────────────────────────────
   $: isCaregiver = personaType?.toLowerCase().includes('caregiver');
-  $: accentColor = isCaregiver ? 'var(--orange)' : 'var(--teal, #23abab)';
+  $: accentColor = isCaregiver ? 'var(--orange)' : 'var(--purple, #23abab)';
 
   // ── Bio tooltip ───────────────────────────────────────────────────────────
   let hovered = false;
@@ -89,19 +89,23 @@
           <h3 class="text-sm text-white">{personaProfile.name}</h3>
         </div>
       </div>
+      <span class="pill-white w-fit absolute bottom-2 left-2"
+                style="background-color: var(--teal)">
+                {personaProfile.preference}</span>
 
       <!-- flip hint -->
-      <div class="flip-hint">
-        <div class="flex flex-row gap-1">
-          <span class="pill-white">{personaProfile.role}</span>
-          <span class="pill-white">{personaProfile.age}</span>
-          <span class="pill-white"
-          style="background-color: {accentColor}">
-          {personaProfile.preference}</span>
+      <div class="flex flex-row w-full absolute top-10 left-2">
+        <div class="flex flex-col justify-start gap-1 mix-blend-inclusion">
+          <span class="pill-white w-fit">{personaProfile.role}</span>
+          <span class="pill-white w-fit">{personaProfile.age}</span>
         </div>
-        <ArrowCounterClockwiseRegular class="text-white" />
       </div>
-    </div>
+      
+            <div class="flex flex-col w-fit absolute bottom-2 right-2">
+              <ArrowCounterClockwiseRegular class="text-white" />
+
+            </div>
+    </div>  
 
     <!-- ── BACK ──────────────────────────────────────────────────── -->
     <div class="card-face card-back" aria-hidden={!flipped}>
@@ -169,8 +173,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 16px;
-    border: 2.5px solid var(--accent, var(--teal, #23abab));
+
     transform-style: preserve-3d;
     transition:
       transform 0.55s cubic-bezier(0.45, 0.05, 0.55, 0.95),
@@ -187,7 +190,6 @@
   .card-face {
     position: absolute;
     inset: 0;
-    border-radius: 14px; /* slightly inset from card-body border */
     overflow: hidden;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -266,21 +268,6 @@
     align-items: stretch;
   }
 
-  .back-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .back-name {
-    font-family: var(--font-heading);
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--text, #1a1a1a);
-    line-height: 1.2;
-  }
-
   /* ── Metric rows ──────────────────────────────────────────────────── */
   .back-metrics {
     display: flex;
@@ -290,21 +277,8 @@
     flex: 1;
   }
 
-  .state-track {
-    height: 4px;
-    border-radius: 2px;
-    background: rgba(0,0,0,0.1);
-    overflow: hidden;
-  }
-
-  .state-fill {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
-  }
-
   /* ── Biobar accent ────────────────────────────────────────────────── */
   :global(.card-scene .biobar) {
-    background-color: var(--accent, var(--teal, #23abab));
+    background-color: var(--accent, var(--purple, #23abab));
   }
 </style>

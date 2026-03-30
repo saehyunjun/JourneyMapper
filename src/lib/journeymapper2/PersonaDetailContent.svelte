@@ -58,22 +58,22 @@
         </div>
 
         <div class="persona-back-section">
-          <span class="label-uppercase">Medical Understanding</span>
+          <span class="label-sm">Medical Understanding</span>
           <span>{profile.medicalUnderstanding}/10</span>
         </div>
 
         <div class="persona-back-section">
-          <span class="label-uppercase">Emotional State</span>
+          <span class="label-sm">Emotional State</span>
           <span>{profile.emotionalValence}/10</span>
         </div>
 
         <div class="persona-back-section">
-          <span class="label-uppercase">Logistical Capacity</span>
+          <span class="label-sm">Logistical Capacity</span>
           <span>{profile.logisticalCapacity}/10</span>
         </div>
 
         <div class="persona-back-section">
-          <span class="label-uppercase">Trust in Providers</span>
+          <span class="label-sm">Trust in Providers</span>
           <span>{profile.trust}/10</span>
         </div>
 

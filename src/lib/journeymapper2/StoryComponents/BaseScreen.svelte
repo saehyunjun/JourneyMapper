@@ -1,5 +1,5 @@
 <script>
-    let { title = '', kicker = '', content = '', meta = null, accent = 'var(--teal)', children } = $props();
+    let { title = '', kicker = '', content = '', meta = null, accent = 'var(--purple)', children } = $props();
   </script>
   
   <div class="screen">
@@ -21,7 +21,7 @@
   
       {#if content}
         <div class="screen-content">
-          <p class="screen-body">{@html content}</p>
+          <p class="text-body text-white">{@html content}</p>
         </div>
       {/if}
   
@@ -30,7 +30,7 @@
   </div>
   
   <style>
-     .screen {
+  .screen {
     position: absolute;
     inset: 0;
     display: flex;
@@ -66,35 +66,5 @@
       background: rgba(255,255,255,0.04);
     }
   
-    .screen-meta {
-      font-family: var(--font-mono, monospace);
-      font-size: 0.65em;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
-    }
   
-    .screen-title {
-      font-family: var(--font-serif, Georgia, serif);
-      font-size: clamp(1.4rem, 5vw, 1.9rem);
-      font-weight: 600;
-      line-height: 1.2;
-      color: rgba(255,255,255,0.97);
-      letter-spacing: -0.02em;
-      margin: 0;
-    }
-  
-    .screen-content {
-      border-left: 2px solid rgba(255,255,255,0.15);
-      padding-left: 14px;
-      margin-top: 2px;
-    }
-  
-    .screen-body {
-      font-size: 0.82em;
-      line-height: 1.65;
-      color: rgba(255,255,255,0.72);
-      margin: 0;
-    }
   </style>

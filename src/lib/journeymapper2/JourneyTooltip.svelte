@@ -73,9 +73,9 @@
 
 {#if step}
   <div
-    class="tooltip jm-surface flex flex-col gap-2"
+    class="tooltip flex flex-col gap-2"
     style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px; 
-    border: 2px solid {stageColor}"
+    border: 2.25px solid {stageColor}; outline: 2px solid {stageColor}"
     role="tooltip"
     aria-live="polite"
   >
@@ -90,17 +90,17 @@
     {/if}
     
 
-    <div class="toolbar-sm-empty"
-      style="border-bottom: 2.5px solid {stageColor};">
-      <div class="flex flex-col gap-1 p-2">
-        <span class="label-xs"
-        style="color: var(--grayblue)">
-        {step.stage}</span>
-      
-        <h3 class="heading-serif"
-        style="color: var(--grayblue)">
+    <div class="flex flex-col gap-1 items-center mb-2 pb-2"
+      style="border-bottom: 2.25px solid {stageColor};">
+        
+          <span class="label-heading text-center"
+          style="color: var(--grayblue)">
+          {step.stage}</span>
+          
+          <h3 class="heading-serif text-center"
+            style="color: var(--darkgrayblue)">
           {step.step}</h3>
-    </div>
+
     </div>
 
 
@@ -109,53 +109,39 @@
     <!-- ── Quote ──────────────────────────────────────────────────────── -->
     {#if hasQuote}
       <div class="flex flex-col justify-center px-2">
-        <span class="tip-quote-icon" aria-hidden="true">
-          <QuotesRegular class="h-12" />
-        </span>
-        <p class="pull-quote">{step.quote}</p>
+        <p class="pull-quote-lg text-center">"{step.quote}"</p>
       </div>
     {/if}
     <!-- ── Sentiment + Emotion ────────────────────────────────────────── -->
 
-  <div class="jm-content-row-divider">
-      <div class="flex flex-row">
+  <div class="jm-content-row-divider">        
+  </div>
 
-      <!-- Sentiment -->
-       <div class ="toolbar-sm-empty">
-        <div class="flex flex-col">
-          <span class="w-full h-2 ring-1" 
-          style="background:{sentimentColor}">
-          </span>
-          
-        <div class="jm-content-col mt-1">
-          <span class="label-sm uppercase">
-            {sentimentLabel}
-          </span>
-          <span class="label-xs">
-            Overall Sentiment
-          </span>
-      </div>
-        </div>
-      </div>
+    <div class ="toolbar-sm-empty">
+      <div class="flex flex-row justify-start align-middle gap-1 items-center">       
+        <span class="jm-swatch" 
+       style="background:{sentimentColor}">
+       </span>
+       <span class="label-sm uppercase">
+         {sentimentLabel}
+       </span>
       </div>
 
+    <!-- Sentiment -->
+
+    <div class="flex flex-row justify-start align-middle gap-1 items-center">
+      <div class="flex flex-row justify-baseline">
+        {#each emotionSwatches as color}
+        <span class="jm-swatch-round" style="background:{color}">
+      </span>
+        {/each}
+      </div>
+      <div class="flex flex-col align-bottom">
+        <span class="label-sm uppercase">
+          {step.plutchik_score}
+        </span>
+      </div>
       <!-- Emotion / Plutchik -->
-      <div class="flex flex-col gap-1">
-        <div class="flex flex-col">
-          <div class="flex">
-            {#each emotionSwatches as color}
-              <span class="w-3 h-3 ring-1 rounded-full" style="background:{color}">
-              </span>
-            {/each}
-          </div>
-          
-          <div class="jm-content-col mt-1">
-            <span class="text-body-sm font-semibold capitalize">
-            {step.plutchik_score}
-          </span>
-        </div>
-        <span class="label-xs">Emotion</span>
-        </div>
       </div>
   </div>
   </div>

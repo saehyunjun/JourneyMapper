@@ -25,8 +25,8 @@
 
   function personaColor(p) {
     return p.type?.toLowerCase().includes('caregiver')
-      ? 'var(--orange)'
-      : 'var(--teal, #23abab)';
+      ? 'var(--gold)'
+      : 'var(--purple, #23abab)';
   }
 
   function selectPersona(id, e) {
@@ -70,11 +70,12 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="sticky-panel-left" aria-label="Persona selector" onmousemove={handleMouseMove}>
+<div class="sticky-panel-left" aria-label="Persona selector" role="navigation" onmousemove={handleMouseMove}>
   <div class="flex flex-col gap-4 py-2 align-middle justify-center">
     {#each personas as p (p.id)}
       {@const active = p.id === activePersonaId}
       {@const accentColor = personaColor(p)}
+      {@const isCaregiver = p.type?.toLowerCase().includes('caregiver')}
       <div class="flex flex-col items-center align-middle justify-center">
         <div class="avatar-wrapper">
           <button
@@ -98,14 +99,13 @@
                 }}
               />
             {:else}
-              <span class="persona-initials">{p.profile.initials}</span>
+              <span class="persona-initials" aria-hidden="true">{p.profile.initials}</span>
             {/if}
           </button>
           {#if p.type}
-            {@const isCaregiver = p.type.toLowerCase().includes('caregiver')}
             <span
-              class="type-badge"
-              class:type-badge--caregiver={isCaregiver}
+              class="pill-white absolute bottom-1 right-0"
+              style="background: {accentColor}; color: var(--paper); border-color: var(--paper);"
               aria-label={p.type}
             >{isCaregiver ? 'C' : 'P'}</span>
           {/if}
@@ -125,39 +125,32 @@
   {@const hp = personas.find((p) => p.id === hoveredId)}
   {#if hp}
     {@const isHpCaregiver = hp.type?.toLowerCase().includes('caregiver')}
+    {@const hpAccent = isHpCaregiver ? 'var(--gold)' : 'var(--purple)'}
     <div
-      class="persona-top-tooltip jm-surface"
-      style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px; border-color: {isHpCaregiver ? 'var(--color-amber-500, #f59e0b)' : 'var(--teal, #23abab)'};"
+      class="tooltip"
+      style="left: {tipX}px; top: {tipY}px; border: 2.25px solid {hpAccent}; outline: 2px solid {hpAccent};"
       role="tooltip"
       aria-live="polite"
     >
-      <div class="biobar"
-        style="background-color: {isHpCaregiver ? 'var(--color-amber-500, #f59e0b)' : 'var(--teal, #23abab)'};">
-        <h3 class="heading-md text-slate-50">{hp.profile.name}</h3>
+      <div class="flex flex-col items-center gap-1 pt-2 mb-2">
         {#if hp.type}
-          <span class="pill-white">{hp.type}</span>
+          <span class="label-sm">{hp.type}</span>
         {/if}
+        <h3 class="heading-serif text-center" style="color: {hpAccent};">
+          {hp.profile.name}
+        </h3>
       </div>
 
-      <div class="content-col">
+      <div class="jm-content-col">
         {#if hp.profile.bio_1}
-          <p class="body-text text-sm">{hp.profile.bio_1}</p>
-        {/if}
-
-        {#if currentState.length}
-          <div class="back-state-bars">
-            <StateBarList states={currentState} />
-          </div>
-        {/if}
-
-        <div class="flex flex-col gap-4 mt-8">
+          <p class="text-body text-center">{hp.profile.bio_1}</p>
           {#each getTooltipFields(hp) as [key, val]}
-            <div class="tip-field-row">
-              <span class="label-heading">{key}</span>
-              <span class="label capitalize">{val}</span>
+            <div class="field-row">
+              <span class="label-xs">{key}</span>
+              <span class="label-sm">{val}</span>
             </div>
           {/each}
-        </div>
+        {/if}
       </div>
     </div>
   {/if}
@@ -167,36 +160,6 @@
   .avatar-wrapper {
     position: relative;
     display: inline-flex;
-  }
-
-  .back-state-bars {
-    padding-top: 8px;
-    border-top: 1px solid rgba(0,0,0,0.08);
-  }
-
-  .type-badge {
-    position: absolute;
-    bottom: 1px;
-    right: 1px;
-    width: 2.25em;
-    height: 2.25em;
-    border-radius: 50%;
-    padding: .25em .25em .15em .25em;
-    background: var(--teal, #23abab);
-    color: var(--paper);
-    font-weight: 400;
-    font-size: .625em;
-    text-align: center;
-    align-content: center;
-    justify-content: center;
-    letter-spacing: 0;
-    border: 1.5px solid var(--color-surface, #fff);
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .type-badge--caregiver {
-    background: var(--orange);
   }
 
   .persona-name {
@@ -224,16 +187,7 @@
   }
 
   .persona-avatar--active {
-    outline: 3.5px solid var(--persona-accent, var(--teal, #23abab));
+    outline: 3.5px solid var(--persona-accent, var(--purple, #23abab));
     outline-offset: 2px;
-  }
-
-  .persona-top-tooltip {
-    position: fixed;
-    pointer-events: none;
-    min-width: 425px;
-    z-index: 500;
-    border: 2.5px solid transparent;
-    transition: left 50ms linear, top 50ms linear, border-color 150ms ease;
   }
 </style>
