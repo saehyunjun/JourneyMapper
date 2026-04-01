@@ -1360,6 +1360,598 @@
       ]
     },
     {
+      "id": "persona_idh1_glioma_hk_01",
+      "type": "patient",
+      "therapeutic_area": "Oncology",
+      "indication": "Grade 2 IDH1-Mutant Glioma",
+      "profile": {
+        "initials": "WL",
+        "name": "Wei-Lin C.",
+        "role": "Patient",
+        "indication": "Grade 2 IDH1-Mutant Glioma",
+        "therapeutic area": "Neuro-Oncology",
+        "age": "late 30s",
+        "gender": "Male",
+        "occupation": "Part-time (reduced hours, financial analyst)",
+        "current_treatments": [
+          "Vorasidenib (IDH1/2 inhibitor, oral)"
+        ],
+        "past_treatments": [
+          "Maximal safe resection",
+          "Temozolomide (adjuvant)",
+          "Radiation therapy (54 Gy)"
+        ],
+        "caregiver": [
+          "Wife (primary), Parents (secondary)"
+        ],
+        "preference": "enroll in IDH-targeted clinical trial",
+        "diagnosed": "22 months ago",
+        "distance to care": "30–60 min (Queen Mary Hospital, Pok Fu Lam)",
+        "imageFile": "WeiLinC.jpg",
+        "quote": "My tumor will not disappear on its own — I know that. What I want is more time, and more control over how that time is spent. A trial feels like the only way to get ahead of this.",
+        "bio_1": "Wei-Lin was training for a half-marathon when he began experiencing subtle word-retrieval difficulties and a single witnessed focal seizure at work. An MRI revealed a non-enhancing left temporal mass. Surgical resection confirmed Grade 2 IDH1-mutant, 1p/19q non-codeleted glioma.",
+        "bio_2": "Following surgery and adjuvant chemoradiation, Wei-Lin was placed on vorasidenib monotherapy through a compassionate use program coordinated with his neuro-oncologist at Queen Mary Hospital. He is highly informed, reads primary literature, and navigates English and Cantonese medical resources fluently. He is deeply concerned about tumor transformation to higher grade and is motivated to access trials investigating IDH1-targeted combination strategies or novel immune approaches. His wife manages his appointment logistics while he focuses on maintaining work output and physical fitness.",
+        "goal1": "Prevent or substantially delay malignant transformation to Grade 3/4 glioma.",
+        "goal2": "Access an IDH1-targeted clinical trial — ideally one with a combination or immune component — before disease progression requires more aggressive standard-of-care intervention.",
+        "goal3": "Preserve cognitive function and occupational capacity long enough to fulfill personal and professional commitments, including the birth of his first child.",
+        "barrier1": "Hong Kong's clinical trial infrastructure for rare neuro-oncology indications is limited; most relevant IDH1 trials are conducted in the US, Europe, or mainland China — requiring international travel or cross-border coordination.",
+        "barrier2": "Vorasidenib compassionate use may create exclusion from trials with prior IDH inhibitor restrictions in eligibility criteria.",
+        "barrier3": "Uncertainty about seizure risk and driving restrictions significantly impacts daily independence and occupational confidence."
+      },
+      "currentState": [
+        {
+          "label": "Motivation",
+          "value": 0.92,
+          "minLabel": "Avoid changes",
+          "maxLabel": "Seek improvement"
+        },
+        {
+          "label": "Care coordination level",
+          "value": 0.65,
+          "minLabel": "Disjointed",
+          "maxLabel": "Cohesive"
+        },
+        {
+          "label": "Willingness to accept help",
+          "value": 0.70,
+          "minLabel": "Resistant",
+          "maxLabel": "Willing"
+        },
+        {
+          "label": "Health literacy",
+          "value": 0.91,
+          "minLabel": "Low",
+          "maxLabel": "High"
+        },
+        {
+          "label": "Cognitive capacity for decision-making",
+          "value": 0.80,
+          "minLabel": "Severely impaired",
+          "maxLabel": "Fully intact"
+        }
+      ],
+      "discussionThemes": [
+        {
+          "label": "Diagnosis shock",
+          "sentiments": [
+            0.04, 0.06, 0.10, 0.18, 0.28, 0.40, 0.50, 0.58, 0.63
+          ]
+        },
+        {
+          "label": "Surgical experience",
+          "sentiments": [
+            0.08, 0.12, 0.20, 0.34, 0.46, 0.55, 0.60
+          ]
+        },
+        {
+          "label": "Treatment decision-making",
+          "sentiments": [
+            0.10, 0.18, 0.28, 0.40, 0.50, 0.58, 0.64, 0.68
+          ]
+        },
+        {
+          "label": "Fear of transformation",
+          "sentiments": [
+            0.06, 0.08, 0.12, 0.16, 0.22, 0.28, 0.34, 0.40, 0.46
+          ]
+        },
+        {
+          "label": "Clinical trial access",
+          "sentiments": [
+            0.08, 0.18, 0.32, 0.44, 0.56, 0.64, 0.70
+          ]
+        },
+        {
+          "label": "Identity and fatherhood",
+          "sentiments": [
+            0.05, 0.10, 0.18, 0.28, 0.40, 0.52, 0.60, 0.66
+          ]
+        }
+      ],
+      "journey": [
+        {
+          "stage_id": "1",
+          "stage": "Initial Treatment",
+          "step_id": "1",
+          "step": "Post-Surgical Pathology and Diagnosis Confirmation",
+          "sentiment": -2,
+          "plutchik_score": "anxiety",
+          "emotional_valence": -2,
+          "provider_trust": 3,
+          "medical_self_efficacy": 2,
+          "logistical_capacity": -1,
+          "narrative_description": "Following maximal safe resection at Queen Mary Hospital, Wei-Lin receives a confirmed pathology report: Grade 2 IDH1-mutant, 1p/19q non-codeleted glioma. His neuro-oncologist walks him and his wife through the molecular profile in detail. Wei-Lin immediately begins researching IDH1 biology and available therapies. The diagnosis is a profound shock, but the molecular specificity of the result — and the existence of targeted agents — gives him a framework for action.",
+          "quote": "When I saw 'IDH1-mutant' in the report, I stayed up all night reading. At least there was something to read about. At least there was a target.",
+          "events": [
+            {
+              "event_id": "ev_wl_01",
+              "type": "hospitalization",
+              "label": "Surgical Resection Completed",
+              "short_label": "Surgery completed",
+              "description": "Maximal safe resection performed at Queen Mary Hospital under awake craniotomy with intraoperative language mapping. Wei-Lin retains full speech function post-operatively. Pathology sent for molecular profiling.",
+              "sentiment_impact": 1,
+              "step_position": 1.2,
+              "tooltip": "Awake craniotomy with language mapping — full speech preserved post-operatively. Molecular profiling ordered."
+            },
+            {
+              "event_id": "ev_wl_02",
+              "type": "roadblock",
+              "label": "Pathology Report Delay (12 Days)",
+              "short_label": "Pathology wait",
+              "description": "Comprehensive molecular profiling including MGMT methylation, 1p/19q co-deletion, and IDH1 sequencing requires 12 days. Wei-Lin and his wife experience this waiting period as acutely distressing, compounded by discharge without interim psychological support.",
+              "sentiment_impact": -3,
+              "step_position": 1.6,
+              "tooltip": "12-day wait for full molecular panel — no structured psychological support offered during the interval."
+            },
+            {
+              "event_id": "ev_wl_03",
+              "type": "progress",
+              "label": "IDH1 Mutation Confirmed — Targeted Therapy Exists",
+              "short_label": "IDH1 confirmed",
+              "description": "Confirmed IDH1 R132H point mutation and MGMT methylation. The neuro-oncologist explains that this molecular profile is associated with a more favorable prognosis and is the target of active drug development. Wei-Lin experiences this as the first actionable piece of information in his diagnosis.",
+              "sentiment_impact": 2,
+              "step_position": 1.9,
+              "tooltip": "IDH1 R132H confirmed with MGMT methylation — neuro-oncologist frames this as an actionable, targetable profile."
+            }
+          ],
+          "sentiment_reasons": [
+            "The waiting period for molecular profiling is psychologically crushing",
+            "Confirmation of a targetable mutation creates the first genuine framework for hope",
+            "Wei-Lin's high health literacy means he quickly understands the therapeutic implications — but also the disease's natural history"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The combination of a brain tumor diagnosis and a waiting period for molecular results creates substantial distress, partially offset by the actionability of the IDH1 finding.",
+            "provider_trust": "The neuro-oncology team's use of awake craniotomy with language mapping demonstrates high technical competence, establishing early trust.",
+            "medical_self_efficacy": "Wei-Lin's prior health literacy rapidly activates — he is already reading primary literature within 24 hours of pathology disclosure.",
+            "logistical_capacity": "Surgical recovery and discharge management consume significant bandwidth, though hospital infrastructure at Queen Mary supports basic coordination."
+          }
+        },
+        {
+          "stage_id": "1",
+          "stage": "Initial Treatment",
+          "step_id": "2",
+          "step": "Adjuvant Chemoradiation Decision and Initiation",
+          "sentiment": -1,
+          "plutchik_score": "anticipation",
+          "emotional_valence": -1,
+          "provider_trust": 3,
+          "medical_self_efficacy": 3,
+          "logistical_capacity": -2,
+          "narrative_description": "Wei-Lin and his neuro-oncologist discuss adjuvant treatment. The oncology team recommends radiation (54 Gy) with concurrent and adjuvant temozolomide, in alignment with EORTC guidelines for Grade 2 glioma requiring treatment. Wei-Lin asks extensively about cognitive side effects and fertility preservation before his wife's planned pregnancy. He agrees to proceed, but is already asking about clinical trial enrollment timing.",
+          "quote": "I wanted to understand every trade-off. Radiation to my temporal lobe is not a small thing. I needed to know exactly what I was giving up and what I was getting.",
+          "events": [
+            {
+              "event_id": "ev_wl_04",
+              "type": "progress",
+              "label": "Fertility Preservation Completed Before Chemotherapy",
+              "short_label": "Fertility preserved",
+              "description": "Prior to TMZ initiation, Wei-Lin undergoes sperm cryopreservation. This proactive step — initiated by the oncology team — is experienced as an act of clinical attentiveness that strengthens trust.",
+              "sentiment_impact": 2,
+              "step_position": 2.2,
+              "tooltip": "Sperm cryopreservation completed before TMZ — proactive fertility counseling strengthens patient-team relationship."
+            },
+            {
+              "event_id": "ev_wl_05",
+              "type": "roadblock",
+              "label": "Cognitive Side Effects from Radiation Affect Work Capacity",
+              "short_label": "Radiation fatigue",
+              "description": "During the 6-week radiation course, Wei-Lin experiences fatigue, concentration difficulties, and word-retrieval lapses that force him to reduce work to part-time. This directly threatens his sense of professional identity and financial contribution to a growing family.",
+              "sentiment_impact": -2,
+              "step_position": 2.7,
+              "tooltip": "Radiation-related fatigue and cognitive effects force reduction to part-time work — direct threat to professional identity."
+            }
+          ],
+          "sentiment_reasons": [
+            "The treatment decision is heavily weighted — radiation to a language-adjacent area carries real cognitive risk",
+            "Proactive fertility preservation is a meaningful act of clinical care that Wei-Lin notices and appreciates",
+            "Work reduction due to radiation side effects represents the first tangible life disruption"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "Ambivalence about a necessary but cognitively risky treatment produces a slightly negative emotional set-point, counteracted by trust in the team.",
+            "provider_trust": "The team's proactive fertility counseling before Wei-Lin had to ask for it significantly reinforces trust.",
+            "medical_self_efficacy": "Wei-Lin's analytical engagement with the treatment protocol — including reading the EORTC trial data — substantially boosts his sense of agency.",
+            "logistical_capacity": "Six weeks of daily radiation at Queen Mary creates significant scheduling demands alongside reduced work capacity and spousal support requirements."
+          }
+        },
+        {
+          "stage_id": "2",
+          "stage": "Maintenance and Monitoring",
+          "step_id": "3",
+          "step": "Post-Chemoradiation Surveillance and Vorasidenib Initiation",
+          "sentiment": 1,
+          "plutchik_score": "optimism",
+          "emotional_valence": 1,
+          "provider_trust": 3,
+          "medical_self_efficacy": 4,
+          "logistical_capacity": 1,
+          "narrative_description": "Three months post-chemoradiation, MRI shows stable disease with expected post-treatment changes. Wei-Lin is transitioned to surveillance MRI every 3 months. His neuro-oncologist secures access to vorasidenib through a compassionate use program, given his IDH1 status and the INDIGO trial data. Wei-Lin begins vorasidenib and experiences the oral regimen as manageable and symbolically important — an active targeted treatment.",
+          "quote": "Taking a pill every day feels like doing something. It's not passive. I know it's a targeted agent. That matters to me.",
+          "events": [
+            {
+              "event_id": "ev_wl_06",
+              "type": "progress",
+              "label": "Stable MRI — No Progression",
+              "short_label": "Stable MRI",
+              "description": "First post-treatment MRI at 3 months shows stable non-enhancing lesion with expected post-surgical and radiation changes. Wei-Lin experiences this as a significant milestone, though he is aware of the long-term natural history.",
+              "sentiment_impact": 3,
+              "step_position": 3.2,
+              "tooltip": "First post-treatment MRI shows stable disease — experienced as a meaningful milestone, though Wei-Lin remains alert to long-term transformation risk."
+            },
+            {
+              "event_id": "ev_wl_07",
+              "type": "progress",
+              "label": "Vorasidenib Access Secured via Compassionate Use",
+              "short_label": "Vorasidenib started",
+              "description": "Neuro-oncologist navigates a compassionate use application for vorasidenib based on INDIGO trial data. Wei-Lin begins 40mg QD oral dosing. Hepatic transaminase monitoring initiated. He experiences the oral regimen as symbolically and practically significant.",
+              "sentiment_impact": 2,
+              "step_position": 3.6,
+              "tooltip": "Compassionate use vorasidenib access granted — INDIGO trial data cited. Oral regimen experienced as active, targeted treatment."
+            },
+            {
+              "event_id": "ev_wl_08",
+              "type": "roadblock",
+              "label": "Uncertainty About How Vorasidenib Affects Trial Eligibility",
+              "short_label": "Eligibility concern",
+              "description": "Wei-Lin discovers that some IDH1 combination trials exclude patients with prior IDH inhibitor exposure. He raises this with his neuro-oncologist, who does not have a definitive answer and defers to trial-specific eligibility review. The uncertainty is destabilizing.",
+              "sentiment_impact": -2,
+              "step_position": 3.9,
+              "tooltip": "Prior IDH inhibitor exposure (vorasidenib) may create eligibility barriers for some combination trials — no definitive answer from HCP team."
+            }
+          ],
+          "sentiment_reasons": [
+            "Stable MRI delivers the most significant positive emotional moment since diagnosis",
+            "Vorasidenib oral therapy creates a sense of active participation in disease control",
+            "Emerging concern about vorasidenib's impact on future trial eligibility introduces a new layer of anxiety"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The combination of a clean scan and a targeted oral therapy produces genuine optimism — but prior IDH inhibitor eligibility concerns partially offset it.",
+            "provider_trust": "The neuro-oncologist's advocacy for compassionate use access deepens trust; the inability to clarify eligibility implications creates a minor gap.",
+            "medical_self_efficacy": "Wei-Lin's independent identification of the prior IDH inhibitor exclusion criterion demonstrates high self-directed health literacy.",
+            "logistical_capacity": "Outpatient surveillance and oral medication are logistically manageable; the quarterly MRI cadence creates a structured rhythm."
+          }
+        },
+        {
+          "stage_id": "2",
+          "stage": "Maintenance and Monitoring",
+          "step_id": "4",
+          "step": "Seizure Recurrence and Medication Adjustment",
+          "sentiment": -3,
+          "plutchik_score": "anxiety",
+          "emotional_valence": -3,
+          "provider_trust": 2,
+          "medical_self_efficacy": 2,
+          "logistical_capacity": -2,
+          "has_experience_wheel": true,
+          "narrative_description": "Seven months into surveillance, Wei-Lin experiences a breakthrough focal seizure at home, witnessed by his wife. Levetiracetam dosing is increased. He is temporarily restricted from driving under Hong Kong Motor Traffic Ordinance. The event triggers intense fear about disease progression, despite his MRI remaining stable at the next scan. His wife's anxiety escalates significantly.",
+          "inflection_detail": {
+            "label": "Seizure Recurrence — Progression Fear Inflection",
+            "description": "Breakthrough seizures in Grade 2 glioma patients on surveillance create intense but often clinically ambiguous fear of transformation. For Wei-Lin, this event threatens occupational independence, spousal wellbeing, and his carefully maintained sense of control. Structured clinical guidance at this moment can channel his heightened vigilance into productive monitoring engagement — or, without support, may accelerate avoidant behavior and disengagement from trial consideration.",
+            "risk_level": "high",
+            "dropout_risk": "moderate",
+            "sponsor_opportunity": "Provide a patient-facing seizure management toolkit that distinguishes breakthrough seizure from radiographic progression, includes driving re-eligibility timelines under Hong Kong law, and offers direct access to a nurse navigator for rapid post-event triage. Proactively address spousal/caregiver distress as a component of the patient support program.",
+            "data_needed": "Incidence of breakthrough seizure in IDH1-mutant Grade 2 glioma patients on vorasidenib; proportion of patients who undergo early MRI re-imaging after seizure recurrence (outside scheduled protocol); caregiver anxiety escalation rates post-seizure event.",
+            "paths": [
+              {
+                "id": "path_pos",
+                "direction": "positive",
+                "label": "Structured Seizure Support and Continued Engagement",
+                "outcome": "Wei-Lin receives a rapid-response call from a neuro-oncology nurse navigator within 24 hours of the seizure. He is given a written protocol distinguishing breakthrough seizure from progression signals, a clear driving re-eligibility timeline, and a referral for spousal psychological support. He processes the event as a disease signal to manage rather than a catastrophic failure of treatment, and remains an engaged clinical trial candidate.",
+                "sentiment_delta": 3,
+                "key_driver": "Same-day or next-day nurse navigator contact post-seizure; written driving restriction guidance with re-eligibility criteria; caregiver-inclusive support offer."
+              },
+              {
+                "id": "path_neg",
+                "direction": "negative",
+                "label": "Unmanaged Fear and Surveillance Anxiety Spiral",
+                "outcome": "Without structured support, Wei-Lin's post-seizure anxiety generalizes into a persistent fear that the disease is progressing despite stable imaging. His wife escalates her own avoidance behavior. He begins to avoid trial inquiry, fearing that any protocol change might destabilize his current (stable) status.",
+                "sentiment_delta": -3,
+                "key_driver": "No proactive outreach post-seizure; absence of written post-event guidance; failure to address caregiver anxiety as a system component."
+              }
+            ]
+          },
+          "quote": "The seizure happened in our kitchen. My wife screamed. We'd been careful, we'd been vigilant — and then in a second it felt like everything was out of control again.",
+          "events": [
+            {
+              "event_id": "ev_wl_09",
+              "type": "roadblock",
+              "label": "Breakthrough Focal Seizure at Home",
+              "short_label": "Seizure recurrence",
+              "description": "Wei-Lin experiences a witnessed focal seizure at home. Wife calls emergency services. He is assessed at Queen Mary A&E and discharged after levetiracetam adjustment. No radiographic evidence of progression on urgent MRI.",
+              "sentiment_impact": -4,
+              "step_position": 4.2,
+              "tooltip": "Breakthrough focal seizure at home — urgent MRI shows no progression, but event triggers intense fear and temporary driving ban."
+            },
+            {
+              "event_id": "ev_wl_10",
+              "type": "roadblock",
+              "label": "Driving Restriction Imposed — Occupational Impact",
+              "short_label": "Driving ban",
+              "description": "Hong Kong Motor Traffic Ordinance requires seizure-free interval before driving resumption. Wei-Lin is prohibited from driving for a minimum 12-month period, directly impacting his independence and ability to commute to work part-time.",
+              "sentiment_impact": -2,
+              "step_position": 4.5,
+              "tooltip": "12-month driving restriction under HK Motor Traffic Ordinance — direct impact on occupational independence and daily logistics."
+            },
+            {
+              "event_id": "ev_wl_11",
+              "type": "progress",
+              "label": "Follow-Up MRI — Stable Disease Confirmed",
+              "short_label": "MRI stable post-seizure",
+              "description": "Three weeks after the seizure event, a scheduled MRI confirms no new enhancement or tumor growth. The neuro-oncology team interprets breakthrough seizure as disease-related but not as a progression signal. Wei-Lin is partially reassured but remains hypervigilant.",
+              "sentiment_impact": 2,
+              "step_position": 4.8,
+              "tooltip": "MRI at 3 weeks post-seizure confirms stable disease — breakthrough interpreted as seizure disorder manifestation, not progression."
+            }
+          ],
+          "sentiment_reasons": [
+            "Breakthrough seizure ruptures the carefully maintained sense of disease control",
+            "Spousal witness to the seizure escalates caregiver anxiety and changes household dynamics",
+            "Driving restriction represents a concrete, daily loss of independence"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The seizure event is the lowest emotional point since pathology disclosure — it disrupts the stable equilibrium Wei-Lin had rebuilt.",
+            "provider_trust": "The A&E team's rapid response and same-day MRI access are reassuring; the absence of proactive post-discharge guidance creates a modest trust gap.",
+            "medical_self_efficacy": "Wei-Lin remains analytically engaged but the seizure temporarily overwhelms his coping framework — he cannot fully rationalize his way through an acute emotional response.",
+            "logistical_capacity": "Driving ban, wife's increased anxiety, and additional monitoring appointments significantly compress logistical bandwidth."
+          }
+        },
+        {
+          "stage_id": "3",
+          "stage": "Clinical Trial Exploration",
+          "step_id": "5",
+          "step": "Independent Trial Research and International Landscape Review",
+          "sentiment": 1,
+          "plutchik_score": "anticipation",
+          "emotional_valence": 2,
+          "provider_trust": 2,
+          "medical_self_efficacy": 4,
+          "logistical_capacity": 0,
+          "narrative_description": "Following the seizure event and with his MRI stable, Wei-Lin intensifies his research into clinical trials. He systematically reviews ClinicalTrials.gov, the EORTC trial portfolio, and several China National Medical Products Administration (NMPA) registries. He identifies multiple IDH1-targeted combination trials — primarily in the US and Europe — and one early-phase trial at a mainland China site. He creates a spreadsheet of trial eligibility windows and prior therapy exclusion criteria, and begins preparing a structured memo for his next neuro-oncology appointment.",
+          "quote": "I made a spreadsheet. Every trial, every inclusion criterion, every country. I flagged which ones might be closed to me because of vorasidenib. My doctor called it 'the most organized patient document I've ever seen.'",
+          "events": [
+            {
+              "event_id": "ev_wl_12",
+              "type": "progress",
+              "label": "Identifies Phase II IDH1 Combination Trial (US Site)",
+              "short_label": "US trial identified",
+              "description": "Wei-Lin identifies an active Phase II trial combining an IDH1 inhibitor with a PD-1 checkpoint inhibitor in IDH-mutant glioma. The trial is located at Memorial Sloan Kettering and MD Anderson. He notes that prior IDH inhibitor exposure appears to be permitted in one arm.",
+              "sentiment_impact": 3,
+              "step_position": 5.2,
+              "tooltip": "Phase II IDH1 + PD-1 combination trial at MSK/MDA — one arm appears to permit prior IDH inhibitor exposure, potentially making Wei-Lin eligible."
+            },
+            {
+              "event_id": "ev_wl_13",
+              "type": "progress",
+              "label": "Mainland China Site Identified (Shorter Travel Distance)",
+              "short_label": "China site identified",
+              "description": "Wei-Lin locates an early-phase IDH1 trial open at Tiantan Hospital in Beijing with a planned expansion to a Guangzhou site. The Guangzhou site would reduce travel to a 2-hour flight. Eligibility requires confirmation with the site PI.",
+              "sentiment_impact": 2,
+              "step_position": 5.6,
+              "tooltip": "IDH1 early-phase trial with Guangzhou expansion site — 2-hour flight from Hong Kong reduces international travel barrier significantly."
+            },
+            {
+              "event_id": "ev_wl_14",
+              "type": "roadblock",
+              "label": "Cross-Registry Eligibility Inconsistencies Impossible to Reconcile Alone",
+              "short_label": "Registry complexity",
+              "description": "Trial eligibility criteria across ClinicalTrials.gov, the NMPA registry, and EORTC use inconsistent terminology for prior therapy washout periods and IDH inhibitor exposure windows. Wei-Lin cannot reconcile the differences without direct site communication.",
+              "sentiment_impact": -1,
+              "step_position": 5.9,
+              "tooltip": "Inconsistent eligibility language across global trial registries — prior IDH inhibitor washout definitions vary; cannot self-assess eligibility."
+            }
+          ],
+          "sentiment_reasons": [
+            "Identifying a US trial with potential eligibility despite vorasidenib exposure is genuinely exciting",
+            "A mainland China site within accessible travel distance changes the logistical calculus significantly",
+            "Registry inconsistency is frustrating for someone accustomed to analytical precision"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The prospect of a viable trial — especially one closer to home — generates real, forward-looking hope that partially restores the emotional baseline disrupted by the seizure.",
+            "provider_trust": "Wei-Lin's independent research is beginning to outpace what his local oncology team can actively guide — he is managing more of this himself.",
+            "medical_self_efficacy": "His systematic spreadsheet approach to trial research represents peak self-directed health literacy — he is operating at near-professional information synthesis levels.",
+            "logistical_capacity": "Trial research itself is manageable; the logistical implications of international site travel are beginning to enter calculation."
+          }
+        },
+        {
+          "stage_id": "3",
+          "stage": "Clinical Trial Exploration",
+          "step_id": "6",
+          "step": "Neuro-Oncologist Consultation on Trial Eligibility",
+          "sentiment": 0,
+          "plutchik_score": "anticipation",
+          "emotional_valence": 1,
+          "provider_trust": 3,
+          "medical_self_efficacy": 4,
+          "logistical_capacity": -1,
+          "narrative_description": "Wei-Lin presents his trial research memo at his next neuro-oncology appointment. His oncologist reviews the options with genuine engagement and agrees to reach out to the principal investigator at the Guangzhou site on his behalf. She also contacts a US academic collaborator regarding eligibility interpretation for the MSK/MDA protocol. Wei-Lin leaves the appointment with specific next steps for the first time. However, his wife raises practical concerns about travel logistics during her third trimester.",
+          "quote": "She actually read my memo. She called it useful. She picked up the phone and called the PI in Guangzhou. That was the first time I felt like we were on the same side of the table.",
+          "events": [
+            {
+              "event_id": "ev_wl_15",
+              "type": "progress",
+              "label": "Oncologist Contacts Guangzhou Site PI Directly",
+              "short_label": "HCP-to-PI outreach",
+              "description": "The neuro-oncologist at Queen Mary initiates a direct physician-to-physician contact with the principal investigator at the Guangzhou expansion site, requesting eligibility clarification regarding vorasidenib prior exposure.",
+              "sentiment_impact": 3,
+              "step_position": 6.2,
+              "tooltip": "Neuro-oncologist contacts Guangzhou site PI directly — physician-to-physician eligibility inquiry initiated on Wei-Lin's behalf."
+            },
+            {
+              "event_id": "ev_wl_16",
+              "type": "roadblock",
+              "label": "Wife's Third Trimester Complicates Travel Window",
+              "short_label": "Travel window conflict",
+              "description": "Wei-Lin's wife is entering her third trimester. Travel to Guangzhou or the US for screening visits or treatment cycles during this period creates direct tension between clinical trial participation and family priorities.",
+              "sentiment_impact": -2,
+              "step_position": 6.6,
+              "tooltip": "Wife's third trimester creates a direct conflict with travel requirements for international trial screening — competing family and health priorities."
+            }
+          ],
+          "sentiment_reasons": [
+            "The oncologist's active engagement — calling the PI directly — is experienced as a pivotal shift in the care dynamic",
+            "Concrete next steps after months of self-directed research provide meaningful psychological relief",
+            "The travel-versus-family tension surfaces as a real and emotionally weighted constraint"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The oncologist's active advocacy produces the strongest interpersonal trust moment in the journey, partially offset by the emerging spousal/family timing conflict.",
+            "provider_trust": "Direct physician-to-PI outreach dramatically increases Wei-Lin's trust in his oncologist as a genuine partner in trial access navigation.",
+            "medical_self_efficacy": "Wei-Lin's memo being taken seriously by the clinical team validates his self-directed research approach and reinforces his engagement.",
+            "logistical_capacity": "Competing demands of family milestone (birth) and trial travel requirements begin to create real friction in logistical planning."
+          }
+        },
+        {
+          "stage_id": "4",
+          "stage": "Trial Screening and Enrollment Decision",
+          "step_id": "7",
+          "step": "Guangzhou Site Screening Visit and Eligibility Confirmation",
+          "sentiment": 2,
+          "plutchik_score": "hope",
+          "emotional_valence": 2,
+          "provider_trust": 3,
+          "medical_self_efficacy": 3,
+          "logistical_capacity": -2,
+          "narrative_description": "Wei-Lin travels to the Guangzhou site for a screening visit, accompanied by his wife. The PI confirms that vorasidenib exposure is acceptable under the protocol's modified eligibility criteria for patients with prior IDH inhibitor use who meet washout requirements. A 4-week vorasidenib washout is required before enrollment. Wei-Lin and his wife spend the overnight stay discussing the implications of a 4-week treatment gap. The screening coordinator provides a structured visit calendar through the entire first trial cycle.",
+          "quote": "The PI told me I was eligible. I had to sit with that for a moment. After all the spreadsheets and the calls and the waiting — eligible.",
+          "events": [
+            {
+              "event_id": "ev_wl_17",
+              "type": "progress",
+              "label": "Eligibility Confirmed — Modified Criteria Permit Prior IDH Inhibitor",
+              "short_label": "Eligibility confirmed",
+              "description": "The Guangzhou site PI confirms Wei-Lin meets modified eligibility criteria allowing prior IDH inhibitor exposure with a 4-week washout. This resolves the eligibility uncertainty that has persisted since vorasidenib initiation.",
+              "sentiment_impact": 4,
+              "step_position": 7.2,
+              "tooltip": "Eligibility confirmed — modified protocol permits prior IDH inhibitor exposure with 4-week washout. Months of eligibility uncertainty resolved."
+            },
+            {
+              "event_id": "ev_wl_18",
+              "type": "roadblock",
+              "label": "4-Week Vorasidenib Washout Period — No Active IDH Inhibitor",
+              "short_label": "Washout gap",
+              "description": "Protocol requires a 4-week cessation of vorasidenib before first dosing. Wei-Lin is acutely aware that this represents a gap in active IDH inhibition. He asks the PI whether any progression risk data exists for washout periods of this duration in Grade 2 glioma — no direct data is available.",
+              "sentiment_impact": -3,
+              "step_position": 7.6,
+              "tooltip": "4-week vorasidenib washout required — Wei-Lin asks about progression risk during gap. No direct washout-period progression data available for Grade 2 glioma."
+            }
+          ],
+          "sentiment_reasons": [
+            "Eligibility confirmation after months of uncertainty is one of the highest-valence moments in the journey",
+            "The washout period introduces a new and specific fear — unprotected disease interval",
+            "Overnight in Guangzhou with his wife becomes an unexpectedly meaningful shared moment of decision-making"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "Confirmed eligibility produces genuine uplift; the washout gap anxiety is real but does not override the net positive of the result.",
+            "provider_trust": "The Guangzhou PI's structured communication and visit calendar significantly increase trust in the research team's patient-centeredness.",
+            "medical_self_efficacy": "Wei-Lin asks a clinically sophisticated washout-period progression risk question — reflecting sustained, high-level engagement with the science.",
+            "logistical_capacity": "International travel for a single screening visit is manageable; the upcoming trial cycle schedule will require repeated Guangzhou travel."
+          }
+        },
+        {
+          "stage_id": "4",
+          "stage": "Trial Screening and Enrollment Decision",
+          "step_id": "8",
+          "step": "Informed Consent, Birth of Child, and Enrollment Decision",
+          "sentiment": 1,
+          "plutchik_score": "hope",
+          "emotional_valence": 2,
+          "provider_trust": 3,
+          "medical_self_efficacy": 3,
+          "logistical_capacity": -3,
+          "has_experience_wheel": true,
+          "narrative_description": "Wei-Lin returns to Guangzhou for the formal informed consent session three weeks after the screening visit. Two days before the consent appointment, his wife goes into labor and delivers their son at Queen Mary Hospital. Wei-Lin postpones the consent session by two weeks. The research coordinator accommodates the delay without losing his enrollment slot. Wei-Lin formally signs consent and enrolls six weeks after eligibility confirmation, describing the period as the most emotionally saturated of his life.",
+          "inflection_detail": {
+            "label": "Concurrent Life Event — Birth and Enrollment Overlap",
+            "description": "Wei-Lin's enrollment decision coincides with the birth of his first child — a convergence of the most significant positive life event and the most demanding clinical commitment in his journey. The research site's accommodation of the delay is a critical trust-building moment. This inflection point illustrates a common but underappreciated barrier: major life events can interrupt enrollment windows even for highly motivated patients. Sponsor and site flexibility at this juncture directly determines whether engagement is preserved.",
+            "risk_level": "moderate",
+            "dropout_risk": "moderate",
+            "sponsor_opportunity": "Build explicit life-event accommodation windows into trial enrollment protocols for non-oncological emergencies (childbirth, bereavement, caregiver events). Designate a dedicated enrollment coordinator contact for highly motivated patients near the consent stage — ensuring continuity across unexpected life interruptions. Consider a post-consent 'deferral hold' mechanism that preserves slot without forfeiting eligibility.",
+            "data_needed": "Proportion of trial-eligible patients who defer or abandon enrollment due to concurrent life events (non-medical); average gap between eligibility confirmation and consent signing in Asia-Pacific neuro-oncology trials; enrollment slot loss rate due to administrative inflexibility.",
+            "paths": [
+              {
+                "id": "path_pos",
+                "direction": "positive",
+                "label": "Site Flexibility Preserves Enrollment",
+                "outcome": "The research coordinator's accommodation of the two-week delay preserves Wei-Lin's enrollment slot and sustains the trust established during screening. He signs consent in a calm post-birth window and enters the trial with high emotional reserves and a clear sense of purpose — his son's birth becomes an additional motivator for sustained protocol adherence.",
+                "sentiment_delta": 3,
+                "key_driver": "Coordinator-initiated proactive contact during delay; explicit enrollment slot preservation policy; acknowledgment of family event as legitimate deferral reason."
+              },
+              {
+                "id": "path_neg",
+                "direction": "negative",
+                "label": "Administrative Inflexibility Breaks Enrollment",
+                "outcome": "Without accommodation, Wei-Lin misses the consent window and loses his enrollment slot. The combination of newborn demands, post-birth exhaustion, and re-navigation of eligibility timelines overwhelms capacity. He does not re-engage the trial for 6+ months, by which point his disease status requires re-screening.",
+                "sentiment_delta": -4,
+                "key_driver": "Rigid consent window without life-event accommodation; failure to proactively contact Wei-Lin during birth delay; loss of enrollment slot without re-eligibility pathway."
+              }
+            ]
+          },
+          "quote": "Our son was born on a Tuesday. I was supposed to sign the consent on a Thursday. The coordinator called me and said: take your time, your slot is safe. That phone call meant everything.",
+          "events": [
+            {
+              "event_id": "ev_wl_19",
+              "type": "community",
+              "label": "Birth of First Child — Family Milestone",
+              "short_label": "Son born",
+              "description": "Wei-Lin's wife delivers their son at Queen Mary Hospital two days before his scheduled consent appointment in Guangzhou. Wei-Lin contacts the research coordinator from the delivery ward. The coordinator immediately confirms a two-week deferral with slot preservation.",
+              "sentiment_impact": 5,
+              "step_position": 8.1,
+              "tooltip": "Son born two days before consent appointment — coordinator confirms enrollment slot preservation during birth delay from delivery ward contact."
+            },
+            {
+              "event_id": "ev_wl_20",
+              "type": "progress",
+              "label": "Research Coordinator Proactively Preserves Enrollment Slot",
+              "short_label": "Slot preserved",
+              "description": "The Guangzhou site coordinator proactively calls Wei-Lin three days into the delay to confirm the slot is held, provides the revised schedule, and sends a digital copy of the consent document for pre-review. Wei-Lin describes this as a pivotal act of patient-centered care.",
+              "sentiment_impact": 3,
+              "step_position": 8.4,
+              "tooltip": "Coordinator calls proactively at day 3 of delay — slot confirmed, revised schedule sent, consent pre-review document provided. Experienced as pivotal patient-centered care."
+            },
+            {
+              "event_id": "ev_wl_21",
+              "type": "progress",
+              "label": "Formal Enrollment — Consent Signed",
+              "short_label": "Enrolled in trial",
+              "description": "Six weeks after eligibility confirmation, Wei-Lin signs the informed consent and is formally enrolled. His wife accompanies him. He describes signing as the culmination of nearly two years of effort — and the beginning of what he calls 'the next part of fighting.'",
+              "sentiment_impact": 4,
+              "step_position": 8.8,
+              "tooltip": "Consent signed — formally enrolled. Wei-Lin describes it as 'the next part of fighting.' Wife present for signing. Nearly two years from diagnosis to trial entry."
+            }
+          ],
+          "sentiment_reasons": [
+            "The birth of his son is the highest positive emotional moment in the entire journey",
+            "The coordinator's proactive slot preservation call is experienced as a defining act of care",
+            "Signing consent is experienced as active agency reclaimed — after 22 months of disease management"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The convergence of birth and enrollment produces the most complex and ultimately positive emotional state in the journey — exhaustion, joy, fear, and purpose simultaneously.",
+            "provider_trust": "The coordinator's proactive call during the birth delay is the single highest trust-building moment in the research relationship — outperforming clinical competence demonstrations.",
+            "medical_self_efficacy": "Pre-review of the consent document before the appointment, combined with 22 months of accumulated literacy, allows Wei-Lin to sign with genuine comprehension.",
+            "logistical_capacity": "Newborn care, trial enrollment, and post-washout disease monitoring simultaneously compress logistical capacity to its lowest point — but strong spousal and parental support network partially compensates."
+          }
+        }
+      ]
+    },
+    {
       "id": "persona_3",
       "type": "patient",
       "therapeutic_area": "Neurology",

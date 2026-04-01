@@ -47,18 +47,18 @@
     on:click={handleClick}
     aria-pressed={$selectedIndex === step.index}
   >
-    <span class="flex flex-row w-full justify-between -my-1">
+    <span class="jm-content-row-stretch p-1">
       <div
-        class="jm-emotion -mx-1"
+        class="jm-swatch"
         style="background-color:{sentimentToColor(d?.sentiment)};"
         aria-label="Sentiment: {d?.sentiment}"
       ></div>
 
       <!-- Emotion swatches -->
       {#if emotionSwatches.length}
-        <div class="flex flex-row -mx-1" aria-label="Emotion: {d?.plutchik_score}">
+        <div class="emotion-container" aria-label="Emotion: {d?.plutchik_score}">
           {#each emotionSwatches as color}
-            <div class="w-3 h-3 rounded-full ring-1"
+            <div class="jm-swatch-round-sm"
                  style="background:{color};">
             </div>
           {/each}
@@ -67,7 +67,7 @@
     </span>
 
     <div class="flex flex-row p-2">
-      <span class="text-body">
+      <span class="label uppercase text-center">
         {step.step}
       </span>
     </div>
@@ -114,7 +114,7 @@
           <span class="text-body-sm">{inflDet.label}</span>
         </div>
       {:else}
-        <span class="infl-placeholder-empty label-heading">Inflection point</span>
+        <span class="infl-placeholder-empty label">Inflection point</span>
       {/if}
     </div>
   {/if}

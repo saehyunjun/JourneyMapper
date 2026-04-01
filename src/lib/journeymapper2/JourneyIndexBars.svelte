@@ -235,16 +235,11 @@
       style="cursor: pointer;"
       on:mouseenter={() => hoveredIndex.set(i)}
       on:mouseleave={() => hoveredIndex.set(-1)}
-      on:click={() => handleColumnClick(i)}
-    />
+      on:click={() => handleColumnClick(i)}></rect>
   {/each}
 
 </svg>
 
 <style>
-  .journey-bars-svg {
-    display: block;
-    z-index: 1;
-  }
 
 </style>

@@ -1,24 +1,31 @@
 <script>
-  let { states = [], accent = 'var(--purple)' } = $props();
+  import { buildScreenBackground } from '$lib/journeymapper2/storyConfig.js';
+
+  let { states = [], accent = 'var(--purple)', theme = null } = $props();
+
+  let resolvedLabel = $derived(theme?.labelColor ?? accent);
+  let bg = $derived(theme ? buildScreenBackground(theme) : 'rgba(0,0,0,0.85)');
 </script>
 
-<div class="screen">
+<div class="screen" style="background: {bg};" role="article">
   <div class="screen-inner">
 
-    <span class="screen-label" style="color: {accent};">Right Now</span>
+    <span class="screen-label" style="color: {resolvedLabel};">Right Now</span>
     <h2 class="screen-title">Current State</h2>
 
-    <div class="states-list">
+    <div class="states-list" role="list">
       {#each states as s, i}
-        <div class="state-row" style="animation-delay: {i * 70}ms;">
+        <div class="state-row" style="animation-delay: {i * 70}ms;" role="listitem">
           <div class="state-header">
             <span class="state-label">{s.label}</span>
-            <span class="state-value" style="color: {s.color ?? accent};">{Math.round(s.value * 100)}%</span>
+            <span class="state-value" style="color: {s.color ?? resolvedLabel};">
+              {Math.round(s.value * 100)}%
+            </span>
           </div>
-          <div class="state-track">
+          <div class="state-track" role="progressbar" aria-valuenow={Math.round(s.value * 100)} aria-valuemin={0} aria-valuemax={100} aria-label={s.label}>
             <div
               class="state-fill"
-              style="width:{s.value * 100}%; background: {s.color ?? accent};"
+              style="width:{s.value * 100}%; background: {s.color ?? resolvedLabel};"
             ></div>
           </div>
         </div>
@@ -36,12 +43,7 @@
     flex-direction: column;
     justify-content: flex-end;
     padding-bottom: 8px;
-    background: linear-gradient(
-      to top,
-      rgba(0,0,0,0.95) 0%,
-      rgba(0,0,0,0.72) 50%,
-      rgba(0,0,0,0.12) 100%
-    );
+    transition: background 400ms ease;
   }
 
   .screen-inner {

@@ -138,8 +138,8 @@
 
               <!-- Path cards -->
               <div class="fork-cards-h" style="gap:{H_GAP}px;">
-                <div class="fork-path-card fork-path-card--pos"
-                     class:fork-path-card--hovered={hoveredPathKey === `${step.index}-pos`}
+                <div class="card-sm card-sm--pos"
+                     class:card-sm--hovered={hoveredPathKey === `${step.index}-pos`}
                      style="border: 2px solid {POS_COLOR}80; 
                      width:{H_CARD_W}px; min-height:{H_CARD_H}px;"
                      role="button"
@@ -158,8 +158,8 @@
                   <span class="fork-path-label">{pos.label}</span>{/if}
                 </div>
 
-                <div class="fork-path-card fork-path-card--neg"
-                     class:fork-path-card--hovered={hoveredPathKey === `${step.index}-neg`}
+                <div class="card-sm card-sm--neg"
+                     class:card-sm--hovered={hoveredPathKey === `${step.index}-neg`}
                      style="border:2px solid {NEG_COLOR}80; width:{H_CARD_W}px; min-height:{H_CARD_H}px;"
                      role="button"
                      tabindex="0"
@@ -212,8 +212,8 @@
 
               <!-- Path cards side-by-side (pos left, neg right) -->
               <div class="fork-cards-v" style="gap:{V_GAP}px;">
-                <div class="fork-path-card fork-path-card--pos"
-                     class:fork-path-card--hovered={hoveredPathKey === `${step.index}-pos`}
+                <div class="card-sm card-sm--pos"
+                     class:card-sm--hovered={hoveredPathKey === `${step.index}-pos`}
                      style="border-color:{POS_COLOR}44; width:{V_CARD_W}px; min-height:{V_CARD_H}px;"
                      role="button"
                      tabindex="0"
@@ -226,8 +226,8 @@
                   {#if pos?.label}<span class="fork-path-label">{pos.label}</span>{/if}
                   {#if pos?.outcome}<p class="fork-path-outcome">{pos.outcome}</p>{/if}
                 </div>
-                <div class="fork-path-card fork-path-card--neg"
-                     class:fork-path-card--hovered={hoveredPathKey === `${step.index}-neg`}
+                <div class="card-sm card-sm--neg"
+                     class:card-sm--hovered={hoveredPathKey === `${step.index}-neg`}
                      style="border-color:{NEG_COLOR}44; width:{V_CARD_W}px; min-height:{V_CARD_H}px;"
                      role="button"
                      tabindex="0"
@@ -380,47 +380,6 @@
     flex-direction: row;
     flex-shrink: 0;
   }
-
-  /* ── Individual path cards ───────────────────────────────────────────── */
-  .fork-path-card {
-    border: 1px solid;
-    border-radius: 5px;
-    padding: 7px 9px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    z-index: 99;
-    overflow: hidden;
-    flex-shrink: 0;
-    box-sizing: border-box;
-    cursor: pointer;
-    transition: box-shadow 0.15s ease, transform 0.15s ease, filter 0.15s ease;
-  }
-  .fork-path-card:hover,
-  .fork-path-card--hovered {
-    transform: translateY(-1px);
-    filter: brightness(1);
-  }
-  .fork-path-card--pos { background: var(--color-green-50); }
-  .fork-path-card--pos:hover,
-  .fork-path-card--pos.fork-path-card--hovered {
-    
-    background: var(--color-green-100);
-    
-    box-shadow: 0 0 0 1.5px rgba(35,171,171,0), 
-    0 2px 6px rgba(35,171,171,0.15);
-  }
-  .fork-path-card--neg { background: var(--lightorange) }
-  .fork-path-card--neg:hover,
-  .fork-path-card--neg.fork-path-card--hovered {
-    
-    background: var(--color-red-200);
-    
-    box-shadow: 
-    0 0 0 1.5px rgba(224,92,92,0.35),
-     0 2px 6px rgba(224,92,92,0.15);
-  }
-
 
   .fork-path-outcome {
     font-size: 0.58rem;

@@ -10,6 +10,7 @@
 
   import XRegular         from 'phosphor-icons-svelte/IconXRegular.svelte';
   import { highlightAll } from '$lib/journeymapper2/textUtils.js';
+  import { getScreenTheme, buildScreenBackground } from '$lib/journeymapper2/storyConfig.js';
   import CaretLeftRegular from 'phosphor-icons-svelte/IconCaretLeftRegular.svelte';
   import CaretRightRegular from 'phosphor-icons-svelte/IconCaretRightRegular.svelte';
 
@@ -154,54 +155,55 @@
     intro: {
       component: BaseStoryScreen,
       props: { title: profile?.name, 
-        content: `<span class="pull-quote-lg">${h(profile?.tagline)}</span>`, accent: accentColor }
+        content: `<span class="pull-quote-lg">${h(profile?.tagline)}</span>`, accent: accentColor, theme: getScreenTheme(screen) }
     },
     'key-quote': {
       component: QuoteScreen,
-      props: { profile, accent: accentColor }
+      props: { profile, accent: accentColor, theme: getScreenTheme(screen) }
     },
     'event-1': {
       component: BaseStoryScreen,
-      props: { title: 'How It Began', content: h(profile?.bio_1), accent: accentColor }
+      props: { title: 'How It Began', content: h(profile?.bio_1), accent: accentColor, theme: getScreenTheme(screen) }
     },
     themes: {
       component: ThemesScreen,
-      props: { themes, profile, accent: accentColor }
+      props: { themes, profile, accent: accentColor, theme: getScreenTheme(screen) }
     },
     bio2: {
       component: BaseStoryScreen,
-      props: { title: `How ${firstName(profile?.name)} navigates care`, content: h(profile?.bio_2), accent: accentColor }
+      props: { title: `How ${firstName(profile?.name)} navigates care`, content: h(profile?.bio_2), accent: accentColor, theme: getScreenTheme(screen) }
     },
     'current-state': {
       component: CurrentStateScreen,
-      props: { states, accent: accentColor }
+      props: { states, accent: accentColor, theme: getScreenTheme(screen) }
     },
     goal: {
       component: BaseStoryScreen,
-      props: { title: `${firstName(profile?.name)}'s Goals`, content: h(goals?.map(g => `• ${g}`).join('<br/>')), accent: accentColor }
+      props: { title: `${firstName(profile?.name)}'s Goals`, content: h(goals?.map(g => `• ${g}`).join('<br/>')), accent: accentColor, theme: getScreenTheme(screen) }
     },
     barrier: {
       component: BaseStoryScreen,
-      props: { title: 'Barriers', content: h(barriers?.map(b => `• ${b}`).join('<br/>')), accent: accentColor }
+      props: { title: 'Barriers', content: h(barriers?.map(b => `• ${b}`).join('<br/>')), accent: accentColor, theme: getScreenTheme(screen) }
     },
     'inflection-lead': {
       component: BaseStoryScreen,
-      props: { kicker: 'Inflection Point', title: inflectionStep?.step, meta: inflectionStep?.stage, content: h(inflectionStep?.quote), accent: accentColor }
+      props: { kicker: 'Inflection Point', title: inflectionStep?.step, meta: inflectionStep?.stage, content: h(inflectionStep?.quote), accent: accentColor, theme: getScreenTheme(screen) }
     },
     'inflection-data': {
       component: BaseStoryScreen,
-      props: { title: 'What happens here', content: h(inflectionStep?.narrative_description), accent: accentColor }
+      props: { title: 'What happens here', content: h(inflectionStep?.narrative_description), accent: accentColor, theme: getScreenTheme(screen) }
     },
     'inflection-detail': {
       component: BaseStoryScreen,
-      props: { title: inflectionStep?.inflection_detail?.label, content: h(inflectionStep?.inflection_detail?.description), accent: accentColor }
+      props: { title: inflectionStep?.inflection_detail?.label, content: h(inflectionStep?.inflection_detail?.description), accent: accentColor, theme: getScreenTheme(screen) }
     },
     'path-pos': {
       component: BaseStoryScreen,
       props: {
         title: 'Best Case Path',
         content: h(inflectionStep?.inflection_detail?.paths?.filter(p => p.direction === 'positive')?.map(p => p.outcome)?.join('<br/><br/>')),
-        accent: accentColor
+        accent: accentColor,
+        theme: getScreenTheme(screen)
       }
     },
     'path-neg': {
@@ -209,20 +211,23 @@
       props: {
         title: 'Risk Path',
         content: h(inflectionStep?.inflection_detail?.paths?.filter(p => p.direction === 'negative')?.map(p => p.outcome)?.join('<br/><br/>')),
-        accent: accentColor
+        accent: accentColor,
+        theme: getScreenTheme(screen)
       }
     },
     'final-lead': {
       component: BaseStoryScreen,
-      props: { kicker: 'Outcome', title: finalStep?.step, meta: finalStep?.stage, content: h(finalStep?.quote), accent: accentColor }
+      props: { kicker: 'Outcome', title: finalStep?.step, meta: finalStep?.stage, content: h(finalStep?.quote), accent: accentColor, theme: getScreenTheme(screen) }
     },
     'final-data': {
       component: BaseStoryScreen,
-      props: { title: 'Final State', content: h(finalStep?.narrative_description), accent: accentColor }
+      props: { title: 'Final State', content: h(finalStep?.narrative_description), accent: accentColor, theme: getScreenTheme(screen) }
     },
   });
 
-  let currentDef = $derived(SCREEN_REGISTRY[screen]);
+  let currentDef   = $derived(SCREEN_REGISTRY[screen]);
+  let currentTheme = $derived(getScreenTheme(screen));
+  let screenBg     = $derived(buildScreenBackground(currentTheme));
 
   // ── Avatar image error ────────────────────────────────────────────────
   let imgError = $state(false);
@@ -319,6 +324,7 @@
     <!-- ── Screen content ────────────────────────────────────────────── -->
     <div
       class="story-content"
+      style="background: {screenBg};"
       role="region"
       aria-label="Slide {screenIndex + 1} of {STORY_FLOW.length}: {screen}"
       aria-live="polite"

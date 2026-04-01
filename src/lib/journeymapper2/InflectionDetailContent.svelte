@@ -83,8 +83,7 @@
         </div>
         <span class="label-sm text-white">{step.stage}</span>
         <h2 class="heading-serif"
-        style="color:var(--lightgrayblue); 
-        font-size:2.5em">{step.step}</h2>
+        style="color:var(--lightgrayblue)">{step.step}</h2>
       </div>
   
       <div class="divider"></div>

@@ -127,9 +127,4 @@
 </svg>
 
 <style>
-  .journey-svg {
-    display: block;
-    background: var(--paper);
-    z-index: 1;
-  }
 </style>

@@ -352,15 +352,16 @@
     z-index: 1;
     padding-bottom: 1em;
     overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-y: scroll;
     scrollbar-width: auto;
     scrollbar-gutter: stable;
-    scrollbar-color: var(--color-orange-700) transparent;
+    scrollbar-color: var(--purple) transparent;
   }
 
   /* Right info sidebar — fixed width, scrollable */
   .info-col {
     max-width: 320px;
-    border-left: 1px solid var(--jm-border, rgba(0, 0, 0, 0.08));
+    width: 20vw;
+    border-left: 1px solid var(--border, rgba(0, 0, 0, 0.08));
   }
 </style>

@@ -40,7 +40,7 @@
     aria-label={title || 'Detail panel'}
   >
     {#if footer}
-      <div class="toolbar-light">
+      <div class="toolbar-sm-empty">
         <button
           class="btn-sm bg-[#CC6324] text-white hover:bg-[#FF8341]"
           onclick={close}

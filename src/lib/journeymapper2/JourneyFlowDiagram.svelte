@@ -23,7 +23,7 @@
 
   /**
    * 'horizontal' (default) — stages left→right, steps below each stage header
-   * 'vertical'             — stage labels on the left rail, steps in rows per stage
+   * 'vertical'             — stage header band per row, steps below
    */
   export let layout = 'horizontal';
   $: isVertical = layout === 'vertical';
@@ -60,7 +60,7 @@
     </div>
 
   <!-- ═══════════════════════════════════════════════════════════════════
-       VERTICAL — left rail has stage label pills, steps flow right per row
+       VERTICAL — left rail with rotated stage label, steps to the right
   ════════════════════════════════════════════════════════════════════ -->
   {:else}
     <div class="flow-diagram-col">
@@ -68,23 +68,21 @@
 
         <div class="stage-row">
 
-          <!-- Left rail: colored stage pill + vertical connector below -->
-          <div class="stage-rail">
-            <div
-            class="stage-rail-label"
-            style="
-              background: {stageColorMap[group.stage_id]}22;
-              color: {stageColorMap[group.stage_id]};
-            "
+          <!-- Left rail: colored bar + rotated stage name, stretches to row height -->
+          <div
+            class="stage-rail"
+            style="background-color: {stageColorMap[group.stage_id]}1A;"
           >
-            <span class="stage-rail-text-rotated label-sm">
+            <span
+              class="stage-rail-label label-sm"
+              style="color: {stageColorMap[group.stage_id]};"
+            >
               {group.stage}
             </span>
           </div>
-          </div>
 
-          <!-- Right: step cards for this stage, scrollable if needed -->
-          <div class="stage-steps-row">
+          <!-- Step cards for this stage -->
+          <div class="stage-steps-area">
             <FlowStageCard
               {group}
               {data}
@@ -96,18 +94,24 @@
 
         </div>
 
+        <!-- Inter-stage connector -->
+        {#if gi < stageGroups.length - 1}
+          <FlowConnector variant="stage" {layout} />
+        {/if}
+
       {/each}
     </div>
   {/if}
 
 </div>
 </div>
+
 <style>
   /* ── Scroll wrapper ───────────────────────────────────────────────────── */
   .flow-diagram-scroll {
     overflow-x: auto;
     overflow-y: visible;
-    z-index:999;
+    z-index: 999;
     padding: 1rem 1.25rem 1.25rem;
   }
 
@@ -130,56 +134,49 @@
     display: flex;
     flex-direction: column;
     min-width: 50vw;
-    align-items: center;
-    margin:auto;
-    justify-content: center;
     width: 100%;
+    gap: 0.5rem;
   }
 
-  /* One horizontal band per stage — stretches to the height of its steps */
+  /* One row per stage: left rail + steps to the right */
   .stage-row {
     display: flex;
     flex-direction: row;
-    min-height: 20vh;
-    align-items: center;
-    gap: 0.75rem;
+    align-items: stretch;
     width: 100%;
+    min-height: 8rem;
   }
 
-  /* Left rail: stage pill pinned to top + connector filling remaining height */
+  /* Left rail: fixed width, stretches to full row height via align-items: stretch */
   .stage-rail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     flex-shrink: 0;
-    width: 7rem;
-    padding-top: 0.75rem;
+    width: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+
+  /* Rotated stage name — writing-mode keeps it upright and centered */
   .stage-rail-label {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  overflow: hidden; /* critical */
-}
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 100%;
+    padding: 0.5rem 0;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
 
-.stage-rail-text-rotated {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-90deg);
-  transform-origin: center;
-  white-space: nowrap;
-}
-
-  /* Step cards area — centered, scrolls horizontally if a stage has many steps */
-  .stage-steps-row {
+  /* Steps area to the right of the rail */
+  .stage-steps-area {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-x: auto;
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.6);
   }
 </style>

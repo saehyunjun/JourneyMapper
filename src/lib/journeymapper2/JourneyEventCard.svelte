@@ -204,7 +204,7 @@
 
       </div>
   
-      <h3 class="label mb-2">{displayLabel}</h3>
+      <h3 class="label-sm mb-2">{displayLabel}</h3>
   
       <div
         class="event-tooltip__rule"

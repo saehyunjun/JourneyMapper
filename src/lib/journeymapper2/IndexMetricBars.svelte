@@ -171,8 +171,8 @@
     }
   
     .jm-swatch--active {
-      outline: 2.15px solid var(--gold);
-      outline-offset: 1px;
+      outline: 2.15px solid var(--grayblue);
+      outline-offset: 2px;
       opacity: 100%;
       filter: saturate(1);
     }

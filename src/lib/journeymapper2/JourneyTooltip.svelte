@@ -54,7 +54,7 @@
   $: hasQuote = !!(step?.quote?.trim());
 
   // ── Tooltip dimensions ─────────────────────────────────────────────────────
-  const TIP_W    = 375;
+  const TIP_W    = 450;
   const TIP_H    = 40 + metrics.length * 28 + 80;
   const OFFSET_X = 14;
   const OFFSET_Y = 8;
@@ -93,7 +93,7 @@
     <div class="flex flex-col gap-1 items-center mb-2 pb-2"
       style="border-bottom: 2.25px solid {stageColor};">
         
-          <span class="label-heading text-center"
+          <span class="label-sm text-center"
           style="color: var(--grayblue)">
           {step.stage}</span>
           
@@ -114,25 +114,23 @@
     {/if}
     <!-- ── Sentiment + Emotion ────────────────────────────────────────── -->
 
-  <div class="jm-content-row-divider">        
-  </div>
+  <div class="jm-content-row-stretch">        
 
-    <div class ="toolbar-sm-empty">
-      <div class="flex flex-row justify-start align-middle gap-1 items-center">       
+    <div class ="sentiment-container items-center">
         <span class="jm-swatch" 
        style="background:{sentimentColor}">
        </span>
+       
        <span class="label-sm uppercase">
          {sentimentLabel}
        </span>
-      </div>
 
     <!-- Sentiment -->
 
-    <div class="flex flex-row justify-start align-middle gap-1 items-center">
-      <div class="flex flex-row justify-baseline">
+    <div class="flex flex-row items-center">
+      <div class="emotion-container">
         {#each emotionSwatches as color}
-        <span class="jm-swatch-round" style="background:{color}">
+        <span class="jm-swatch-round-sm" style="background:{color}">
       </span>
         {/each}
       </div>
@@ -145,6 +143,8 @@
       </div>
   </div>
   </div>
+</div>
 {/if}
+
 <style>
 </style>
