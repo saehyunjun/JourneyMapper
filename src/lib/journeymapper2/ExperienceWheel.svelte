@@ -224,7 +224,7 @@
     <!-- Tooltip -->
     {#if hoveredTp !== null && tooltipPos}
       {@const tp = touchpoints[hoveredTp]}
-      <div class="tooltip jm-surface" style="left:{tooltipPos.x}px; top:{tooltipPos.y}px;">
+      <div class="tooltip" style="left:{tooltipPos.x}px; top:{tooltipPos.y}px;">
         
         <div class="pill">
           <span class="label-sm">{tp.type?.replace(/_/g,' ')}</span>
@@ -307,7 +307,7 @@
 
     <div class="jm-content-col gap-3">
       {#each sponsorActions as action}
-        <div class="jm-surface content-col gap-2">
+        <div class="jm-content-row content-col gap-2">
 
           <div class="jm-content-row">
             <span class="label-xs">{action.category}</span>
@@ -340,14 +340,8 @@
   }
 
   .wheel-svg {
-    max-width: 720px;
+    max-width: 100%;
     overflow: visible;
   }
 
-  .tooltip {
-    position: absolute;
-    z-index: 300;
-    width: 320px;
-    padding: 12px;
-  }
 </style>

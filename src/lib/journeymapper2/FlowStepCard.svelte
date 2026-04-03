@@ -55,23 +55,25 @@
       ></div>
 
       <!-- Emotion swatches -->
-      {#if emotionSwatches.length}
-        <div class="emotion-container" aria-label="Emotion: {d?.plutchik_score}">
-          {#each emotionSwatches as color}
-            <div class="jm-swatch-round-sm"
-                 style="background:{color};">
-            </div>
-          {/each}
-        </div>
-      {/if}
     </span>
-
+    
     <div class="flex flex-row p-2">
       <span class="label uppercase text-center">
         {step.step}
       </span>
     </div>
-  </button>
+    
+    {#if emotionSwatches.length}
+      <div class="emotion-container" aria-label="Emotion: {d?.plutchik_score}">
+        {#each emotionSwatches as color}
+          <div class="jm-swatch-round-sm -ml-1"
+               style="background:{color};">
+          </div>
+          {/each}
+        </div>
+        {/if}
+      </button>
+      
 
   <!-- ── Event pills ──────────────────────────────────────────────────────── -->
   {#if hasEvents}
@@ -125,7 +127,9 @@
   .flow-step-slot {
     display: flex;
     flex-direction: column;
-    align-items: top;
+    align-items: center;
+    place-items: center;
+    place-content: center;
     justify-content: center;
   } 
 

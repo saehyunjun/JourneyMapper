@@ -82,7 +82,7 @@
   
                 <div class="flex flex-row gap-2 align-middle items-center">
                   {#if IconComponent}
-                      <svelte:component this={IconComponent} class="icon-toolbar-dark"
+                      <svelte:component this={IconComponent} class="icon-toolbar-dark-sm"
                       style=
                       "background-color: {m.color};
                       outline: 2.5px solid {m.color};" />
@@ -90,40 +90,41 @@
                     <div class="w-2 h-2 ring-1" 
                     style="background: {m.color};"></div>
                   {/if}
-                  <span class="heading-sm">{m.label}</span>
+                  <span class="label-sm">{m.label}</span>
                 </div>
   
-            <!-- ── Qualitative label ───────────────────────────────────── -->
-            {#key selectedIndex}
-              <span
-                class="pill font-semibold"
-                style="border: 1px solid {m.color}; color: {m.color}"
-                in:fade={{ duration: 200, delay: 80 + i * 40 }}
-                out:fade={{ duration: 80 }}
-              >
-                {metricScoreLabel(m.key, tweenedVal)}
-              </span>
-            {/key}
+        
               </div>
             </div>
   
             <!-- ── Squares ────────────────────────────────────────────── -->
-            <div class="flex flex-row w-full justify-between">
-            <div class="flex flex-row gap-1">
+            <div class="flex flex-row w-full justify-between align-middle">
+            <div class="flex flex-row gap-1 align-middle">
               {#each STOPS as _stop, si}
                 {@const opacity  = squareOpacity(si, activePos)}
                 {@const isActive = si === Math.round(activePos)}
                 <div
-                  class="jm-swatch-round"
+                  class="jm-swatch-round-sm"
                   class:jm-swatch--active={isActive}
                   class:jm-swatch--compact={compact}
                   style="background: {ramp[si]}; 
                   opacity: {opacity};"></div>
               {/each}
             </div>
+                <!-- ── Qualitative label ───────────────────────────────────── -->
+                {#key selectedIndex}
+                <span
+                  class="pill label-sm"
+                  style="border: 1px solid {m.color}; color: {m.color}"
+                  in:fade={{ duration: 200, delay: 80 + i * 40 }}
+                  out:fade={{ duration: 80 }}
+                >
+                  {metricScoreLabel(m.key, tweenedVal)}
+                </span>
+              {/key}
               {#key selectedIndex}
               <span
-                class="label"
+                class="label-sm"
                 style="color: {m.color};"
                 in:fade={{ duration: 180, delay: 60 + i * 40 }}
                 out:fade={{ duration: 80 }}
@@ -131,6 +132,7 @@
                 {tweenedVal > 0 ? '+' : ''}{tweenedVal.toFixed(1)}
               </span>
             {/key}
+            
             </div>
 
   

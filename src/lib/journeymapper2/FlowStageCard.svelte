@@ -226,7 +226,7 @@
                   {#if pos?.label}<span class="fork-path-label">{pos.label}</span>{/if}
                   {#if pos?.outcome}<p class="fork-path-outcome">{pos.outcome}</p>{/if}
                 </div>
-                <div class="card-sm card-sm--neg"
+                <div class="card-sm"
                      class:card-sm--hovered={hoveredPathKey === `${step.index}-neg`}
                      style="border-color:{NEG_COLOR}44; width:{V_CARD_W}px; min-height:{V_CARD_H}px;"
                      role="button"
@@ -283,8 +283,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    align-items: top;
-    justify-content: start;
+    align-items: center;
+    justify-content: center;
   }
 
   .flow-stage--vertical { gap: 0; }
@@ -296,6 +296,7 @@
     flex-direction: row;
     min-height: 32.5vh;
     justify-content: center;
+    align-content: center;
     gap: 1em;
   }
   

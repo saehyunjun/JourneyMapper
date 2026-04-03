@@ -310,23 +310,8 @@ export const SENTIMENT_SCALE = [
  * @returns {string} — rgb() color string
  */
 export function sentimentToColor(val) {
-  const norm = Math.max(0, Math.min(10, parseFloat(val)));
-  const t    = (norm + 5) / 10; // normalise to [0, 1]
-  const pos  = t * (SENTIMENT_SCALE.length - 1);
-  const lo   = Math.floor(pos);
-  const hi   = Math.min(lo + 1, SENTIMENT_SCALE.length - 1);
-  const u    = pos - lo;
-
-  const hex = SENTIMENT_SCALE[lo];
-  const hex2 = SENTIMENT_SCALE[hi];
-  const n1 = parseInt(hex.slice(1), 16);
-  const n2 = parseInt(hex2.slice(1), 16);
-
-  const r = Math.round(((n1 >> 16) & 255) + (((n2 >> 16) & 255) - ((n1 >> 16) & 255)) * u);
-  const g = Math.round(((n1 >>  8) & 255) + (((n2 >>  8) & 255) - ((n1 >>  8) & 255)) * u);
-  const b = Math.round(( n1        & 255) + (( n2        & 255) - ( n1        & 255)) * u);
-
-  return `rgb(${r},${g},${b})`;
+  const t   = (Math.max(-5, Math.min(5, parseFloat(val))) + 5) / 10;
+  const idx = Math.round(t * (SENTIMENT_SCALE.length - 1));
+  return SENTIMENT_SCALE[idx];
 }
-
 

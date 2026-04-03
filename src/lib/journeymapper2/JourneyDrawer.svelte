@@ -35,7 +35,7 @@
 
   <!-- Drawer shell -->
   <aside
-    class="drawer w-7/12"
+    class="drawer"
     transition:fly={{ x: 120, duration: 320, easing: cubicOut }}
     aria-label={title || 'Detail panel'}
   >

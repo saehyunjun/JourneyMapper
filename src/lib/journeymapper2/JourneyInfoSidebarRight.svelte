@@ -89,7 +89,7 @@
     const toAdd = metrics.length - metricTweens.length;
     for (let j = 0; j < toAdd; j++) {
       const store = tweened(0, TWEEN_OPTS);
-      const idx   = metricTweens.length;
+      const idx   = metricTweens.len th;
       // Subscribe so metricVals stays in sync
       store.subscribe(v => {
         metricVals[idx] = v;

@@ -89,7 +89,7 @@
 </script>
 
 <!--
-  JourneyIndexBars
+  ourneyIndexBars
   ─────────────────────────────────────────────────────────────────────────────
   Grouped vertical bar chart for journey index metrics.
   Uses the same SVG dimensions as JourneyGrid so it can sit flush in the

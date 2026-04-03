@@ -81,7 +81,7 @@
   >
 
     <!-- ── Header ─────────────────────────────────────────────────────── -->
-    {#if isInflection}
+  {#if isInflection}
     <div class="flex flex-row w-full justify-end">
     <span class="pill-sm">
       <IconArrowsOutLineVerticalRegular />
@@ -93,12 +93,12 @@
     <div class="flex flex-col gap-1 items-center mb-2 pb-2"
       style="border-bottom: 2.25px solid {stageColor};">
         
-          <span class="label-sm text-center"
-          style="color: var(--grayblue)">
+          <span class="label-xs text-center"
+          style="color: {stageColor}">
           {step.stage}</span>
           
-          <h3 class="heading-serif text-center"
-            style="color: var(--darkgrayblue)">
+          <h3 class="heading-serif-sm text-center"
+          style="color: {stageColor}">
           {step.step}</h3>
 
     </div>
@@ -109,7 +109,9 @@
     <!-- ── Quote ──────────────────────────────────────────────────────── -->
     {#if hasQuote}
       <div class="flex flex-col justify-center px-2">
-        <p class="pull-quote-lg text-center">"{step.quote}"</p>
+        <p class="pull-quote text-center"
+        style="color: var(--ink)">
+        "{step.quote}"</p>
       </div>
     {/if}
     <!-- ── Sentiment + Emotion ────────────────────────────────────────── -->
@@ -117,17 +119,17 @@
   <div class="jm-content-row-stretch">        
 
     <div class ="sentiment-container items-center">
-        <span class="jm-swatch" 
+        <span class="jm-swatch-sm" 
        style="background:{sentimentColor}">
        </span>
        
-       <span class="label-sm uppercase">
+       <span class="label-xs uppercase">
          {sentimentLabel}
        </span>
 
     <!-- Sentiment -->
 
-    <div class="flex flex-row items-center">
+    <div class="sentiment-container">
       <div class="emotion-container">
         {#each emotionSwatches as color}
         <span class="jm-swatch-round-sm" style="background:{color}">
@@ -135,7 +137,7 @@
         {/each}
       </div>
       <div class="flex flex-col align-bottom">
-        <span class="label-sm uppercase">
+        <span class="label-xs uppercase">
           {step.plutchik_score}
         </span>
       </div>

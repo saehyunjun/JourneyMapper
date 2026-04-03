@@ -89,9 +89,7 @@
           <h3 class="text-sm text-white">{personaProfile.name}</h3>
         </div>
       </div>
-      <span class="pill-white w-fit absolute bottom-2 left-2"
-                style="background-color: var(--teal)">
-                {personaProfile.preference}</span>
+
 
       <!-- flip hint -->
       <div class="flex flex-row w-full absolute top-10 left-2">
@@ -153,7 +151,6 @@
 <style>
   /* ── Scene: holds the perspective so preserve-3d works correctly ──── */
   .card-scene {
-    height: 300px;
     cursor: pointer;
     flex-shrink: 0;
   }

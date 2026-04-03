@@ -36,7 +36,6 @@
 
   <aside
     class="sub-drawer"
-    style="width: 65vw;"
     transition:fly={{ x: width, duration: 300, easing: cubicOut }}
     role="complementary"
     aria-label={title || 'Detail panel'}
@@ -75,7 +74,7 @@
     position: fixed;
     inset: 0;
     background: rgba(30, 20, 10, 0.825);
-    z-index: 9998;
+    z-index: 99;
     cursor: pointer;
   }
 
@@ -84,10 +83,13 @@
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 9999;
+    z-index: 999;
+    width: 67vw;
+
     display: flex;
     flex-direction: column;
     background: var(--paper);
+    
     border-left: 2.5px solid var(--panel-dark);
     box-shadow:
       -4px 0 24px rgba(90, 62, 40, 0.10),

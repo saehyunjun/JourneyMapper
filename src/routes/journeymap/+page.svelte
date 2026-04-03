@@ -10,7 +10,7 @@
   import DiseaseSelectDropdowns    from '$lib/journeymapper2/DiseaseSelectDropdowns.svelte';
   import PersonaStory              from '$lib/journeymapper2/PersonaStory.svelte';
   import JourneyTooltip            from '$lib/journeymapper2/JourneyTooltip.svelte';
-  import JourneyInfoSidebar        from '$lib/journeymapper2/JourneyInfoSidebar.svelte';
+  import JourneyInfoSidebar        from '$lib/journeymapper2/JourneyInfoSidebarTop.svelte';
   import JourneyDrawer             from '$lib/journeymapper2/JourneyDrawer.svelte';
   import JourneySubDrawer          from '$lib/journeymapper2/JourneySubDrawer.svelte';
   import PlutchikContent           from '$lib/journeymapper2/PlutchikContent.svelte';
@@ -200,18 +200,16 @@
     </div>
   </div>
 
-  <!-- ── Three-column body ────────────────────────────────────────────── -->
-  <div class="journey-body flex flex-row flex-1 min-h-0">
-
-    <!-- LEFT — persona selector column -->
-    <div class="persona-col shrink-0 overflow-y-auto">
       <PersonaTopSelector
         personas={filteredPersonas}
         {activePersonaId}
         onselect={(id: string) => handlePersonaSelect(id)}
         onstory={() => handlePersonaStory()}
       />
-    </div>
+  <!-- ── Three-column body ────────────────────────────────────────────── -->
+  <div class="flex flex-row flex-1 min-h-0">
+
+    <!-- LEFT — persona selector column -->
 
     <!-- MIDDLE — chart / flow, scrolls horizontally -->
     <div class="chart-col flex-1 min-w-0" bind:this={scrollEl}>
@@ -240,14 +238,13 @@
       <JourneyLegend items={metrics} />
     </div>
 
-    <!-- RIGHT — info sidebar column -->
-    <div class="info-col shrink-0 overflow-y-auto">
+
       <JourneyInfoSidebar
         activePersona={activePersona as any}
         data={journeyData}
         {metrics}
       />
-    </div>
+
 
   </div><!-- /journey-body -->
 

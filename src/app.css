@@ -129,6 +129,7 @@
   .heading-serif-sm {
     font-family: var(--font-heading-serif);
     font-weight: 800;
+    font-style: italic;
     
     font-size: .825em;
     line-height: 1.125;
@@ -228,7 +229,8 @@
     text-indent: -0.45em;
     text-justify: center;
     font-size: 1.125em;
-    font-weight: 600;
+    letter-spacing: -.25px;
+    font-weight: 500;
 
     color: var(--grayblue);
     text-wrap: balance;
@@ -355,8 +357,8 @@
 
 .persona-avatar {
   position: relative;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
 
   overflow: visible;
@@ -380,8 +382,8 @@
 
 .persona-avatar--active {
   outline: 2.5px solid var(--orange);
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
 
   transition:
   width 200ms,
@@ -506,7 +508,7 @@
     width: 2.25em;
     font-size: 1.1em;
     
-    background-color: var(--grayblue);
+    background-color: var(--darkgrayblue);
     border-radius: 100em;
     padding: .25em;
 
@@ -553,18 +555,18 @@
   .icon-toolbar-dark-sm {
     height: 1.725em;
     width: 1.725em;
-    font-size: .825em;
+    font-size: .725em;
     aspect-ratio: 1;
 
     justify-content: center;
     align-content: center;
 
-    background-color: var(--purple);
+    background-color: var(--darkgrayblue);
     border-radius: 100em;
     padding: .25em;
 
     color: var(--lightgrayblue);
-    outline: 2.5px solid var(--purple);
+    outline: 2.5px solid var(--darkgrayblue);
     outline-offset: 1px;
   }
 
@@ -627,13 +629,15 @@
   .emotion-container {
     display: flex;
     flex-direction: row;
-    gap: -10em;
+    margin-left: .25em;
   }
 
   .sentiment-container {
     display: flex;
     flex-direction: row;
-    gap: .125em;
+    align-items: center;
+    justify-content: left;
+    gap: .5em;
   }
 
   .even-col { display: flex; flex-direction: column; }
@@ -944,10 +948,10 @@
     padding: 0.25em;
     font-weight: 800;
     background-color: var(--lightgrayblue);
-    border: .25px solid var(--panel);
-    color:var(--ink);
+    border: 2.25px solid var(--teal);
+    color:var(--teal);
     cursor: pointer;
-    font-size: .625em;
+    font-size: .725em;
     transition: background 0.25s ease, border-color 0.15s ease-in;
   }
 
@@ -959,10 +963,11 @@
     width: 2.5em;
     padding: 0.25em;
     font-weight: 800;
-    background-color: var(--card);
-    color:var(--ink);
+    background-color: var(--orange);
+    border: 2.25px solid var(--lightorange);
+    color:var(--lightorange);
     cursor: pointer;
-    font-size: .625em;
+    font-size: .725em;
     transition: background 0.25s ease, border-color 0.15s ease-in;
   }
 
@@ -1046,26 +1051,29 @@
   }
   
   .card-quote {
-    background: var(--paper);
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    width: 250px;
+    min-height: 7.5em;
+    padding-top: .725em;
+    padding-bottom: 1em;
     
-    width: fit-content;
-    max-width: 20em;
-    min-height: 5em;
+    border-radius: .525em;
 
-    border: .5px solid var(--gray);
-    outline: 1px solid var(--grayblue);
-    outline-offset: 3px;
+    cursor: pointer;
+
+    background-color: var(--panel);
+    border: 0.25px solid var(--panel-dark);
     padding: 1.125em;
 
     box-shadow:    
     0px 1px 2px -12px rgba(0, 0, 0, 0.08),
     0px 2px 12px 0px rgba(0, 0, 0, 0.06);
     
-    color: var(--panel);
     cursor: pointer;
-    gap: 1em;
+    
   }
 
 
@@ -1075,8 +1083,9 @@
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 999;
-    width: 70vw;
+    z-index: 9999;
+
+    width: 75vw;
     display: flex;
     flex-direction: column;
     background: var(--paper);
@@ -1281,7 +1290,6 @@ color: var(--grayblue);
   /* ---------------------------------------------------------------------- */
   .tooltip {
     position: fixed;
-    pointer-events: none;
     z-index: 300;
     display: flex;
     flex-direction: column;
@@ -1289,13 +1297,11 @@ color: var(--grayblue);
     padding: .75em .5em;
 
     background: var(--paper);
-    border: 2px solid var(--stroke);
-    outline: 1.5px solid var(--stroke);
-    outline-offset: -5px;
+    border: 1.25px solid var(--stroke);
+    border-radius: .5em;
     box-shadow: var(--shadow);
 
-    width: 420px;
-
+    width: 375px;
 
     transition: left 60ms linear, top 60ms linear;
   }
@@ -1549,7 +1555,7 @@ padding: .25em 1em;
 
   border-radius: 10em;
   
-  background-color: var(--lightgrayblue);
+  background-color: var(--paper);
   
   color: var(--darkgrayblue);
   padding: .25em 1em .25em .25em;
@@ -1852,10 +1858,11 @@ padding: .25em 1em;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: left;
     gap: 0.5rem;
     border-radius: 10em;
-    padding: 0.3rem 0.65rem;
+    padding: 0.3em 0.65em;
   }
 
   .jm-content-grid-2 {
@@ -1863,7 +1870,6 @@ padding: .25em 1em;
     grid-template-columns: 1fr 1fr;
     justify-content: start;
     align-items: center;
-    
   }
 
 
@@ -1888,9 +1894,9 @@ padding: .25em 1em;
   .jm-content-row-stretch {
     display: flex;
     flex-direction: row;
-    min-width: 100%;
+    width: 100%;
     align-content: middle;
-    justify-content: space-evenly;
+    justify-content: space-around;
   }
 
 
@@ -1959,6 +1965,18 @@ padding: .25em 1em;
     opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
     transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  .jm-swatch-sm {
+    display: inline-flex;
+    border: .25px solid var(--ink);
+    height: .825em;
+    width: .825em;
+  
+    overflow: hidden;
+    transition:
+    opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
   
 
   .jm-swatch-round {
@@ -1976,8 +1994,8 @@ padding: .25em 1em;
   .jm-swatch-round-sm {
     display: inline-flex;
     border: .25px solid var(--ink);
-    height: 1em;
-    width: 1em;
+    height: .825em;
+    width: .825em;
     border-radius: 100em;
     overflow: hidden;
     transition:
@@ -2049,18 +2067,19 @@ padding: .25em 1em;
     gap: 0.25rem;
     width: 250px;
     min-height: 7.5em;
-    padding-bottom: 2em;
+    padding-top: .725em;
+    padding-bottom: 1em;
+    
+    border-radius: .525em;
 
     cursor: pointer;
-    text-align: left;
 
-    background-color: var(--paper);
-    border: 1.25px solid var(--purple);
-    outline: .725px solid var(--purple);
-    outline-offset: 1px;
+    background-color: var(--panel);
+    border: 0.25px solid var(--panel-dark);
 
 
     box-shadow: rgba(0, 0, 0, 0.15) 0 2px 12px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 2px 20px;
     box-shadow: rgba(55, 39, 37, 0.05) 0 10px 20px -10px;
     transition: background-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
   }
@@ -2069,9 +2088,9 @@ padding: .25em 1em;
   .card-sm--hovered {
     background-color: var(--panel);
     box-shadow: 
-    0 2px -10px rgba(0,0,0,0.1), 
+    0 2px -10px rgba(0,0,10,0.1), 
     0 0 0 10px rgba(63,115,255,0.18);
-    transform: translateY(-1px);
+    transform: translateY(-.525em);
     z-index: 1;
   }
 
@@ -2122,6 +2141,27 @@ padding: .25em 1em;
       background-color: var(--panel);
       scrollbar-color: (--orange) transparent;
     }
+
+    .sticky-panel-top {
+      position: sticky;
+      width: 100%;
+      min-width: 100%;
+      height: fit-content;
+      display: flex;
+      flex-direction: row;
+      overflow-y: auto;
+      overflow-x: hidden;
+      flex-shrink: 0;
+      scrollbar-width: thin;
+      border-left: 2.5px solid var(--panel-dark);
+  
+      box-shadow: 
+      0 2px 12px -10px rgba(0,0,0,0.15)
+      0 20px 20px 10px rgba(0,0,0,0.25);
+      background-color: var(--panel);
+      scrollbar-color: (--orange) transparent;
+    }
+  
   /* Also update .shared-scroll to NOT have its own overflow-x:auto,
      since the clip div now contains it. Keep: */
   .shared-scroll {

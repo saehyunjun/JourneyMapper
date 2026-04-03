@@ -70,12 +70,14 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="sticky-panel-left" aria-label="Persona selector" role="navigation" onmousemove={handleMouseMove}>
-  <div class="flex flex-col gap-4 py-2 align-middle justify-center">
-    {#each personas as p (p.id)}
+<div class="sticky-panel-top pl-2" 
+aria-label="Persona selector" role="navigation" onmousemove={handleMouseMove}>
+
+  <div class="flex flex-row gap-6 py-2 align-middle justify-center">
+    {#each personas as p (p.id)}  
       {@const active = p.id === activePersonaId}
       {@const accentColor = personaColor(p)}
-      {@const isCaregiver = p.type?.toLowerCase().includes('caregiver')}
+    {@const isCaregiver = p.type?.toLowerCase().includes('caregiver')}
       <div class="flex flex-col items-center align-middle justify-center">
         <div class="avatar-wrapper">
           <button
@@ -101,14 +103,14 @@
             {:else}
               <span class="persona-initials" aria-hidden="true">{p.profile.initials}</span>
             {/if}
+            {#if p.type}
+              <span
+                class="pill-white absolute bottom-0 right-0"
+                style="background: {accentColor}; color: var(--paper); border-color: var(--paper);"
+                aria-label={p.type}
+              >{isCaregiver ? 'C' : 'P'}</span>
+            {/if}
           </button>
-          {#if p.type}
-            <span
-              class="pill-white absolute bottom-1 right-0"
-              style="background: {accentColor}; color: var(--paper); border-color: var(--paper);"
-              aria-label={p.type}
-            >{isCaregiver ? 'C' : 'P'}</span>
-          {/if}
         </div>
         <span
           class="persona-name"
@@ -136,20 +138,15 @@
         {#if hp.type}
           <span class="label-sm">{hp.type}</span>
         {/if}
-        <h3 class="heading-serif text-center" style="color: {hpAccent};">
+        <h3 class="heading-serif-md text-center" style="color: {hpAccent};">
           {hp.profile.name}
         </h3>
       </div>
 
       <div class="jm-content-col">
         {#if hp.profile.bio_1}
-          <p class="text-body text-center">{hp.profile.bio_1}</p>
-          {#each getTooltipFields(hp) as [key, val]}
-            <div class="field-row">
-              <span class="label-xs">{key}</span>
-              <span class="label-sm">{val}</span>
-            </div>
-          {/each}
+          <p class="text-body-sm text-center">{hp.profile.bio_1}</p>
+ 
         {/if}
       </div>
     </div>
@@ -158,18 +155,23 @@
 
 <style>
   .avatar-wrapper {
-    position: relative;
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .avatar-wrapper:hover {
+    cursor: pointer;
   }
 
   .persona-name {
     font-family: var(--font-heading);
-    font-size: .725em;
+    font-size: .6725em;
     text-transform: uppercase;
     color: var(--darkbluegray);
     opacity: 50%;
     font-weight: 400;
-    margin-top: .25em;
+    margin-top: .725em;
   }
 
   .persona-name--active {
