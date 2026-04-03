@@ -596,6 +596,550 @@
       ]
     },
     {
+      "id": "persona_idh1_glioma_eu_mk_01",
+      "type": "patient",
+      "therapeutic_area": "Oncology",
+      "indication": "Grade 2 IDH1-Mutant Diffuse Astrocytoma",
+      "profile": {
+        "initials": "TK",
+        "name": "Tomáš K.",
+        "role": "Patient",
+        "indication": "Grade 2 IDH1-Mutant Diffuse Astrocytoma",
+        "therapeutic area": "Neuro-Oncology",
+        "age": "early 40s",
+        "gender": "Male",
+        "occupation": "Civil engineer (currently on medical leave)",
+        "current_treatments": [
+          "Levetiracetam (seizure prophylaxis)",
+          "Active surveillance (post-resection)"
+        ],
+        "past_treatments": [
+          "Gross total resection"
+        ],
+        "caregiver": [
+          "Wife (primary)"
+        ],
+        "preference": "access Vorasidenib or enroll in IDH1 clinical trial",
+        "diagnosed": "8 months ago",
+        "distance to care": "4–5 hours to Vienna / Prague (nearest specialist centers)",
+        "imageFile": "TomasK.jpg",
+        "quote": "Vorasidenib is approved. I know it exists. My oncologist knows it exists. But in our country it is simply not available, and no one can tell me when that will change — or if it will. My daughter is six years old. I do not have the luxury of waiting.",
+        "bio_1": "Tomáš was preparing a bid for a large infrastructure project when he experienced a focal seizure at his desk. He had noticed occasional word-finding difficulties and mild headaches for several months prior, which he attributed to work stress. An MRI at his regional hospital in North Macedonia revealed a non-enhancing left frontal mass. He was referred to a neurosurgical center in Skopje, where a gross total resection was performed. Pathology returned IDH1 R132H-mutant, MGMT-methylated, 1p/19q non-codeleted — Grade 2 diffuse astrocytoma.",
+        "bio_2": "Tomáš is an organized, practically oriented professional who responds to uncertainty by seeking information and building plans. He reads medical literature and has joined several international online patient communities where he has encountered accounts of Vorasidenib (Voranigo) access across the EU. His wife manages household logistics and their daughter's school schedule while working part-time. Financially, the family is middle-class — they own their home and have modest savings, but extended out-of-pocket drug costs or frequent international travel would strain them within months. Tomáš is acutely aware that his treatment window — before potential transformation to higher-grade disease — is not infinite.",
+        "goal1": "Access Vorasidenib as the standard-of-care IDH inhibitor recommended by EU neuro-oncology guidelines, either through named patient programs, cross-border care, or clinical trial enrollment.",
+        "goal2": "Avoid or substantially delay radiation and chemotherapy, preserving cognitive function for occupational re-entry and active parenting.",
+        "goal3": "Establish a durable treatment plan before his daughter is old enough to understand the severity of his illness — on his own terms, not dictated by system delays.",
+        "barrier1": "Vorasidenib has received EMA approval but has not been reimbursed by the North Macedonian national health authority, and no named patient program is available domestically. Out-of-pocket cost is prohibitive at approximately €8,000–€10,000 per month.",
+        "barrier2": "The nearest centers with active IDH1 trial sites and Vorasidenib access are in Vienna, Prague, and Munich — requiring cross-border travel, time off work, accommodation costs, and separation from his family.",
+        "barrier3": "His domestic oncology team recommends watchful waiting but has limited familiarity with the IDH inhibitor data and actively discourages cross-border self-referral, creating friction in the patient-provider relationship."
+      },
+      "currentState": [
+        {
+          "label": "Motivation",
+          "value": 0.94,
+          "minLabel": "Avoid changes",
+          "maxLabel": "Seek improvement"
+        },
+        {
+          "label": "Care coordination level",
+          "value": 0.32,
+          "minLabel": "Disjointed",
+          "maxLabel": "Cohesive"
+        },
+        {
+          "label": "Willingness to accept help",
+          "value": 0.82,
+          "minLabel": "Resistant",
+          "maxLabel": "Willing"
+        },
+        {
+          "label": "Health literacy",
+          "value": 0.76,
+          "minLabel": "Low",
+          "maxLabel": "High"
+        },
+        {
+          "label": "Cognitive capacity for decision-making",
+          "value": 0.78,
+          "minLabel": "Severely impaired",
+          "maxLabel": "Fully intact"
+        }
+      ],
+      "discussionThemes": [
+        {
+          "label": "Diagnosis and surgical outcome",
+          "sentiments": [
+            0.05, 0.08, 0.14, 0.22, 0.34, 0.44, 0.52, 0.58
+          ]
+        },
+        {
+          "label": "Vorasidenib access and reimbursement",
+          "sentiments": [
+            0.06, 0.08, 0.10, 0.14, 0.20, 0.26, 0.32, 0.38, 0.44
+          ]
+        },
+        {
+          "label": "Radiation vs. observation decision",
+          "sentiments": [
+            0.08, 0.12, 0.18, 0.26, 0.36, 0.44, 0.50
+          ]
+        },
+        {
+          "label": "Clinical trial navigation",
+          "sentiments": [
+            0.10, 0.18, 0.30, 0.42, 0.54, 0.62
+          ]
+        },
+        {
+          "label": "Family and financial impact",
+          "sentiments": [
+            0.05, 0.08, 0.12, 0.18, 0.26, 0.34, 0.42, 0.48
+          ]
+        },
+        {
+          "label": "Fear of transformation",
+          "sentiments": [
+            0.06, 0.08, 0.12, 0.16, 0.22, 0.30, 0.36, 0.42
+          ]
+        }
+      ],
+      "journey": [
+        {
+          "stage_id": "1",
+          "stage": "Initial Treatment",
+          "step_id": "1",
+          "step": "Resection and Pathology Disclosure",
+          "sentiment": -1,
+          "plutchik_score": "anxiety",
+          "emotional_valence": -1,
+          "provider_trust": 2,
+          "medical_self_efficacy": 2,
+          "logistical_capacity": -1,
+          "narrative_description": "Gross total resection is performed at the neurosurgical center in Skopje. The surgery is uneventful and Tomáš retains full motor and language function. When pathology returns two weeks later confirming IDH1-mutant Grade 2 diffuse astrocytoma, his oncologist presents the result as 'relatively good news' — a slow-growing tumor with a favorable molecular profile. However, the oncologist provides no information about Vorasidenib or IDH-targeted therapies, defaulting immediately to a watchful waiting recommendation. Tomáš leaves the consultation with a diagnosis but no treatment plan and begins researching independently that evening.",
+          "quote": "They said 'Grade 2, IDH-mutant, favorable prognosis.' They said we could watch and wait. I went home and read everything I could find. By midnight I knew the drug existed. I knew it was approved in Europe. I knew my hospital didn't have it.",
+          "events": [
+            {
+              "event_id": "ev_tk_01",
+              "type": "progress",
+              "label": "Gross Total Resection — Full Function Preserved",
+              "short_label": "Surgery successful",
+              "description": "Maximal safe resection achieved at Skopje neurosurgical center. Tomáš retains full motor and language function post-operatively. Intraoperative neuromonitoring used. He is discharged after four days.",
+              "sentiment_impact": 2,
+              "step_position": 1.2,
+              "tooltip": "GTR with full functional preservation — a genuinely positive surgical outcome that establishes initial trust in the Skopje team."
+            },
+            {
+              "event_id": "ev_tk_02",
+              "type": "roadblock",
+              "label": "Oncologist Recommends Watch-and-Wait Without Mentioning Vorasidenib",
+              "short_label": "No IDH therapy discussed",
+              "description": "At the post-pathology consultation, the oncologist recommends observation with 3-monthly MRI. No mention is made of Vorasidenib, IDH inhibitor therapy, or clinical trial options. Tomáš discovers the existence of Vorasidenib through his own research the same evening.",
+              "sentiment_impact": -3,
+              "step_position": 1.7,
+              "tooltip": "Watch-and-wait recommended without any discussion of IDH inhibitor options — Tomáš self-discovers Vorasidenib the night of his pathology disclosure."
+            }
+          ],
+          "sentiment_reasons": [
+            "Successful surgery with preserved function is a meaningful early positive — but the oncologist's silence on IDH-targeted therapy immediately unsettles Tomáš",
+            "Self-discovery of an approved, targeted drug his team never mentioned creates a deep and lasting sense of information inequality",
+            "The gap between 'favorable prognosis' framing and the reality of an untreated IDH-mutant tumor begins to widen in his mind immediately"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The surgical success briefly lifts the emotional baseline, but the omission of IDH inhibitor options in the same consultation deflates it — leaving a net slightly negative state.",
+            "provider_trust": "Initial trust in the surgical team is solid; the oncology consultation introduces the first significant trust gap through information omission.",
+            "medical_self_efficacy": "Tomáš's practical intelligence activates immediately — he begins structured research within hours of leaving the clinic.",
+            "logistical_capacity": "Post-operative recovery is manageable; logistical demands are not yet a dominant concern at this stage."
+          }
+        },
+        {
+          "stage_id": "1",
+          "stage": "Initial Treatment",
+          "step_id": "2",
+          "step": "Confronting the Reimbursement Gap",
+          "sentiment": -3,
+          "plutchik_score": "anger",
+          "emotional_valence": -3,
+          "provider_trust": -1,
+          "medical_self_efficacy": 2,
+          "logistical_capacity": -1,
+          "narrative_description": "Tomáš confirms through his oncologist and a pharmacy inquiry that Vorasidenib is not reimbursed in North Macedonia and carries an estimated out-of-pocket cost of €8,000–€10,000 per month. The drug is EMA-approved. It is available in Germany, Austria, and France. His country has not initiated a reimbursement review timeline. He contacts the local patient association for rare cancers and is told there is no named patient program and no compassionate use pathway currently active for vorasidenib. His wife sits with him at the kitchen table while their daughter sleeps and they calculate how many months their savings could cover.",
+          "quote": "The drug is approved. In Germany they can get it. In France they can get it. We are three hours from Vienna. But for us it does not exist. This is the part that made me genuinely angry.",
+          "events": [
+            {
+              "event_id": "ev_tk_03",
+              "type": "roadblock",
+              "label": "Vorasidenib Not Reimbursed — No Named Patient Pathway",
+              "short_label": "Drug not available",
+              "description": "Pharmacist and oncologist confirm Vorasidenib is unobtainable domestically. EMA approval does not translate to national reimbursement. The patient association confirms no compassionate use or named patient program is active in North Macedonia.",
+              "sentiment_impact": -4,
+              "step_position": 2.2,
+              "tooltip": "EMA-approved drug unavailable domestically. No reimbursement review timeline. No named patient program. Out-of-pocket cost approximately €8,000–€10,000/month."
+            },
+            {
+              "event_id": "ev_tk_04",
+              "type": "roadblock",
+              "label": "Out-of-Pocket Cost Calculation — Savings Runway Is Limited",
+              "short_label": "Financial ceiling identified",
+              "description": "Tomáš and his wife calculate that their household savings could sustain 3–4 months of out-of-pocket Vorasidenib at best. His medical leave has reduced household income by approximately 40%. The financial ceiling makes self-pay a bridge, not a solution.",
+              "sentiment_impact": -3,
+              "step_position": 2.6,
+              "tooltip": "Household savings could sustain 3–4 months of self-pay at most. Medical leave has reduced income by ~40%. Out-of-pocket is not a durable solution."
+            }
+          ],
+          "sentiment_reasons": [
+            "Discovering that an approved, standard-of-care drug is simply unavailable in his country produces profound anger and a sense of systemic injustice",
+            "Calculating the financial runway at the kitchen table with his wife makes the stakes viscerally concrete",
+            "The absence of any pathway — named patient, compassionate use, or reimbursement review — removes all domestic options simultaneously"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "This step contains the sharpest single emotional drop in the journey — the transition from 'there is a drug' to 'you cannot have it' is the defining injustice of Tomáš's experience.",
+            "provider_trust": "The oncologist's failure to proactively raise the reimbursement gap — or offer any pathway guidance — significantly erodes trust in the domestic system.",
+            "medical_self_efficacy": "Tomáš's practical research capability keeps him from feeling entirely passive, but the structural barriers he is encountering are beyond individual agency.",
+            "logistical_capacity": "Financial constraint begins to compress logistical options — cross-border access is theoretically possible but cost-prohibitive without additional support."
+          }
+        },
+        {
+          "stage_id": "2",
+          "stage": "Seeking Expert Guidance",
+          "step_id": "3",
+          "step": "Online Community Discovery and Peer Navigation",
+          "sentiment": 1,
+          "plutchik_score": "anticipation",
+          "emotional_valence": 2,
+          "provider_trust": 1,
+          "medical_self_efficacy": 3,
+          "logistical_capacity": 1,
+          "narrative_description": "Tomáš finds an international IDH-mutant glioma patient community on Facebook and a dedicated Reddit subforum. He reads accounts from patients in Georgia and North Macedonia who have traveled to Germany or Austria for second opinions and treatment, and others describing Vorasidenib access through named patient programs in countries where domestic reimbursement was pending. He encounters a Swedish patient who has been on Vorasidenib since September 2024 with 'spectacular' results. He posts his situation and within 48 hours has detailed, practical responses from four patients in similar geographic access situations. He also learns that several centers in Vienna, Munich, and Prague are active EORTC neuro-oncology trial sites.",
+          "quote": "I posted at midnight. By morning there were four replies from people in almost exactly my situation. One of them had driven from Serbia to Vienna for their consultation. He told me which doctor to ask for. That information did not come from any hospital.",
+          "events": [
+            {
+              "event_id": "ev_tk_05",
+              "type": "community",
+              "label": "Finds IDH-Mutant Glioma Patient Community — International Peers",
+              "short_label": "Patient community found",
+              "description": "Tomáš joins an international Facebook group and Reddit community for IDH-mutant glioma patients. He reads accounts from patients in Serbia, Georgia, and North Macedonia who have navigated cross-border access. He identifies a pattern: patients from non-reimbursing countries traveling to Vienna or Munich for second opinions and trial access.",
+              "sentiment_impact": 3,
+              "step_position": 3.2,
+              "tooltip": "International patient community reveals a pattern: non-reimbursing country patients traveling to Vienna and Munich for second opinions and trial access — exactly Tomáš's situation."
+            },
+            {
+              "event_id": "ev_tk_06",
+              "type": "community",
+              "label": "Peer Identifies Specific Vienna Neuro-Oncologist with IDH Trial Affiliation",
+              "short_label": "Named specialist referral",
+              "description": "A patient from Serbia who traveled to the Medical University of Vienna provides the name of a neuro-oncologist who leads an active IDH-targeted EORTC trial. He provides the direct email for the clinical trials coordinator and confirms the center accepts international self-referrals.",
+              "sentiment_impact": 3,
+              "step_position": 3.7,
+              "tooltip": "Peer from Serbia provides named neuro-oncologist at Vienna MedUni — EORTC IDH trial affiliation confirmed. Direct coordinator email provided. Center accepts international self-referrals."
+            }
+          ],
+          "sentiment_reasons": [
+            "Finding peers in genuinely comparable geographic situations — not theoretical ones — produces the first real sense that a path forward exists",
+            "The Swedish patient's 'spectacular' Vorasidenib result is the first concrete evidence that the drug works in a real person's life",
+            "A named specialist and direct coordinator contact transforms abstract options into actionable next steps"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "Community discovery produces the strongest positive shift in the journey so far — grounded in practical information, not reassurance.",
+            "provider_trust": "Trust shifts from the domestic care system toward the international patient network and the community-identified specialist center.",
+            "medical_self_efficacy": "Accumulating peer knowledge gives Tomáš the vocabulary and framing to begin a productive conversation with a specialist center.",
+            "logistical_capacity": "Knowing the specific person to contact at the Vienna center dramatically reduces the logistical complexity of cross-border access."
+          }
+        },
+        {
+          "stage_id": "2",
+          "stage": "Seeking Expert Guidance",
+          "step_id": "4",
+          "step": "Cross-Border Second Opinion in Vienna",
+          "sentiment": 2,
+          "plutchik_score": "optimism",
+          "emotional_valence": 2,
+          "provider_trust": 4,
+          "medical_self_efficacy": 3,
+          "logistical_capacity": -2,
+          "narrative_description": "Tomáš emails the Medical University of Vienna neuro-oncology department directly, attaches his complete pathology report and MRI imaging, and requests a second opinion consultation. He receives an appointment within three weeks. He travels by train with his wife — his daughter stays with her grandparents. The Vienna neuro-oncologist reviews his case in detail, affirms that his molecular profile makes him an ideal candidate for IDH inhibition, confirms that Vorasidenib is available in Austria through national reimbursement, and — critically — informs him of two active clinical trials: an EORTC combination IDH1 + immunotherapy Phase II, and a randomized Phase III comparing vorasidenib against observation in a post-GTR setting with a European site in Prague. The consultation costs €420 out of pocket. Tomáš describes it as the most productive two hours since his diagnosis.",
+          "quote": "The doctor in Vienna spent ninety minutes with us. She drew diagrams. She printed the trial summaries. She said 'you are exactly the kind of patient these trials were designed for.' I had not heard that before — that I was the right patient for something.",
+          "events": [
+            {
+              "event_id": "ev_tk_07",
+              "type": "progress",
+              "label": "Vienna Second Opinion — IDH Inhibition Strongly Affirmed",
+              "short_label": "Expert second opinion",
+              "description": "Vienna neuro-oncologist reviews the case comprehensively and confirms that Tomáš's IDH1-mutant, MGMT-methylated profile makes him an ideal candidate for IDH inhibitor therapy. She provides a written letter of recommendation for Vorasidenib initiation — useful for any subsequent named patient or trial application.",
+              "sentiment_impact": 4,
+              "step_position": 4.2,
+              "tooltip": "Vienna specialist strongly affirms IDH inhibition candidacy — written letter of recommendation provided for named patient / trial application use."
+            },
+            {
+              "event_id": "ev_tk_08",
+              "type": "progress",
+              "label": "Two Active Trials Identified — EORTC Combination + Phase III Prague Site",
+              "short_label": "Trials identified",
+              "description": "The Vienna oncologist identifies two immediately relevant trials: a Phase II EORTC IDH1 inhibitor + PD-1 immunotherapy combination trial with a Vienna site, and a Phase III randomized trial comparing vorasidenib to active surveillance post-GTR, with a participating center in Prague.",
+              "sentiment_impact": 3,
+              "step_position": 4.6,
+              "tooltip": "Two trials identified: EORTC Phase II IDH1+PD-1 at Vienna (combination), and Phase III vorasidenib vs. observation with a Prague site — both within travel range."
+            },
+            {
+              "event_id": "ev_tk_09",
+              "type": "roadblock",
+              "label": "Travel and Accommodation Cost — Vienna Not Sustainable Long-Term",
+              "short_label": "Cross-border cost burden",
+              "description": "The Vienna consultation costs €420, plus train travel and one night of accommodation — approximately €700 total. Manageable for a single visit, but a trial requiring monthly visits would cost €600–€800 per month in travel alone, before any drug costs.",
+              "sentiment_impact": -1,
+              "step_position": 4.9,
+              "tooltip": "Single Vienna consultation manageable (~€700 all-in). Monthly trial participation would cost €600–€800 in travel alone — a significant recurring burden on a reduced income."
+            }
+          ],
+          "sentiment_reasons": [
+            "Being told explicitly that his profile is exactly what active trials were designed for is the first moment Tomáš feels like a candidate rather than a problem",
+            "Two concrete trial options — within travel range — represent a genuine bifurcation of possible futures",
+            "The travel cost reality reasserts itself as a persistent structural constraint even in the most positive consultation of his journey"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The Vienna consultation is the single most positive step in the journey — combining expert validation, concrete options, and the first sense of genuine clinical partnership.",
+            "provider_trust": "Trust in the Vienna specialist is immediate and high — she invests time, provides written documentation, and treats his case with visible engagement.",
+            "medical_self_efficacy": "The structured trial summaries the specialist provides give Tomáš a framework to evaluate options analytically — matching his decision-making style.",
+            "logistical_capacity": "The consultation is logistically achievable; the sustainability of repeated travel at trial-cadence cost is the emerging constraint."
+          }
+        },
+        {
+          "stage_id": "3",
+          "stage": "Treatment Decision Navigation",
+          "step_id": "5",
+          "step": "Domestic Oncologist Conflict — Radiation Pressure",
+          "sentiment": -2,
+          "plutchik_score": "anger",
+          "emotional_valence": -2,
+          "provider_trust": -2,
+          "medical_self_efficacy": 3,
+          "logistical_capacity": 0,
+          "narrative_description": "Tomáš returns from Vienna and presents his second opinion and the trial information to his domestic oncologist. The response is dismissive — the oncologist expresses skepticism about the value of the trials ('too experimental') and reiterates a recommendation for adjuvant radiation and temozolomide. He suggests that Vorasidenib's long-term side effect profile is 'unknown' and that proven chemoradiation is the safer choice. Tomáš has read the INDIGO trial data. He knows the NDA. He is not persuaded — but the conflict with his domestic team introduces practical complications: he needs local coordination for monitoring and any cross-border care requires some domestic infrastructure.",
+          "quote": "My oncologist at home told me the trials are too experimental. He said radiation is proven. But I have read the INDIGO data. I know the five-year progression curves. He did not mention them. How do you trust someone who is telling you less than you already know?",
+          "events": [
+            {
+              "event_id": "ev_tk_10",
+              "type": "roadblock",
+              "label": "Domestic Oncologist Rejects Second Opinion — Pushes Radiation",
+              "short_label": "Physician conflict",
+              "description": "The domestic oncologist dismisses the Vienna second opinion and the trial options, characterizing them as 'experimental.' He recommends adjuvant radiation and TMZ chemotherapy and expresses concern that pursuing cross-border options will delay treatment. Tomáš questions the framing directly — the oncologist does not engage with the INDIGO data.",
+              "sentiment_impact": -4,
+              "step_position": 5.3,
+              "tooltip": "Domestic oncologist dismisses Vienna second opinion and trial options as 'too experimental' — recommends radiation/TMZ, does not engage with INDIGO trial evidence."
+            },
+            {
+              "event_id": "ev_tk_11",
+              "type": "roadblock",
+              "label": "Local Care Dependency — Cannot Fully Disengage from Domestic System",
+              "short_label": "Domestic care dependency",
+              "description": "Tomáš recognizes that regardless of where he pursues treatment, he needs local support: MRI access, levetiracetam prescriptions, and routine monitoring. His domestic oncologist's resistance creates a practical infrastructure problem for any cross-border or trial pathway.",
+              "sentiment_impact": -2,
+              "step_position": 5.7,
+              "tooltip": "Cross-border or trial access requires domestic monitoring support. Oncologist's hostility to self-referral creates friction even for logistical coordination."
+            }
+          ],
+          "sentiment_reasons": [
+            "A physician who argues against a treatment using less evidence than the patient has already read destroys rather than shapes trust",
+            "The radiation recommendation is not wrong per se — but presented without any acknowledgment of IDH inhibitor data, it feels like epistemic negligence",
+            "Recognizing his dependency on a system that is not supporting him produces a new and specifically frustrating form of anxiety"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The domestic physician conflict is the second-lowest emotional step — it combines dismissal, power asymmetry, and practical dependency into a highly aversive experience.",
+            "provider_trust": "The domestic oncologist's failure to engage with primary trial evidence drops provider trust to its lowest point in the journey.",
+            "medical_self_efficacy": "Paradoxically, the conflict reinforces Tomáš's conviction that his own research-led judgment is more clinically grounded than the advice he is receiving locally.",
+            "logistical_capacity": "The dependency on domestic infrastructure for monitoring and prescriptions constrains his options — he cannot fully exit the domestic system even if he wants to."
+          }
+        },
+        {
+          "stage_id": "3",
+          "stage": "Treatment Decision Navigation",
+          "step_id": "6",
+          "step": "Exploring Named Patient and Expanded Access Options",
+          "sentiment": 0,
+          "plutchik_score": "anticipation",
+          "emotional_valence": 0,
+          "provider_trust": 2,
+          "medical_self_efficacy": 3,
+          "logistical_capacity": -1,
+          "narrative_description": "Armed with the Vienna specialist's letter of recommendation and the patient community's guidance, Tomáš investigates every non-trial pathway to Vorasidenib. He contacts Servier (the manufacturer) directly through their medical information line to ask about expanded access programs. He is informed that a formal expanded access program is not currently active for vorasidenib in his geography, but that named patient applications can be considered on a country-by-country basis and require a local physician to sponsor the request. His domestic oncologist declines to sponsor. His community peers suggest approaching the Vienna specialist to initiate a cross-border named patient application — a process neither party has experience navigating.",
+          "quote": "I called the company. I was polite. I asked about expanded access. They said it requires a physician sponsor in my country. My physician in my country said no. The circle was complete.",
+          "events": [
+            {
+              "event_id": "ev_tk_12",
+              "type": "roadblock",
+              "label": "Expanded Access Application Requires Domestic Physician Sponsor — Refused",
+              "short_label": "Sponsor refusal",
+              "description": "Named patient application for vorasidenib requires a sponsoring physician in the patient's country of residence. Tomáš's domestic oncologist declines to participate, citing unfamiliarity with the application process and personal reservations about IDH inhibitor therapy.",
+              "sentiment_impact": -3,
+              "step_position": 6.3,
+              "tooltip": "Named patient application requires domestic physician sponsor. Domestic oncologist declines — citing unfamiliarity and personal reservations. Circle closes."
+            },
+            {
+              "event_id": "ev_tk_13",
+              "type": "progress",
+              "label": "Vienna Specialist Agrees to Explore Cross-Border Named Patient Pathway",
+              "short_label": "Vienna explores workaround",
+              "description": "The Vienna neuro-oncologist agrees to investigate whether a cross-border named patient application can be initiated from Austria on Tomáš's behalf. This is non-standard and requires coordination between Austrian regulatory authorities and the Macedonian health ministry. No timeline is available.",
+              "sentiment_impact": 2,
+              "step_position": 6.7,
+              "tooltip": "Vienna specialist agrees to explore cross-border named patient application — non-standard, requires Austria-North Macedonia regulatory coordination. Timeline unknown."
+            }
+          ],
+          "sentiment_reasons": [
+            "The physician sponsor refusal closes every domestic access pathway simultaneously — it is the most complete institutional blockage in the journey",
+            "The Vienna specialist's willingness to explore a non-standard workaround sustains hope but introduces a new layer of bureaucratic uncertainty",
+            "Tomáš is now managing three parallel tracks — trial, named patient, and self-pay bridge — simultaneously, with no certainty on any of them"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The named patient rejection and the slow-moving Vienna workaround produce a flat, grinding neutral state — neither the sharp pain of the worst steps nor the lift of genuine progress.",
+            "provider_trust": "The Vienna specialist's active advocacy partially compensates for domestic system failures; trust is now strongly bifurcated between local and international care.",
+            "medical_self_efficacy": "Tomáš is operating at the edge of what patient-level agency can achieve — he has done everything available to him and is now dependent on institutional action.",
+            "logistical_capacity": "Managing three parallel pathways (trial, named patient, self-pay bridge) while on medical leave with a reduced income is beginning to create emotional and logistical overload."
+          }
+        },
+        {
+          "stage_id": "4",
+          "stage": "Clinical Trial Decision",
+          "step_id": "7",
+          "step": "Evaluating the Two Trial Options — Prague vs. Vienna",
+          "sentiment": 1,
+          "plutchik_score": "anticipation",
+          "emotional_valence": 1,
+          "provider_trust": 3,
+          "medical_self_efficacy": 4,
+          "logistical_capacity": -1,
+          "narrative_description": "Tomáš focuses his analysis on the two trials the Vienna specialist identified. The Prague Phase III (vorasidenib vs. observation) is closer — a 6-hour drive versus a 9-hour train journey to Vienna. It offers guaranteed vorasidenib access in the active arm, but carries a 50% placebo probability. The Vienna Phase II (IDH1 inhibitor + PD-1 immunotherapy combination) has no placebo arm but is an unproven combination with unknown additive side effects. He creates a comparison document. His wife reads it and asks one question: 'Which one gets you the drug for sure?' He does not have a clean answer. He also connects with a patient in the Prague trial via the online community who shares their visit schedule — approximately one visit every 6 weeks — and confirms the center reimburses reasonable travel costs for trial participants.",
+          "quote": "My wife asked which trial guarantees the drug. I had to tell her that one has a 50/50 chance of placebo, and the other is a combination that's never been tested. Neither is the simple answer. But both are better than what I have now, which is nothing.",
+          "events": [
+            {
+              "event_id": "ev_tk_14",
+              "type": "progress",
+              "label": "Peer in Prague Trial Confirms Visit Cadence and Travel Reimbursement",
+              "short_label": "Prague peer contact",
+              "description": "A community peer currently enrolled in the Prague Phase III trial confirms visits are required every 6 weeks, the site reimburses documented travel up to €200 per visit, and the site coordinator is responsive and English-speaking. This substantially reduces the logistical uncertainty of the Prague option.",
+              "sentiment_impact": 3,
+              "step_position": 7.2,
+              "tooltip": "Prague trial peer confirms: 6-week visit cadence, up to €200 travel reimbursement per visit, English-speaking coordinator. Logistical uncertainty substantially reduced."
+            },
+            {
+              "event_id": "ev_tk_15",
+              "type": "roadblock",
+              "label": "50% Placebo Probability in Phase III — Wife's Core Concern",
+              "short_label": "Placebo risk",
+              "description": "The Prague Phase III is a randomized, placebo-controlled trial. Tomáš has a 50% probability of receiving placebo. His wife's reaction to this is visceral — she asks whether they could know if he receives placebo and whether he could withdraw to access the drug another way. He does not yet have those answers.",
+              "sentiment_impact": -2,
+              "step_position": 7.5,
+              "tooltip": "50% placebo probability in Prague Phase III. Wife's central concern: could they know if he receives placebo? Could he withdraw? Answers not yet available."
+            },
+            {
+              "event_id": "ev_tk_16",
+              "type": "roadblock",
+              "label": "Vienna Phase II — Combination Arm Carries Unknown Additive Risk",
+              "short_label": "Combination uncertainty",
+              "description": "The Vienna Phase II adds PD-1 immunotherapy to IDH inhibition — a mechanistically promising but clinically unvalidated combination in glioma. Tomáš researches checkpoint inhibitor toxicity in brain tumors and finds mixed data. The absence of a placebo arm is appealing, but the additive side effect profile is genuinely unknown.",
+              "sentiment_impact": -1,
+              "step_position": 7.8,
+              "tooltip": "Vienna Phase II IDH1+PD-1 combination: no placebo arm (positive), but additive toxicity profile unvalidated in glioma context. Mixed literature on checkpoint inhibitors in brain tumors."
+            }
+          ],
+          "sentiment_reasons": [
+            "The peer contact in the Prague trial makes that option feel real and navigable for the first time",
+            "The placebo randomization is not an abstract statistical concern — for a 40-year-old with a six-year-old daughter, it is a concrete fear of spending months unprotected",
+            "Facing two imperfect options simultaneously — when the 'right' answer would be unrestricted vorasidenib access — generates a specific kind of frustrated optimism"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "Genuine options produce genuine hope — but the imperfections of both options prevent a clean positive shift. The emotional register is engaged uncertainty rather than dread.",
+            "provider_trust": "The Prague trial peer and the Vienna specialist's continued involvement sustain trust in the research pathway; the domestic system has effectively ceased to be a trust resource.",
+            "medical_self_efficacy": "Tomáš's comparison document and his ability to articulate the mechanistic distinction between the two trials represent the peak of his self-directed health literacy.",
+            "logistical_capacity": "Prague's travel reimbursement program meaningfully improves the financial sustainability of trial participation; the 6-week visit cadence is manageable alongside partial work return."
+          }
+        },
+        {
+          "stage_id": "4",
+          "stage": "Clinical Trial Decision",
+          "step_id": "8",
+          "step": "The Inflection — Enroll, Wait, or Find a Bridge",
+          "sentiment": -1,
+          "plutchik_score": "anxiety",
+          "emotional_valence": 0,
+          "provider_trust": 3,
+          "medical_self_efficacy": 3,
+          "logistical_capacity": -2,
+          "has_experience_wheel": false,
+          "narrative_description": "Three converging pressures bring Tomáš to a decision point. His latest MRI — at 7 months post-resection — shows stable disease but his Vienna specialist notes a small area of T2 signal change that she describes as 'worth watching.' His domestic oncologist reiterates that radiation should begin within the next 3 months if they are not proceeding with IDH inhibition. And his daughter, who has been told only that her father has 'something wrong with his head that the doctors are fixing,' asks him one morning whether he will be better by her birthday. He has three paths in front of him: enroll in the Prague Phase III (guaranteed drug access — 50% of the time); pursue the Vienna Phase II combination (no placebo, but unknown additive risk); or continue waiting for the named patient pathway to open, bridging with 2–3 months of self-pay vorasidenib if the family depletes part of their savings. He and his wife schedule an evening to decide.",
+          "inflection_detail": {
+            "label": "Three-Way Decision Inflection — Enroll, Wait, or Self-Pay Bridge",
+            "description": "Tomáš reaches a convergence of clinical urgency, financial constraint, and family emotional weight that forces a decision without a clear 'right' answer. Each option carries a distinct combination of clinical, financial, and logistical risk. The absence of straightforward domestic vorasidenib access is the structural failure driving this decision — the complexity of his choice is not inherent to his disease state but is an artifact of reimbursement geography. This is precisely the inflection point where sponsor-supported patient navigation and access programs have the highest potential impact on enrollment quality and patient wellbeing.",
+            "risk_level": "high",
+            "dropout_risk": "high",
+            "sponsor_opportunity": "Establish a cross-border patient navigation program for IDH1-mutant glioma patients in non-reimbursing EU countries — providing named patient application support, trial site matching, financial bridge assistance for self-pay periods, and a dedicated international access coordinator who can engage both the patient and the domestic physician. A structured 'access bridge' — covering 2–3 months of vorasidenib at no cost while trial screening or named patient processing proceeds — would materially reduce dropout at this inflection point.",
+            "data_needed": "Proportion of IDH1-mutant glioma patients in non-reimbursing EU countries who ultimately access vorasidenib within 12 months of eligibility confirmation; rate of trial enrollment versus watchful waiting in patients who cannot access vorasidenib domestically; average named patient processing time by EU member state; financial distress rate among trial-eligible patients who do not enroll.",
+            "paths": [
+              {
+                "id": "path_pos",
+                "direction": "positive",
+                "label": "Prague Phase III Enrollment — Structured Access with Accepted Risk",
+                "outcome": "Tomáš and his wife decide that the 50% probability of active treatment in a well-run EORTC trial — with travel reimbursement, English-speaking coordinators, and a 6-week visit cadence — is the most sustainable path. They accept the placebo risk as the price of access and commit to Prague. If randomized to placebo, they plan to withdraw at the first MRI and pursue the Vienna Phase II or self-pay bridge. The decision is made with eyes open to its imperfection — and the family frames it as the most active thing they can do together.",
+                "sentiment_delta": 3,
+                "key_driver": "Prague peer's logistical reassurance; Vienna specialist's written recommendation supporting trial as first choice; family agreement that structured access is preferable to indefinite waiting; site's travel reimbursement reducing financial pressure."
+              },
+              {
+                "id": "path_neg",
+                "direction": "negative",
+                "label": "Paralysis and Delayed Enrollment — Window Narrowing",
+                "outcome": "Unable to resolve the placebo concern and without a named patient pathway open, Tomáš and his wife defer the decision. They begin self-pay vorasidenib for one month while waiting — depleting savings at a rate that cannot be sustained. Three months later, the financial runway is exhausted, the named patient pathway has not progressed, and the domestic oncologist's radiation recommendation has become more urgent as a new MRI shows borderline T2 change. Tomáš eventually enrolls in Prague under significantly more emotional and financial duress than would have been necessary three months earlier.",
+                "sentiment_delta": -4,
+                "key_driver": "Unresolved placebo anxiety; no sponsor-side financial bridge or access navigator; domestic oncologist pressure toward radiation increasing urgency; savings depletion accelerating decision crisis."
+              }
+            ]
+          },
+          "quote": "My daughter asked me if I would be better by her birthday. It's in four months. I said yes. And then I sat down and thought about what I actually need to do to make that true — not for her birthday, but for the next ten years of them.",
+          "events": [
+            {
+              "event_id": "ev_tk_17",
+              "type": "roadblock",
+              "label": "MRI Shows T2 Signal Change — 'Worth Watching'",
+              "short_label": "T2 signal change noted",
+              "description": "7-month post-resection MRI shows stable tumor volume but a new, small area of T2 signal change. Vienna specialist describes it as 'worth watching' and notes it slightly increases the urgency of initiating IDH inhibition. The finding does not constitute progression, but eliminates the sense that time pressure is low.",
+              "sentiment_impact": -3,
+              "step_position": 8.2,
+              "tooltip": "7-month MRI: stable volume but new T2 signal change. Vienna specialist notes it 'warrants watching' — not progression, but increases urgency of IDH inhibitor initiation."
+            },
+            {
+              "event_id": "ev_tk_18",
+              "type": "roadblock",
+              "label": "Domestic Oncologist Resets Radiation Recommendation — 3-Month Window",
+              "short_label": "Radiation deadline issued",
+              "description": "In response to the T2 change, the domestic oncologist restates that adjuvant radiation should begin within 3 months if no IDH inhibitor access is established. He does not acknowledge the trial options. For Tomáš, this feels less like clinical guidance than a deadline issued without understanding his situation.",
+              "sentiment_impact": -2,
+              "step_position": 8.5,
+              "tooltip": "Domestic oncologist issues 3-month radiation deadline in response to T2 signal change — does not engage with trial or IDH inhibitor options. Experienced as pressure without understanding."
+            },
+            {
+              "event_id": "ev_tk_19",
+              "type": "community",
+              "label": "Wife and Tomáš Schedule an Evening to Decide Together",
+              "short_label": "Family decision session",
+              "description": "Tomáš and his wife arrange their daughter's bedtime and set aside the evening to review the three options systematically — Prague trial, Vienna trial, self-pay bridge — with Tomáš's comparison document and the Vienna specialist's written recommendation on the table. This deliberate, shared decision-making process is itself a form of reclaimed agency.",
+              "sentiment_impact": 2,
+              "step_position": 8.8,
+              "tooltip": "Couple schedules structured decision session with comparison document and Vienna specialist letter — shared deliberation as reclaimed agency."
+            }
+          ],
+          "sentiment_reasons": [
+            "The T2 signal change dissolves any remaining sense that time is abundant — the decision cannot be deferred indefinitely",
+            "The daughter's birthday question is not a narrative device — it is the emotional truth of what is at stake, stated without artifice",
+            "Scheduling a deliberate decision evening with his wife represents the most autonomous act in the journey — turning a crisis into a choice"
+          ],
+          "metric_explainers": {
+            "emotional_valence": "The convergence of T2 change, radiation deadline, and family emotional weight produces a state of active, loaded uncertainty — not despair, but the weight of a decision that carries irreversible consequences.",
+            "provider_trust": "Trust in the Vienna specialist and the Prague trial infrastructure remains solid; the domestic oncologist's radiation deadline without acknowledgment of alternatives is experienced as clinical abandonment.",
+            "medical_self_efficacy": "Tomáš's comparison document and structured family decision session demonstrate that he has converted distress into deliberate agency — the hallmark of a high self-efficacy patient under duress.",
+            "logistical_capacity": "Self-pay bridge option would deplete savings in 3–4 months; Prague trial travel reimbursement provides the most logistically sustainable path; Vienna is feasible but more expensive per visit."
+          }
+        }
+      ]
+    },    
+    {
       "id": "persona_nmdar_01",
       "type": "patient",
       "therapeutic_area": "Neurology",

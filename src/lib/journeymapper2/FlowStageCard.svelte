@@ -295,7 +295,7 @@
     display: flex;
     flex-direction: row;
     min-height: 32.5vh;
-    align-items: center;
+    justify-content: center;
     gap: 1em;
   }
   

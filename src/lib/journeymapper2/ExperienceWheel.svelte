@@ -300,7 +300,7 @@
   </div>
 
   <!-- Actions -->
-<div class="detail-section">
+  <div class="detail-section">
     <div class="jm-section-bar">
       <span class="label-sm">Sponsor Actions</span>
     </div>

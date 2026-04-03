@@ -5,6 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import { selectedIndex } from './journeyStore.js';
   import ExperienceWheel from './ExperienceWheel.svelte';
+  import StepEvents from './StepEvents.svelte';
   import JourneySubDrawer from './JourneySubDrawer.svelte';
 
   import { emotionColor, ratingToLabel, DYAD_BY_ID, SCORE_ALIASES, SENTIMENT_SCALE, sentimentToColor, metricScoreLabel, buildStageColorMap } from './journeyConfig.js';
@@ -323,6 +324,9 @@
                   </span>
                 {/key}
               </div>
+
+              <StepEvents events={step.events ?? []} />
+
 
               <div class="imb-card-scale">
                 <div

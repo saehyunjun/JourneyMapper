@@ -31,6 +31,7 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    margin: 1.25em;
   }
 
   .flow-connector {

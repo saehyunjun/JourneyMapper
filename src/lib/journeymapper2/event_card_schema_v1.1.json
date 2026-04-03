@@ -1,0 +1,187 @@
+{
+  "_schema_version": "1.1.0",
+  "_description": "Schema additions for two new event card types: info_source and intervention. Drop these into any step's existing `events` array alongside roadblock / progress / community / hospitalization entries.",
+
+  "event_types": {
+
+    "info_source": {
+      "_description": "Documents a specific source of information or influence the patient encountered at this step. Used to map where patients get their knowledge, what quality that knowledge is, and how strongly it shapes decisions.",
+      "fields": {
+        "event_id":        { "type": "string",  "required": true,  "example": "ev_tk_is_01" },
+        "type":            { "type": "string",  "required": true,  "value": "info_source" },
+        "label":           { "type": "string",  "required": true,  "example": "Vorasidenib discovery via Google Search" },
+        "short_label":     { "type": "string",  "required": true,  "example": "Google search" },
+        "description":     { "type": "string",  "required": true,  "example": "Patient discovers Vorasidenib exists through a late-night Google search the evening of his pathology disclosure — before his oncologist mentioned it." },
+        "sentiment_impact":{ "type": "number",  "required": true,  "range": "−5 to +5", "example": 2 },
+        "step_position":   { "type": "number",  "required": false, "example": 1.8, "_note": "Fractional step position for timeline pill placement" },
+        "tooltip":         { "type": "string",  "required": false, "example": "Patient self-discovers EMA-approved targeted therapy the night of diagnosis." },
+
+        "source_type": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "web_search",       "patient_forum",   "social_media",
+            "advocacy_org",     "hcp",             "pharma_brand",
+            "peer_network",     "news_media",       "clinical_registry"
+          ],
+          "example": "web_search"
+        },
+        "platform": {
+          "type": "string",
+          "required": false,
+          "example": "Google",
+          "_note": "Specific platform name — e.g. 'Google', 'Reddit r/glioma', 'Facebook group: IDH-Mutant Glioma Support', 'ClinicalTrials.gov', 'EMA website'"
+        },
+        "influence_level": {
+          "type": "string",
+          "required": true,
+          "enum": ["high", "medium", "low"],
+          "example": "high",
+          "_note": "How strongly this source shaped the patient's perception or decision at this step"
+        },
+        "content_quality": {
+          "type": "string",
+          "required": true,
+          "enum": ["accurate", "mixed", "misleading"],
+          "example": "accurate",
+          "_note": "Clinical accuracy of the information encountered. 'mixed' = contains accurate and inaccurate content."
+        }
+      }
+    },
+
+    "intervention": {
+      "_description": "Marks a sponsor or advocacy opportunity — a moment where educational materials, a partnership, a digital tool, or a support program could materially improve patient experience or engagement.",
+      "fields": {
+        "event_id":        { "type": "string",  "required": true,  "example": "ev_tk_int_01" },
+        "type":            { "type": "string",  "required": true,  "value": "intervention" },
+        "label":           { "type": "string",  "required": true,  "example": "Plain-language IDH inhibitor guide at point of pathology disclosure" },
+        "short_label":     { "type": "string",  "required": true,  "example": "Pathology disclosure guide" },
+        "description":     { "type": "string",  "required": true,  "example": "A one-page, plain-language guide to IDH-mutant glioma and available therapies — distributed at the point of pathology disclosure — would close the information gap that currently drives patients to low-quality late-night web searches." },
+        "sentiment_impact":{ "type": "number",  "required": true,  "range": "−5 to +5, typically positive", "example": 3 },
+        "step_position":   { "type": "number",  "required": false, "example": 1.9 },
+        "tooltip":         { "type": "string",  "required": false, "example": "Sponsor opportunity: IDH disclosure guide at pathology consult reduces misinformation gap." },
+
+        "intervention_type": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "educational_content",   "advocacy_partnership",
+            "digital_tool",          "hcp_support",
+            "patient_navigator",     "access_program",
+            "peer_program",          "community_event"
+          ],
+          "example": "educational_content"
+        },
+        "partner": {
+          "type": "string",
+          "required": false,
+          "example": "European Brain Tumour Association",
+          "_note": "Named advocacy org, patient foundation, or health system the sponsor could partner with"
+        },
+        "timing": {
+          "type": "string",
+          "required": true,
+          "enum": ["before", "during", "after"],
+          "example": "during",
+          "_note": "Relative to the step: 'before' = pre-step prep, 'during' = in-moment support, 'after' = follow-up"
+        },
+        "impact_potential": {
+          "type": "string",
+          "required": true,
+          "enum": ["high", "medium", "low"],
+          "example": "high",
+          "_note": "Estimated potential to improve patient experience, decision quality, or trial engagement at this moment"
+        }
+      }
+    }
+  },
+
+  "example_events_array": [
+    {
+      "_comment": "Existing event type — unchanged",
+      "event_id": "ev_tk_02",
+      "type": "roadblock",
+      "label": "Oncologist Recommends Watch-and-Wait Without Mentioning Vorasidenib",
+      "short_label": "No IDH therapy discussed",
+      "description": "Watch-and-wait recommended without any discussion of IDH inhibitor therapy or clinical trial options.",
+      "sentiment_impact": -3,
+      "step_position": 1.7,
+      "tooltip": "Vorasidenib omitted from pathology disclosure consult — patient self-discovers drug that evening."
+    },
+    {
+      "_comment": "NEW — info_source: how the patient actually found out",
+      "event_id": "ev_tk_is_01",
+      "type": "info_source",
+      "label": "Vorasidenib Discovered via Late-Night Google Search",
+      "short_label": "Google search",
+      "description": "The night of his pathology disclosure, Tomáš searches 'IDH1 mutant glioma treatment' and finds the EMA approval page for Vorasidenib. This is the first time any targeted therapy has been mentioned — not by his oncologist, but by a search engine.",
+      "sentiment_impact": 2,
+      "step_position": 1.85,
+      "tooltip": "Patient self-discovers EMA-approved targeted therapy via Google the night of diagnosis.",
+      "source_type": "web_search",
+      "platform": "Google",
+      "influence_level": "high",
+      "content_quality": "accurate"
+    },
+    {
+      "_comment": "NEW — intervention: what a sponsor could do at this exact moment",
+      "event_id": "ev_tk_int_01",
+      "type": "intervention",
+      "label": "IDH-Mutant Glioma Plain-Language Disclosure Guide",
+      "short_label": "Disclosure guide",
+      "description": "A one-page, plain-language guide to IDH-mutant glioma and approved targeted therapies — provided at the point of pathology disclosure by the oncology team — would close the information gap currently filled by unsupported web searches and eliminate a critical window of patient misinformation risk.",
+      "sentiment_impact": 3,
+      "step_position": 1.95,
+      "tooltip": "Sponsor opportunity: plain-language IDH guide at pathology disclosure prevents misinformation gap.",
+      "intervention_type": "educational_content",
+      "partner": "European Brain Tumour Association",
+      "timing": "during",
+      "impact_potential": "high"
+    },
+    {
+      "_comment": "NEW — info_source: patient forum as influence vector",
+      "event_id": "ev_tk_is_02",
+      "type": "info_source",
+      "label": "IDH-Mutant Glioma Facebook Community — Peer Accounts of Vorasidenib Access",
+      "short_label": "Facebook patient group",
+      "description": "Tomáš joins an international Facebook group and reads accounts from patients in Serbia and Georgia who have traveled to Vienna and Munich for second opinions and vorasidenib access. This community becomes his primary navigation resource — providing more actionable information than his domestic care team.",
+      "sentiment_impact": 4,
+      "step_position": 3.2,
+      "tooltip": "International patient community on Facebook provides cross-border access navigation that domestic HCP team could not.",
+      "source_type": "patient_forum",
+      "platform": "Facebook — IDH-Mutant Glioma Support Group",
+      "influence_level": "high",
+      "content_quality": "mixed"
+    },
+    {
+      "_comment": "NEW — intervention: advocacy partnership at community discovery moment",
+      "event_id": "ev_tk_int_02",
+      "type": "intervention",
+      "label": "Sponsor-Supported Navigation Hub Within Patient Community",
+      "short_label": "Community navigation hub",
+      "description": "A branded — but clinically credible — navigation resource embedded within or adjacent to active patient communities would intercept patients at the moment they self-organize around access problems. A pinned post, chatbot, or moderated resource thread providing country-specific access guidance, named patient program status, and trial site maps would channel community momentum toward accurate, actionable information.",
+      "sentiment_impact": 3,
+      "step_position": 3.4,
+      "tooltip": "Sponsor opportunity: navigation hub within patient community channels self-organizing access behavior toward accurate trial and access information.",
+      "intervention_type": "advocacy_partnership",
+      "partner": "EBRAINS Patient Alliance / Brain Tumour Europe",
+      "timing": "during",
+      "impact_potential": "high"
+    },
+    {
+      "_comment": "NEW — intervention: access program at sponsor refusal inflection",
+      "event_id": "ev_tk_int_03",
+      "type": "intervention",
+      "label": "Cross-Border Named Patient Application Support Program",
+      "short_label": "Named patient support",
+      "description": "A dedicated sponsor-side access navigator who can initiate and manage named patient applications cross-border — requiring only an international specialist letter rather than a domestic physician sponsor — would eliminate the single largest structural barrier in Tomáš's access pathway. The navigator would manage regulatory coordination between Austria and North Macedonia on the patient's behalf.",
+      "sentiment_impact": 4,
+      "step_position": 6.5,
+      "tooltip": "Sponsor opportunity: cross-border named patient navigator eliminates domestic physician sponsor requirement that currently closes all access pathways.",
+      "intervention_type": "access_program",
+      "partner": null,
+      "timing": "during",
+      "impact_potential": "high"
+    }
+  ]
+}
