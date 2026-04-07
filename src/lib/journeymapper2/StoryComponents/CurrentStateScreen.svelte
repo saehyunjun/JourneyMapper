@@ -4,7 +4,7 @@
   let { states = [], accent = 'var(--purple)', theme = null } = $props();
 
   let resolvedLabel = $derived(theme?.labelColor ?? accent);
-  let bg = $derived(theme ? buildScreenBackground(theme) : 'rgba(0,0,0,0.85)');
+  let bg = $derived(theme ? buildScreenBackground(theme) : 'rgba(0,0,0,0.85');
 </script>
 
 <div class="screen" style="background: {bg};" role="article">
@@ -17,7 +17,7 @@
       {#each states as s, i}
         <div class="state-row" style="animation-delay: {i * 70}ms;" role="listitem">
           <div class="state-header">
-            <span class="state-label">{s.label}</span>
+            <span class="label-sm text-white">{s.label}</span>
             <span class="state-value" style="color: {s.color ?? resolvedLabel};">
               {Math.round(s.value * 100)}%
             </span>
@@ -95,12 +95,6 @@
     align-items: baseline;
   }
 
-  .state-label {
-    font-size: 0.75em;
-    font-weight: 500;
-    color: rgba(255,255,255,0.65);
-  }
-
   .state-value {
     font-family: var(--font-mono, monospace);
     font-size: 0.75em;
@@ -110,7 +104,7 @@
 
   .state-track {
     height: 4px;
-    background: rgba(255,255,255,0.1);
+    background: var(--grayblue);
     border-radius: 4px;
     overflow: hidden;
   }
