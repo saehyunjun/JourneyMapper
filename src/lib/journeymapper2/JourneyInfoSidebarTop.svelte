@@ -149,7 +149,7 @@
             {#key displayIndex}
               <div
                 class="flex flex-row items-baseline justify-between gap-4"
-                in:fade={{ y: 3, duration: 260, easing: cubicOut }}
+                in:fly={{ y: 3, duration: 260, easing: cubicOut }}
                 out:fade={{ duration: 200 }}
               >
                 <span class="label uppercase">{step.step}</span>
@@ -187,7 +187,7 @@
       ═══════════════════════════════════════════════════════════════════ -->
       {#if step}
         <div
-          class="grid grid-cols-6"
+          class="metric-strip"
           in:fade={{ duration: 380, easing: cubicOut }}
           out:fade={{ duration: 450, easing: cubicInOut }}
         >
@@ -195,7 +195,7 @@
           <!-- Sentiment cell -->
           <div class="metric-cell metric-cell--sentiment">
             <div class="metric-cell-label">
-            <HeartHalf class="text-lg" 
+              <HeartHalf class="text-lg" 
               style="color: var(--grayblue)"/>
               <span class="label-sm" 
               style="color: var(--grayblue)">Sentiment</span>
@@ -250,6 +250,8 @@
                 {:else}
                   <div class="w-2 h-2 rounded-full" style="color:{m.color};"></div>
                 {/if}
+                <span class="label-sm"
+                style="color:{m.color}" >{m.label}</span>
               </div>
     
               <div class="metric-cell-swatches">
@@ -262,8 +264,6 @@
                     style="background:{ramp[si]}; opacity:{opacity}; transition:opacity 320ms ease;"
                   ></div>
                 {/each}
-                <span class="label-xs"
-                style="color:{m.color}" >{m.label}</span>
               </div>
     
               {#key qualLabel}
@@ -288,13 +288,13 @@
            Narrative content {#key}s on displayIndex for a short fly-in.
       ═══════════════════════════════════════════════════════════════════ -->
       {#if expanded && hasContent}
-    
-          <!-- COL A — PERSONA BIO: only remounts on persona change -->
         <div
           class="info-bar-body"
           in:slide={{ duration: 260, easing: cubicOut }}
           out:slide={{ duration: 180, easing: cubicInOut }}
         >
+    
+          <!-- COL A — PERSONA BIO: only remounts on persona change -->
           {#if activePersona}
             {#key activePersona.id}
                 <PersonaProfileCard
@@ -302,11 +302,16 @@
                   currentState={activePersona.currentState ?? []}
                   personaType={activePersona.type}
                 />
+              <div
+                class="body-col body-col--persona"
+                in:fade={{ duration: 220, easing: cubicOut }}
+              >
     
-    <div class="flex flex-row gap-3">
-                  {#if profile.bio_1 && displayIndex < 0}
-                    <p class="text-body-sm">{profile.bio_1}</p>
-                  {/if}
+                {#if profile.bio_1 && displayIndex < 0}
+                  <p class="text-body-sm">{profile.bio_1}</p>
+                {/if}
+    
+                <div class="flex flex-row gap-3">
                   {#if profile.goal1 || profile.goal2 || profile.goal3}
                     <div class="jm-content-col gap-1 flex-1">
                       <div class="toolbar-sm-light">
@@ -337,6 +342,7 @@
                     </div>
                   {/if}
                 </div>
+              </div>
             {/key}
           {/if}
     
@@ -519,7 +525,7 @@
     
       .metric-cell-label {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         gap: 5px;
         flex-shrink: 0;
@@ -623,7 +629,7 @@
       @media (max-width: 768px) {
         .info-bar-body {
           grid-template-columns: 1fr;
-          max-height: 22.5vh;
+          max-height: 55vh;
         }
     
         .body-col--persona {

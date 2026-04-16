@@ -1413,10 +1413,9 @@ color: var(--grayblue);
 
 
   .label-xs {
-    font-size: .6em;
-    font-weight: 600;
+    font-size: .525em;
+    font-weight: 800;
     color: var(--gray);
-    line-height: 1em;
 
     font-family: var(--font-heading);
     text-align: start;
