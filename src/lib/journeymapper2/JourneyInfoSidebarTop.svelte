@@ -439,8 +439,10 @@
         display: flex;
         flex-direction: column;
         min-height: 0;
+        max-height: 40vh;   /* ← never grows past 40% of viewport height */
+        overflow: hidden;
       }
-    
+          
       /* ── Handle row ──────────────────────────────────────────────────── */
       .info-bar-handle {
         display: flex;

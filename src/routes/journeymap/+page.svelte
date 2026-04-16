@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import JourneyLayoutToggle       from '$lib/journeymapper2/JourneyLayoutToggle.svelte';
   import JourneyIndexBars          from '$lib/journeymapper2/JourneyIndexBars.svelte';
   import JourneyLegend             from '$lib/journeymapper2/JourneyLegend.svelte';
@@ -75,19 +74,14 @@
   let drawerMode = $state<'step' | 'plutchik' | 'persona' | 'inflection' | null>(null);
   let drawerOpen = $derived(drawerMode !== null);
 
-  // Auto-open drawers when chart selections change.
-  // Subscriptions make this deterministic regardless of rune/store reactivity nuances.
-  onMount(() => {
-    const unsubStep = selectedIndex.subscribe((i) => {
-      if (i >= 0 && drawerMode !== 'step') drawerMode = 'step';
-    });
-    const unsubInflection = selectedInflectionIndex.subscribe((i) => {
-      if (i >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
-    });
-    return () => {
-      unsubStep();
-      unsubInflection();
-    };
+  // Auto-open step drawer when a step is selected
+  $effect(() => {
+    if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
+  });
+
+  // Auto-open inflection drawer when a fork path card is clicked
+  $effect(() => {
+    if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
   });
 
   let timelineActive = $derived($selectedIndex >= 0 || drawerOpen);
@@ -213,11 +207,7 @@
         onstory={() => handlePersonaStory()}
       />
   <!-- ── Three-column body ────────────────────────────────────────────── -->
-<div class="flex flex-row flex-1 min-h-0">
-
-    <!-- LEFT — persona selector column -->
-
-    <!-- MIDDLE — chart / flow, scrolls horizontally -->
+  <div class="flex flex-row flex-1 min-h-0">
     <div class="chart-col flex-1 min-w-0" bind:this={scrollEl}>
       {#if chartView === 'flow'}
         <div class="flex flex-col w-full justify-right">
@@ -244,12 +234,11 @@
       <JourneyLegend items={metrics} />
     </div>
 
-
-      <JourneyInfoSidebar
-        activePersona={activePersona as any}
-        data={journeyData}
-        {metrics}
-      />
+    <JourneyInfoSidebar
+    activePersona={activePersona as any}
+    data={journeyData}
+    {metrics}
+  />
 
 
   </div><!-- /journey-body -->
@@ -361,10 +350,4 @@
     scrollbar-color: var(--purple) transparent;
   }
 
-  /* Right info sidebar — fixed width, scrollable */
-  .info-col {
-    max-width: 320px;
-    width: 20vw;
-    border-left: 1px solid var(--border, rgba(0, 0, 0, 0.08));
-  }
 </style>
