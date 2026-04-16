@@ -55,9 +55,9 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="card-scene"
-  on:click={toggle}
-  on:mouseenter={() => (hovered = true)}
-  on:mouseleave={() => (hovered = false)}
+  onclick={toggle}
+  onmouseenter={() => (hovered = true)}
+  onmouseleave={() => (hovered = false)}
   style="--accent: {accentColor};"
   title="Click to flip"
 >
@@ -71,7 +71,7 @@
             class="card-photo"
             src="/assets/profiles/{personaProfile.imageFile}"
             alt={personaProfile.name}
-            on:error={() => (imgError = true)}
+            onerror={() => (imgError = true)}
           />
         {:else}
           <div class="card-initials">

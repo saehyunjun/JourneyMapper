@@ -69,10 +69,10 @@
       role="button"
       tabindex="0"
       aria-label="{item.label} — hover for description"
-      on:mouseenter={() => hoveredKey = item.key}
-      on:mouseleave={() => hoveredKey = null}
-      on:focus={() => hoveredKey = item.key}
-      on:blur={() => hoveredKey = null}
+      onmouseenter={() => hoveredKey = item.key}
+      onmouseleave={() => hoveredKey = null}
+      onfocus={() => hoveredKey = item.key}
+      onblur={() => hoveredKey = null}
     >
       <!-- Pill swatch — thicker than a plain dot to signal interactivity -->
       <span

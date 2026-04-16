@@ -168,7 +168,7 @@
           <button
             class="btn-sm handle-toggle"
             aria-label={expanded ? 'Collapse detail bar' : 'Expand detail bar'}
-            on:click={() => (expanded = !expanded)}
+            onclick={() => (expanded = !expanded)}
           >
             {#if expanded}
               <CaretDownRegular class="text-lg"/>

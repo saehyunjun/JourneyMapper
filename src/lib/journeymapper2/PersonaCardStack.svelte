@@ -46,7 +46,7 @@
     
     <!-- toggle -->
     <div class="flex justify-end p-2">
-    <button class="btn-base" on:click={toggle}>
+    <button class="btn-base" onclick={toggle}>
     {#if open}
     <IconCaretLeftRegular />
     {:else}
@@ -58,14 +58,14 @@
     <!-- collapsed thumb -->
     {#if !open && activePersona}
     
-    <button class="thumb" on:click={toggle}>
+    <button class="thumb" onclick={toggle}>
     
     {#if !thumbImgError}
     <img
     class="thumb-photo"
     src="/assets/profiles/{activePersona.profile.imageFile}"
     alt={activePersona.profile.name}
-    on:error={() => (thumbImgError = true)}
+    onerror={() => (thumbImgError = true)}
     />
     {:else}
     <span class="thumb-initials">
@@ -91,9 +91,9 @@
     <div
     class="mini-card"
     class:mini-card--hovered={hoveredId === persona.id}
-    on:click={() => select(persona.id)}
-    on:mouseenter={() => hoveredId = persona.id}
-    on:mouseleave={() => hoveredId = null}
+    onclick={() => select(persona.id)}
+    onmouseenter={() => hoveredId = persona.id}
+    onmouseleave={() => hoveredId = null}
     in:receive={{ key: persona.id }}
     out:send={{ key: persona.id }}
     >
@@ -144,9 +144,9 @@
     <div
     class="mini-card"
     class:mini-card--hovered={hoveredId === persona.id}
-    on:click={() => select(persona.id)}
-    on:mouseenter={() => hoveredId = persona.id}
-    on:mouseleave={() => hoveredId = null}
+    onclick={() => select(persona.id)}
+    onmouseenter={() => hoveredId = persona.id}
+    onmouseleave={() => hoveredId = null}
     in:receive={{ key: persona.id }}
     out:send={{ key: persona.id }}
     >

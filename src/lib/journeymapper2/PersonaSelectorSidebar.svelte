@@ -56,7 +56,7 @@
     <button
       class="toggle-btn"
       class:toggle-btn--flipped={!open}
-      on:click={toggle}
+      onclick={toggle}
       aria-label={open ? 'Collapse personas' : 'Expand personas'}
       title={open ? 'Collapse' : 'Expand'}
     >
@@ -78,7 +78,7 @@
           <button
             class="persona-card"
             class:persona-card--active={active}
-            on:click={() => selectPersona(p.id)}
+            onclick={() => selectPersona(p.id)}
             aria-pressed={active}
             aria-label="Select {p.profile.name}"
           >
@@ -89,7 +89,7 @@
                   src="/assets/profiles/{p.profile.imageFile}"
                   alt={p.profile.name}
                   class="avatar-photo"
-                  on:error={() => { imgErrors[p.id] = true; imgErrors = { ...imgErrors }; }}
+                  onerror={() => { imgErrors[p.id] = true; imgErrors = { ...imgErrors }; }}
                 />
               {:else}
                 <span class="avatar-initials">{p.profile.initials}</span>
@@ -119,7 +119,7 @@
           <button
             class="rail-avatar"
             class:rail-avatar--active={active}
-            on:click={() => { selectPersona(p.id); open = true; }}
+            onclick={() => { selectPersona(p.id); open = true; }}
             aria-pressed={active}
             title={p.profile.name}
             aria-label="Select {p.profile.name}"
@@ -129,7 +129,7 @@
                 src="/assets/profiles/{p.profile.imageFile}"
                 alt={p.profile.name}
                 class="rail-photo"
-                on:error={() => { imgErrors[p.id] = true; imgErrors = { ...imgErrors }; }}
+                onerror={() => { imgErrors[p.id] = true; imgErrors = { ...imgErrors }; }}
               />
             {:else}
               <span class="rail-initials">{p.profile.initials}</span>

@@ -11,55 +11,36 @@
     buildStageColorMap,
   } from './journeyConfig.js';
   import { hoveredIndex, selectedIndex, zoomedIndex } from './journeyStore.js';
-  import { createEventDispatcher } from 'svelte';
 
-  /** Journey step data array */
-  export let data = [];
-
-  /**
-   * Metric definitions — each item: { key, color, label }
-   * Matches the shape from journeyPersonas.json metrics array.
-   */
-  export let metrics = [];
+  let {
+    /** Journey step data array */
+    data = [],
+    /**
+     * Metric definitions — each item: { key, color, label }
+     * Matches the shape from journeyPersonas.json metrics array.
+     */
+    metrics = [],
+    /** Called when a column is double-clicked (already zoomed) to open the drawer */
+    onOpenDrawer = null,
+  } = $props();
 
   // ── Bar layout ────────────────────────────────────────────────────────────
-  // Leave a small gutter on each side of the column so bars don't crowd dividers
-  const COL_GUTTER   = 24; // px total inset per column (split left/right)
-  const BAR_GAP      = 24;  // px gap between bars within a group
+  const COL_GUTTER = 24; // px total inset per column (split left/right)
+  const BAR_GAP    = 8;  // px gap between bars within a group
 
-  /**
-   * Given the number of metrics and the step column width, compute the width
-   * of a single bar so the whole group fits within the column minus gutters.
-   * @param {number} n
-   * @returns {number}
-   */
   function barWidth(n) {
     if (n === 0) return 0;
     const usable = STEP_WIDTH - COL_GUTTER;
     return Math.max(2, (usable - BAR_GAP * (n - 1)) / n);
   }
 
-  /**
-   * X origin of the leftmost bar in a group, so the group is centred on stepToX(i).
-   * @param {number} i   step index
-   * @param {number} n   number of metrics
-   */
   function groupStartX(i, n) {
     const groupW = barWidth(n) * n + BAR_GAP * (n - 1);
     return stepToX(i) - groupW / 2;
   }
 
-  const zeroY = valueToY(0); // pixel y-position of the zero baseline
+  const zeroY = valueToY(0);
 
-  /**
-   * Compute the SVG rect attrs for a single metric bar at a given step.
-   * Returns { x, y, width, height } — ready to spread onto <rect>.
-   *
-   * @param {number} i    step index
-   * @param {number} mi   metric index within the group
-   * @param {number} val  raw metric value
-   * @param {number} n    total number of metrics
-   */
   function barRect(i, mi, val, n) {
     const bw = barWidth(n);
     const x  = groupStartX(i, n) + mi * (bw + BAR_GAP);
@@ -72,15 +53,13 @@
     };
   }
 
-  $: n             = metrics.length;
-  $: width         = totalWidth(data.length);
-  $: stageColorMap = buildStageColorMap(data);
-
-  const dispatch = createEventDispatcher();
+  const n             = $derived(metrics.length);
+  const width         = $derived(totalWidth(data.length));
+  const stageColorMap = $derived(buildStageColorMap(data));
 
   function handleColumnClick(i) {
     if ($zoomedIndex === i) {
-      dispatch('openDrawer', { index: i });
+      onOpenDrawer?.({ index: i });
     } else {
       zoomedIndex.set(i);
       selectedIndex.set(i);
@@ -89,7 +68,7 @@
 </script>
 
 <!--
-  ourneyIndexBars
+  JourneyIndexBars
   ─────────────────────────────────────────────────────────────────────────────
   Grouped vertical bar chart for journey index metrics.
   Uses the same SVG dimensions as JourneyGrid so it can sit flush in the
@@ -171,8 +150,8 @@
   <!-- ── Metric bars ────────────────────────────────────────────────────── -->
   {#each data as d, i}
     {#each metrics as m, mi}
-      {@const val  = parseFloat(d[m.key])}
-      {@const rect = barRect(i, mi, val, n)}
+      {@const val    = parseFloat(d[m.key])}
+      {@const rect   = barRect(i, mi, val, n)}
       {@const isActive = $hoveredIndex === i || $selectedIndex === i}
 
       <!-- Bar fill -->
@@ -186,7 +165,7 @@
         pointer-events="none"
       />
 
-      <!-- Top cap line (improves readability at small heights) -->
+      <!-- Top cap line -->
       {#if rect.height > 2}
         <line
           x1={rect.x}
@@ -200,7 +179,7 @@
         />
       {/if}
 
-      <!-- Value label: only show on hover/select for cleanliness -->
+      <!-- Value label: only on hover/select -->
       {#if isActive && rect.height > 10}
         {@const labelY = val >= 0 ? rect.y - 3 : rect.y + rect.height + 9}
         <text
@@ -212,7 +191,7 @@
           pointer-events="none"
         >
           {val > 0 ? '+' : ''}{val}
-    </text>
+        </text>
       {/if}
     {/each}
   {/each}
@@ -225,7 +204,6 @@
     pointer-events="none"
   />
 
-
   <!-- ── Full-column hit areas ─────────────────────────────────────────── -->
   {#each data as _d, i}
     <rect
@@ -233,13 +211,13 @@
       width={STEP_WIDTH} height={GRID_HEIGHT}
       fill="transparent"
       style="cursor: pointer;"
-      on:mouseenter={() => hoveredIndex.set(i)}
-      on:mouseleave={() => hoveredIndex.set(-1)}
-      on:click={() => handleColumnClick(i)}></rect>
+      onmouseenter={() => hoveredIndex.set(i)}
+      onmouseleave={() => hoveredIndex.set(-1)}
+      onclick={() => handleColumnClick(i)}
+    />
   {/each}
 
 </svg>
 
 <style>
-
 </style>

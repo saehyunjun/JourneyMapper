@@ -175,9 +175,9 @@
         width={STEP_WIDTH} height={svgHeight}
         fill="transparent"
         style="cursor: pointer;"
-        on:mouseenter={() => hoveredIndex.set(i)}
-        on:mouseleave={() => hoveredIndex.set(-1)}
-        on:click={() => selectedIndex.set($selectedIndex === i ? -1 : i)}
+        onmouseenter={() => hoveredIndex.set(i)}
+        onmouseleave={() => hoveredIndex.set(-1)}
+        onclick={() => selectedIndex.set($selectedIndex === i ? -1 : i)}
       />
     {/each}
   

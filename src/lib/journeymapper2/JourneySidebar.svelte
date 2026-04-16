@@ -73,7 +73,7 @@
       <button
         class="toggle-btn"
         class:toggle-btn--flipped={side === 'right' ? open : !open}
-        on:click={toggle}
+        onclick={toggle}
         aria-label={open ? 'Collapse sidebar' : 'Expand sidebar'}
         title={open ? 'Collapse' : 'Expand'}
       >
@@ -107,7 +107,7 @@
   
               <button
                 class="section-header"
-                on:click={() => toggleSection(section.id)}
+                onclick={() => toggleSection(section.id)}
                 aria-expanded={!!expandedSections[section.id]}
               >
                 {#if section.icon}
@@ -159,7 +159,7 @@
             <button
               class="rail-btn"
               title={section.label}
-              on:click={() => openToSection(section.id)}
+              onclick={() => openToSection(section.id)}
               aria-label="Open {section.label}"
             >
               {#if section.icon}

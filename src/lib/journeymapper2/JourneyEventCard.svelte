@@ -105,9 +105,9 @@
       class="event-pill"
       class:event-pill--pos={isPos}
       class:event-pill--neg={!isPos}
-      on:click={onClick}
-      on:mouseenter={() => (hovered = true)}
-      on:mouseleave={() => (hovered = false)}
+      onclick={onClick}
+      onmouseenter={() => (hovered = true)}
+      onmouseleave={() => (hovered = false)}
       aria-label="{type}: {displayLabel}"
       type="button"
     >
@@ -128,9 +128,9 @@
       class="event-card jm-surface"
       class:event-card--pos={isPos}
       class:event-card--neg={!isPos}
-      on:click={onClick}
-      on:mouseenter={() => (hovered = true)}
-      on:mouseleave={() => (hovered = false)}
+      onclick={onClick}
+      onmouseenter={() => (hovered = true)}
+      onmouseleave={() => (hovered = false)}
       aria-label="{type}: {displayLabel}"
       type="button"
     >

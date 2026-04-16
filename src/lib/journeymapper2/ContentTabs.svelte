@@ -37,7 +37,7 @@
   <button
     class="btn-base layout-btn"
     class:layout-btn--active={layout === 'horizontal'}
-    on:click={() => {
+    onclick={() => {
       if (layout !== 'horizontal') {
         layout = 'horizontal';
         pressed.set(false);
@@ -46,7 +46,7 @@
     aria-pressed={layout === 'horizontal'}
     title="Horizontal layout — steps left to right"
   >
-    <IconRowsRegular size={14} />
+    <IconRowsRegular class="text-sm" />
     <span class="nav-title">Horizontal</span>
   </button>
 
@@ -57,7 +57,7 @@
     class:layout-btn--active={layout === 'vertical'}
     title="Vertical layout — steps top to bottom"
   >
-    <IconColumnsRegular size={14} />
+    <IconColumnsRegular class="text-sm" />
     <span class="nav-title">Vertical</span>
   </button>
 </div>

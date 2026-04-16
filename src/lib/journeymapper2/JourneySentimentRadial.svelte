@@ -250,12 +250,12 @@
     <span class="jm-kicker">Sentiment Arc</span>
     <div class="flex items-center gap-3">
       <div class="flex items-center gap-1">
-        <button class="btn-base" class:active={isSmooth}  on:click={setSmooth}
+        <button class="btn-base" class:active={isSmooth}  onclick={setSmooth}
           style="font-size:0.7rem;height:1.75rem;padding:0 0.6rem;">Smooth</button>
-        <button class="btn-base" class:active={!isSmooth} on:click={setLinear}
+        <button class="btn-base" class:active={!isSmooth} onclick={setLinear}
           style="font-size:0.7rem;height:1.75rem;padding:0 0.6rem;">Linear</button>
       </div>
-      <button class="btn-base" on:click={() => (showZeroRing = !showZeroRing)}
+      <button class="btn-base" onclick={() => (showZeroRing = !showZeroRing)}
         style="font-size:0.7rem;height:1.75rem;padding:0 0.6rem;">
         {showZeroRing ? 'Hide' : 'Show'} Neutral Ring
       </button>
@@ -415,8 +415,8 @@
                   dominant-baseline="end"
                   opacity={anyHovered ? (isActive ? 1 : 0.1) : 0.85}
                   style="transition: opacity 200ms ease; cursor: default;"
-                  on:mouseenter={() => hoveredIndex.set(i)}
-                  on:mouseleave={() => hoveredIndex.set(-1)}
+                  onmouseenter={() => hoveredIndex.set(i)}
+                  onmouseleave={() => hoveredIndex.set(-1)}
                 >
                   {#each lbl.lines as line, li}
                     <tspan x="0" dy={li === 0 ? -(lbl.lines.length - 1) * 5 : 10}>{line}</tspan>
@@ -433,8 +433,8 @@
                 stroke="transparent"
                 stroke-width="28"
                 style="cursor: crosshair;"
-                on:mouseenter={() => hoveredIndex.set(sh.index)}
-                on:mouseleave={() => hoveredIndex.set(-1)}
+                onmouseenter={() => hoveredIndex.set(sh.index)}
+                onmouseleave={() => hoveredIndex.set(-1)}
               />
             {/each}
 
@@ -444,8 +444,8 @@
                 cx={pt.x} cy={pt.y} r={pt.r}
                 fill="transparent"
                 style="cursor: crosshair;"
-                on:mouseenter={() => hoveredIndex.set(pt.index)}
-                on:mouseleave={() => hoveredIndex.set(-1)}
+                onmouseenter={() => hoveredIndex.set(pt.index)}
+                onmouseleave={() => hoveredIndex.set(-1)}
               />
             {/each}
 

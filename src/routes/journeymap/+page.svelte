@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import JourneyLayoutToggle       from '$lib/journeymapper2/JourneyLayoutToggle.svelte';
   import JourneyIndexBars          from '$lib/journeymapper2/JourneyIndexBars.svelte';
   import JourneyLegend             from '$lib/journeymapper2/JourneyLegend.svelte';
@@ -74,14 +75,19 @@
   let drawerMode = $state<'step' | 'plutchik' | 'persona' | 'inflection' | null>(null);
   let drawerOpen = $derived(drawerMode !== null);
 
-  // Auto-open step drawer when a step is selected
-  $effect(() => {
-    if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
-  });
-
-  // Auto-open inflection drawer when a fork path card is clicked
-  $effect(() => {
-    if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
+  // Auto-open drawers when chart selections change.
+  // Subscriptions make this deterministic regardless of rune/store reactivity nuances.
+  onMount(() => {
+    const unsubStep = selectedIndex.subscribe((i) => {
+      if (i >= 0 && drawerMode !== 'step') drawerMode = 'step';
+    });
+    const unsubInflection = selectedInflectionIndex.subscribe((i) => {
+      if (i >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
+    });
+    return () => {
+      unsubStep();
+      unsubInflection();
+    };
   });
 
   let timelineActive = $derived($selectedIndex >= 0 || drawerOpen);
@@ -207,7 +213,7 @@
         onstory={() => handlePersonaStory()}
       />
   <!-- ── Three-column body ────────────────────────────────────────────── -->
-  <div class="flex flex-row flex-1 min-h-0">
+<div class="flex flex-row flex-1 min-h-0">
 
     <!-- LEFT — persona selector column -->
 

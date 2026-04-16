@@ -145,11 +145,11 @@
                      role="button"
                      tabindex="0"
                      aria-label="Open positive inflection path"
-                     on:mouseenter={() => handlePathMouseEnter(`${step.index}-pos`)}
-                     on:mouseleave={handlePathMouseLeave}
-                     on:click={() => handlePathClick(step.index, 'positive')}
-                     on:keydown={e => e.key === 'Enter' && handlePathClick(step.index, 'positive')}>
-                
+                     onmouseenter={() => handlePathMouseEnter(`${step.index}-pos`)}
+                     onmouseleave={() => handlePathMouseLeave()}
+                     onclick={() => handlePathClick(step.index, 'positive')}
+                     onkeydown={e => e.key === 'Enter' && handlePathClick(step.index, 'positive')}>
+
                 <span class="pill-sm" 
                   style="border: 1px solid {POS_COLOR};
                   color: {POS_COLOR}">
@@ -164,10 +164,10 @@
                      role="button"
                      tabindex="0"
                      aria-label="Open negative inflection path"
-                     on:mouseenter={() => handlePathMouseEnter(`${step.index}-neg`)}
-                     on:mouseleave={handlePathMouseLeave}
-                     on:click={() => handlePathClick(step.index, 'negative')}
-                     on:keydown={e => e.key === 'Enter' && handlePathClick(step.index, 'negative')}>
+                     onmouseenter={() => handlePathMouseEnter(`${step.index}-neg`)}
+                     onmouseleave={() => handlePathMouseLeave()}
+                     onclick={() => handlePathClick(step.index, 'negative')}
+                     onkeydown={e => e.key === 'Enter' && handlePathClick(step.index, 'negative')}>
 
                   <span class="pill-sm" 
                   style="border: 1px solid {NEG_COLOR}; 
@@ -218,10 +218,10 @@
                      role="button"
                      tabindex="0"
                      aria-label="Open positive inflection path"
-                     on:mouseenter={() => handlePathMouseEnter(`${step.index}-pos`)}
-                     on:mouseleave={handlePathMouseLeave}
-                     on:click={() => handlePathClick(step.index, 'positive')}
-                     on:keydown={e => e.key === 'Enter' && handlePathClick(step.index, 'positive')}>
+                     onmouseenter={() => handlePathMouseEnter(`${step.index}-pos`)}
+                     onmouseleave={() => handlePathMouseLeave()}
+                     onclick={() => handlePathClick(step.index, 'positive')}
+                     onkeydown={e => e.key === 'Enter' && handlePathClick(step.index, 'positive')}>
                   <span class="fork-path-tag" style="color:{POS_COLOR}; background:{POS_COLOR}18;">↑ Positive</span>
                   {#if pos?.label}<span class="fork-path-label">{pos.label}</span>{/if}
                   {#if pos?.outcome}<p class="fork-path-outcome">{pos.outcome}</p>{/if}
@@ -232,10 +232,10 @@
                      role="button"
                      tabindex="0"
                      aria-label="Open negative inflection path"
-                     on:mouseenter={() => handlePathMouseEnter(`${step.index}-neg`)}
-                     on:mouseleave={handlePathMouseLeave}
-                     on:click={() => handlePathClick(step.index, 'negative')}
-                     on:keydown={e => e.key === 'Enter' && handlePathClick(step.index, 'negative')}>
+                     onmouseenter={() => handlePathMouseEnter(`${step.index}-neg`)}
+                     onmouseleave={() => handlePathMouseLeave()}
+                     onclick={() => handlePathClick(step.index, 'negative')}
+                     onkeydown={e => e.key === 'Enter' && handlePathClick(step.index, 'negative')}>
                   <span class="fork-path-tag" style="color:{NEG_COLOR}; background:{NEG_COLOR}18;">↓ Negative</span>
                   {#if neg?.label}<span class="fork-path-label">{neg.label}</span>{/if}
                   {#if neg?.outcome}<p class="fork-path-outcome">{neg.outcome}</p>{/if}

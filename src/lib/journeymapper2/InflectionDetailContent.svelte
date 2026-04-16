@@ -96,7 +96,7 @@
           style="--tab-color:{POS_COLOR}"
           role="tab"
           aria-selected={direction === 'positive'}
-          on:click={() => switchPath('positive')}
+          onclick={() => switchPath('positive')}
         >
           <IconArrowUpRegular />
           <span>{posPath?.label ?? 'Positive Path'}</span>
@@ -107,7 +107,7 @@
           style="--tab-color:{NEG_COLOR}"
           role="tab"
           aria-selected={direction === 'negative'}
-          on:click={() => switchPath('negative')}
+          onclick={() => switchPath('negative')}
         >
           <IconArrowDownRegular />
           <span>{negPath?.label ?? 'Negative Path'}</span>
@@ -175,7 +175,7 @@
         <button
           class="other-path-row"
           style="--other-color:{otherDirection === 'positive' ? POS_COLOR : NEG_COLOR}"
-          on:click={() => switchPath(otherDirection)}
+          onclick={() => switchPath(otherDirection)}
           aria-label="Switch to {otherDirection} path"
         >
           <span class="other-path-tag" style="color:{otherDirection === 'positive' ? POS_COLOR : NEG_COLOR}">

@@ -42,9 +42,9 @@
     class="card-sm"
     class:flow-step-card--hovered={$hoveredIndex === step.index}
     class:flow-step-card--selected={$selectedIndex === step.index}
-    on:mouseenter={() => { hoveredIndex.set(step.index); hoveredInflectionIndex.set(-1); }}
-    on:mouseleave={() => hoveredIndex.set(-1)}
-    on:click={handleClick}
+    onmouseenter={() => { hoveredIndex.set(step.index); hoveredInflectionIndex.set(-1); }}
+    onmouseleave={() => hoveredIndex.set(-1)}
+    onclick={handleClick}
     aria-pressed={$selectedIndex === step.index}
   >
     <span class="jm-content-row-stretch p-1">
@@ -108,8 +108,8 @@
       style="border-color:{stageColor};"
       role="region"
       aria-label="Inflection point: {d?.step}"
-      on:mouseenter={() => { hoveredInflectionIndex.set(step.index); hoveredIndex.set(-1); }}
-      on:mouseleave={() => hoveredInflectionIndex.set(-1)}
+      onmouseenter={() => { hoveredInflectionIndex.set(step.index); hoveredIndex.set(-1); }}
+      onmouseleave={() => hoveredInflectionIndex.set(-1)}
     >
       {#if inflDet}
         <div class="flex flex-row p-2">

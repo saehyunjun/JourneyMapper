@@ -130,7 +130,7 @@ aria-label="Persona selector" role="navigation" onmousemove={handleMouseMove}>
     {@const hpAccent = isHpCaregiver ? 'var(--gold)' : 'var(--purple)'}
     <div
       class="tooltip"
-      style="left: {tipX}px; top: {tipY}px; border: 2.25px solid {hpAccent}; outline: 2px solid {hpAccent};"
+      style="left: {tipX}px; top: {tipY}px; border: 2.25px solid {hpAccent}; outline: 2px solid {hpAccent}; pointer-events: none;"
       role="tooltip"
       aria-live="polite"
     >

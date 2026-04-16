@@ -31,7 +31,7 @@
   let nodeRefs = [];
 
   $: nodeRefs = new Array(touchpoints.length);
-
+z
   function degToRad(d) { return (d * Math.PI) / 180; }
 
   function polar(r, deg) {
@@ -193,8 +193,8 @@
           r={hoveredTp === i ? 10 : 8}
           fill="var(--midgrayblue)"
           cursor="pointer"
-          on:mouseenter={() => hoveredTp = i}
-          on:mouseleave={() => hoveredTp = null}>
+          onmouseenter={() => hoveredTp = i}
+          onmouseleave={() => hoveredTp = null}>
         </circle>
 
         <foreignObject

@@ -1,8 +1,7 @@
 <script>
   import { hoveredIndex, hoveredInflectionIndex } from './journeyStore.js';
-  import { ratingToLabel, emotionColor, buildStageColorMap, plutchikScoreToColor, DYAD_BY_ID, SCORE_ALIASES, sentimentToColor } from './journeyConfig.js';
+  import { ratingToLabel, emotionColor, buildStageColorMap, sentimentToColor, DYAD_BY_ID, SCORE_ALIASES } from './journeyConfig.js';
 
-  import QuotesRegular from "phosphor-icons-svelte/IconQuotesRegular.svelte";
   import IconArrowsOutLineVerticalRegular from 'phosphor-icons-svelte/IconArrowsOutLineVerticalRegular.svelte';
 
   export let data    = [];
@@ -31,12 +30,11 @@
 
   $: isInflection = $hoveredIndex < 0 && $hoveredInflectionIndex >= 0;
 
-    // ── Stage color ───────────────────────────────────────────────────────
-    $: stageColorMap = buildStageColorMap(data);
-    $: stageColor = (step && stageColorMap[step.stage_id]) ? stageColorMap[step.stage_id] : 'var(--jm-icon-dark, #3a3a3a)';
+  // ── Stage color ────────────────────────────────────────────────────────────
+  $: stageColorMap = buildStageColorMap(data);
+  $: stageColor = (step && stageColorMap[step.stage_id]) ? stageColorMap[step.stage_id] : 'var(--jm-icon-dark, #3a3a3a)';
 
   // ── Sentiment label and color ──────────────────────────────────────────────
-  $: sentimentVal   = step ? parseFloat(step.sentiment) : 0;
   $: sentimentLabel = step ? ratingToLabel(step.sentiment) : '';
   $: sentimentColor = step ? sentimentToColor(step.sentiment) : '#BFA080';
 
@@ -69,83 +67,76 @@
   $: tipY = flipUp   ? mouseY - TIP_H - OFFSET_Y : mouseY + OFFSET_Y;
 </script>
 
-<svelte:window on:mousemove={onMouseMove} />
+<!-- ── KEY FIX: onmousemove (Svelte 5 syntax) ─────────────────────────────── -->
+<svelte:window onmousemove={onMouseMove} />
 
 {#if step}
   <div
     class="tooltip flex flex-col gap-2"
-    style="left: {tipX}px; top: {tipY}px; width: {TIP_W}px; 
-    border: 2.25px solid {stageColor}; outline: 2px solid {stageColor}"
+    style="
+      left: {tipX}px;
+      top: {tipY}px;
+      width: {TIP_W}px;
+      border: 2.25px solid {stageColor};
+      outline: 2px solid {stageColor};
+      pointer-events: none;
+    "
     role="tooltip"
     aria-live="polite"
   >
 
-    <!-- ── Header ─────────────────────────────────────────────────────── -->
-  {#if isInflection}
-    <div class="flex flex-row w-full justify-end">
-    <span class="pill-sm">
-      <IconArrowsOutLineVerticalRegular />
-      Inflection Point</span>
-    </div>
+    <!-- ── Inflection badge ───────────────────────────────────────────── -->
+    {#if isInflection}
+      <div class="flex flex-row w-full justify-end">
+        <span class="pill-sm">
+          <IconArrowsOutLineVerticalRegular />
+          Inflection Point
+        </span>
+      </div>
     {/if}
-    
 
-    <div class="flex flex-col gap-1 items-center mb-2 pb-2"
-      style="border-bottom: 2.25px solid {stageColor};">
-        
-          <span class="label-xs text-center"
-          style="color: {stageColor}">
-          {step.stage}</span>
-          
-          <h3 class="heading-serif-sm text-center"
-          style="color: {stageColor}">
-          {step.step}</h3>
-
+    <!-- ── Header: stage + step name ─────────────────────────────────── -->
+    <div
+      class="flex flex-col gap-1 items-center mb-2 pb-2"
+      style="border-bottom: 2.25px solid {stageColor};"
+    >
+      <span class="label-xs text-center" style="color: {stageColor};">
+        {step.stage}
+      </span>
+      <h3 class="heading-serif-sm text-center" style="color: {stageColor};">
+        {step.step}
+      </h3>
     </div>
-
-
-
 
     <!-- ── Quote ──────────────────────────────────────────────────────── -->
     {#if hasQuote}
       <div class="flex flex-col justify-center px-2">
-        <p class="pull-quote text-center"
-        style="color: var(--ink)">
-        "{step.quote}"</p>
+        <p class="pull-quote text-center" style="color: var(--ink);">
+          "{step.quote}"
+        </p>
       </div>
     {/if}
+
     <!-- ── Sentiment + Emotion ────────────────────────────────────────── -->
+    <div class="jm-content-row-stretch">
+      <div class="sentiment-container items-center">
+        <span class="jm-swatch-sm" style="background:{sentimentColor};"></span>
+        <span class="label-xs uppercase">{sentimentLabel}</span>
 
-  <div class="jm-content-row-stretch">        
-
-    <div class ="sentiment-container items-center">
-        <span class="jm-swatch-sm" 
-       style="background:{sentimentColor}">
-       </span>
-       
-       <span class="label-xs uppercase">
-         {sentimentLabel}
-       </span>
-
-    <!-- Sentiment -->
-
-    <div class="sentiment-container">
-      <div class="emotion-container">
-        {#each emotionSwatches as color}
-        <span class="jm-swatch-round-sm" style="background:{color}">
-      </span>
-        {/each}
+        <div class="sentiment-container">
+          <div class="emotion-container">
+            {#each emotionSwatches as color}
+              <span class="jm-swatch-round-sm" style="background:{color};"></span>
+            {/each}
+          </div>
+          <div class="flex flex-col align-bottom">
+            <span class="label-xs uppercase">{step.plutchik_score}</span>
+          </div>
+        </div>
       </div>
-      <div class="flex flex-col align-bottom">
-        <span class="label-xs uppercase">
-          {step.plutchik_score}
-        </span>
-      </div>
-      <!-- Emotion / Plutchik -->
-      </div>
+    </div>
+
   </div>
-  </div>
-</div>
 {/if}
 
 <style>

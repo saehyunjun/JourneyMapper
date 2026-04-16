@@ -118,9 +118,9 @@
       width={STEP_WIDTH} height={GRID_HEIGHT}
       fill="transparent"
       style="cursor: pointer;"
-      on:mouseenter={() => hoveredIndex.set(i)}
-      on:mouseleave={() => hoveredIndex.set(-1)}
-      on:click={() => handleColumnClick(i)}
+      onmouseenter={() => hoveredIndex.set(i)}
+      onmouseleave={() => hoveredIndex.set(-1)}
+      onclick={() => handleColumnClick(i)}
     />
   {/each}
 

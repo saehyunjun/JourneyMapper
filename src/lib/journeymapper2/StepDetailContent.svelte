@@ -184,7 +184,7 @@
 
       <button
         class="btn-nav"
-        on:click={() => dispatch('openEmotionDetail')}
+        onclick={() => dispatch('openEmotionDetail')}
         aria-label="Learn about {step.plutchik_score} — open emotion detail"
         title="About Plutchik emotions"
       >
@@ -206,7 +206,7 @@
             src={illustrationSrc}
             alt="Illustration for {step.step}"
             class="step-illustration__img"
-            on:error={() => (imgError = true)}
+            onerror={() => (imgError = true)}
           />
         {:else}
           <div class="step-illustration__fallback stats-animation-gradient__gradient--bright pt-8">
@@ -231,7 +231,7 @@
           {#if wheelData}
                 <button
                   class="btn-extranote-orange pl-2"
-                  on:click={() => (wheelDrawerOpen = true)}
+                  onclick={() => (wheelDrawerOpen = true)}
                   aria-label="Open experience wheel for {step.step}"
                 >
                   <span class="">View Experience Wheel</span>
@@ -332,9 +332,9 @@
                 <div
                   class="imb-squares"
                   class:imb-squares--interactive={hasExplainer}
-                  on:mouseenter={hasExplainer ? (e) => onSquareEnter(e, m.key) : undefined}
-                  on:mousemove={hasExplainer ? onSquareMove : undefined}
-                  on:mouseleave={hasExplainer ? onSquareLeave : undefined}
+                  onmouseenter={hasExplainer ? (e) => onSquareEnter(e, m.key) : undefined}
+                  onmousemove={hasExplainer ? onSquareMove : undefined}
+                  onmouseleave={hasExplainer ? onSquareLeave : undefined}
                   role="group"
                   aria-label="{m.label} scale"
                 >
@@ -391,7 +391,7 @@
     eyebrow={step.stage}
     title="Experience Wheel"
     width={650}
-    on:close={() => (wheelDrawerOpen = false)}
+    onclose={() => (wheelDrawerOpen = false)}
   >
     <ExperienceWheel
       data={wheelData}

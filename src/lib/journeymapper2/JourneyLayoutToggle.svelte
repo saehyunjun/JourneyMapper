@@ -12,7 +12,7 @@
     class="btn-sm"
     class:layout-btn--active={layout === 'horizontal'}
     aria-pressed={layout === 'horizontal'}
-    on:click={() => (layout = 'horizontal')}
+    onclick={() => (layout = 'horizontal')}
     title="Horizontal layout"
   >
     <ArrowRight class="w-6" />
@@ -22,7 +22,7 @@
     class="btn-sm"
     class:layout-btn--active={layout === 'vertical'}
     aria-pressed={layout === 'vertical'}
-    on:click={() => (layout = 'vertical')}
+    onclick={() => (layout = 'vertical')}
     title="Vertical layout"
   >
     <ArrowDown class="w-4" />

@@ -80,7 +80,7 @@
           <li
             class="dyad-row"
             style="opacity: {rowOp(dyad)}; transition: opacity 0.18s ease;"
-            on:mouseenter={() => hoverPair(dyad.emotions[0], dyad.emotions[1])}
+            onmouseenter={() => hoverPair(dyad.emotions[0], dyad.emotions[1])}
             on:mouseleave={hoverClear}
           >
             <div class="swatches">

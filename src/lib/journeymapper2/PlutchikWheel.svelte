@@ -108,7 +108,7 @@
           stroke-width="1.25"
           opacity={petalOp(em.id)}
           style="transition: opacity 0.18s ease; cursor: pointer;"
-          on:mouseenter={() => hoverOne(em.id)}
+          onmouseenter={() => hoverOne(em.id)}
           on:mouseleave={hoverClear}
         />
       {/each}
