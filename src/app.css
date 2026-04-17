@@ -637,7 +637,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: left;
-    gap: .5em;
+    gap: .125em;
   }
 
   .even-col { display: flex; flex-direction: column; }

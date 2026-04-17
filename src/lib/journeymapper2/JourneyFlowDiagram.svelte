@@ -96,7 +96,7 @@
 
         <!-- Inter-stage connector -->
         {#if gi < stageGroups.length - 1}
-          <FlowConnector variant="stage" {layout} />
+        <FlowConnector variant={isVertical ? 'stage-vertical' : 'stage'} />
         {/if}
 
       {/each}
@@ -124,7 +124,7 @@
   .flow-diagram-row {
     display: flex;
     flex-direction: row;
-    align-items: middle;
+    align-items: flex-start;
     height: max-content;
     gap: 0.25rem;
   }
@@ -142,7 +142,7 @@
   .stage-row {
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-content: center;
     width: 100%;
     min-height: 8rem;
   }

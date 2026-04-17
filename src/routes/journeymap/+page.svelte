@@ -208,6 +208,10 @@
       />
   <!-- ── Three-column body ────────────────────────────────────────────── -->
   <div class="flex flex-row flex-1 min-h-0">
+
+    <!-- LEFT — persona selector column -->
+
+    <!-- MIDDLE — chart / flow, scrolls horizontally -->
     <div class="chart-col flex-1 min-w-0" bind:this={scrollEl}>
       {#if chartView === 'flow'}
         <div class="flex flex-col w-full justify-right">
@@ -234,11 +238,12 @@
       <JourneyLegend items={metrics} />
     </div>
 
-    <JourneyInfoSidebar
-    activePersona={activePersona as any}
-    data={journeyData}
-    {metrics}
-  />
+
+      <JourneyInfoSidebar
+        activePersona={activePersona as any}
+        data={journeyData}
+        {metrics}
+      />
 
 
   </div><!-- /journey-body -->
@@ -350,4 +355,10 @@
     scrollbar-color: var(--purple) transparent;
   }
 
+  /* Right info sidebar — fixed width, scrollable */
+  .info-col {
+    max-width: 320px;
+    width: 20vw;
+    border-left: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  }
 </style>
