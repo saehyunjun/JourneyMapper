@@ -2,7 +2,7 @@
 
 export const ROW_VALUES  = [5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5];
 export const GRID_HEIGHT = 320;
-export const STEP_WIDTH  = 225;
+export const STEP_WIDTH  = 280;
 export const LEFT_AXIS_WIDTH = 10;
 export const TOP_PADDING = 0;
 export const SVG_HEIGHT  = GRID_HEIGHT + TOP_PADDING * 1.25;

@@ -74,7 +74,7 @@
     position: fixed;
     inset: 0;
     background: rgba(30, 20, 10, 0.825);
-    z-index: 99;
+    z-index: 9997;
     cursor: pointer;
   }
 
@@ -83,7 +83,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 999;
+    z-index: 9999;
     width: 67vw;
 
     display: flex;

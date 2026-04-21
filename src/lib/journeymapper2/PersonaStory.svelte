@@ -3,20 +3,21 @@
   import { cubicOut, cubicInOut } from 'svelte/easing';
   import { tweened } from 'svelte/motion';
 
-  import QuoteScreen      from './StoryComponents/QuoteScreen.svelte';
-  import ThemesScreen     from './StoryComponents/ThemeScreen.svelte';
-  import BaseStoryScreen  from './StoryComponents/BaseScreen.svelte';
-  import CurrentStateScreen from './StoryComponents/CurrentStateScreen.svelte';
+  import QuoteScreen     from './StoryComponents/QuoteScreen.svelte';
+  import ThemesScreen    from './StoryComponents/ThemeScreen.svelte';
+  import BaseStoryScreen from './StoryComponents/BaseScreen.svelte';
+  import IntroScreen     from './StoryComponents/IntroScreen.svelte';
 
-  import XRegular         from 'phosphor-icons-svelte/IconXRegular.svelte';
+  import XRegular          from 'phosphor-icons-svelte/IconXRegular.svelte';
+  import CaretLeftRegular  from 'phosphor-icons-svelte/IconCaretLeftRegular.svelte';
+  import CaretRightRegular from 'phosphor-icons-svelte/IconCaretRightRegular.svelte';
+
   import { highlightAll } from '$lib/journeymapper2/textUtils.js';
   import { getScreenTheme, buildScreenBackground } from '$lib/journeymapper2/storyConfig.js';
-  import CaretLeftRegular from 'phosphor-icons-svelte/IconCaretLeftRegular.svelte';
-  import CaretRightRegular from 'phosphor-icons-svelte/IconCaretRightRegular.svelte';
 
   // ── Props ─────────────────────────────────────────────────────────────
   let {
-    open = $bindable(false),
+    open    = $bindable(false),
     persona = {},
     steps   = [],
     onclose = undefined,
@@ -24,8 +25,6 @@
 
   // ── Derived persona data ──────────────────────────────────────────────
   let profile  = $derived(persona?.profile ?? {});
-
-  // JSON uses camelCase keys and flat goal/barrier fields
   let states   = $derived(persona?.currentState ?? persona?.current_state ?? []);
   let themes   = $derived(persona?.discussionThemes ?? persona?.themes ?? []);
 
@@ -38,10 +37,14 @@
     const p = persona?.profile ?? {};
     return [p.barrier1, p.barrier2, p.barrier3].filter(Boolean);
   })());
-  let inflectionStep = $derived(steps?.find(s => s.inflection) ?? null);
+
+  // FIX: was `s.inflection` (boolean that does not exist in JSON).
+  // JSON marks the inflection step with an `inflection_detail` object.
+  let inflectionStep = $derived(steps?.find(s => s.inflection_detail != null) ?? null);
   let finalStep      = $derived(steps?.[steps.length - 1] ?? null);
-  let isCaregiver    = $derived(persona?.type?.toLowerCase().includes('caregiver') ?? false);
-  let accentColor    = $derived(isCaregiver ? 'var(--gold)' : 'var(--purple, #23abab)');
+
+  let isCaregiver = $derived(persona?.type?.toLowerCase().includes('caregiver') ?? false);
+  let accentColor = $derived(isCaregiver ? 'var(--gold)' : 'var(--purple, #23abab)');
 
   /** Highlight durations + clinical terms in a bio/narrative string */
   function h(text = '') {
@@ -55,7 +58,7 @@
   // ── Story flow ────────────────────────────────────────────────────────
   const DEFAULT_FLOW = [
     'intro', 'key-quote', 'event-1', 'themes', 'bio2',
-    'current-state', 'goal', 'barrier',
+    'goal', 'barrier',
     'inflection-lead', 'inflection-data', 'inflection-detail',
     'path-pos', 'path-neg', 'final-lead', 'final-data',
   ];
@@ -95,16 +98,16 @@
 
   function onKeydown(e) {
     if (!open) return;
-    if (e.key === 'Escape') close();
+    if (e.key === 'Escape')     close();
     if (e.key === 'ArrowRight') next();
     if (e.key === 'ArrowLeft')  prev();
   }
 
   // ── Auto-advance progress bar ─────────────────────────────────────────
   const AUTO_ADVANCE_MS = 8000;
-  let progress = $state(0);
-  let paused   = $state(false);
-  let rafId    = null;
+  let progress  = $state(0);
+  let paused    = $state(false);
+  let rafId     = null;
   let startTime = null;
   let elapsed   = 0;
 
@@ -113,7 +116,7 @@
     startTime = performance.now() - elapsed;
     function tick(now) {
       if (paused) return;
-      elapsed = now - startTime;
+      elapsed  = now - startTime;
       progress = Math.min(elapsed / AUTO_ADVANCE_MS, 1);
       if (progress >= 1) {
         elapsed = 0;
@@ -127,7 +130,7 @@
 
   function resetProgress() {
     cancelAnimationFrame(rafId);
-    elapsed = 0;
+    elapsed  = 0;
     progress = 0;
     if (open && !paused) startProgress();
   }
@@ -138,7 +141,7 @@
       resetProgress();
     } else {
       cancelAnimationFrame(rafId);
-      elapsed = 0;
+      elapsed  = 0;
       progress = 0;
     }
     return () => cancelAnimationFrame(rafId);
@@ -146,82 +149,155 @@
 
   // Reset timer on screen change
   $effect(() => {
-    screenIndex; // track
+    screenIndex; // track dependency
     resetProgress();
   });
 
   // ── Screen registry ───────────────────────────────────────────────────
+  // FIX: each entry passes its own literal key to getScreenTheme() instead
+  // of the reactive `screen` variable. Previously every entry would receive
+  // the theme of whatever screen was currently active, which was coincidentally
+  // correct for the active screen but wrong for all others when the registry
+  // is inspected outside the current slide.
   let SCREEN_REGISTRY = $derived({
     intro: {
-      component: BaseStoryScreen,
-      props: { title: profile?.name, 
-        content: `<span class="pull-quote-lg">${h(profile?.tagline)}</span>`, accent: accentColor, theme: getScreenTheme(screen) }
+      component: IntroScreen,
+      props: {
+        profile,
+        states,
+        accent: accentColor,
+        theme:  getScreenTheme('intro'),
+      }
     },
     'key-quote': {
       component: QuoteScreen,
-      props: { profile, accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        profile,
+        accent: accentColor,
+        theme:  getScreenTheme('key-quote'),
+      }
     },
     'event-1': {
       component: BaseStoryScreen,
-      props: { title: 'How It Began', content: h(profile?.bio_1), accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        title:   'How It Began',
+        content: h(profile?.bio_1),
+        accent:  accentColor,
+        theme:   getScreenTheme('event-1'),
+      }
     },
     themes: {
       component: ThemesScreen,
-      props: { themes, profile, accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        themes,
+        profile,
+        accent: accentColor,
+        theme:  getScreenTheme('themes'),
+      }
     },
     bio2: {
       component: BaseStoryScreen,
-      props: { title: `How ${firstName(profile?.name)} navigates care`, content: h(profile?.bio_2), accent: accentColor, theme: getScreenTheme(screen) }
-    },
-    'current-state': {
-      component: CurrentStateScreen,
-      props: { states, accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        title:   `How ${firstName(profile?.name)} navigates care`,
+        content: h(profile?.bio_2),
+        accent:  accentColor,
+        theme:   getScreenTheme('bio2'),
+      }
     },
     goal: {
       component: BaseStoryScreen,
-      props: { title: `${firstName(profile?.name)}'s Goals`, content: h(goals?.map(g => `• ${g}`).join('<br/>')), accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        title:   `${firstName(profile?.name)}'s Goals`,
+        content: h(goals?.map(g => `• ${g}`).join('<br/>')),
+        accent:  accentColor,
+        theme:   getScreenTheme('goal'),
+      }
     },
     barrier: {
       component: BaseStoryScreen,
-      props: { title: 'Barriers', content: h(barriers?.map(b => `• ${b}`).join('<br/>')), accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        title:   'Barriers',
+        content: h(barriers?.map(b => `• ${b}`).join('<br/>')),
+        accent:  accentColor,
+        theme:   getScreenTheme('barrier'),
+      }
     },
     'inflection-lead': {
       component: BaseStoryScreen,
-      props: { kicker: 'Inflection Point', title: inflectionStep?.step, meta: inflectionStep?.stage, content: h(inflectionStep?.quote), accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        kicker:  'Inflection Point',
+        title:   inflectionStep?.step,
+        meta:    inflectionStep?.stage,
+        content: h(inflectionStep?.quote),
+        accent:  accentColor,
+        theme:   getScreenTheme('inflection-lead'),
+      }
     },
     'inflection-data': {
       component: BaseStoryScreen,
-      props: { title: 'What happens here', content: h(inflectionStep?.narrative_description), accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        title:   'What happens here',
+        content: h(inflectionStep?.narrative_description),
+        accent:  accentColor,
+        theme:   getScreenTheme('inflection-data'),
+      }
     },
     'inflection-detail': {
       component: BaseStoryScreen,
-      props: { title: inflectionStep?.inflection_detail?.label, content: h(inflectionStep?.inflection_detail?.description), accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        title:   inflectionStep?.inflection_detail?.label,
+        content: h(inflectionStep?.inflection_detail?.description),
+        accent:  accentColor,
+        theme:   getScreenTheme('inflection-detail'),
+      }
     },
     'path-pos': {
       component: BaseStoryScreen,
       props: {
-        title: 'Best Case Path',
-        content: h(inflectionStep?.inflection_detail?.paths?.filter(p => p.direction === 'positive')?.map(p => p.outcome)?.join('<br/><br/>')),
-        accent: accentColor,
-        theme: getScreenTheme(screen)
+        kicker:  'Best Case Path',
+        title:   inflectionStep?.inflection_detail?.paths
+                   ?.find(p => p.direction === 'positive')?.label ?? 'Positive Path',
+        content: h(
+          inflectionStep?.inflection_detail?.paths
+            ?.find(p => p.direction === 'positive')?.outcome ?? ''
+        ),
+        accent:  accentColor,
+        theme:   getScreenTheme('path-pos'),
       }
     },
     'path-neg': {
       component: BaseStoryScreen,
       props: {
-        title: 'Risk Path',
-        content: h(inflectionStep?.inflection_detail?.paths?.filter(p => p.direction === 'negative')?.map(p => p.outcome)?.join('<br/><br/>')),
-        accent: accentColor,
-        theme: getScreenTheme(screen)
+        kicker:  'Risk Path',
+        title:   inflectionStep?.inflection_detail?.paths
+                   ?.find(p => p.direction === 'negative')?.label ?? 'Risk Path',
+        content: h(
+          inflectionStep?.inflection_detail?.paths
+            ?.find(p => p.direction === 'negative')?.outcome ?? ''
+        ),
+        accent:  accentColor,
+        theme:   getScreenTheme('path-neg'),
       }
     },
     'final-lead': {
       component: BaseStoryScreen,
-      props: { kicker: 'Outcome', title: finalStep?.step, meta: finalStep?.stage, content: h(finalStep?.quote), accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        kicker:  'Outcome',
+        title:   finalStep?.step,
+        meta:    finalStep?.stage,
+        content: h(finalStep?.quote),
+        accent:  accentColor,
+        theme:   getScreenTheme('final-lead'),
+      }
     },
     'final-data': {
       component: BaseStoryScreen,
-      props: { title: 'Final State', content: h(finalStep?.narrative_description), accent: accentColor, theme: getScreenTheme(screen) }
+      props: {
+        title:   'Final State',
+        content: h(finalStep?.narrative_description),
+        accent:  accentColor,
+        theme:   getScreenTheme('final-data'),
+      }
     },
   });
 
@@ -289,7 +365,6 @@
 
     <!-- ── Story header ──────────────────────────────────────────────── -->
     <header class="story-header">
-      <!-- Avatar + name -->
       <div class="story-avatar-row" role="group" aria-label="Persona identity">
         <div
           class="story-avatar-ring"
@@ -315,7 +390,6 @@
         </div>
       </div>
 
-      <!-- Close -->
       <button class="story-close" onclick={close} aria-label="Close story">
         <XRegular size={18} aria-hidden="true" />
       </button>

@@ -2,7 +2,6 @@
   import { tweened } from 'svelte/motion';
   import { cubicInOut, cubicOut } from 'svelte/easing';
   import { fade, fly } from 'svelte/transition';
-  import { createEventDispatcher } from 'svelte';
   import { selectedIndex } from './journeyStore.js';
   import ExperienceWheel from './ExperienceWheel.svelte';
   import StepEvents from './StepEvents.svelte';
@@ -21,13 +20,13 @@
   import HandHeart    from 'phosphor-icons-svelte/IconHandHeartBold.svelte';
   import Aclepius     from 'phosphor-icons-svelte/IconAsclepiusBold.svelte';
  
-  const dispatch = createEventDispatcher();
- 
   export let data    = [];
   export let metrics = [];
   /** Optional experience wheel data — opens in sub-drawer when present */
   export let wheelData = /** @type {any} */ (null);
   export let illustrationSrc = '/static/illustrations/Regression1.jpeg';
+  /** Callback prop — page owns the emotion sub-drawer */
+  export let onopenEmotionDetail = () => {};
 
   /** Controls the Experience Wheel sub-drawer */
   let wheelDrawerOpen = false;
@@ -64,12 +63,6 @@
   let tooltipX = 0;
   let tooltipY = 0;
 
-  let emotionSubDrawerOpen = false;
- 
- function openEmotionDetail() {
-   emotionSubDrawerOpen = true;
- }
- 
   function onSquareEnter(e, key) {
     hoveredMetricKey = key;
     positionTooltip(e);
@@ -184,7 +177,7 @@
 
       <button
         class="btn-nav"
-        onclick={() => dispatch('openEmotionDetail')}
+        onclick={onopenEmotionDetail}
         aria-label="Learn about {step.plutchik_score} — open emotion detail"
         title="About Plutchik emotions"
       >
