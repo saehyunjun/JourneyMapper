@@ -14,7 +14,7 @@
   import SmileyBlank  from 'phosphor-icons-svelte/IconSmileyBlankBold.svelte';
   import Scroll from 'phosphor-icons-svelte/IconScrollRegular.svelte';
   import IconHeartHalfRegular from 'phosphor-icons-svelte/IconHeartHalfRegular.svelte';
-  import IconDiamondsFourRegular from 'phosphor-icons-svelte/IconDiamondsFourRegular.svelte'
+  import IconDiamondsFourRegular from 'phosphor-icons-svelte/IconDiamondsFourRegular.svelte';
 
   import CalenderDots from 'phosphor-icons-svelte/IconCalendarDotsBold.svelte';
   import HandHeart    from 'phosphor-icons-svelte/IconHandHeartBold.svelte';
@@ -43,7 +43,7 @@
     medical_self_efficacy: HandHeart,
   };
 
-  /** Build a 10-stop light→dark ramp from a CSS hex color — mirrors IndexMetricBars */
+  /** Build a 10-stop light→dark ramp from a CSS hex color */
   function buildRamp(baseColor) {
     return STOPS.map((_, si) => {
       const pct = Math.round(10 + (si / (STOPS.length - 1)) * 90);
@@ -51,7 +51,7 @@
     });
   }
 
-  /** Derive per-square opacity — mirrors IndexMetricBars */
+  /** Derive per-square opacity */
   function squareOpacity(si, activePos) {
     const dist = Math.abs(si - activePos);
     return si === Math.round(activePos) ? 1 : Math.max(0.12, 1 - dist * 0.28);
@@ -140,10 +140,6 @@
     });
   }
  
-  function toPercent(val) {
-    return ((parseFloat(val) + 5) / 10) * 100;
-  }
- 
   // ── Illustration error fallback ───────────────────────────────────────
   let imgError = false;
   $: if (illustrationSrc) imgError = false;
@@ -152,28 +148,22 @@
 {#if step}
   <div class="content-wrap">
 
-    <!-- Top meta bar -->
-    <div class="toolbar p-2"
-    style="border-bottom: 2.5px solid {stageColor}">
-        <div class="flex flex-row gap-2 align-center items-center">
-          <div class="sentiment-container">
-            {#each SENTIMENT_SCALE as stopColor, i}
-              {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
-              {@const isActive  = i === Math.round(activePos)}
-              <div
-                class="jm-swatch"
-                class:score-square--active={isActive}
-                style="background: {stopColor}; opacity: {isActive ? 1 : 0.2};"
-              >
-              </div>
-            {/each}
-          </div>
-          <span class="label-sm" 
-          style="color:var(--ink)">
-            {sentimentLabel}
-          </span>
-         
+    <!-- ── Top meta bar: sentiment + emotion ──────────────────────────── -->
+    <div class="toolbar p-2" style="border-bottom: 2.5px solid {stageColor}">
+      <div class="flex flex-row gap-2 items-center">
+        <div class="sentiment-container">
+          {#each SENTIMENT_SCALE as stopColor, i}
+            {@const activePos = ($sentimentTween + 5) / 10 * (SENTIMENT_SCALE.length - 1)}
+            {@const isActive  = i === Math.round(activePos)}
+            <div
+              class="jm-swatch"
+              class:score-square--active={isActive}
+              style="background: {stopColor}; opacity: {isActive ? 1 : 0.2};"
+            ></div>
+          {/each}
         </div>
+        <span class="label-sm">{sentimentLabel}</span>
+      </div>
 
       <button
         class="btn-nav"
@@ -181,9 +171,9 @@
         aria-label="Learn about {step.plutchik_score} — open emotion detail"
         title="About Plutchik emotions"
       >
-          <div class="emotion-container">
+        <div class="emotion-container">
           {#each emotionSwatches as color}
-          <span class="jm-swatch-round-sm" style="background: {color};"></span>
+            <span class="jm-swatch-round-sm" style="background: {color};"></span>
           {/each}
         </div>
         <span class="label-sm">{step.plutchik_score}</span>
@@ -191,9 +181,9 @@
       </button>
     </div>
 
-    <!-- Illustration -->
+    <!-- ── Illustration ───────────────────────────────────────────────── -->
     {#key illustrationSrc}
-      <div class="h-40" in:fade={{ duration: 300 }}>
+      <div class="illustration-wrap" in:fade={{ duration: 300 }}>
         {#if !imgError}
           <img
             src={illustrationSrc}
@@ -202,83 +192,64 @@
             onerror={() => (imgError = true)}
           />
         {:else}
-          <div class="step-illustration__fallback stats-animation-gradient__gradient--bright pt-8">
-            <div class="flex flex-col px-4">
-              <span class="label-sm text-white">{step.stage}</span>
-              <h2 class="heading-serif"
-              style="color:var(--lightgrayblue); 
-              font-size:2.5em">{step.step}</h2>
-            </div>
-        </div>
-          
+          <div class="flex flex-col px-4 py-6">
+            <span class="label-sm" style="color: var(--grayblue);">{step.stage}</span>
+            <h2 class="heading-serif" style="color: var(--grayblue); font-size: 2.5em;">{step.step}</h2>
+          </div>
         {/if}
       </div>
-      {/key}
-      
-      <div class="header-row">
-          <div class="flex flex-row gap-8 align-center">
-          <Scroll class="icon-header" style="background-color: {stageColor}; outline-color: {stageColor};" />
-          <h3 class="label uppercase my-auto">Journey Narrative</h3>
-          </div>
-          
-          {#if wheelData}
-                <button
-                  class="btn-extranote-orange pl-2"
-                  onclick={() => (wheelDrawerOpen = true)}
-                  aria-label="Open experience wheel for {step.step}"
-                >
-                  <span class="">View Experience Wheel</span>
-                  <ArrowSquareOutRegular class="icon-toolbar-light-sm"
-                  style= "background-color: var(--lightorange); color: var(--orange)" />
-                </button>
-            {:else}
-            <button
-            class="btn-extranote pl-2 hover:cursor-not-allowed saturate-20 opacity-50"
-            aria-label="Open experience wheel for {step.step}"
-          >
-            <span class="">View Experience Wheel</span>
-            <ArrowSquareOutRegular class="icon-toolbar-light-sm" />
-          </button>
-            {/if}
-          </div>  
-          
-  <div class="content-padding">
+    {/key}
 
-    <div class="flex flex-col w-2/3">
-    <!-- Narrative -->
-      {#if step.narrative_description}
-          <p class="text-body">{step.narrative_description}</p>
+    <!-- ── Quote ─────────────────────────────────────────────────────── -->
+    {#if step.quote}
+      <div class="quote-hero" style="border-left-color: {stageColor};">
+        <QuotesRegular class="quote-hero__icon" style="color: {stageColor};" />
+        <p class="text-2xl">&ldquo;{step.quote}&rdquo;</p>
+      </div>
+    {/if}
+
+    <!-- ── Narrative header row ───────────────────────────────────────── -->
+    <div class="header-row">
+      <div class="flex flex-row gap-2 items-center">
+        <Scroll class="icon-header" style="background-color: {stageColor}; outline-color: {stageColor};" />
+        <h3 class="label uppercase">Journey Narrative</h3>
+      </div>
+
+      {#if wheelData}
+        <button
+          class="btn-extranote-orange pl-2"
+          onclick={() => (wheelDrawerOpen = true)}
+          aria-label="Open experience wheel for {step.step}"
+        >
+          <span>View Experience Wheel</span>
+          <ArrowSquareOutRegular class="icon-toolbar-light-sm"
+            style="background-color: var(--lightorange); color: var(--orange);" />
+        </button>
+      {:else}
+        <button
+          class="btn-extranote pl-2 hover:cursor-not-allowed opacity-50 saturate-0"
+          aria-label="Experience wheel not available for this step"
+          disabled
+        >
+          <span>View Experience Wheel</span>
+          <ArrowSquareOutRegular class="icon-toolbar-light-sm" />
+        </button>
       {/if}
     </div>
 
-  
-  </div>
-  
-  <div class="toolbar-light-sm">
-    <QuotesRegular class="icon-toolbar-dark-md" style="background-color: {stageColor}; outline-color: {stageColor};"
-    | />
-    <span class="label-sm">Key Quote</span>
-  </div>
-
-    <!-- Quote -->
-    {#if step.quote}
-      <section class="detail-section">
-        <div class="content-padding">
-        <div class="card-quote">
-          <p class="pull-quote">
-            &ldquo;{step.quote}&rdquo;
-          </p>
-        </div>
-        </div>
-      </section>
+    <!-- ── Narrative body ─────────────────────────────────────────────── -->
+    {#if step.narrative_description}
+      <div class="content-padding">
+        <p class="text-body">{step.narrative_description}</p>
+      </div>
     {/if}
-    
 
-    <!-- Metrics -->
+    <!-- ── Index Metrics ─────────────────────────────────────────────── -->
     <section class="detail-section">
       <div class="toolbar-sm-white">
-        <IconDiamondsFourRegular class="icon-toolbar-dark-md" style="background-color: {stageColor}; outline-color: {stageColor};"/>
-        <span>Index Metrics</span>
+        <IconDiamondsFourRegular class="icon-toolbar-dark-md"
+          style="background-color: {stageColor}; outline-color: {stageColor};" />
+        <span class="label-sm">Index Metrics</span>
       </div>
 
       <div class="metrics-wrap">
@@ -294,6 +265,7 @@
               class="imb-card"
               in:fly={{ y: 4, duration: 200, delay: 60 + i * 40, easing: cubicOut }}
             >
+              <!-- Label + pill -->
               <div class="imb-card-header">
                 <div class="imb-card-title">
                   {#if IconComponent}
@@ -318,9 +290,7 @@
                 {/key}
               </div>
 
-              <StepEvents events={step.events ?? []} />
-
-
+              <!-- Scale + numeric value -->
               <div class="imb-card-scale">
                 <div
                   class="imb-squares"
@@ -358,10 +328,14 @@
         </div>
       </div>
     </section>
+
+    <!-- ── Step Events ────────────────────────────────────────────────── -->
+    <StepEvents events={step.events ?? []} />
+
   </div>
 {/if}
 
-<!-- Index Metric Tooltip -->
+<!-- ── Index Metric Tooltip ──────────────────────────────────────────── -->
 {#if tooltipMetric}
   <div
     class="tooltip"
@@ -377,7 +351,7 @@
   </div>
 {/if}
 
-<!-- Experience Wheel Sub-Drawer -->
+<!-- ── Experience Wheel Sub-Drawer ───────────────────────────────────── -->
 {#if wheelData && step}
   <JourneySubDrawer
     bind:open={wheelDrawerOpen}
@@ -396,25 +370,37 @@
 
 <style>
 
-
-.quote-block {
+/* ── Quote hero ───────────────────────────────────────────────────────── */
+.quote-hero {
   display: flex;
-  gap: 0.75rem;
+  flex-direction: row;
   align-items: flex-start;
-  margin-left: 2rem;
-  padding: 1.25rem 1.5rem;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem 1.125rem;
+  border-left: 3px solid var(--panel-dark);
+  background: var(--panel);
+  margin: 0;
 }
 
-.sentiment-pill {
-  white-space: nowrap;
+.quote-hero__icon {
+  flex-shrink: 0;
+  margin-top: 0.15em;
+  opacity: 0.7;
 }
 
-
+/* ── Sentiment swatch active state ───────────────────────────────────── */
 .score-square--active {
   outline: 1.5px solid var(--grayblue);
   outline-offset: 2px;
 }
 
+/* ── Illustration wrapper ────────────────────────────────────────────── */
+.illustration-wrap {
+  height: 10rem;
+  overflow: hidden;
+}
+
+/* ── Metrics grid ────────────────────────────────────────────────────── */
 .metrics-wrap {
   padding: 0 2rem;
 }
@@ -427,10 +413,6 @@
 
 @media (max-width: 480px) {
   .imb-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .content-padding {
     grid-template-columns: 1fr;
   }
 }
@@ -469,6 +451,10 @@
   min-width: 0;
 }
 
+.imb-squares--interactive {
+  cursor: help;
+}
+
 .imb-icon {
   display: flex;
   align-items: center;
@@ -486,10 +472,6 @@
   scale: 120%;
   opacity: 100%;
   filter: saturate(1);
-}
-
-.imb-squares--interactive {
-  cursor: help;
 }
 
 </style>

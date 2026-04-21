@@ -119,7 +119,7 @@
     ensureMeasureCtx();
   });
 
-  const labelMaxWidth = $derived(Math.max(20, STEP_WIDTH - LABEL_PAD_X * 2));
+  const labelMaxWidth = $derived(Math.max(15, STEP_WIDTH - LABEL_PAD_X * 10));
 
   const wrappedSteps = $derived(
     data.map((d) => wrapToWidth(d.step, labelMaxWidth))
@@ -136,8 +136,8 @@
     return (group.endIndex - group.startIndex + 1) * STEP_WIDTH;
   }
 
-  function handleColumnClick(index) {
-    selectedIndex.set(index);
+function handleColumnClick(index) {
+  selectedIndex.set(index);
 
     if (typeof onColumnClick === 'function') {
       onColumnClick(index, data[index]);
