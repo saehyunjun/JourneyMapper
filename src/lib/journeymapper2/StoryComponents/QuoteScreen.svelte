@@ -1,19 +1,17 @@
 <script>
   import { buildScreenBackground } from '$lib/journeymapper2/storyConfig.js';
+  import QuotesIcon from 'phosphor-icons-svelte/IconQuotesDuotone.svelte';
 
   let { profile = {}, accent = 'var(--purple)', theme = null } = $props();
 
   let resolvedLabel = $derived(theme?.labelColor ?? accent);
-  let bg = $derived(theme ? buildScreenBackground(theme) : 'rgba(0,0,0,0.85)');
+  let bg = $derived(theme ? buildScreenBackground(theme) : 'rgba(255,255,255,0.85)');
 </script>
 
 <div class="screen" style="background: {bg};" role="article">
   <div class="screen-inner">
-    <span class="screen-label" style="color: {resolvedLabel};">Key Quote</span>
-
-    <div class="quote-mark" style="color: {resolvedLabel};" aria-hidden="true">&ldquo;</div>
-
-    <p class="quote-text">
+    <QuotesIcon class="text-xl text-slate-50" />
+    <p class="pull-quote ">
       {profile?.quote ?? 'No quote available.'}
     </p>
 
@@ -60,15 +58,6 @@
     margin-bottom: -4px;
   }
 
-  .quote-text {
-    font-family: var(--font-serif, Georgia, serif);
-    font-size: clamp(1.05rem, 3.5vw, 1.35rem);
-    line-height: 1.55;
-    color: rgba(255,255,255,0.92);
-    font-style: italic;
-    letter-spacing: -0.01em;
-    margin: 0;
-  }
 
   .quote-attribution {
     margin-top: 8px;

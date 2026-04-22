@@ -143,14 +143,13 @@
 
   .heading-serif {
     font-family: var(--font-heading-serif);
-    font-weight: 600;
-    
-    font-size: 1.25em;
-    
+    font-weight: 400;
+    font-size: 2.25em;
     color: var(--darkgrayblue);
     
     text-wrap: balance;
-    text-transform: uppercase;
+    text-transform: capitalize;
+    line-height: 1;
   }
 
 
@@ -232,7 +231,7 @@
     letter-spacing: -.25px;
     font-weight: 500;
 
-    color: var(--grayblue);
+    color: var(--lightgrayblue);
     text-wrap: balance;
   }
 
@@ -298,7 +297,7 @@
     color: var(--ink);
   }
 
-  .caption, .label, small, figcaption, .text-mono {
+  .caption, small, figcaption, .text-mono {
     font-family: var(--font-heading);
     font-size: 0.8725em;
     letter-spacing: .05em;

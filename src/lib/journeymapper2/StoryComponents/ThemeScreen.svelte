@@ -4,14 +4,14 @@
   let { themes = [], profile = {}, accent = 'var(--purple)', theme = null } = $props();
 
   let resolvedLabel = $derived(theme?.labelColor ?? accent);
-  let bg = $derived(theme ? buildScreenBackground(theme) : 'rgba(0,0,0,0.85)');
+  let bg = $derived(theme ? buildScreenBackground(theme) : 'rgba(255,255,255,0.85)');
 </script>
 
 <div class="screen" style="background: {bg};" role="article">
   <div class="screen-inner">
 
     <span class="screen-label" style="color: {resolvedLabel};">Themes</span>
-    <h2 class="screen-title">What defines<br />{profile?.name}</h2>
+    <h2 class="heading">What defines<br />{profile?.name}</h2>
 
     <div class="themes-list" role="list">
       {#each themes as t, i}
@@ -52,6 +52,7 @@
   .screen-inner {
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     gap: 14px;
     padding: 20px 22px 10px;
   }

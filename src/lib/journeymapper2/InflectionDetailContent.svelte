@@ -132,7 +132,7 @@
     <div class="content-padding">
       <div class="path-tabs" role="tablist">
         <button
-          class="path-tab"
+          class="pill gap-2"
           class:path-tab--active={direction === 'positive'}
           style="--tab-color:{POS_COLOR}"
           role="tab"
@@ -143,7 +143,7 @@
           <span>{posPath?.label ?? 'Positive Path'}</span>
         </button>
         <button
-          class="path-tab"
+          class="pill gap-2"
           class:path-tab--active={direction === 'negative'}
           style="--tab-color:{NEG_COLOR}"
           role="tab"

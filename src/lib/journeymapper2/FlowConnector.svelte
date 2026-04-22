@@ -6,7 +6,8 @@
 </script>
 
 {#if variant === 'stage'}
-  <span class="flow-stage-connector arrow-line horizontal" aria-hidden="true"></span>
+  <span class="flow-stage-connector 
+" aria-hidden="true"></span>
 
 {:else if variant === 'stage-vertical'}
   <span class="flow-stage-connector--vertical arrow-line vertical" aria-hidden="true"></span>
@@ -31,16 +32,16 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    margin: 1.25em;
   }
 
   .flow-connector {
     color: var(--ink-muted, #8090a8);
   }
+
   .flow-connector.horizontal {
     padding: 0 0.12em;
     width: 24px;
-    height: 2px;
+    height: 12px;
   }
   .flow-connector.vertical {
     padding: 0.12em 0;

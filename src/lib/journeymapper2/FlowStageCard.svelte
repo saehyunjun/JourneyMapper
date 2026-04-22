@@ -97,7 +97,8 @@
   {/if}
 
   <!-- Steps row / column -->
-  <div class="flow-steps-row" class:flow-steps-col={isVertical}>
+  <div class="flow-steps-row justify-items-center-safe
+" class:flow-steps-col={isVertical}>
     {#each group.steps as step, si}
 
       {#if hasFork(step)}
@@ -151,16 +152,17 @@
                      onkeydown={e => e.key === 'Enter' && handlePathClick(step.index, 'positive')}>
 
                 <span class="pill-sm" 
-                  style="border: 1px solid {POS_COLOR};
+                  style="border: 1.25px solid {POS_COLOR};
                   color: {POS_COLOR}">
                    Positive</span>
                   {#if pos?.label}
-                  <span class="fork-path-label">{pos.label}</span>{/if}
+                  <span class="label-sm">{pos.label}</span>{/if}
                 </div>
 
-                <div class="card-sm card-sm--neg"
+                <div class="card-sm"
                      class:card-sm--hovered={hoveredPathKey === `${step.index}-neg`}
-                     style="border:2px solid {NEG_COLOR}80; width:{H_CARD_W}px; min-height:{H_CARD_H}px;"
+                     style="border:1.25px solid {NEG_COLOR}80; 
+                     width:{H_CARD_W}px; min-height:{H_CARD_H}px;"
                      role="button"
                      tabindex="0"
                      aria-label="Open negative inflection path"
@@ -175,7 +177,7 @@
                   Negative
                   </span>
                 {#if neg?.label}
-                    <span class="fork-path-label">                    
+                    <span class="label-sm">                    
                     {neg.label}
                   </span>{/if}
                 </div>
@@ -222,9 +224,8 @@
                      onmouseleave={() => handlePathMouseLeave()}
                      onclick={() => handlePathClick(step.index, 'positive')}
                      onkeydown={e => e.key === 'Enter' && handlePathClick(step.index, 'positive')}>
-                  <span class="fork-path-tag" style="color:{POS_COLOR}; background:{POS_COLOR}18;">↑ Positive</span>
-                  {#if pos?.label}<span class="fork-path-label">{pos.label}</span>{/if}
-                  {#if pos?.outcome}<p class="fork-path-outcome">{pos.outcome}</p>{/if}
+                  <span class="label-sm" style="color:{POS_COLOR}; background:{POS_COLOR}18;">↑ Positive</span>
+                  {#if pos?.label}<span class="label">{pos.label}</span>{/if}
                 </div>
                 <div class="card-sm"
                      class:card-sm--hovered={hoveredPathKey === `${step.index}-neg`}
@@ -236,11 +237,18 @@
                      onmouseleave={() => handlePathMouseLeave()}
                      onclick={() => handlePathClick(step.index, 'negative')}
                      onkeydown={e => e.key === 'Enter' && handlePathClick(step.index, 'negative')}>
-                  <span class="fork-path-tag" style="color:{NEG_COLOR}; background:{NEG_COLOR}18;">↓ Negative</span>
-                  {#if neg?.label}<span class="fork-path-label">{neg.label}</span>{/if}
-                  {#if neg?.outcome}<p class="fork-path-outcome">{neg.outcome}</p>{/if}
-                </div>
+                  
+                  <span class="pill-white label-sm" 
+                  style="color:{NEG_COLOR}; background:{NEG_COLOR}38;">
+                  Negative path
+                </span>
+                
+                {#if neg?.label}
+                  <span class="label">{neg.label}</span>
+                {/if}
+              
               </div>
+            </div>
 
               <!-- Converge bracket (bottom) -->
               <svg class="fork-bracket-v" width={V_SVG_W} height={V_BRACKET_H}
@@ -260,7 +268,8 @@
         </div><!-- /fork-slot -->
 
         {#if si < group.steps.length - 1}
-          <FlowConnector variant="step" {layout} />
+          <FlowConnector
+          variant="step" {layout} />
         {/if}
 
       {:else}
@@ -279,14 +288,6 @@
 </div>
 
 <style>
-  .flow-stage {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-  }
-
   .flow-stage--vertical { gap: 0; }
   .flow-stage-count { opacity: 0.8; }
 
@@ -295,7 +296,6 @@
     display: flex;
     flex-direction: row;
     min-height: 32.5vh;
-    justify-content: center;
     align-content: center;
     gap: 1em;
   }

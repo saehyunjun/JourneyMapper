@@ -9,11 +9,10 @@
 
   import { emotionColor, ratingToLabel, DYAD_BY_ID, SCORE_ALIASES, SENTIMENT_SCALE, sentimentToColor, metricScoreLabel, buildStageColorMap } from './journeyConfig.js';
   
-  import QuotesRegular from 'phosphor-icons-svelte/IconQuotesRegular.svelte';
+  import QuotesRegular from 'phosphor-icons-svelte/IconQuotesDuotone.svelte';
   import ArrowSquareOutRegular from 'phosphor-icons-svelte/IconArrowSquareOutRegular.svelte';
   import SmileyBlank  from 'phosphor-icons-svelte/IconSmileyBlankBold.svelte';
   import Scroll from 'phosphor-icons-svelte/IconScrollRegular.svelte';
-  import IconHeartHalfRegular from 'phosphor-icons-svelte/IconHeartHalfRegular.svelte';
   import IconDiamondsFourRegular from 'phosphor-icons-svelte/IconDiamondsFourRegular.svelte';
 
   import CalenderDots from 'phosphor-icons-svelte/IconCalendarDotsBold.svelte';
@@ -181,30 +180,41 @@
       </button>
     </div>
 
-    <!-- ── Illustration ───────────────────────────────────────────────── -->
-    {#key illustrationSrc}
-      <div class="illustration-wrap" in:fade={{ duration: 300 }}>
-        {#if !imgError}
-          <img
-            src={illustrationSrc}
-            alt="Illustration for {step.step}"
-            class="step-illustration__img"
-            onerror={() => (imgError = true)}
-          />
-        {:else}
-          <div class="flex flex-col px-4 py-6">
-            <span class="label-sm" style="color: var(--grayblue);">{step.stage}</span>
-            <h2 class="heading-serif" style="color: var(--grayblue); font-size: 2.5em;">{step.step}</h2>
+          <div class="flex flex-col gap-8 px-4 py-6" 
+          style="background-color: {stageColor}">
+          <div class="flex flex-col md:w-9/12 gap-2">
+              <span class="label-sm" 
+              style="color: var(--lightgrayblue);">{step.stage}</span>
+              <h2 class="heading-serif" 
+              style="color: var(--lightgrayblue)">
+              {step.step}</h2>
           </div>
-        {/if}
-      </div>
-    {/key}
+        
+          <div class="flex flex-col gap-2 md:w-9/12">
+            <h3 class="label-sm uppercase"
+              style="color: var(--lightgrayblue)">
+              Journey Narrative
+            </h3>
+
+            <p class="text-body w-9/12"
+              style="color: var(--lightgrayblue)">
+              {step.narrative_description}
+            </p>
+          </div>
+        </div>
 
     <!-- ── Quote ─────────────────────────────────────────────────────── -->
     {#if step.quote}
-      <div class="quote-hero" style="border-left-color: {stageColor};">
-        <QuotesRegular class="quote-hero__icon" style="color: {stageColor};" />
-        <p class="text-2xl">&ldquo;{step.quote}&rdquo;</p>
+      <div class="flex flex-col justify-center align-middle py-8 gap-2 w-9/12">
+        <h3 class="label-sm uppercase"
+        style="color: var(--grayblue)">
+        Key Quotes
+      </h3>
+        <QuotesRegular class="text-2xl text-slate-600"/>
+        
+        <p class="text-2xl font-semibold">
+          {step.quote}
+        </p>
       </div>
     {/if}
 
@@ -212,7 +222,7 @@
     <div class="header-row">
       <div class="flex flex-row gap-2 items-center">
         <Scroll class="icon-header" style="background-color: {stageColor}; outline-color: {stageColor};" />
-        <h3 class="label uppercase">Journey Narrative</h3>
+        
       </div>
 
       {#if wheelData}
@@ -382,12 +392,6 @@
   margin: 0;
 }
 
-.quote-hero__icon {
-  flex-shrink: 0;
-  margin-top: 0.15em;
-  opacity: 0.7;
-}
-
 /* ── Sentiment swatch active state ───────────────────────────────────── */
 .score-square--active {
   outline: 1.5px solid var(--grayblue);
@@ -396,7 +400,6 @@
 
 /* ── Illustration wrapper ────────────────────────────────────────────── */
 .illustration-wrap {
-  height: 10rem;
   overflow: hidden;
 }
 

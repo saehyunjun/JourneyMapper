@@ -377,7 +377,7 @@
 
   {#if wheelData}
     <div class="wheel-section">
-      <div class="wheel-section-label">
+      <div class="label-sm">
         <span class="wheel-icon" aria-hidden="true">◎</span>
         Experience Wheel
       </div>

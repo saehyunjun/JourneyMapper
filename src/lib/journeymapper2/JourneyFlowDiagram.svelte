@@ -114,6 +114,10 @@
   .flow-diagram-scroll--vertical {
     overflow-x: visible;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
   }
 
   /* ── HORIZONTAL LAYOUT ─────────────────────────────────────────────── */
@@ -121,7 +125,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     width: max-content;
     min-width: 100%;
     gap: 0;
