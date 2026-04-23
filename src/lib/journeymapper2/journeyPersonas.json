@@ -668,39 +668,27 @@
       "discussionThemes": [
         {
           "label": "Diagnosis and surgical outcome",
-          "sentiments": [
-            0.05, 0.08, 0.14, 0.22, 0.34, 0.44, 0.52, 0.58
-          ]
+          "sentiments": [0.05, 0.08, 0.14, 0.22, 0.34, 0.44, 0.52, 0.58]
         },
         {
           "label": "Vorasidenib access and reimbursement",
-          "sentiments": [
-            0.06, 0.08, 0.10, 0.14, 0.20, 0.26, 0.32, 0.38, 0.44
-          ]
+          "sentiments": [0.06, 0.08, 0.1, 0.14, 0.2, 0.26, 0.32, 0.38, 0.44]
         },
         {
           "label": "Radiation vs. observation decision",
-          "sentiments": [
-            0.08, 0.12, 0.18, 0.26, 0.36, 0.44, 0.50
-          ]
+          "sentiments": [0.08, 0.12, 0.18, 0.26, 0.36, 0.44, 0.5]
         },
         {
           "label": "Clinical trial navigation",
-          "sentiments": [
-            0.10, 0.18, 0.30, 0.42, 0.54, 0.62
-          ]
+          "sentiments": [0.1, 0.18, 0.3, 0.42, 0.54, 0.62]
         },
         {
           "label": "Family and financial impact",
-          "sentiments": [
-            0.05, 0.08, 0.12, 0.18, 0.26, 0.34, 0.42, 0.48
-          ]
+          "sentiments": [0.05, 0.08, 0.12, 0.18, 0.26, 0.34, 0.42, 0.48]
         },
         {
           "label": "Fear of transformation",
-          "sentiments": [
-            0.06, 0.08, 0.12, 0.16, 0.22, 0.30, 0.36, 0.42
-          ]
+          "sentiments": [0.06, 0.08, 0.12, 0.16, 0.22, 0.3, 0.36, 0.42]
         }
       ],
       "journey": [
@@ -784,6 +772,48 @@
               "sentiment_impact": -3,
               "step_position": 2.6,
               "tooltip": "Household savings could sustain 3–4 months of self-pay at most. Medical leave has reduced income by ~40%. Out-of-pocket is not a durable solution."
+            },
+            {
+              "event_id": "ev_tk_int_01",
+              "type": "intervention",
+              "label": "Country-Specific Access Status Tool — EMA Approval vs. National Reimbursement Map",
+              "short_label": "Reimbursement status map",
+              "description": "A sponsor-maintained, publicly accessible digital tool showing real-time vorasidenib reimbursement status by EU member state — including named patient program availability, estimated processing timelines, and links to country-specific application forms — would intercept Tomáš at the exact moment he discovers the access gap. Rather than ending at 'not available,' the tool would immediately surface his next available option: named patient application, cross-border self-referral, or active trial sites within travel range.",
+              "sentiment_impact": 3,
+              "step_position": 2.3,
+              "tooltip": "Sponsor opportunity: real-time EU access status map by country — prevents the 'drug exists but is unavailable' dead end by surfacing named patient and trial pathways immediately.",
+              "intervention_type": "digital_tool",
+              "partner": null,
+              "timing": "during",
+              "impact_potential": "high"
+            },
+            {
+              "event_id": "ev_tk_int_02",
+              "type": "intervention",
+              "label": "Financial Bridge Program — 90-Day Self-Pay Coverage While Named Patient Processes",
+              "short_label": "Access bridge program",
+              "description": "A sponsor-funded financial bridge program providing vorasidenib at no cost for 60–90 days while a named patient application or trial screening is processed would eliminate the kitchen-table savings calculation as a rate-limiting step. Tomáš's family savings runway of 3–4 months is the primary structural reason self-pay is a bridge rather than a solution. Removing that ceiling during the access processing window transforms a crisis timeline into a manageable one.",
+              "sentiment_impact": 4,
+              "step_position": 2.7,
+              "tooltip": "Sponsor opportunity: 60–90 day cost-free drug bridge during named patient or trial screening processing — eliminates the savings depletion crisis that forces premature, distressed decisions.",
+              "intervention_type": "access_program",
+              "partner": null,
+              "timing": "during",
+              "impact_potential": "high"
+            },
+            {
+              "event_id": "ev_tk_mis_01",
+              "type": "info_source",
+              "label": "No Central Resource Explaining Named Patient Process for North Macedonia",
+              "short_label": "Named patient pathway absent",
+              "description": "Tomáš cannot find any authoritative, patient-facing resource explaining how a North Macedonian patient would initiate a named patient or compassionate use application for vorasidenib — not from the EMA, the manufacturer, the domestic health authority, or patient advocacy organizations. The gap between EMA approval and domestic access is visible; the pathway to close it is not. This information vacuum is the single largest driver of the path_neg risk at this step.",
+              "sentiment_impact": -3,
+              "step_position": 2.5,
+              "tooltip": "Missing resource: no patient-facing guide to named patient application process for non-reimbursing EU countries — EMA approval visible but access pathway invisible.",
+              "source_type": "advocacy_org",
+              "platform": "EMA / North Macedonian Medicines Agency (MALMED)",
+              "influence_level": "high",
+              "content_quality": "absent"
             }
           ],
           "sentiment_reasons": [
@@ -982,6 +1012,48 @@
               "sentiment_impact": 2,
               "step_position": 6.7,
               "tooltip": "Vienna specialist agrees to explore cross-border named patient application — non-standard, requires Austria-North Macedonia regulatory coordination. Timeline unknown."
+            },
+            {
+              "event_id": "ev_tk_int_03",
+              "type": "intervention",
+              "label": "International Specialist Letter as Named Patient Sponsor — Bypass Domestic Refusal",
+              "short_label": "International sponsor letter pathway",
+              "description": "A formal sponsor policy — and supporting regulatory guidance — establishing that an international specialist letter (e.g., from the Vienna neuro-oncologist) can substitute for a domestic physician sponsor signature on named patient applications in non-EU member states would eliminate the blockage Tomáš hits when his domestic oncologist refuses. The Vienna specialist is willing and qualified; the barrier is procedural, not clinical. A pre-negotiated pathway with MALMED (North Macedonia's medicines authority) would make this substitution actionable.",
+              "sentiment_impact": 4,
+              "step_position": 6.5,
+              "tooltip": "Sponsor opportunity: pre-negotiated named patient pathway accepting international specialist letters in lieu of domestic physician sponsors — eliminates the single point of failure in Tomáš's access route.",
+              "intervention_type": "access_program",
+              "partner": "Medical University of Vienna / MALMED (North Macedonian Medicines Agency)",
+              "timing": "during",
+              "impact_potential": "high"
+            },
+            {
+              "event_id": "ev_tk_int_04",
+              "type": "intervention",
+              "label": "HCP Education Program — IDH Inhibitor Data for Domestic Oncologists in Non-Reimbursing Countries",
+              "short_label": "Domestic HCP education",
+              "description": "A targeted medical education program for oncologists in non-reimbursing EU and Western Balkans countries — covering IDH1 inhibitor mechanism, the INDIGO trial data, current EANO guidelines, and how to support cross-border patient referrals — would address the root cause of Tomáš's domestic physician barrier. His oncologist's refusal to co-sign the named patient application is driven by unfamiliarity with the data, not clinical disagreement. Education converts a blocker into a facilitator.",
+              "sentiment_impact": 2,
+              "step_position": 6.8,
+              "tooltip": "Sponsor opportunity: HCP education program in non-reimbursing Western Balkans markets — converts unfamiliar domestic oncologists from access blockers into referral facilitators.",
+              "intervention_type": "hcp_support",
+              "partner": "EANO (European Association of Neuro-Oncology)",
+              "timing": "before",
+              "impact_potential": "high"
+            },
+            {
+              "event_id": "ev_tk_mis_02",
+              "type": "info_source",
+              "label": "No Patient Navigator or Dedicated Access Contact at Sponsor or Trial Site",
+              "short_label": "No navigator available",
+              "description": "At the point of named patient refusal — the most logistically complex and emotionally draining moment in the access journey — Tomáš has no single human contact he can reach out to for navigation support. The Vienna specialist is helpful but not resourced for cross-border regulatory administration. The trial site coordinator handles enrolled participants, not pre-screening access cases. The domestic oncologist has refused to engage. There is no patient navigator, access coordinator, or sponsor helpline that can hold his case and move it forward.",
+              "sentiment_impact": -4,
+              "step_position": 6.4,
+              "tooltip": "Missing resource: no dedicated access navigator or case manager for patients in non-reimbursing countries — the most critical gap at the highest-complexity moment in the journey.",
+              "source_type": "hcp",
+              "platform": "Sponsor / Trial Site Access Coordinator",
+              "influence_level": "high",
+              "content_quality": "absent"
             }
           ],
           "sentiment_reasons": [
@@ -1065,7 +1137,8 @@
           "medical_self_efficacy": 3,
           "logistical_capacity": -2,
           "has_experience_wheel": false,
-          "narrative_description": "Three converging pressures bring Tomáš to a decision point. His latest MRI — at 7 months post-resection — shows stable disease but his Vienna specialist notes a small area of T2 signal change that she describes as 'worth watching.' His domestic oncologist reiterates that radiation should begin within the next 3 months if they are not proceeding with IDH inhibition. And his daughter, who has been told only that her father has 'something wrong with his head that the doctors are fixing,' asks him one morning whether he will be better by her birthday. He has three paths in front of him: enroll in the Prague Phase III (guaranteed drug access — 50% of the time); pursue the Vienna Phase II combination (no placebo, but unknown additive risk); or continue waiting for the named patient pathway to open, bridging with 2–3 months of self-pay vorasidenib if the family depletes part of their savings. He and his wife schedule an evening to decide.",
+          "narrative_description": "Tomáš faces three possible paths: Enroll in the Phase III; pursue the Vienna Phase II combination; or continue waiting for the named patient pathway to open, bridging with 2–3 months of self-pay vorasidenib if the family depletes part of their savings.",
+          "narrative_description_detail": "Three converging pressures bring Tomáš to a decision point. His latest MRI — at 7 months post-resection — shows stable disease but his Vienna specialist notes a small area of T2 signal change that she describes as 'worth watching.' His domestic oncologist reiterates that radiation should begin within the next 3 months if they are not proceeding with IDH inhibition. And his daughter, who has been told only that her father has 'something wrong with his head that the doctors are fixing,' asks him one morning whether he will be better by her birthday. He has three paths in front of him: enroll in the Prague Phase III (guaranteed drug access — 50% of the time); pursue the Vienna Phase II combination (no placebo, but unknown additive risk); or continue waiting for the named patient pathway to open, bridging with 2–3 months of self-pay vorasidenib if the family depletes part of their savings. He and his wife schedule an evening to decide.",
           "inflection_detail": {
             "label": "Three-Way Decision Inflection — Enroll, Wait, or Self-Pay Bridge",
             "description": "Tomáš reaches a convergence of clinical urgency, financial constraint, and family emotional weight that forces a decision without a clear 'right' answer. Each option carries a distinct combination of clinical, financial, and logistical risk. The absence of straightforward domestic vorasidenib access is the structural failure driving this decision — the complexity of his choice is not inherent to his disease state but is an artifact of reimbursement geography. This is precisely the inflection point where sponsor-supported patient navigation and access programs have the highest potential impact on enrollment quality and patient wellbeing.",
@@ -1123,6 +1196,48 @@
               "sentiment_impact": 2,
               "step_position": 8.8,
               "tooltip": "Couple schedules structured decision session with comparison document and Vienna specialist letter — shared deliberation as reclaimed agency."
+            },
+            {
+              "event_id": "ev_tk_int_05",
+              "type": "intervention",
+              "label": "Placebo Risk Counseling Tool — Structured Decision Aid for Randomized Trials",
+              "short_label": "Trial decision aid",
+              "description": "A structured, patient-facing decision aid — covering what placebo randomization means in practice, what monitoring is provided in the control arm, withdrawal rights, and options if randomized to placebo — would directly address the unresolved concern that is blocking Tomáš's enrollment in Prague. His wife's question ('which one gets you the drug for sure?') is the articulation of an anxiety that no clinical document has yet answered in plain language. A one-page decision aid co-developed with patient advocates would close this gap in under 48 hours.",
+              "sentiment_impact": 3,
+              "step_position": 8.3,
+              "tooltip": "Sponsor opportunity: plain-language placebo risk decision aid — directly addresses the unresolved family anxiety blocking Prague Phase III enrollment at the inflection decision session.",
+              "intervention_type": "educational_content",
+              "partner": "Brain Tumour Europe / Rare Cancers Europe",
+              "timing": "before",
+              "impact_potential": "high"
+            },
+            {
+              "event_id": "ev_tk_int_06",
+              "type": "intervention",
+              "label": "Peer Patient Program — Connection to Enrolled Prague Trial Participants Pre-Decision",
+              "short_label": "Pre-enrollment peer match",
+              "description": "A formal peer matching program — connecting trial-eligible patients with currently enrolled participants before the enrollment decision — would formalize and scale the accidental peer contact Tomáš made through the online community. The Prague peer's logistical reassurance (6-week cadence, €200 travel reimbursement, English-speaking coordinator) was the single most actionable data point in his decision process. A structured peer program ensures every eligible patient receives this information proactively, not by chance.",
+              "sentiment_impact": 3,
+              "step_position": 8.6,
+              "tooltip": "Sponsor opportunity: formal pre-enrollment peer matching program — scales the accidental community peer contact that was Tomáš's most decisive logistical reassurance.",
+              "intervention_type": "peer_program",
+              "partner": null,
+              "timing": "before",
+              "impact_potential": "high"
+            },
+            {
+              "event_id": "ev_tk_mis_03",
+              "type": "info_source",
+              "label": "No Domestic Oncologist Willing to Frame Trial as a Valid Clinical Option",
+              "short_label": "Domestic HCP trial endorsement absent",
+              "description": "At the most consequential decision point in his journey, Tomáš has no domestic clinical voice endorsing trial enrollment as a valid — let alone preferred — clinical choice. His domestic oncologist is actively recommending radiation within 3 months and has not engaged with the trial options at all. The family is making a decision that requires weighing placebo risk, cross-border logistics, and financial strain without any local physician validation that they are making the right call. This absence of domestic clinical endorsement is the primary driver of decision paralysis on path_neg.",
+              "sentiment_impact": -4,
+              "step_position": 8.4,
+              "tooltip": "Missing resource: no domestic oncologist willing to endorse trial enrollment — family makes high-stakes cross-border trial decision without any local clinical validation.",
+              "source_type": "hcp",
+              "platform": "Domestic Oncology Team (Skopje / North Macedonia)",
+              "influence_level": "high",
+              "content_quality": "absent"
             }
           ],
           "sentiment_reasons": [
@@ -1138,7 +1253,7 @@
           }
         }
       ]
-    },    
+    },
     {
       "id": "persona_nmdar_01",
       "type": "patient",
@@ -1428,7 +1543,7 @@
           "stage_id": "2",
           "stage": "Acute Hospitalization",
           "step_id": "4",
-          "step": "Tumor Workup and Negative Ovarian Teratoma Screen",
+          "step": "Tumor Workup and Screen",
           "sentiment": 1,
           "plutchik_score": "despair",
           "emotional_valence": 1,

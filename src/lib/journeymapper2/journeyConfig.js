@@ -93,8 +93,8 @@ const METRIC_SCORE_LABELS = {
 export const STAGE_COLORS = [
   '#264290', // Dark Blue
   '#3F73FF', // Deep Blue
-  '#468A85ff', // Teal Green
-  '#699D97ff', // Light TG
+  '#468A85', // Teal Green
+  '#699D97', // Light TG
   '#28B798', // Warren Green
   '#7DBFA7', // Mint Green  
   '#5830A2', // Purple

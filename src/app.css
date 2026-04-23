@@ -81,7 +81,7 @@
   }
 
   .body-dotted {
-    background-size: 25px 25px;
+    background-size: 10px 10px;
     background-image: 
     radial-gradient(circle, var(--midgrayblue) .25px, rgba(0, 0, 0, 0) 1px);
     z-index: 1;
@@ -282,13 +282,16 @@
     line-height: 125%;
     font-size: .825em;
     color: var(--ink);
+    text-wrap: balance;
   }
 
   .text-body-lg {
     font-family: var(--font-body);
-    font-size: 1.125em;
+    font-size: 1.2em;
     letter-spacing: -.25px;
-
+    line-height: 135%;
+    font-weight: 500;
+    text-wrap: balance;
   }
 
   .caption {
@@ -531,9 +534,9 @@
   }
 
   .icon-toolbar-light-sm {
-    height: 1.725em;
-    width: 1.725em;
-    font-size: .725em;
+    height: 1.5em;
+    width: 1.5em;
+    font-size: .825em;
     aspect-ratio: 1;
     
     background-color: var(--orange);
@@ -547,8 +550,6 @@
     flex-direction: row;
 
     color: var(--lightorange);
-    outline: 2.5px solid var(--orange);
-    outline-offset: 1px;
   }
 
   .icon-toolbar-dark-sm {
@@ -628,7 +629,7 @@
   .emotion-container {
     display: flex;
     flex-direction: row;
-    margin-left: .25em;
+    gap: .125em;
   }
 
   .sentiment-container {
@@ -708,27 +709,27 @@
   .btn-nav {
     display: flex;
     flex-direction: row;
-    
-    gap: 1em;
-    align-items: center;
     align-content: center;
-    justify-content: center;
-  
+    align-items: center;
+
+    gap: .725em;
+
+    
     user-select: none;
     cursor: pointer;
 
     background-color: var(--panel-dark);
     color: var(--ink);
-    border: 1.5px solid var(--panel-mid);
+    border: 1.25px solid var(--panel-mid);
 
     box-shadow:
     0px 0px 0px 1px rgba(0, 0, 0, 0.08),
     0px 1px 2px -1px rgba(0, 0, 0, 0.08),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.06);
+    0px 2px 2px 0px rgba(10, 10, 0, 0.02);
   
     min-width: 2rem; /* min-w-16 */
     height: 2.25rem; /* h-9 */
-    padding-left: 0.525rem;
+    padding-left: .525rem;
     padding-right: 0.725rem;
 
     border-radius: 100em; /* rounded-lg */
@@ -934,8 +935,9 @@
   .btn-fill:hover, .btn-empty:hover, .btn-sm:hover, .btn-sm-alt:hover { 
     background-color: #23abab;
     color: var(--paper);
-    box-shadow:     0 2px 6px rgba(0,0,0,0.15),
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15),
     0 0 0 1px rgba(0,0,0,0.1);
+    cursor: pointer;
   } 
 
   .btn-sm {
@@ -946,8 +948,7 @@
     width: 2.5em;
     padding: 0.25em;
     font-weight: 800;
-    background-color: var(--lightgrayblue);
-    border: 2.25px solid var(--teal);
+    background-color: var(--lightgrayblue);    
     color:var(--teal);
     cursor: pointer;
     font-size: .725em;
@@ -963,7 +964,6 @@
     padding: 0.25em;
     font-weight: 800;
     background-color: var(--orange);
-    border: 2.25px solid var(--lightorange);
     color:var(--lightorange);
     cursor: pointer;
     font-size: .725em;
@@ -1084,16 +1084,17 @@
     bottom: 0;
     z-index: 999;
 
-    width: 75vw;
+    width: 65vw;
+    min-width: 650px;
     display: flex;
     flex-direction: column;
     background: var(--paper);
     overflow-y: auto;
-    border-left: 2.5px solid var(--panel);
+    border-left: 1.25px solid var(--darkgrayblue);
     box-shadow: 
-    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
-    0px 1px 2px -1px rgba(0, 0, 0, 0.08),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.06);
+    0px 0px 0px 10px rgba(0, 0, 0, 0.01),
+    0px 1px 2px -10px rgba(0, 0, 0, 0.09),
+    0px 2px 4px -20px rgba(0, 0, 0, 0.02);
     overflow: hidden;
   }
 
@@ -1221,29 +1222,52 @@ color: var(--grayblue);
   padding: .25em .55em .275em .5em;
 }
 
-  .pill-white {
-    display: flex;
-    flex-direction: row;
+.pill-white {
+  display: flex;
+  flex-direction: row;
 
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 
-    padding: .2em .5em .225em .45em;
-    border-radius: 100px;
+  padding: .125em 1.25em;
+  border-radius: 100px;
 
-    background: rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 
-    font-family: var(--font-heading);
-    font-size: 0.725em;
-    
-    font-weight: 600;
-    text-transform: uppercase;
-    color: var(--panel);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
+  font-family: var(--font-heading);
+  font-size: 0.725em;
+  
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
 
+.pill-round {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+
+  width: 2em;
+  height: 2em;
+  border-radius: 100px;
+
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  font-family: var(--font-heading);
+  font-size: 0.625em;
+  
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--panel);
+}
 
   .pill:hover {
     background-color: var(--lightgrayblue);
@@ -1425,7 +1449,6 @@ color: var(--grayblue);
     font-size: .725em;
     font-weight: 800;
     letter-spacing: .05em;
-    line-height: 1;
 
     font-family: var(--font-heading);
     text-align: start;
@@ -1506,23 +1529,19 @@ align-items: center;
   
 
 .toolbar {
-display: flex;
-position: rel;
-flex-direction: row;
-align-items: center;
-justify-content: space-between;
-gap: .5em;
-width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5em;
+  width: 100%;
 
-background-color: var(--panel);
-box-shadow: 
-0 2px -5px 10 rgba(60, 64, 43, 0.12);
+  background-color: var(--paper);
+  box-shadow: 
+  0 2px -5px 10 rgba(60, 64, 43, 0.12);
 
-padding: .5em 1em;
-
-border-bottom: 2.5px solid var(--orange);
-border-top: .5px solid var(--panel-mid);
-color: var(--card);
+  padding: .5em 1em;;
+  color: var(--card);
 }
 
 .toolbar-sm {
@@ -1981,8 +2000,8 @@ padding: .25em 1em;
   .jm-swatch-round {
     display: inline-flex;
     border: .25px solid var(--ink);
-    height: 1.5em;
-    width: 1.5em;
+    height: 1.125em;
+    width: 1.125em;
     border-radius: 100em;
     overflow: hidden;
     transition:

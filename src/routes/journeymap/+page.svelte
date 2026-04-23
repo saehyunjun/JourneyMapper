@@ -67,8 +67,7 @@
   );
 
   // ── Layout / view toggles ─────────────────────────────────────────────
-  let layout    = $state<'horizontal' | 'vertical'>('horizontal');
-  let chartView = $state<'chart' | 'flow'>('chart');
+  let chartView = $state<'chart' | 'flow'>('flow');
 
   // ── Drawer state ──────────────────────────────────────────────────────
   let drawerMode = $state<'step' | 'plutchik' | 'persona' | 'inflection' | null>(null);
@@ -83,8 +82,6 @@
   $effect(() => {
     if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
   });
-
-  let timelineActive = $derived($selectedIndex >= 0 || drawerOpen);
 
   let drawerEyebrow = $derived(
     drawerMode === 'plutchik' ? 'Methodology' :
@@ -104,8 +101,39 @@
   // Close sub-drawer when main drawer closes
   $effect(() => { if (!drawerOpen) emotionSubDrawerOpen = false; });
 
-  // ── Story overlay (PersonaStory in a SubDrawer) ───────────────────────
+  // ── Story overlay ────────────────────────────────────────────────────
   let storyOpen = $state(false);
+
+  // ── Scroll minimise state ─────────────────────────────────────────────
+  let scrollEl   = $state<HTMLDivElement | null>(null);
+  let isScrolled = $state(false);
+
+  const SCROLL_THRESHOLD   = 32;  // px before bars minimise
+  const IDLE_RESTORE_DELAY = 850; // ms of scroll silence before restoring
+
+  $effect(() => {
+    const el = scrollEl;
+    if (!el) return;
+
+    let idleTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function onScroll() {
+      // Minimise immediately once past threshold
+      if (el.scrollTop > SCROLL_THRESHOLD) isScrolled = true;
+
+      // Restart idle timer on every scroll event
+      if (idleTimer !== null) clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        isScrolled = false;
+      }, IDLE_RESTORE_DELAY);
+    }
+
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      el.removeEventListener('scroll', onScroll);
+      if (idleTimer !== null) clearTimeout(idleTimer);
+    };
+  });
 
   // ── Jitter offsets for coincident nodes ──────────────────────────────
   const JITTER = 7;
@@ -130,9 +158,6 @@
   }
 
   let nodeOffsets = $derived(computeOffsets(journeyData, metrics));
-
-  // ── Scroll container ref ──────────────────────────────────────────────
-  let scrollEl = $state<HTMLDivElement | null>(null);
 
   // ── Event handlers ────────────────────────────────────────────────────
   function handlePersonaSelect(id: string) {
@@ -162,7 +187,7 @@
 </script>
 
 <!-- ── Page shell ──────────────────────────────────────────────────────── -->
-<div class="journey-wrapper flex flex-col h-screen overflow-hidden">
+<div class="journey-wrapper flex flex-col h-screen overflow-hidden" class:scrolled={isScrolled}>
 
   <!-- ── Toolbar ──────────────────────────────────────────────────────── -->
   <div class="toolbar" role="tablist">
@@ -200,23 +225,23 @@
     </div>
   </div>
 
-      <PersonaTopSelector
-        personas={filteredPersonas}
-        {activePersonaId}
-        onselect={(id: string) => handlePersonaSelect(id)}
-        onstory={() => handlePersonaStory()}
-      />
+  <div class="persona-bar-wrap">
+    <PersonaTopSelector
+      personas={filteredPersonas}
+      {activePersonaId}
+      onselect={(id: string) => handlePersonaSelect(id)}
+      onstory={() => handlePersonaStory()}
+    />
+  </div>
+
   <!-- ── Three-column body ────────────────────────────────────────────── -->
   <div class="flex flex-row flex-1 min-h-0">
-
-    <!-- LEFT — persona selector column -->
 
     <!-- MIDDLE — chart / flow, scrolls horizontally -->
     <div class="chart-col flex-1 min-w-0" bind:this={scrollEl}>
       {#if chartView === 'flow'}
         <div class="flex flex-col w-full justify-right">
-          <JourneyLayoutToggle bind:layout />
-          <JourneyFlowDiagram data={journeyData} {layout} />
+          <JourneyFlowDiagram data={journeyData} />
         </div>
       {:else}
         <div class="px-4 py-2 w-full relative">
@@ -238,13 +263,11 @@
       <JourneyLegend items={metrics} />
     </div>
 
-
-      <JourneyInfoSidebar
-        activePersona={activePersona as any}
-        data={journeyData}
-        {metrics}
-      />
-
+    <JourneyInfoSidebar
+      activePersona={activePersona as any}
+      data={journeyData}
+      {metrics}
+    />
 
   </div><!-- /journey-body -->
 
@@ -343,7 +366,7 @@
 
 
 <style>
-  /* Middle scrolling chart area */
+  /* ── Chart / flow scroll area ────────────────────────────────────────────── */
   .chart-col {
     position: relative;
     z-index: 1;
@@ -355,10 +378,47 @@
     scrollbar-color: var(--purple) transparent;
   }
 
-  /* Right info sidebar — fixed width, scrollable */
-  .info-col {
-    max-width: 320px;
-    width: 20vw;
-    border-left: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  .toolbar {
+    overflow: hidden;
+    /* Restore: slow, ease-out */
+    transition:
+      max-height 420ms cubic-bezier(0.0, 0, 0.2, 1),
+      padding-top    400ms cubic-bezier(0.0, 0, 0.2, 1),
+      padding-bottom 400ms cubic-bezier(0.0, 0, 0.2, 1),
+      opacity        380ms ease-out;
+  }
+
+  .persona-bar-wrap {
+    overflow: hidden;
+    /* Restore: slow, ease-out — slightly delayed so toolbar restores first */
+    transition:
+      max-height 420ms 40ms cubic-bezier(0.0, 0, 0.2, 1),
+      opacity    360ms 40ms ease-out;
+  }
+
+  /* ── Minimised state ── triggered by .scrolled on the wrapper ────────────── */
+
+  .scrolled .toolbar {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    /* Collapse: fast, ease-in */
+    transition:
+      max-height 220ms cubic-bezier(0.4, 0, 1, 1),
+      padding-top    200ms cubic-bezier(0.4, 0, 1, 1),
+      padding-bottom 200ms cubic-bezier(0.4, 0, 1, 1),
+      opacity        160ms ease-in;
+  }
+
+  .scrolled .persona-bar-wrap {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    /* Collapse: fast, ease-in — toolbar collapses first */
+    transition:
+      max-height 220ms cubic-bezier(0.4, 0, 1, 1),
+      opacity    160ms ease-in;
   }
 </style>

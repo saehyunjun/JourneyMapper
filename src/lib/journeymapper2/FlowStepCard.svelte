@@ -1,5 +1,5 @@
 <script>
-  import { hoveredIndex, selectedIndex, hoveredInflectionIndex } from './journeyStore.js';
+  import { hoveredIndex, selectedIndex, hoveredInflectionIndex, selectedInflectionIndex, selectedInflectionPath } from './journeyStore.js';
   import {
     sentimentToColor,
     emotionColor,
@@ -18,62 +18,62 @@
     selectedIndex.update((i) => (i === step.index ? -1 : step.index));
   }
 
-  $: d = data[step.index];
-  $: infl = d?.inflection === 'Y';
+  $: d       = data[step.index];
+  $: infl    = d?.inflection === 'Y';
   $: inflDet = d?.inflection_detail ?? null;
 
-  $: events = (d?.events ?? []).slice().sort((a, b) => a.step_position - b.step_position);
-  $: hasEvents = events.length > 0;
+  $: allEvents = (d?.events ?? []).slice().sort((a, b) => a.step_position - b.step_position);
 
-  // ── Sentiment label from config ───────────────────────────────
+  $: experienceEvents = allEvents.filter(e =>
+    ['roadblock', 'hospitalization', 'progress', 'community'].includes(e.type)
+  );
+  $: sponsorEvents = allEvents.filter(e =>
+    ['info_source', 'intervention'].includes(e.type)
+  );
+
+  $: hasExperience = experienceEvents.length > 0;
+  $: hasSponsor    = sponsorEvents.length > 0;
+  $: hasEvents     = hasExperience || hasSponsor;
+
   $: sentimentLabel = ratingToLabel(d?.sentiment);
 
-  // ── Emotion resolution (color + label) ────────────────────────
   $: emotionData = (() => {
     const raw = d?.plutchik_score?.toLowerCase().trim() ?? '';
     if (!raw) return { colors: [], label: '' };
-
     const dyad = DYAD_BY_ID[raw];
-    if (dyad) {
-      return {
-        colors: dyad.primary.map((pid) => emotionColor(pid)),
-        label: dyad.label
-      };
-    }
-
+    if (dyad) return { colors: dyad.primary.map(pid => emotionColor(pid)), label: dyad.label };
     const id = SCORE_ALIASES[raw] ?? raw;
-
-    return {
-      colors: [emotionColor(id)],
-      label: EMOTION_BY_ID[id]?.label ?? raw
-    };
+    return { colors: [emotionColor(id)], label: EMOTION_BY_ID[id]?.label ?? raw };
   })();
+
+  // ── Fork-bracket geometry (mirrors FlowStageCard vertical constants) ──────
+  const LINE_COLOR  = 'var(--midgrayblue)';
+  const BRACKET_H   = 28;      // height of the diverge / converge SVG panel
+  const CARD_W      = 260;     // width of each event-pill column
+  const GAP         = 48;      // gap between the two columns
+  const SVG_W       = CARD_W * 2 + GAP;
+  const MID_X       = SVG_W / 2;
 </script>
 
 <div class="flow-step-slot">
+
+  <!-- ── Step card ─────────────────────────────────────────────────────── -->
   <button
     class="card-sm flow-step-card"
     class:flow-step-card--hovered={$hoveredIndex === step.index}
     class:flow-step-card--selected={$selectedIndex === step.index}
-    onmouseenter={() => {
-      hoveredIndex.set(step.index);
-      hoveredInflectionIndex.set(-1);
-    }}
+    onmouseenter={() => { hoveredIndex.set(step.index); hoveredInflectionIndex.set(-1); }}
     onmouseleave={() => hoveredIndex.set(-1)}
     onclick={handleClick}
     aria-pressed={$selectedIndex === step.index}
   >
     <div class="flow-step-card__body">
       <div class="flow-step-card__title-row">
-        <span class="label uppercase text-center flow-step-card__title">
-          {step.step}
-        </span>
+        <span class="label uppercase text-center flow-step-card__title">{step.step}</span>
       </div>
     </div>
 
-    <!-- ── Bottom metadata row ─────────────────────────────────── -->
     <div class="flow-step-card__meta">
-      <!-- Sentiment -->
       <div class="flow-step-card__meta-item">
         <span class="flow-step-card__meta-label">{sentimentLabel}</span>
         <div class="flow-step-card__swatch-wrap">
@@ -83,70 +83,138 @@
           ></div>
         </div>
       </div>
-
-      <!-- Emotion -->
       <div class="flow-step-card__meta-item">
         <span class="flow-step-card__meta-label">{emotionData.label}</span>
         <div class="flow-step-card__swatch-wrap flow-step-card__emotion-wrap">
-          {#if emotionData.colors.length}
-            {#each emotionData.colors as color}
-              <div
-                class="jm-swatch-round-sm flow-step-card__emotion-swatch"
-                style="background:{color};"
-              ></div>
-            {/each}
-          {/if}
+          {#each emotionData.colors as color}
+            <div class="jm-swatch-round-sm flow-step-card__emotion-swatch" style="background:{color};"></div>
+          {/each}
         </div>
       </div>
     </div>
   </button>
 
+  <!-- ── Event fork — only rendered when events exist ─────────────────── -->
   {#if hasEvents}
-    <div class="event-connector"></div>
-    <div class="event-cluster">
-      {#each events as ev (ev.event_id)}
-        <JourneyEventCard
-          type={ev.type}
-          label={ev.label}
-          shortLabel={ev.short_label}
-          tooltip={ev.tooltip ?? ''}
-          compact={true}
-        />
-      {/each}
+
+    <!-- Short stem from card bottom into the diverge bracket -->
+    <div class="fork-stem" aria-hidden="true"></div>
+
+    <!-- Diverge bracket SVG -->
+    <svg
+      class="fork-bracket"
+      width={SVG_W}
+      height={BRACKET_H}
+      viewBox="0 0 {SVG_W} {BRACKET_H}"
+      aria-hidden="true"
+    >
+      <!-- Vertical drop from top-centre down to the horizontal bar midpoint -->
+      <line x1={MID_X}              y1="0"
+            x2={MID_X}              y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
+      <!-- Horizontal bar spanning both column centres -->
+      <line x1={CARD_W / 2}         y1={BRACKET_H / 2}
+            x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
+      <!-- Left drop to experience column -->
+      <line x1={CARD_W / 2}         y1={BRACKET_H / 2}
+            x2={CARD_W / 2}         y2={BRACKET_H}      stroke={LINE_COLOR} stroke-width="1"/>
+      <!-- Right drop to sponsor column -->
+      <line x1={CARD_W + GAP + CARD_W / 2} y1={BRACKET_H / 2}
+            x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H}      stroke={LINE_COLOR} stroke-width="1"/>
+    </svg>
+
+    <!-- Two event columns side-by-side -->
+    <div class="fork-columns" style="gap:{GAP}px; width:{SVG_W}px;">
+
+      <!-- Left: experience events -->
+      <div class="fork-col fork-col--left" style="width:{CARD_W}px;">
+        {#if hasExperience}
+          <div class="label-sm">
+            Patient Experience</div>
+          {#each experienceEvents as ev (ev.event_id)}
+            <JourneyEventCard event={ev} compact={true} />
+          {/each}
+        {/if}
+      </div>
+
+      <!-- Right: sponsor / info events -->
+      <div class="fork-col fork-col--right" style="width:{CARD_W}px;">
+        {#if hasSponsor}
+          <div class="fork-col__label jm-kicker" style="color: #7a4d08;">Sponsor</div>
+          {#each sponsorEvents as ev (ev.event_id)}
+            <JourneyEventCard event={ev} compact={true} />
+          {/each}
+        {/if}
+      </div>
+
     </div>
+
+    <!-- Converge bracket SVG -->
+    <svg
+      class="fork-bracket"
+      width={SVG_W}
+      height={BRACKET_H}
+      viewBox="0 0 {SVG_W} {BRACKET_H}"
+      aria-hidden="true"
+    >
+      <!-- Left rise from experience column -->
+      <line x1={CARD_W / 2}         y1="0"
+            x2={CARD_W / 2}         y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
+      <!-- Right rise from sponsor column -->
+      <line x1={CARD_W + GAP + CARD_W / 2} y1="0"
+            x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
+      <!-- Horizontal bar converging to centre -->
+      <line x1={CARD_W / 2}         y1={BRACKET_H / 2}
+            x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
+      <!-- Vertical rise to top-centre -->
+      <line x1={MID_X}              y1={BRACKET_H / 2}
+            x2={MID_X}              y2={BRACKET_H}      stroke={LINE_COLOR} stroke-width="1"/>
+    </svg>
+
   {/if}
 
+  <!-- ── Inflection card ───────────────────────────────────────────────── -->
   {#if infl}
-    <div class="flow-inflection-connector"></div>
-    <div
-      class="card"
+    <div class="flow-inflection-connector" aria-hidden="true"></div>
+    <button
+      class="card flow-inflection-card"
       style="border-color:{stageColor};"
-      onmouseenter={() => {
-        hoveredInflectionIndex.set(step.index);
-        hoveredIndex.set(-1);
-      }}
+      tabindex="0"
+      aria-label="View inflection point{inflDet?.label ? `: ${inflDet.label}` : ''}"
+      onmouseenter={() => { hoveredInflectionIndex.set(step.index); hoveredIndex.set(-1); }}
       onmouseleave={() => hoveredInflectionIndex.set(-1)}
+      onclick={() => {
+        selectedInflectionIndex.set(step.index);
+        selectedInflectionPath.set(null);
+      }}
+      onkeydown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectedInflectionIndex.set(step.index);
+          selectedInflectionPath.set(null);
+        }
+      }}
     >
       {#if inflDet}
         <div class="flex flex-row p-2">
           <span class="text-body-sm">{inflDet.label}</span>
         </div>
       {/if}
-    </div>
+    </button>
   {/if}
+
 </div>
 
 
 <style>
+  /* ── Outer slot ──────────────────────────────────────────────────────────── */
   .flow-step-slot {
     display: flex;
     flex-direction: column;
     align-items: center;
-    place-items: center;
-    place-content: center;
-    justify-content: center;
+    width: 100%;
   }
 
+  /* ── Step card ───────────────────────────────────────────────────────────── */
   .flow-step-card {
     width: 225px;
     min-height: 110px;
@@ -222,61 +290,87 @@
     border-radius: 999px;
   }
 
-  .flow-step-card__emotion-wrap {
-    gap: 0;
-  }
+  .flow-step-card__emotion-wrap { gap: 0; }
 
   .flow-step-card__emotion-swatch {
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9);
   }
 
-  .flow-step-card__emotion-placeholder {
-    width: 24px;
-    height: 10px;
+  /* ── Fork bracket system ─────────────────────────────────────────────────── */
+
+  /* Short vertical stem between the step card and the diverge bracket */
+  .fork-stem {
+    width: 1px;
+    height: 16px;
+    border-left: 1.5px dashed rgba(160, 168, 184, 0.7);
+    flex-shrink: 0;
+    align-self: center;
   }
 
-  /* Event cluster */
+  .fork-bracket {
+    flex-shrink: 0;
+    display: block;
+    overflow: visible;
+  }
 
-  .event-connector {
-    width: 1px;
-    height: 14px;
+  /* Two event-pill columns rendered between the brackets */
+  .fork-columns {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-left: 1.5px dashed rgba(160, 168, 184, 0.6);
+    flex-direction: row;
+    align-items: flex-start;
     flex-shrink: 0;
   }
 
-  .event-cluster {
+  .fork-col {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     gap: 4px;
-    width: 180px;
+    min-height: 24px; /* keeps column present even when empty */
   }
 
-  /* Inflection */
+  /* Experience cards — right-justified so pills sit flush against the gap */
+  .fork-col--left {
+    align-items: flex-end;
+  }
 
+  /* Sponsor cards — left-justified so pills sit flush against the gap */
+  .fork-col--right {
+    align-items: flex-start;
+  }
+
+  .fork-col__label {
+    margin-bottom: 2px;
+  }
+
+  /* ── Inflection card ────────────────────────────────────────────────────────── */
+  .flow-inflection-card {
+    text-align: left;
+    cursor: pointer;
+    transition:
+      box-shadow 160ms ease,
+      transform  160ms ease;
+  }
+
+  .flow-inflection-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .flow-inflection-card:focus-visible {
+    outline: 2px solid var(--purple, #5830a2);
+    outline-offset: 2px;
+  }
+
+  .flow-inflection-card:active {
+    transform: scale(0.98);
+  }
+
+  /* ── Inflection connector ────────────────────────────────────────────────── */
   .flow-inflection-connector {
-    width: 2px;
+    width: 1px;
     height: 20px;
     border-left: 1.5px dashed #a0a8b8;
     flex-shrink: 0;
-  }
-
-  .flow-inflection-card--hovered {
-    background-color: var(--panel);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(63, 115, 255, 0.18);
-  }
-
-  .flow-inflection-card--selected {
-    opacity: 1;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  }
-
-  .infl-placeholder-empty {
-    font-size: 0.5rem;
-    color: #a0a8b8;
-    font-style: italic;
+    align-self: center;
   }
 </style>

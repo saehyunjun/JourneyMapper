@@ -4,8 +4,8 @@
   import { fade, fly } from 'svelte/transition';
   import { selectedIndex } from './journeyStore.js';
   import ExperienceWheel from './ExperienceWheel.svelte';
-  import StepEvents from './StepEvents.svelte';
   import JourneySubDrawer from './JourneySubDrawer.svelte';
+  import JourneyEventCard from './JourneyEventCard.svelte';
 
   import { emotionColor, ratingToLabel, DYAD_BY_ID, SCORE_ALIASES, SENTIMENT_SCALE, sentimentToColor, metricScoreLabel, buildStageColorMap } from './journeyConfig.js';
   
@@ -14,10 +14,11 @@
   import SmileyBlank  from 'phosphor-icons-svelte/IconSmileyBlankBold.svelte';
   import Scroll from 'phosphor-icons-svelte/IconScrollRegular.svelte';
   import IconDiamondsFourRegular from 'phosphor-icons-svelte/IconDiamondsFourRegular.svelte';
-
   import CalenderDots from 'phosphor-icons-svelte/IconCalendarDotsBold.svelte';
   import HandHeart    from 'phosphor-icons-svelte/IconHandHeartBold.svelte';
   import Aclepius     from 'phosphor-icons-svelte/IconAsclepiusBold.svelte';
+  import WarningDiamondRegular from 'phosphor-icons-svelte/IconWarningDiamondRegular.svelte';
+  import TrendUpRegular from 'phosphor-icons-svelte/IconTrendUpRegular.svelte';
  
   export let data    = [];
   export let metrics = [];
@@ -56,7 +57,7 @@
     return si === Math.round(activePos) ? 1 : Math.max(0.12, 1 - dist * 0.28);
   }
 
-  // ── Tooltip state ─────────────────────────────────────────────────────
+  // ── Tooltip state ─────────────────────────────────────────────────────────
   /** @type {string | null} */
   let hoveredMetricKey = null;
   let tooltipX = 0;
@@ -97,7 +98,7 @@
   $: step = $selectedIndex >= 0 ? data[$selectedIndex] : null;
   $: sentimentLabel = step ? ratingToLabel(step.sentiment) : '';
 
-  // ── Stage color ───────────────────────────────────────────────────────
+  // ── Stage color ───────────────────────────────────────────────────────────
   $: stageColorMap = buildStageColorMap(data);
   $: stageColor = (step && stageColorMap[step.stage_id]) ? stageColorMap[step.stage_id] : 'var(--jm-icon-dark, #3a3a3a)';
  
@@ -110,13 +111,13 @@
     return [emotionColor(id)];
   })();
  
-  // ── Tweened sentiment ─────────────────────────────────────────────────
+  // ── Tweened sentiment ─────────────────────────────────────────────────────
   const sentimentTween = tweened(0, TWEEN_OPTS);
   $: if (step) sentimentTween.set(parseFloat(step.sentiment ?? 0));
   $: sentimentTweenVal = $sentimentTween;
   $: sentimentColor    = sentimentToColor($sentimentTween);
  
-  // ── Tweened metric stores ─────────────────────────────────────────────
+  // ── Tweened metric stores ─────────────────────────────────────────────────
   let metricTweens = /** @type {ReturnType<typeof tweened>[]} */ ([]);
   let metricVals   = /** @type {number[]} */ ([]);
  
@@ -138,8 +139,17 @@
       metricTweens[i]?.set(parseFloat(step[m.key] ?? 0));
     });
   }
+
+  // ── Events: split by polarity ─────────────────────────────────────────────
+  const NEGATIVE_TYPES = ['roadblock', 'hospitalization'];
+  const POSITIVE_TYPES = ['progress', 'community', 'info_source', 'intervention'];
+
+  $: allEvents      = step?.events ?? [];
+  $: negativeEvents = allEvents.filter(e => NEGATIVE_TYPES.includes(e.type));
+  $: positiveEvents = allEvents.filter(e => POSITIVE_TYPES.includes(e.type));
+  $: hasEvents      = allEvents.length > 0;
  
-  // ── Illustration error fallback ───────────────────────────────────────
+  // ── Illustration error fallback ───────────────────────────────────────────
   let imgError = false;
   $: if (illustrationSrc) imgError = false;
 </script>
@@ -148,7 +158,8 @@
   <div class="content-wrap">
 
     <!-- ── Top meta bar: sentiment + emotion ──────────────────────────── -->
-    <div class="toolbar p-2" style="border-bottom: 2.5px solid {stageColor}">
+    <div class="toolbar p-8" 
+      style="border-bottom: 1.725px solid {stageColor}">
       <div class="flex flex-row gap-2 items-center">
         <div class="sentiment-container">
           {#each SENTIMENT_SCALE as stopColor, i}
@@ -157,11 +168,20 @@
             <div
               class="jm-swatch"
               class:score-square--active={isActive}
-              style="background: {stopColor}; opacity: {isActive ? 1 : 0.2};"
+              style="background: {stopColor}; opacity: {isActive ? 1 : 0.125};"
             ></div>
           {/each}
         </div>
-        <span class="label-sm">{sentimentLabel}</span>
+
+        <span
+          class="pill-white"
+          style="
+            border: 2px solid {sentimentColor};
+            color: {sentimentColor};
+          "
+        >
+          {sentimentLabel}
+        </span>
       </div>
 
       <button
@@ -172,7 +192,8 @@
       >
         <div class="emotion-container">
           {#each emotionSwatches as color}
-            <span class="jm-swatch-round-sm" style="background: {color};"></span>
+            <span class="jm-swatch-round" 
+            style="background: {color};"></span>
           {/each}
         </div>
         <span class="label-sm">{step.plutchik_score}</span>
@@ -180,88 +201,98 @@
       </button>
     </div>
 
-          <div class="flex flex-col gap-8 px-4 py-6" 
-          style="background-color: {stageColor}">
-          <div class="flex flex-col md:w-9/12 gap-2">
-              <span class="label-sm" 
-              style="color: var(--lightgrayblue);">{step.stage}</span>
-              <h2 class="heading-serif" 
-              style="color: var(--lightgrayblue)">
-              {step.step}</h2>
-          </div>
-        
-          <div class="flex flex-col gap-2 md:w-9/12">
-            <h3 class="label-sm uppercase"
-              style="color: var(--lightgrayblue)">
-              Journey Narrative
-            </h3>
-
-            <p class="text-body w-9/12"
-              style="color: var(--lightgrayblue)">
-              {step.narrative_description}
-            </p>
-          </div>
+    <div
+      class="flex flex-col md:w-full md:grid md:grid-cols-3 gap-8 px-6 py-6"
+      style="background-color: {stageColor}"
+    >
+      <div class="flex flex-col md:col-span-2 gap-6">
+        <div class="flex flex-col gap-2">
+          <span
+            class="label-sm"
+            style="color: var(--lightgrayblue);"
+          >
+            {step.stage}
+          </span>
+          
+          <h2
+            class="heading-serif"
+            style="color: var(--lightgrayblue)"
+          >
+            {step.step}
+          </h2>
         </div>
+        
+        <div class="flex flex-col gap-2">
+          <h3
+            class="label-sm"
+            style="color: var(--lightgrayblue)"
+          >
+            Journey Narrative
+          </h3>
+
+          <p
+            class="text-body-lg"
+            style="color: var(--lightgrayblue)"
+          >
+            {step.narrative_description}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-row col-span-1 justify-end">
+        {#if wheelData}
+          <button
+            class="btn-nav hover:pointer"
+            onclick={() => (wheelDrawerOpen = true)}
+            aria-label="Open experience wheel for {step.step}"
+          >
+            <span class="label-sm">View PX Wheel</span>
+            <ArrowSquareOutRegular class="icon-toolbar-light-sm" />
+          </button>
+        {:else}
+          <button
+            class="btn-nav hover:pointer opacity-50 saturate-0 md:col-span-2"
+            aria-label="Experience wheel not available for this step"
+            disabled
+          >
+            <span class="label-sm">View PX Wheel</span>
+            <ArrowSquareOutRegular class="icon-toolbar-light-sm" />
+          </button>
+        {/if}
+      </div>
+    </div>
 
     <!-- ── Quote ─────────────────────────────────────────────────────── -->
     {#if step.quote}
-      <div class="flex flex-col justify-center align-middle py-8 gap-2 w-9/12">
-        <h3 class="label-sm uppercase"
-        style="color: var(--grayblue)">
-        Key Quotes
-      </h3>
-        <QuotesRegular class="text-2xl text-slate-600"/>
-        
-        <p class="text-2xl font-semibold">
-          {step.quote}
-        </p>
-      </div>
-    {/if}
-
-    <!-- ── Narrative header row ───────────────────────────────────────── -->
-    <div class="header-row">
-      <div class="flex flex-row gap-2 items-center">
-        <Scroll class="icon-header" style="background-color: {stageColor}; outline-color: {stageColor};" />
-        
-      </div>
-
-      {#if wheelData}
-        <button
-          class="btn-extranote-orange pl-2"
-          onclick={() => (wheelDrawerOpen = true)}
-          aria-label="Open experience wheel for {step.step}"
+      <div
+        class="flex flex-col gap-6 p-6"
+        style="background-color: rgb(from {stageColor} r g b / 0.25);"
+      >
+        <h3
+          class="label-sm uppercase"
+          style="color: var(--grayblue)"
         >
-          <span>View Experience Wheel</span>
-          <ArrowSquareOutRegular class="icon-toolbar-light-sm"
-            style="background-color: var(--lightorange); color: var(--orange);" />
-        </button>
-      {:else}
-        <button
-          class="btn-extranote pl-2 hover:cursor-not-allowed opacity-50 saturate-0"
-          aria-label="Experience wheel not available for this step"
-          disabled
-        >
-          <span>View Experience Wheel</span>
-          <ArrowSquareOutRegular class="icon-toolbar-light-sm" />
-        </button>
-      {/if}
-    </div>
-
-    <!-- ── Narrative body ─────────────────────────────────────────────── -->
-    {#if step.narrative_description}
-      <div class="content-padding">
-        <p class="text-body">{step.narrative_description}</p>
+          Key Quotes
+        </h3>
+         
+        <div class="flex flex-col gap-2 md:w-7/12 md:justify-between">
+          <QuotesRegular class="text-2xl text-slate-600" />
+          <p class="text-4xl text-balance font-medium">
+            {step.quote}
+          </p>
+        </div>
       </div>
     {/if}
 
     <!-- ── Index Metrics ─────────────────────────────────────────────── -->
-    <section class="detail-section">
-      <div class="toolbar-sm-white">
-        <IconDiamondsFourRegular class="icon-toolbar-dark-md"
-          style="background-color: {stageColor}; outline-color: {stageColor};" />
-        <span class="label-sm">Index Metrics</span>
-      </div>
-
+    <div
+      class="flex flex-col gap-6 p-6"
+      style="background-color: rgb(from {stageColor} r g b / 0.1);"
+    >
+      <span class="label-sm">
+        Index Metrics
+      </span>
+      
       <div class="metrics-wrap">
         <div class="imb-grid">
           {#each metrics as m, i}
@@ -272,38 +303,42 @@
             {@const hasExplainer  = !!step.metric_explainers?.[m.key]}
 
             <div
-              class="imb-card"
+              class="flex flex-col"
               in:fly={{ y: 4, duration: 200, delay: 60 + i * 40, easing: cubicOut }}
             >
-              <!-- Label + pill -->
-              <div class="imb-card-header">
-                <div class="imb-card-title">
+              <!-- Header row: icon + label (left) | pill + value (right) -->
+              <div class="flex flex-row w-full justify-between items-start">
+                <div class="flex flex-row items-center gap-2">
                   {#if IconComponent}
-                    <span class="imb-icon" style="color: {m.color};">
-                      <svelte:component this={IconComponent} size={14} />
-                    </span>
+                    <svelte:component
+                      this={IconComponent}
+                      class="text-lg"
+                      style="color: {m.color}"
+                    />
                   {:else}
                     <div class="w-2 h-2 ring-1" style="background: {m.color};"></div>
                   {/if}
-                  <span class="text-body-sm">{m.label}</span>
+                  <span class="label-sm">{m.label}</span>
                 </div>
 
-                {#key $selectedIndex}
-                  <span
-                    class="pill-white"
-                    style="border: 1px solid {m.color}; color: {m.color}"
-                    in:fade={{ duration: 200, delay: 80 + i * 40 }}
-                    out:fade={{ duration: 80 }}
-                  >
-                    {metricScoreLabel(m.key, tweenedVal)}
-                  </span>
-                {/key}
+                <div class="flex flex-col items-end">
+                  {#key $selectedIndex}
+                    <span
+                      class="pill-white"
+                      style="border: 2px solid {m.color}; color: {m.color}"
+                      in:fade={{ duration: 200, delay: 80 + i * 40 }}
+                      out:fade={{ duration: 80 }}
+                    >
+                      {metricScoreLabel(m.key, tweenedVal)}
+                    </span>
+                  {/key}
+                </div>
               </div>
 
               <!-- Scale + numeric value -->
-              <div class="imb-card-scale">
+              <div class="imb-card-scale flex flex-row items-center justify-between gap-3">
                 <div
-                  class="imb-squares"
+                  class="emotion-container"
                   class:imb-squares--interactive={hasExplainer}
                   onmouseenter={hasExplainer ? (e) => onSquareEnter(e, m.key) : undefined}
                   onmousemove={hasExplainer ? onSquareMove : undefined}
@@ -315,9 +350,10 @@
                     {@const opacity  = squareOpacity(si, activePos)}
                     {@const isActive = si === Math.round(activePos)}
                     <div
-                      class="jm-swatch-round-sm"
+                      class="jm-swatch-round"
                       class:imb-square--active={isActive}
-                      style="background: {ramp[si]}; opacity: {opacity};"
+                      style="background: {ramp[si]}; 
+                      opacity: {opacity};"
                     ></div>
                   {/each}
                 </div>
@@ -337,10 +373,61 @@
           {/each}
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- ── Step Events ────────────────────────────────────────────────── -->
-    <StepEvents events={step.events ?? []} />
+    {#if hasEvents}
+      <div class="flex flex-col gap-5 p-6">
+
+        <span class="label-sm">Step Events</span>
+
+        <!-- Challenges row -->
+        {#if negativeEvents.length > 0}
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-row align-middle justify-start gap-2">
+              <WarningDiamondRegular class="text-base" />
+              <span class="jm-kicker" style="color: var(--red);">Challenges</span>
+              <span class="pill-sm">
+                {negativeEvents.length}</span>
+            </div>
+            <div class="event-carousel">
+              {#each negativeEvents as event, i (event.event_id ?? i)}
+                <div
+                  class="event-carousel__item"
+                  in:fly={{ x: 12, duration: 220, delay: i * 50, easing: cubicOut }}
+                >
+                  <JourneyEventCard {event} />
+                </div>
+              {/each}
+            </div>
+          </div>
+        {/if}
+
+        <!-- Positive Signals row -->
+        {#if positiveEvents.length > 0}
+          <div class="flex flex-col gap-3">
+            <div class="flex flex-row items-center gap-2">
+              <TrendUpRegular class="text-base" 
+              style="color: var(--red)" />
+              
+              <span class="jm-kicker" style="color: var(--red);">Positive Signals</span>
+              <span class="pill">{positiveEvents.length}</span>
+            </div>
+            <div class="event-carousel">
+              {#each positiveEvents as event, i (event.event_id ?? i)}
+                <div
+                  class="event-carousel__item"
+                  in:fly={{ x: 12, duration: 220, delay: i * 50, easing: cubicOut }}
+                >
+                  <JourneyEventCard {event} />
+                </div>
+              {/each}
+            </div>
+          </div>
+        {/if}
+
+      </div>
+    {/if}
 
   </div>
 {/if}
@@ -355,7 +442,7 @@
     <span class="label font-semibold" style="color: {tooltipMetric.color};">
       {tooltipMetric.label}
     </span>
-    {#if tooltipText}
+    {#if tooltipText} 
       <p class="text-body-sm mt-1">{tooltipText}</p>
     {/if}
   </div>
@@ -379,102 +466,64 @@
 {/if}
 
 <style>
+  /* ── Sentiment swatch active state ───────────────────────────────────── */
+  .score-square--active {
+    outline: 1.5px solid var(--panel-dark);
+    outline-offset: 1px;
+    transition:
+      transform 0.55s cubic-bezier(0.45, 0.05, 0.55, 0.95),
+      box-shadow 0.25s ease;
 
-/* ── Quote hero ───────────────────────────────────────────────────────── */
-.quote-hero {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem 1.125rem;
-  border-left: 3px solid var(--panel-dark);
-  background: var(--panel);
-  margin: 0;
-}
-
-/* ── Sentiment swatch active state ───────────────────────────────────── */
-.score-square--active {
-  outline: 1.5px solid var(--grayblue);
-  outline-offset: 2px;
-}
-
-/* ── Illustration wrapper ────────────────────────────────────────────── */
-.illustration-wrap {
-  overflow: hidden;
-}
-
-/* ── Metrics grid ────────────────────────────────────────────────────── */
-.metrics-wrap {
-  padding: 0 2rem;
-}
-
-.imb-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.25rem 4.25rem;
-}
-
-@media (max-width: 480px) {
-  .imb-grid {
-    grid-template-columns: 1fr;
+    box-shadow:
+      0 10px 20px -22px rgba(50, 50, 10, 0.125),
+      0 1em 1em -1em rgba(0, 0, 0, 0.125);
   }
-}
 
-.imb-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.275rem;
-  min-width: 0;
-}
+  .imb-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 
-.imb-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
+  .imb-value {
+    white-space: nowrap;
+  }
 
-.imb-card-title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 0;
-}
+  .imb-square--active {
+    outline: 1.25px solid var(--grayblue);
+    outline-offset: 1px;
+    scale: 125%;
+    opacity: 100%;
+    z-index: 9999;
+    filter: saturate(1);
+  }
 
-.imb-card-scale {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.75rem;
-  align-items: center;
-}
+  /* ── Events carousel rows ───────────────────────────────────────────── */
+  .event-carousel {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    /* hide scrollbar on webkit while keeping scroll functionality */
+    scrollbar-width: thin;
+    scrollbar-color: var(--hairline) transparent;
+  }
 
-.imb-squares {
-  display: flex;
-  gap: 0.25rem;
-  min-width: 0;
-}
+  .event-carousel::-webkit-scrollbar {
+    height: 4px;
+  }
 
-.imb-squares--interactive {
-  cursor: help;
-}
+  .event-carousel::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-.imb-icon {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  opacity: 0.85;
-}
+  .event-carousel::-webkit-scrollbar-thumb {
+    background: var(--hairline);
+    border-radius: 2px;
+  }
 
-.imb-value {
-  white-space: nowrap;
-}
-
-.imb-square--active {
-  outline: 2.15px solid var(--grayblue);
-  outline-offset: 1.5px;
-  scale: 120%;
-  opacity: 100%;
-  filter: saturate(1);
-}
-
+  .event-carousel__item {
+    flex: 0 0 260px;
+  }
 </style>

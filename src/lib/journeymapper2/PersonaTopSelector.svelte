@@ -26,7 +26,7 @@
   function personaColor(p) {
     return p.type?.toLowerCase().includes('caregiver')
       ? 'var(--gold)'
-      : 'var(--purple, #23abab)';
+      : 'var(--teal)';
   }
 
   function selectPersona(id, e) {
@@ -73,7 +73,7 @@
 <div class="sticky-panel-top pl-2" 
 aria-label="Persona selector" role="navigation" onmousemove={handleMouseMove}>
 
-  <div class="flex flex-row gap-6 py-2 align-middle justify-center">
+  <div class="flex flex-row gap-2 py-2 align-middle justify-center">
     {#each personas as p (p.id)}  
       {@const active = p.id === activePersonaId}
       {@const accentColor = personaColor(p)}
@@ -101,11 +101,12 @@ aria-label="Persona selector" role="navigation" onmousemove={handleMouseMove}>
                 }}
               />
             {:else}
-              <span class="persona-initials" aria-hidden="true">{p.profile.initials}</span>
+              <span class="label-sm" aria-hidden="true">
+                {p.profile.initials}</span>
             {/if}
             {#if p.type}
               <span
-                class="pill-white absolute bottom-0 right-0"
+                class="pill-round label-xs absolute bottom-0 right-0"
                 style="background: {accentColor}; color: var(--paper); border-color: var(--paper);"
                 aria-label={p.type}
               >{isCaregiver ? 'C' : 'P'}</span>
@@ -191,5 +192,7 @@ aria-label="Persona selector" role="navigation" onmousemove={handleMouseMove}>
   .persona-avatar--active {
     outline: 3.5px solid var(--persona-accent, var(--purple, #23abab));
     outline-offset: 2px;
+    margin-right: .5em;
+    margin-left: .5em;
   }
 </style>

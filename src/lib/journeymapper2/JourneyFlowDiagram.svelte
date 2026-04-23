@@ -1,14 +1,9 @@
 <script>
   import { buildStageColorMap } from './journeyConfig.js';
   import FlowStageCard from './FlowStageCard.svelte';
-  import FlowConnector from './FlowConnector.svelte';
 
   /** @type {any[]} */
   export let data = [];
-
-  export let layout = 'horizontal';
-
-  $: isVertical = layout === 'vertical';
 
   // ── Stage groups ───────────────────────────────────────────────────────────
   $: stageGroups = (() => {
@@ -39,116 +34,49 @@
 
 <div class="body-dotted">
   <div
-    class="flow-diagram-scroll shared-scroll"
-    class:flow-diagram-scroll--vertical={isVertical}
+    class="flow-diagram-scroll"
     role="region"
     aria-label="Journey flow diagram"
   >
-    {#if !isVertical}
-      <!-- HORIZONTAL -->
-      <div class="flow-diagram-row">
-        {#each stageGroups as group, gi}
-          <div class="flow-stage-shell">
+    <div class="flow-diagram-col">
+      {#each stageGroups as group, gi}
+        <div class="stage-row"
+        style="background-color:{stageColorMap[group.stage_id]}1A;">
+          <div
+            class="stage-rail"
+            style="background-color:{stageColorMap[group.stage_id]};"
+          >
+            <span
+              class="stage-rail-label label-sm"
+            >
+              {group.stage}
+            </span>
+          </div>
+
+          <div class="stage-steps-area">
             <FlowStageCard
               {group}
               {data}
               stageColor={stageColorMap[group.stage_id]}
-              {layout}
+              layout="vertical"
+              hideHeader
             />
           </div>
+        </div>
 
-          {#if gi < stageGroups.length - 1}
-            <div class="flow-stage-connector flow-stage-connector--horizontal" aria-hidden="true">
-              <FlowConnector variant="stage" {layout} />
-            </div>
-          {/if}
-        {/each}
-      </div>
-    {:else}
-      <!-- VERTICAL -->
-      <div class="flow-diagram-col">
-        {#each stageGroups as group, gi}
-          <div class="stage-row">
-            <div
-              class="stage-rail"
-              style="background-color:{stageColorMap[group.stage_id]}1A;"
-            >
-              <span
-                class="stage-rail-label label-sm"
-                style="color:{stageColorMap[group.stage_id]};"
-              >
-                {group.stage}
-              </span>
-            </div>
-
-            <div class="stage-steps-area">
-              <FlowStageCard
-                {group}
-                {data}
-                stageColor={stageColorMap[group.stage_id]}
-                {layout}
-                hideHeader
-              />
-            </div>
-          </div>
-
-          {#if gi < stageGroups.length - 1}
-            <div class="flow-stage-connector flow-stage-connector--vertical" aria-hidden="true">
-              <FlowConnector variant="stage-vertical" {layout} />
-            </div>
-          {/if}
-        {/each}
-      </div>
-    {/if}
+      {/each}
+    </div>
   </div>
 </div>
 
 <style>
   .flow-diagram-scroll {
-    overflow-x: auto;
-    overflow-y: visible;
-    z-index: 999;
-    padding: 1rem 1.25rem 1.25rem;
-  }
-
-  .flow-diagram-scroll--vertical {
     overflow-x: visible;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
-  }
-
-  /* ── HORIZONTAL LAYOUT ─────────────────────────────────────────────── */
-  .flow-diagram-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: max-content;
-    min-width: 100%;
-    gap: 0;
-  }
-
-  .flow-stage-shell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: stretch;
-  }
-
-  .flow-stage-connector {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .flow-stage-connector--horizontal {
-    align-self: stretch;
-    min-width: 48px;
-    padding-inline: 0.125rem;
+    z-index: 999;
   }
 
   /* ── VERTICAL LAYOUT ───────────────────────────────────────────────── */
@@ -156,8 +84,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-width: 50vw;
-    gap: 0;
   }
 
   .stage-row {
@@ -169,16 +95,11 @@
     min-height: 8rem;
   }
 
-  .flow-stage-connector--vertical {
-    width: 100%;
-    min-height: 44px;
-    padding-block: 0.125rem;
-  }
 
   /* ── LEFT RAIL ─────────────────────────────────────────────────────── */
   .stage-rail {
     flex-shrink: 0;
-    width: 2rem;
+    width: 2.5em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,6 +109,7 @@
   .stage-rail-label {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
+    color: var(--paper);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -197,8 +119,6 @@
     text-overflow: ellipsis;
     max-height: 100%;
     padding: 0.5rem 0;
-    font-weight: 600;
-    letter-spacing: 0.02em;
   }
 
   /* ── STEPS AREA ────────────────────────────────────────────────────── */
