@@ -34,6 +34,7 @@
   $: hasExperience = experienceEvents.length > 0;
   $: hasSponsor    = sponsorEvents.length > 0;
   $: hasEvents     = hasExperience || hasSponsor;
+  $: hasBothTypes  = hasExperience && hasSponsor;
 
   $: sentimentLabel = ratingToLabel(d?.sentiment);
 
@@ -49,7 +50,7 @@
   // ── Fork-bracket geometry (mirrors FlowStageCard vertical constants) ──────
   const LINE_COLOR  = 'var(--midgrayblue)';
   const BRACKET_H   = 28;      // height of the diverge / converge SVG panel
-  const CARD_W      = 260;     // width of each event-pill column
+  const CARD_W      = 325;     // width of each event-pill column
   const GAP         = 48;      // gap between the two columns
   const SVG_W       = CARD_W * 2 + GAP;
   const MID_X       = SVG_W / 2;
@@ -62,10 +63,11 @@
     class="card-sm flow-step-card"
     class:flow-step-card--hovered={$hoveredIndex === step.index}
     class:flow-step-card--selected={$selectedIndex === step.index}
+    style="border-color:{stageColor};"    
     onmouseenter={() => { hoveredIndex.set(step.index); hoveredInflectionIndex.set(-1); }}
     onmouseleave={() => hoveredIndex.set(-1)}
     onclick={handleClick}
-    aria-pressed={$selectedIndex === step.index}
+    aria-pressed={$selectedIndex === step.index}flow-step-card__swatch-wrap
   >
     <div class="flow-step-card__body">
       <div class="flow-step-card__title-row">
@@ -75,69 +77,115 @@
 
     <div class="flow-step-card__meta">
       <div class="flow-step-card__meta-item">
-        <span class="flow-step-card__meta-label">{sentimentLabel}</span>
         <div class="flow-step-card__swatch-wrap">
           <div
-            class="jm-swatch flow-step-card__sentiment-swatch"
+            class="jm-swatch-sm"
             style="background-color:{sentimentToColor(d?.sentiment)};"
           ></div>
         </div>
+        <span class="label-xs">{sentimentLabel}</span>
       </div>
       <div class="flow-step-card__meta-item">
-        <span class="flow-step-card__meta-label">{emotionData.label}</span>
         <div class="flow-step-card__swatch-wrap flow-step-card__emotion-wrap">
           {#each emotionData.colors as color}
             <div class="jm-swatch-round-sm flow-step-card__emotion-swatch" style="background:{color};"></div>
           {/each}
         </div>
+        <span class="label-xs">{emotionData.label}</span>
       </div>
     </div>
   </button>
 
-  <!-- ── Event fork — only rendered when events exist ─────────────────── -->
+  <!-- ── Events: fork layout (both types) or centered single column ──── -->
   {#if hasEvents}
 
-    <!-- Short stem from card bottom into the diverge bracket -->
-    <div class="fork-stem" aria-hidden="true"></div>
+    {#if hasBothTypes}
+      <!-- Short stem from card bottom into the diverge bracket -->
+      <div class="fork-stem" aria-hidden="true"></div>
 
-    <!-- Diverge bracket SVG -->
-    <svg
-      class="fork-bracket"
-      width={SVG_W}
-      height={BRACKET_H}
-      viewBox="0 0 {SVG_W} {BRACKET_H}"
-      aria-hidden="true"
-    >
-      <!-- Vertical drop from top-centre down to the horizontal bar midpoint -->
-      <line x1={MID_X}              y1="0"
-            x2={MID_X}              y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
-      <!-- Horizontal bar spanning both column centres -->
-      <line x1={CARD_W / 2}         y1={BRACKET_H / 2}
-            x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
-      <!-- Left drop to experience column -->
-      <line x1={CARD_W / 2}         y1={BRACKET_H / 2}
-            x2={CARD_W / 2}         y2={BRACKET_H}      stroke={LINE_COLOR} stroke-width="1"/>
-      <!-- Right drop to sponsor column -->
-      <line x1={CARD_W + GAP + CARD_W / 2} y1={BRACKET_H / 2}
-            x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H}      stroke={LINE_COLOR} stroke-width="1"/>
-    </svg>
+      <!-- Diverge bracket SVG -->
+      <svg
+        class="fork-bracket"
+        width={SVG_W}
+        height={BRACKET_H}
+        viewBox="0 0 {SVG_W} {BRACKET_H}"
+        aria-hidden="true"
+      >
+        <line x1={MID_X}              y1="0"
+              x2={MID_X}              y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
+        <line x1={CARD_W / 2}         y1={BRACKET_H / 2}
+              x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
+        <line x1={CARD_W / 2}         y1={BRACKET_H / 2}
+              x2={CARD_W / 2}         y2={BRACKET_H}      stroke={LINE_COLOR} stroke-width="1"/>
+        <line x1={CARD_W + GAP + CARD_W / 2} y1={BRACKET_H / 2}
+              x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H}      stroke={LINE_COLOR} stroke-width="1"/>
+      </svg>
 
-    <!-- Two event columns side-by-side -->
-    <div class="fork-columns" style="gap:{GAP}px; width:{SVG_W}px;">
+      <!-- Two event columns side-by-side -->
+      <div class="fork-columns" style="gap:{GAP}px; width:{SVG_W}px;">
 
-      <!-- Left: experience events -->
-      <div class="fork-col fork-col--left" style="width:{CARD_W}px;">
+        <!-- Left: experience events -->
+        <div class="fork-col fork-col--left" style="width:{CARD_W}px;">
+          {#if hasExperience}
+            <div class="label-sm fork-col__label pt-2" 
+              style="color: var(--grayblue);">
+              Patient Experience
+            </div>
+            
+            {#each experienceEvents as ev (ev.event_id)}
+              <JourneyEventCard event={ev} compact={true} />
+            {/each}
+          {/if}
+        </div>
+
+        <!-- Right: sponsor / info events -->
+        <div class="fork-col fork-col--right" style="width:{CARD_W}px;">
+          {#if hasSponsor}
+            <div class="fork-col__label label-sm pt-2" 
+            style="color: var(--grayblue);">
+            Sponsor Opportunities
+          </div>
+            {#each sponsorEvents as ev (ev.event_id)}
+              <JourneyEventCard event={ev} compact={true} />
+            {/each}
+          {/if}
+        </div>
+
+      </div>
+
+      <!-- Converge bracket SVG -->
+      <svg
+        class="fork-bracket"
+        width={SVG_W}
+        height={BRACKET_H}
+        viewBox="0 0 {SVG_W} {BRACKET_H}"
+        aria-hidden="true"
+      >
+        <line x1={CARD_W / 2}         y1="0"
+              x2={CARD_W / 2}         y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
+        <line x1={CARD_W + GAP + CARD_W / 2} y1="0"
+              x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
+        <line x1={CARD_W / 2}         y1={BRACKET_H / 2}
+              x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
+        <line x1={MID_X}              y1={BRACKET_H / 2}
+              x2={MID_X}              y2={BRACKET_H}      stroke={LINE_COLOR} stroke-width="1"/>
+      </svg>
+
+    {:else}
+      <!-- Single-type: straight stem + centered column -->
+      <div class="fork-stem" aria-hidden="true"></div>
+      <div class="single-events-col" style="width:{CARD_W}px;">
         {#if hasExperience}
-          <div class="label-sm">
-            Patient Experience</div>
+          
+        <div class="label-sm fork-col__label pt-2" 
+        style="color: var(--grayblue);">
+          Patient Experience
+        </div>
+          
           {#each experienceEvents as ev (ev.event_id)}
             <JourneyEventCard event={ev} compact={true} />
           {/each}
         {/if}
-      </div>
-
-      <!-- Right: sponsor / info events -->
-      <div class="fork-col fork-col--right" style="width:{CARD_W}px;">
         {#if hasSponsor}
           <div class="fork-col__label jm-kicker" style="color: #7a4d08;">Sponsor</div>
           {#each sponsorEvents as ev (ev.event_id)}
@@ -145,30 +193,7 @@
           {/each}
         {/if}
       </div>
-
-    </div>
-
-    <!-- Converge bracket SVG -->
-    <svg
-      class="fork-bracket"
-      width={SVG_W}
-      height={BRACKET_H}
-      viewBox="0 0 {SVG_W} {BRACKET_H}"
-      aria-hidden="true"
-    >
-      <!-- Left rise from experience column -->
-      <line x1={CARD_W / 2}         y1="0"
-            x2={CARD_W / 2}         y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
-      <!-- Right rise from sponsor column -->
-      <line x1={CARD_W + GAP + CARD_W / 2} y1="0"
-            x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
-      <!-- Horizontal bar converging to centre -->
-      <line x1={CARD_W / 2}         y1={BRACKET_H / 2}
-            x2={CARD_W + GAP + CARD_W / 2} y2={BRACKET_H / 2}  stroke={LINE_COLOR} stroke-width="1"/>
-      <!-- Vertical rise to top-centre -->
-      <line x1={MID_X}              y1={BRACKET_H / 2}
-            x2={MID_X}              y2={BRACKET_H}      stroke={LINE_COLOR} stroke-width="1"/>
-    </svg>
+    {/if}
 
   {/if}
 
@@ -223,6 +248,7 @@
     align-items: stretch;
     justify-content: space-between;
     padding: 8px;
+    margin-top: 1em;
     gap: 10px;
   }
 
@@ -265,7 +291,7 @@
     gap: 5px;
   }
 
-  .flow-step-card__meta-label {
+  .label-xs {
     font-size: 0.52rem;
     line-height: 1;
     text-transform: uppercase;
@@ -276,18 +302,10 @@
   }
 
   .flow-step-card__swatch-wrap {
-    min-height: 22px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .flow-step-card__sentiment-swatch {
-    width: 100%;
-    max-width: 56px;
-    height: 10px;
-    border-radius: 999px;
   }
 
   .flow-step-card__emotion-wrap { gap: 0; }
@@ -301,7 +319,7 @@
   /* Short vertical stem between the step card and the diverge bracket */
   .fork-stem {
     width: 1px;
-    height: 16px;
+    height: 28px;
     border-left: 1.5px dashed rgba(160, 168, 184, 0.7);
     flex-shrink: 0;
     align-self: center;
@@ -340,6 +358,15 @@
 
   .fork-col__label {
     margin-bottom: 2px;
+  }
+
+  /* ── Single-type event column (centered, no fork) ────────────────────────── */
+  .single-events-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
   }
 
   /* ── Inflection card ────────────────────────────────────────────────────────── */

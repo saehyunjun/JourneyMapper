@@ -1,335 +1,229 @@
 <script>
+  import { onMount, tick } from 'svelte';
+  import { hoveredIndex, selectedIndex } from './journeyStore.js';
+  import { sentimentToColor } from './journeyConfig.js';
+
+  /** @type {any[]} */
+  export let data = [];
+
   /**
-   * FlowSentimentSidebar
-   * ─────────────────────────────────────────────────────────────────────────────
-   * Vertical sentiment-only line chart pinned to the right of the flow diagram.
-   * Nodes are vertically aligned to step card centres via measured stepYOffsets.
-   *
-   * Props:
-   *   data           — full journey data array
-   *   stepYOffsets   — number[] of measured Y centres per step (from parent)
-   *   stepSlotHeight — fallback uniform slot height in px (default 160)
-   *   width          — sidebar width in px (default 180)
+   * Ref to the flow-diagram scroll container. The rail measures the
+   * `.flow-step-slot` elements inside it (in DOM order, which matches the
+   * flat `data` array order) to get exact per-step y-positions, so
+   * sentiment nodes align to the vertical centre of each step card
+   * regardless of how many event cards are present.
+   * @type {HTMLElement | null}
    */
+  export let flowRef = null;
 
-  import { sentimentToColor, ratingToLabel, buildStageColorMap } from './journeyConfig.js';
-  import { selectedIndex, hoveredIndex } from './journeyStore.js';
+  // Mirrors .flow-step-card min-height in FlowStepCard.svelte
+  const STEP_CARD_H = 110;
+  const NODE_CENTER = STEP_CARD_H / 2;
 
-  export let data           = [];
-  /** Measured Y-centre of each step card relative to flowDiagramEl top (px) */
-  export let stepYOffsets   = /** @type {number[]} */ ([]);
-  /** Fallback uniform slot height when stepYOffsets is absent */
-  export let stepSlotHeight = 160;
-  /** Sidebar total width */
-  export let width          = 180;
+  // ── Horizontal scale: sentiment −5 → +5 mapped to rail x-coordinates ──
+  const RAIL_W   = 225;
+  const PAD_L    = 0;                     // left padding inside the rail SVG
+  const PAD_R    = 0;                     // right padding
+  const PLOT_W   = RAIL_W - PAD_L - PAD_R; // usable chart width
 
-  // ── Dimensions ────────────────────────────────────────────────────────────
-  const PAD_LEFT   = 28;  // room for ±5 axis labels
-  const PAD_RIGHT  = 12;
-  const PAD_TOP    = 16;
-  const PAD_BOTTOM = 24;
-
-  $: chartW = width - PAD_LEFT - PAD_RIGHT;
-
-  // ── Y position for step i ─────────────────────────────────────────────────
-  // stepYOffsets[i] is already the centre of the step card relative to
-  // flowDiagramEl top. We add PAD_TOP so the SVG has breathing room at the top.
-  function stepY(i) {
-    if (stepYOffsets.length > i) return PAD_TOP + stepYOffsets[i];
-    return PAD_TOP + i * stepSlotHeight + stepSlotHeight / 2;
+  /** Map a sentiment value (−5…+5) to an SVG x-coordinate. */
+  function sentimentToX(val) {
+    const clamped = Math.max(-5, Math.min(5, parseFloat(val ?? 0)));
+    return PAD_L + ((clamped + 5) / 10) * PLOT_W;
   }
 
-  // Total SVG height — driven by the last measured offset so the chart
-  // grows/shrinks as event cards expand the flow diagram.
-  $: svgH = stepYOffsets.length > 0
-    ? PAD_TOP + stepYOffsets[stepYOffsets.length - 1] + PAD_BOTTOM
-    : PAD_TOP + data.length * stepSlotHeight + PAD_BOTTOM;
+  // Grid lines at key sentiment values; 0 is emphasised
+  const GRID_LINES = [-5, -4, -3, -2, -1,  0, 1, 2, 3, 4, 5];
 
-  // ── X mapping: sentiment −5…+5 → pixel within chart area ──────────────────
-  function valueToX(val) {
-    const n = Math.max(-5, Math.min(5, parseFloat(val) || 0));
-    return PAD_LEFT + ((n + 5) / 10) * chartW;
+  /** Measured y-centres for each step, in rail-container coordinates. */
+  let nodeYs = /** @type {(number | null)[]} */ ([]);
+  /** Bottom edge of each step slot, used for horizontal divider lines. */
+  let slotBottoms = /** @type {(number | null)[]} */ ([]);
+  let railHeight = 0;
+
+  /** @type {HTMLElement | null} */
+  let railColEl;
+
+  function measure() {
+    if (!flowRef || !railColEl) return;
+
+    const ys = /** @type {(number | null)[]} */ (new Array(data.length).fill(null));
+    const bots = /** @type {(number | null)[]} */ (new Array(data.length).fill(null));
+    const railTop = railColEl.getBoundingClientRect().top;
+
+    const slots = flowRef.querySelectorAll('.flow-step-slot');
+    let maxBottom = 0;
+
+    for (let i = 0; i < data.length; i++) {
+      const slot = slots[i];
+      if (!(slot instanceof HTMLElement)) continue;
+
+      const rect = slot.getBoundingClientRect();
+      ys[i] = rect.top - railTop + NODE_CENTER;
+      bots[i] = rect.bottom - railTop;
+
+      if (bots[i] > maxBottom) maxBottom = bots[i];
+    }
+
+    nodeYs = ys;
+    slotBottoms = bots;
+    railHeight = maxBottom;
   }
 
-  // ── Stage color map ───────────────────────────────────────────────────────
-  $: stageColorMap = buildStageColorMap(data);
+  /** @type {ResizeObserver | undefined} */
+  let ro;
+  /** @type {MutationObserver | undefined} */
+  let mo;
+  let mounted = false;
 
-  // ── Sentiment segments (colored per-segment average) ──────────────────────
-  $: sentimentSegments = data.slice(0, -1).map((d, i) => {
-    const next = data[i + 1];
-    const avg  = (parseFloat(d.sentiment) + parseFloat(next.sentiment)) / 2;
-    return {
-      x1: valueToX(d.sentiment),    y1: stepY(i),
-      x2: valueToX(next.sentiment), y2: stepY(i + 1),
-      color: sentimentToColor(avg),
-      indexA: i,
-      indexB: i + 1,
+  function setupObservers() {
+    if (!flowRef) return;
+
+    ro?.disconnect();
+    mo?.disconnect();
+
+    ro = new ResizeObserver(measure);
+    ro.observe(flowRef);
+    flowRef.querySelectorAll('.flow-step-slot').forEach((el) => ro?.observe(el));
+
+    mo = new MutationObserver(() => {
+      flowRef?.querySelectorAll('.flow-step-slot').forEach((el) => ro?.observe(el));
+      measure();
+    });
+    mo.observe(flowRef, { childList: true, subtree: true });
+
+    measure();
+  }
+
+  onMount(() => {
+    mounted = true;
+    setupObservers();
+    window.addEventListener('resize', measure);
+
+    return () => {
+      ro?.disconnect();
+      mo?.disconnect();
+      window.removeEventListener('resize', measure);
     };
   });
 
-  // ── Grid values ───────────────────────────────────────────────────────────
-  const GRID_VALUES = [-4, -2, 0, 2, 4];
+  // React to flowRef arriving after mount (parent bind:this resolution order)
+  $: if (mounted && flowRef) setupObservers();
 
-  // ── Active step ───────────────────────────────────────────────────────────
-  $: activeIndex = $hoveredIndex >= 0 ? $hoveredIndex : $selectedIndex;
-
-  // ── Hover tooltip ─────────────────────────────────────────────────────────
-  let hoveredStep = -1;
-  let tooltipX = 0;
-  let tooltipY = 0;
-
-  function onNodeEnter(i, e) {
-    hoveredStep = i;
-    hoveredIndex.set(i);
-    tooltipX = e.clientX;
-    tooltipY = e.clientY;
+  // Re-measure whenever data changes (step count / event counts may shift)
+  $: if (data && flowRef) {
+    tick().then(measure);
   }
-  function onNodeMove(e) {
-    tooltipX = e.clientX;
-    tooltipY = e.clientY;
-  }
-  function onNodeLeave() {
-    hoveredStep = -1;
-    hoveredIndex.set(-1);
-  }
-
-  $: tooltipStep = hoveredStep >= 0 ? data[hoveredStep] : null;
 </script>
 
-<!-- ── Sidebar shell ─────────────────────────────────────────────────────── -->
 <aside
-  class="flow-sentiment-sidebar"
-  style="width:{width}px;"
-  aria-label="Journey sentiment sidebar"
+  class="sentiment-rail"
+  role="complementary"
+  aria-label="Journey sentiment"
 >
-
-  <!-- ── Header ────────────────────────────────────────────────────────── -->
-  <div class="sidebar-header">
-    <span class="jm-kicker">Sentiment</span>
-    <div class="axis-labels" aria-hidden="true">
-      <span class="axis-label axis-label--pos">+5</span>
-      <span class="axis-label">0</span>
-      <span class="axis-label axis-label--neg">−5</span>
-    </div>
+  <div class="sentiment-rail__header">
+    <span class="label-sm">Sentiment</span>
   </div>
 
-  <!-- ── Chart ─────────────────────────────────────────────────────────── -->
-  <div class="chart-wrap">
+  <div
+    class="sentiment-rail__col"
+    bind:this={railColEl}
+    style="min-height:{railHeight}px;"
+  >
+    <!-- SVG overlay: vertical line chart with x = sentiment, y = step position -->
     <svg
-      {width}
-      height={svgH}
-      class="sidebar-svg"
-      overflow="visible"
-      role="img"
-      aria-label="Vertical sentiment line chart, one node per journey step"
+      class="sentiment-rail__overlay"
+      width={RAIL_W}
+      height={railHeight}
+      viewBox="0 0 {RAIL_W} {railHeight}"
+      aria-hidden="true"
     >
-
-      <!-- Stage color bands -->
-      {#each data as d, i}
-        {@const y0 = i === 0               ? PAD_TOP              : (stepY(i - 1) + stepY(i)) / 2}
-        {@const y1 = i === data.length - 1 ? svgH - PAD_BOTTOM    : (stepY(i) + stepY(i + 1)) / 2}
-        <rect
-          x={PAD_LEFT} y={y0}
-          width={chartW} height={y1 - y0}
-          fill={stageColorMap[d.stage_id] ?? 'transparent'}
-          opacity="0.07"
-          pointer-events="none"
-        />
-      {/each}
-
-      <!-- Grid lines -->
-      {#each GRID_VALUES as v}
+      <!-- Sentiment grid lines -->
+      {#each GRID_LINES as gv}
+        {@const gx = sentimentToX(gv)}
         <line
-          x1={valueToX(v)} y1={PAD_TOP}
-          x2={valueToX(v)} y2={svgH - PAD_BOTTOM}
-          stroke={v === 0 ? 'var(--hairline, rgba(0,0,0,0.15))' : 'var(--hairline, rgba(0,0,0,0.06))'}
-          stroke-width={v === 0 ? 1 : 0.75}
-          stroke-dasharray={v === 0 ? '3 5' : 'none'}
-          pointer-events="none"
+          x1={gx} y1="0"
+          x2={gx} y2={railHeight}
+          stroke={gv === 0 ? 'var(--midgrayblue, #a0a8b8)' : 'var(--gray, #e5e5e5)'}
+          stroke-width={gv === 0 ? 1 : 0.25}
+          stroke-dasharray={gv === 0 ? '4 3' : 'none'}
         />
       {/each}
 
-      <!-- Sentiment line segments -->
-      {#each sentimentSegments as seg}
-        {@const active    = activeIndex === seg.indexA || activeIndex === seg.indexB}
-        {@const anyActive = activeIndex >= 0}
-        <line
-          x1={seg.x1} y1={seg.y1}
-          x2={seg.x2} y2={seg.y2}
-          stroke={seg.color}
-          stroke-width="2.5"
-          stroke-linecap="round"
-          opacity={active ? 1 : anyActive ? 0.18 : 0.8}
-          pointer-events="none"
-        />
-      {/each}
-
-      <!-- Nodes -->
-      {#each data as d, i}
-        {@const cx        = valueToX(d.sentiment)}
-        {@const cy        = stepY(i)}
-        {@const isActive  = activeIndex === i}
-        {@const anyActive = activeIndex >= 0}
-        {@const color     = sentimentToColor(d.sentiment)}
-        {@const isInfl    = d.inflection === 'Y' || d.inflection_detail != null}
-
-        <!-- Transparent hit area -->
-        <circle
-          {cx} {cy} r="16"
-          fill="transparent"
-          style="cursor:pointer;"
-          role="button"
-          tabindex="0"
-          aria-label="Step {i + 1}: {d.step}, {ratingToLabel(d.sentiment)}"
-          onmouseenter={(e) => onNodeEnter(i, e)}
-          onmousemove={onNodeMove}
-          onmouseleave={onNodeLeave}
-          onclick={() => selectedIndex.update(s => s === i ? -1 : i)}
-          onkeydown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              selectedIndex.update(s => s === i ? -1 : i);
-            }
-          }}
-        />
-
-        <!-- Inflection = diamond, normal = circle -->
-        {#if isInfl}
-          {@const s = isActive ? 9 : 6}
-          <polygon
-            points="{cx},{cy - s} {cx + s},{cy} {cx},{cy + s} {cx - s},{cy}"
-            fill={color}
-            opacity={isActive ? 1 : anyActive ? 0.18 : 0.85}
-            pointer-events="none"
-          />
-        {:else}
-          <circle
-            {cx} {cy}
-            r={isActive ? 8 : 5}
-            fill={color}
-            opacity={isActive ? 1 : anyActive ? 0.18 : 0.85}
-            pointer-events="none"
+      <!-- Horizontal step dividers (drawn at the bottom edge of each slot except the last) -->
+      {#each slotBottoms as bot, i}
+        {#if bot != null && i < data.length - 1}
+          <line
+            x1={PAD_L} y1={bot}
+            x2={RAIL_W - PAD_R} y2={bot}
+            stroke="var(--gray)"
+            stroke-width="0.25"
           />
         {/if}
-
-        <!-- Selection ring -->
-        {#if $selectedIndex === i}
-          <circle
-            {cx} {cy} r="13"
-            fill="none"
-            stroke={color}
-            stroke-width="1"
-            stroke-dasharray="2 3"
-            opacity="0.55"
-            pointer-events="none"
-          />
-        {/if}
-
-        <!-- Step index label -->
-        <text
-          x={cx + (isActive ? 13 : 10)}
-          y={cy}
-          dominant-baseline="middle"
-          class="step-num-label"
-          opacity={isActive ? 1 : anyActive ? 0.28 : 0.48}
-          pointer-events="none"
-        >{i + 1}</text>
-
       {/each}
 
+      <!-- Straight segments between consecutive nodes -->
+      {#each nodeYs as y, i}
+        {#if i > 0 && nodeYs[i - 1] != null && y != null}
+          <line
+            x1={sentimentToX(data[i - 1]?.sentiment)}
+            y1={nodeYs[i - 1]}
+            x2={sentimentToX(data[i]?.sentiment)}
+            y2={y}
+            stroke="var(--grayblue, #a0a8b8)"
+            stroke-width="2.25"
+          />
+        {/if}
+      {/each}
+
+      <!-- Nodes: circles at each step's sentiment position -->
+      {#each nodeYs as y, i}
+        {#if y != null && data[i]}
+          <circle
+            cx={sentimentToX(data[i]?.sentiment)}
+            cy={y}
+            r={$selectedIndex === i ? 12 : $hoveredIndex === i ? 12 : 6}
+            fill={sentimentToColor(data[i]?.sentiment)}
+            stroke="var(--panel, #fff)"
+            stroke-width="2.25"
+            style="transition: r 160ms ease, cx 260ms ease;"
+          />
+        {/if}
+      {/each}
     </svg>
   </div>
-
 </aside>
-
-<!-- Tooltip -->
-{#if tooltipStep}
-  <div
-    class="sidebar-tooltip"
-    style="left:{tooltipX + 14}px; top:{tooltipY - 32}px;"
-    role="tooltip"
-    aria-live="polite"
-  >
-    <span class="label-xs sidebar-tooltip__step">{tooltipStep.step}</span>
-    <span
-      class="label-xs sidebar-tooltip__val"
-      style="color:{sentimentToColor(tooltipStep.sentiment)};"
-    >{ratingToLabel(tooltipStep.sentiment)}</span>
-  </div>
-{/if}
 
 
 <style>
-  .flow-sentiment-sidebar {
-    display: flex;
-    flex-direction: column;
-    background: var(--paper);
-    overflow: hidden;
-  }
-
-  .sidebar-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 12px 6px;
-    border-bottom: 1px solid var(--hairline, rgba(0,0,0,0.06));
+  .sentiment-rail {
     flex-shrink: 0;
-  }
-
-  .axis-labels {
-    display: flex;
-    flex-direction: row;
-    gap: 6px;
-    align-items: center;
-  }
-
-  .axis-label {
-    font-size: 0.5rem;
-    font-family: 'Space Mono', monospace;
-    color: var(--grayblue, #a0a8b8);
-    letter-spacing: 0.03em;
-  }
-
-  .axis-label--pos { color: var(--midgreen, #4a9e7f); }
-  .axis-label--neg { color: var(--red, #c0392b); }
-
-  /* Chart area scrolls in sync with flowDiagramEl via the parent */
-  .chart-wrap {
-    flex: 1;
-    overflow: visible;
-  }
-
-  .sidebar-svg { display: block; }
-
-  .step-num-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 8px;
-    fill: var(--grayblue, #a0a8b8);
-  }
-
-  .sidebar-tooltip {
-    position: fixed;
-    z-index: 9999;
-    pointer-events: none;
+    width: 225px;
+    max-width: 15vw;
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    background: var(--paper, #faf9f6);
-    border: 1px solid var(--hairline, rgba(0,0,0,0.1));
-    border-radius: 6px;
-    padding: 5px 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    max-width: 200px;
+    border-left: 1px solid var(--hairline, #e5e5e5);
+    background: var(--paper, #fff);
   }
 
-  .sidebar-tooltip__step {
-    color: var(--ink, #1a1a1a);
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .sentiment-rail__header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--hairline, #e5e5e5);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 
-  .sidebar-tooltip__val { font-weight: 500; }
+  .sentiment-rail__col {
+    position: relative;
+    flex: 1;
+    width: 100%;
+  }
+
+  .sentiment-rail__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
 </style>

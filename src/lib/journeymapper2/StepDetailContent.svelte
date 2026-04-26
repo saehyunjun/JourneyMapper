@@ -205,7 +205,7 @@
       class="flex flex-col md:w-full md:grid md:grid-cols-3 gap-8 px-6 py-6"
       style="background-color: {stageColor}"
     >
-      <div class="flex flex-col md:col-span-2 gap-6">
+      <div class="flex flex-col md:col-span-2 gap-16 ">
         <div class="flex flex-col gap-2">
           <span
             class="label-sm"
@@ -231,7 +231,7 @@
           </h3>
 
           <p
-            class="text-body-lg"
+            class="text-body"
             style="color: var(--lightgrayblue)"
           >
             {step.narrative_description}
@@ -277,7 +277,7 @@
          
         <div class="flex flex-col gap-2 md:w-7/12 md:justify-between">
           <QuotesRegular class="text-2xl text-slate-600" />
-          <p class="text-4xl text-balance font-medium">
+          <p class="text-2xl text-balance font-semibold">
             {step.quote}
           </p>
         </div>
@@ -377,23 +377,26 @@
 
     <!-- ── Step Events ────────────────────────────────────────────────── -->
     {#if hasEvents}
-      <div class="flex flex-col gap-5 p-6">
+      <div class="flex flex-col gap-4 p-8">
 
-        <span class="label-sm">Step Events</span>
+        <span class="label-sm">
+          Step Events</span>
 
         <!-- Challenges row -->
         {#if negativeEvents.length > 0}
           <div class="flex flex-col gap-2">
             <div class="flex flex-row align-middle justify-start gap-2">
-              <WarningDiamondRegular class="text-base" />
-              <span class="jm-kicker" style="color: var(--red);">Challenges</span>
-              <span class="pill-sm">
-                {negativeEvents.length}</span>
+              
+              <WarningDiamondRegular class="text-sm"
+              style="color: var(--red)" />
+                <span class="label-sm" style="color: var(--red);">
+                  Challenges
+                </span>
             </div>
-            <div class="event-carousel">
+            <div class="flex flex-col gap-2">
               {#each negativeEvents as event, i (event.event_id ?? i)}
                 <div
-                  class="event-carousel__item"
+                  class="flex flex-row"
                   in:fly={{ x: 12, duration: 220, delay: i * 50, easing: cubicOut }}
                 >
                   <JourneyEventCard {event} />
@@ -405,18 +408,20 @@
 
         <!-- Positive Signals row -->
         {#if positiveEvents.length > 0}
-          <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-3 mt-16 border-t-2 pt-16">
             <div class="flex flex-row items-center gap-2">
               <TrendUpRegular class="text-base" 
-              style="color: var(--red)" />
+              style="color: var(--green)" />
               
-              <span class="jm-kicker" style="color: var(--red);">Positive Signals</span>
-              <span class="pill">{positiveEvents.length}</span>
+              <span class="label-sm" 
+              style="color: var(--green);">
+                Positive Signals
+              </span>
             </div>
-            <div class="event-carousel">
+            <div class="flex flex-col gap-2">
               {#each positiveEvents as event, i (event.event_id ?? i)}
                 <div
-                  class="event-carousel__item"
+                  class="flex flex-row"
                   in:fly={{ x: 12, duration: 220, delay: i * 50, easing: cubicOut }}
                 >
                   <JourneyEventCard {event} />

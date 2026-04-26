@@ -106,34 +106,38 @@
 
   // ── Scroll minimise state ─────────────────────────────────────────────
   let scrollEl   = $state<HTMLDivElement | null>(null);
-  let isScrolled = $state(false);
 
-  const SCROLL_THRESHOLD   = 32;  // px before bars minimise
-  const IDLE_RESTORE_DELAY = 850; // ms of scroll silence before restoring
+let isScrolled = $state(false);
 
-  $effect(() => {
-    const el = scrollEl;
-    if (!el) return;
+const SCROLL_THRESHOLD = 32;
 
-    let idleTimer: ReturnType<typeof setTimeout> | null = null;
+$effect(() => {
 
-    function onScroll() {
-      // Minimise immediately once past threshold
-      if (el.scrollTop > SCROLL_THRESHOLD) isScrolled = true;
+  const el = scrollEl;
 
-      // Restart idle timer on every scroll event
-      if (idleTimer !== null) clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => {
-        isScrolled = false;
-      }, IDLE_RESTORE_DELAY);
-    }
+  if (!el) return;
 
-    el.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      el.removeEventListener('scroll', onScroll);
-      if (idleTimer !== null) clearTimeout(idleTimer);
-    };
-  });
+  function onScroll() {
+
+    // Hide only after user scrolls down past threshold.
+
+    // Reappear only when user scrolls back near the top.
+
+    isScrolled = el.scrollTop > SCROLL_THRESHOLD;
+
+  }
+
+  onScroll();
+
+  el.addEventListener('scroll', onScroll, { passive: true });
+
+  return () => {
+
+    el.removeEventListener('scroll', onScroll);
+
+  };
+
+});
 
   // ── Jitter offsets for coincident nodes ──────────────────────────────
   const JITTER = 7;

@@ -158,9 +158,10 @@
       class:event-icon--sponsor={isSponsor}
       aria-hidden="true"
     >
-      <svelte:component this={Icon} class="text-2xl p-1" />
+      <svelte:component this={Icon} class="text-lg p-1" />
     </span>
-    <span class="label-sm">{displayShortLabel}</span>
+    <span class="label-sm">
+      {displayShortLabel}</span>
   </button>
 
 <!-- ─────────────────────────────────────────────────────────────────────────
@@ -168,11 +169,11 @@
 ───────────────────────────────────────────────────────────────────────────── -->
 {:else}
   <button
-    class="event-card jm-surface"
-    class:event-card--pos={isPos}
-    class:event-card--neg={isNeg}
-    class:event-card--info={isInfo}
-    class:event-card--sponsor={isSponsor}
+    class="step-event"
+    class:step-event--pos={isPos}
+    class:step-event--neg={isNeg}
+    class:step-event--info={isInfo}
+    class:step-event--sponsor={isSponsor}
     onclick={onClick}
     onmouseenter={() => (hovered = true)}
     onmouseleave={() => (hovered = false)}
@@ -180,24 +181,24 @@
     type="button"
   >
     <!-- Header: icon badge + type kicker -->
-    <div class="event-card__header">
+    <div class="step-event__header">
       <div
-        class="event-card__icon-badge"
-        class:event-card__icon-badge--pos={isPos}
-        class:event-card__icon-badge--neg={isNeg}
-        class:event-card__icon-badge--info={isInfo}
-        class:event-card__icon-badge--sponsor={isSponsor}
+        class="step-event__icon-badge"
+        class:step-event__icon-badge--pos={isPos}
+        class:step-event__icon-badge--neg={isNeg}
+        class:step-event__icon-badge--info={isInfo}
+        class:step-event__icon-badge--sponsor={isSponsor}
         aria-hidden="true"
       >
-        <svelte:component this={Icon} class="text-2xl p-1" />
+        <svelte:component this={Icon} class="text-lg" />
       </div>
 
       <span
-        class="event-card__type-kicker jm-kicker"
-        class:event-card__type-kicker--pos={isPos}
-        class:event-card__type-kicker--neg={isNeg}
-        class:event-card__type-kicker--info={isInfo}
-        class:event-card__type-kicker--sponsor={isSponsor}
+        class="step-event__type-kicker jm-kicker"
+        class:step-event__type-kicker--pos={isPos}
+        class:step-event__type-kicker--neg={isNeg}
+        class:step-event__type-kicker--info={isInfo}
+        class:step-event__type-kicker--sponsor={isSponsor}
       >
         {type.replace("_", " ")}
       </span>
@@ -205,19 +206,21 @@
 
     <!-- Rule -->
     <div
-      class="event-card__rule"
-      class:event-card__rule--pos={isPos}
-      class:event-card__rule--neg={isNeg}
-      class:event-card__rule--info={isInfo}
-      class:event-card__rule--sponsor={isSponsor}
+      class="step-event__rule"
+      class:step-event__rule--pos={isPos}
+      class:step-event__rule--neg={isNeg}
+      class:step-event__rule--info={isInfo}
+      class:step-event__rule--sponsor={isSponsor}
     ></div>
 
     <!-- Label -->
-    <p class="event-card__label label-lg">{displayLabel}</p>
+    <p class="step-event__label label uppercase">
+      {displayLabel}
+    </p>
 
     <!-- Description -->
     {#if description}
-      <p class="text-body-sm">{description}</p>
+      <p class="text-body">{description}</p>
     {/if}
 
   </button>
@@ -245,20 +248,22 @@
       class:event-icon--sponsor={isSponsor}
       aria-hidden="true"
     >
-      <svelte:component this={Icon} class="text-2xl p-1" />
+      <svelte:component this={Icon} class="text-lg" />
     </div>
 
     <div class="flex flex-row max-h-8 justify-between align-bottom h-fit pb-2 mb-2">
       <span
         class="label-xs"
-        class:event-card__type-kicker--pos={isPos}
-        class:event-card__type-kicker--neg={isNeg}
-        class:event-card__type-kicker--info={isInfo}
-        class:event-card__type-kicker--sponsor={isSponsor}
+        class:step-event__type-kicker--pos={isPos}
+        class:step-event__type-kicker--neg={isNeg}
+        class:step-event__type-kicker--info={isInfo}
+        class:step-event__type-kicker--sponsor={isSponsor}
       >{type.replace("_", " ")}</span>
     </div>
 
-    <h3 class="label-sm mb-2">{displayLabel}</h3>
+    <h3 class="label-sm">
+      {displayLabel}
+    </h3>
 
     <div
       class="event-tooltip__rule"
@@ -277,16 +282,14 @@
   /* ════════════════════════════════════════════════════════════════════════
      FULL CARD BASE
   ════════════════════════════════════════════════════════════════════════ */
-  .event-card {
+  .step-event {
     display: flex;
     flex-direction: column;
     gap: 1em;
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 12px;
+    padding: 1em;
     text-align: left;
     cursor: pointer;
-    border-width: 1.5px;
+    border-width: 2.25px;
     border-style: solid;
     transition:
       box-shadow 180ms ease,
@@ -294,71 +297,64 @@
       background  180ms ease;
   }
 
-  .event-card:hover  { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
-  .event-card:active { transform: scale(0.98); }
+  .step-event:hover  { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+  .step-event:active { transform: scale(0.98); }
 
   /* ── Positive — green */
-  .event-card--pos       { border-color: #1a7a4a; background: #f0faf4; }
-  .event-card--pos:hover { background: #e3f7ec; }
+  .step-event--pos       { border-color: #1a7a4a; background: #f5f9ff; }
+  .step-event--pos:hover { background: #e3f7ec; }
 
   /* ── Negative — red */
-  .event-card--neg       { border-color: #c0392b; background: #fff5f4; }
-  .event-card--neg:hover { background: #ffe8e5; }
+  .step-event--neg       { border-color: #c0392b; background: #fff5f4; }
+  .step-event--neg:hover { background: #ffe8e5; }
 
   /* ── Info source — slate blue */
-  .event-card--info       { border-color: #3b6ea8; background: #f0f5fc; }
-  .event-card--info:hover { background: #e4eef9; }
+  .step-event--info       { border-color: #3b6ea8; background: #f0f5fc; }
+  .step-event--info:hover { background: #e4eef9; }
 
   /* ── Intervention — amber */
-  .event-card--sponsor       { border-color: #a06b10; background: #fdf8ee; }
-  .event-card--sponsor:hover { background: #faf0d7; }
+  .step-event--sponsor       { border-color: #3E1631; background: #F4F4FF; }
+
+  .step-event--sponsor:hover { background: #e7e9ee; }
 
 
   /* ════════════════════════════════════════════════════════════════════════
      HEADER
   ════════════════════════════════════════════════════════════════════════ */
-  .event-card__header {
+  .step-event__header {
     display: flex;
-    align-items: center;
-    gap: 2em;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: left;
+    gap: .5em;
   }
 
-  .event-card__icon-badge {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    flex-shrink: 0;
-  }
+  .step-event__icon-badge--pos     { color: #0f5c32; }
+  .step-event__icon-badge--neg     { color: #8b1a10; }
+  .step-event__icon-badge--info    { color: #1e4a80; }
+  .step-event__icon-badge--sponsor { color: #294457; }
 
-  .event-card__icon-badge--pos     { background: #c6f0d8; color: #0f5c32; }
-  .event-card__icon-badge--neg     { background: #ffd8d4; color: #8b1a10; }
-  .event-card__icon-badge--info    { background: #d0e4f7; color: #1e4a80; }
-  .event-card__icon-badge--sponsor { background: #fde9bf; color: #7a4d08; }
-
-  .event-card__type-kicker--pos     { color: #0f5c32; }
-  .event-card__type-kicker--neg     { color: #8b1a10; }
-  .event-card__type-kicker--info    { color: #1e4a80; }
-  .event-card__type-kicker--sponsor { color: #7a4d08; }
+  .step-event__type-kicker--pos     { color: #0f5c32; }
+  .step-event__type-kicker--neg     { color: #8b1a10; }
+  .step-event__type-kicker--info    { color: #1e4a80; }
+  .step-event__type-kicker--sponsor { color: #294457; }
 
 
   /* ════════════════════════════════════════════════════════════════════════
      RULE
   ════════════════════════════════════════════════════════════════════════ */
-  .event-card__rule { height: 1px; width: 100%; }
+  .step-event__rule { height: 1px; width: 100%; }
 
-  .event-card__rule--pos     { background: #b6e8cc; }
-  .event-card__rule--neg     { background: #f5c0bc; }
-  .event-card__rule--info    { background: #b8d4f0; }
-  .event-card__rule--sponsor { background: #f5dda0; }
+  .step-event__rule--pos     { background: #b6e8cc; }
+  .step-event__rule--neg     { background: #FB8809; }
+  .step-event__rule--info    { background: #599077; }
+  .step-event__rule--sponsor { background: #6a99c2; }
 
 
   /* ════════════════════════════════════════════════════════════════════════
      LABEL
   ════════════════════════════════════════════════════════════════════════ */
-  .event-card__label {
+  .step-event__label {
     margin: 0;
     color: var(--ink);
     line-height: 1.3;
@@ -383,7 +379,7 @@
     gap: 0.725em;
     padding: 3px 7px 3px 5px;
     border-radius: 100px;
-    border: 1px solid transparent;
+    border: 1.725px solid transparent;
     cursor: pointer;
     white-space: nowrap;
     transition:
