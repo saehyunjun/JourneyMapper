@@ -1,5 +1,6 @@
 <script lang="ts">
   import JourneyLayoutToggle       from '$lib/journeymapper2/JourneyLayoutToggle.svelte';
+  import JourneyReportView         from '$lib/journeymapper2/JourneyReportView.svelte';
   import JourneyIndexBars          from '$lib/journeymapper2/JourneyIndexBars.svelte';
   import JourneyLegend             from '$lib/journeymapper2/JourneyLegend.svelte';
   import JourneySteps              from '$lib/journeymapper2/JourneySteps.svelte';
@@ -25,6 +26,7 @@
   import CaretLeft                from 'phosphor-icons-svelte/IconCaretLeftRegular.svelte';
   import IconChartLineRegular     from 'phosphor-icons-svelte/IconChartLineRegular.svelte';
   import IconFlowArrowRegular     from 'phosphor-icons-svelte/IconFlowArrowRegular.svelte';
+  import IconListRegular          from 'phosphor-icons-svelte/IconListRegular.svelte';
 
   import personaFile from '$lib/journeymapper2/journeyPersonas.json';
 
@@ -47,7 +49,6 @@
   // ── Active persona ────────────────────────────────────────────────────
   let activePersonaId = $state(personas[0].id);
 
-  // Reset to first filtered persona if the active one is filtered out
   $effect(() => {
     if (filteredPersonas.length && !filteredPersonas.find((p) => p.id === activePersonaId)) {
       activePersonaId = filteredPersonas[0].id;
@@ -67,18 +68,17 @@
   );
 
   // ── Layout / view toggles ─────────────────────────────────────────────
-  let chartView = $state<'chart' | 'flow'>('flow');
+  let layout    = $state<'horizontal' | 'vertical'>('horizontal');
+  let chartView = $state<'chart' | 'flow' | 'report'>('chart');
 
   // ── Drawer state ──────────────────────────────────────────────────────
   let drawerMode = $state<'step' | 'plutchik' | 'persona' | 'inflection' | null>(null);
   let drawerOpen = $derived(drawerMode !== null);
 
-  // Auto-open step drawer when a step is selected
   $effect(() => {
     if ($selectedIndex >= 0 && drawerMode !== 'step') drawerMode = 'step';
   });
 
-  // Auto-open inflection drawer when a fork path card is clicked
   $effect(() => {
     if ($selectedInflectionIndex >= 0 && drawerMode !== 'inflection') drawerMode = 'inflection';
   });
@@ -97,47 +97,26 @@
 
   // ── Sub-drawer: emotion detail ────────────────────────────────────────
   let emotionSubDrawerOpen = $state(false);
-
-  // Close sub-drawer when main drawer closes
   $effect(() => { if (!drawerOpen) emotionSubDrawerOpen = false; });
 
-  // ── Story overlay ────────────────────────────────────────────────────
+  // ── Story overlay ─────────────────────────────────────────────────────
   let storyOpen = $state(false);
 
   // ── Scroll minimise state ─────────────────────────────────────────────
-  let scrollEl   = $state<HTMLDivElement | null>(null);
+  let scrollEl    = $state<HTMLDivElement | null>(null);
+  let isScrolled  = $state(false);
+  const SCROLL_THRESHOLD = 32;
 
-let isScrolled = $state(false);
-
-const SCROLL_THRESHOLD = 32;
-
-$effect(() => {
-
-  const el = scrollEl;
-
-  if (!el) return;
-
-  function onScroll() {
-
-    // Hide only after user scrolls down past threshold.
-
-    // Reappear only when user scrolls back near the top.
-
-    isScrolled = el.scrollTop > SCROLL_THRESHOLD;
-
-  }
-
-  onScroll();
-
-  el.addEventListener('scroll', onScroll, { passive: true });
-
-  return () => {
-
-    el.removeEventListener('scroll', onScroll);
-
-  };
-
-});
+  $effect(() => {
+    const el = scrollEl;
+    if (!el) return;
+    function onScroll() {
+      isScrolled = el.scrollTop > SCROLL_THRESHOLD;
+    }
+    onScroll();
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+  });
 
   // ── Jitter offsets for coincident nodes ──────────────────────────────
   const JITTER = 7;
@@ -226,6 +205,19 @@ $effect(() => {
         </span>
         <span class="label-sm">Journey Flow</span>
       </button>
+
+      <button
+        class="btn-nav"
+        class:view-tab--active={chartView === 'report'}
+        role="tab"
+        aria-selected={chartView === 'report'}
+        onclick={() => chartView = 'report'}
+      >
+        <span class="icon-toolbar" style="background: var(--orange); color: var(--lightorange);">
+          <IconListRegular />
+        </span>
+        <span class="label-sm">Journey Report</span>
+      </button>
     </div>
   </div>
 
@@ -238,16 +230,22 @@ $effect(() => {
     />
   </div>
 
-  <!-- ── Three-column body ────────────────────────────────────────────── -->
+  <!-- ── Body ─────────────────────────────────────────────────────────── -->
   <div class="flex flex-row flex-1 min-h-0">
 
-    <!-- MIDDLE — chart / flow, scrolls horizontally -->
+    <!-- MIDDLE — chart / flow / report -->
     <div class="chart-col flex-1 min-w-0" bind:this={scrollEl}>
       {#if chartView === 'flow'}
         <div class="flex flex-col w-full justify-right">
-          <JourneyFlowDiagram data={journeyData} />
+          <JourneyLayoutToggle bind:layout />
+          <JourneyFlowDiagram data={journeyData} {layout} />
         </div>
+
+      {:else if chartView === 'report'}
+        <JourneyReportView data={journeyData} {metrics} />
+
       {:else}
+        <!-- chart view -->
         <div class="px-4 py-2 w-full relative">
           <h3 class="heading-sm">Sentiment</h3>
         </div>
@@ -262,18 +260,21 @@ $effect(() => {
         </div>
 
         <JourneyIndexBars data={journeyData} {metrics} />
-      {/if}
 
-      <JourneyLegend items={metrics} />
+        <JourneyLegend items={metrics} />
+      {/if}
     </div>
 
-    <JourneyInfoSidebar
-      activePersona={activePersona as any}
-      data={journeyData}
-      {metrics}
-    />
+    <!-- RIGHT — info sidebar (hidden on report view to give full width) -->
+    {#if chartView !== 'report'}
+      <JourneyInfoSidebar
+        activePersona={activePersona as any}
+        data={journeyData}
+        {metrics}
+      />
+    {/if}
 
-  </div><!-- /journey-body -->
+  </div><!-- /body -->
 
 </div><!-- /journey-wrapper -->
 
@@ -365,12 +366,11 @@ $effect(() => {
 />
 
 
-<!-- ── Global tooltip (outside scroll containers) ────────────────────────── -->
+<!-- ── Global tooltip ────────────────────────────────────────────────────── -->
 <JourneyTooltip data={journeyData} {metrics} />
 
 
 <style>
-  /* ── Chart / flow scroll area ────────────────────────────────────────────── */
   .chart-col {
     position: relative;
     z-index: 1;
@@ -384,23 +384,19 @@ $effect(() => {
 
   .toolbar {
     overflow: hidden;
-    /* Restore: slow, ease-out */
     transition:
-      max-height 420ms cubic-bezier(0.0, 0, 0.2, 1),
-      padding-top    400ms cubic-bezier(0.0, 0, 0.2, 1),
+      max-height    420ms cubic-bezier(0.0, 0, 0.2, 1),
+      padding-top   400ms cubic-bezier(0.0, 0, 0.2, 1),
       padding-bottom 400ms cubic-bezier(0.0, 0, 0.2, 1),
-      opacity        380ms ease-out;
+      opacity       380ms ease-out;
   }
 
   .persona-bar-wrap {
     overflow: hidden;
-    /* Restore: slow, ease-out — slightly delayed so toolbar restores first */
     transition:
       max-height 420ms 40ms cubic-bezier(0.0, 0, 0.2, 1),
       opacity    360ms 40ms ease-out;
   }
-
-  /* ── Minimised state ── triggered by .scrolled on the wrapper ────────────── */
 
   .scrolled .toolbar {
     max-height: 0;
@@ -408,19 +404,17 @@ $effect(() => {
     padding-bottom: 0;
     opacity: 0;
     pointer-events: none;
-    /* Collapse: fast, ease-in */
     transition:
-      max-height 220ms cubic-bezier(0.4, 0, 1, 1),
-      padding-top    200ms cubic-bezier(0.4, 0, 1, 1),
+      max-height    220ms cubic-bezier(0.4, 0, 1, 1),
+      padding-top   200ms cubic-bezier(0.4, 0, 1, 1),
       padding-bottom 200ms cubic-bezier(0.4, 0, 1, 1),
-      opacity        160ms ease-in;
+      opacity       160ms ease-in;
   }
 
   .scrolled .persona-bar-wrap {
     max-height: 0;
     opacity: 0;
     pointer-events: none;
-    /* Collapse: fast, ease-in — toolbar collapses first */
     transition:
       max-height 220ms cubic-bezier(0.4, 0, 1, 1),
       opacity    160ms ease-in;
