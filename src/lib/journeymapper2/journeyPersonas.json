@@ -294,17 +294,17 @@
             "medical_self_efficacy": 1,
             "logistical_capacity": 2,
             "has_experience_wheel": false,
-            "narrative_description": "Radical prostatectomy or radiation is completed with curative intent. The patient enters this phase optimistic and recovery-focused — a clear treatment plan with a defined endpoint provides psychological structure. Side effects are managed and the oncology team communicates confidence.",
+            "narrative_description": "Prostatectomy is completed with curative intent. Terry enters this phase optimistic and recovery-focused — a clear treatment plan with a defined endpoint provides psychological structure. Side effects are managed and the oncology team communicates confidence.",
             "quote": "We caught it. The plan is clear, and I'm going to get through this.",
             "sentiment_reasons": [
               "Curative intent framing provides strong psychological grounding",
               "Local treatment at a familiar community hospital reduces logistical anxiety",
-              "Active treatment feels like progress — the patient is 'doing something'"
+              "Active treatment feels like progress — terry is 'doing something'"
             ],
             "metric_explainers": {
               "emotional_valence": "Optimism about curative potential supports a moderately positive emotional state, even amid surgery or radiation side effects.",
-              "provider_trust": "The urologist and radiation oncologist are experienced and communicative; the patient feels guided and supported.",
-              "medical_self_efficacy": "The patient defers heavily to clinical judgment at this stage and has limited independent knowledge of disease biology.",
+              "provider_trust": "The urologist and radiation oncologist are experienced and communicative; terry feels guided and supported.",
+              "medical_self_efficacy": "Terry defers heavily to clinical judgment at this stage and has limited independent knowledge of disease biology.",
               "logistical_capacity": "Treatment is local and time-bounded; out-of-pocket costs are significant but manageable with insurance."
             },
             "events": [
@@ -344,7 +344,7 @@
             "medical_self_efficacy": 1,
             "logistical_capacity": 3,
             "has_experience_wheel": false,
-            "narrative_description": "PSA reaches nadir and stabilizes. The patient resumes near-normal daily life and shifts to routine monitoring every 3–6 months. This period is experienced as validation — treatment worked. Life recedes toward normalcy and the disease moves to the background.",
+            "narrative_description": "PSA reaches nadir and stabilizes. Terry resumes near-normal daily life and shifts to routine monitoring every 3–6 months. This period is experienced as validation — treatment worked. Life recedes toward normalcy and the disease moves to the background.",
             "quote": "Numbers look great. I feel like myself again.",
             "sentiment_reasons": [
               "PSA nadir is interpreted as treatment success — a powerful emotional signal",
@@ -354,7 +354,7 @@
             "metric_explainers": {
               "emotional_valence": "Stable PSA and resumed normal life produce the highest emotional positivity in the journey.",
               "provider_trust": "Confidence in the oncology team is reinforced by the treatment appearing to have worked.",
-              "medical_self_efficacy": "The patient remains in a provider-dependent orientation; there is no disease pressure to self-educate further.",
+              "medical_self_efficacy": "Terry remains in a provider-dependent orientation; there is no disease pressure to self-educate further.",
               "logistical_capacity": "Monitoring visits are local, routine, and covered under standard insurance with low out-of-pocket burden."
             },
             "events": [
@@ -381,7 +381,7 @@
             "medical_self_efficacy": 1,
             "logistical_capacity": 1,
             "has_experience_wheel": false,
-            "narrative_description": "PSA begins rising approximately 18–24 months after primary treatment. Salvage radiation is attempted. The patient experiences anxiety but remains reassured by the oncology team, who frame this as a manageable recurrence with active treatment options still available.",
+            "narrative_description": "PSA begins rising approximately 18–24 months after primary treatment. Salvage radiation is attempted. Terry experiences anxiety but remains reassured by the oncology team, who frame this as a manageable recurrence with active treatment options still available.",
             "quote": "The PSA is creeping up. They say there's still a plan — I'm trying to trust that.",
             "sentiment_reasons": [
               "PSA rise after a period of stability is psychologically destabilizing",
@@ -389,9 +389,9 @@
               "First referral to an academic center introduces logistical friction and travel burden"
             ],
             "metric_explainers": {
-              "emotional_valence": "Anxiety and uncertainty temper the patient's mood, but provider reassurance prevents a sharp emotional drop.",
+              "emotional_valence": "Anxiety and uncertainty temper terry's mood, but provider reassurance prevents a sharp emotional drop.",
               "provider_trust": "The oncology team's responsiveness with a salvage plan preserves trust despite the recurrence.",
-              "medical_self_efficacy": "The patient begins to ask more questions but still relies heavily on clinical guidance for decision-making.",
+              "medical_self_efficacy": "Terry begins to ask more questions but still relies heavily on clinical guidance for decision-making.",
               "logistical_capacity": "Salvage radiation may require travel to an academic center for the first time; cumulative out-of-pocket costs begin rising."
             },
             "events": [
@@ -427,7 +427,7 @@
             "medical_self_efficacy": 0,
             "logistical_capacity": 0,
             "has_experience_wheel": false,
-            "narrative_description": "Metastatic disease is confirmed on bone scan and CT. The psychological shift from 'curable' to 'manageable' is profound. ADT is initiated and the patient begins confronting a fundamentally altered disease trajectory. The oncology nurse navigator is introduced as a new coordination resource.",
+            "narrative_description": "Metastatic disease is confirmed on bone scan and CT. The psychological shift from 'curable' to 'manageable' is profound. ADT is initiated and terry begins confronting a fundamentally altered disease trajectory. The oncology nurse navigator is introduced as a new coordination resource.",
             "quote": "Manageable — that's what they're calling it now. I'm trying to understand what that means for my life.",
             "sentiment_reasons": [
               "The shift from curative to palliative framing is a major psychological rupture",
@@ -436,8 +436,8 @@
             ],
             "metric_explainers": {
               "emotional_valence": "Confirmation of metastatic disease and the loss of curative hope produces a significant emotional drop.",
-              "provider_trust": "The medical oncologist assumes the primary role; the patient begins building trust with a new key clinician.",
-              "medical_self_efficacy": "The patient has no framework for understanding metastatic PCa management and feels dependent on the team.",
+              "provider_trust": "The medical oncologist assumes the primary role; terry begins building trust with a new key clinician.",
+              "medical_self_efficacy": "Terry has no framework for understanding metastatic PCa management and feels dependent on the team.",
               "logistical_capacity": "Lupron injections require ongoing office visits and prior authorization; copay assistance programs add administrative burden."
             },
             "events": [
@@ -485,7 +485,7 @@
             "medical_self_efficacy": 1,
             "logistical_capacity": 2,
             "has_experience_wheel": false,
-            "narrative_description": "ADT is combined with a first-line ARPI (enzalutamide). PSA drops significantly and disease stabilizes over 12–18 months. The patient experiences a 'second wind' — a period of treatment-driven optimism. Oral at-home therapy avoids infusion center visits, reducing logistical burden.",
+            "narrative_description": "ADT is combined with a first-line ARPI (enzalutamide). PSA drops significantly and disease stabilizes over 12–18 months. Terry experiences a 'second wind' — a period of treatment-driven optimism. Oral at-home therapy avoids infusion center visits, reducing logistical burden.",
             "quote": "The numbers are dropping fast. I know it won't last forever, but right now this is working.",
             "sentiment_reasons": [
               "Rapid PSA decline on enzalutamide produces strong, evidence-driven optimism",
@@ -495,7 +495,7 @@
             "metric_explainers": {
               "emotional_valence": "Treatment response creates a genuine period of cautious optimism — the best emotional state since PSA nadir.",
               "provider_trust": "The medical oncologist's treatment choice is validated by measurable PSA response.",
-              "medical_self_efficacy": "The patient learns basic concepts of CRPC and ARPI mechanisms but remains dependent on clinical guidance.",
+              "medical_self_efficacy": "Terry learns basic concepts of CRPC and ARPI mechanisms but remains dependent on clinical guidance.",
               "logistical_capacity": "Specialty mail-order pharmacy for enzalutamide adds a new coordination touchpoint but removes infusion visits entirely."
             },
             "events": [
@@ -535,7 +535,7 @@
             "medical_self_efficacy": 1,
             "logistical_capacity": 1,
             "has_experience_wheel": false,
-            "narrative_description": "The cumulative side effect burden of ADT and enzalutamide becomes increasingly intrusive — fatigue, hot flashes, cognitive dulling, muscle loss, and loss of libido alter daily identity. The patient continues to show measurable disease response but quality of life deteriorates quietly. Ancillary medications multiply.",
+            "narrative_description": "The cumulative side effect burden of ADT and enzalutamide becomes increasingly intrusive — fatigue, hot flashes, cognitive dulling, muscle loss, and loss of libido alter daily identity. Terry continues to show measurable disease response but quality of life deteriorates quietly. Ancillary medications multiply.",
             "quote": "The cancer is quiet but I'm not. I don't feel like myself anymore.",
             "sentiment_reasons": [
               "Persistent side effects erode quality of life even while PSA remains controlled",
@@ -545,7 +545,7 @@
             "metric_explainers": {
               "emotional_valence": "Side effects are experienced as ongoing losses — energy, sexuality, cognitive sharpness — producing a slow emotional drain.",
               "provider_trust": "The oncology team responds to side effect reports but solutions are limited; trust is maintained but expectations lower.",
-              "medical_self_efficacy": "The patient becomes more proactive about side effect management but is not empowered to change the treatment trajectory.",
+              "medical_self_efficacy": "Terry becomes more proactive about side effect management but is not empowered to change the treatment trajectory.",
               "logistical_capacity": "Ancillary medications add ~$100–300/month in cost and require coordination across PCP, cardiologist, and oncologist."
             },
             "events": [
@@ -584,7 +584,7 @@
             "medical_self_efficacy": 1,
             "logistical_capacity": -1,
             "has_experience_wheel": false,
-            "narrative_description": "PSA rises despite castrate testosterone levels — castration resistance is confirmed. The patient crosses a significant threshold. Docetaxel chemotherapy is initiated over 6–9 months. Infusion center visits add new logistical burden. Hair loss, neutropenia risk, and neuropathy emerge as new concerns.",
+            "narrative_description": "PSA rises despite castrate testosterone levels — castration resistance is confirmed. Terry crosses a significant threshold. Docetaxel chemotherapy is initiated over 6–9 months. Infusion center visits add new logistical burden. Hair loss, neutropenia risk, and neuropathy emerge as new concerns.",
             "quote": "I thought the pill was working. Now they're talking about chemo — I didn't think we'd be here this soon.",
             "sentiment_reasons": [
               "Confirmation of castration resistance reframes the prognosis in a more threatening direction",
@@ -594,7 +594,7 @@
             "metric_explainers": {
               "emotional_valence": "The mCRPC diagnosis and chemotherapy initiation produce genuine fear — the disease is no longer responding to the prior 'steady' plan.",
               "provider_trust": "The oncology team is proactive and communicative about the escalation, which sustains trust despite the setback.",
-              "medical_self_efficacy": "The patient begins to understand the sequential nature of mCRPC treatment lines, increasing awareness if not control.",
+              "medical_self_efficacy": "Terry begins to understand the sequential nature of mCRPC treatment lines, increasing awareness if not control.",
               "logistical_capacity": "Infusion visits every 3 weeks, port placement, and Xgeva administration add significant scheduling and travel burden."
             },
             "events": [
@@ -642,7 +642,7 @@
             "medical_self_efficacy": 2,
             "logistical_capacity": 1,
             "has_experience_wheel": false,
-            "narrative_description": "Post-chemotherapy restaging shows mixed response. A second-line ARPI (abiraterone + prednisone) is initiated. The patient is fatigued but disease is temporarily controlled. First exposure to an academic oncology team through second opinion opens awareness of clinical trial options.",
+            "narrative_description": "Post-chemotherapy restaging shows mixed response. A second-line ARPI (abiraterone + prednisone) is initiated. Terry is fatigued but disease is temporarily controlled. First exposure to an academic oncology team through second opinion opens awareness of clinical trial options.",
             "quote": "Back to the pills — I'll take it. But I can feel we're running out of road.",
             "sentiment_reasons": [
               "Return to oral therapy feels like a reprieve after chemotherapy's intensity",
@@ -650,8 +650,8 @@
               "First trial awareness at academic center introduces both hope and the realization that options may be narrowing"
             ],
             "metric_explainers": {
-              "emotional_valence": "The patient is exhausted and aware of disease progression, but temporary control and return to oral therapy prevent a sharp emotional drop.",
-              "provider_trust": "Exposure to an NCI-designated academic oncology team expands the patient's trust network and introduces new clinical voices.",
+              "emotional_valence": "Terry is exhausted and aware of disease progression, but temporary control and return to oral therapy prevent a sharp emotional drop.",
+              "provider_trust": "Exposure to an NCI-designated academic oncology team expands terry's trust network and introduces new clinical voices.",
               "medical_self_efficacy": "Patient begins actively researching treatment lines and asking more targeted questions about what comes after abiraterone.",
               "logistical_capacity": "Oral therapy at home reduces infusion burden; restaging imaging at an academic center introduces modest travel."
             },
@@ -688,17 +688,17 @@
             "medical_self_efficacy": 2,
             "logistical_capacity": 0,
             "has_experience_wheel": false,
-            "narrative_description": "PSMA-PET imaging is introduced for the first time. New lesions are identified. The patient begins to understand the systemic, multifocal nature of their disease more viscerally. The imaging itself — its specificity and the clarity of what it shows — is both clarifying and frightening.",
+            "narrative_description": "PSMA-PET imaging is introduced for the first time. New lesions are identified. Terry begins to understand the systemic, multifocal nature of their disease more viscerally. The imaging itself — its specificity and the clarity of what it shows — is both clarifying and frightening.",
             "quote": "Seeing it on the scan like that — all those lit-up spots — made it real in a way the numbers never did.",
             "sentiment_reasons": [
               "Visual confirmation of multifocal disease is more emotionally impactful than PSA numbers alone",
               "PSMA-PET availability only at specialized centers requires meaningful travel and overnight arrangements",
-              "PSMA positivity is a prerequisite for future Lu-177 therapy — the patient begins to understand its role in the treatment pathway"
+              "PSMA positivity is a prerequisite for future Lu-177 therapy — terry begins to understand its role in the treatment pathway"
             ],
             "metric_explainers": {
               "emotional_valence": "The visual reality of metastatic burden on PSMA-PET is viscerally confronting even for patients who intellectually understood their diagnosis.",
               "provider_trust": "Nuclear medicine and academic oncology teams are seen as precise and competent; the technology itself inspires a degree of confidence.",
-              "medical_self_efficacy": "The patient becomes more informed about PSMA biology and its relevance to future therapeutic options.",
+              "medical_self_efficacy": "Terry becomes more informed about PSMA biology and its relevance to future therapeutic options.",
               "logistical_capacity": "PSMA-PET is only available at select centers, requiring significant travel; coverage is inconsistent and some patients pay out-of-pocket."
             },
             "events": [
@@ -734,7 +734,7 @@
             "medical_self_efficacy": 1,
             "logistical_capacity": -2,
             "has_experience_wheel": false,
-            "narrative_description": "Second ARPI progresses within 10–14 months. Bone pain becomes a persistent daily reality requiring opioid management. Cabazitaxel chemotherapy is initiated. The caregiver role intensifies significantly. Palliative care is formally introduced — a transition the patient experiences as both practical relief and an existential signal.",
+            "narrative_description": "Second ARPI progresses within 10–14 months. Bone pain becomes a persistent daily reality requiring opioid management. Cabazitaxel chemotherapy is initiated. The caregiver role intensifies significantly. Palliative care is formally introduced — a transition terry experiences as both practical relief and an existential signal.",
             "quote": "The pain is always there now. I hate the opioids but I hate the pain more.",
             "sentiment_reasons": [
               "Persistent bone pain is a constant physical reminder of disease progression and reduces quality of life acutely",
@@ -744,7 +744,7 @@
             "metric_explainers": {
               "emotional_valence": "Chronic pain, disease progression, and caregiver burden converge to produce the most negative emotional state to date.",
               "provider_trust": "The palliative care team is a positive addition, but the overall care team is growing large and harder to navigate.",
-              "medical_self_efficacy": "Pain management complexity and opioid side effect management leave the patient feeling less in control of their body.",
+              "medical_self_efficacy": "Pain management complexity and opioid side effect management leave terry feeling less in control of their body.",
               "logistical_capacity": "Cabazitaxel infusions resume infusion center visits; pain management specialist may require travel; prior auths for controlled substances add friction."
             },
             "events": [
@@ -799,8 +799,8 @@
             "metric_explainers": {
               "emotional_valence": "Physical decline combined with transportation dependence and palliative framing sustain a deeply negative emotional state.",
               "provider_trust": "Radiation oncologist's palliative expertise and social worker support are valued; trust is maintained through visible practical help.",
-              "medical_self_efficacy": "The patient has little agency over treatment decisions at this stage; care is increasingly directed by symptom management needs.",
-              "logistical_capacity": "Daily radiation requires transportation infrastructure the patient increasingly cannot self-provide; social work transport assistance is essential."
+              "medical_self_efficacy": "Terry has little agency over treatment decisions at this stage; care is increasingly directed by symptom management needs.",
+              "logistical_capacity": "Daily radiation requires transportation infrastructure terry increasingly cannot self-provide; social work transport assistance is essential."
             },
             "events": [
               {
@@ -838,7 +838,7 @@
             "medical_self_efficacy": 2,
             "logistical_capacity": -2,
             "has_experience_wheel": false,
-            "narrative_description": "Lu-177 PSMA (Pluvicto) is initiated as a fourth-line option. It offers 6–9 months of PSA stabilization before resistance emerges. The patient experiences this treatment as both hopeful and logistically demanding — authorized treatment centers are distant, requiring extended travel every 6 weeks.",
+            "narrative_description": "Lu-177 PSMA (Pluvicto) is initiated as a fourth-line option. It offers 6–9 months of PSA stabilization before resistance emerges. Terry experiences this treatment as both hopeful and logistically demanding — authorized treatment centers are distant, requiring extended travel every 6 weeks.",
             "quote": "This one feels different — more targeted, more hopeful. But getting there and back each time is hard.",
             "sentiment_reasons": [
               "Lu-177 carries genuine hope as a PSMA-targeted approach validated by clinical trial data",
@@ -848,7 +848,7 @@
             "metric_explainers": {
               "emotional_valence": "Temporary optimism from treatment response is balanced against the physical and logistical demands of the regimen.",
               "provider_trust": "The nuclear medicine team at the authorized center is experienced and communicative; trial coordinator introduces future options.",
-              "medical_self_efficacy": "The patient has developed a more sophisticated understanding of their disease biology and actively engages with treatment rationale.",
+              "medical_self_efficacy": "Terry has developed a more sophisticated understanding of their disease biology and actively engages with treatment rationale.",
               "logistical_capacity": "Round-trip travel to an authorized Pluvicto center every 6 weeks, combined with radiation safety protocols, is a major logistical undertaking."
             },
             "events": [
@@ -896,17 +896,17 @@
             "medical_self_efficacy": 1,
             "logistical_capacity": -2,
             "has_experience_wheel": false,
-            "narrative_description": "Caregiver burden intensifies significantly. The patient reduces work or stops entirely. Social withdrawal, depression, and financial toxicity compound physical decline. An antidepressant is initiated. Telemedicine begins supplementing in-person visits to reduce transportation burden.",
+            "narrative_description": "Caregiver burden intensifies significantly. Terry reduces work or stops entirely. Social withdrawal, depression, and financial toxicity compound physical decline. An antidepressant is initiated. Telemedicine begins supplementing in-person visits to reduce transportation burden.",
             "quote": "I've stopped going to things. It's too hard, and I don't want anyone to see me like this.",
             "sentiment_reasons": [
               "Social withdrawal and depression are now clinically significant and directly impair quality of life",
               "Financial toxicity — lifetime out-of-pocket costs exceeding $150,000 — creates existential household stress",
-              "Caregiver burden has reached a level that strains family relationships and the patient's sense of being a burden"
+              "Caregiver burden has reached a level that strains family relationships and terry's sense of being a burden"
             ],
             "metric_explainers": {
               "emotional_valence": "Depression, social withdrawal, and physical decline converge into the most emotionally depleted state of the journey.",
               "provider_trust": "Psychiatry/psychology addition to the care team is positive; the social worker remains a trusted anchor.",
-              "medical_self_efficacy": "The patient feels increasingly passive in treatment decisions as options narrow and energy for self-advocacy diminishes.",
+              "medical_self_efficacy": "Terry feels increasingly passive in treatment decisions as options narrow and energy for self-advocacy diminishes.",
               "logistical_capacity": "Telemedicine supplements in-person visits; disability filing and estate planning add bureaucratic burden to an already exhausted household."
             },
             "events": [
@@ -945,17 +945,17 @@
             "medical_self_efficacy": 2,
             "logistical_capacity": -1,
             "has_experience_wheel": false,
-            "narrative_description": "The oncologist conducts a frank goals-of-care conversation. Standard treatment options are characterized as exhausted or near-exhausted. The patient and family begin processing what comes next while simultaneously being introduced to clinical trial eligibility for the first time as a formal next step.",
+            "narrative_description": "The oncologist conducts a frank goals-of-care conversation. Standard treatment options are characterized as exhausted or near-exhausted. Terry and family begin processing what comes next while simultaneously being introduced to clinical trial eligibility for the first time as a formal next step.",
             "quote": "She was honest with me — I appreciated that. Now I have to figure out what matters most to me.",
             "sentiment_reasons": [
               "A frank, compassionate goals-of-care discussion is experienced as both frightening and deeply respectful",
-              "Advance directive conversations engage existential questions the patient has been deferring",
+              "Advance directive conversations engage existential questions terry has been deferring",
               "Clinical trial introduction offers a concrete forward path that partly offsets the gravity of the conversation"
             ],
             "metric_explainers": {
-              "emotional_valence": "The goals-of-care conversation is inherently distressing but the patient's trust in the oncologist softens its impact.",
+              "emotional_valence": "The goals-of-care conversation is inherently distressing but terry's trust in the oncologist softens its impact.",
               "provider_trust": "Honest, compassionate communication from the oncologist significantly increases trust — transparency is valued highly by this patient.",
-              "medical_self_efficacy": "The patient gains agency through advance directive completion and active participation in defining care goals.",
+              "medical_self_efficacy": "Terry gains agency through advance directive completion and active participation in defining care goals.",
               "logistical_capacity": "Estate planning and advance directive preparation engage financial and legal systems; trial site logistics planning begins."
             },
             "events": [
@@ -994,10 +994,10 @@
             "medical_self_efficacy": 2,
             "logistical_capacity": -1,
             "has_experience_wheel": false,
-            "narrative_description": "The oncologist identifies the ABO-701 trial as a strong clinical fit given PSMA-positive disease, preserved ECOG 1 status, and prior therapy history. The trial coordinator becomes the primary contact. Hope re-enters the patient's emotional landscape for the first time in months.",
+            "narrative_description": "The oncologist identifies the ABO-701 trial as a strong clinical fit given PSMA-positive disease, preserved ECOG 1 status, and prior therapy history. The trial coordinator becomes the primary contact. Hope re-enters terry's emotional landscape for the first time in months.",
             "quote": "Finally — something that was designed for exactly where I am.",
             "sentiment_reasons": [
-              "Precision match between trial eligibility criteria and the patient's actual disease profile is experienced as validation",
+              "Precision match between trial eligibility criteria and terry's actual disease profile is experienced as validation",
               "The trial coordinator's communication style and knowledge instill confidence in the investigational pathway",
               "Sponsor-covered procedures reduce financial anxiety associated with continuing standard care"
             ],
@@ -1013,7 +1013,7 @@
                 "type": "progress",
                 "label": "ABO-701 trial identified as strong eligibility match",
                 "short_label": "Trial match identified",
-                "description": "Medical oncologist and trial coordinator confirm the patient meets all ABO-701 inclusion criteria. Formal trial introduction meeting scheduled.",
+                "description": "Medical oncologist and trial coordinator confirm terry meets all ABO-701 inclusion criteria. Formal trial introduction meeting scheduled.",
                 "sentiment_impact": 2,
                 "step_position": 15.3
               },
@@ -1044,7 +1044,7 @@
             "medical_self_efficacy": 3,
             "logistical_capacity": -1,
             "has_experience_wheel": false,
-            "narrative_description": "The patient and family independently research ABO-701. They navigate ClinicalTrials.gov, patient advocacy forums, and prostate cancer communities where others have enrolled in similar trials. Hope and skepticism oscillate. The patient emerges with more questions and a sharper sense of the risks they are weighing.",
+            "narrative_description": "Terry and family independently research ABO-701. They navigate ClinicalTrials.gov, patient advocacy forums, and prostate cancer communities where others have enrolled in similar trials. Hope and skepticism oscillate. Terry emerges with more questions and a sharper sense of the risks they are weighing.",
             "quote": "Every forum post I read sends me in a different direction. I need to figure out what I actually believe.",
             "sentiment_reasons": [
               "Independent research increases medical self-efficacy but also surfaces risks and uncertainties not emphasized by the clinical team",
@@ -1053,7 +1053,7 @@
             ],
             "metric_explainers": {
               "emotional_valence": "Oscillation between hope and skepticism produces a near-neutral emotional valence with high internal volatility.",
-              "provider_trust": "Independent information-gathering temporarily distances the patient from pure reliance on clinical team framing.",
+              "provider_trust": "Independent information-gathering temporarily distances terry from pure reliance on clinical team framing.",
               "medical_self_efficacy": "Actively engaging with primary trial data, forums, and advocacy resources represents the highest point of patient-driven health literacy.",
               "logistical_capacity": "Travel and lodging cost estimation ($5,000–15,000) adds financial planning stress; crowdfunding and foundation grants are explored."
             },
@@ -1094,7 +1094,7 @@
             "medical_self_efficacy": 2,
             "logistical_capacity": 0,
             "has_experience_wheel": false,
-            "narrative_description": "The patient is formally referred to the trial site. Screening confirms eligibility — PSMA-PET qualifies, labs are within threshold, and performance status is acceptable. The full trial team is introduced. The patient experiences a procedural momentum that feels purposeful after months of decline.",
+            "narrative_description": "Terry is formally referred to the trial site. Screening confirms eligibility — PSMA-PET qualifies, labs are within threshold, and performance status is acceptable. The full trial team is introduced. Terry experiences a procedural momentum that feels purposeful after months of decline.",
             "quote": "They said I qualified. After everything, I actually qualified.",
             "sentiment_reasons": [
               "Screening confirmation is a meaningful positive outcome after a period of uncertainty",
@@ -1140,7 +1140,7 @@
             "medical_self_efficacy": 2,
             "logistical_capacity": -1,
             "has_experience_wheel": false,
-            "narrative_description": "Informed consent is completed. The patient weighs manufacturing failure risk, CRS toxicity probability, and non-response likelihood before signing. Leukapheresis is performed and ABO-701 manufacturing is initiated. The 7–10 day manufacturing window requires the patient and caregiver to remain near the trial site.",
+            "narrative_description": "Informed consent is completed. Terry weighs manufacturing failure risk, CRS toxicity probability, and non-response likelihood before signing. Leukapheresis is performed and ABO-701 manufacturing is initiated. The 7–10 day manufacturing window requires terry and caregiver to remain near the trial site.",
             "quote": "Signing that form was the hardest thing I've done. But I've run out of other options — and this one actually makes sense.",
             "inflection_detail": {
               "label": "Manufacturing & Consent Inflection",
@@ -1149,14 +1149,14 @@
                 {
                   "direction": "positive",
                   "label": "Successful Manufacturing & Enrollment",
-                  "outcome": "ABO-701 product manufactured within the 7–10 day window. Patient remains clinically stable during the wait. Day 1 dosing proceeds on schedule. The patient and caregiver experience the manufacturing wait as tense but manageable, supported by trial site staff and coordinated temporary housing.",
+                  "outcome": "ABO-701 product manufactured within the 7–10 day window. Patient remains clinically stable during the wait. Day 1 dosing proceeds on schedule. Terry and caregiver experience the manufacturing wait as tense but manageable, supported by trial site staff and coordinated temporary housing.",
                   "sentiment_delta": 2,
                   "next_step": "Day 1–7 inpatient monitoring phase"
                 },
                 {
                   "direction": "negative",
                   "label": "Manufacturing Failure or Clinical Deterioration",
-                  "outcome": "ABO-701 manufacturing fails or product does not meet release specifications, or the patient's performance status declines during the manufacturing window, making Day 1 dosing unsafe. The patient and caregiver face a devastating setback after having committed fully to the trial pathway. Re-manufacturing may be attempted if the patient remains eligible.",
+                  "outcome": "ABO-701 manufacturing fails or product does not meet release specifications, or terry's performance status declines during the manufacturing window, making Day 1 dosing unsafe. Terry and caregiver face a devastating setback after having committed fully to the trial pathway. Re-manufacturing may be attempted if terry remains eligible.",
                   "sentiment_delta": -4,
                   "next_step": "Manufacturing restart or compassionate care transition"
                 }
@@ -1191,13 +1191,13 @@
             ],
             "sentiment_reasons": [
               "Informed consent forces explicit confrontation with manufacturing failure risk, CRS toxicity, and non-response probability",
-              "The manufacturing wait period — outside the patient's control — generates significant anticipatory anxiety",
+              "The manufacturing wait period — outside terry's control — generates significant anticipatory anxiety",
               "Successful leukapheresis completion is experienced as a milestone and partial commitment to the trial pathway"
             ],
             "metric_explainers": {
               "emotional_valence": "The consent and leukapheresis experience is emotionally complex — hope and fear coexist in near-equal measure.",
               "provider_trust": "The trial team's preparation, transparency, and responsiveness during this period are critical to sustaining trust.",
-              "medical_self_efficacy": "The patient has done extensive preparation and engages with the consent process as an informed participant.",
+              "medical_self_efficacy": "Terry has done extensive preparation and engages with the consent process as an informed participant.",
               "logistical_capacity": "Extended stay near the trial site during manufacturing requires temporary housing, caregiver coordination, and financial resources."
             },
             "events": [
@@ -1583,7 +1583,7 @@
         "description": "At the point of DCM diagnosis — when Rachel is actively asking 'why?' — there is no patient-facing resource in her hospital, cardiology office, or discharge materials that explains the role of genetic testing in DCM, the guideline recommendations for it, or how to request it. The DCM Foundation and GCAC resources exist but are not surfaced in clinical settings. Rachel's question about genetics is answered by a single dismissive sentence from her cardiologist rather than an informed discussion.",
         "sentiment_impact": -3,
         "step_position": 4.5,
-        "tooltip": "Missing resource: no patient-facing genetic testing education in clinical DCM workflow — the patient asks the right question but receives a dismissive answer with no supporting materials.",
+        "tooltip": "Missing resource: no patient-facing genetic testing education in clinical DCM workflow — terry asks the right question but receives a dismissive answer with no supporting materials.",
         "source_type": "hcp",
         "platform": "Community cardiology practice",
         "influence_level": "high",
@@ -1834,7 +1834,7 @@
         "description": "A sponsor-supported digital pathway — triggered when a BAG3 pathogenic variant is confirmed by any clinical lab — that automatically surfaces relevant clinical trial listings, registry enrollment options, and patient community resources would intercept Rachel at her highest moment of motivated information-seeking. Rather than relying on her to independently discover ClinicalTrials.gov, the DCM Foundation, and individual trial listings, the pathway would present a curated, BAG3-specific next-steps package within the genetic test result delivery workflow.",
         "sentiment_impact": 4,
         "step_position": 8.4,
-        "tooltip": "Automated BAG3-specific trial and community matching triggered at genetic diagnosis confirmation — intercepts the patient at peak information-seeking motivation.",
+        "tooltip": "Automated BAG3-specific trial and community matching triggered at genetic diagnosis confirmation — intercepts terry at peak information-seeking motivation.",
         "intervention_type": "digital_tool",
         "partner": "DCM Foundation / Clinical genetic testing labs (Invitae, GeneDx, Ambry)",
         "timing": "during",
@@ -2005,7 +2005,7 @@
         "type": "intervention",
         "label": "Travel and Logistical Support Program for Trial Participants",
         "short_label": "Trial travel support",
-        "description": "A sponsor-funded travel and logistical support program — covering travel costs, accommodation near trial sites, and childcare coordination assistance for participants with young children — would directly address Rachel's primary logistical barrier. The geographic concentration of BAG3 expertise at a handful of academic centers means that most eligible patients will face significant travel burden. Converting that barrier from the patient's problem to the sponsor's investment is a recruitment accelerant.",
+        "description": "A sponsor-funded travel and logistical support program — covering travel costs, accommodation near trial sites, and childcare coordination assistance for participants with young children — would directly address Rachel's primary logistical barrier. The geographic concentration of BAG3 expertise at a handful of academic centers means that most eligible patients will face significant travel burden. Converting that barrier from terry's problem to the sponsor's investment is a recruitment accelerant.",
         "sentiment_impact": 3,
         "step_position": 10.9,
         "tooltip": "Sponsor-funded travel, accommodation, and childcare support for trial participants — converts geographic barrier from patient's problem to sponsor's investment in recruitment.",
@@ -2708,7 +2708,7 @@
         "goal3": "Establish a durable treatment plan before his daughter is old enough to understand the severity of his illness — on his own terms, not dictated by system delays.",
         "barrier1": "Vorasidenib has received EMA approval but has not been reimbursed by the North Macedonian national health authority, and no named patient program is available domestically. Out-of-pocket cost is prohibitive at approximately €8,000–€10,000 per month.",
         "barrier2": "The nearest centers with active IDH1 trial sites and Vorasidenib access are in Vienna, Prague, and Munich — requiring cross-border travel, time off work, accommodation costs, and separation from his family.",
-        "barrier3": "His domestic oncology team recommends watchful waiting but has limited familiarity with the IDH inhibitor data and actively discourages cross-border self-referral, creating friction in the patient-provider relationship."
+        "barrier3": "His domestic oncology team recommends watchful waiting but has limited familiarity with the IDH inhibitor data and actively discourages cross-border self-referral, creating friction in terry-provider relationship."
       },
       "currentState": [
         {
@@ -2835,7 +2835,7 @@
               "type": "roadblock",
               "label": "Vorasidenib Not Reimbursed — No Named Patient Pathway",
               "short_label": "Drug not available",
-              "description": "Pharmacist and oncologist confirm Vorasidenib is unobtainable domestically. EMA approval does not translate to national reimbursement. The patient association confirms no compassionate use or named patient program is active in North Macedonia.",
+              "description": "Pharmacist and oncologist confirm Vorasidenib is unobtainable domestically. EMA approval does not translate to national reimbursement. Terry association confirms no compassionate use or named patient program is active in North Macedonia.",
               "sentiment_impact": -4,
               "step_position": 2.2,
               "tooltip": "EMA-approved drug unavailable domestically. No reimbursement review timeline. No named patient program. Out-of-pocket cost approximately €8,000–€10,000/month."
@@ -3045,7 +3045,7 @@
             }
           ],
           "sentiment_reasons": [
-            "A physician who argues against a treatment using less evidence than the patient has already read destroys rather than shapes trust",
+            "A physician who argues against a treatment using less evidence than terry has already read destroys rather than shapes trust",
             "The radiation recommendation is not wrong per se — but presented without any acknowledgment of IDH inhibitor data, it feels like epistemic negligence",
             "Recognizing his dependency on a system that is not supporting him produces a new and specifically frustrating form of anxiety"
           ],
@@ -3067,7 +3067,7 @@
           "provider_trust": 2,
           "medical_self_efficacy": 3,
           "logistical_capacity": -1,
-          "narrative_description": "Armed with the Vienna specialist's letter of recommendation and the patient community's guidance, Tomáš investigates every non-trial pathway to Vorasidenib. He contacts Servier (the manufacturer) directly through their medical information line to ask about expanded access programs. He is informed that a formal expanded access program is not currently active for vorasidenib in his geography, but that named patient applications can be considered on a country-by-country basis and require a local physician to sponsor the request. His domestic oncologist declines to sponsor. His community peers suggest approaching the Vienna specialist to initiate a cross-border named patient application — a process neither party has experience navigating.",
+          "narrative_description": "Armed with the Vienna specialist's letter of recommendation and terry community's guidance, Tomáš investigates every non-trial pathway to Vorasidenib. He contacts Servier (the manufacturer) directly through their medical information line to ask about expanded access programs. He is informed that a formal expanded access program is not currently active for vorasidenib in his geography, but that named patient applications can be considered on a country-by-country basis and require a local physician to sponsor the request. His domestic oncologist declines to sponsor. His community peers suggest approaching the Vienna specialist to initiate a cross-border named patient application — a process neither party has experience navigating.",
           "quote": "I called the company. I was polite. I asked about expanded access. They said it requires a physician sponsor in my country. My physician in my country said no. The circle was complete.",
           "events": [
             {
@@ -3075,7 +3075,7 @@
               "type": "roadblock",
               "label": "Expanded Access Application Requires Domestic Physician Sponsor — Refused",
               "short_label": "Sponsor refusal",
-              "description": "Named patient application for vorasidenib requires a sponsoring physician in the patient's country of residence. Tomáš's domestic oncologist declines to participate, citing unfamiliarity with the application process and personal reservations about IDH inhibitor therapy.",
+              "description": "Named patient application for vorasidenib requires a sponsoring physician in terry's country of residence. Tomáš's domestic oncologist declines to participate, citing unfamiliarity with the application process and personal reservations about IDH inhibitor therapy.",
               "sentiment_impact": -3,
               "step_position": 6.3,
               "tooltip": "Named patient application requires domestic physician sponsor. Domestic oncologist declines — citing unfamiliarity and personal reservations. Circle closes."
@@ -3221,7 +3221,7 @@
             "description": "Tomáš reaches a convergence of clinical urgency, financial constraint, and family emotional weight that forces a decision without a clear 'right' answer. Each option carries a distinct combination of clinical, financial, and logistical risk. The absence of straightforward domestic vorasidenib access is the structural failure driving this decision — the complexity of his choice is not inherent to his disease state but is an artifact of reimbursement geography. This is precisely the inflection point where sponsor-supported patient navigation and access programs have the highest potential impact on enrollment quality and patient wellbeing.",
             "risk_level": "high",
             "dropout_risk": "high",
-            "sponsor_opportunity": "Establish a cross-border patient navigation program for IDH1-mutant glioma patients in non-reimbursing EU countries — providing named patient application support, trial site matching, financial bridge assistance for self-pay periods, and a dedicated international access coordinator who can engage both the patient and the domestic physician. A structured 'access bridge' — covering 2–3 months of vorasidenib at no cost while trial screening or named patient processing proceeds — would materially reduce dropout at this inflection point.",
+            "sponsor_opportunity": "Establish a cross-border patient navigation program for IDH1-mutant glioma patients in non-reimbursing EU countries — providing named patient application support, trial site matching, financial bridge assistance for self-pay periods, and a dedicated international access coordinator who can engage both terry and the domestic physician. A structured 'access bridge' — covering 2–3 months of vorasidenib at no cost while trial screening or named patient processing proceeds — would materially reduce dropout at this inflection point.",
             "data_needed": "Proportion of IDH1-mutant glioma patients in non-reimbursing EU countries who ultimately access vorasidenib within 12 months of eligibility confirmation; rate of trial enrollment versus watchful waiting in patients who cannot access vorasidenib domestically; average named patient processing time by EU member state; financial distress rate among trial-eligible patients who do not enroll.",
             "paths": [
               {
@@ -4384,7 +4384,7 @@
             "description": "Breakthrough seizures in Grade 2 glioma patients on surveillance create intense but often clinically ambiguous fear of transformation. For Wei-Lin, this event threatens occupational independence, spousal wellbeing, and his carefully maintained sense of control. Structured clinical guidance at this moment can channel his heightened vigilance into productive monitoring engagement — or, without support, may accelerate avoidant behavior and disengagement from trial consideration.",
             "risk_level": "high",
             "dropout_risk": "moderate",
-            "sponsor_opportunity": "Provide a patient-facing seizure management toolkit that distinguishes breakthrough seizure from radiographic progression, includes driving re-eligibility timelines under Hong Kong law, and offers direct access to a nurse navigator for rapid post-event triage. Proactively address spousal/caregiver distress as a component of the patient support program.",
+            "sponsor_opportunity": "Provide a patient-facing seizure management toolkit that distinguishes breakthrough seizure from radiographic progression, includes driving re-eligibility timelines under Hong Kong law, and offers direct access to a nurse navigator for rapid post-event triage. Proactively address spousal/caregiver distress as a component of terry support program.",
             "data_needed": "Incidence of breakthrough seizure in IDH1-mutant Grade 2 glioma patients on vorasidenib; proportion of patients who undergo early MRI re-imaging after seizure recurrence (outside scheduled protocol); caregiver anxiety escalation rates post-seizure event.",
             "paths": [
               {
