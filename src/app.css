@@ -1437,8 +1437,8 @@ color: var(--grayblue);
 
 
   .label-xs {
-    font-size: .525em;
-    font-weight: 800;
+    font-size: .5925em;
+    font-weight: 600;
     color: var(--gray);
 
     font-family: var(--font-heading);

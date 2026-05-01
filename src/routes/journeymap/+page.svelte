@@ -252,14 +252,7 @@
 
         <JourneyStages data={journeyData} />
         <JourneySteps  data={journeyData} />
-        <JourneySentiment data={journeyData} />
-        <div class="spacer"></div>
-
-        <div class="px-4 py-2 w-full">
-          <h3 class="heading-sm">Sentiment Drivers</h3>
-        </div>
-
-        <JourneyIndexBars data={journeyData} {metrics} />
+        <JourneySentiment data={journeyData} {metrics} />
 
         <JourneyLegend items={metrics} />
       {/if}

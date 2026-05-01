@@ -1,181 +1,305 @@
 <script>
-    import { fade, fly } from 'svelte/transition';
-    import { cubicOut } from 'svelte/easing';
-    import SmileyBlank  from 'phosphor-icons-svelte/IconSmileyBlankRegular.svelte';
-    import CalenderDots from 'phosphor-icons-svelte/IconCalendarDotsRegular.svelte';
-    import HandHeart    from 'phosphor-icons-svelte/IconHandHeartRegular.svelte';
-    import Aclepius     from 'phosphor-icons-svelte/IconAsclepiusRegular.svelte';
-    import { metricScoreLabel } from './journeyConfig.js';
-  
+  import {
+    STEP_WIDTH,
+    LEFT_AXIS_WIDTH,
+    GRID_HEIGHT,
+    TOP_PADDING,
+    SVG_HEIGHT,
+    valueToY,
+    stepToX,
+    totalWidth,
+    buildStageColorMap,
+  } from './journeyConfig.js';
+  import { hoveredIndex, selectedIndex, zoomedIndex } from './journeyStore.js';
+
+  let {
+    /** Journey step data array */
+    data = [],
     /**
-     * Array of metric config objects: { key, label, color }
-     * `color` is the base hue used to derive the light→dark ramp.
+     * Metric definitions — each item: { key, color, label }
+     * Matches the shape from journeyPersonas.json metrics array.
      */
-    export let metrics = /** @type {{ key: string; label: string; color: string }[]} */ ([]);
-  
+    metrics = [],
     /**
-     * Parallel array of tweened/current values for each metric (−5 → +5).
-     * Kept in sync by the parent via tweened stores.
+     * When true, the component renders only the bar group — no grid lines,
+     * no column dividers, no hit areas. Use when overlaying inside a
+     * JourneyGrid (e.g. stacked with JourneySentiment).
      */
-    export let metricVals = /** @type {number[]} */ ([]);
-  
-    /**
-     * The currently active step index — used as a `{#key}` anchor so
-     * value readouts fade-in whenever the step changes.
-     */
-    export let selectedIndex = -1;
-  
-    /**
-     * Compact mode for the sidebar: tighter gaps, no section heading.
-     * Set to false (default) for the full detail-panel presentation.
-     */
-    export let compact = false;
-  
-    // 10 evenly-spaced stops spanning −5 → +5
-    const STOPS = Array.from({ length: 10 }, (_, i) => -5 + i * (10 / 9));
-  
-    /** Map each metric key to its icon component. */
-    const METRIC_ICONS = {
-      emotional_valence:     SmileyBlank,
-      logistical_capacity:   CalenderDots,
-      provider_trust:        Aclepius,
-      medical_self_efficacy: HandHeart,
+    overlayMode = false,
+    /** Called when a column is double-clicked (already zoomed) to open the drawer */
+    onOpenDrawer = null,
+  } = $props();
+
+  // ── Bar layout ────────────────────────────────────────────────────────────
+  const COL_GUTTER = 24; // px total inset per column (split left/right)
+  const BAR_GAP    = 8;  // px gap between bars within a group
+
+  function barWidth(n) {
+    if (n === 0) return 0;
+    const usable = STEP_WIDTH - COL_GUTTER;
+    return Math.max(2, (usable - BAR_GAP * (n - 1)) / n);
+  }
+
+  function groupStartX(i, n) {
+    const groupW = barWidth(n) * n + BAR_GAP * (n - 1);
+    return stepToX(i) - groupW / 2;
+  }
+
+  const zeroY = valueToY(0);
+
+  function barRect(i, mi, val, n) {
+    const bw = barWidth(n);
+    const x  = groupStartX(i, n) + mi * (bw + BAR_GAP);
+    const y  = valueToY(val);
+    return {
+      x,
+      y:      Math.min(y, zeroY),
+      width:  bw,
+      height: Math.abs(zeroY - y),
     };
-  
-    /**
-     * Build a 10-stop light→dark ramp from a CSS hex color.
-     */
-    function buildRamp(baseColor) {
-      return STOPS.map((_, si) => {
-        const pct = Math.round(10 + (si / (STOPS.length - 1)) * 45);
-        return `color-mix(in srgb, ${baseColor} ${pct}%, white)`;
-      });
-    }
-  
-    /**
-     * Derive per-square opacity based on distance from the active position.
-     * Active square → 1; neighbours fall off; floor at 0.12.
-     */
-    function squareOpacity(si, activePos) {
-      const dist = Math.abs(si - activePos);
-      return si === Math.round(activePos) ? 1 : Math.max(0.2, 1 - dist * 0.75);
-    }
-  </script>
-  
-  <div class="index-metric-bars" class:index-metric-bars--compact={compact}>
-    <div class="imb-grid">
-      {#each metrics as m, i}
-        {@const tweenedVal    = metricVals[i] ?? 0}
-        {@const ramp          = buildRamp(m.color)}
-        {@const activePos     = (tweenedVal + 5) / 10 * (STOPS.length - 1)}
-        {@const IconComponent = METRIC_ICONS[m.key] ?? null}
-  
-        <div
-          class="imb-card"
-          in:fly={{ y: 4, duration: 200, delay: 60 + i * 40, easing: cubicOut }}
-        >
-          <div class="flex flex-col gap-2">
-  
-            <!-- ── Label row ──────────────────────────────────────────── -->
-            <div class="toolbar-sm-light">
-              <div class="flex flex-row gap-2 w-full items-center justify-between">
-  
-                <div class="flex flex-row gap-2 align-middle items-center">
-                  {#if IconComponent}
-                      <svelte:component this={IconComponent} class="icon-toolbar-dark-sm"
-                      style=
-                      "background-color: {m.color};
-                      outline: 2.5px solid {m.color};" />
-                  {:else}
-                    <div class="w-2 h-2 ring-1" 
-                    style="background: {m.color};"></div>
-                  {/if}
-                  <span class="label-sm">{m.label}</span>
-                </div>
-  
-        
-              </div>
-            </div>
-  
-            <!-- ── Squares ────────────────────────────────────────────── -->
-            <div class="flex flex-row w-full justify-between align-middle">
-            <div class="flex flex-row gap-1 align-middle">
-              {#each STOPS as _stop, si}
-                {@const opacity  = squareOpacity(si, activePos)}
-                {@const isActive = si === Math.round(activePos)}
-                <div
-                  class="jm-swatch-round-sm"
-                  class:jm-swatch--active={isActive}
-                  class:jm-swatch--compact={compact}
-                  style="background: {ramp[si]}; 
-                  opacity: {opacity};"></div>
-              {/each}
-            </div>
-                <!-- ── Qualitative label ───────────────────────────────────── -->
-                {#key selectedIndex}
-                <span
-                  class="pill label-sm"
-                  style="border: 1px solid {m.color}; color: {m.color}"
-                  in:fade={{ duration: 200, delay: 80 + i * 40 }}
-                  out:fade={{ duration: 80 }}
-                >
-                  {metricScoreLabel(m.key, tweenedVal)}
-                </span>
-              {/key}
-              {#key selectedIndex}
-              <span
-                class="label-sm"
-                style="color: {m.color};"
-                in:fade={{ duration: 180, delay: 60 + i * 40 }}
-                out:fade={{ duration: 80 }}
-              >
-                {tweenedVal > 0 ? '+' : ''}{tweenedVal.toFixed(1)}
-              </span>
-            {/key}
-            
-            </div>
+  }
 
-  
-          </div>
-        </div>
+  const n             = $derived(metrics.length);
+  const width         = $derived(totalWidth(data.length));
+  const stageColorMap = $derived(buildStageColorMap(data));
+
+  function handleColumnClick(i) {
+    if ($zoomedIndex === i) {
+      onOpenDrawer?.({ index: i });
+    } else {
+      zoomedIndex.set(i);
+      selectedIndex.set(i);
+    }
+  }
+
+  // In overlay mode bars are always shown at a consistent opacity so they
+  // read as background context behind the sentiment line chart.
+  function barOpacity(isActive) {
+    if (overlayMode) return 0.22;
+    return isActive ? 0.88 : 0.15;
+  }
+
+  function capOpacity(isActive) {
+    if (overlayMode) return 0.5;
+    return isActive ? 1 : 0.325;
+  }
+</script>
+
+<!--
+  JourneyIndexBars
+  ─────────────────────────────────────────────────────────────────────────────
+  Grouped vertical bar chart for journey index metrics.
+
+  Stand-alone mode (overlayMode = false, default):
+    Renders its own SVG with grid lines, column dividers, column hit areas,
+    and the left-axis white mask. Use beneath JourneySentiment as a separate
+    row (legacy layout).
+
+  Overlay mode (overlayMode = true):
+    Renders only the <g> bar group — no grid, no dividers, no hit areas.
+    Designed to be composed inside a JourneyGrid <slot> so bars sit behind
+    the sentiment line/nodes while sharing the same coordinate space.
+-->
+
+{#if overlayMode}
+  <!-- ── Overlay: bare bar group only, no outer SVG ────────────────────── -->
+  <g class="journey-bars-overlay" aria-label="Journey index bars">
+    {#each data as d, i}
+      {#each metrics as m, mi}
+        {@const val    = parseFloat(d[m.key])}
+        {@const rect   = barRect(i, mi, val, n)}
+        {@const isActive = $hoveredIndex === i || $selectedIndex === i}
+
+        <!-- Bar fill -->
+        <rect
+          x={rect.x}
+          y={rect.y}
+          width={rect.width}
+          height={rect.height}
+          fill={m.color}
+          opacity={barOpacity(isActive)}
+          pointer-events="none"
+        />
+
+        <!-- Top cap line -->
+        {#if rect.height > 2}
+          <line
+            x1={rect.x}
+            y1={rect.y}
+            x2={rect.x + rect.width}
+            y2={rect.y}
+            stroke={m.color}
+            stroke-width="1.5"
+            opacity={capOpacity(isActive)}
+            pointer-events="none"
+          />
+        {/if}
+
+        <!-- Value label: only on hover/select -->
+        {#if isActive && rect.height > 10}
+          {@const labelY = val >= 0 ? rect.y - 3 : rect.y + rect.height + 9}
+          <text
+            x={rect.x + rect.width / 2}
+            y={labelY}
+            text-anchor="middle"
+            class="label-sm"
+            fill={m.color}
+            pointer-events="none"
+          >
+            {val > 0 ? '+' : ''}{val}
+          </text>
+        {/if}
       {/each}
-    </div>
-  </div>
-  
-  <style>
-    /* ── Container ───────────────────────────────────────────────── */
-    .index-metric-bars {
-      display: flex;
-      flex-direction: column;
-      gap: 1em;
-    }
-  
-    .index-metric-bars--compact {
-      display: flex;
-      flex-direction: column;
-    }
-    .imb-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2em;
-}
+    {/each}
+  </g>
 
-.index-metric-bars--compact .imb-grid {
-  display:flex;
-    flex-direction: column;
-    max-width: 300px;
-}
-  
-    @media (max-width: 480px) {
-      .imb-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  
-    .jm-swatch--active {
-      outline: 2.15px solid var(--grayblue);
-      outline-offset: 2px;
-      opacity: 100%;
-      filter: saturate(1);
-    }
-  </style>
+{:else}
+  <!-- ── Stand-alone SVG (legacy layout) ───────────────────────────────── -->
+  <svg
+    {width}
+    height={SVG_HEIGHT}
+    class="journey-svg journey-bars-svg"
+    overflow="visible"
+    aria-label="Journey index bar chart"
+  >
+
+    <!-- ── Per-column stage color bands ────────────────────────────────── -->
+    {#each data as d, i}
+      {#if stageColorMap[d.stage_id]}
+        <rect
+          x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={TOP_PADDING}
+          width={STEP_WIDTH}
+          height={GRID_HEIGHT}
+          fill={stageColorMap[d.stage_id]}
+          opacity="0"
+          pointer-events="none"
+        />
+      {/if}
+    {/each}
+
+    <!-- ── Column hover / selection highlights ──────────────────────────── -->
+    {#each data as _d, i}
+      {#if $selectedIndex === i}
+        <rect
+          x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={TOP_PADDING}
+          width={STEP_WIDTH} height={GRID_HEIGHT}
+          fill="var(--accent, #C4956A)" opacity="0.10"
+          pointer-events="none"
+        />
+      {:else if $hoveredIndex === i}
+        <rect
+          x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={TOP_PADDING}
+          width={STEP_WIDTH} height={GRID_HEIGHT}
+          fill="var(--accent, #C4956A)" opacity="0.05"
+          pointer-events="none"
+        />
+      {/if}
+    {/each}
+
+    <!-- ── Horizontal grid lines ───────────────────────────────────────── -->
+    {#each [-4, -3, -2, -1, 0, 1, 2, 3, 4] as rowVal}
+      {@const y      = valueToY(rowVal)}
+      {@const isZero = rowVal === 0}
+      <line
+        x1={LEFT_AXIS_WIDTH} y1={y} x2={width} y2={y}
+        stroke={isZero ? '#5E5A5B' : '#D6D6D6'}
+        stroke-width={isZero ? 1 : 0.725}
+        pointer-events="none"
+      />
+    {/each}
+
+    <!-- ── Vertical column dividers ─────────────────────────────────────── -->
+    {#each data as _d, i}
+      {@const isHovered = $hoveredIndex === i}
+      <line
+        x1={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y1={TOP_PADDING}
+        x2={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y2={TOP_PADDING + GRID_HEIGHT}
+        stroke={isHovered ? '#F9564E' : '#CACCB7'}
+        stroke-width={isHovered ? 2 : 1}
+        opacity={isHovered ? 0.85 : 1}
+        pointer-events="none"
+      />
+    {/each}
+    <!-- Right edge -->
+    <line
+      x1={width} y1={TOP_PADDING}
+      x2={width} y2={TOP_PADDING + GRID_HEIGHT}
+      stroke="#DFC3A8" stroke-width="1.25"
+      pointer-events="none"
+    />
+
+    <!-- ── Metric bars ────────────────────────────────────────────────── -->
+    {#each data as d, i}
+      {#each metrics as m, mi}
+        {@const val    = parseFloat(d[m.key])}
+        {@const rect   = barRect(i, mi, val, n)}
+        {@const isActive = $hoveredIndex === i || $selectedIndex === i}
+
+        <!-- Bar fill -->
+        <rect
+          x={rect.x}
+          y={rect.y}
+          width={rect.width}
+          height={rect.height}
+          fill={m.color}
+          opacity={barOpacity(isActive)}
+          pointer-events="none"
+        />
+
+        <!-- Top cap line -->
+        {#if rect.height > 2}
+          <line
+            x1={rect.x}
+            y1={rect.y}
+            x2={rect.x + rect.width}
+            y2={rect.y}
+            stroke={m.color}
+            stroke-width="1.5"
+            opacity={capOpacity(isActive)}
+            pointer-events="none"
+          />
+        {/if}
+
+        <!-- Value label: only on hover/select -->
+        {#if isActive && rect.height > 10}
+          {@const labelY = val >= 0 ? rect.y - 3 : rect.y + rect.height + 9}
+          <text
+            x={rect.x + rect.width / 2}
+            y={labelY}
+            text-anchor="middle"
+            class="label-sm"
+            fill={m.color}
+            pointer-events="none"
+          >
+            {val > 0 ? '+' : ''}{val}
+          </text>
+        {/if}
+      {/each}
+    {/each}
+
+    <!-- ── Left axis gutter (white mask over bar overflow) ───────────── -->
+    <rect
+      x="0" y="0"
+      width={LEFT_AXIS_WIDTH} height={SVG_HEIGHT}
+      fill="#fff"
+      pointer-events="none"
+    />
+
+    <!-- ── Full-column hit areas ─────────────────────────────────────── -->
+    {#each data as _d, i}
+      <rect
+        x={LEFT_AXIS_WIDTH + i * STEP_WIDTH} y={TOP_PADDING}
+        width={STEP_WIDTH} height={GRID_HEIGHT}
+        fill="transparent"
+        style="cursor: pointer;"
+        onmouseenter={() => hoveredIndex.set(i)}
+        onmouseleave={() => hoveredIndex.set(-1)}
+        onclick={() => handleColumnClick(i)}
+      />
+    {/each}
+
+  </svg>
+{/if}
+
+<style>
+</style>

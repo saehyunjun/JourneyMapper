@@ -54,7 +54,7 @@
   // ── Tooltip dimensions ─────────────────────────────────────────────────────
   const TIP_W    = 450;
   const TIP_H    = 40 + metrics.length * 28 + 80;
-  const OFFSET_X = 14;
+  const OFFSET_X = 30;
   const OFFSET_Y = 8;
 
   $: vpW = typeof window !== 'undefined' ? window.innerWidth  : 9999;

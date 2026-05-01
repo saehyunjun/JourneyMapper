@@ -1,9 +1,9 @@
 // ─── Shared Journey Map Configuration ────────────────────────────────────────
 
 export const ROW_VALUES  = [5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5];
-export const GRID_HEIGHT = 320;
-export const STEP_WIDTH  = 280;
-export const LEFT_AXIS_WIDTH = 10;
+export const GRID_HEIGHT = 500;
+export const STEP_WIDTH  = 300;
+export const LEFT_AXIS_WIDTH = 20;
 export const TOP_PADDING = 0;
 export const SVG_HEIGHT  = GRID_HEIGHT + TOP_PADDING * 1.25;
 
@@ -93,7 +93,6 @@ const METRIC_SCORE_LABELS = {
 export const STAGE_COLORS = [
   '#264290', // Dark Blue
   '#3F73FF', // Deep Blue
-  '#468A85', // Teal Green
   '#699D97', // Light TG
   '#28B798', // Warren Green
   '#7DBFA7', // Mint Green  

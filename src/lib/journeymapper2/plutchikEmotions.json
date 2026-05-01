@@ -1,0 +1,38 @@
+{
+  "primary_dyads": [
+    {"emotion_1": "joy", "emotion_2": "trust", "label": "love"},
+    {"emotion_1": "trust", "emotion_2": "fear", "label": "submission"},
+    {"emotion_1": "fear", "emotion_2": "surprise", "label": "alarm"},
+    {"emotion_1": "surprise", "emotion_2": "sadness", "label": "disappointment"},
+    {"emotion_1": "sadness", "emotion_2": "disgust", "label": "remorse"},
+    {"emotion_1": "disgust", "emotion_2": "anger", "label": "contempt"},
+    {"emotion_1": "anger", "emotion_2": "anticipation", "label": "aggression"},
+    {"emotion_1": "anticipation", "emotion_2": "joy", "label": "optimism"}
+  ],
+  "secondary_dyads": [
+    {"emotion_1": "joy", "emotion_2": "fear", "label": "guilt"},
+    {"emotion_1": "trust", "emotion_2": "surprise", "label": "curiosity"},
+    {"emotion_1": "fear", "emotion_2": "sadness", "label": "despair"},
+    {"emotion_1": "surprise", "emotion_2": "disgust", "label": "unbelief"},
+    {"emotion_1": "sadness", "emotion_2": "anger", "label": "envy"},
+    {"emotion_1": "disgust", "emotion_2": "anticipation", "label": "cynicism"},
+    {"emotion_1": "anger", "emotion_2": "joy", "label": "pride"},
+    {"emotion_1": "anticipation", "emotion_2": "trust", "label": "hope"}
+  ],
+  "tertiary_dyads": [
+    {"emotion_1": "joy", "emotion_2": "surprise", "label": "delight"},
+    {"emotion_1": "trust", "emotion_2": "sadness", "label": "sentimentality"},
+    {"emotion_1": "fear", "emotion_2": "disgust", "label": "shame"},
+    {"emotion_1": "surprise", "emotion_2": "anger", "label": "outrage"},
+    {"emotion_1": "sadness", "emotion_2": "anticipation", "label": "pessimism"},
+    {"emotion_1": "disgust", "emotion_2": "joy", "label": "morbideness"},
+    {"emotion_1": "anger", "emotion_2": "trust", "label": "dominance"},
+    {"emotion_1": "anticipation", "emotion_2": "fear", "label": "anxiety"}
+  ],
+  "opposite_dyads": [
+    {"emotion_1": "joy", "emotion_2": "sadness", "label": "bittersweetness"},
+    {"emotion_1": "trust", "emotion_2": "disgust", "label": "ambivalence"},
+    {"emotion_1": "fear", "emotion_2": "anger", "label": "frozenness"},
+    {"emotion_1": "surprise", "emotion_2": "anticipation", "label": "confusion"}
+  ]
+}
