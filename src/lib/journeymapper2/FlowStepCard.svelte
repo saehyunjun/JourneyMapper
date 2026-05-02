@@ -8,6 +8,7 @@
     ratingToLabel,
     EMOTION_BY_ID
   } from './journeyConfig.js';
+  import IconArrowUpRegular from 'phosphor-icons-svelte/IconArrowCircleUpRightDuotone.svelte';
   import JourneyEventCard from './JourneyEventCard.svelte';
 
   export let step;
@@ -49,9 +50,9 @@
 
   // ── Fork-bracket geometry (mirrors FlowStageCard vertical constants) ──────
   const LINE_COLOR  = 'var(--midgrayblue)';
-  const BRACKET_H   = 28;      // height of the diverge / converge SVG panel
-  const CARD_W      = 325;     // width of each event-pill column
-  const GAP         = 48;      // gap between the two columns
+  const BRACKET_H   = 42;      // height of the diverge / converge SVG panel
+  const CARD_W      = 400;     // width of each event-pill column
+  const GAP         = 120;      // gap between the two columns
   const SVG_W       = CARD_W * 2 + GAP;
   const MID_X       = SVG_W / 2;
 </script>
@@ -60,38 +61,37 @@
 
   <!-- ── Step card ─────────────────────────────────────────────────────── -->
   <button
-    class="card-sm flow-step-card"
-    class:flow-step-card--hovered={$hoveredIndex === step.index}
-    class:flow-step-card--selected={$selectedIndex === step.index}
-    style="border-color:{stageColor};"    
+    class="card-lg"
+    class:card-lg--hovered={$hoveredIndex === step.index}
+    class:card-lg--selected={$selectedIndex === step.index}
     onmouseenter={() => { hoveredIndex.set(step.index); hoveredInflectionIndex.set(-1); }}
     onmouseleave={() => hoveredIndex.set(-1)}
     onclick={handleClick}
-    aria-pressed={$selectedIndex === step.index}flow-step-card__swatch-wrap
+    aria-pressed={$selectedIndex === step.index}
   >
-    <div class="flow-step-card__body">
-      <div class="flow-step-card__title-row">
-        <span class="label uppercase text-center flow-step-card__title">{step.step}</span>
-      </div>
-    </div>
-
-    <div class="flow-step-card__meta">
-      <div class="flow-step-card__meta-item">
-        <div class="flow-step-card__swatch-wrap">
+  <div class="flex flex-row w-full gap-16 justify-start">
+    <span class="text-2xl grow-7 justify-start text-left text-slate-600">
+      {step.step}
+    </span>
+    <IconArrowUpRegular class="text-4xl w-12 text-slate-600"></IconArrowUpRegular>
+  </div>
+    <div class="mt-auto grid w-full grid-cols-2 gap-8 items-end">
+      <div class="flex min-w-0 flex-row flex-wrap items-end gap-1 justify-self-start">
+        <div class="flex h-4 flex-row gap-1">
           <div
             class="jm-swatch-sm"
             style="background-color:{sentimentToColor(d?.sentiment)};"
           ></div>
         </div>
-        <span class="label-xs">{sentimentLabel}</span>
+        <span class="label-sm font-medium">{sentimentLabel}</span>
       </div>
-      <div class="flow-step-card__meta-item">
-        <div class="flow-step-card__swatch-wrap flow-step-card__emotion-wrap">
+      <div class="flex min-w-0 flex-col items-start gap-1 justify-self-start">
+        <div class="flex h-4 flex-row flex-wrap gap-1">
           {#each emotionData.colors as color}
-            <div class="jm-swatch-round-sm flow-step-card__emotion-swatch" style="background:{color};"></div>
+            <div class="jm-swatch-round-sm shrink-0" style="background:{color};"></div>
           {/each}
         </div>
-        <span class="label-xs">{emotionData.label}</span>
+        <span class="label-sm font-medium">{emotionData.label}</span>
       </div>
     </div>
   </button>
@@ -201,8 +201,7 @@
   {#if infl}
     <div class="flow-inflection-connector" aria-hidden="true"></div>
     <button
-      class="card flow-inflection-card"
-      style="border-color:{stageColor};"
+      class="card-lg"
       tabindex="0"
       aria-label="View inflection point{inflDet?.label ? `: ${inflDet.label}` : ''}"
       onmouseenter={() => { hoveredInflectionIndex.set(step.index); hoveredIndex.set(-1); }}
@@ -221,7 +220,9 @@
     >
       {#if inflDet}
         <div class="flex flex-row p-2">
-          <span class="text-body-sm">{inflDet.label}</span>
+          <span class="text-body-sm">
+            {inflDet.label}
+          </span>
         </div>
       {/if}
     </button>
@@ -239,80 +240,6 @@
     width: 100%;
   }
 
-  /* ── Step card ───────────────────────────────────────────────────────────── */
-  .flow-step-card {
-    width: 225px;
-    min-height: 110px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: space-between;
-    padding: 8px;
-    margin-top: 1em;
-    gap: 10px;
-  }
-
-  .flow-step-card__body {
-    flex: 1 1 auto;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .flow-step-card__title-row {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-
-  .flow-step-card__title {
-    display: block;
-    width: 100%;
-    line-height: 1.2;
-    text-wrap: balance;
-  }
-
-  .flow-step-card__meta {
-    margin-top: auto;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    align-items: end;
-  }
-
-  .flow-step-card__meta-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    min-width: 0;
-    gap: 5px;
-  }
-
-  .label-xs {
-    font-size: 0.52rem;
-    line-height: 1;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--gray, #767676);
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .flow-step-card__swatch-wrap {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .flow-step-card__emotion-wrap { gap: 0; }
-
-  .flow-step-card__emotion-swatch {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9);
-  }
 
   /* ── Fork bracket system ─────────────────────────────────────────────────── */
 
