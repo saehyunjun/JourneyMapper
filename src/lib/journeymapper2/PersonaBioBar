@@ -1,0 +1,249 @@
+<!-- PersonaBioBar.svelte -->
+<!--
+  Shared persona bio bar — sits under the disease/view selection bar at the top
+  of all three report views (chart, flow, report).
+
+  Collapsed: shows persona name + type pill + expand caret.
+  Expanded:  shows bio narrative, goals (1–3), barriers (1–3), and currentState bars.
+
+  Fields read from persona:
+    profile.name, profile.role, persona.type
+    profile.bio  OR profile.bio_1   (whichever is present)
+    profile.goal1, goal2, goal3
+    profile.barrier1, barrier2, barrier3
+    persona.currentState  ([{ label, value, minLabel, maxLabel }, ...])
+-->
+
+<script>
+  import { slide, fade } from 'svelte/transition';
+  import { cubicOut, cubicInOut } from 'svelte/easing';
+
+  import StateBarList from './StateBarList.svelte';
+
+  import CaretDownRegular        from 'phosphor-icons-svelte/IconCaretDownRegular.svelte';
+  import CaretUpRegular          from 'phosphor-icons-svelte/IconCaretUpRegular.svelte';
+  import ArrowDownRightRegular   from 'phosphor-icons-svelte/IconArrowElbowDownRightRegular.svelte';
+  import Flag                    from 'phosphor-icons-svelte/IconFlagBannerFill.svelte';
+  import Barricade               from 'phosphor-icons-svelte/IconBarricadeFill.svelte';
+  import UserRegular             from 'phosphor-icons-svelte/IconUserRegular.svelte';
+
+  // ── Props ───────────────────────────────────────────────────────────────
+  let {
+    persona = null,
+    expanded = $bindable(false),
+  } = $props();
+
+  // ── Derived persona data ────────────────────────────────────────────────
+  let profile  = $derived(persona?.profile ?? {});
+  let states   = $derived(persona?.currentState ?? persona?.current_state ?? []);
+
+  // Support both `bio` (Terry's persona) and `bio_1` (others)
+  let bioText = $derived(profile?.bio ?? profile?.bio_1 ?? '');
+
+  let goals = $derived(
+    [profile?.goal1, profile?.goal2, profile?.goal3].filter(Boolean)
+  );
+
+  let barriers = $derived(
+    [profile?.barrier1, profile?.barrier2, profile?.barrier3].filter(Boolean)
+  );
+
+  // Persona type → caregiver vs patient accent (matches PersonaTopSelector)
+  let isCaregiver = $derived(
+    persona?.type?.toLowerCase()?.includes('caregiver') ?? false
+  );
+  let accentColor = $derived(isCaregiver ? 'var(--gold)' : 'var(--purple)');
+  let typeLabel = $derived(persona?.type ?? profile?.role ?? '');
+
+  function toggle() {
+    expanded = !expanded;
+  }
+</script>
+
+{#if persona}
+  <section
+    class="persona-bio-bar"
+    aria-label="Persona bio for {profile?.name ?? 'persona'}"
+  >
+    <!-- ── Header (always visible) ───────────────────────────────────── -->
+    <button
+      class="toolbar-sm-light-left persona-bio-header"
+      onclick={toggle}
+      aria-expanded={expanded}
+      aria-controls="persona-bio-body"
+      aria-label={expanded ? 'Collapse persona bio' : 'Expand persona bio'}
+    >
+      <span
+        class="pill-round label-xs"
+        style="background: {accentColor}; color: var(--paper); border-color: var(--paper);"
+        aria-hidden="true"
+      >
+        <UserRegular />
+      </span>
+
+      <span
+        class="label-sm persona-bio-name"
+        style="color: {accentColor};"
+      >
+        {profile?.name ?? 'Persona'}
+      </span>
+
+      {#if typeLabel}
+        <span
+          class="pill label-xs"
+          style="border-color: {accentColor}; color: {accentColor};"
+        >
+          {typeLabel}
+        </span>
+      {/if}
+
+      <span class="persona-bio-spacer" aria-hidden="true"></span>
+
+      <span class="persona-bio-caret" aria-hidden="true">
+        {#if expanded}
+          <CaretUpRegular />
+        {:else}
+          <CaretDownRegular />
+        {/if}
+      </span>
+    </button>
+
+    <!-- ── Body (collapsible) ────────────────────────────────────────── -->
+    {#if expanded}
+      <div
+        id="persona-bio-body"
+        class="persona-bio-body"
+        in:slide={{ duration: 260, easing: cubicOut }}
+        out:slide={{ duration: 180, easing: cubicInOut }}
+      >
+        <div
+          class="persona-bio-grid"
+          in:fade={{ duration: 220, delay: 60, easing: cubicOut }}
+        >
+          <!-- ── Bio narrative ─────────────────────────────────────── -->
+          {#if bioText}
+            <div class="jm-content-col gap-1 persona-bio-col persona-bio-col--narrative">
+              <div class="toolbar-sm-light">
+                <UserRegular style="color: var(--grayblue)" />
+                <span class="label-sm" style="color: var(--grayblue)">Bio</span>
+              </div>
+              <p class="text-body-sm">{bioText}</p>
+            </div>
+          {/if}
+
+          <!-- ── Goals ─────────────────────────────────────────────── -->
+          {#if goals.length}
+            <div class="jm-content-col gap-1 persona-bio-col">
+              <div class="toolbar-sm-light">
+                <Flag style="color: var(--green)" />
+                <span class="label-sm" style="color: var(--green)">Goals</span>
+              </div>
+              {#each goals as goal}
+                <div class="flex flex-row items-start gap-2">
+                  <ArrowDownRightRegular />
+                  <span class="text-body-sm">{goal}</span>
+                </div>
+              {/each}
+            </div>
+          {/if}
+
+          <!-- ── Barriers ──────────────────────────────────────────── -->
+          {#if barriers.length}
+            <div class="jm-content-col gap-1 persona-bio-col">
+              <div class="toolbar-sm-light">
+                <Barricade style="color: var(--red)" />
+                <span class="label-sm" style="color: var(--red)">Barriers</span>
+              </div>
+              {#each barriers as barrier}
+                <div class="flex flex-row items-start gap-2">
+                  <ArrowDownRightRegular />
+                  <span class="text-body-sm">{barrier}</span>
+                </div>
+              {/each}
+            </div>
+          {/if}
+
+          <!-- ── Current State bars ────────────────────────────────── -->
+          {#if states.length}
+            <div class="jm-content-col gap-1 persona-bio-col">
+              <div class="toolbar-sm-light">
+                <span class="label-sm" style="color: var(--grayblue)">Current State</span>
+              </div>
+              <StateBarList {states} />
+            </div>
+          {/if}
+        </div>
+      </div>
+    {/if}
+  </section>
+{/if}
+
+<style>
+  /* Structural-only styles — no design tokens redefined.
+     All colors and typography come from app.css utilities and CSS vars. */
+
+  .persona-bio-bar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .persona-bio-header {
+    /* toolbar-sm-light-left already provides background, padding, radius.
+       We override only the bits needed to make it a full-width clickable row. */
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .persona-bio-name {
+    text-transform: none;
+  }
+
+  .persona-bio-spacer {
+    flex: 1;
+  }
+
+  .persona-bio-caret {
+    display: inline-flex;
+    align-items: center;
+    color: var(--grayblue);
+  }
+
+  .persona-bio-body {
+    width: 100%;
+    padding: 0.75em 1em 1em 1em;
+    background-color: var(--paper);
+    border-bottom: 1px solid var(--panel-dark);
+  }
+
+  .persona-bio-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.25fr;
+    gap: 1.25em;
+    align-items: start;
+  }
+
+  /* Stack on narrower viewports */
+  @media (max-width: 1100px) {
+    .persona-bio-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .persona-bio-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .persona-bio-col {
+    min-width: 0;
+  }
+
+  .persona-bio-col--narrative {
+    /* let the long bio text breathe a bit more */
+    min-width: 0;
+  }
+</style>

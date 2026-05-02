@@ -71,7 +71,7 @@
       {/each}
     </div>
 
-    <JourneyFlowSentimentRail
+  <JourneyFlowSentimentRail
       {data}
       flowRef={flowColEl}
     />

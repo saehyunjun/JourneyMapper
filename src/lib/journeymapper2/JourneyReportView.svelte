@@ -50,6 +50,20 @@
     return val >= 0 ? metricColor : '#e05c5c';
   }
 
+  const INDEX_STOPS = Array.from({ length: 10 }, (_, i) => -5 + i * (10 / 9));
+
+  function buildIndexRamp(baseColor: string): string[] {
+    return INDEX_STOPS.map((_, si) => {
+      const pct = Math.round(10 + (si / (INDEX_STOPS.length - 1)) * 45);
+      return `color-mix(in srgb, ${baseColor} ${pct}%, white)`;
+    });
+  }
+
+  function swatchOpacity(stopIndex: number, activePos: number): number {
+    const dist = Math.abs(stopIndex - activePos);
+    return stopIndex === Math.round(activePos) ? 1 : Math.max(0.15, 1 - dist * 0.8);
+  }
+
   function stepSentimentColor(step: any): string {
     return sentimentToColor(step.sentiment ?? 0);
   }
@@ -89,11 +103,11 @@
     <section class="report-stage-section">
       <div
         class="report-stage-header"
-        style="--stage-color: {stageColor}; border-left: 3px solid {stageColor};"
+        style="--stage-color: {stageColor}"
       >
         <div class="flex flex-row items-center gap-3">
           <span
-            class="stage-index-badge"
+            class="pill-white"
             style="background: {stageColor}20; color: {stageColor}; border-color: {stageColor}40;"
           >
             Stage {gi + 1}
@@ -127,7 +141,7 @@
 
                 {#if isInflection}
                   <span class="pill-sm">
-                    <IconArrowsOutLineVerticalRegular class="text-xs" />
+                    <IconArrowsOutLineVerticalRegular class="text-lg" />
                     Inflection
                   </span>
                 {/if}
@@ -140,68 +154,70 @@
             <div class="report-metric-block">
               <div class="report-metric-row">
                 <div class="flex flex-row items-center gap-1">
-                  <IconHeartHalfRegular class="text-xs" style="color: {sentColor};" />
-                  <span class="label-sm" style="color: var(--ink-muted);">Sentiment</span>
+                  <IconHeartHalfRegular class="text-lg" 
+                  style="color: var(--gray);" />
+                  <span class="label-sm" 
+                  style="color: var(--ink-muted);">Sentiment</span>
                 </div>
 
                 <span
                   class="pill-white"
-                  style="color: {sentColor}; border-color: {sentColor}50; background: {sentColor}10;"
+                  style="color: var(--ink-mute); 
+                  border-color: {sentColor}; background: {sentColor}30;"
                 >
                   {sentLabel}
                 </span>
               </div>
 
-              <div class="flex flex-row" aria-hidden="true">
+              <div class="sentiment-row" aria-hidden="true">
                 {#each SENTIMENT_SCALE as stopColor, i}
                   {@const activePos =
                     (((step.sentiment ?? 0) + 5) / 10) * (SENTIMENT_SCALE.length - 1)}
                   {@const isActive = i === Math.round(activePos)}
 
                   <div
-                    class="jm-swatch-lg"
-                    class:jm-swatch-lg--active={isActive}
+                    class="jm-swatch"
+                    class:jm-swatch--active={isActive}
                     style="background: {stopColor}; opacity: {isActive ? 1 : 0.18};"
                   ></div>
                 {/each}
               </div>
             </div>
 
-            <div class="report-index-block">
-              <span class="label-xs uppercase mb-2" style="color: var(--ink-muted);">
+            <div class="report-index-block mt-4">
+              <span class="label-sm" 
+              style="color: var(--ink-muted);">
                 Index Metrics
               </span>
 
               {#each metrics as m}
                 {@const val = step[m.key] ?? 0}
-                {@const fill = barColor(val, m.color)}
+                {@const ramp = buildIndexRamp(m.color)}
+                {@const activePos = ((val ?? 0) + 5) / 10 * (INDEX_STOPS.length - 1)}
                 {@const label = metricScoreLabel(m.key, val)}
 
                 <div class="report-index-item">
-                  <div class="report-index-label-row">
-                    <span class="label-xs" style="color: var(--ink-muted);">{m.label}</span>
-                    <span class="report-bar-value" style="color: {fill};">
-                      {val > 0 ? '+' : ''}{val.toFixed(1)}
-                    </span>
+                  <div class="report-index-label">
+                    <span class="label-xs" 
+                    style="color: var(--ink-muted);">
+                      {m.label}</span>
+                    
                   </div>
 
-                  <div class="sentiment-track">
-                    <div class="report-bar-zero" aria-hidden="true"></div>
+                  <div class="report-index-swatches" aria-hidden="true">
+                    {#each INDEX_STOPS as _stop, i}
+                      {@const isActive = i === Math.round(activePos)}
+                      {@const opacity = swatchOpacity(i, activePos)}
 
-                    {#if val >= 0}
                       <div
-                        class="report-bar-fill report-bar-fill--pos"
-                        style="width: {(val / 5) * 50}%; left: 50%; background: {fill};"
+                        class="jm-swatch-sm"
+                        class:jm-swatch--active={isActive}
+                        style="background: {ramp[i]}; opacity: {opacity};"
                       ></div>
-                    {:else}
-                      <div
-                        class="report-bar-fill report-bar-fill--neg"
-                        style="width: {(Math.abs(val) / 5) * 50}%; right: 50%; background: {fill};"
-                      ></div>
-                    {/if}
+                    {/each}
                   </div>
 
-                  <span class="label-xs" style="color: {fill};">
+                  <span class="label-xs" style="color: {m.color};">
                     {label}
                   </span>
                 </div>
@@ -270,14 +286,18 @@
                     {#each journeyEvents as ev}
                       {@const Icon = eventIcon(ev.type)}
 
-                      <div class="report-event-card {eventSentimentClass(ev.sentiment_impact ?? 0)}">
+                      <div class="flex flex-col gap-2 p-2 w-xl {eventSentimentClass(ev.sentiment_impact ?? 0)}">
                         <div class="report-event-header">
-                          <svelte:component this={Icon} class="report-event-icon" />
-                          <span class="label-xs uppercase">{ev.label}</span>
+                          <svelte:component this={Icon} 
+                          class="text-lg" />
+                          <span class="label-sm uppercase">
+                            {ev.label}
+                          </span>
                         </div>
 
                         {#if ev.description}
-                          <p class="text-body-sm">{ev.description}</p>
+                          <p class="text-md">
+                            {ev.description}</p>
                         {/if}
                       </div>
                     {/each}
@@ -295,7 +315,7 @@
 
                       <div class="report-event-card event-badge--neutral">
                         <div class="report-event-header">
-                          <svelte:component this={Icon} class="report-event-icon" />
+                          <svelte:component this={Icon} class="text-lg" />
                           <span class="label-xs uppercase">{ev.label}</span>
                         </div>
 
@@ -318,7 +338,7 @@
                     {#each interventions as ev}
                       <div class="report-event-card event-badge--intervention">
                         <div class="report-event-header">
-                          <IconLightbulbRegular class="report-event-icon" />
+                          <IconLightbulbRegular class="text-lg" />
                           <span class="label-xs uppercase">{ev.label}</span>
 
                           {#if ev.sentiment_impact}
@@ -345,7 +365,7 @@
                 <div class="report-inflection-pair">
                   {#if step.inflection_paths_pos}
                     <div class="report-inflection-chip report-inflection-chip--pos">
-                      <IconArrowUpRegular class="text-xs" />
+                      <IconArrowUpRegular class="text-lg" />
                       <span class="label-xs">
                         {step.inflection_paths_pos?.label ?? 'Positive path'}
                       </span>
@@ -354,7 +374,7 @@
 
                   {#if step.inflection_paths_neg}
                     <div class="report-inflection-chip report-inflection-chip--neg">
-                      <IconArrowDownRegular class="text-xs" />
+                      <IconArrowDownRegular class="text-lg" />
                       <span class="label-xs">
                         {step.inflection_paths_neg?.label ?? 'Negative path'}
                       </span>
@@ -387,18 +407,18 @@
   .report-stage-section {
   position: relative;
   isolation: isolate;
-  min-height: calc(100vh - 1px);
+  min-height: calc(100vh - 10);
 }
 
-.report-stage-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-
+  .report-stage-header {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  position: sticky;
+  top: 0;
+  z-index: 50;
 
   min-height: 64px;
   height: 64px;
@@ -406,13 +426,14 @@
 
   padding: 0 2rem 0 1.5rem;
   background: var(--paper);
+  backdrop-filter: none;
 
   border-bottom: var(--hairline);
   box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
 
   transform: none;
   opacity: 1;
-  animation: none;
+  transition: box-shadow 160ms ease, background 160ms ease;
 }
 
   .report-stage-header::after {
@@ -457,15 +478,21 @@
     border-bottom: var(--hairline);
   }
 
+  .sentiment-row {
+    display: flex;
+    width: 100%;
+    gap: 0.1em;
+  }
+
   .report-row {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: .25fr 1fr;
     min-height: 0;
     border-bottom: var(--hairline);
   }
 
   .report-row--inflection {
-    background: color-mix(in srgb, var(--panel) 60%, transparent);
+    background: color-mix(in srgb, var(--panel) 40%, transparent);
   }
 
   .report-left {
@@ -474,6 +501,7 @@
     gap: 1.25rem;
     padding: 1.5rem 1.25rem 1.5rem 1.5rem;
     border-right: var(--hairline);
+    height: 100%;
     position: sticky;
     top: 64px;
     align-self: start;
@@ -498,6 +526,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 100%;
   }
 
   .report-metric-row {
@@ -512,6 +541,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
+    width: 100%;
   }
 
   .report-index-item {
@@ -521,46 +551,23 @@
     width: 100%;
   }
 
+  .report-index-label {
+    display: flex;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .report-index-swatches {
+    display: flex;
+    width: 100%;
+    gap: 0.1em;
+  }
+
   .report-index-label-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-  }
-
-  .sentiment-track {
-    position: relative;
-    width: 100%;
-    height: 6px;
-    background: var(--panel-dark);
-    border-radius: 999px;
-    overflow: hidden;
-  }
-
-  .report-bar-zero {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 1px;
-    height: 100%;
-    background: var(--hairline-color, #ccc);
-    opacity: 0.7;
-    z-index: 1;
-  }
-
-  .report-bar-fill {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    border-radius: 2px;
-  }
-
-  .report-bar-fill--pos {
-    border-radius: 0 999px 999px 0;
-  }
-
-  .report-bar-fill--neg {
-    border-radius: 999px 0 0 999px;
   }
 
   .report-bar-value {
@@ -688,7 +695,7 @@
     gap: 0.5rem;
   }
 
-  .report-event-icon {
+  .text-lg {
     flex-shrink: 0;
     font-size: 0.85rem;
   }

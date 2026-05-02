@@ -40,10 +40,15 @@
 
     <!-- Identity -->
     <div class="intro-identity">
-      <span class="intro-role" style="color: {resolvedLabel};">
+      <span
+        class="intro-kicker"
+        style="--kicker-color: {resolvedLabel}; --kicker-border: {resolvedLabel}40;"
+      >
         {profile?.role ?? 'Patient'}
       </span>
+
       <h2 class="intro-name">{profile?.name ?? ''}</h2>
+
       {#if profile?.indication}
         <p class="intro-indication">{profile.indication}</p>
       {/if}
@@ -55,11 +60,11 @@
         {#each states as s, i}
           <div
             class="state-row"
-            style="animation-delay: {i * 60}ms;"
+            style="animation-delay: {360 + i * 70}ms;"
             role="listitem"
           >
             <div class="state-header">
-              <span class="label-sm text-slate-100">{s.label}</span>
+              <span class="state-label">{s.label}</span>
             </div>
             <div
               class="state-track"
@@ -70,8 +75,8 @@
               aria-label={s.label}
             >
               <div
-                class="state-fill bg-slate-400"
-                style="width: {s.value * 100}%;"
+                class="state-fill"
+                style="width: {s.value * 100}%; background: {resolvedLabel};"
               ></div>
             </div>
           </div>
@@ -102,6 +107,7 @@
     object-fit: cover;
     object-position: center top;
     display: block;
+    animation: photoFadeIn 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .screen-photo-fallback {
@@ -110,7 +116,6 @@
   }
 
   /* ── Scrim ──────────────────────────────────────────────────────────── */
-  /* Two-stop scrim: transparent at top, heavy at bottom for legibility */
   .screen-scrim {
     position: absolute;
     inset: 0;
@@ -125,36 +130,49 @@
 
   /* ── Content ────────────────────────────────────────────────────────── */
   .screen-inner {
-    position: relative; /* above scrim */
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    padding: 20px 22px 10px;
+    gap: 22px;
+    padding: 24px 24px 12px;
   }
 
   /* ── Identity block ─────────────────────────────────────────────────── */
   .intro-identity {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
   }
 
-  .intro-role {
+  /* Pill kicker — matches BaseScreen / ThemeScreen treatment */
+  .intro-kicker {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    padding: 4px 10px;
+    border: 1px solid var(--kicker-border, rgba(255,255,255,0.25));
+    border-radius: 100em;
+
     font-family: var(--font-mono, monospace);
-    font-size: 0.65em;
-    font-weight: 700;
+    font-size: 0.6em;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
+    color: var(--kicker-color, rgba(255,255,255,0.85));
+
+    animation: storyFadeUp 380ms 80ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .intro-name {
-    font-family: var(--font-serif, Georgia, serif);
-    font-size: clamp(1.5rem, 5.5vw, 2rem);
-    font-weight: 600;
-    line-height: 1.15;
-    color: rgba(255, 255, 255, 0.97);
-    letter-spacing: -0.02em;
+    font-family: var(--font-heading-serif, 'Spectral', Georgia, serif);
+    font-style: italic;
+    font-size: clamp(1.7rem, 6vw, 2.2rem);
+    font-weight: 500;
+    line-height: 1.1;
+    color: rgba(255, 255, 255, 0.98);
+    letter-spacing: -0.015em;
     margin: 0;
+    animation: storyFadeUp 460ms 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .intro-indication {
@@ -162,27 +180,23 @@
     font-size: 0.68em;
     font-weight: 500;
     letter-spacing: 0.04em;
-    color: rgba(255, 255, 255, 0.50);
+    color: rgba(255, 255, 255, 0.55);
     margin: 0;
+    animation: storyFadeUp 380ms 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   /* ── State bars ─────────────────────────────────────────────────────── */
   .states-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
 
   .state-row {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    animation: fadeUp 320ms ease both;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    gap: 6px;
+    animation: storyFadeUp 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .state-header {
@@ -191,17 +205,18 @@
     align-items: baseline;
   }
 
-
-  .state-value {
+  .state-label {
     font-family: var(--font-mono, monospace);
-    font-size: 0.72em;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-size: 0.65em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.78);
   }
 
   .state-track {
     height: 3px;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.14);
     border-radius: 4px;
     overflow: hidden;
   }
@@ -209,6 +224,29 @@
   .state-fill {
     height: 100%;
     border-radius: 4px;
-    transition: width 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: left center;
+    animation: stateFill 700ms 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* ── Entrance animations ────────────────────────────────────────────── */
+  @keyframes storyFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes photoFadeIn {
+    from { opacity: 0; transform: scale(1.04); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes stateFill {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
   }
 </style>

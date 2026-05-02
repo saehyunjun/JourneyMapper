@@ -84,7 +84,7 @@
     right: 0;
     bottom: 0;
     z-index: 9999;
-    width: 67vw;
+    width: 40vw;
 
     display: flex;
     flex-direction: column;

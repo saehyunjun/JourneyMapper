@@ -313,7 +313,7 @@
     letter-spacing: 2px;
 
     font-size: 2.25em;
-    font-weight: 600;
+    font-weight: 400;
     text-transform: uppercase;
   }
 
@@ -322,7 +322,6 @@
     font-size: 0.8em;
     font-weight: 600;
 
-    text-transform: uppercase;
     letter-spacing: .1px;
 
     color: var(--gray);
@@ -1304,10 +1303,17 @@ color: var(--grayblue);
     align-items: center;
 
     background-color: var(--lightgrayblue);
-    color: var(--grayblue);
-    font-weight: 600;
+    color: var(--darkgrayblue);
     border-bottom: .5px solid var(--panel);
-    
+    cursor: pointer;
+  }
+
+
+  .header-row:hover  {
+    border-bottom: .5px solid var(--midgreen);
+    background-color: var(--lightgrayblue);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
   }
   /* ---------------------------------------------------------------------- */
   /* Journey tooltip (ported from the component styles)                       */
@@ -2120,6 +2126,43 @@ padding: .25em 1em;
   }
 
 
+
+  .card-lg {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 1em;
+    min-height: 35vh;
+    width: 22vw;
+    border-radius: .5em;
+
+    cursor: pointer;
+
+    background-color: var(--panel);
+    border: 2px solid var(--panel-mid);
+
+
+    box-shadow: 0 2px 12px -10px rgba(0,0,0,0.15), 0 20px 20px 10px rgba(0,0,0,0.25);
+    box-shadow: rgba(55, 39, 37, 0.05) 0 10px 20px -10px;
+    transition: background-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+  }
+
+  .card-lg:hover,
+  .card-lg--hovered {
+    background-color: var(--panel);
+    box-shadow: 
+    0 2px -10px rgba(0,0,10,0.1), 
+    0 0 0 10px rgba(63,115,255,0.18);
+    transform: translateY(-.525em);
+    z-index: 1;
+  }
+
+  .card-lg--selected {
+    background-color: var(--card, #fffff0);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.14), 0 0 0 2px;
+    z-index: 2;
+  }
 
 
   /* ── Sidebar shell ────────────────────────────────────────────── */

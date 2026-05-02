@@ -1,7 +1,7 @@
 <script lang="ts">
-  import JourneyLayoutToggle       from '$lib/journeymapper2/JourneyLayoutToggle.svelte';
+  import JourneyLayoutToggle       from '$lib/archive/JourneyLayoutToggle.svelte';
   import JourneyReportView         from '$lib/journeymapper2/JourneyReportView.svelte';
-  import JourneyIndexBars          from '$lib/journeymapper2/JourneyIndexBars.svelte';
+  import PersonaBioBar from '$lib/journeymapper2/PersonaBioBar.svelte'; 
   import JourneyLegend             from '$lib/journeymapper2/JourneyLegend.svelte';
   import JourneySteps              from '$lib/journeymapper2/JourneySteps.svelte';
   import JourneyStages             from '$lib/journeymapper2/JourneyStages.svelte';
@@ -229,6 +229,7 @@
       onstory={() => handlePersonaStory()}
     />
   </div>
+  <PersonaBioBar persona={activePersona} />
 
   <!-- ── Body ─────────────────────────────────────────────────────────── -->
   <div class="flex flex-row flex-1 min-h-0">
@@ -237,7 +238,6 @@
     <div class="chart-col flex-1 min-w-0" bind:this={scrollEl}>
       {#if chartView === 'flow'}
         <div class="flex flex-col w-full justify-right">
-          <JourneyLayoutToggle bind:layout />
           <JourneyFlowDiagram data={journeyData} {layout} />
         </div>
 
