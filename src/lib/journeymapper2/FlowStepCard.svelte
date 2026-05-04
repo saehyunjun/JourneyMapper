@@ -1,5 +1,7 @@
 <script>
   import { hoveredIndex, selectedIndex, hoveredInflectionIndex, selectedInflectionIndex, selectedInflectionPath } from './journeyStore.js';
+  import InterventionDropZone from './JourneyInterventions/InterventionDropZone.svelte';
+
   import {
     sentimentToColor,
     DYAD_BY_ID,
@@ -60,6 +62,7 @@
 </script>
 
 <div class="flow-step-slot">
+  <div class="flow-step-card-row">
 
   <!-- ── Step card ─────────────────────────────────────────────────────── -->
   <button
@@ -97,6 +100,9 @@
       </div>
     </div>
   </button>
+      <InterventionDropZone stepId={step.step_id} />
+  </div>
+
 
   <!-- ── Events: fork layout (both types) or centered single column ──── -->
   {#if hasEvents}
@@ -242,6 +248,12 @@
     width: 100%;
   }
 
+  .flow-step-card-row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 1em;
+  }
 
   /* ── Fork bracket system ─────────────────────────────────────────────────── */
 
@@ -296,29 +308,6 @@
     align-items: center;
     gap: 4px;
     flex-shrink: 0;
-  }
-
-  /* ── Inflection card ────────────────────────────────────────────────────────── */
-  .flow-inflection-card {
-    text-align: left;
-    cursor: pointer;
-    transition:
-      box-shadow 160ms ease,
-      transform  160ms ease;
-  }
-
-  .flow-inflection-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-
-  .flow-inflection-card:focus-visible {
-    outline: 2px solid var(--purple, #5830a2);
-    outline-offset: 2px;
-  }
-
-  .flow-inflection-card:active {
-    transform: scale(0.98);
   }
 
   /* ── Inflection connector ────────────────────────────────────────────────── */
