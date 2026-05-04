@@ -14,6 +14,8 @@
   import JourneyInfoSidebar        from '$lib/journeymapper2/JourneyInfoSidebarTop.svelte';
   import JourneyDrawer             from '$lib/journeymapper2/JourneyDrawer.svelte';
   import JourneySubDrawer          from '$lib/journeymapper2/JourneySubDrawer.svelte';
+
+  import InterventionPalette from '$lib/journeymapper2/JourneyInterventions/InterventionPalette.svelte';
   import PlutchikContent           from '$lib/journeymapper2/PlutchikContent.svelte';
   import StepDetailContent         from '$lib/journeymapper2/StepDetailContent.svelte';
   import PersonaDetailContent      from '$lib/journeymapper2/PersonaDetailContent.svelte';
@@ -237,9 +239,12 @@
     <!-- MIDDLE — chart / flow / report -->
     <div class="chart-col flex-1 min-w-0" bind:this={scrollEl}>
       {#if chartView === 'flow'}
-        <div class="flex flex-col w-full justify-right">
-          <JourneyFlowDiagram data={journeyData} {layout} />
-        </div>
+      <div class="flex flex-row w-full">
+      <div class="flex flex-col flex-1 min-w-0">
+        <JourneyFlowDiagram data={journeyData} {layout} />
+      </div>
+        <InterventionPalette />
+      </div>
 
       {:else if chartView === 'report'}
         <JourneyReportView data={journeyData} {metrics} />
@@ -257,19 +262,20 @@
         <JourneyLegend items={metrics} />
       {/if}
     </div>
-
+    
     <!-- RIGHT — info sidebar (hidden on report view to give full width)
     {#if chartView !== 'report'}
-      <JourneyInfoSidebar
-        activePersona={activePersona as any}
-        data={journeyData}
-        {metrics}
-      />
+    <JourneyInfoSidebar
+    activePersona={activePersona as any}
+    data={journeyData}
+    {metrics}
+    />
     {/if} -->
-
+    
   </div><!-- /body -->
-
 </div><!-- /journey-wrapper -->
+
+
 
 
 <!-- ── Main drawer ───────────────────────────────────────────────────────── -->

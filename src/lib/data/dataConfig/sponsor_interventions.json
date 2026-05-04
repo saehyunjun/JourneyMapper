@@ -1,0 +1,171 @@
+{
+  "event_types": [
+    "community",
+    "hospitalization",
+    "new_info_source",
+    "intervention",
+    "progress",
+    "roadblock"
+  ],
+
+  "intervention_types": [
+    "access_program",
+    "care_pathway",
+    "digital_tool",
+    "branded_hcp",
+    "branded_patient",
+    "branded_caregiver",
+    "unbranded_hcp",
+    "unbranded_caregiver",
+    "unbranded_campaign_patient",
+    "hcp_support",
+    "peer_connect",
+
+    "trial_navigation",
+    "site_activation",
+    "patient_identification",
+    "diagnostic_acceleration",
+    "eligibility_support",
+    "recruitment_campaign",
+    "retention_program",
+    "caregiver_support_program",
+    "financial_assistance",
+    "travel_logistics_support",
+    "real_world_evidence_tool",
+    "community_activation",
+    "center_of_excellence_referral",
+    "kOL_engagement",
+    "field_medical_education",
+    "disease_education",
+    "treatment_decision_support",
+    "adherence_program",
+    "post_marketing_support"
+  ],
+
+  "source_types": [
+    "advocacy_org",
+    "online_peer_group",
+    "pcp",
+    "specialist",
+
+    "clinical_trial_registry",
+    "sponsor_website",
+    "patient_portal",
+    "hcp_portal",
+    "center_of_excellence",
+    "genetic_testing_lab",
+    "payer",
+    "pharmacy_hub",
+    "field_medical",
+    "conference_event"
+  ],
+
+  "risk_levels": [
+    "critical",
+    "high",
+    "moderate"
+  ],
+
+  "team_involvement": [
+    "MSL",
+    "patient_advocacy",
+
+    "clinical_operations",
+    "site_feasibility",
+    "recruitment_marketing",
+    "market_access",
+    "medical_affairs",
+    "commercial_brand",
+    "patient_services",
+    "field_reimbursement",
+    "data_science",
+    "regulatory"
+  ],
+
+  "dropout_risks": [
+    "high",
+    "moderate",
+    "low"
+  ],
+
+  "impact_potential": [
+    "high",
+    "moderate",
+    "low"
+  ],
+
+  "sponsor_initiative_categories": [
+    "awareness",
+    "diagnosis",
+    "referral",
+    "trial_enrollment",
+    "trial_retention",
+    "treatment_access",
+    "adherence",
+    "caregiver_support",
+    "long_term_outcomes"
+  ],
+
+  "sponsor_initiatives": [
+    {
+      "id": "genotype_to_trial_matching",
+      "category": "trial_enrollment",
+      "description": "Automated matching of patients to relevant trials at the moment of diagnosis or biomarker confirmation."
+    },
+    {
+      "id": "site_referral_network",
+      "category": "referral",
+      "description": "Structured referral pathways directing patients from community providers to high-performing trial sites or centers of excellence."
+    },
+    {
+      "id": "diagnostic_trigger_tools",
+      "category": "diagnosis",
+      "description": "EHR-based prompts or algorithms that accelerate diagnosis and flag trial-eligible patients earlier."
+    },
+    {
+      "id": "trial_education_hub",
+      "category": "awareness",
+      "description": "Centralized, plain-language education platform explaining trial options, risks, and expectations."
+    },
+    {
+      "id": "patient_navigator_program",
+      "category": "trial_enrollment",
+      "description": "Human or hybrid support guiding patients through screening, logistics, and decision-making."
+    },
+    {
+      "id": "travel_and_logistics_support",
+      "category": "trial_retention",
+      "description": "Financial and operational support for travel, lodging, and scheduling to reduce participation burden."
+    },
+    {
+      "id": "caregiver_enablement_program",
+      "category": "caregiver_support",
+      "description": "Resources and training designed to support caregivers managing patient participation and care."
+    },
+    {
+      "id": "community_ambassador_program",
+      "category": "awareness",
+      "description": "Activation of patient advocates and community leaders to share experiences and increase trust."
+    },
+    {
+      "id": "kOL_education_series",
+      "category": "referral",
+      "description": "Targeted education for key opinion leaders to improve appropriate referrals and trial awareness."
+    },
+    {
+      "id": "financial_assistance_program",
+      "category": "treatment_access",
+      "description": "Co-pay support, reimbursement assistance, and affordability programs post-approval."
+    },
+    {
+      "id": "real_world_outcomes_dashboard",
+      "category": "long_term_outcomes",
+      "description": "Data-driven tools demonstrating real-world efficacy and patient outcomes to support decision-making."
+    },
+    {
+      "id": "adherence_support_program",
+      "category": "adherence",
+      "description": "Ongoing engagement tools (apps, reminders, coaching) to maintain treatment adherence."
+    }
+  ]
+}
