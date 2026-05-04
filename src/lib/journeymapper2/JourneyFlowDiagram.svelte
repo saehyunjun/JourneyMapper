@@ -1,7 +1,6 @@
 <script>
   import { buildStageColorMap } from './journeyConfig.js';
   import FlowStageCard from './FlowStageCard.svelte';
-
   /** @type {any[]} */
   export let data = [];
 
@@ -41,6 +40,8 @@
     role="region"
     aria-label="Journey flow diagram"
   >
+
+    <div class="flow-step-slot">    
     <div class="flow-diagram-col" bind:this={flowColEl}>
       {#each stageGroups as group, gi}
         <div class="stage-row"
@@ -65,9 +66,10 @@
               hideHeader
             />
           </div>
+          
         </div>
-
-      {/each}
+        {/each}
+      </div>
     </div>
   </div>
 </div>

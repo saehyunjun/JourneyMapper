@@ -1,29 +1,13 @@
 <!--
   InterventionDropZone.svelte
   ─────────────────────────────────────────────────────────────────────────────
-  Per-step drop target that pairs visually with a FlowStepCard.
+  Per-step drop target. Sits to the right of each FlowStepCard.
 
-  Behaviour
-  ─────────
-  • Accepts items of `type: 'intervention'` from the InterventionPalette and
-    from other drop zones (move-between-steps).
-  • Source-of-truth is the shared `stepInterventions` store, keyed by step_id.
-  • A chip can be removed via its × button, reordered by drag inside the zone,
-    or moved to another step's zone by drag.
+  Accepts items of `type: 'intervention'` from InterventionPalette and from
+  other drop zones. Items arrive with globally unique ids (the palette mints
+  fresh ids on every rebuild), so no id rewriting is needed here.
 
-  Item id uniqueness
-  ──────────────────
-  The palette uses svelte-dnd-action's canonical copy-on-drag pattern, so every
-  item that arrives here already has a globally unique id.  We MUST NOT rewrite
-  the id in finalize — doing so desynchronises svelte-dnd-action's internal
-  tracking and makes the dropped chip fail to render.
-
-  Store sync
-  ──────────
-  `items` is local state because svelte-dnd-action mutates it during drag.
-  An effect reads from the store and pushes external changes (e.g. × removal,
-  programmatic clear) into local state, but skips while a drag is active to
-  avoid clobbering the in-flight items array.
+  Source-of-truth is the shared `stepInterventions` store.
 -->
 
 <script lang="ts">
@@ -49,7 +33,7 @@
     // ── Props ────────────────────────────────────────────────────────────────
     let { stepId }: { stepId: string } = $props();
   
-    // ── Category accent (mirrors palette colors) ─────────────────────────────
+    // ── Category accent ──────────────────────────────────────────────────────
     const CATEGORY_COLORS: Record<string, string> = {
       awareness:          '#3b6ea8',
       diagnosis:          '#7a5fc7',
@@ -64,15 +48,16 @@
   
     const FLIP_DURATION = 150;
   
-    // ── Local state mirrored with store ──────────────────────────────────────
+    // ── Local state ──────────────────────────────────────────────────────────
     let items = $state<InterventionItem[]>([]);
     let dragActive = $state(false);
   
-    // Pull external store changes into local state when not currently dragging.
+    // Sync from store when not mid-drag
     $effect(() => {
       const fromStore = ($stepInterventions.get(stepId) ?? []) as InterventionItem[];
-      if (dragActive) return;
-      if (fromStore !== items) items = fromStore;
+      if (!dragActive) {
+        items = [...fromStore];
+      }
     });
   
     // ── DnD handlers ─────────────────────────────────────────────────────────
@@ -82,10 +67,8 @@
     }
   
     function handleFinalize(e: CustomEvent) {
-      // Commit the lib's view as-is. Ids are already unique thanks to the
-      // palette's canonical copy-on-drag replenishment.
       items = e.detail.items;
-      setStepInterventions(stepId, items);
+      setStepInterventions(stepId, [...items]);
       dragActive = false;
     }
   
@@ -141,21 +124,16 @@
   </div>
   
   <style>
-    /* ── Zone shell ────────────────────────────────────────────────────────── */
     .drop-zone {
       display: flex;
       flex-direction: column;
       gap: 4px;
-  
-      width: 200px;
-      min-height: 110px;
-  
+      width: 180px;
+      min-height: 80px;
       padding: 6px;
       border-radius: 6px;
-  
       background: rgba(255, 255, 255, 0.4);
       border: 0.5px solid var(--panel-mid);
-  
       transition:
         border-color 150ms ease,
         background   150ms ease;
@@ -166,31 +144,24 @@
       border: 1px dashed var(--panel-mid);
     }
   
-    /* svelte-dnd-action attaches this class to the zone while a compatible
-       drag is hovering — `:global` because the lib applies it outside scope. */
     :global(.drop-zone--active) {
       border-color: var(--orange) !important;
       border-style: solid !important;
       background: rgba(255, 131, 65, 0.06) !important;
     }
   
-    /* ── Chip ──────────────────────────────────────────────────────────────── */
     .drop-zone-chip {
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 6px;
-  
       padding: 3px 4px 3px 6px;
       border-radius: 4px;
-  
       background: var(--paper);
       border: 0.5px solid var(--panel-mid);
       border-left: 3px solid var(--chip-accent, var(--gray));
-  
       cursor: grab;
       user-select: none;
-  
       transition: box-shadow 150ms ease;
     }
   
@@ -208,35 +179,28 @@
     .drop-zone-chip__label {
       flex: 1;
       min-width: 0;
-  
       font-family: var(--font-body);
       font-size: 0.625rem;
       font-weight: 500;
       color: var(--ink);
       line-height: 1.25;
-  
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
   
-    /* ── Remove button ─────────────────────────────────────────────────────── */
     .drop-zone-chip__close {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-  
       width: 14px;
       height: 14px;
-  
       background: transparent;
       border: none;
       border-radius: 100%;
-  
       color: var(--gray);
       cursor: pointer;
       flex-shrink: 0;
-  
       opacity: 0.4;
       transition:
         opacity    150ms ease,
@@ -251,7 +215,6 @@
       color: var(--orange);
     }
   
-    /* ── Empty state ───────────────────────────────────────────────────────── */
     .drop-zone-empty {
       flex: 1;
       display: flex;

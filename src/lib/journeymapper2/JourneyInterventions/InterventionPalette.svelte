@@ -1,16 +1,23 @@
 <!--
   InterventionPalette.svelte
   ─────────────────────────────────────────────────────────────────────────────
-  Sticky right-side palette listing all sponsor intervention types from
-  sponsor_interventions.json.  Uses svelte-dnd-action's canonical copy-on-drag
-  pattern: on DRAG_STARTED the source list is replenished IN PLACE with a
-  freshly-id'd clone, and the dragged ghost carries the original id forward
-  to its destination.  This guarantees every chip dropped into a zone has a
-  globally unique id without any rewriting at the destination.
+  Sticky right-side palette listing sponsor intervention types.
 
-  Filtering by search/category is done by hiding non-matching rows (CSS),
-  NOT by mutating the array passed to dndzone — the items array must stay
-  in 1:1 sync with the rendered DOM children.
+  Key architectural decisions
+  ───────────────────────────
+  1. The `items` array passed to svelte-dnd-action is ALWAYS rebuilt from the
+     filtered subset on every finalize AND whenever the filter/search changes.
+     This avoids the `display:none` trick (which desyncs dndzone's internal
+     child-count tracking and breaks cursor/grab across the whole page).
+
+  2. Copy-on-drag uses the canonical DRAG_STARTED clone-insertion pattern:
+     during `consider`, when the trigger is DRAG_STARTED, we splice a fresh
+     clone (new id) into the position the dragged item vacated. The dragged
+     ghost keeps its original id and lands in the destination unchanged.
+
+  3. After finalize (whether dropped externally or cancelled), `items` is
+     reset to a fresh clone of the current filtered set so the palette is
+     always fully replenished.
 -->
 
 <script lang="ts">
@@ -57,7 +64,6 @@
     function resolveCategory(typeId: string): string {
       const initiative = interventionData.sponsor_initiatives.find((si) => si.id === typeId);
       if (initiative) return initiative.category;
-  
       if (typeId.includes('trial') || typeId.includes('recruitment') ||
           typeId.includes('retention') || typeId.includes('eligibility')) return 'trial_enrollment';
       if (typeId.includes('caregiver')) return 'caregiver_support';
@@ -73,7 +79,7 @@
       return 'awareness';
     }
   
-    /** Master list of intervention items — the seed for the source palette. */
+    /** Master seed — never mutated directly. */
     const ALL_ITEMS: InterventionItem[] = interventionData.intervention_types.map((typeId, i) => ({
       id: `intv-${typeId}-${i}`,
       label: humanise(typeId),
@@ -86,58 +92,65 @@
     let collapsed    = $state(false);
     let filterOpen   = $state(false);
   
-    // The dndzone receives the FULL list. Filtering is applied via row visibility
-    // (`.palette-item--hidden`), NOT by removing items from the array, because
-    // svelte-dnd-action requires items[] to match the rendered children 1:1.
-    let items = $state<InterventionItem[]>(structuredClone(ALL_ITEMS));
-  
-    function matches(item: InterventionItem): boolean {
-      if (activeFilter && item.category !== activeFilter) return false;
+    /** Build a fresh filtered+cloned items array with unique ids. */
+    function buildItems(): InterventionItem[] {
+      let base = ALL_ITEMS;
+      if (activeFilter) base = base.filter((it) => it.category === activeFilter);
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
-        if (!item.label.toLowerCase().includes(q) &&
-            !item.category.toLowerCase().includes(q)) return false;
+        base = base.filter(
+          (it) => it.label.toLowerCase().includes(q) || it.category.toLowerCase().includes(q)
+        );
       }
-      return true;
+      // Fresh ids on every rebuild so svelte-dnd-action never sees stale ghosts
+      return base.map((it) => ({
+        ...it,
+        id: `${it.id}--${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      }));
     }
   
-    let visibleCount = $derived(items.filter(matches).length);
+    let items = $state<InterventionItem[]>(buildItems());
+  
+    // Rebuild items whenever filter or search changes
+    $effect(() => {
+      // Touch both reactive deps
+      void searchQuery;
+      void activeFilter;
+      items = buildItems();
+    });
   
     let categoryCounts = $derived.by(() => {
       const counts: Record<string, number> = {};
-      items.forEach((it) => { counts[it.category] = (counts[it.category] ?? 0) + 1; });
+      ALL_ITEMS.forEach((it) => { counts[it.category] = (counts[it.category] ?? 0) + 1; });
       return counts;
     });
   
-    // ── DnD: canonical copy-on-drag ────────────────────────────────────────────
-    // On DRAG_STARTED the lib hands us items WITHOUT the dragged item. We
-    // re-insert a fresh clone (new id) at the original index so the source list
-    // is never depleted; the dragged ghost keeps the original id and lands in
-    // the destination zone. Subsequent drags of the same row will use the
-    // current clone's id, so every dropped chip is globally unique.
+    // ── DnD: copy-on-drag ─────────────────────────────────────────────────────
     const FLIP_DURATION = 150;
   
-    function makeCloneId(): string {
-      return `intv-clone-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-    }
-  
     function handleConsider(e: CustomEvent) {
-      const { items: newItems, info } = e.detail;
+      const { items: incoming, info } = e.detail;
   
       if (info.trigger === TRIGGERS.DRAG_STARTED) {
+        // The lib removed the dragged item from `incoming`. Find the original
+        // and re-insert a clone with a fresh id at its former position.
         const origIdx = items.findIndex((it) => it.id === info.id);
         const original = origIdx !== -1 ? items[origIdx] : null;
         if (original) {
-          newItems.splice(origIdx, 0, { ...original, id: makeCloneId() });
+          const clone: InterventionItem = {
+            ...original,
+            id: `intv-clone-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+          };
+          incoming.splice(origIdx, 0, clone);
         }
       }
   
-      items = newItems;
+      items = incoming;
     }
   
     function handleFinalize(e: CustomEvent) {
-      // Source already replenished during consider — just commit the lib's view.
-      items = e.detail.items;
+      // Whether dropped externally or cancelled, reset to full filtered set.
+      items = buildItems();
     }
   </script>
   
@@ -149,13 +162,12 @@
     <!-- ── Header ─────────────────────────────────────────────────────────── -->
     <div class="toolbar-light-sm">
       <div class="flex flex-row items-center gap-2">
-        <span class="pill-round" style="background: var(--orange); color: var(--paper);">
-          <IconLightbulbRegular />
+        <span class="label-sm uppercase">
+            Recommended Sponsor Actions
         </span>
-        <span class="label-sm uppercase">Interventions</span>
-        <span class="label-xs" style="color: var(--gray);">
-          {visibleCount}
-        </span>
+        <!-- <span class="label-xs" style="color: var(--gray);">
+          {items.length}
+        </span> -->
       </div>
   
       <div class="flex flex-row items-center gap-1">
@@ -233,8 +245,6 @@
       {/if}
   
       <!-- ── Draggable list ───────────────────────────────────────────────── -->
-      <!-- NOTE: items is the FULL list. Non-matching rows are visually hidden
-           but stay in the DOM so svelte-dnd-action's array stays consistent. -->
       <div
         class="palette-list"
         use:dndzone={{
@@ -250,7 +260,6 @@
         {#each items as item (item.id)}
           <div
             class="palette-item"
-            class:palette-item--hidden={!matches(item)}
             animate:flip={{ duration: FLIP_DURATION }}
             tabindex="0"
             role="option"
@@ -272,7 +281,7 @@
         {/each}
       </div>
   
-      {#if visibleCount === 0}
+      {#if items.length === 0}
         <div class="flex items-center justify-center p-4">
           <span class="label-sm" style="color:var(--gray);">No matching interventions</span>
         </div>
@@ -281,29 +290,23 @@
   </aside>
   
   <style>
-    /* ── Palette shell ─────────────────────────────────────────────────────── */
     .intervention-palette {
       position: sticky;
       top: 0;
       align-self: flex-start;
-  
       display: flex;
       flex-direction: column;
-  
       width: 260px;
       min-width: 220px;
       max-height: 100vh;
-  
       background: var(--paper);
       border-left: 0.5px solid var(--panel-dark);
-  
       z-index: 10;
       flex-shrink: 0;
     }
   
     .intervention-palette--collapsed { max-height: fit-content; }
   
-    /* ── Search input ──────────────────────────────────────────────────────── */
     .palette-search {
       flex: 1;
       min-width: 0;
@@ -319,7 +322,6 @@
   
     .palette-filter--active { font-weight: 700; }
   
-    /* ── Scrollable item list ──────────────────────────────────────────────── */
     .palette-list {
       flex: 1;
       overflow-y: auto;
@@ -331,20 +333,16 @@
       min-height: 3rem;
     }
   
-    /* ── Individual draggable item ─────────────────────────────────────────── */
     .palette-item {
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 0.5rem;
-  
       padding: 0.35rem 0.5rem;
       border-radius: 6px;
       border: 1px solid transparent;
-  
       cursor: grab;
       user-select: none;
-  
       transition:
         background   150ms ease,
         border-color 150ms ease,
@@ -358,10 +356,6 @@
     }
   
     .palette-item:active { cursor: grabbing; }
-  
-    /* Filtered-out rows stay in the DOM (display:none) so svelte-dnd-action's
-       items array remains in 1:1 sync with the rendered children. */
-    .palette-item--hidden { display: none; }
   
     .palette-item__dot {
       width: 6px;

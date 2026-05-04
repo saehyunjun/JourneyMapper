@@ -1,7 +1,6 @@
 <script lang="ts">
   import JourneyLayoutToggle       from '$lib/archive/JourneyLayoutToggle.svelte';
   import JourneyReportView         from '$lib/journeymapper2/JourneyReportView.svelte';
-  import PersonaBioBar from '$lib/journeymapper2/PersonaBioBar.svelte'; 
   import JourneyLegend             from '$lib/journeymapper2/JourneyLegend.svelte';
   import JourneySteps              from '$lib/journeymapper2/JourneySteps.svelte';
   import JourneyStages             from '$lib/journeymapper2/JourneyStages.svelte';
@@ -11,14 +10,14 @@
   import DiseaseSelectDropdowns    from '$lib/journeymapper2/DiseaseSelectDropdowns.svelte';
   import PersonaStory              from '$lib/journeymapper2/PersonaStory.svelte';
   import JourneyTooltip            from '$lib/journeymapper2/JourneyTooltip.svelte';
-  import JourneyInfoSidebar        from '$lib/journeymapper2/JourneyInfoSidebarTop.svelte';
+
   import JourneyDrawer             from '$lib/journeymapper2/JourneyDrawer.svelte';
   import JourneySubDrawer          from '$lib/journeymapper2/JourneySubDrawer.svelte';
 
   import InterventionPalette from '$lib/journeymapper2/JourneyInterventions/InterventionPalette.svelte';
   import PlutchikContent           from '$lib/journeymapper2/PlutchikContent.svelte';
   import StepDetailContent         from '$lib/journeymapper2/StepDetailContent.svelte';
-  import PersonaDetailContent      from '$lib/journeymapper2/PersonaDetailContent.svelte';
+
   import PersonaTopSelector        from '$lib/journeymapper2/PersonaTopSelector.svelte';
 
   import { STEP_WIDTH, LEFT_AXIS_WIDTH, valueToY } from '$lib/journeymapper2/journeyConfig.js';
@@ -71,7 +70,7 @@
 
   // ── Layout / view toggles ─────────────────────────────────────────────
   let layout    = $state<'horizontal' | 'vertical'>('horizontal');
-  let chartView = $state<'chart' | 'flow' | 'report'>('chart');
+  let chartView = $state<'chart' | 'flow' | 'report'>('flow');
 
   // ── Drawer state ──────────────────────────────────────────────────────
   let drawerMode = $state<'step' | 'plutchik' | 'persona' | 'inflection' | null>(null);
@@ -175,7 +174,7 @@
 <div class="journey-wrapper flex flex-col h-screen overflow-hidden" class:scrolled={isScrolled}>
 
   <!-- ── Toolbar ──────────────────────────────────────────────────────── -->
-  <div class="toolbar" role="tablist">
+  <div class="toolbar-transparent" role="tablist">
     <DiseaseSelectDropdowns
       {personas}
       onchange={handleFilterChange}
@@ -231,7 +230,7 @@
       onstory={() => handlePersonaStory()}
     />
   </div>
-  <PersonaBioBar persona={activePersona} />
+
 
   <!-- ── Body ─────────────────────────────────────────────────────────── -->
   <div class="flex flex-row flex-1 min-h-0">
@@ -241,9 +240,9 @@
       {#if chartView === 'flow'}
       <div class="flex flex-row w-full">
       <div class="flex flex-col flex-1 min-w-0">
-        <JourneyFlowDiagram data={journeyData} {layout} />
+        <JourneyFlowDiagram data={journeyData} />
       </div>
-        <InterventionPalette />
+      <InterventionPalette />
       </div>
 
       {:else if chartView === 'report'}
@@ -258,9 +257,8 @@
         <JourneyStages data={journeyData} />
         <JourneySteps  data={journeyData} />
         <JourneySentiment data={journeyData} {metrics} />
-
         <JourneyLegend items={metrics} />
-      {/if}
+        {/if}
     </div>
     
     <!-- RIGHT — info sidebar (hidden on report view to give full width)
@@ -381,14 +379,6 @@
     scrollbar-color: var(--purple) transparent;
   }
 
-  .toolbar {
-    overflow: hidden;
-    transition:
-      max-height    420ms cubic-bezier(0.0, 0, 0.2, 1),
-      padding-top   400ms cubic-bezier(0.0, 0, 0.2, 1),
-      padding-bottom 400ms cubic-bezier(0.0, 0, 0.2, 1),
-      opacity       380ms ease-out;
-  }
 
   .persona-bar-wrap {
     overflow: hidden;
@@ -397,18 +387,6 @@
       opacity    360ms 40ms ease-out;
   }
 
-  .scrolled .toolbar {
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    opacity: 0;
-    pointer-events: none;
-    transition:
-      max-height    220ms cubic-bezier(0.4, 0, 1, 1),
-      padding-top   200ms cubic-bezier(0.4, 0, 1, 1),
-      padding-bottom 200ms cubic-bezier(0.4, 0, 1, 1),
-      opacity       160ms ease-in;
-  }
 
   .scrolled .persona-bar-wrap {
     max-height: 0;
