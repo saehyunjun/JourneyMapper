@@ -2,7 +2,6 @@
   import { hoveredIndex, selectedIndex, hoveredInflectionIndex, selectedInflectionIndex, selectedInflectionPath } from './journeyStore.js';
   import {
     sentimentToColor,
-    emotionColor,
     DYAD_BY_ID,
     SCORE_ALIASES,
     ratingToLabel,
@@ -10,6 +9,7 @@
   } from './journeyConfig.js';
   import IconArrowUpRegular from 'phosphor-icons-svelte/IconArrowCircleUpRightDuotone.svelte';
   import JourneyEventCard from './JourneyEventCard.svelte';
+  import DyadGradient from './PlutchikDyadGradient.svelte';
 
   export let step;
   export let data = [];
@@ -39,13 +39,15 @@
 
   $: sentimentLabel = ratingToLabel(d?.sentiment);
 
-  $: emotionData = (() => {
-    const raw = d?.plutchik_score?.toLowerCase().trim() ?? '';
-    if (!raw) return { colors: [], label: '' };
-    const dyad = DYAD_BY_ID[raw];
-    if (dyad) return { colors: dyad.primary.map(pid => emotionColor(pid)), label: dyad.label };
-    const id = SCORE_ALIASES[raw] ?? raw;
-    return { colors: [emotionColor(id)], label: EMOTION_BY_ID[id]?.label ?? raw };
+  // Raw plutchik_score is passed straight to <DyadGradient />, which handles
+  // dyad / aliased / primary lookup internally. We only resolve the label here.
+  $: plutchikScore = d?.plutchik_score?.toLowerCase().trim() ?? '';
+  $: emotionLabel = (() => {
+    if (!plutchikScore) return '';
+    const dyad = DYAD_BY_ID[plutchikScore];
+    if (dyad) return dyad.label;
+    const id = SCORE_ALIASES[plutchikScore] ?? plutchikScore;
+    return EMOTION_BY_ID[id]?.label ?? plutchikScore;
   })();
 
   // ── Fork-bracket geometry (mirrors FlowStageCard vertical constants) ──────
@@ -86,12 +88,12 @@
         <span class="label-sm font-medium">{sentimentLabel}</span>
       </div>
       <div class="flex min-w-0 flex-col items-start gap-1 justify-self-start">
-        <div class="flex h-4 flex-row flex-wrap gap-1">
-          {#each emotionData.colors as color}
-            <div class="jm-swatch-round-sm shrink-0" style="background:{color};"></div>
-          {/each}
+        <div class="flex h-4 flex-row items-center gap-1">
+          {#if plutchikScore}
+            <DyadGradient score={plutchikScore} size={92} />
+          {/if}
         </div>
-        <span class="label-sm font-medium">{emotionData.label}</span>
+        <span class="label-sm font-medium">{emotionLabel}</span>
       </div>
     </div>
   </button>

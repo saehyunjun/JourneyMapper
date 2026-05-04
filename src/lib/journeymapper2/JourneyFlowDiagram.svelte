@@ -1,7 +1,6 @@
 <script>
   import { buildStageColorMap } from './journeyConfig.js';
   import FlowStageCard from './FlowStageCard.svelte';
-  import JourneyFlowSentimentRail from './FlowSentimentSidebar.svelte';
 
   /** @type {any[]} */
   export let data = [];
@@ -70,11 +69,6 @@
 
       {/each}
     </div>
-
-  <JourneyFlowSentimentRail
-      {data}
-      flowRef={flowColEl}
-    />
   </div>
 </div>
 
