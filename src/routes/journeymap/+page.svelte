@@ -258,14 +258,14 @@
       {/if}
     </div>
 
-    <!-- RIGHT — info sidebar (hidden on report view to give full width) -->
+    <!-- RIGHT — info sidebar (hidden on report view to give full width)
     {#if chartView !== 'report'}
       <JourneyInfoSidebar
         activePersona={activePersona as any}
         data={journeyData}
         {metrics}
       />
-    {/if}
+    {/if} -->
 
   </div><!-- /body -->
 

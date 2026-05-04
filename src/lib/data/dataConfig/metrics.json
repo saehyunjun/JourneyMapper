@@ -1,0 +1,30 @@
+{
+  "metrics": {
+    "emotional_valence": {
+      "key": "emotional_valence",
+      "color": "#9b6bc4",
+      "label": "Emotional Valence"
+    },
+    "provider_trust": {
+      "key": "provider_trust",
+      "color": "#3a7fc1",
+      "label": "Trust in Providers"
+    },
+    "medical_self_efficacy": {
+      "key": "medical_self_efficacy",
+      "color": "#c8902a",
+      "label": "Medical Self-Efficacy"
+    },
+    "logistical_capacity": {
+      "key": "logistical_capacity",
+      "color": "#4a9e7f",
+      "label": "Logistical Capacity"
+    }
+  },
+  "metric_order": [
+    "emotional_valence",
+    "provider_trust",
+    "medical_self_efficacy",
+    "logistical_capacity"
+  ]
+}

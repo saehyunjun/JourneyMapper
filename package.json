@@ -32,6 +32,7 @@
     "vite": "^7.3.1"
   },
   "dependencies": {
+    "@thisux/sveltednd": "^0.4.1",
     "d3": "^7.9.0",
     "d3-cloud": "^1.2.9",
     "layerchart": "^1.0.13"
