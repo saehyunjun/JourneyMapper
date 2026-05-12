@@ -1233,6 +1233,717 @@
         ]
     },
     {
+      "id": "persona_hofh_us_jp_01",
+      "type": "patient",
+      "therapeutic_area": "Cardiology — Genetic Lipid Disorders",
+      "indication": "Homozygous Familial Hypercholesterolemia",
+      "profile": {
+        "initials": "JP",
+        "name": "Jordan P.",
+        "role": "Patient",
+        "indication": "Homozygous Familial Hypercholesterolemia (HoFH)",
+        "therapeutic area": "Cardiology — Genetic Lipid Disorders",
+        "age": "early 20s",
+        "gender": "Female",
+        "occupation": "Graduate nursing student (Nurse Practitioner program); Family Heart Ambassador",
+        "current_treatments": [
+          "Rosuvastatin 40mg daily",
+          "Ezetimibe 10mg daily",
+          "Evolocumab 420mg monthly",
+          "Weekly LDL apheresis"
+        ],
+        "past_treatments": [
+          "Atorvastatin 40mg daily (switched due to inadequate LDL response)",
+          "Multiple statin trials at escalating doses over 4 years"
+        ],
+        "caregiver": [],
+        "preference": "Prefers providers who treat her as an informed partner, not a passive recipient. Responds poorly to dismissiveness or oversimplification. Values transparency about uncertainty.",
+        "diagnosed": "Clinical FH diagnosis at 14 (following incidental lipid panel); HoFH genetically confirmed at 18",
+        "distance to care": "Trial site 3 hours from university; apheresis center on campus",
+        "imageFile": "",
+        "quote": "I'm rare, but I'm definitely not alone.",
+        "bio_1": "Jordan was flagged for elevated cholesterol at age nine, but spent the next five years receiving only lifestyle counseling from a series of pediatricians who never considered a genetic cause. At 14, persistent Achilles tendon pain led to physical therapy — and eventually a pre-surgical lipid panel ordered by an orthopedic surgeon who knew her family history. The result: LDL over 700 mg/dL. She was referred immediately to a pediatric lipid specialist and diagnosed clinically with Familial Hypercholesterolemia. Four years of statin trials followed, with her LDL never falling below 400 mg/dL. On her 18th birthday, genetic testing confirmed what her specialist had suspected: Homozygous FH, with two inherited LDL-receptor gene mutations. Within weeks she was on a four-drug regimen and weekly LDL apheresis. At 19, she experienced her first cardiac event during an apheresis session — sustaining no permanent damage, but no longer able to treat her diagnosis as abstract.",
+        "bio_2": "Jordan is highly analytical and processes her condition through research and advocacy rather than avoidance. The isolation of her early treatment years — managing weekly apheresis as a college student with no HoFH peer community — shaped her into a fierce advocate. She found the Family Heart Foundation after her cardiac event and trained as an Ambassador in 2020, deliberately choosing to give others the support she never had. She is completing graduate school to become a Nurse Practitioner, explicitly to combine clinical practice with patient advocacy. She thinks in systems: she notices gaps, names them, and works to close them. She is not afraid of clinical complexity — she reads consent forms — but she carries the weight of years of fear, isolation, and anticipatory grief that no amount of expertise fully neutralizes. She participates in clinical trials because she understands the debt she owes to the patients who came before her and the children who will come after.",
+        "goal1": "Get my LDL to a level where I'm not counting down to a cardiac event — actually at goal, not just 'better than before'",
+        "goal2": "Make it through graduate school and into practice so I can be the provider I never had as a kid",
+        "goal3": "Make sure the next person diagnosed with HoFH doesn't have to spend years feeling like the only person in the world with this",
+        "barrier1": "My current regimen — apheresis, four drugs, and now a trial — takes up more of my life than I can always afford to give it",
+        "barrier2": "Insurance and access barriers keep threatening to interrupt treatment that I literally cannot survive without",
+        "barrier3": "Even with everything I know, I still don't have certainty about my future — and learning to build a life around that uncertainty is its own ongoing work"
+      },
+      "currentState": [
+        {
+          "label": "Motivation",
+          "value": 0.92,
+          "minLabel": "Avoid changes",
+          "maxLabel": "Seek improvement"
+        },
+        {
+          "label": "Disease literacy",
+          "value": 0.95,
+          "minLabel": "Uninformed",
+          "maxLabel": "Expert"
+        },
+        {
+          "label": "Care coordination level",
+          "value": 0.72,
+          "minLabel": "Disjointed",
+          "maxLabel": "Cohesive"
+        },
+        {
+          "label": "Willingness to accept help",
+          "value": 0.78,
+          "minLabel": "Resistant",
+          "maxLabel": "Willing"
+        },
+        {
+          "label": "Health literacy",
+          "value": 0.96,
+          "minLabel": "Low",
+          "maxLabel": "High"
+        }
+      ],
+      "discussionThemes": [
+        {
+          "label": "Diagnosis and genetic identity",
+          "sentiments": [0.3, 0.25, 0.2, 0.22, 0.35, 0.5, 0.62, 0.7, 0.75, 0.8]
+        },
+        {
+          "label": "Treatment burden and apheresis",
+          "sentiments": [0.5, 0.45, 0.38, 0.3, 0.25, 0.22, 0.28, 0.35, 0.38, 0.4]
+        },
+        {
+          "label": "Fear of cardiac events",
+          "sentiments": [0.6, 0.55, 0.45, 0.4, 0.3, 0.15, 0.18, 0.25, 0.32, 0.38]
+        },
+        {
+          "label": "Insurance and access barriers",
+          "sentiments": [0.5, 0.45, 0.4, 0.3, 0.2, 0.18, 0.35, 0.42, 0.45]
+        },
+        {
+          "label": "Community and advocacy",
+          "sentiments": [0.2, 0.2, 0.22, 0.25, 0.3, 0.55, 0.72, 0.82, 0.88, 0.9]
+        },
+        {
+          "label": "Hope and future planning",
+          "sentiments": [0.4, 0.35, 0.3, 0.2, 0.15, 0.18, 0.42, 0.58, 0.68, 0.78]
+        }
+      ],
+      "journey": [
+        {
+          "stage_id": "1",
+          "stage": "Initial Misdiagnosis",
+          "step_id": "1",
+          "step": "High Cholesterol Flagged — Lifestyle Advice Given",
+          "sentiment": 2,
+          "plutchik_score": "acceptance",
+          "emotional_valence": 3,
+          "provider_trust": 3,
+          "medical_self_efficacy": 1,
+          "logistical_capacity": 5,
+          "treatment_changes": [],
+          "narrative_description": "At nine years old, Jordan's pediatrician flags elevated cholesterol during a routine exam. Rather than investigating a genetic cause, multiple pediatricians over the following years counsel diet and exercise. Her parents follow instructions carefully — the family already eats well and exercises regularly. Her cholesterol does not improve. No specialist referral is made.",
+          "quote": "Every doctor I saw just told me to eat better. We were already doing everything right.",
+          "events": [
+            {
+              "event_id": "ev_sp_01",
+              "type": "roadblock",
+              "label": "Repeated Pediatric Visits — Lifestyle Counseling Only, No FH Workup",
+              "short_label": "FH not considered",
+              "description": "Multiple pediatrician visits over years yield only diet and exercise counseling despite persistently elevated LDL and a documented family history of high cholesterol and early cardiac events. FH is never placed in the differential.",
+              "sentiment_impact": -2,
+              "step_position": 1.3,
+              "tooltip": "Years of elevated LDL dismissed as lifestyle; FH never considered despite family history of early heart attacks."
+            },
+            {
+              "event_id": "ev_sp_mis_01",
+              "type": "info_source",
+              "label": "Primary Care — No FH-Specific Guidance Provided",
+              "short_label": "No FH guidance",
+              "description": "Pediatric primary care practice provides no information about familial hypercholesterolemia or genetic causes of childhood hypercholesterolemia. Family has no knowledge of FH as a diagnostic possibility.",
+              "sentiment_impact": -1,
+              "step_position": 1.6,
+              "source_type": "hcp",
+              "platform": "Community pediatrics practice",
+              "influence_level": "high",
+              "content_quality": "absent",
+              "tooltip": "No FH education offered at any pediatric visit; family unaware a genetic diagnosis is possible."
+            }
+          ]
+        },
+        {
+          "stage_id": "1",
+          "stage": "Initial Misdiagnosis",
+          "step_id": "2",
+          "step": "Years of Monitoring — No Diagnosis",
+          "sentiment": 1,
+          "plutchik_score": "annoyance",
+          "emotional_valence": 3,
+          "provider_trust": 2,
+          "medical_self_efficacy": 1,
+          "logistical_capacity": 5,
+          "treatment_changes": [],
+          "narrative_description": "Through her early teens, Jordan continues to have elevated cholesterol documented but not investigated. She is active, healthy-appearing, and asymptomatic — the profile of a child who doesn't look sick. No genetic workup, no specialist referral, no family cascade screening is initiated despite a mother with high cholesterol and a family history of early cardiac events. The condition progresses silently.",
+          "quote": "I looked healthy. I was healthy. Nobody thought to look harder.",
+          "events": [
+            {
+              "event_id": "ev_sp_02",
+              "type": "roadblock",
+              "label": "HoFH Under-Recognition — Assumed to Present Only with Visible Xanthomas",
+              "short_label": "HoFH not recognized",
+              "description": "FH is under-recognized in primary care, with HoFH incorrectly assumed to present only with dramatic physical signs or childhood cardiac events. Jordan's active, healthy appearance works against her — no one looks beyond lifestyle as an explanation.",
+              "sentiment_impact": -2,
+              "step_position": 2.2,
+              "tooltip": "Physician misconception that HoFH always presents visibly; Jordan's healthy appearance delays any FH investigation."
+            },
+            {
+              "event_id": "ev_sp_03",
+              "type": "roadblock",
+              "label": "No Cascade Screening — Family History Not Acted Upon",
+              "short_label": "No cascade screening",
+              "description": "Despite Jordan's mother having known high cholesterol and the family having a history of early heart attacks, no cascade screening or specialist referral is initiated. The connection between family history and genetic hypercholesterolemia is never made.",
+              "sentiment_impact": -2,
+              "step_position": 2.5,
+              "tooltip": "Mother's known hypercholesterolemia and family cardiac history not used to trigger FH screening or specialist referral."
+            },
+            {
+              "event_id": "ev_sp_int_01",
+              "type": "intervention",
+              "label": "Universal Pediatric Cholesterol Screening & FH Cascade Program",
+              "short_label": "Pediatric FH screening",
+              "description": "A sponsor- or payer-supported universal pediatric cholesterol screening program with automated FH cascade triggers would identify patients like Jordan years earlier, reducing cardiovascular exposure time significantly.",
+              "sentiment_impact": 3,
+              "step_position": 2.8,
+              "intervention_type": "care_pathway",
+              "partner": "FH Foundation / AAP",
+              "timing": "before",
+              "impact_potential": "high",
+              "tooltip": "Sponsor opportunity: universal pediatric lipid screening with FH cascade trigger would have identified Jordan 4–6 years earlier."
+            }
+          ]
+        },
+        {
+          "stage_id": "1",
+          "stage": "Initial Misdiagnosis",
+          "step_id": "3",
+          "step": "Achilles Injury — Tendon Xanthoma Missed",
+          "sentiment": -1,
+          "plutchik_score": "surprise",
+          "emotional_valence": 2,
+          "provider_trust": 4,
+          "medical_self_efficacy": 1,
+          "logistical_capacity": 4,
+          "treatment_changes": [],
+          "narrative_description": "At 14, Jordan develops persistent Achilles tendon pain and begins physical therapy. Eight months of PT provide little improvement. The tendon xanthoma — cholesterol deposited in the tendon, a hallmark physical sign of severe FH — is not recognized for what it is. Surgery is eventually recommended. It is Jordan's orthopedic surgeon who, aware of her family history, orders a lipid panel before proceeding. The result is shocking: LDL over 700 mg/dL. Surgery is postponed and an urgent referral is placed.",
+          "quote": "Eight months of physical therapy and nobody thought to check my cholesterol. It turned out the tendon problem was cholesterol.",
+          "events": [
+            {
+              "event_id": "ev_sp_04",
+              "type": "roadblock",
+              "label": "Tendon Xanthoma Unrecognized — FH Not in Differential During 8 Months of PT",
+              "short_label": "Xanthoma missed",
+              "description": "Jordan undergoes eight months of physical therapy for Achilles pain without any clinician recognizing the tendon xanthoma as a diagnostic sign of severe familial hypercholesterolemia. FH is never placed in the differential.",
+              "sentiment_impact": -2,
+              "step_position": 3.2,
+              "tooltip": "8 months of PT for what was a tendon xanthoma; classic HoFH physical sign unrecognized by all treating clinicians."
+            },
+            {
+              "event_id": "ev_sp_05",
+              "type": "progress",
+              "label": "Orthopedic Surgeon Orders Lipid Panel — LDL Over 700 mg/dL Identified",
+              "short_label": "LDL 700+ discovered",
+              "description": "Jordan's orthopedic surgeon, aware of her family history of cardiovascular disease, orders a lipid panel before proceeding with surgery. The result — LDL over 700 mg/dL — triggers immediate postponement of surgery and an urgent pediatric lipid specialist referral.",
+              "sentiment_impact": 1,
+              "step_position": 3.6,
+              "tooltip": "Orthopedic surgeon's pre-surgical lipid check reveals LDL 700+ mg/dL; the first correct clinical action in Jordan's journey."
+            }
+          ]
+        },
+        {
+          "stage_id": "2",
+          "stage": "Diagnosis & Initial Treatments",
+          "step_id": "4",
+          "step": "Pediatric Lipid Specialist — FH Diagnosed, Statins Begin",
+          "sentiment": 2,
+          "plutchik_score": "apprehension",
+          "emotional_valence": 2,
+          "provider_trust": 4,
+          "medical_self_efficacy": 2,
+          "logistical_capacity": 4,
+          "treatment_changes": [
+            {
+              "drug": "Atorvastatin",
+              "action": "add",
+              "dose": "40mg daily",
+              "note": "Initial high-intensity statin trial following FH clinical diagnosis; LDL response insufficient — never below 400 mg/dL over 4 years of titration attempts."
+            },
+            {
+              "drug": "Rosuvastatin",
+              "action": "switch",
+              "dose": "40mg daily",
+              "note": "Switched from atorvastatin after inadequate LDL response; LDL remains above 400 mg/dL. Specialist suspects HoFH."
+            }
+          ],
+          "narrative_description": "Jordan is referred to a pediatric lipid specialist and receives a clinical diagnosis of Familial Hypercholesterolemia. Multiple statins at escalating doses are trialed over four years. Her LDL never falls below 400 mg/dL. The specialist suspects something more serious than heterozygous FH — the response to statins is far too poor. Genetic testing is ordered. Jordan is a teenager managing a serious diagnosis with no peer community and no roadmap.",
+          "quote": "We tried every statin at every dose. Nothing worked. My doctor knew something more serious was happening.",
+          "events": [
+            {
+              "event_id": "ev_sp_06",
+              "type": "roadblock",
+              "label": "4 Years of Statin Therapy — LDL Floor Remains Above 400 mg/dL",
+              "short_label": "Statins insufficient",
+              "description": "Despite trying every available statin at maximum doses over four years, Jordan's LDL never falls below 400 mg/dL. Cardiovascular risk accumulates throughout this period. The inadequate statin response is itself a diagnostic signal of HoFH.",
+              "sentiment_impact": -3,
+              "step_position": 4.2,
+              "tooltip": "4-year statin trial: LDL floor 400 mg/dL despite maximum doses; cardiovascular clock running throughout."
+            },
+            {
+              "event_id": "ev_sp_07",
+              "type": "progress",
+              "label": "Specialist Identifies Poor Statin Response as HoFH Signal — Genetic Testing Ordered",
+              "short_label": "Genetic testing ordered",
+              "description": "The pediatric lipid specialist correctly identifies inadequate statin response across multiple agents as a diagnostic signal pointing toward HoFH rather than HeFH. Genetic testing is ordered.",
+              "sentiment_impact": 2,
+              "step_position": 4.6,
+              "tooltip": "Specialist correctly reads poor statin response as HoFH indicator; genetic testing initiated — first step toward accurate diagnosis."
+            },
+            {
+              "event_id": "ev_sp_mis_02",
+              "type": "info_source",
+              "label": "Pediatric Lipid Specialist — Accurate Clinical Guidance",
+              "short_label": "Lipid specialist engaged",
+              "description": "Academic lipid center provides accurate clinical information and appropriate escalation. This is the first provider in Jordan's journey who understands FH and acts on it correctly.",
+              "sentiment_impact": 2,
+              "step_position": 4.8,
+              "source_type": "hcp",
+              "platform": "Academic pediatric lipid center",
+              "influence_level": "high",
+              "content_quality": "accurate",
+              "tooltip": "First accurate FH-informed clinical guidance received; specialist correctly recognizes inadequate statin response."
+            }
+          ]
+        },
+        {
+          "stage_id": "2",
+          "stage": "Diagnosis & Initial Treatments",
+          "step_id": "5",
+          "step": "Genetic Confirmation — HoFH Diagnosis at 18",
+          "sentiment": 1,
+          "plutchik_score": "alarm",
+          "emotional_valence": 1,
+          "provider_trust": 4,
+          "medical_self_efficacy": 2,
+          "logistical_capacity": 3,
+          "treatment_changes": [
+            {
+              "drug": "Ezetimibe",
+              "action": "add",
+              "dose": "10mg daily",
+              "note": "Added to statin backbone following HoFH genetic confirmation as part of combination escalation."
+            },
+            {
+              "drug": "Evolocumab",
+              "action": "add",
+              "dose": "420mg monthly",
+              "note": "PCSK9 inhibitor added as component of aggressive multi-drug regimen initiated at HoFH diagnosis."
+            }
+          ],
+          "narrative_description": "On her 18th birthday, Jordan receives her official diagnosis: Homozygous Familial Hypercholesterolemia. Genetic testing has confirmed two inherited LDL-receptor gene mutations. The clinical conversation changes completely — where providers once said 'take this statin and you'll be fine,' they now say 'you're going to have a heart attack or stroke in your 20s if we don't start aggressive treatment right now.' Jordan is paralyzed. She has lived a completely normal life. She is 18 years old and being asked to conceptualize her own mortality.",
+          "quote": "How do you process being told your life might be cut short when you're just starting to plan your future?",
+          "events": [
+            {
+              "event_id": "ev_sp_08",
+              "type": "progress",
+              "label": "HoFH Genetically Confirmed — Aggressive Multi-Drug Protocol Initiated",
+              "short_label": "HoFH confirmed",
+              "description": "Genetic testing confirms two inherited LDL-receptor gene mutations. Care team immediately pivots to aggressive combination therapy: high-potency statin, ezetimibe, and PCSK9 inhibitor.",
+              "sentiment_impact": 1,
+              "step_position": 5.2,
+              "tooltip": "HoFH confirmed genetically on 18th birthday; care team initiates aggressive multi-drug protocol same day."
+            },
+            {
+              "event_id": "ev_sp_09",
+              "type": "roadblock",
+              "label": "Mortality Framing at 18 — No Psychosocial Support Offered",
+              "short_label": "No psych support",
+              "description": "Jordan is told she faces risk of heart attack or stroke in her 20s without aggressive intervention. No psychosocial support, counseling referral, or peer connection is offered alongside this devastating framing. She processes the news alone.",
+              "sentiment_impact": -4,
+              "step_position": 5.5,
+              "tooltip": "Mortality framing delivered at 18 with no psychosocial referral or peer support; Jordan processes alone."
+            },
+            {
+              "event_id": "ev_sp_10",
+              "type": "community",
+              "label": "Parents Informed — Cascade Testing Initiated, Mother Confirmed HeFH",
+              "short_label": "Family cascade begins",
+              "description": "Jordan's parents are informed of the HoFH diagnosis. Cascade testing reveals her mother carries HeFH. The family begins navigating shared genetic risk, though no formal family support program is offered.",
+              "sentiment_impact": 1,
+              "step_position": 5.8,
+              "tooltip": "Cascade testing confirms mother has HeFH; family begins navigating shared genetic risk without formal support structure."
+            }
+          ]
+        },
+        {
+          "stage_id": "2",
+          "stage": "Diagnosis & Initial Treatments",
+          "step_id": "6",
+          "step": "Weekly Apheresis Initiated — Treatment Burden Begins",
+          "sentiment": 2,
+          "plutchik_score": "sadness",
+          "emotional_valence": 1,
+          "provider_trust": 4,
+          "medical_self_efficacy": 2,
+          "logistical_capacity": 2,
+          "treatment_changes": [
+            {
+              "drug": "LDL Apheresis",
+              "action": "add",
+              "dose": null,
+              "note": "Weekly apheresis initiated as core component of HoFH aggressive treatment protocol; LDL rebuilds fully between sessions requiring indefinite weekly treatment."
+            }
+          ],
+          "narrative_description": "Jordan begins weekly LDL apheresis — a procedure that mechanically removes LDL from her blood, requiring hours at a treatment center every week. Combined with statin, ezetimibe, and PCSK9 inhibitor, this is now a four-pronged regimen. Her LDL improves but remains elevated. The weekly sessions are grueling and isolating — she is in college, managing a schedule no peer can relate to. She has never met another person with HoFH.",
+          "quote": "Navigating my diagnosis, treatments, and feelings about all of it, alone, was one of the hardest things I've ever done.",
+          "events": [
+            {
+              "event_id": "ev_sp_11",
+              "type": "roadblock",
+              "label": "Weekly Apheresis Schedule — Profound Isolation in College Setting",
+              "short_label": "Weekly apheresis burden",
+              "description": "Weekly apheresis sessions are incompatible with a normal college experience. Jordan attends treatment alone, with no peers who understand her schedule or her condition. She has never met another HoFH patient.",
+              "sentiment_impact": -3,
+              "step_position": 6.2,
+              "tooltip": "Weekly apheresis during college creates profound logistical and social isolation; no HoFH peer community accessible."
+            },
+            {
+              "event_id": "ev_sp_12",
+              "type": "roadblock",
+              "label": "LDL Rebuilds Between Apheresis Sessions — Therapeutic Ceiling Reached",
+              "short_label": "LDL ceiling reached",
+              "description": "LDL cholesterol rebuilds fully between weekly apheresis sessions. Despite a four-drug regimen plus apheresis, Jordan's LDL remains elevated. The ceiling of current standard-of-care combination therapy is becoming apparent.",
+              "sentiment_impact": -2,
+              "step_position": 6.5,
+              "tooltip": "LDL fully rebounds between apheresis sessions; four-drug regimen + apheresis insufficient to sustain target LDL."
+            },
+            {
+              "event_id": "ev_sp_mis_03",
+              "type": "info_source",
+              "label": "Facebook HoFH Support Group — First Peer Connection",
+              "short_label": "HoFH peer group found",
+              "description": "Jordan discovers a Facebook support group for HoFH patients — her first exposure to others with her condition. Content quality is mixed, but the emotional impact of finding community is significant.",
+              "sentiment_impact": 2,
+              "step_position": 6.8,
+              "source_type": "patient_forum",
+              "platform": "Facebook HoFH support group",
+              "influence_level": "high",
+              "content_quality": "mixed",
+              "tooltip": "First peer community discovered via Facebook; mixed clinical accuracy but high emotional impact for an isolated patient."
+            }
+          ]
+        },
+        {
+          "stage_id": "3",
+          "stage": "Cardiac Event & Advocacy",
+          "step_id": "7",
+          "step": "Cardiac Event During Apheresis",
+          "sentiment": 0,
+          "plutchik_score": "alarm",
+          "emotional_valence": 1,
+          "provider_trust": 5,
+          "medical_self_efficacy": 2,
+          "logistical_capacity": 1,
+          "treatment_changes": [],
+          "narrative_description": "One year after her HoFH diagnosis, while a sophomore in college, Jordan has her first cardiac event during an apheresis session. Medical staff respond quickly and she sustains no permanent damage. The experience shatters her sense of invincibility. She thinks immediately of the patients who aren't as lucky — those without resources, without knowledge, without access. The isolation she has carried for years sharpens into urgency.",
+          "quote": "I'm grateful I was in the right place. But I kept thinking about the people who aren't.",
+          "events": [
+            {
+              "event_id": "ev_sp_hosp_01",
+              "type": "hospitalization",
+              "label": "Cardiac Event During Apheresis — Emergency Intervention, No Permanent Damage",
+              "short_label": "Cardiac event",
+              "description": "Jordan experiences her first cardiac event during a weekly apheresis session at age 19. Medical staff on-site intervene quickly. She sustains no permanent damage, but the event is a profound psychological rupture.",
+              "sentiment_impact": -5,
+              "step_position": 7.2,
+              "tooltip": "First cardiac event at 19 during apheresis; rapid staff intervention; no permanent damage but deeply traumatic."
+            },
+            {
+              "event_id": "ev_sp_13",
+              "type": "roadblock",
+              "label": "Acute Psychological Crisis — Isolation, Fear, No Peer Support Network",
+              "short_label": "Psychological crisis",
+              "description": "The cardiac event triggers acute fear, isolation, and grief. Jordan is a college sophomore with no HoFH peer community, no counseling referral, and no framework for processing a near-cardiac event at 19. She navigates it entirely alone.",
+              "sentiment_impact": -4,
+              "step_position": 7.5,
+              "tooltip": "Post-event psychological crisis with no peer network, no counseling referral; Jordan processes alone as a college sophomore."
+            },
+            {
+              "event_id": "ev_sp_14",
+              "type": "progress",
+              "label": "Cardiac Event Catalyzes Intensive Self-Research — Family Heart Foundation Discovered",
+              "short_label": "FHF discovered",
+              "description": "In the aftermath of her cardiac event, Jordan researches HoFH with urgency. She discovers the Family Heart Foundation through a Facebook support group and for the first time finds a community of patients who understand her experience.",
+              "sentiment_impact": 3,
+              "step_position": 7.8,
+              "tooltip": "Cardiac event triggers intensive HoFH research; Family Heart Foundation discovered via Facebook — first real peer community access."
+            }
+          ]
+        },
+        {
+          "stage_id": "3",
+          "stage": "Cardiac Event & Advocacy",
+          "step_id": "8",
+          "step": "Finding Community — Family Heart Foundation",
+          "sentiment": 6,
+          "plutchik_score": "optimism",
+          "emotional_valence": 4,
+          "provider_trust": 4,
+          "medical_self_efficacy": 4,
+          "logistical_capacity": 3,
+          "treatment_changes": [],
+          "narrative_description": "After her cardiac event, Jordan immerses herself in the Family Heart Foundation's resources and community. She reads stories from patients who understand — their wins, losses, and ongoing battles. She trains as a Family Heart Ambassador in 2020. The shift from fear to advocacy changes her relationship with her diagnosis entirely. For the first time, she understands her condition rather than only fearing it.",
+          "quote": "I found research. I found knowledge. I found friends. I found power. And perhaps most importantly, I found hope.",
+          "events": [
+            {
+              "event_id": "ev_sp_15",
+              "type": "progress",
+              "label": "Family Heart Foundation — Evidence-Based Resources and Peer Community Accessed",
+              "short_label": "Peer community found",
+              "description": "Jordan accesses the Family Heart Foundation's patient resources, specialist map, and Cascade FH Registry. She gains her first accurate, comprehensive picture of HoFH epidemiology, treatment options, and patient rights.",
+              "sentiment_impact": 4,
+              "step_position": 8.2,
+              "source_type": "advocacy_org",
+              "platform": "familyheart.org",
+              "influence_level": "high",
+              "content_quality": "accurate",
+              "tooltip": "Family Heart Foundation provides first accurate, comprehensive HoFH education and a community of patients who understand."
+            },
+            {
+              "event_id": "ev_sp_16",
+              "type": "community",
+              "label": "Family Heart Ambassador Training — Jordan Transitions from Patient to Advocate",
+              "short_label": "Ambassador trained",
+              "description": "Jordan completes Family Heart Ambassador training in 2020. She begins supporting newly diagnosed HoFH patients, channeling her own isolation and fear into active advocacy. Her identity shifts from isolated patient to informed champion.",
+              "sentiment_impact": 4,
+              "step_position": 8.6,
+              "tooltip": "Ambassador training completed 2020; Jordan begins mentoring newly diagnosed HoFH patients — identity shift from victim to advocate."
+            }
+          ]
+        },
+        {
+          "stage_id": "3",
+          "stage": "Cardiac Event & Advocacy",
+          "step_id": "9",
+          "step": "Regimen Optimization — Best Achieved LDL",
+          "sentiment": 6,
+          "plutchik_score": "serenity",
+          "emotional_valence": 4,
+          "provider_trust": 5,
+          "medical_self_efficacy": 4,
+          "logistical_capacity": 3,
+          "treatment_changes": [
+            {
+              "drug": "Rosuvastatin",
+              "action": "uptitrate",
+              "dose": "40mg daily",
+              "note": "Confirmed at maximum tolerated dose as part of optimized stable regimen; LDL trending toward best achieved levels."
+            }
+          ],
+          "narrative_description": "With a coordinated team — cardiologist, genetic specialist, and lipid center — Jordan's management stabilizes. Her LDL reaches its best achieved levels, though still above guideline target. She is completing her BSN, managing weekly apheresis around clinical rotations, and beginning to see that the ceiling of her current treatment may not be the ceiling of available medicine. Her care team begins discussing next-generation investigational options.",
+          "quote": "For the first time, I started thinking about my future instead of just surviving the present.",
+          "events": [
+            {
+              "event_id": "ev_sp_17",
+              "type": "progress",
+              "label": "Coordinated Cardiologist + Genetic Specialist Team — Best LDL Achieved",
+              "short_label": "Best LDL achieved",
+              "description": "A coordinated team of cardiologist and genetic specialist working in tandem produces Jordan's best lipid numbers to date. She is stable, functioning, and completing her nursing degree.",
+              "sentiment_impact": 3,
+              "step_position": 9.2,
+              "tooltip": "Coordinated specialist team achieves best LDL to date; Jordan stable and advancing nursing education."
+            },
+            {
+              "event_id": "ev_sp_18",
+              "type": "roadblock",
+              "label": "LDL Still Above Target — Weekly Apheresis Required Indefinitely",
+              "short_label": "LDL still above goal",
+              "description": "Despite the best regimen achieved, Jordan's LDL remains above guideline target. Weekly apheresis continues to be required indefinitely. The sustained physical and logistical burden — now years old — remains constant.",
+              "sentiment_impact": -2,
+              "step_position": 9.5,
+              "tooltip": "LDL above guideline target despite maximum tolerated regimen; weekly apheresis indefinitely required — years of sustained burden."
+            },
+            {
+              "event_id": "ev_sp_int_02",
+              "type": "intervention",
+              "label": "Integrated HoFH Care Model — Lipid Specialist, Genetic Counselor, Psychosocial Support",
+              "short_label": "Integrated HoFH care",
+              "description": "A coordinated HoFH care model formally pairing lipid specialist, genetic counselor, and psychosocial support would address the clinical, emotional, and logistical complexity of long-term HoFH management.",
+              "sentiment_impact": 2,
+              "step_position": 9.8,
+              "intervention_type": "care_coordination",
+              "partner": "Academic lipid center / Sponsor",
+              "timing": "during",
+              "impact_potential": "high",
+              "tooltip": "Sponsor opportunity: formal integrated care model (lipid + genetics + psychosocial) for HoFH patients on long-term complex regimens."
+            }
+          ]
+        },
+        {
+          "stage_id": "4",
+          "stage": "Considering Clinical Trials",
+          "step_id": "10",
+          "step": "Specialist Introduces Investigational Options",
+          "sentiment": 5,
+          "plutchik_score": "anticipation",
+          "emotional_valence": 3,
+          "provider_trust": 5,
+          "medical_self_efficacy": 5,
+          "logistical_capacity": 3,
+          "treatment_changes": [],
+          "narrative_description": "Jordan's care team raises the possibility of clinical trial participation. Newer agents — ANGPTL3 inhibitors, gene-silencing therapies — are showing promise in HoFH. Her specialist explains that her profile makes her a strong candidate. She is handed dense informed consent materials and referred to a trial coordinator. She has context now that she didn't have at 18 — she is a trained nurse and advocate — but the emotional weight of considering experimental therapy for a life-threatening condition is real.",
+          "quote": "I had been through enough that I knew how to read the consent form. But knowing what it meant was different.",
+          "events": [
+            {
+              "event_id": "ev_sp_19",
+              "type": "progress",
+              "label": "Investigational ANGPTL3 Inhibitor Trial — Eligibility Identified",
+              "short_label": "Trial eligibility found",
+              "description": "Jordan's care team identifies her as a strong candidate for an ANGPTL3 inhibitor clinical trial. Specialist makes a formal referral to the trial coordinator.",
+              "sentiment_impact": 3,
+              "step_position": 10.2,
+              "tooltip": "Care team identifies ANGPTL3 inhibitor trial eligibility; formal referral placed — first concrete next-generation treatment option."
+            },
+            {
+              "event_id": "ev_sp_mis_04",
+              "type": "info_source",
+              "label": "ClinicalTrials.gov — Technically Accessible, Not Patient-Friendly",
+              "short_label": "Trial info fragmented",
+              "description": "Jordan searches for information about the HoFH trial pipeline and finds ClinicalTrials.gov and PubMed. Content is technically accurate but not patient-accessible. No patient-facing summary of the HoFH investigational pipeline exists.",
+              "sentiment_impact": -1,
+              "step_position": 10.5,
+              "source_type": "clinical_registry",
+              "platform": "ClinicalTrials.gov",
+              "influence_level": "medium",
+              "content_quality": "mixed",
+              "tooltip": "No accessible patient-facing HoFH trial pipeline summary; Jordan relies on ClinicalTrials.gov — technically accurate but not readable."
+            },
+            {
+              "event_id": "ev_sp_20",
+              "type": "roadblock",
+              "label": "Dense Consent Materials — No Peer Navigator for Trial Decision",
+              "short_label": "No trial peer support",
+              "description": "Informed consent materials are clinical and voluminous. No peer navigator or patient support program connects Jordan with HoFH patients who have previously enrolled in clinical trials.",
+              "sentiment_impact": -2,
+              "step_position": 10.8,
+              "tooltip": "Dense trial consent materials with no HoFH peer navigator to support the enrollment decision."
+            }
+          ]
+        },
+        {
+          "stage_id": "4",
+          "stage": "Considering Clinical Trials",
+          "step_id": "11",
+          "step": "Screening, Eligibility & Logistical Barriers",
+          "sentiment": 4,
+          "plutchik_score": "annoyance",
+          "emotional_valence": 3,
+          "provider_trust": 4,
+          "medical_self_efficacy": 5,
+          "logistical_capacity": 1,
+          "treatment_changes": [],
+          "narrative_description": "Trial screening begins. Jordan's current regimen must remain stable for a 30-day window before enrollment. The trial site is three hours away. As a graduate nursing student with weekly apheresis already on her schedule, the logistics are real. She thinks about the patients who came before her — like Mashal, who enrolled in trials decades ago when almost nothing else existed — and feels both the weight and the obligation of that lineage.",
+          "quote": "I thought about the patients who came before me, the ones who enrolled in trials when there were no good options at all. This felt like honoring that.",
+          "events": [
+            {
+              "event_id": "ev_sp_21",
+              "type": "roadblock",
+              "label": "30-Day GDMT Stability Window — Enrollment Delayed for Graduate Student on Complex Regimen",
+              "short_label": "Stability window delay",
+              "description": "Trial eligibility requires a 30-day GDMT stability window. For a patient managing weekly apheresis and a graduate school schedule, this administrative requirement creates meaningful friction and delay.",
+              "sentiment_impact": -2,
+              "step_position": 11.2,
+              "tooltip": "30-day stability window delays trial entry; significant burden for patient already managing weekly apheresis and graduate school."
+            },
+            {
+              "event_id": "ev_sp_22",
+              "type": "roadblock",
+              "label": "Trial Site 3 Hours Away — No Travel Support Confirmed at Screening",
+              "short_label": "Travel burden unmet",
+              "description": "The trial site is three hours from Jordan's university. No travel reimbursement program has been confirmed at the screening stage. For a nursing student without significant financial resources, this is a real barrier to enrollment.",
+              "sentiment_impact": -2,
+              "step_position": 11.5,
+              "tooltip": "Trial site 3 hours from campus; no travel support confirmed at screening — material barrier to enrollment for a graduate student."
+            },
+            {
+              "event_id": "ev_sp_int_03",
+              "type": "intervention",
+              "label": "Sponsor Patient Navigation Program — Travel Reimbursement and HoFH Trial Coordinator",
+              "short_label": "Trial navigation support",
+              "description": "A sponsor-supported patient navigation program providing travel reimbursement, a dedicated HoFH trial coordinator, and logistical support for students and working-age patients would directly address the barriers present at this step.",
+              "sentiment_impact": 3,
+              "step_position": 11.8,
+              "intervention_type": "care_pathway",
+              "partner": "Sponsor / Family Heart Foundation",
+              "timing": "before",
+              "impact_potential": "high",
+              "tooltip": "Sponsor opportunity: patient navigation program with travel reimbursement and HoFH trial coordinator to reduce enrollment dropout."
+            }
+          ]
+        },
+        {
+          "stage_id": "4",
+          "stage": "Considering Clinical Trials",
+          "step_id": "12",
+          "step": "Enrollment Decision",
+          "sentiment": 8,
+          "plutchik_score": "optimism",
+          "emotional_valence": 5,
+          "provider_trust": 5,
+          "medical_self_efficacy": 5,
+          "logistical_capacity": 2,
+          "treatment_changes": [],
+          "narrative_description": "Jordan enrolls. The decision is not naive — she knows the risks, the time commitment, and the uncertainty of investigational therapy. But she is one of the most informed HoFH patients alive. She thinks about what it means to contribute data that might one day mean a child diagnosed at seven doesn't spend her twenties inside an operating room. Jordan is in graduate school to become a Nurse Practitioner. She will combine her clinical training with advocacy every day.",
+          "quote": "If this works for me, it might work for the kids who are diagnosed today. I'm doing this for them too.",
+          "events": [
+            {
+              "event_id": "ev_sp_23",
+              "type": "progress",
+              "label": "Trial Enrollment Confirmed — Access to Investigational ANGPTL3 Inhibitor",
+              "short_label": "Trial enrolled",
+              "description": "Jordan enrolls in the ANGPTL3 inhibitor clinical trial as add-on to her existing regimen. She gains access to an investigational agent with potential to reduce LDL beyond the ceiling of current standard-of-care.",
+              "sentiment_impact": 4,
+              "step_position": 12.2,
+              "tooltip": "Trial enrollment confirmed; investigational ANGPTL3 inhibitor added to regimen — potential to break through current LDL ceiling."
+            },
+            {
+              "event_id": "ev_sp_24",
+              "type": "community",
+              "label": "Jordan Mentors Newly Diagnosed HoFH Patients Through Family Heart Foundation",
+              "short_label": "Mentors new patients",
+              "description": "Jordan actively mentors newly diagnosed HoFH patients through the Family Heart Foundation Ambassador program, providing the peer support she never had at diagnosis. Her mother continues cascade screening of extended family.",
+              "sentiment_impact": 3,
+              "step_position": 12.5,
+              "tooltip": "Jordan mentors newly diagnosed HoFH patients — giving others the peer support she lacked at her own diagnosis."
+            },
+            {
+              "event_id": "ev_sp_int_04",
+              "type": "intervention",
+              "label": "HoFH Patient Ambassador Program — Peer Connection for Trial-Enrolled Patients",
+              "short_label": "HoFH ambassador program",
+              "description": "A formal sponsor-supported HoFH patient ambassador program pairing trial-enrolled patients with experienced advocates addresses the isolation and uncertainty of investigational therapy in a rare disease population.",
+              "sentiment_impact": 3,
+              "step_position": 12.8,
+              "intervention_type": "peer_program",
+              "partner": "Family Heart Foundation / Sponsor",
+              "timing": "during",
+              "impact_potential": "high",
+              "tooltip": "Sponsor opportunity: formal HoFH peer ambassador program pairing trial participants with experienced patient advocates."
+            }
+          ]
+        }
+      ]
+    },
+    
+    {
       "id": "persona_bag3_dcm_us_rm_01",
       "type": "patient",
       "therapeutic_area": "Cardiology",

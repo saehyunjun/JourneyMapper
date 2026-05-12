@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@thisux/sveltednd": "^0.4.1",
+    "bits-ui": "^2.18.1",
     "d3": "^7.9.0",
     "d3-cloud": "^1.2.9",
     "layerchart": "^1.0.13"

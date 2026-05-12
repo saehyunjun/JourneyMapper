@@ -131,6 +131,7 @@
       width: 180px;
       min-height: 80px;
       padding: 6px;
+      z-index: 999;
       border-radius: 6px;
       background: rgba(255, 255, 255, 0.4);
       border: 0.5px solid var(--panel-mid);

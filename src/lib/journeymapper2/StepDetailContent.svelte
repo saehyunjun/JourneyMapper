@@ -499,7 +499,7 @@
     outline-offset: 1px;
     scale: 125%;
     opacity: 100%;
-    z-index: 9999;
+    z-index: 999;
     filter: saturate(1);
   }
 

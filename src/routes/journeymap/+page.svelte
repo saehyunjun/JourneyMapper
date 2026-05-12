@@ -242,7 +242,6 @@
       <div class="flex flex-col flex-1 min-w-0">
         <JourneyFlowDiagram data={journeyData} />
       </div>
-      <InterventionPalette />
       </div>
 
       {:else if chartView === 'report'}

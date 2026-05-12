@@ -1,50 +1,42 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import FlowStepCard  from './FlowStepCard.svelte';
   import FlowConnector from './FlowConnector.svelte';
   import { selectedInflectionIndex, selectedInflectionPath } from './journeyStore.js';
 
-  const dispatch = createEventDispatcher();
+  /** @type {{
+   *   group: { stage_id: string, stage: string, steps: Array<{ step: string, step_id: string, index: number }> },
+   *   data?: any[],
+   *   stageColor?: string,
+   *   hideHeader?: boolean,
+   *   layout?: 'horizontal' | 'vertical',
+   *   onopenInflectionDrawer?: (detail: { index: number, direction: string }) => void
+   * }} */
+  let {
+    group,
+    data = [],
+    stageColor = '#6b7280',
+    hideHeader = false,
+    layout = 'horizontal',
+    onopenInflectionDrawer,
+  } = $props();
 
-  /** Stage group object: { stage_id, stage, steps[] } */
-  export let group;
-
-  /** Full journey data array — passed through to FlowStepCard */
-  export let data = [];
-
-  /** Accent color for this stage (hex) */
-  export let stageColor = '#6b7280';
-
-  /**
-   * When true the stage header pill is hidden.
-   * Used in vertical layout where the stage label lives in the left rail instead.
-   */
-  export let hideHeader = false;
-
-  /**
-   * Layout orientation forwarded from JourneyFlowDiagram.
-   * 'horizontal' — step cards in a horizontal row (default)
-   * 'vertical'   — step cards stacked top-to-bottom
-   */
-  export let layout = 'horizontal';
-
-  $: isVertical = layout === 'vertical';
+  let isVertical = $derived(layout === 'vertical');
 
   // ── Inflection card hover state ────────────────────────────────────────────
   /** Tracks which path card the cursor is over: `${stepIndex}-${'pos'|'neg'}` or null */
-  let hoveredPathKey = null;
+  let hoveredPathKey = $state(null);
 
   function handlePathMouseEnter(key) { hoveredPathKey = key; }
   function handlePathMouseLeave()    { hoveredPathKey = null; }
 
   /**
-   * Click a fork path card: write to stores and dispatch so the page
+   * Click a fork path card: write to stores and fire callback so the page
    * can open the inflection drawer.
    */
   function handlePathClick(stepIndex, direction) {
     selectedInflectionIndex.set(stepIndex);
     selectedInflectionPath.set(direction);
-    dispatch('openInflectionDrawer', { index: stepIndex, direction });
+    onopenInflectionDrawer?.({ index: stepIndex, direction });
   }
 
   // ── Inflection fork helpers ────────────────────────────────────────────────
