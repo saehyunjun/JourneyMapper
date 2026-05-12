@@ -805,50 +805,131 @@
   box-shadow 200ms ease;
 }
 
-.sidebar-nav {
+  /* ── Nav strip ─────────────────────────────────────────────── */
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.5rem 0.35rem;
+    border-bottom: 1px solid var(--panel-dark);
+    flex-shrink: 0;
+  }
 
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-width: 10vw;
-height: 100%;
-
-background: #FFFFFF;
-
-/* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
-}
-
-.sidebar-item {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  padding: .525em 1em .525em .3725em;
-  gap: .275em;
+  .sidebar-divider {
+    height: 1px;
+    background: var(--panel-dark);
+    margin: 0.2rem 0.1rem;
+  }
 
 
-  align-items: center;
-  text-transform: uppercase;
-  justify-content: center;
-  align-content: center;
-  cursor: pointer;
-  color: var(--grayblue);
-}
+    /* ── Nav items ─────────────────────────────────────────────── */
+    .sidebar-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      height: 2.1rem;
+      /* icon centred in rail when collapsed */
+      padding: 0;
+      border: 1.25px solid transparent;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      user-select: none;
+      font-family: var(--font-heading);
+      font-size: 0.825em;
+      transition:
+        background-color 150ms ease,
+        color 150ms ease,
+        border-color 150ms ease;
+    }
 
-.sidebar-item:hover {
-  background-color: var(--lightgrayblue);
-  border-bottom: 1px solid var(--grayblue);
-}
 
-.sidebar-item--active {
-  background-color: var(--lightorange);
-  border-bottom: 2px solid var(--orange);
-  color: var(--orange);
-}
-
-
+    .sidebar-item:hover {
+      background-color: var(--panel-dark);
+      color: var(--green);
+      border-color: var(--panel-mid);
+    }
+  
+    .sidebar-item--active {
+      background-color: var(--lightorange);
+      color: var(--orange);
+      border-color: var(--orange);
+      font-weight: 500;
+    }
+  
+    .sidebar-item--toggle {
+      color: var(--gray);
+    }
+  
+    .sidebar-item--toggle:hover {
+      color: var(--darkgrayblue);
+      background-color: var(--panel-dark);
+      border-color: var(--panel-mid);
+    }
+  
+    /* ── Icon: always visible, centred in rail ─────────────────── */
+    .sidebar-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* rail width minus border = available icon space */
+      width: calc(var(--sidebar-rail) - 2px);
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+  
+    /* ── Label: fades out when collapsed ──────────────────────── */
+    .sidebar-label {
+      flex: 1;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      opacity: 1;
+      transition: opacity var(--dur-fast) var(--ease-standard);
+    }
+  
+    /* Caret at row end */
+    .sidebar-caret {
+      display: flex;
+      align-items: center;
+      padding-right: 0.4rem;
+      font-size: 0.75rem;
+      opacity: 1;
+      transition: opacity var(--dur-fast) var(--ease-standard);
+    }
+  
+    /* When sidebar is collapsed, fade labels and carets */
+    :global(.app-sidebar:not(.app-sidebar--open)) .sidebar-label,
+    :global(.app-sidebar:not(.app-sidebar--open)) .sidebar-caret {
+      opacity: 0;
+      pointer-events: none;
+    }
+  
+    /* ── Content area: fades out when collapsed ────────────────── */
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: var(--panel-mid) transparent;
+      padding: 1rem 1rem 1.5rem;
+      opacity: 1;
+      transition: opacity var(--dur-fast) var(--ease-standard);
+    }
+  
+    :global(.app-sidebar:not(.app-sidebar--open)) .sidebar-content {
+      opacity: 0;
+      pointer-events: none;
+    }
+  
+    .sidebar-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+  
 .layout-btn--active {
   background: var(--teal);
   color: paper;

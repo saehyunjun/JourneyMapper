@@ -1,40 +1,18 @@
 <script lang="ts">
   import AppSidebar from '$lib/pageElements/Appsidebar.svelte';
-  import IconListRegular from 'phosphor-icons-svelte/IconListRegular.svelte';
-  import IconFlowArrowRegular from 'phosphor-icons-svelte/IconFlowArrowRegular.svelte';
 
-  // Default open on wide screens; AppSidebar reads this to decide its mode
+  let { children } = $props();
   let sidebarOpen = $state(true);
-
-  function toggleSidebar() {
-    sidebarOpen = !sidebarOpen;
-  }
 </script>
 
-<!-- ── Root shell ────────────────────────────────────────────────────────── -->
 <div class="app-shell">
-
-  <!-- ── Body row: sidebar + main ─────────────────────────────────────── -->
   <div class="app-body">
-
-    <!-- Sidebar: inline on wide, overlay on narrow -->
     <AppSidebar bind:open={sidebarOpen} />
-    <button
-    class="btn-sm"
-    onclick={toggleSidebar}
-    aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
-    aria-expanded={sidebarOpen}
-  >
-    <IconListRegular class="text-sm"/>
-  </button>
 
-    <!-- Main content grows to fill remaining space -->
     <main class="app-main">
-      <slot />
+      {@render children?.()}
     </main>
-
   </div>
-
 </div>
 
 <style>
@@ -47,12 +25,6 @@
     background-color: var(--paper);
   }
 
-  .app-topbar {
-    flex-shrink: 0;
-    z-index: 200;
-  }
-
-  /* Horizontal flex row that contains sidebar + main */
   .app-body {
     display: flex;
     flex-direction: row;
