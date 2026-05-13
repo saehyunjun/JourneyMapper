@@ -30,10 +30,21 @@
 				</Breadcrumb.Root>
 			</div>
 		</header>
-		<div class="flex flex-1 flex-col gap-4 p-6">
+		<div class="flex flex-1 flex-col gap-4 p-4 md:px-32 md:py-8">
 			{#if entry}
 				{@const Content = entry.Component}
+				{@const hero = entry.metadata.hero as string | undefined}
+				{@const summary = entry.metadata.summary as string | undefined}
 				<article class="markdown-body max-w-3xl">
+					{#if hero}
+						<img src={hero} alt="" class="mb-6 w-full rounded-lg" />
+					{/if}
+					{#if entry.hasFrontmatter}
+						<h1>{entry.title}</h1>
+						{#if summary}
+							<p class="text-muted-foreground -mt-2 mb-6 text-lg">{summary}</p>
+						{/if}
+					{/if}
 					<Content />
 				</article>
 			{/if}
@@ -43,19 +54,33 @@
 
 <style>
 	.markdown-body :global(h1) {
-		font-size: 1.875rem;
-		font-weight: 600;
+		font-size: 2.125rem;
+		font-weight: 400;
 		margin-bottom: 1rem;
 	}
 	.markdown-body :global(h2) {
-		font-size: 1.25rem;
-		font-weight: 600;
+		border-top: 1px solid var(--color-gray-300);
+		font-size: 1.425rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		padding-top: 1rem;
 		margin-top: 1.5rem;
 		margin-bottom: 0.5rem;
 	}
+
+	.markdown-body :global(h3) {
+		font-size: .925rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		margin-top: 1.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+
 	.markdown-body :global(p) {
-		margin-bottom: 0.75rem;
+		margin-bottom: 0.825rem;
 		line-height: 1.6;
+		text-wrap: balance;
 	}
 	.markdown-body :global(ul) {
 		list-style: disc;

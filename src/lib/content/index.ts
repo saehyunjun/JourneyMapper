@@ -15,6 +15,7 @@ const comps = import.meta.glob('/src/lib/content/**/*.md', {
 const folderTitles: Record<string, string> = {
 	casestudies: 'Case Studies',
 	glossary: 'Glossary',
+	markups: 'Markups',
 	pxclips: 'PX Clips'
 };
 
@@ -38,11 +39,13 @@ export type ContentEntry = {
 	url: string;
 	Component: Component;
 	metadata: Record<string, unknown>;
+	hasFrontmatter: boolean;
 };
 
 export type ContentSection = {
 	folder: string;
 	title: string;
+	url: string;
 	entries: ContentEntry[];
 };
 
@@ -59,6 +62,7 @@ const entries: ContentEntry[] = Object.entries(raws)
 		const comp = comps[path];
 		if (!comp) return null;
 		const meta = comp.metadata ?? {};
+		const hasFrontmatter = Object.keys(meta).length > 0;
 		const title = (meta.title as string | undefined) ?? extractH1(raw, parsed.slug);
 		return {
 			folder: parsed.folder,
@@ -66,7 +70,8 @@ const entries: ContentEntry[] = Object.entries(raws)
 			title,
 			url: `/pxreview/${parsed.folder}/${encodeURIComponent(parsed.slug)}`,
 			Component: comp.default,
-			metadata: meta
+			metadata: meta,
+			hasFrontmatter
 		} satisfies ContentEntry;
 	})
 	.filter((x): x is ContentEntry => x !== null);
@@ -82,12 +87,17 @@ export const sections: ContentSection[] = (() => {
 		.map(([folder, items]) => ({
 			folder,
 			title: humanize(folder),
+			url: `/pxreview/${folder}`,
 			entries: items.sort((a, b) => a.title.localeCompare(b.title))
 		}));
 })();
 
 export function findEntry(folder: string, slug: string): ContentEntry | undefined {
 	return entries.find((e) => e.folder === folder && e.slug === slug);
+}
+
+export function findSection(folder: string): ContentSection | undefined {
+	return sections.find((s) => s.folder === folder);
 }
 
 export function getSectionTitle(folder: string): string {

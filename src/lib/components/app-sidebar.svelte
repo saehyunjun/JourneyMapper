@@ -35,7 +35,9 @@
 				{#each sections as section (section.folder)}
 					<Sidebar.MenuItem>
 						<Sidebar.MenuButton class="font-medium">
-							{section.title}
+							{#snippet child({ props })}
+								<a href={section.url} {...props}>{section.title}</a>
+							{/snippet}
 						</Sidebar.MenuButton>
 						{#if section.entries.length}
 							<Sidebar.MenuSub>

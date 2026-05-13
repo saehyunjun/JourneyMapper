@@ -1,4 +1,4 @@
-# The Magic Moment 
+# Curiosity Gap
 
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
 

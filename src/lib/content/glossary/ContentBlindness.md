@@ -1,6 +1,15 @@
-# The Magic Moment 
+# Content Blindness 
 
-**JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
+This happens in both the short and long terms.
+
+### Short term (reactive)
+
+On sequential pages (e.g., a sign-up form), if you have lots of very similar content, people will skim-read it at best—or just ignore it entirely.
+Long term (habitual):
+
+People are used to the common advertising spaces on the internet (e.g., sidebar ads), and they'll pay less attention to it.
+
+## Highlights
 
 It enables medical affairs teams to map multi-stage clinical journeys with structured sentiment scoring, Plutchik emotion tagging, and inflection point analysis.
 

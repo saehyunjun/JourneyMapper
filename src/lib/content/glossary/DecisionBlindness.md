@@ -1,5 +1,13 @@
 # Content Blindness 
 
+<Callout title="Key takeaways">
+
+- Donald Trump's upcoming summit with Xi Jinping is likely to be dominated...
+- In recent months, US attention and military resources have been shifted...
+- This is in many ways the **opposite** of what many expected...
+
+</Callout>
+
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
 
 It enables medical affairs teams to map multi-stage clinical journeys with structured sentiment scoring, Plutchik emotion tagging, and inflection point analysis.

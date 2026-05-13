@@ -1,5 +1,7 @@
 <script lang="ts">
 	import '../app.css';
+
+	let { children } = $props();
 </script>
 
 <!-- ── Nav bar ──────────────────────────────────────────────────────── -->
@@ -8,12 +10,6 @@
 	<span class="nav-title">Powered by PatientlyIQ</span>
 </div>
 
-
-<!--
-  This layout file imports global CSS (including Tailwind via @import in app.css).
-  Layouts in SvelteKit use a slot as an outlet for child routes.
--->
-
-<slot />
+{@render children()}
 
 
