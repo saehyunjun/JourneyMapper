@@ -30,25 +30,38 @@
 				</Breadcrumb.Root>
 			</div>
 		</header>
-		<div class="flex flex-1 flex-col gap-4 p-4 md:px-32 md:py-8">
-			{#if entry}
-				{@const Content = entry.Component}
-				{@const hero = entry.metadata.hero as string | undefined}
-				{@const summary = entry.metadata.summary as string | undefined}
-				<article class="markdown-body max-w-3xl">
-					{#if hero}
-						<img src={hero} alt="" class="mb-6 w-full rounded-lg" />
-					{/if}
-					{#if entry.hasFrontmatter}
-						<h1>{entry.title}</h1>
-						{#if summary}
-							<p class="text-muted-foreground -mt-2 mb-6 text-lg">{summary}</p>
-						{/if}
-					{/if}
-					<Content />
-				</article>
-			{/if}
+	<div class="flex flex-1 flex-col gap-4 py-8 px-2">
+
+	{#if entry}
+		{@const Content = entry.Component}
+		{@const hero = entry.metadata.hero as string | undefined}
+		{@const summary = entry.metadata.summary as string | undefined}
+
+		<!-- FULL WIDTH HERO -->
+		<div class="min-w-full px-8 h-64 items-center justify-center mx-auto my-auto">
+			<div class="mx-auto w-full">
+				{#if hero}
+					<img
+						src={hero}
+						alt=""
+						class="w-full h-[420px] object-cover"
+					/>
+				{:else}
+					<div class="flex flex-col md:flex-row items-center justify-center">
+						<h1 class="text-center">{entry.title}</h1>
+					</div>
+				{/if}
+			</div>
 		</div>
+
+		<!-- ARTICLE WIDTH -->
+		<article class="markdown-body mx-auto w-full max-w-3xl px-8">
+			<div class="markdown-body">
+				<Content />
+			</div>
+		</article>
+	{/if}
+</div>
 	</Sidebar.Inset>
 </Sidebar.Provider>
 

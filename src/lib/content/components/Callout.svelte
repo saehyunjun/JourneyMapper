@@ -26,26 +26,31 @@
 
 <style>
 	.callout {
-		border-left: 3px solid var(--border);
+		border-top: 3px solid var(--border);
 		padding: 0.75rem 1rem;
 		margin: 1rem 0;
-		border-radius: 0.5rem;
 		background: var(--muted);
 	}
 	.callout-info {
-		border-left-color: var(--primary);
+		border-top-color: var(--primary);
 	}
 	.callout-warning {
-		border-left-color: #d97706;
+		border-top-color: #d97706;
 	}
 	.callout-success {
-		border-left-color: #059669;
+		border-top-color: #059669;
 	}
 	.callout-title {
-		font-weight: 600;
-		margin-bottom: 0.25rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		font-family: var(--font-mono);
+		margin-bottom: .725rem;
+		padding-bottom: .425rem;
+		border-bottom: 1px solid var(--color-gray-600);
 	}
-	.callout-body :global(p:last-child) {
-		margin-bottom: 0;
+	.callout-body :global(li) {
+		margin-bottom: 1rem;
+		padding-left: .5rem;
+		list-style-type: circle;
 	}
 </style>

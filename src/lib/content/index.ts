@@ -19,11 +19,22 @@ const folderTitles: Record<string, string> = {
 	pxclips: 'PX Clips'
 };
 
+const folderDescriptions: Record<string, string> = {
+	casestudies: 'In-depth looks at how specific programs map and act on patient experience.',
+	glossary: 'Shared vocabulary for talking about patient experience with rigor.',
+	markups: 'Annotated examples — what works, what to watch for, and why.',
+	pxclips: 'Short, focused excerpts illustrating a single PX principle.'
+};
+
 function humanize(slug: string): string {
 	return (
 		folderTitles[slug] ??
 		slug.replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 	);
+}
+
+function getDescription(slug: string): string {
+	return folderDescriptions[slug] ?? '';
 }
 
 function extractH1(raw: string, fallback: string): string {
@@ -36,6 +47,7 @@ export type ContentEntry = {
 	folder: string;
 	slug: string;
 	title: string;
+	summary: string;
 	url: string;
 	Component: Component;
 	metadata: Record<string, unknown>;
@@ -45,6 +57,7 @@ export type ContentEntry = {
 export type ContentSection = {
 	folder: string;
 	title: string;
+	description: string;
 	url: string;
 	entries: ContentEntry[];
 };
@@ -64,10 +77,12 @@ const entries: ContentEntry[] = Object.entries(raws)
 		const meta = comp.metadata ?? {};
 		const hasFrontmatter = Object.keys(meta).length > 0;
 		const title = (meta.title as string | undefined) ?? extractH1(raw, parsed.slug);
+		const summary = (meta.summary as string | undefined) ?? extractH1(raw, parsed.slug);
 		return {
 			folder: parsed.folder,
 			slug: parsed.slug,
 			title,
+			summary,
 			url: `/pxreview/${parsed.folder}/${encodeURIComponent(parsed.slug)}`,
 			Component: comp.default,
 			metadata: meta,
@@ -87,6 +102,7 @@ export const sections: ContentSection[] = (() => {
 		.map(([folder, items]) => ({
 			folder,
 			title: humanize(folder),
+			description: getDescription(folder),
 			url: `/pxreview/${folder}`,
 			entries: items.sort((a, b) => a.title.localeCompare(b.title))
 		}));

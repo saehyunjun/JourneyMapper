@@ -1,12 +1,18 @@
-# Content Blindness 
 
-<Callout title="Key takeaways">
 
-- Donald Trump's upcoming summit with Xi Jinping is likely to be dominated...
-- In recent months, US attention and military resources have been shifted...
-- This is in many ways the **opposite** of what many expected...
+<script>
+  import Takeaways from '$lib/content/components/Takeaways.svelte';
+</script>
 
-</Callout>
+<Takeaways title="Key takeaways">
+
+- **When inbound information exceeds our mental space**, we struggle mentally to keep up. Overwhelming information flow makes tasks more difficult and details easier to miss.
+
+- Intrinsic cognitive load refers to the effort required by users to carry around information relevant to their goal, absorb new information and keep track of their goals.
+
+- Extraneous cognitive load refers to the mental processing that takes up resources but doesn't help users understand the content of an interface (e.g. distracting or unnecessary design elements).
+
+</Takeaways>
 
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
 

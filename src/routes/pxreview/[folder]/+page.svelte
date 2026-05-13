@@ -20,7 +20,8 @@
 				<Breadcrumb.Root>
 					<Breadcrumb.List>
 						<Breadcrumb.Item class="hidden md:block">
-							<Breadcrumb.Link href="/pxreview">PX Review</Breadcrumb.Link>
+							<Breadcrumb.Link href="/pxreview">
+								PX Review</Breadcrumb.Link>
 						</Breadcrumb.Item>
 						<Breadcrumb.Separator class="hidden md:block" />
 						<Breadcrumb.Item>
@@ -33,8 +34,12 @@
 		<div class="flex flex-1 flex-col gap-6 p-6">
 			{#if section}
 				<div>
-					<h1 class="text-2xl font-semibold">{section.title}</h1>
-					<p class="text-muted-foreground mt-1">
+					<h1 class="text-2xl font-semibold">
+						{section.title}</h1>
+					{#if section.description}
+						<p class="text-muted-foreground mt-1 max-w-2xl">{section.description}</p>
+					{/if}
+					<p class="text-muted-foreground mt-1 text-sm">
 						{section.entries.length}
 						{section.entries.length === 1 ? "entry" : "entries"}
 					</p>

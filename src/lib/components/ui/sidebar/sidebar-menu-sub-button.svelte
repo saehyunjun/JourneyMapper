@@ -8,7 +8,7 @@
 		children,
 		child,
 		class: className,
-		size = "md",
+		size = "lg",
 		isActive = false,
 		...restProps
 	}: WithElementRef<HTMLAnchorAttributes> & {

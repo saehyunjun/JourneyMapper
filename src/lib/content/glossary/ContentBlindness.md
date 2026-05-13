@@ -1,4 +1,21 @@
-# Content Blindness 
+---
+title: "Content Blindness"
+summary: "When exposed to similar, reptitive, or identical content, people will pay less and less attention to it."
+---
+
+<script>
+  import Takeaways from '$lib/content/components/Takeaways.svelte';
+</script>
+
+<Takeaways title="Key takeaways">
+
+- When exposed to similar, reptitive, or identical content, people will pay less and less attention to it.
+
+- On sequential pages (e.g., a sign-up form), if you have lots of very similar content, people will skim-read it at best—or just ignore it entirely.
+
+- People are used to the common advertising spaces on the internet (e.g., sidebar ads), and they'll pay less attention to it.
+
+</Takeaways>
 
 This happens in both the short and long terms.
 

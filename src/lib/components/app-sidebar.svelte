@@ -2,9 +2,20 @@
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 	import GalleryVerticalEndIcon from "@lucide/svelte/icons/gallery-vertical-end";
 	import type { ComponentProps } from "svelte";
-	import { sections } from "$lib/content";
+	import { sections, type ContentSection, type ContentEntry } from "$lib/content";
+	import { page } from "$app/state";
 
 	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
+
+	const path = $derived(page.url.pathname);
+
+	function isSectionActive(section: ContentSection): boolean {
+		return path === section.url || path.startsWith(section.url + "/");
+	}
+
+	function isEntryActive(entry: ContentEntry): boolean {
+		return path === entry.url;
+	}
 </script>
 
 <Sidebar.Root {...restProps} bind:ref>
@@ -14,14 +25,12 @@
 				<Sidebar.MenuButton size="lg">
 					{#snippet child({ props })}
 						<a href="/pxreview" {...props}>
-							<div
-								class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
-							>
-								<GalleryVerticalEndIcon class="size-4" />
-							</div>
-							<div class="flex flex-col gap-0.5 leading-none">
-								<span class="font-medium">Documentation</span>
-								<span class="">v1.0.0</span>
+							<div class="flex flex-col leading-none border-b border-primary w-full pb-2">
+								<span class="font-semibold text-base uppercase">
+									The PX Review</span>
+									<span class="text-xs">
+										By Patiently Studio
+									</span>
 							</div>
 						</a>
 					{/snippet}
@@ -34,9 +43,15 @@
 			<Sidebar.Menu>
 				{#each sections as section (section.folder)}
 					<Sidebar.MenuItem>
-						<Sidebar.MenuButton class="font-medium">
+						<Sidebar.MenuButton>
 							{#snippet child({ props })}
-								<a href={section.url} {...props}>{section.title}</a>
+								<a
+									href={section.url}
+									{...props}
+									class:active-underline={isSectionActive(section)}
+								>
+									{section.title}
+								</a>
 							{/snippet}
 						</Sidebar.MenuButton>
 						{#if section.entries.length}
@@ -45,7 +60,13 @@
 									<Sidebar.MenuSubItem>
 										<Sidebar.MenuSubButton>
 											{#snippet child({ props })}
-												<a href={entry.url} {...props}>{entry.title}</a>
+												<a
+													href={entry.url}
+													{...props}
+													class:active-entry={isEntryActive(entry)}
+												>
+													{entry.title}
+												</a>
 											{/snippet}
 										</Sidebar.MenuSubButton>
 									</Sidebar.MenuSubItem>
@@ -59,3 +80,4 @@
 	</Sidebar.Content>
 	<Sidebar.Rail />
 </Sidebar.Root>
+

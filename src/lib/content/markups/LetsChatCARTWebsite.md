@@ -1,5 +1,7 @@
-# Let's Chat CAR-T Website Markup
-
+---
+title: "Let's Chat CAR-T Website"
+summary: "How medical affairs at ArgenX mapped the MG patient journey across diagnosis, treatment, and long-term care."
+---
 
 ## Highlights
 
