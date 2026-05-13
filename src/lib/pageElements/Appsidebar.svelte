@@ -232,7 +232,8 @@
       overflow-y: auto;
       overflow-x: hidden;
       scrollbar-width: thin;
-      scrollbar-color: var(--panel-mid) transparent;
+      scrollbar-color: var(--panel-mid) trans
+      parent;
       padding: 1rem 1rem 1.5rem;
       opacity: 1;
       transition: opacity var(--dur-fast) var(--ease-standard);

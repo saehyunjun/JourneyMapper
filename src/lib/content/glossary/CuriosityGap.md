@@ -1,4 +1,4 @@
-# JourneyMapper
+# The Magic Moment 
 
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
 

@@ -31,7 +31,7 @@
   import IconCaretDownRegular       from 'phosphor-icons-svelte/IconCaretDownRegular.svelte';
   import IconCaretUpRegular         from 'phosphor-icons-svelte/IconCaretUpRegular.svelte';
 
-  import interventionData from '$lib/data/dataConfig/intervention_types.json';
+  import interventionData from '$lib/data/dataConfig/taxonomies.json';
   // ── Types ──────────────────────────────────────────────────────────────────
   interface InterventionItem {
     id: string;

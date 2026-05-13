@@ -1,5 +1,8 @@
 <script lang="ts">
   import JourneyLayoutToggle       from '$lib/archive/JourneyLayoutToggle.svelte';
+  import * as ButtonGroup from "$lib/components/ui/button-group/index.js";
+  import { Button } from "$lib/components/ui/button/index.js";
+
   import JourneyReportView         from '$lib/journeymapper2/JourneyReportView.svelte';
   import JourneyLegend             from '$lib/journeymapper2/JourneyLegend.svelte';
   import JourneySteps              from '$lib/journeymapper2/JourneySteps.svelte';
@@ -13,8 +16,7 @@
 
   import JourneyDrawer             from '$lib/journeymapper2/JourneyDrawer.svelte';
   import JourneySubDrawer          from '$lib/journeymapper2/JourneySubDrawer.svelte';
-
-  import InterventionPalette from '$lib/journeymapper2/JourneyInterventions/InterventionPalette.svelte';
+  import PersonaDetailContent from '$lib/journeymapper2/PersonaDetailContent.svelte';
   import PlutchikContent           from '$lib/journeymapper2/PlutchikContent.svelte';
   import StepDetailContent         from '$lib/journeymapper2/StepDetailContent.svelte';
 
@@ -171,7 +173,7 @@
 </script>
 
 <!-- ── Page shell ──────────────────────────────────────────────────────── -->
-<div class="journey-wrapper flex flex-col h-screen overflow-hidden" class:scrolled={isScrolled}>
+<div class="journey-wrapper flex flex-colp h-screen overflow-hidden" class:scrolled={isScrolled}>
 
   <!-- ── Toolbar ──────────────────────────────────────────────────────── -->
   <div class="toolbar-transparent" role="tablist">
@@ -181,18 +183,10 @@
     />
 
     <div class="flex flex-row gap-2 justify-start">
-      <button
-        class="btn-nav"
-        class:view-tab--active={chartView === 'chart'}
-        role="tab"
-        aria-selected={chartView === 'chart'}
-        onclick={() => chartView = 'chart'}
-      >
-        <span class="icon-toolbar" style="background: var(--orange); color: var(--lightorange);">
-          <IconChartLineRegular />
-        </span>
+      <ButtonGroup.Root>
+      <Button variant="outline" size="sm">Therapeutic Area</Button>
         <span class="label-sm">Journey Sentiment</span>
-      </button>
+  
 
       <button
         class="btn-nav"
@@ -219,6 +213,7 @@
         </span>
         <span class="label-sm">Journey Report</span>
       </button>
+    </ButtonGroup.Root>
     </div>
   </div>
 
@@ -370,7 +365,6 @@
   .chart-col {
     position: relative;
     z-index: 1;
-    padding-bottom: 1em;
     overflow-x: scroll;
     overflow-y: scroll;
     scrollbar-width: auto;
