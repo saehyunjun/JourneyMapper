@@ -4,13 +4,14 @@
 	import { Separator } from "$lib/components/ui/separator/index.js";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 	import { findEntry } from "$lib/content";
+	import { sidebarState } from "$lib/sidebar-state.svelte.js";
 
 	let { data } = $props();
 
 	const entry = $derived(findEntry(data.folder, data.slug));
 </script>
 
-<Sidebar.Provider>
+<Sidebar.Provider bind:open={() => sidebarState.open, (v) => (sidebarState.open = v)}>
 	<AppSidebar />
 	<Sidebar.Inset>
 		<header class="flex h-16 shrink-0 items-center gap-2 border-b">
@@ -20,7 +21,8 @@
 				<Breadcrumb.Root>
 					<Breadcrumb.List>
 						<Breadcrumb.Item class="hidden md:block">
-							<Breadcrumb.Link href="/pxreview">{data.sectionTitle}</Breadcrumb.Link>
+							<Breadcrumb.Link href="/pxreview">
+								{data.sectionTitle}</Breadcrumb.Link>
 						</Breadcrumb.Item>
 						<Breadcrumb.Separator class="hidden md:block" />
 						<Breadcrumb.Item>
@@ -30,7 +32,7 @@
 				</Breadcrumb.Root>
 			</div>
 		</header>
-	<div class="flex flex-1 flex-col gap-4 py-8 px-2">
+	<div class="flex flex-1 flex-col gap-4 px-2 align-middle justify-center mx-a">
 
 	{#if entry}
 		{@const Content = entry.Component}
@@ -39,7 +41,7 @@
 
 		<!-- FULL WIDTH HERO -->
 		<div class="min-w-full px-8 h-64 items-center justify-center mx-auto my-auto">
-			<div class="mx-auto w-full">
+			<div class="mx-auto w-full h-64 bg-accent-mint">
 				{#if hero}
 					<img
 						src={hero}
@@ -47,8 +49,8 @@
 						class="w-full h-[420px] object-cover"
 					/>
 				{:else}
-					<div class="flex flex-col md:flex-row items-center justify-center">
-						<h1 class="text-center">{entry.title}</h1>
+					<div class="flex flex-col md:flex-row align-content-center justify-center">
+						<h1 class="text-center text-accent-mint-foreground">{entry.title}</h1>
 					</div>
 				{/if}
 			</div>

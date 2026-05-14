@@ -25,7 +25,7 @@
 				<Sidebar.MenuButton size="lg">
 					{#snippet child({ props })}
 						<a href="/pxreview" {...props}>
-							<div class="flex flex-col leading-none border-b border-primary w-full pb-2">
+							<div class="flex flex-col gap-0.5 leading-none border-b border-primary w-full">
 								<span class="font-semibold text-base uppercase">
 									The PX Review</span>
 									<span class="text-xs">
@@ -48,7 +48,7 @@
 								<a
 									href={section.url}
 									{...props}
-									class:active-underline={isSectionActive(section)}
+									class:border-b-2={isSectionActive(section)}
 								>
 									{section.title}
 								</a>
@@ -81,3 +81,11 @@
 	<Sidebar.Rail />
 </Sidebar.Root>
 
+<style>
+	:global(.active-entry) {
+		background-color: var(--lightteal);
+	}
+	:global(.active-entry:hover) {
+		background-color: var(--lightteal);
+	}
+</style>

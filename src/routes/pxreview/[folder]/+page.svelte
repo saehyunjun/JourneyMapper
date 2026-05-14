@@ -4,13 +4,14 @@
 	import { Separator } from "$lib/components/ui/separator/index.js";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 	import { findSection } from "$lib/content";
+	import { sidebarState } from "$lib/sidebar-state.svelte.js";
 
 	let { data } = $props();
 
 	const section = $derived(findSection(data.folder));
 </script>
 
-<Sidebar.Provider>
+<Sidebar.Provider bind:open={() => sidebarState.open, (v) => (sidebarState.open = v)}>
 	<AppSidebar />
 	<Sidebar.Inset>
 		<header class="flex h-16 shrink-0 items-center gap-2 border-b">

@@ -2644,6 +2644,7 @@ padding: .25em 1em;
   --muted-foreground: oklch(0.554 0.046 257.417);
   --accent: oklch(0.968 0.007 247.896);
   --accent-foreground: oklch(0.208 0.042 265.755);
+  --accent-orange: oklch(0.604 0.245 28.403);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.929 0.013 255.508);
   --input: oklch(0.929 0.013 255.508);
@@ -2733,7 +2734,7 @@ padding: .25em 1em;
 }
 
 @theme inline {
-  --font-sans: 'Inter Variable', sans-serif;
+  --font-sans: 'IBM Plex Sans', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -2741,6 +2742,10 @@ padding: .25em 1em;
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-accent-orange: oklch(0.6 0.19 18);
+  --color-accent-orange-foreground: oklch(0.85 0.12 32);
+  --color-accent-mint: oklch(0.565 0.192 165);
+  --color-accent-mint-foreground: oklch(0.977 0.021 165);
   --color-sidebar: var(--sidebar);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
