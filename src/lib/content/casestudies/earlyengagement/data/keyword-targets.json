@@ -1,0 +1,41 @@
+{
+  "title": "Search Keyword Targets by Site",
+  "description": "Approximate number of keyword targets each MG-related site competed for as of October 2024.",
+  "source": "SEO competitive audit, October 2024",
+  "unit": "keywords",
+  "sites": [
+    {
+      "domain": "Vyvgart.com",
+      "sponsor": "argenX",
+      "audience": "patient",
+      "branded": true,
+      "keyword_targets": 360
+    },
+    {
+      "domain": "MG-United.com",
+      "sponsor": "argenX",
+      "audience": "patient",
+      "branded": false,
+      "keyword_targets": 115
+    },
+    {
+      "domain": "VyvgartHCP.com",
+      "sponsor": "argenX",
+      "audience": "hcp",
+      "branded": true,
+      "keyword_targets": 48
+    },
+    {
+      "domain": "MoreThanMG.com",
+      "sponsor": "Alexion",
+      "audience": "patient",
+      "branded": false,
+      "keyword_targets": 17
+    }
+  ],
+  "sample_queries": [
+    "myasthenic crisis icd 10",
+    "what is myasthenia gravis",
+    "foods to avoid with mg"
+  ]
+}

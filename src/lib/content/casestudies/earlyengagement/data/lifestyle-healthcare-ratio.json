@@ -1,0 +1,22 @@
+{
+  "title": "Lifestyle-to-Healthcare Content Ratio",
+  "description": "Ratio of lifestyle-oriented pages to healthcare-oriented pages on MG United across audit points.",
+  "source": "MG-United.com site audit",
+  "unit": "ratio",
+  "points": [
+    {
+      "year": 2020,
+      "label": "June 2020 (launch)",
+      "healthcare_pages": 20,
+      "lifestyle_pages": 28,
+      "ratio": 1.4
+    },
+    {
+      "year": 2024,
+      "label": "October 2024",
+      "healthcare_pages": 25,
+      "lifestyle_pages": 69,
+      "ratio": 2.76
+    }
+  ]
+}

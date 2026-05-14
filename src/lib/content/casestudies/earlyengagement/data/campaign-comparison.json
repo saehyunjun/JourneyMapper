@@ -1,0 +1,42 @@
+{
+  "title": "Unbranded MG Campaign Comparison",
+  "description": "Healthcare vs lifestyle content volume across three unbranded MG campaigns.",
+  "source": "Site audit, October 2024",
+  "unit": "pages",
+  "campaigns": [
+    {
+      "key": "mg_united",
+      "label": "MG United",
+      "sponsor": "argenX",
+      "launched": "2020-06",
+      "total_pages": 180,
+      "healthcare_pages": 25,
+      "lifestyle_pages": 69,
+      "ratio_lifestyle_to_healthcare": 2.76,
+      "active": true
+    },
+    {
+      "key": "more_than_mg",
+      "label": "More Than MG",
+      "sponsor": "Alexion",
+      "launched": "2024-07",
+      "total_pages": 38,
+      "healthcare_pages": 6,
+      "lifestyle_pages": 14,
+      "ratio_lifestyle_to_healthcare": 2.33,
+      "active": true
+    },
+    {
+      "key": "understanding_gmg",
+      "label": "Understanding gMG",
+      "sponsor": "Alexion",
+      "launched": "2021-12",
+      "retired": "2024-07",
+      "total_pages": 7,
+      "healthcare_pages": 7,
+      "lifestyle_pages": 0,
+      "ratio_lifestyle_to_healthcare": 0,
+      "active": false
+    }
+  ]
+}

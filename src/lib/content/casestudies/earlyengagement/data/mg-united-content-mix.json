@@ -1,0 +1,71 @@
+{
+  "title": "MG United Content Mix Over Time",
+  "description": "Page counts across content categories on MG-United.com at launch (June 2020) and after expansion (October 2024).",
+  "source": "MG-United.com site audit",
+  "unit": "pages",
+  "categories": [
+    {
+      "key": "navigating_healthcare",
+      "label": "Navigating Healthcare",
+      "type": "healthcare"
+    },
+    {
+      "key": "explaining_mg",
+      "label": "Explaining MG",
+      "type": "healthcare"
+    },
+    {
+      "key": "disease_treatment",
+      "label": "Disease/Treatment Info",
+      "type": "healthcare"
+    },
+    {
+      "key": "emotional_wellness",
+      "label": "Emotional Wellness",
+      "type": "lifestyle"
+    },
+    {
+      "key": "food_nutrition",
+      "label": "Food & Nutrition",
+      "type": "lifestyle"
+    },
+    {
+      "key": "career_future",
+      "label": "Career & Future Planning",
+      "type": "lifestyle"
+    },
+    {
+      "key": "advocacy_stories",
+      "label": "Advocacy & Patient Stories",
+      "type": "lifestyle"
+    }
+  ],
+  "series": [
+    {
+      "year": 2020,
+      "label": "Launch (June 2020)",
+      "values": {
+        "navigating_healthcare": 8,
+        "explaining_mg": 5,
+        "disease_treatment": 7,
+        "emotional_wellness": 5,
+        "food_nutrition": 9,
+        "career_future": 0,
+        "advocacy_stories": 14
+      }
+    },
+    {
+      "year": 2024,
+      "label": "Expansion (October 2024)",
+      "values": {
+        "navigating_healthcare": 9,
+        "explaining_mg": 5,
+        "disease_treatment": 11,
+        "emotional_wellness": 17,
+        "food_nutrition": 23,
+        "career_future": 6,
+        "advocacy_stories": 23
+      }
+    }
+  ]
+}
