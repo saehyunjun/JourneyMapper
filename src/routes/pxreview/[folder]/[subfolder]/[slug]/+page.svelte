@@ -1,85 +1,64 @@
 <script lang="ts">
-	import AppSidebar from "$lib/components/app-sidebar.svelte";
-	import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
-	import { Separator } from "$lib/components/ui/separator/index.js";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+	import { Button } from "$lib/components/ui/button/index.js";
 	import { findEntry } from "$lib/content";
-	import { sidebarState } from "$lib/sidebar-state.svelte.js";
 
 	let { data } = $props();
 
 	const entry = $derived(findEntry(data.folder, data.subfolder, data.slug));
 </script>
 
-<Sidebar.Provider bind:open={() => sidebarState.open, (v) => (sidebarState.open = v)}>
-	<AppSidebar />
-	<Sidebar.Inset>
-		<header class="flex h-16 shrink-0 items-center gap-2 border-b">
-			<div class="flex items-center gap-2 px-3">
-				<Sidebar.Trigger />
-				<Separator orientation="vertical" class="me-2 h-4" />
-				<Breadcrumb.Root>
-					<Breadcrumb.List>
-						<Breadcrumb.Item class="hidden md:block">
-							<Breadcrumb.Link href="/pxreview">
-								{data.sectionTitle}</Breadcrumb.Link>
-						</Breadcrumb.Item>
-						<Breadcrumb.Separator class="hidden md:block" />
-						<Breadcrumb.Item>
-							<Breadcrumb.Page>{data.title}</Breadcrumb.Page>
-						</Breadcrumb.Item>
-					</Breadcrumb.List>
-				</Breadcrumb.Root>
-			</div>
-		</header>
-	<div class="flex flex-1 flex-col gap-4 px-2 align-middle justify-center mx-a">
-
+<div class="flex flex-1 flex-col gap-4 px-2 align-middle justify-center bg-accent-mint-foreground/40">
 	{#if entry}
 		{@const Content = entry.Component}
 		{@const hero = entry.metadata.hero as string | undefined}
-		{@const summary = entry.metadata.summary as string | undefined}
 
 		<!-- FULL WIDTH HERO -->
-		<div class="min-w-full px-8 h-64 items-center justify-center mx-auto my-auto">
-			<div class="mx-auto w-full h-64 bg-accent-mint">
+		<div class="flex flex-col min-w-full items-center justify-center mx-auto my-auto">
+			<div
+				class="mx-auto w-full bg-accent-mint bg-[url('/content-assets/bgtexture.png')] bg-cover bg-center bg-blend-multiply"
+			>
 				{#if hero}
 					<img
 						src={hero}
 						alt=""
-						class="w-full h-[420px] object-cover"
+						class="max-h-2xl justify-center mx-auto py-8 px-2 object-cover mix-blend-luminosity brightness-75"
 					/>
 				{:else}
-					<div class="flex flex-col md:flex-row align-content-center justify-center">
-						<h1 class="text-center text-accent-mint-foreground">{entry.title}</h1>
-					</div>
 				{/if}
 			</div>
 		</div>
-
+		<div class="flex flex-col gap-2 justify-center mx-auto">
+		<h1 class="text-center text-accent-mint w-full leading-14 border-y-2 border-accent-mint py-4 mb-4">
+			{entry.title}
+		</h1>
+			<!--Tag groups-->
+			{#if entry.tags.length}
+			<div class="flex flex-row gap-2 align-middle w-full justify-center">
+				<span class="font-mono text-xs">Tags</span>
+				{#each entry.tags as tag (tag)}
+					<Button
+						variant="outline"
+						size="xs"
+						href="/pxreview/{entry.folder}?tag={tag}"
+					>
+						{tag}
+					</Button>
+				{/each}
+			</div>
+		{/if}
+	</div>
+		<div class="flex flex-col md:flex-row md:w-7xl align-content-center justify-center ">
+		<div class="md:w-md">
+		</div>
 		<!-- ARTICLE WIDTH -->
-		<article class="markdown-body mx-auto w-full max-w-3xl px-8">
-		{#if entry.tags.length}
-				<ul class="mb-4 flex flex-wrap gap-1.5 list-none p-0">
-					{#each entry.tags as tag (tag)}
-						<li>
-							<a
-								href="/pxreview/{entry.folder}?tag={tag}"
-								class="pill bg-muted text-muted-foreground hover:bg-muted/80 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors"
-							>
-								{tag}
-							</a>
-						</li>
-					{/each}
-				</ul>
-			{/if}
+		<article class="markdown-body mx-auto w-full max-w-3xl px-8 overflow-scroll">
 			<div class="markdown-body">
 				<Content />
 			</div>
 		</article>
+	</div>
 	{/if}
 </div>
-	</Sidebar.Inset>
-</Sidebar.Provider>
 
 <style>
 	.markdown-body :global(h1) {
@@ -109,6 +88,7 @@
 	.markdown-body :global(p) {
 		margin-bottom: 0.825rem;
 		line-height: 1.6;
+		font-size: 1.25rem;
 		text-wrap: balance;
 	}
 	.markdown-body :global(ul) {

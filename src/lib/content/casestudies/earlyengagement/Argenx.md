@@ -1,8 +1,23 @@
 ---
-title: "ArgenX's MG United Strategy"
-summary: "How medical affairs at ArgenX mapped the MG patient journey across diagnosis, treatment, and long-term care."
-tags: [myasthenia-gravis, rare-disease, early-engagement]
+title: "How argenX Set the Pace in the MG Attention Race"
+summary: "Starting in 2019, argenX began an aggressive campaign, championing patient stories and experiences across each piece of its corporate and unbranded messaging."
+tags: [myasthenia-gravis, rare-disease, early-engagement, corporate, unbranded]
+hero: "/content-assets/casestudies/argenx-hero.png"
 ---
+
+<script>
+  import Takeaways from '$lib/content/components/Takeaways.svelte';
+</script>
+
+<Takeaways title="Key takeaways">
+
+1. argenX’s succeds by speaking to whole lived experience of patients and caregivers, with materials and support centered around lifestyle, emotional wellness, advocacy, and everyday living, as well as medical education.
+
+2. Sustained investment mattered: argenX paired emotionally resonant storytelling with aggressive publishing cadence, SEO/search dominance, multimedia content, and international expansion
+
+3. Rather than limiting the patient voice to only patient-facing marketing, argenX rolled out patient voice components across all of its corporate communications, including an ever-growing presence on its annual reports. 
+
+</Takeaways>
 
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
 

@@ -21,6 +21,8 @@
 <style>
 	.takeaways {
 		margin: 2rem 0;
+		background-color: var(--color-accent-mint-foreground);
+		padding: 1rem;
 	}
 	.takeaways-title {
 		font-size: 1.75rem;
@@ -40,9 +42,10 @@
 	.takeaways-body :global(li) {
 		counter-increment: takeaway;
 		position: relative;
-		list-style: none;
+		list-style: none;	
 		padding-top: 2.25rem;
-		font-size: 1.0625rem;
+		margin-top: 2.25rem;
+		font-size: .8125rem;
 		line-height: 1.55;
 	}
 	.takeaways-body :global(li::before) {
@@ -66,8 +69,10 @@
 	}
 	.takeaways-body :global(p) {
 		margin: 0 0 0.5rem;
+		font-size: .8125rem;
 	}
 	.takeaways-body :global(p:last-child) {
 		margin-bottom: 0;
+		font-size: .925rem;
 	}
 </style>
