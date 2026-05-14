@@ -1,3 +1,9 @@
+---
+title: "Curiosity Gap (as a measure)"
+summary: "Operationalizing the curiosity gap as a measurable PX signal — what to instrument, what to ignore, what to compare against."
+tags: [measurement, attention]
+---
+
 # Curiosity Gap
 
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.

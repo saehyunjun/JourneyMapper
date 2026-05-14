@@ -1,13 +1,10 @@
 ---
-title: "Decision Blindness"
-summary: "How medical affairs at ArgenX mapped the MG patient journey across diagnosis, treatment, and long-term care."
+title: "Magic Moments"
+summary: "The specific instant when a user feels the product's core value click — and why it sets every retention curve that follows."
+tags: [motivation, engagement]
 ---
 
-- **When inbound information exceeds our mental space**, we struggle mentally to keep up. Overwhelming information flow makes tasks more difficult and details easier to miss.
-
-- Intrinsic cognitive load refers to the effort required by users to carry around information relevant to their goal, absorb new information and keep track of their goals.
-
-- Extraneous cognitive load refers to the mental processing that takes up resources but doesn't help users understand the content of an interface (e.g. distracting or unnecessary design elements).
+# Magic Moments
 
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
 

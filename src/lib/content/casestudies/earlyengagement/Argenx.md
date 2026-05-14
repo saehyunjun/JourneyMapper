@@ -1,13 +1,13 @@
 ---
-title: "Let's Chat CAR-T Website"
+title: "ArgenX's MG United Strategy"
 summary: "How medical affairs at ArgenX mapped the MG patient journey across diagnosis, treatment, and long-term care."
+tags: [myasthenia-gravis, rare-disease, early-engagement]
 ---
-
-## Highlights
 
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
 
 It enables medical affairs teams to map multi-stage clinical journeys with structured sentiment scoring, Plutchik emotion tagging, and inflection point analysis.
+
 
 ## What it does
 

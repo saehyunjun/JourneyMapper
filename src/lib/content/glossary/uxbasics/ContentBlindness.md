@@ -1,6 +1,7 @@
 ---
 title: "Content Blindness"
 summary: "When exposed to similar, reptitive, or identical content, people will pay less and less attention to it."
+tags: [attention, cognitive-bias]
 ---
 
 <script>

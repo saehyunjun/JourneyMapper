@@ -1,4 +1,10 @@
-# Magic Moments
+---
+title: "Curiosity Gap"
+summary: "The deliberate space between what someone knows and what they want to know — the engine behind opens, clicks, and read-throughs."
+tags: [attention, motivation]
+---
+
+# Curiosity Gap
 
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
 

@@ -2743,7 +2743,7 @@ padding: .25em 1em;
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-accent-orange: oklch(0.6 0.19 18);
-  --color-accent-orange-foreground: oklch(0.85 0.12 32);
+  --color-accent-orange-foreground: ;
   --color-accent-mint: oklch(0.565 0.192 165);
   --color-accent-mint-foreground: oklch(0.977 0.021 165);
   --color-sidebar: var(--sidebar);

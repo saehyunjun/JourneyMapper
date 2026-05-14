@@ -1,10 +1,14 @@
 ---
-title: "Let's Chat CAR-T — Website"
-summary: "Annotated breakdown of the Let's Chat CAR-T website — what lands with oncologists and what gets skimmed past."
-tags: [website, best-practice]
+title: "Decision Blindness"
+summary: "Why people often can't articulate why they chose what they chose — and how that distorts post-decision research."
+tags: [decision-making, cognitive-bias]
 ---
 
-## Highlights
+- **When inbound information exceeds our mental space**, we struggle mentally to keep up. Overwhelming information flow makes tasks more difficult and details easier to miss.
+
+- Intrinsic cognitive load refers to the effort required by users to carry around information relevant to their goal, absorb new information and keep track of their goals.
+
+- Extraneous cognitive load refers to the mental processing that takes up resources but doesn't help users understand the content of an interface (e.g. distracting or unnecessary design elements).
 
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
 

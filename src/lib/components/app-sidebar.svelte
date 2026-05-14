@@ -25,10 +25,10 @@
 				<Sidebar.MenuButton size="lg">
 					{#snippet child({ props })}
 						<a href="/pxreview" {...props}>
-							<div class="flex flex-col gap-0.5 leading-none border-b border-primary w-full">
-								<span class="font-semibold text-base uppercase">
+							<div class="flex flex-col gap-0.5 leading-none pb-2 border-b border-primary w-full">
+								<span class="font-bold text-base uppercase text-accent-foreground">
 									The PX Review</span>
-									<span class="text-xs">
+									<span class="text-xs text-muted-foreground">
 										By Patiently Studio
 									</span>
 							</div>

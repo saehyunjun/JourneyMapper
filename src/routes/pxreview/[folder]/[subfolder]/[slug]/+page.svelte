@@ -8,7 +8,7 @@
 
 	let { data } = $props();
 
-	const entry = $derived(findEntry(data.folder, data.slug));
+	const entry = $derived(findEntry(data.folder, data.subfolder, data.slug));
 </script>
 
 <Sidebar.Provider bind:open={() => sidebarState.open, (v) => (sidebarState.open = v)}>
@@ -58,6 +58,20 @@
 
 		<!-- ARTICLE WIDTH -->
 		<article class="markdown-body mx-auto w-full max-w-3xl px-8">
+		{#if entry.tags.length}
+				<ul class="mb-4 flex flex-wrap gap-1.5 list-none p-0">
+					{#each entry.tags as tag (tag)}
+						<li>
+							<a
+								href="/pxreview/{entry.folder}?tag={tag}"
+								class="pill bg-muted text-muted-foreground hover:bg-muted/80 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors"
+							>
+								{tag}
+							</a>
+						</li>
+					{/each}
+				</ul>
+			{/if}
 			<div class="markdown-body">
 				<Content />
 			</div>

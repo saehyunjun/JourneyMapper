@@ -1,4 +1,10 @@
-# Let's Chat CAR-T
+---
+title: "Sarepta & Duchenne"
+summary: "An unbranded look at how caregivers navigate the Duchenne diagnostic odyssey before treatment decisions begin."
+tags: [duchenne, rare-disease, caregiver, unbranded]
+---
+
+# Sarepta & Duchenne
 
 **JourneyMapper** is a patient and caregiver experience modeling tool built on the PatientlyIQ platform.
 
