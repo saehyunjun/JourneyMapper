@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { Button } from "$lib/components/ui/button/index.js";
 	import { findEntry } from "$lib/content";
+	import TableOfContents from "$lib/components/TableOfContents.svelte";
 
 	let { data } = $props();
 
 	const entry = $derived(findEntry(data.folder, data.subfolder, data.slug));
+
+	let articleEl: HTMLElement | null = $state(null);
 </script>
 
 <div class="flex flex-1 flex-col gap-4 px-2 align-middle justify-center bg-accent-mint-foreground/40">
@@ -48,10 +51,14 @@
 		{/if}
 	</div>
 		<div class="flex flex-col md:flex-row md:w-7xl align-content-center justify-center ">
-		<div class="md:w-md">
-		</div>
+		<aside class="md:w-md md:pl-4">
+			<TableOfContents article={articleEl} key={data.slug} />
+		</aside>
 		<!-- ARTICLE WIDTH -->
-		<article class="markdown-body mx-auto w-full max-w-3xl px-8 overflow-scroll">
+		<article
+			bind:this={articleEl}
+			class="markdown-body mx-auto w-full max-w-3xl px-8 overflow-scroll"
+		>
 			<div class="markdown-body">
 				<Content />
 			</div>

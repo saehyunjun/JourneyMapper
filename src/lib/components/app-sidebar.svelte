@@ -1,6 +1,5 @@
 <script lang="ts">
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import GalleryVerticalEndIcon from "@lucide/svelte/icons/gallery-vertical-end";
 	import type { ComponentProps } from "svelte";
 	import { sections, type ContentSection, type ContentEntry } from "$lib/content";
 	import { page } from "$app/state";

@@ -6,8 +6,8 @@
 </script>
 
 <div class="flex flex-1 flex-col gap-6">
-	<div class="flex flex-col py-24 bg-accent-mint px-8">
-		<p class="text-primary-foreground justify-center text-2xl md:text-4xl md:font-light leading-8 md:leading-11 text-pretty h-64 text-center  align-middle my-auto md:w-5xl mx-auto">
+	<div class="flex flex-col mx-auto w-full h-96 bg-accent-orange bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten align-middle justify-center">
+		<p class="text-primary-foreground justify-center text-2xl md:text-4xl md:font-light leading-8 md:leading-11 text-pretty md:w-5xl mx-auto">
 			<span class="font-bold text-primary-foreground">
 				PX Review</span> is a collection of best practices for patient advocacy, medical affairs, and clinical operations teams to reference as they collaborate in the building of patient experiences.
 		</p>
@@ -24,6 +24,7 @@
 							{section.description}
 						</p>
 					</div>
+          
 					<Button
 						variant="outline"
 						size="lg"

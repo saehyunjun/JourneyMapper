@@ -3,6 +3,7 @@ title: "How argenX Set the Pace in the MG Attention Race"
 summary: "Starting in 2019, argenX began an aggressive campaign, championing patient stories and experiences across each piece of its corporate and unbranded messaging."
 tags: [myasthenia-gravis, rare-disease, early-engagement, corporate, unbranded]
 hero: "/content-assets/casestudies/argenx-hero.png"
+color: "mint"
 ---
 
 <script>
