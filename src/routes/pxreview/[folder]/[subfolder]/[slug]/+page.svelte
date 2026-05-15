@@ -103,7 +103,7 @@
 	
 		<article
 			bind:this={articleEl}
-			class="markdown-body mx-auto w-5xl px-8"
+			class="markdown-body mx-auto md:w-5xl px-8"
 		>
 			<div class="markdown-body prose-body">
 				<Content />
