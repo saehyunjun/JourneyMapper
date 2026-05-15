@@ -13,6 +13,7 @@ color: "mint"
   import BarY from '$lib/charts/BarY.svelte';
   import BarYGrouped from '$lib/charts/BarYGrouped.svelte';
   import BarXStacked from '$lib/charts/BarXStacked.svelte';
+  import Radar from '$lib/charts/Radar.svelte';
   import contentMix from './data/mg-united-content-mix.json';
   import marketingSpend from './data/marketing-spend.json';
   import campaignComparison from './data/campaign-comparison.json';
@@ -45,6 +46,21 @@ color: "mint"
     value: d.value,
     unit: 'pages',
     extra: d.type === 'lifestyle' ? 'Lifestyle content' : 'Healthcare content'
+  });
+
+  // Figure 1 (radar variant) — series colored per group
+  const contentMixGroupColor = (g) =>
+    g.startsWith('Launch') ? 'var(--midgrayblue)' : 'var(--green)';
+  const contentMixRadarLegend = [
+    { label: 'Launch (June 2020)', color: 'var(--midgrayblue)' },
+    { label: 'Expansion (Oct 2024)', color: 'var(--green)' }
+  ];
+  const contentMixRadarTooltip = (d) => ({
+    title: d.category,
+    meta: d.group,
+    swatchColor: contentMixGroupColor(d.group),
+    value: d.value,
+    unit: 'pages'
   });
 
   // Figure 2 — Marketing spend (single-series vertical bars)
@@ -110,7 +126,7 @@ This transformation coincided with promising Phase 3 MG trial results and repres
 
 ## A Shift Toward Patient-Centered Corporate Messaging
 
-Prior to 2020, argenX annual reports largely resembled conventional biotech shareholder communications: financials, risk disclosures, and operational updates.
+Prior to 2020, argenX annual reports largely resembled conventional biotech shareholder communications: financials, risk disclosures, and operational updates. For example, though the company's 2019 annual report **mentions the word "patient" 326 times**, each instance relates to regulatory risk, clinical operations, and other factors that impact the sponsor first and foremost. 
 
 The 2020 annual report marked a dramatic change. Before even reaching the table of contents, readers encountered bold patient-facing language:
 
@@ -148,17 +164,16 @@ This broader focus differentiated MG United from many traditional pharma-sponsor
 
 By October 2024, MG United had expanded significantly and further concentrated on lifestyle-focused materials.
 
-<BarYGrouped
+<Radar
   figure="1"
   caption="MG United content mix, June 2020 vs October 2024"
   data={contentMixFlat}
   category="category"
   group="group"
   value="value"
-  colorBy={contentMixColor}
-  legend={contentMixLegend}
-  tooltip={contentMixTooltip}
-  labelRotate={-30}
+  colorBy={contentMixGroupColor}
+  legend={contentMixRadarLegend}
+  tooltip={contentMixRadarTooltip}
 />
 
 The platform increasingly emphasized:

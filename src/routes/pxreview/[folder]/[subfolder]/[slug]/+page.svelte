@@ -81,19 +81,19 @@
 				class="mx-auto w-full bg-accent-mint bg-[url('/content-assets/bgtexture.png')] bg-cover bg-center bg-blend-multiply"
 			>
 				{#if hero}
-					<img
-						src={hero}
-						alt=""
-						class="max-h-2xl justify-center mx-auto py-8 px-2 object-cover mix-blend-luminosity brightness-75"
-					/>
+				<img
+				src={hero}
+				alt=""
+				class="max-h-2xl justify-center mx-auto py-8 px-2 object-cover mix-blend-luminosity brightness-75"
+				/>
 				{:else}
 				{/if}
+				<h1 class="text-center text-accent-mint-foreground w-full leading-14 pb-8">
+					{entry.title}
+				</h1>
 			</div>
 		</div>
 	<div class="flex flex-col gap-2 justify-center mx-auto w-full">
-		<h1 class="text-center text-accent-mint w-full leading-14 border-y-2 border-accent-mint mb-4 py-4">
-			{entry.title}
-		</h1>
 	</div>
 	<div class="relative mx-auto flex w-full flex-col justify-center md:flex-row">
 		<aside class="sticky top-0 z-50 w-full md:top-20 md:z-10 md:w-md md:pl-4">

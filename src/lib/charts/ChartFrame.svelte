@@ -42,7 +42,7 @@
 		figure,
 		caption,
 		legend = [],
-		height = 320,
+		height = 420,
 		margin = { top: 24, right: 16, bottom: 40, left: 40 },
 		ariaLabel,
 		initialWidth = 640,
@@ -85,14 +85,15 @@
 </script>
 
 <figure
-	class="chart"
+	class="chart shadow-md border bg-muted"
 	class:is-revealed={isRevealed}
 	bind:this={wrapEl}
 	use:reveal={{ onReveal: startReveal }}
 >
-	<figcaption class="chart-title">
-		<span class="kicker">Figure {figure}</span>
+	<figcaption class="flex flex-row bg-muted border-b border-accent-foreground p-2 justify-between">
 		{caption}
+		<span class="caption">
+			Figure {figure}</span>
 	</figcaption>
 
 	<svg viewBox="0 0 {width} {height}" role="img" aria-label={ariaLabel ?? caption}>
@@ -103,7 +104,7 @@
 
 	{#if hover}
 		<div class="tooltip" style="left: {hover.x}px; top: {hover.y}px;" role="tooltip">
-			<div class="tt-title">{hover.content.title}</div>
+			<div class="label uppercase">{hover.content.title}</div>
 			{#if hover.content.meta}
 				<div class="tt-meta">{hover.content.meta}</div>
 			{/if}
@@ -125,16 +126,21 @@
 	{/if}
 
 	{#if legend.length}
-		<div class="legend">
+		<div class="legend bg-secondary-foreground p-2">
 			{#each legend as item (item.label)}
-				<span class="legend-swatch" style="background: {item.color};"></span>
-				<span class="legend-key">{item.label}</span>
+				<span class="jm-swatch-round" 
+				style="background: {item.color};"></span>
+				<span class="legend-key text-accent caption">
+					{item.label}</span>
 			{/each}
 		</div>
 	{/if}
 
 	{#if source}
-		<p class="source">Source: {source}</p>
+	<div class="w-full bg-muted-foreground justify-between p-2">
+		<span class="caption text-muted">
+			Source: {source}</span>
+		</div>
 	{/if}
 </figure>
 

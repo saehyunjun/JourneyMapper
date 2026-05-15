@@ -8,7 +8,7 @@
 	let {
 		ref = $bindable(null),
 		side = "left",
-		variant = "floating",
+		variant = "sidebar",
 		collapsible = "offcanvas",
 		class: className,
 		children,
@@ -25,7 +25,7 @@
 {#if collapsible === "none"}
 	<div
 		class={cn(
-			"bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col",
+			"bg-sidebar-foreground text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col",
 			className
 		)}
 		bind:this={ref}
