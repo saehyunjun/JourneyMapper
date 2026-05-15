@@ -1,4 +1,6 @@
 <script lang="ts">
+import { ChevronDown, ChevronUp } from "@lucide/svelte";
+
 	type Item = { id: string; text: string; level: 2 | 3 };
 
 	let {
@@ -88,7 +90,10 @@
 			onclick={() => (mobileOpen = !mobileOpen)}
 		>
 			<span>{activeText}</span>
-			<span class:open={mobileOpen} class="toc-chevron">⌄</span>
+			{#if mobileOpen}
+			<ChevronDown class="toc-chevron" />{:else}
+	<ChevronDown class="toc-chevron" />
+{/if}
 		</button>
 
 		{#if mobileOpen}
@@ -110,7 +115,7 @@
 
 	<!-- Desktop sticky TOC -->
 	<nav class="toc text-accent-mint-foreground w-full md:w-xs" aria-label="On this page">
-		<ul class="gap-4">
+		<ul class="gap-6">
 			{#each items as item (item.id)}
 				<li class="level-{item.level} pl-1">
 					<a href={`#${item.id}`} class:active={activeId === item.id}>
@@ -152,14 +157,38 @@
 	}
 
 	.toc-chevron {
-		font-size: 1.75rem;
-		line-height: 1;
-		transition: transform 180ms ease;
+	width: 1.25rem;
+	height: 1.25rem;
+	flex-shrink: 0;
+	transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toc-chevron.open {
+	transform: rotate(180deg);
+}
+
+.toc-mobile-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0.5rem 1.5rem 1rem;
+	background: var(--color-accent-mint);
+	border-top: 1px solid rgba(255, 255, 255, 0.25);
+
+	animation: toc-dropdown 220ms cubic-bezier(0.4, 0, 0.2, 1);
+	transform-origin: top;
+}
+
+@keyframes toc-dropdown {
+	from {
+		opacity: 0;
+		transform: translateY(-0.35rem) scaleY(0.96);
 	}
 
-	.toc-chevron.open {
-		transform: rotate(180deg);
+	to {
+		opacity: 1;
+		transform: translateY(0) scaleY(1);
 	}
+}
 
 	.toc-mobile-menu {
 		list-style: none;

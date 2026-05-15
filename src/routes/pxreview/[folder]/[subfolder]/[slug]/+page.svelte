@@ -70,7 +70,7 @@
 	});
 </script>
 
-<div class="flex flex-1 flex-col gap-4 align-middle justify-center bg-accent-mint-foreground/40">
+<div class="flex flex-1 flex-col align-middle justify-center bg-accent-mint-foreground/40">
 	{#if entry}
 		{@const Content = entry.Component}
 		{@const hero = entry.metadata.hero as string | undefined}
@@ -84,11 +84,11 @@
 				<img
 				src={hero}
 				alt=""
-				class="max-h-2xl justify-center mx-auto py-8 px-2 object-cover mix-blend-luminosity brightness-75"
+				class="max-h-3xl justify-center mx-auto py-8 px-2 object-cover mix-blend-luminosity brightness-75"
 				/>
 				{:else}
 				{/if}
-				<h1 class="text-center text-accent-mint-foreground w-full leading-14 pb-8">
+				<h1 class="text-center text-accent-mint-foreground w-full leading-14 pb-16">
 					{entry.title}
 				</h1>
 			</div>
@@ -103,9 +103,9 @@
 	
 		<article
 			bind:this={articleEl}
-			class="markdown-body mx-auto w-4xl px-8"
+			class="markdown-body mx-auto w-5xl px-8"
 		>
-			<div class="markdown-body">
+			<div class="markdown-body prose-body">
 				<Content />
 			</div>
 		</article>
@@ -164,6 +164,14 @@
 	.markdown-body :global(a) {
 		color: var(--primary);
 		text-decoration: underline;
+	}
+	/* On md+ screens, constrain prose to a readable measure so charts and
+	   figures (the `figure` children) read wider than the text. */
+	@media (min-width: 768px) {
+		.prose-body > :global(:is(h1, h2, h3, p, ul, ol, blockquote, hr, table)) {
+			max-width: 44rem;
+			margin-inline: auto;
+		}
 	}
 	.markdown-body :global(.reveal-text) {
 		opacity: 0;

@@ -9,6 +9,7 @@ color: "mint"
 <script>
   import Takeaways from '$lib/content/components/Takeaways.svelte';
   import Callout from '$lib/content/components/Callout.svelte';
+  import Figure from '$lib/content/components/Figure.svelte';
   import BarX from '$lib/charts/BarX.svelte';
   import BarY from '$lib/charts/BarY.svelte';
   import BarYGrouped from '$lib/charts/BarYGrouped.svelte';
@@ -127,6 +128,17 @@ This transformation coincided with promising Phase 3 MG trial results and repres
 ## A Shift Toward Patient-Centered Corporate Messaging
 
 Prior to 2020, argenX annual reports largely resembled conventional biotech shareholder communications: financials, risk disclosures, and operational updates. For example, though the company's 2019 annual report **mentions the word "patient" 326 times**, each instance relates to regulatory risk, clinical operations, and other factors that impact the sponsor first and foremost. 
+<Figure
+  src="/content-assets/casestudies/argenx2019report.png"
+  alt="2020 annual report cover with patient-facing language"
+  caption="The 2020 annual report opened with direct patient address."
+/>
+
+<Figure
+  src="/content-assets/casestudies/argenx2020report.png"
+  alt="2020 annual report cover with patient-facing language"
+  caption="The 2020 annual report opened with direct patient address."
+/>
 
 The 2020 annual report marked a dramatic change. Before even reaching the table of contents, readers encountered bold patient-facing language:
 
