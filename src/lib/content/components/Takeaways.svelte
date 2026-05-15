@@ -11,68 +11,52 @@
 </script>
 
 <section class="takeaways">
-	<h2 class="takeaways-title">
-		{title}</h2>
+	<h2 class="takeaways-title">{title}</h2>
+
 	<div class="takeaways-body">
 		{@render children()}
 	</div>
 </section>
 
 <style>
-	.takeaways {
-		margin: 2rem 0;
-		background-color: var(--color-accent-mint-foreground);
-		padding: 1rem;
-	}
-	.takeaways-title {
-		font-size: 1.75rem;
-		font-weight: 700;
-		margin: 0 0 1.5rem;
-		line-height: 1.1;
-	}
-	.takeaways-body :global(ul) {
-		list-style: none;
-		padding: 0;
-		margin: 0;
+
+	.takeaways-body :global(ol) {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-		gap: 2rem 2.5rem;
+		position: relative;
+		margin-top: 4rem;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 2rem 1.25rem;
+		list-style: none;
 		counter-reset: takeaway;
 	}
+
 	.takeaways-body :global(li) {
 		counter-increment: takeaway;
 		position: relative;
-		list-style: none;	
-		padding-top: 2.25rem;
-		margin-top: 2.25rem;
-		font-size: .8125rem;
-		line-height: 1.55;
+		padding-top: .525rem;
+		border-top: 2px solid var(--color-accent-mint);
+		font-size: 1rem;
+		line-height: 1.35;
 	}
+
 	.takeaways-body :global(li::before) {
 		content: counter(takeaway);
-		position: absolute;
-		top: 0;
-		left: 0;
-		font-size: 0.8125rem;
-		color: var(--muted-foreground);
+		position: relative;
+		font-weight: 800;
+		font-size: 0.825rem;
+		color: var(--color-accent-mint);
 		font-variant-numeric: tabular-nums;
 	}
-	.takeaways-body :global(li::after) {
-		content: "";
-		position: absolute;
-		top: 1.75rem;
-		left: 0;
-		right: 0;
-		height: 1px;
-		background: currentColor;
-		opacity: 0.2;
-	}
+
 	.takeaways-body :global(p) {
-		margin: 0 0 0.5rem;
-		font-size: .8125rem;
+		font-size: 1rem;
+		padding-top: 1rem;
+		line-height: 1.4;
 	}
-	.takeaways-body :global(p:last-child) {
-		margin-bottom: 0;
-		font-size: .925rem;
+
+	@media (max-width: 768px) {
+		.takeaways-body :global(ol) {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

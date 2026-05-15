@@ -8,9 +8,69 @@
 	const entry = $derived(findEntry(data.folder, data.subfolder, data.slug));
 
 	let articleEl: HTMLElement | null = $state(null);
+
+	// Selector targets only direct, prose-level children. Charts (`figure`) and
+	// boxed components (`section`, `aside`) animate themselves.
+	const REVEAL_SELECTOR =
+		':scope > h1, :scope > h2, :scope > h3, :scope > p, :scope > ul, :scope > ol, :scope > blockquote, :scope > hr, :scope > table';
+
+	function findScrollParent(node: HTMLElement): Element | null {
+		let el: HTMLElement | null = node.parentElement;
+		while (el && el !== document.documentElement) {
+			const overflowY = getComputedStyle(el).overflowY;
+			if (overflowY === 'auto' || overflowY === 'scroll') return el;
+			el = el.parentElement;
+		}
+		return null;
+	}
+
+	$effect(() => {
+		const root = articleEl?.querySelector<HTMLElement>('.markdown-body');
+		if (!root) return;
+		// Re-run when the article (slug) changes.
+		void data.slug;
+
+		const targets = Array.from(root.querySelectorAll<HTMLElement>(REVEAL_SELECTOR));
+		targets.forEach((el) => el.classList.add('reveal-text'));
+
+		const scrollParent = findScrollParent(root);
+		const viewH = () => window.innerHeight || document.documentElement.clientHeight;
+
+		const io = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('reveal-text--in');
+						io.unobserve(entry.target);
+					}
+				}
+			},
+			{ root: scrollParent, rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+		);
+
+		targets.forEach((el) => io.observe(el));
+
+		// Fallback: anything already in view at mount gets revealed immediately.
+		const t = window.setTimeout(() => {
+			const h = viewH();
+			for (const el of targets) {
+				if (el.classList.contains('reveal-text--in')) continue;
+				const rect = el.getBoundingClientRect();
+				if (rect.top < h && rect.bottom > 0) {
+					el.classList.add('reveal-text--in');
+					io.unobserve(el);
+				}
+			}
+		}, 400);
+
+		return () => {
+			io.disconnect();
+			clearTimeout(t);
+		};
+	});
 </script>
 
-<div class="flex flex-1 flex-col gap-4 px-2 align-middle justify-center bg-accent-mint-foreground/40">
+<div class="flex flex-1 flex-col gap-4 align-middle justify-center bg-accent-mint-foreground/40">
 	{#if entry}
 		{@const Content = entry.Component}
 		{@const hero = entry.metadata.hero as string | undefined}
@@ -30,34 +90,20 @@
 				{/if}
 			</div>
 		</div>
-		<div class="flex flex-col gap-2 justify-center mx-auto">
-		<h1 class="text-center text-accent-mint w-full leading-14 border-y-2 border-accent-mint py-4 mb-4">
+	<div class="flex flex-col gap-2 justify-center mx-auto w-full">
+		<h1 class="text-center text-accent-mint w-full leading-14 border-y-2 border-accent-mint mb-4 py-4">
 			{entry.title}
 		</h1>
-			<!--Tag groups-->
-			{#if entry.tags.length}
-			<div class="flex flex-row gap-2 align-middle w-full justify-center">
-				<span class="font-mono text-xs">Tags</span>
-				{#each entry.tags as tag (tag)}
-					<Button
-						variant="outline"
-						size="xs"
-						href="/pxreview/{entry.folder}?tag={tag}"
-					>
-						{tag}
-					</Button>
-				{/each}
-			</div>
-		{/if}
 	</div>
-		<div class="flex flex-col md:flex-row md:w-7xl align-content-center justify-center ">
-		<aside class="md:w-md md:pl-4">
-			<TableOfContents article={articleEl} key={data.slug} />
+	<div class="relative mx-auto flex w-full flex-col justify-center md:flex-row">
+		<aside class="sticky top-0 z-50 w-full md:top-20 md:z-10 md:w-md md:pl-4">
+			<TableOfContents 
+			article={articleEl} key={data.slug} />
 		</aside>
-		<!-- ARTICLE WIDTH -->
+	
 		<article
 			bind:this={articleEl}
-			class="markdown-body mx-auto w-full max-w-3xl px-8 overflow-scroll"
+			class="markdown-body mx-auto w-4xl px-8"
 		>
 			<div class="markdown-body">
 				<Content />
@@ -74,37 +120,42 @@
 		margin-bottom: 1rem;
 	}
 	.markdown-body :global(h2) {
-		border-top: 1px solid var(--color-gray-300);
-		font-size: 1.425rem;
+		border-top: 1.5px solid var(--color-primary);
+		border-bottom: 1.5px solid var(--color-primary);
+		font-size: 1.15rem;
 		font-weight: 500;
 		text-transform: uppercase;
 		padding-top: 1rem;
+		padding-bottom: 1rem;
 		margin-top: 1.5rem;
-		margin-bottom: 0.5rem;
+		margin-bottom: 2.25rem; 
 	}
 
 	.markdown-body :global(h3) {
-		font-size: .925rem;
+		font-size: 1.25rem;
 		font-weight: 700;
 		text-transform: uppercase;
 		margin-top: 1.5rem;
 		margin-bottom: 0.5rem;
 	}
 
-
 	.markdown-body :global(p) {
-		margin-bottom: 0.825rem;
+		margin-bottom: 1.25rem;
 		line-height: 1.6;
-		font-size: 1.25rem;
+		font-size: 1.125rem;
 		text-wrap: balance;
 	}
 	.markdown-body :global(ul) {
 		list-style: disc;
-		padding-left: 1.5rem;
-		margin-bottom: 0.75rem;
+		padding-left: 2.5rem;
+		margin-bottom: 1.25rem;
 	}
 	.markdown-body :global(li) {
-		margin-bottom: 0.25rem;
+		margin-top: 0.25rem;
+		margin-bottom: 0.525rem;
+		line-height: 1.6;
+		font-size: 1.125rem;
+		color: var(--color-secondary-foreground)
 	}
 	.markdown-body :global(hr) {
 		margin: 1.5rem 0;
@@ -113,5 +164,22 @@
 	.markdown-body :global(a) {
 		color: var(--primary);
 		text-decoration: underline;
+	}
+	.markdown-body :global(.reveal-text) {
+		opacity: 0;
+		transform: translateY(8px);
+		transition: opacity 600ms ease-out, transform 600ms ease-out;
+		will-change: opacity, transform;
+	}
+	.markdown-body :global(.reveal-text--in) {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.markdown-body :global(.reveal-text) {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
 	}
 </style>
