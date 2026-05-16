@@ -99,17 +99,15 @@
 			</div>
 		</div>
 
-	<div class="flex flex-col gap-2 justify-center mx-auto w-full">
-	</div>
-	<div class="relative mx-auto flex w-full flex-col justify-center md:flex-row">
-		<aside class="sticky top-0 z-50 w-full md:top-20 md:z-10 md:w-md md:pl-4">
+	<div class="relative mx-auto flex w-full md:max-w-7xl lg:w-full flex-col justify-center md:flex-row">
+		<aside class="sticky top-10 z-50 md:top-20 md:z-10 md:pr-16">
 			<TableOfContents 
 			article={articleEl} key={data.slug} />
 		</aside>
 	
 		<article
 			bind:this={articleEl}
-			class="markdown-body mx-auto md:w-5xl px-8"
+			class="markdown-body mx-auto md:w-4xl lg:w-5xl px-4 md:pl-16"
 		>
 			<div class="markdown-body prose-body">
 				<Content />
@@ -139,7 +137,7 @@
 	}
 
 	.markdown-body :global(h3) {
-		font-size: 1.25rem;
+		font-size: 1.15rem;
 		font-weight: 700;
 		text-transform: uppercase;
 		margin-top: 1.5rem;
