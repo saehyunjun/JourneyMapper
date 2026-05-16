@@ -45,7 +45,7 @@
 <Sidebar.Provider bind:open={() => sidebarState.open, (v) => (sidebarState.open = v)}>
 	<AppSidebar />
 	<Sidebar.Inset>
-		<header class="flex h-16 shrink-0 items-center gap-2 border-b">
+		<header class="flex h-fit py-1 shrink-0 items-center gap-2 border-b sticky top-0 z-99 bg-accent w-full">
 			<div class="flex items-center gap-2 px-3">
 				<Sidebar.Trigger />
 				<Separator orientation="vertical" class="me-2 h-4" />
@@ -70,3 +70,7 @@
 		{@render children()}
 	</Sidebar.Inset>
 </Sidebar.Provider>
+
+<div class="footer h-64 bg-accent-mint-background">
+
+</div>

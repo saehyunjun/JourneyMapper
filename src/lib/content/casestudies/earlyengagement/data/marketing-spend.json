@@ -1,7 +1,7 @@
 {
   "title": "argenX Marketing Services Spend",
-  "description": "Annual marketing services spend, including unbranded engagement initiatives like MG United.",
-  "source": "argenX financial reports, 2021–2023",
+  "description": "Annual marketing services spend",
+  "source": "argenX financial reports, 2021–2025",
   "unit": "USD millions",
   "currency": "USD",
   "points": [
@@ -21,6 +21,18 @@
       "year": 2023,
       "spend_millions": 202.15,
       "yoy_change_pct": 74,
+      "estimated": false
+    },
+    {
+      "year": 2024,
+      "spend_millions": 307,
+      "yoy_change_pct": 53,
+      "estimated": false
+    },
+    {
+      "year": 2025,
+      "spend_millions": 395.35,
+      "yoy_change_pct": 29,
       "estimated": false
     }
   ]

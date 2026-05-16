@@ -11,7 +11,7 @@ color: "mint"
   import Callout from '$lib/content/components/Callout.svelte';
   import Figure from '$lib/content/components/Figure.svelte';
   import BarX from '$lib/charts/BarX.svelte';
-  import BarY from '$lib/charts/BarY.svelte';
+  import ComboBarLine from '$lib/charts/ComboBarLine.svelte';
   import BarYGrouped from '$lib/charts/BarYGrouped.svelte';
   import BarXStacked from '$lib/charts/BarXStacked.svelte';
   import Radar from '$lib/charts/Radar.svelte';
@@ -64,16 +64,29 @@ color: "mint"
     unit: 'pages'
   });
 
-  // Figure 2 — Marketing spend (single-series vertical bars)
-  const spendValueFormat = (v) => `$${Number(v).toFixed(1)}M`;
+  // Figure 2 — Marketing spend (bars) + YoY change (line)
+  const spendValueFormat = (v) => `$${Number(v).toFixed(0)}M`;
+  const yoyValueFormat = (v) => `${v}%`;
   const spendColor = (d) => (d.estimated ? 'var(--midgrayblue)' : 'var(--darkgrayblue)');
   const spendLabelFormat = (d) => `${d.year}${d.estimated ? ' (est.)' : ''}`;
-  const spendTooltip = (d) => ({
-    title: `${d.year}${d.estimated ? ' (est.)' : ''}`,
-    value: spendValueFormat(d.spend_millions),
-    unit: 'marketing services',
-    extra: d.yoy_change_pct !== null ? `+${d.yoy_change_pct}% YoY` : undefined
-  });
+  const spendLegend = [
+    { label: 'Marketing spend', color: 'var(--darkgrayblue)' },
+    { label: 'YoY change', color: 'var(--orange)' }
+  ];
+  const spendTooltip = (d, series) =>
+    series === 'line'
+      ? {
+          title: `${d.year}`,
+          swatchColor: 'var(--orange)',
+          value: `${d.yoy_change_pct}%`,
+          unit: 'YoY change'
+        }
+      : {
+          title: `${d.year}${d.estimated ? ' (est.)' : ''}`,
+          swatchColor: spendColor(d),
+          value: `$${d.spend_millions.toFixed(1)}M`,
+          unit: 'marketing services'
+        };
 
   // Figure 3 — Campaign comparison (horizontal stacked bars)
   const campaignSegments = [
@@ -202,15 +215,21 @@ The ratio of lifestyle-focused to healthcare-focused content grew substantially 
 
 Financial reports from 2021–2023 suggest argenX significantly expanded investment into marketing services and unbranded engagement initiatives, with marketing services spend growing from an estimated $66.78M in 2021 to $202.15M in 2023 — a 74% year-over-year increase in both 2022 and 2023.
 
-<BarY
+<ComboBarLine
   figure="2"
-  caption="argenX marketing services spend, 2021–2023"
+  caption="argenX marketing services spend & YoY growth, 2021–2023"
   data={marketingSpend.points}
   label="year"
-  value="spend_millions"
+  bar="spend_millions"
+  line="yoy_change_pct"
   labelFormat={spendLabelFormat}
-  valueFormat={spendValueFormat}
-  colorBy={spendColor}
+  barValueFormat={spendValueFormat}
+  lineValueFormat={yoyValueFormat}
+  barColor={spendColor}
+  lineColor="var(--orange)"
+  barAxisLabel="Spend (USD M)"
+  lineAxisLabel="YoY change"
+  legend={spendLegend}
   tooltip={spendTooltip}
   source="argenX financial reports"
 />
@@ -312,7 +331,7 @@ As a result, More Than MG is forced to compete directly against an entrenched pl
 
 Despite argenX's leadership position, several patient populations remain under-addressed. One especially notable opportunity area is younger professionals living with MG.
 
-<Callout variant="info" title="Underserved Topics">
+<Callout variant="takeaway" title="Underserved Topics">
 
 - Early-stage career management
 - Remote work adaptation
@@ -327,6 +346,93 @@ A hypothetical content initiative targeted toward young professional women aged 
 
 Future competitors will benefit less from attempting to outscale MG United broadly and more from identifying niche audiences and underserved emotional or lifestyle conversations.
 
----
+## Recommendations
 
-*Powered by PatientlyIQ · Built for clinical insight*
+The MG treatment and digital engagement landscape has evolved
+significantly in 2024, marked by increasing dominance of newer
+treatments and intensifying competition for patient attention.
+Patient interest and enthusiasm for new MG treatment options
+has never been higher. As such, the competition for their attention
+has never been more necessary, nor has it ever been quite so
+competitive.
+
+<Callout variant="takeaway" title="Winning Community Awareness + Interest">
+
+- Center patient voices across key, public-facing
+corporate assets
+- Identify niche, long-tail keywords not currently
+dominated by argenX or Alexion
+- Develop a focused paid search strategy targeting
+specific demographic segments
+- Monitor competitor content strategies and identify
+emerging gaps
+- Track search trends in specialized topic areas
+- Create a balanced multi-channel approach where
+unbranded and branded initiatives work in tandem
+
+</Callout>
+
+argenX’s well-establish head start provide it a commanding
+share-of-voice. This head start is maintained through a robust
+content publishing scheduling and equally aggressive digital
+marketing strategies. Even so, Alexion has pivoted its entire
+unbranded marketing strategy in 2024 in order to meet the
+standard set by argenX and its MG United evorts. This clash is
+likely to make competition for organic patient attention much
+more digcult, and digital advertising much more expensive over
+the near-term.
+
+However, meaningful opportunities remain for new entrants.
+Rather than attempting to compete directly with established
+players, early success in this space can be built through
+identifying and serving under-addressed patient segments. One
+such potential audience is the young professional navigating
+career, lifestyle, and social challenges. We’re confident that there
+are many others cohorts who are similarly waiting for content and
+guidance dedicated specifically to their concerns and needs.
+It is probable that these trends in increased attention,
+enthusiasm, and engagement within the MG community will
+continue beyond 2024. How will sponsors respond to these new
+challenges and growing opportunities? We’re eager to find out.
+
+
+<Callout variant="takeaway" title="Navigating Digital Competition">
+
+- Avoid direct competition with MG United and More
+Than MG in general interest content
+- Diverentiate through deep focus on specific patient
+segments rather than broad coverage
+- Establish authority in underserved topics before
+expanding scope
+- Prioritize mobile-first, easily shareable content
+formats
+- Create modular content that can be repurposed
+across multiple channels
+
+</Callout>
+
+<Callout variant="citation" title="Citations">
+
+- Diverentiate through deep focus on specific patient
+segments rather than broad coverage
+- Establish authority in underserved topics before
+expanding scope
+- Prioritize mobile-first, easily shareable content
+formats
+- Create modular content that can be repurposed
+across multiple channels
+
+</Callout>
+
+<Callout variant="more" title="Further Reading">
+
+- Diverentiate through deep focus on specific patient
+segments rather than broad coverage
+- Establish authority in underserved topics before
+expanding scope
+- Prioritize mobile-first, easily shareable content
+formats
+- Create modular content that can be repurposed
+across multiple channels
+
+</Callout>

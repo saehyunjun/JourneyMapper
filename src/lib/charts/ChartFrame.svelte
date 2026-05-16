@@ -42,10 +42,10 @@
 		figure,
 		caption,
 		legend = [],
-		height = 420,
+		height = 520,
 		margin = { top: 24, right: 16, bottom: 40, left: 40 },
 		ariaLabel,
-		initialWidth = 640,
+		initialWidth = 620,
 		source,
 		body
 	}: Props = $props();

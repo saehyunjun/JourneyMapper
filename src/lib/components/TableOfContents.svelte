@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ChevronDown, ChevronUp } from "@lucide/svelte";
+import { ChevronDown } from "@lucide/svelte";
 
 	type Item = { id: string; text: string; level: 2 | 3 };
 
@@ -82,7 +82,7 @@ import { ChevronDown, ChevronUp } from "@lucide/svelte";
 
 {#if items.length > 0}
 	<!-- Mobile sticky dropdown -->
-	<nav class="toc-mobile text-accent-mint-foreground" aria-label="On this page">
+	<nav class="toc-mobile font-mono text-accent-mint-foreground" aria-label="On this page">
 		<button
 			type="button"
 			class="toc-mobile-trigger"
@@ -91,8 +91,8 @@ import { ChevronDown, ChevronUp } from "@lucide/svelte";
 		>
 			<span>{activeText}</span>
 			{#if mobileOpen}
-			<ChevronDown class="toc-chevron" />{:else}
-	<ChevronDown class="toc-chevron" />
+			<ChevronDown class="toc-chevron.open" />{:else}
+			<ChevronDown class="toc-chevron" />
 {/if}
 		</button>
 
@@ -114,7 +114,7 @@ import { ChevronDown, ChevronUp } from "@lucide/svelte";
 	</nav>
 
 	<!-- Desktop sticky TOC -->
-	<nav class="toc text-accent-mint-foreground w-full md:w-xs" aria-label="On this page">
+	<nav class="toc font-mono text-accent-mint-foreground w-full md:w-xs" aria-label="On this page">
 		<ul class="gap-6">
 			{#each items as item (item.id)}
 				<li class="level-{item.level} pl-1">
@@ -131,23 +131,21 @@ import { ChevronDown, ChevronUp } from "@lucide/svelte";
 	/* Mobile dropdown */
 	.toc-mobile {
 		position: sticky;
-		top: 0;
 		z-index: 50;
 		display: block;
 		width: 100%;
 		background: var(--color-accent-mint);
-		border-top: 2px solid var(--color-accent-mint-foreground);
 	}
 
 	.toc-mobile-trigger {
 		display: flex;
 		width: 100%;
-		min-height: 3.75rem;
+		min-height: 2.75rem;
 		align-items: center;
 		justify-content: space-between;
 		gap: 1rem;
 		padding: 0 1.5rem;
-		font-size: 1rem;
+		font-size: .825rem;
 		font-weight: 600;
 		text-align: left;
 		background: transparent;
@@ -156,7 +154,7 @@ import { ChevronDown, ChevronUp } from "@lucide/svelte";
 		cursor: pointer;
 	}
 
-	.toc-chevron {
+.toc-chevron {
 	width: 1.25rem;
 	height: 1.25rem;
 	flex-shrink: 0;
@@ -173,7 +171,6 @@ import { ChevronDown, ChevronUp } from "@lucide/svelte";
 	padding: 0.5rem 1.5rem 1rem;
 	background: var(--color-accent-mint);
 	border-top: 1px solid rgba(255, 255, 255, 0.25);
-
 	animation: toc-dropdown 220ms cubic-bezier(0.4, 0, 0.2, 1);
 	transform-origin: top;
 }
@@ -224,16 +221,18 @@ import { ChevronDown, ChevronUp } from "@lucide/svelte";
 	.toc {
 		display: none;
 		position: sticky;
-		top: 1rem;
+		top: 5rem;
 		align-self: flex-start;
+		font-size: .825rem;
 		padding: 0 1rem .5rem .5rem;
-		background-color: var(--color-accent-mint);
+		background-color: var(--color-accent-mint-background);
+		color: var(--color-accent-mint-foreground);
 		line-height: 1.25;
 	}
 
 	.toc ul {
 		list-style-type: none;
-		padding: 1rem;
+		padding: 1rem 0 2rem .5rem;
 		margin: 0;
 		display: flex;
 		flex-direction: column;
@@ -255,8 +254,7 @@ import { ChevronDown, ChevronUp } from "@lucide/svelte";
 	}
 
 	.toc a.active {
-		font-weight: 600;
-		list-style: square;
+		font-weight: 800;
 		opacity: 1;
 	}
 

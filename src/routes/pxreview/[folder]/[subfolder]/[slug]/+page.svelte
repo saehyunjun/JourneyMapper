@@ -70,7 +70,7 @@
 	});
 </script>
 
-<div class="flex flex-1 flex-col align-middle justify-center bg-accent-mint-foreground/40">
+<div class="flex flex-col align-middle justify-center bg-accent-mint-foreground/40 pb-32">
 	{#if entry}
 		{@const Content = entry.Component}
 		{@const hero = entry.metadata.hero as string | undefined}
@@ -78,21 +78,27 @@
 		<!-- FULL WIDTH HERO -->
 		<div class="flex flex-col min-w-full items-center justify-center mx-auto my-auto">
 			<div
-				class="mx-auto w-full bg-accent-mint bg-[url('/content-assets/bgtexture.png')] bg-cover bg-center bg-blend-multiply"
+				class="mx-auto w-full bg-accent-mint bg-[url('/content-assets/bgtexture.png')] bg-blend-multiply"
 			>
-				{#if hero}
+			{#if hero}
 				<img
 				src={hero}
 				alt=""
 				class="max-h-3xl justify-center mx-auto py-8 px-2 object-cover mix-blend-luminosity brightness-75"
 				/>
-				{:else}
-				{/if}
-				<h1 class="text-center text-accent-mint-foreground w-full leading-14 pb-16">
+			{:else}
+			<img
+			src={hero}
+			alt=""
+			class="max-h-3xl justify-center mx-auto py-8 px-2 object-cover mix-blend-luminosity brightness-75"
+			/>
+			{/if}
+				<h1 class="text-center text-4xl md:text-6xl leading-tight text-accent-mint-foreground w-full pb-16">
 					{entry.title}
 				</h1>
 			</div>
 		</div>
+
 	<div class="flex flex-col gap-2 justify-center mx-auto w-full">
 	</div>
 	<div class="relative mx-auto flex w-full flex-col justify-center md:flex-row">
@@ -112,6 +118,7 @@
 	</div>
 	{/if}
 </div>
+
 
 <style>
 	.markdown-body :global(h1) {

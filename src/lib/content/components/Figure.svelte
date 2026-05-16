@@ -10,16 +10,18 @@
 	} = $props();
 </script>
 
-<figure class="figure">
+<figure class="figure bg-secondary p-4 shadow-sm">
 	<img {src} {alt} />
 	{#if caption}
-		<figcaption>{caption}</figcaption>
+		<figcaption class="flex flex-row bg-muted border-t mt-4 border-accent-foreground pt-2 justify-between">
+		{caption}</figcaption>
 	{/if}
 </figure>
 
 <style>
 	.figure {
 		margin: 1.5rem 0;
+		background-color: var(--color-secondary);
 	}
 	.figure img {
 		width: 100%;
@@ -27,10 +29,5 @@
 		border-radius: 0.5rem;
 		display: block;
 	}
-	figcaption {
-		font-size: 0.875rem;
-		color: var(--muted-foreground);
-		margin-top: 0.5rem;
-		text-align: center;
-	}
+
 </style>

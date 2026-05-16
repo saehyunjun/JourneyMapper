@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
 
-	type Variant = "info" | "warning" | "success" | "takeaway";
+	type Variant = "info" | "warning" | "success" | "takeaway" | "citation" | "more";
 
 	let {
 		variant = "info",
@@ -16,40 +16,55 @@
 
 <aside class="callout callout-{variant}">
 	{#if title}
-		<div class="callout-title">
+		<div class="callout-title w-full border-b border-gray-300 p-4 mb-4">
 			{title}</div>
 	{/if}
-	<div class="callout-body">
+	<div class="callout-body pb-2">
 		{@render children()}
 	</div>
 </aside>
 
 <style>
 	.callout {
-		border-top: 3px solid var(--border);
-		padding: 0.75rem 1rem;
-		margin: 1rem 0;
-		background: var(--muted);
+		border-top: 5px solid var(--border);
+		margin: 3.5rem 0;
+		background: var(--color-sidebar-primary-foreground);
+		box-shadow: 10px 10px -10%;
 	}
+
 	.callout-info {
 		border-top-color: var(--primary);
 	}
 	.callout-warning {
-		border-top-color: #d97706;
+		border-top-color: var(--color-red-800);
 	}
+
+	.callout-takeaway {
+		border-top-color: var(--color-secondary-foreground);
+	}
+
 	.callout-success {
-		border-top-color: #059669;
+		border-top-color: var(--color-green-600);
 	}
+
+	.callout-citation {
+		border-top: 1px solid var(--primary);
+		box-shadow: none;
+		background-color: transparent;
+		list-style-type: square;
+	}
+
+	.callout-more {
+		border-top-color: var(--primary);
+	}
+
 	.callout-title {
-		font-weight: 800;
-		text-transform: uppercase;
-		font-family: var(--font-mono);
-		margin-bottom: .725rem;
-		padding-bottom: .425rem;
-		border-bottom: 1px solid var(--color-gray-600);
+		font-weight: 600;
+		font-family: var(--font-heading-alt);
+		text-transform: capitalize;
 	}
+
 	.callout-body :global(li) {
-		margin-bottom: 1rem;
 		padding-left: .5rem;
 		list-style-type: circle;
 	}
