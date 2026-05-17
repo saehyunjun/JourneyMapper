@@ -12,12 +12,22 @@
 		data,
 		color = 'var(--darkgrayblue)',
 		unitLabel = 'mentions',
-		rowHeight = 32
+		rowHeight = 32,
+		itemNoun = 'terms',
+		blockLabel = 'mention',
+		onselect,
+		selected = null
 	}: {
 		data: WordCount[];
 		color?: string;
 		unitLabel?: string;
 		rowHeight?: number;
+		itemNoun?: string;
+		blockLabel?: string;
+		/** When set, rows become clickable and call this with the clicked datum. */
+		onselect?: (datum: WordCount) => void;
+		/** `word` of the currently-selected row, highlighted and never dimmed. */
+		selected?: string | null;
 	} = $props();
 
 	let sortMode = $state<SortMode>('freq-desc');
@@ -42,7 +52,7 @@
 <div class="flex flex-col gap-3">
 	<div class="flex flex-wrap items-center justify-between gap-3">
 		<p class="caption text-muted-foreground">
-			{data.length} terms · sorted by
+			{data.length} {itemNoun} · sorted by
 			<span class="font-medium lowercase text-foreground">
 				{sortOptions.find((o) => o.id === sortMode)?.label}
 			</span>
@@ -96,12 +106,22 @@
 					{@const dim = hovered !== null && hovered !== d.word}
 					<g
 						class="row"
+						class:selectable={!!onselect}
+						class:row-selected={selected === d.word}
 						style:transform="translateY({by}px)"
-						style:opacity={dim ? 0.35 : 1}
+						style:opacity={dim && selected !== d.word ? 0.35 : 1}
 						transition:fade={{ duration: 200 }}
 						onpointerenter={() => (hovered = d.word)}
 						onpointerleave={() => (hovered = null)}
-						role="presentation"
+						onclick={() => onselect?.(d)}
+						onkeydown={(e) => {
+							if (onselect && (e.key === 'Enter' || e.key === ' ')) {
+								e.preventDefault();
+								onselect(d);
+							}
+						}}
+						role={onselect ? 'button' : 'presentation'}
+						tabindex={onselect ? 0 : undefined}
 					>
 						<rect
 							x="-128"
@@ -146,7 +166,7 @@
 	</div>
 
 	<p class="caption text-muted-foreground">
-		Each block is one mention · bar length = {unitLabel}. Hover a row to isolate it; use the
+		Each block is one {blockLabel} · bar length = {unitLabel}. Hover a row to isolate it; use the
 		controls above to re-sort.
 	</p>
 </div>
@@ -157,6 +177,19 @@
 			transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
 			opacity 150ms ease;
 		cursor: crosshair;
+	}
+	.row.selectable {
+		cursor: pointer;
+	}
+	.row.selectable:focus-visible {
+		outline: none;
+	}
+	.row.selectable:focus-visible .word-label {
+		text-decoration: underline;
+	}
+	.row-selected .word-label,
+	.row-selected .count-label {
+		font-weight: 700;
 	}
 	.word-label {
 		font-family: var(--font-body);

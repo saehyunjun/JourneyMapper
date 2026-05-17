@@ -133,6 +133,25 @@ export function themeFrequency(): { id: string; count: number; subthemes: { id: 
 export const emotionFrequency = (): { id: string; count: number }[] =>
 	tally(annotations.map((a) => a.emotions));
 
+/** Theme counts across the segment annotations matching an optional predicate. */
+export function themeCounts(
+	predicate: (a: Annotation) => boolean = () => true
+): { id: string; count: number }[] {
+	return tally(annotations.filter(predicate).map((a) => a.themes));
+}
+
+const questionOrder = new Map(questions.map((q) => [q.question_id, q.order]));
+
+/** Question ids with themed annotations — admin questions excluded, in interview-guide order. */
+export const themedQuestionIds: string[] = [...new Set(annotations.map((a) => a.question_id))]
+	.filter((id) => questionById.get(id)?.type !== 'admin')
+	.sort((a, b) => (questionOrder.get(a) ?? 99) - (questionOrder.get(b) ?? 99));
+
+/** Interview ids with themed annotations. */
+export const themedParticipantIds: string[] = [
+	...new Set(annotations.map((a) => a.interview_id))
+].sort();
+
 /** Counts of each sentiment value (-2..2) across annotations. */
 export function sentimentDistribution(): { value: number; count: number }[] {
 	return [-2, -1, 0, 1, 2].map((value) => ({
