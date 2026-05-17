@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AppSidebar from "$lib/components/app-sidebar.svelte";
+	import WctglpSidebar from "$lib/components/wctglp-sidebar.svelte";
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
 	import { Separator } from "$lib/components/ui/separator/index.js";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
@@ -16,7 +16,7 @@
 		const { folder, subfolder, slug } = page.params;
 		const atIndex = page.url.pathname === "/wctglpdemo";
 
-		list.push(atIndex ? { label: "GLP-1 Insights" } : { label: "PX Review", href: "/wctglpdemo" });
+		list.push(atIndex ? { label: "GLP-1 Insights" } : { label: "GLP-1 Insights", href: "/wctglpdemo" });
 
 		if (folder) {
 			const isLeaf = !subfolder && !slug;
@@ -43,7 +43,7 @@
 </script>
 
 <Sidebar.Provider bind:open={() => sidebarState.open, (v) => (sidebarState.open = v)}>
-	<AppSidebar />
+	<WctglpSidebar />
 	<Sidebar.Inset>
 		<header class="flex h-fit py-1 shrink-0 items-center gap-2 border-b sticky top-0 z-99 bg-accent w-full">
 			<div class="flex items-center gap-2 px-3">

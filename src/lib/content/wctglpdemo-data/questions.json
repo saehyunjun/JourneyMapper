@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "description": "Canonical interview-guide questions for the WCT GLP-1 weight-maintenance trial study. Interviewer turns in question_map.json are normalized to these question_ids so participant responses can be compared across interviews.",
+    "turn_roles": {
+      "question": "Interviewer turn that poses a canonical question for the first time in the interview.",
+      "probe": "Follow-up, clarification, or sub-item within an already-open question topic.",
+      "acknowledgment": "Interviewer turn with no question (e.g. 'Oh, okay'); inherits the surrounding topic for response continuity.",
+      "admin": "Logistics, introduction, or closing; not analytical content."
+    },
+    "notes": [
+      "The actual interviewer wording of every mapped turn lives in interviews_structured.json (with char offsets); this codebook holds only the canonical form, so question variants are not duplicated here.",
+      "This codebook is editable and versioned; bump schema_version when questions are added or revised."
+    ]
+  },
+  "questions": [
+    {
+      "question_id": "study_intro",
+      "type": "admin",
+      "order": 0,
+      "canonical_question": "Study introduction and protocol explanation."
+    },
+    {
+      "question_id": "stopping_glp1",
+      "type": "primary",
+      "order": 1,
+      "canonical_question": "Why would you consider stopping a GLP-1 medication, and what factors would influence that decision?"
+    },
+    {
+      "question_id": "try_different_medication",
+      "type": "primary",
+      "order": 2,
+      "canonical_question": "Would you consider trying a different medication from the one you currently take?"
+    },
+    {
+      "question_id": "trial_unapproved_medication",
+      "type": "primary",
+      "order": 3,
+      "canonical_question": "Would you consider participating in a clinical trial with a new medication that is not yet approved?"
+    },
+    {
+      "question_id": "trial_motivation",
+      "type": "primary",
+      "order": 4,
+      "canonical_question": "What factors, reasons, or incentives would attract you to taking part in a clinical trial?"
+    },
+    {
+      "question_id": "placebo_controlled_appeal",
+      "type": "primary",
+      "order": 5,
+      "canonical_question": "How do you feel about a placebo-controlled study, including one offering commercial medication after the initial period?"
+    },
+    {
+      "question_id": "monthly_injection_barrier",
+      "type": "primary",
+      "order": 6,
+      "canonical_question": "Would taking monthly injections over a 36-week period be a barrier to participating?"
+    },
+    {
+      "question_id": "compounded_vs_approved",
+      "type": "primary",
+      "order": 7,
+      "canonical_question": "How likely are you to purchase compounded semaglutide versus an approved product?"
+    },
+    {
+      "question_id": "trial_barriers",
+      "type": "primary",
+      "order": 8,
+      "canonical_question": "What barriers (e.g. fasting blood, glucose monitoring, visit frequency, travel) would affect your participation in a trial?"
+    },
+    {
+      "question_id": "trial_concerns",
+      "type": "primary",
+      "order": 9,
+      "canonical_question": "Are there any other concerns you would want to discuss with the study doctors before signing up?"
+    },
+    {
+      "question_id": "educational_support",
+      "type": "primary",
+      "order": 10,
+      "canonical_question": "What educational, diet, exercise, or lifestyle support would be most valuable to you?"
+    },
+    {
+      "question_id": "weight_loss_history",
+      "type": "primary",
+      "order": 11,
+      "canonical_question": "How have you tried to lose weight in the past, before starting a GLP-1?"
+    },
+    {
+      "question_id": "considered_trials_before",
+      "type": "primary",
+      "order": 12,
+      "canonical_question": "Have you considered or looked into taking part in a clinical trial before now?"
+    },
+    {
+      "question_id": "oral_glp_awareness",
+      "type": "primary",
+      "order": 13,
+      "canonical_question": "How aware are you of other weight-loss drugs in development, such as oral GLP-1s, and what is your perception of them?"
+    },
+    {
+      "question_id": "oral_vs_injectable",
+      "type": "primary",
+      "order": 14,
+      "canonical_question": "What are your thoughts on oral GLP-1s versus injectable medications?"
+    },
+    {
+      "question_id": "closing",
+      "type": "admin",
+      "order": 15,
+      "canonical_question": "Closing: anything else to add, and wrap-up."
+    }
+  ]
+}

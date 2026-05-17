@@ -1,0 +1,367 @@
+{
+  "meta": {
+    "study": "WCT GLP-1 Interviews",
+    "participants": [
+      "participant_6",
+      "participant_7",
+      "participant_8",
+      "participant_9",
+      "participant_10"
+    ],
+    "notes": [
+      "Words are normalized to lowercase.",
+      "Common stopwords should typically be filtered downstream for visualization.",
+      "Domain-relevant terms were preserved.",
+      "Counts are thematic approximations derived from interview content.",
+      "Structure is optimized for wordclouds, frequency charts, filters, and comparative analysis."
+    ]
+  },
+  "overall_word_usage": [
+    { "word": "weight", "count": 82 },
+    { "word": "medication", "count": 69 },
+    { "word": "trial", "count": 61 },
+    { "word": "glp-1", "count": 58 },
+    { "word": "insurance", "count": 34 },
+    { "word": "placebo", "count": 32 },
+    { "word": "injections", "count": 31 },
+    { "word": "travel", "count": 29 },
+    { "word": "cost", "count": 27 },
+    { "word": "access", "count": 26 },
+    { "word": "food", "count": 25 },
+    { "word": "support", "count": 24 },
+    { "word": "research", "count": 23 },
+    { "word": "nutrition", "count": 22 },
+    { "word": "health", "count": 22 },
+    { "word": "exercise", "count": 21 },
+    { "word": "side-effects", "count": 20 },
+    { "word": "maintenance", "count": 19 },
+    { "word": "monthly", "count": 19 },
+    { "word": "clinic", "count": 18 },
+    { "word": "compounded", "count": 18 },
+    { "word": "oral", "count": 17 },
+    { "word": "fitbit", "count": 14 },
+    { "word": "telehealth", "count": 13 },
+    { "word": "meal", "count": 13 },
+    { "word": "travel-time", "count": 12 },
+    { "word": "fasting", "count": 11 },
+    { "word": "glucose", "count": 10 },
+    { "word": "science", "count": 10 },
+    { "word": "inflammation", "count": 9 },
+    { "word": "food-noise", "count": 9 },
+    { "word": "stress", "count": 8 },
+    { "word": "apple-watch", "count": 7 },
+    { "word": "nutritionist", "count": 7 },
+    { "word": "learning", "count": 7 },
+    { "word": "webinars", "count": 6 },
+    { "word": "education", "count": 6 },
+    { "word": "tracking", "count": 6 },
+    { "word": "sleep", "count": 5 },
+    { "word": "travel-concierge", "count": 5 }
+  ],
+  "question_groups": {
+    "stopping_glp1": {
+      "question": "Why would you stop taking a GLP-1 medication?",
+      "top_words": [
+        { "word": "cost", "count": 16 },
+        { "word": "insurance", "count": 15 },
+        { "word": "access", "count": 14 },
+        { "word": "side-effects", "count": 11 },
+        { "word": "health", "count": 11 },
+        { "word": "weight", "count": 10 },
+        { "word": "inflammation", "count": 6 },
+        { "word": "food-noise", "count": 5 },
+        { "word": "mental", "count": 5 },
+        { "word": "family", "count": 4 }
+      ],
+      "participant_breakdown": {
+        "participant_6": [
+          { "word": "cost", "count": 5 },
+          { "word": "family", "count": 3 },
+          { "word": "side-effects", "count": 3 },
+          { "word": "insurance", "count": 2 }
+        ],
+        "participant_7": [
+          { "word": "inflammation", "count": 3 },
+          { "word": "brain", "count": 3 },
+          { "word": "maintenance", "count": 2 },
+          { "word": "microdosing", "count": 2 }
+        ],
+        "participant_8": [
+          { "word": "accessibility", "count": 4 },
+          { "word": "sleep", "count": 3 },
+          { "word": "goal-weight", "count": 3 }
+        ],
+        "participant_9": [
+          { "word": "insurance", "count": 5 },
+          { "word": "heartburn", "count": 2 },
+          { "word": "blood-pressure", "count": 2 }
+        ],
+        "participant_10": [
+          { "word": "surgery", "count": 2 },
+          { "word": "shortages", "count": 2 },
+          { "word": "lifelong", "count": 2 }
+        ]
+      }
+    },
+    "clinical_trial_interest": {
+      "question": "Would you participate in a clinical trial?",
+      "top_words": [
+        { "word": "research", "count": 14 },
+        { "word": "science", "count": 10 },
+        { "word": "help", "count": 9 },
+        { "word": "access", "count": 8 },
+        { "word": "future", "count": 7 },
+        { "word": "data", "count": 5 },
+        { "word": "medication", "count": 5 }
+      ],
+      "participant_breakdown": {
+        "participant_6": [
+          { "word": "access", "count": 3 },
+          { "word": "maintenance", "count": 2 }
+        ],
+        "participant_7": [
+          { "word": "learning", "count": 3 },
+          { "word": "help", "count": 2 }
+        ],
+        "participant_8": [
+          { "word": "science", "count": 5 },
+          { "word": "data", "count": 3 },
+          { "word": "contribute", "count": 2 }
+        ],
+        "participant_9": [
+          { "word": "research", "count": 4 },
+          { "word": "academic", "count": 2 }
+        ],
+        "participant_10": [
+          { "word": "world", "count": 2 },
+          { "word": "change", "count": 2 }
+        ]
+      }
+    },
+    "placebo_concerns": {
+      "question": "How do you feel about placebo-controlled studies?",
+      "top_words": [
+        { "word": "weight-gain", "count": 13 },
+        { "word": "fear", "count": 9 },
+        { "word": "placebo", "count": 9 },
+        { "word": "risk", "count": 8 },
+        { "word": "medication", "count": 8 },
+        { "word": "science", "count": 4 }
+      ],
+      "participant_breakdown": {
+        "participant_6": [
+          { "word": "fear", "count": 4 },
+          { "word": "weight-gain", "count": 4 }
+        ],
+        "participant_7": [
+          { "word": "white-knuckle", "count": 2 },
+          { "word": "frightened", "count": 2 }
+        ],
+        "participant_8": [
+          { "word": "science", "count": 2 },
+          { "word": "important", "count": 2 }
+        ],
+        "participant_9": [
+          { "word": "randomized", "count": 1 },
+          { "word": "control", "count": 1 }
+        ],
+        "participant_10": [
+          { "word": "help-others", "count": 2 },
+          { "word": "pray", "count": 1 }
+        ]
+      }
+    },
+    "travel_and_convenience": {
+      "question": "What travel or logistical barriers exist?",
+      "top_words": [
+        { "word": "travel", "count": 19 },
+        { "word": "time", "count": 17 },
+        { "word": "schedule", "count": 14 },
+        { "word": "clinic", "count": 11 },
+        { "word": "home-visits", "count": 9 },
+        { "word": "telehealth", "count": 8 },
+        { "word": "monthly", "count": 8 }
+      ],
+      "participant_breakdown": {
+        "participant_6": [
+          { "word": "vacation", "count": 2 },
+          { "word": "flexible", "count": 2 }
+        ],
+        "participant_7": [
+          { "word": "travel", "count": 3 },
+          { "word": "easy", "count": 2 }
+        ],
+        "participant_8": [
+          { "word": "schedule", "count": 5 },
+          { "word": "travel-lifestyle", "count": 3 }
+        ],
+        "participant_9": [
+          { "word": "three-hours", "count": 3 },
+          { "word": "telehealth", "count": 3 },
+          { "word": "time", "count": 4 }
+        ],
+        "participant_10": [
+          { "word": "transportation", "count": 3 },
+          { "word": "atlanta", "count": 1 }
+        ]
+      }
+    },
+    "oral_vs_injectable": {
+      "question": "What are your thoughts on oral GLP-1s versus injections?",
+      "top_words": [
+        { "word": "oral", "count": 15 },
+        { "word": "injections", "count": 14 },
+        { "word": "travel", "count": 9 },
+        { "word": "easy", "count": 8 },
+        { "word": "predictability", "count": 4 },
+        { "word": "convenience", "count": 4 }
+      ],
+      "participant_breakdown": {
+        "participant_6": [
+          { "word": "consistency", "count": 2 },
+          { "word": "remembering", "count": 2 }
+        ],
+        "participant_7": [
+          { "word": "sublingual", "count": 5 },
+          { "word": "travel", "count": 3 },
+          { "word": "easy", "count": 4 }
+        ],
+        "participant_8": [
+          { "word": "predictability", "count": 3 },
+          { "word": "absorption", "count": 2 }
+        ],
+        "participant_9": [
+          { "word": "pill", "count": 3 },
+          { "word": "needle-phobic", "count": 1 }
+        ],
+        "participant_10": [
+          { "word": "faster", "count": 2 },
+          { "word": "stronger", "count": 1 }
+        ]
+      }
+    },
+    "educational_support": {
+      "question": "What educational or lifestyle support would be valuable?",
+      "top_words": [
+        { "word": "nutrition", "count": 13 },
+        { "word": "videos", "count": 5 },
+        { "word": "webinars", "count": 5 },
+        { "word": "meal-planning", "count": 5 },
+        { "word": "tracking", "count": 4 },
+        { "word": "learning", "count": 4 },
+        { "word": "classes", "count": 4 }
+      ],
+      "participant_breakdown": {
+        "participant_6": [
+          { "word": "provider-access", "count": 2 }
+        ],
+        "participant_7": [
+          { "word": "research", "count": 4 },
+          { "word": "knowledge", "count": 3 }
+        ],
+        "participant_8": [
+          { "word": "nutritionist", "count": 3 },
+          { "word": "tracking-app", "count": 2 }
+        ],
+        "participant_9": [
+          { "word": "modules", "count": 3 },
+          { "word": "classes", "count": 3 },
+          { "word": "discount", "count": 2 }
+        ],
+        "participant_10": [
+          { "word": "videos", "count": 3 },
+          { "word": "visual-learner", "count": 2 }
+        ]
+      }
+    },
+    "emotional_and_non_weight_benefits": {
+      "question": "What non-weight-loss benefits did you experience?",
+      "top_words": [
+        { "word": "inflammation", "count": 9 },
+        { "word": "food-noise", "count": 8 },
+        { "word": "stress", "count": 7 },
+        { "word": "mental", "count": 6 },
+        { "word": "sleep", "count": 5 },
+        { "word": "joy", "count": 4 },
+        { "word": "energy", "count": 4 }
+      ],
+      "participant_breakdown": {
+        "participant_7": [
+          { "word": "food-noise", "count": 5 },
+          { "word": "stress", "count": 4 },
+          { "word": "joyful", "count": 3 }
+        ],
+        "participant_8": [
+          { "word": "sleep", "count": 4 },
+          { "word": "teeth-grinding", "count": 2 }
+        ],
+        "participant_9": [
+          { "word": "blood-pressure", "count": 2 },
+          { "word": "heartburn", "count": 2 }
+        ]
+      }
+    }
+  },
+  "participant_profiles": {
+    "participant_6": {
+      "dominant_words": [
+        "cost",
+        "insurance",
+        "placebo",
+        "travel",
+        "apple-watch",
+        "maintenance",
+        "provider",
+        "injectable"
+      ]
+    },
+    "participant_7": {
+      "dominant_words": [
+        "food-noise",
+        "stress",
+        "inflammation",
+        "sublingual",
+        "research",
+        "knowledge",
+        "travel",
+        "microdosing"
+      ]
+    },
+    "participant_8": {
+      "dominant_words": [
+        "science",
+        "scheduling",
+        "travel",
+        "predictability",
+        "nutritionist",
+        "tracking-app",
+        "data",
+        "convenience"
+      ]
+    },
+    "participant_9": {
+      "dominant_words": [
+        "telehealth",
+        "insurance",
+        "time",
+        "education",
+        "modules",
+        "pill",
+        "access",
+        "distance"
+      ]
+    },
+    "participant_10": {
+      "dominant_words": [
+        "stall",
+        "injection",
+        "videos",
+        "visual-learning",
+        "transportation",
+        "support",
+        "exercise",
+        "nutrition"
+      ]
+    }
+  }
+}

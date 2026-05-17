@@ -1,0 +1,6686 @@
+{
+  "meta": {
+    "schema_version": "1.1",
+    "study_id": "wct_glp1",
+    "generated_at": "2026-05-17T18:21:55.586Z",
+    "generator": "scripts/build-word-usage.mjs",
+    "sources": [
+      "src/lib/content/wctglpdemo-data/segments.json",
+      "src/lib/content/wctglpdemo-data/questions.json"
+    ],
+    "scope": "participant segments",
+    "tokenization": {
+      "lowercased": true,
+      "curly_apostrophes_normalized": true,
+      "token_pattern": "[a-z0-9]+(?:['-][a-z0-9]+)*",
+      "min_length": 2,
+      "pure_numeric_tokens_dropped": true,
+      "stopword_list": "standard English function words + contractions + speech fillers + discourse/vague fillers",
+      "stopwords_count": 287,
+      "stemming": false
+    },
+    "extended_stopwords": [
+      "able",
+      "absolutely",
+      "actually",
+      "anybody",
+      "anyone",
+      "anything",
+      "anyway",
+      "anyways",
+      "basically",
+      "bit",
+      "came",
+      "come",
+      "comes",
+      "coming",
+      "definitely",
+      "even",
+      "everybody",
+      "everyone",
+      "everything",
+      "get",
+      "gets",
+      "getting",
+      "go",
+      "goes",
+      "going",
+      "gone",
+      "gonna",
+      "good",
+      "got",
+      "gotta",
+      "gotten",
+      "great",
+      "guess",
+      "guessed",
+      "honestly",
+      "kind",
+      "kinda",
+      "knew",
+      "know",
+      "knowing",
+      "knows",
+      "let",
+      "lets",
+      "letting",
+      "like",
+      "liked",
+      "likes",
+      "literally",
+      "look",
+      "looked",
+      "looking",
+      "looks",
+      "lot",
+      "lots",
+      "made",
+      "make",
+      "makes",
+      "making",
+      "many",
+      "maybe",
+      "mean",
+      "means",
+      "meant",
+      "much",
+      "nah",
+      "nope",
+      "nothing",
+      "obviously",
+      "one",
+      "ones",
+      "pretty",
+      "probably",
+      "put",
+      "puts",
+      "putting",
+      "really",
+      "right",
+      "said",
+      "say",
+      "saying",
+      "says",
+      "somebody",
+      "someone",
+      "something",
+      "sort",
+      "sorta",
+      "still",
+      "stuff",
+      "sure",
+      "tell",
+      "telling",
+      "tells",
+      "thing",
+      "things",
+      "think",
+      "thinking",
+      "thinks",
+      "thought",
+      "told",
+      "wanna",
+      "want",
+      "wanted",
+      "wanting",
+      "wants",
+      "way",
+      "ways",
+      "went",
+      "yep",
+      "yes",
+      "yup"
+    ],
+    "notes": [
+      "Deterministic, code-counted frequencies. Same input produces identical output.",
+      "Counts participant speech only; interviewer prompts are not in segments.json.",
+      "No stemming: e.g. \"injection\" and \"injections\" are counted separately.",
+      "question_groups are grouped by canonical question; admin questions (intro/closing) are excluded.",
+      "extended_stopwords are conversational/vague fillers removed by editorial choice."
+    ]
+  },
+  "overall_word_usage": [
+    {
+      "word": "weight",
+      "count": 15
+    },
+    {
+      "word": "medication",
+      "count": 12
+    },
+    {
+      "word": "access",
+      "count": 9
+    },
+    {
+      "word": "people",
+      "count": 9
+    },
+    {
+      "word": "stop",
+      "count": 9
+    },
+    {
+      "word": "different",
+      "count": 8
+    },
+    {
+      "word": "research",
+      "count": 8
+    },
+    {
+      "word": "amazing",
+      "count": 7
+    },
+    {
+      "word": "day",
+      "count": 7
+    },
+    {
+      "word": "injection",
+      "count": 7
+    },
+    {
+      "word": "long",
+      "count": 7
+    },
+    {
+      "word": "taking",
+      "count": 7
+    },
+    {
+      "word": "time",
+      "count": 7
+    },
+    {
+      "word": "better",
+      "count": 6
+    },
+    {
+      "word": "doctor",
+      "count": 6
+    },
+    {
+      "word": "done",
+      "count": 6
+    },
+    {
+      "word": "life",
+      "count": 6
+    },
+    {
+      "word": "tried",
+      "count": 6
+    },
+    {
+      "word": "compound",
+      "count": 5
+    },
+    {
+      "word": "drive",
+      "count": 5
+    },
+    {
+      "word": "heard",
+      "count": 5
+    },
+    {
+      "word": "hours",
+      "count": 5
+    },
+    {
+      "word": "loss",
+      "count": 5
+    },
+    {
+      "word": "lost",
+      "count": 5
+    },
+    {
+      "word": "medications",
+      "count": 5
+    },
+    {
+      "word": "month",
+      "count": 5
+    },
+    {
+      "word": "telehealth",
+      "count": 5
+    },
+    {
+      "word": "trials",
+      "count": 5
+    },
+    {
+      "word": "try",
+      "count": 5
+    },
+    {
+      "word": "benefit",
+      "count": 4
+    },
+    {
+      "word": "clinical",
+      "count": 4
+    },
+    {
+      "word": "counseling",
+      "count": 4
+    },
+    {
+      "word": "first",
+      "count": 4
+    },
+    {
+      "word": "insurance",
+      "count": 4
+    },
+    {
+      "word": "live",
+      "count": 4
+    },
+    {
+      "word": "participate",
+      "count": 4
+    },
+    {
+      "word": "stall",
+      "count": 4
+    },
+    {
+      "word": "stay",
+      "count": 4
+    },
+    {
+      "word": "three",
+      "count": 4
+    },
+    {
+      "word": "times",
+      "count": 4
+    },
+    {
+      "word": "tirzepatide",
+      "count": 4
+    },
+    {
+      "word": "two",
+      "count": 4
+    },
+    {
+      "word": "weekly",
+      "count": 4
+    },
+    {
+      "word": "another",
+      "count": 3
+    },
+    {
+      "word": "away",
+      "count": 3
+    },
+    {
+      "word": "bigger",
+      "count": 3
+    },
+    {
+      "word": "blood",
+      "count": 3
+    },
+    {
+      "word": "cause",
+      "count": 3
+    },
+    {
+      "word": "classes",
+      "count": 3
+    },
+    {
+      "word": "continue",
+      "count": 3
+    },
+    {
+      "word": "diet",
+      "count": 3
+    },
+    {
+      "word": "discount",
+      "count": 3
+    },
+    {
+      "word": "down",
+      "count": 3
+    },
+    {
+      "word": "drug",
+      "count": 3
+    },
+    {
+      "word": "far",
+      "count": 3
+    },
+    {
+      "word": "glp-1s",
+      "count": 3
+    },
+    {
+      "word": "help",
+      "count": 3
+    },
+    {
+      "word": "huge",
+      "count": 3
+    },
+    {
+      "word": "injections",
+      "count": 3
+    },
+    {
+      "word": "learning",
+      "count": 3
+    },
+    {
+      "word": "major",
+      "count": 3
+    },
+    {
+      "word": "manager",
+      "count": 3
+    },
+    {
+      "word": "monthly",
+      "count": 3
+    },
+    {
+      "word": "need",
+      "count": 3
+    },
+    {
+      "word": "next",
+      "count": 3
+    },
+    {
+      "word": "online",
+      "count": 3
+    },
+    {
+      "word": "order",
+      "count": 3
+    },
+    {
+      "word": "personally",
+      "count": 3
+    },
+    {
+      "word": "positive",
+      "count": 3
+    },
+    {
+      "word": "semaglutide",
+      "count": 3
+    },
+    {
+      "word": "started",
+      "count": 3
+    },
+    {
+      "word": "studies",
+      "count": 3
+    },
+    {
+      "word": "support",
+      "count": 3
+    },
+    {
+      "word": "take",
+      "count": 3
+    },
+    {
+      "word": "truly",
+      "count": 3
+    },
+    {
+      "word": "trying",
+      "count": 3
+    },
+    {
+      "word": "unless",
+      "count": 3
+    },
+    {
+      "word": "week",
+      "count": 3
+    },
+    {
+      "word": "without",
+      "count": 3
+    },
+    {
+      "word": "accessible",
+      "count": 2
+    },
+    {
+      "word": "approved",
+      "count": 2
+    },
+    {
+      "word": "aside",
+      "count": 2
+    },
+    {
+      "word": "attractive",
+      "count": 2
+    },
+    {
+      "word": "available",
+      "count": 2
+    },
+    {
+      "word": "back",
+      "count": 2
+    },
+    {
+      "word": "break",
+      "count": 2
+    },
+    {
+      "word": "chances",
+      "count": 2
+    },
+    {
+      "word": "change",
+      "count": 2
+    },
+    {
+      "word": "company",
+      "count": 2
+    },
+    {
+      "word": "complication",
+      "count": 2
+    },
+    {
+      "word": "consider",
+      "count": 2
+    },
+    {
+      "word": "cost",
+      "count": 2
+    },
+    {
+      "word": "course",
+      "count": 2
+    },
+    {
+      "word": "cover",
+      "count": 2
+    },
+    {
+      "word": "currently",
+      "count": 2
+    },
+    {
+      "word": "days",
+      "count": 2
+    },
+    {
+      "word": "depend",
+      "count": 2
+    },
+    {
+      "word": "depends",
+      "count": 2
+    },
+    {
+      "word": "doctors",
+      "count": 2
+    },
+    {
+      "word": "education",
+      "count": 2
+    },
+    {
+      "word": "effects",
+      "count": 2
+    },
+    {
+      "word": "eli",
+      "count": 2
+    },
+    {
+      "word": "ever",
+      "count": 2
+    },
+    {
+      "word": "fully",
+      "count": 2
+    },
+    {
+      "word": "gained",
+      "count": 2
+    },
+    {
+      "word": "gastric",
+      "count": 2
+    },
+    {
+      "word": "happen",
+      "count": 2
+    },
+    {
+      "word": "health",
+      "count": 2
+    },
+    {
+      "word": "heartburn",
+      "count": 2
+    },
+    {
+      "word": "helpful",
+      "count": 2
+    },
+    {
+      "word": "hour",
+      "count": 2
+    },
+    {
+      "word": "idea",
+      "count": 2
+    },
+    {
+      "word": "issues",
+      "count": 2
+    },
+    {
+      "word": "last",
+      "count": 2
+    },
+    {
+      "word": "lasts",
+      "count": 2
+    },
+    {
+      "word": "lessons",
+      "count": 2
+    },
+    {
+      "word": "lifestyle",
+      "count": 2
+    },
+    {
+      "word": "lilly",
+      "count": 2
+    },
+    {
+      "word": "local",
+      "count": 2
+    },
+    {
+      "word": "losing",
+      "count": 2
+    },
+    {
+      "word": "manage",
+      "count": 2
+    },
+    {
+      "word": "management",
+      "count": 2
+    },
+    {
+      "word": "modules",
+      "count": 2
+    },
+    {
+      "word": "motivator",
+      "count": 2
+    },
+    {
+      "word": "mounjaro",
+      "count": 2
+    },
+    {
+      "word": "name",
+      "count": 2
+    },
+    {
+      "word": "never",
+      "count": 2
+    },
+    {
+      "word": "nurse",
+      "count": 2
+    },
+    {
+      "word": "nursing",
+      "count": 2
+    },
+    {
+      "word": "nutrition",
+      "count": 2
+    },
+    {
+      "word": "nutritional",
+      "count": 2
+    },
+    {
+      "word": "obesity",
+      "count": 2
+    },
+    {
+      "word": "participated",
+      "count": 2
+    },
+    {
+      "word": "pill",
+      "count": 2
+    },
+    {
+      "word": "placebo",
+      "count": 2
+    },
+    {
+      "word": "plan",
+      "count": 2
+    },
+    {
+      "word": "plenty",
+      "count": 2
+    },
+    {
+      "word": "pocket",
+      "count": 2
+    },
+    {
+      "word": "pressure",
+      "count": 2
+    },
+    {
+      "word": "prohibitive",
+      "count": 2
+    },
+    {
+      "word": "read",
+      "count": 2
+    },
+    {
+      "word": "reason",
+      "count": 2
+    },
+    {
+      "word": "retatrutide",
+      "count": 2
+    },
+    {
+      "word": "save",
+      "count": 2
+    },
+    {
+      "word": "see",
+      "count": 2
+    },
+    {
+      "word": "sicker",
+      "count": 2
+    },
+    {
+      "word": "side",
+      "count": 2
+    },
+    {
+      "word": "sign",
+      "count": 2
+    },
+    {
+      "word": "signed",
+      "count": 2
+    },
+    {
+      "word": "significant",
+      "count": 2
+    },
+    {
+      "word": "since",
+      "count": 2
+    },
+    {
+      "word": "six",
+      "count": 2
+    },
+    {
+      "word": "sometimes",
+      "count": 2
+    },
+    {
+      "word": "surgery",
+      "count": 2
+    },
+    {
+      "word": "taken",
+      "count": 2
+    },
+    {
+      "word": "teach",
+      "count": 2
+    },
+    {
+      "word": "though",
+      "count": 2
+    },
+    {
+      "word": "thousand",
+      "count": 2
+    },
+    {
+      "word": "throughout",
+      "count": 2
+    },
+    {
+      "word": "trial",
+      "count": 2
+    },
+    {
+      "word": "understand",
+      "count": 2
+    },
+    {
+      "word": "watch",
+      "count": 2
+    },
+    {
+      "word": "whenever",
+      "count": 2
+    },
+    {
+      "word": "working",
+      "count": 2
+    },
+    {
+      "word": "year",
+      "count": 2
+    },
+    {
+      "word": "yet",
+      "count": 2
+    },
+    {
+      "word": "academic",
+      "count": 1
+    },
+    {
+      "word": "accepted",
+      "count": 1
+    },
+    {
+      "word": "actual",
+      "count": 1
+    },
+    {
+      "word": "added",
+      "count": 1
+    },
+    {
+      "word": "advancing",
+      "count": 1
+    },
+    {
+      "word": "affordability",
+      "count": 1
+    },
+    {
+      "word": "affordable",
+      "count": 1
+    },
+    {
+      "word": "ahead",
+      "count": 1
+    },
+    {
+      "word": "allowed",
+      "count": 1
+    },
+    {
+      "word": "along",
+      "count": 1
+    },
+    {
+      "word": "already",
+      "count": 1
+    },
+    {
+      "word": "amount",
+      "count": 1
+    },
+    {
+      "word": "answer",
+      "count": 1
+    },
+    {
+      "word": "anticipate",
+      "count": 1
+    },
+    {
+      "word": "appealing",
+      "count": 1
+    },
+    {
+      "word": "applied",
+      "count": 1
+    },
+    {
+      "word": "area",
+      "count": 1
+    },
+    {
+      "word": "arranged",
+      "count": 1
+    },
+    {
+      "word": "asked",
+      "count": 1
+    },
+    {
+      "word": "ate",
+      "count": 1
+    },
+    {
+      "word": "atkins",
+      "count": 1
+    },
+    {
+      "word": "atlanta",
+      "count": 1
+    },
+    {
+      "word": "attract",
+      "count": 1
+    },
+    {
+      "word": "attractiveness",
+      "count": 1
+    },
+    {
+      "word": "attracts",
+      "count": 1
+    },
+    {
+      "word": "authorization",
+      "count": 1
+    },
+    {
+      "word": "automatically",
+      "count": 1
+    },
+    {
+      "word": "aware",
+      "count": 1
+    },
+    {
+      "word": "awesome",
+      "count": 1
+    },
+    {
+      "word": "bad",
+      "count": 1
+    },
+    {
+      "word": "barrier",
+      "count": 1
+    },
+    {
+      "word": "beach",
+      "count": 1
+    },
+    {
+      "word": "behind",
+      "count": 1
+    },
+    {
+      "word": "beneficial",
+      "count": 1
+    },
+    {
+      "word": "benefits",
+      "count": 1
+    },
+    {
+      "word": "big",
+      "count": 1
+    },
+    {
+      "word": "biggest",
+      "count": 1
+    },
+    {
+      "word": "bodies",
+      "count": 1
+    },
+    {
+      "word": "body",
+      "count": 1
+    },
+    {
+      "word": "boss",
+      "count": 1
+    },
+    {
+      "word": "brand",
+      "count": 1
+    },
+    {
+      "word": "brought",
+      "count": 1
+    },
+    {
+      "word": "burning",
+      "count": 1
+    },
+    {
+      "word": "busy",
+      "count": 1
+    },
+    {
+      "word": "cagrilintide",
+      "count": 1
+    },
+    {
+      "word": "called",
+      "count": 1
+    },
+    {
+      "word": "car",
+      "count": 1
+    },
+    {
+      "word": "carb",
+      "count": 1
+    },
+    {
+      "word": "carbs",
+      "count": 1
+    },
+    {
+      "word": "challenge",
+      "count": 1
+    },
+    {
+      "word": "changes",
+      "count": 1
+    },
+    {
+      "word": "changing",
+      "count": 1
+    },
+    {
+      "word": "cities",
+      "count": 1
+    },
+    {
+      "word": "city",
+      "count": 1
+    },
+    {
+      "word": "clinic",
+      "count": 1
+    },
+    {
+      "word": "closest",
+      "count": 1
+    },
+    {
+      "word": "comfortable",
+      "count": 1
+    },
+    {
+      "word": "common",
+      "count": 1
+    },
+    {
+      "word": "comparable",
+      "count": 1
+    },
+    {
+      "word": "compensation",
+      "count": 1
+    },
+    {
+      "word": "completely",
+      "count": 1
+    },
+    {
+      "word": "compounding",
+      "count": 1
+    },
+    {
+      "word": "concern",
+      "count": 1
+    },
+    {
+      "word": "consent",
+      "count": 1
+    },
+    {
+      "word": "controlled",
+      "count": 1
+    },
+    {
+      "word": "conversation",
+      "count": 1
+    },
+    {
+      "word": "conversations",
+      "count": 1
+    },
+    {
+      "word": "country",
+      "count": 1
+    },
+    {
+      "word": "coverage",
+      "count": 1
+    },
+    {
+      "word": "crazy",
+      "count": 1
+    },
+    {
+      "word": "curious",
+      "count": 1
+    },
+    {
+      "word": "cut",
+      "count": 1
+    },
+    {
+      "word": "dealt",
+      "count": 1
+    },
+    {
+      "word": "degree",
+      "count": 1
+    },
+    {
+      "word": "deserves",
+      "count": 1
+    },
+    {
+      "word": "diabetes",
+      "count": 1
+    },
+    {
+      "word": "diabetic",
+      "count": 1
+    },
+    {
+      "word": "diets",
+      "count": 1
+    },
+    {
+      "word": "difference",
+      "count": 1
+    },
+    {
+      "word": "discuss",
+      "count": 1
+    },
+    {
+      "word": "discussed",
+      "count": 1
+    },
+    {
+      "word": "disease",
+      "count": 1
+    },
+    {
+      "word": "distances",
+      "count": 1
+    },
+    {
+      "word": "doctor's",
+      "count": 1
+    },
+    {
+      "word": "dollars",
+      "count": 1
+    },
+    {
+      "word": "dose",
+      "count": 1
+    },
+    {
+      "word": "dr",
+      "count": 1
+    },
+    {
+      "word": "driving",
+      "count": 1
+    },
+    {
+      "word": "drugs",
+      "count": 1
+    },
+    {
+      "word": "easier",
+      "count": 1
+    },
+    {
+      "word": "educated",
+      "count": 1
+    },
+    {
+      "word": "effect",
+      "count": 1
+    },
+    {
+      "word": "eight",
+      "count": 1
+    },
+    {
+      "word": "either",
+      "count": 1
+    },
+    {
+      "word": "emptying",
+      "count": 1
+    },
+    {
+      "word": "end",
+      "count": 1
+    },
+    {
+      "word": "entire",
+      "count": 1
+    },
+    {
+      "word": "especially",
+      "count": 1
+    },
+    {
+      "word": "exactly",
+      "count": 1
+    },
+    {
+      "word": "example",
+      "count": 1
+    },
+    {
+      "word": "exercise",
+      "count": 1
+    },
+    {
+      "word": "experience",
+      "count": 1
+    },
+    {
+      "word": "extra",
+      "count": 1
+    },
+    {
+      "word": "extremely",
+      "count": 1
+    },
+    {
+      "word": "face",
+      "count": 1
+    },
+    {
+      "word": "facility",
+      "count": 1
+    },
+    {
+      "word": "factor",
+      "count": 1
+    },
+    {
+      "word": "factors",
+      "count": 1
+    },
+    {
+      "word": "family",
+      "count": 1
+    },
+    {
+      "word": "faster",
+      "count": 1
+    },
+    {
+      "word": "fda",
+      "count": 1
+    },
+    {
+      "word": "feel",
+      "count": 1
+    },
+    {
+      "word": "feeling",
+      "count": 1
+    },
+    {
+      "word": "fifth",
+      "count": 1
+    },
+    {
+      "word": "financial",
+      "count": 1
+    },
+    {
+      "word": "find",
+      "count": 1
+    },
+    {
+      "word": "fitness",
+      "count": 1
+    },
+    {
+      "word": "follow-ups",
+      "count": 1
+    },
+    {
+      "word": "following",
+      "count": 1
+    },
+    {
+      "word": "food",
+      "count": 1
+    },
+    {
+      "word": "forced",
+      "count": 1
+    },
+    {
+      "word": "forefront",
+      "count": 1
+    },
+    {
+      "word": "form",
+      "count": 1
+    },
+    {
+      "word": "genetics",
+      "count": 1
+    },
+    {
+      "word": "glad",
+      "count": 1
+    },
+    {
+      "word": "glp-1",
+      "count": 1
+    },
+    {
+      "word": "goal",
+      "count": 1
+    },
+    {
+      "word": "guinea",
+      "count": 1
+    },
+    {
+      "word": "guys",
+      "count": 1
+    },
+    {
+      "word": "gym",
+      "count": 1
+    },
+    {
+      "word": "half",
+      "count": 1
+    },
+    {
+      "word": "halfway",
+      "count": 1
+    },
+    {
+      "word": "halved",
+      "count": 1
+    },
+    {
+      "word": "happened",
+      "count": 1
+    },
+    {
+      "word": "happens",
+      "count": 1
+    },
+    {
+      "word": "happy",
+      "count": 1
+    },
+    {
+      "word": "helped",
+      "count": 1
+    },
+    {
+      "word": "helping",
+      "count": 1
+    },
+    {
+      "word": "helps",
+      "count": 1
+    },
+    {
+      "word": "history",
+      "count": 1
+    },
+    {
+      "word": "hit",
+      "count": 1
+    },
+    {
+      "word": "honest",
+      "count": 1
+    },
+    {
+      "word": "hope",
+      "count": 1
+    },
+    {
+      "word": "hospital",
+      "count": 1
+    },
+    {
+      "word": "hospitals",
+      "count": 1
+    },
+    {
+      "word": "hungry",
+      "count": 1
+    },
+    {
+      "word": "hyper",
+      "count": 1
+    },
+    {
+      "word": "influence",
+      "count": 1
+    },
+    {
+      "word": "information",
+      "count": 1
+    },
+    {
+      "word": "instead",
+      "count": 1
+    },
+    {
+      "word": "insulin",
+      "count": 1
+    },
+    {
+      "word": "intend",
+      "count": 1
+    },
+    {
+      "word": "interesting",
+      "count": 1
+    },
+    {
+      "word": "journal",
+      "count": 1
+    },
+    {
+      "word": "kinds",
+      "count": 1
+    },
+    {
+      "word": "lasted",
+      "count": 1
+    },
+    {
+      "word": "lawsuits",
+      "count": 1
+    },
+    {
+      "word": "learn",
+      "count": 1
+    },
+    {
+      "word": "learner",
+      "count": 1
+    },
+    {
+      "word": "legit",
+      "count": 1
+    },
+    {
+      "word": "less",
+      "count": 1
+    },
+    {
+      "word": "likely",
+      "count": 1
+    },
+    {
+      "word": "little",
+      "count": 1
+    },
+    {
+      "word": "lives",
+      "count": 1
+    },
+    {
+      "word": "locally",
+      "count": 1
+    },
+    {
+      "word": "lose",
+      "count": 1
+    },
+    {
+      "word": "love",
+      "count": 1
+    },
+    {
+      "word": "low",
+      "count": 1
+    },
+    {
+      "word": "lowering",
+      "count": 1
+    },
+    {
+      "word": "ma'am",
+      "count": 1
+    },
+    {
+      "word": "main",
+      "count": 1
+    },
+    {
+      "word": "maintenance",
+      "count": 1
+    },
+    {
+      "word": "managing",
+      "count": 1
+    },
+    {
+      "word": "master's",
+      "count": 1
+    },
+    {
+      "word": "maximum",
+      "count": 1
+    },
+    {
+      "word": "meal",
+      "count": 1
+    },
+    {
+      "word": "meds",
+      "count": 1
+    },
+    {
+      "word": "met",
+      "count": 1
+    },
+    {
+      "word": "metformin",
+      "count": 1
+    },
+    {
+      "word": "mind",
+      "count": 1
+    },
+    {
+      "word": "mom",
+      "count": 1
+    },
+    {
+      "word": "money",
+      "count": 1
+    },
+    {
+      "word": "months",
+      "count": 1
+    },
+    {
+      "word": "mostly",
+      "count": 1
+    },
+    {
+      "word": "motivated",
+      "count": 1
+    },
+    {
+      "word": "move",
+      "count": 1
+    },
+    {
+      "word": "multiple",
+      "count": 1
+    },
+    {
+      "word": "natural",
+      "count": 1
+    },
+    {
+      "word": "necessarily",
+      "count": 1
+    },
+    {
+      "word": "needed",
+      "count": 1
+    },
+    {
+      "word": "new",
+      "count": 1
+    },
+    {
+      "word": "noise",
+      "count": 1
+    },
+    {
+      "word": "notifications",
+      "count": 1
+    },
+    {
+      "word": "nowadays",
+      "count": 1
+    },
+    {
+      "word": "obese",
+      "count": 1
+    },
+    {
+      "word": "offer",
+      "count": 1
+    },
+    {
+      "word": "one-on-one",
+      "count": 1
+    },
+    {
+      "word": "open",
+      "count": 1
+    },
+    {
+      "word": "opposed",
+      "count": 1
+    },
+    {
+      "word": "orforglipron",
+      "count": 1
+    },
+    {
+      "word": "others",
+      "count": 1
+    },
+    {
+      "word": "outside",
+      "count": 1
+    },
+    {
+      "word": "paleo",
+      "count": 1
+    },
+    {
+      "word": "part",
+      "count": 1
+    },
+    {
+      "word": "past",
+      "count": 1
+    },
+    {
+      "word": "patient",
+      "count": 1
+    },
+    {
+      "word": "patients",
+      "count": 1
+    },
+    {
+      "word": "pay",
+      "count": 1
+    },
+    {
+      "word": "percent",
+      "count": 1
+    },
+    {
+      "word": "period",
+      "count": 1
+    },
+    {
+      "word": "person",
+      "count": 1
+    },
+    {
+      "word": "pharmacy",
+      "count": 1
+    },
+    {
+      "word": "phentermine",
+      "count": 1
+    },
+    {
+      "word": "physical",
+      "count": 1
+    },
+    {
+      "word": "physician",
+      "count": 1
+    },
+    {
+      "word": "pig",
+      "count": 1
+    },
+    {
+      "word": "planning",
+      "count": 1
+    },
+    {
+      "word": "plays",
+      "count": 1
+    },
+    {
+      "word": "potential",
+      "count": 1
+    },
+    {
+      "word": "potentially",
+      "count": 1
+    },
+    {
+      "word": "pounds",
+      "count": 1
+    },
+    {
+      "word": "pray",
+      "count": 1
+    },
+    {
+      "word": "prefer",
+      "count": 1
+    },
+    {
+      "word": "preference",
+      "count": 1
+    },
+    {
+      "word": "prices",
+      "count": 1
+    },
+    {
+      "word": "process",
+      "count": 1
+    },
+    {
+      "word": "producing",
+      "count": 1
+    },
+    {
+      "word": "products",
+      "count": 1
+    },
+    {
+      "word": "promising",
+      "count": 1
+    },
+    {
+      "word": "pronounce",
+      "count": 1
+    },
+    {
+      "word": "purely",
+      "count": 1
+    },
+    {
+      "word": "push",
+      "count": 1
+    },
+    {
+      "word": "questions",
+      "count": 1
+    },
+    {
+      "word": "randomized",
+      "count": 1
+    },
+    {
+      "word": "ravenous",
+      "count": 1
+    },
+    {
+      "word": "real",
+      "count": 1
+    },
+    {
+      "word": "reasoning",
+      "count": 1
+    },
+    {
+      "word": "regular",
+      "count": 1
+    },
+    {
+      "word": "replacements",
+      "count": 1
+    },
+    {
+      "word": "resistant",
+      "count": 1
+    },
+    {
+      "word": "responders",
+      "count": 1
+    },
+    {
+      "word": "rest",
+      "count": 1
+    },
+    {
+      "word": "results",
+      "count": 1
+    },
+    {
+      "word": "role",
+      "count": 1
+    },
+    {
+      "word": "round",
+      "count": 1
+    },
+    {
+      "word": "safer",
+      "count": 1
+    },
+    {
+      "word": "school",
+      "count": 1
+    },
+    {
+      "word": "second",
+      "count": 1
+    },
+    {
+      "word": "sell",
+      "count": 1
+    },
+    {
+      "word": "sent",
+      "count": 1
+    },
+    {
+      "word": "services",
+      "count": 1
+    },
+    {
+      "word": "set",
+      "count": 1
+    },
+    {
+      "word": "shortages",
+      "count": 1
+    },
+    {
+      "word": "shot",
+      "count": 1
+    },
+    {
+      "word": "shots",
+      "count": 1
+    },
+    {
+      "word": "significantly",
+      "count": 1
+    },
+    {
+      "word": "simply",
+      "count": 1
+    },
+    {
+      "word": "sixth",
+      "count": 1
+    },
+    {
+      "word": "slow",
+      "count": 1
+    },
+    {
+      "word": "smart",
+      "count": 1
+    },
+    {
+      "word": "south",
+      "count": 1
+    },
+    {
+      "word": "spikes",
+      "count": 1
+    },
+    {
+      "word": "staff",
+      "count": 1
+    },
+    {
+      "word": "standpoint",
+      "count": 1
+    },
+    {
+      "word": "start",
+      "count": 1
+    },
+    {
+      "word": "step",
+      "count": 1
+    },
+    {
+      "word": "steps",
+      "count": 1
+    },
+    {
+      "word": "stopping",
+      "count": 1
+    },
+    {
+      "word": "strange",
+      "count": 1
+    },
+    {
+      "word": "strong",
+      "count": 1
+    },
+    {
+      "word": "students",
+      "count": 1
+    },
+    {
+      "word": "study",
+      "count": 1
+    },
+    {
+      "word": "sugar",
+      "count": 1
+    },
+    {
+      "word": "super",
+      "count": 1
+    },
+    {
+      "word": "surprised",
+      "count": 1
+    },
+    {
+      "word": "sustain",
+      "count": 1
+    },
+    {
+      "word": "switched",
+      "count": 1
+    },
+    {
+      "word": "talk",
+      "count": 1
+    },
+    {
+      "word": "teaching",
+      "count": 1
+    },
+    {
+      "word": "terribly",
+      "count": 1
+    },
+    {
+      "word": "tolerate",
+      "count": 1
+    },
+    {
+      "word": "took",
+      "count": 1
+    },
+    {
+      "word": "tool",
+      "count": 1
+    },
+    {
+      "word": "tough",
+      "count": 1
+    },
+    {
+      "word": "track",
+      "count": 1
+    },
+    {
+      "word": "transportation",
+      "count": 1
+    },
+    {
+      "word": "treatment",
+      "count": 1
+    },
+    {
+      "word": "trip",
+      "count": 1
+    },
+    {
+      "word": "two-hour",
+      "count": 1
+    },
+    {
+      "word": "type",
+      "count": 1
+    },
+    {
+      "word": "usually",
+      "count": 1
+    },
+    {
+      "word": "vegan",
+      "count": 1
+    },
+    {
+      "word": "videos",
+      "count": 1
+    },
+    {
+      "word": "visits",
+      "count": 1
+    },
+    {
+      "word": "visual",
+      "count": 1
+    },
+    {
+      "word": "vitkin's",
+      "count": 1
+    },
+    {
+      "word": "vouchers",
+      "count": 1
+    },
+    {
+      "word": "walk",
+      "count": 1
+    },
+    {
+      "word": "walking",
+      "count": 1
+    },
+    {
+      "word": "watchers",
+      "count": 1
+    },
+    {
+      "word": "webinars",
+      "count": 1
+    },
+    {
+      "word": "wegovy",
+      "count": 1
+    },
+    {
+      "word": "welcome",
+      "count": 1
+    },
+    {
+      "word": "whatever",
+      "count": 1
+    },
+    {
+      "word": "who's",
+      "count": 1
+    },
+    {
+      "word": "willing",
+      "count": 1
+    },
+    {
+      "word": "work",
+      "count": 1
+    },
+    {
+      "word": "works",
+      "count": 1
+    },
+    {
+      "word": "world",
+      "count": 1
+    },
+    {
+      "word": "worst",
+      "count": 1
+    },
+    {
+      "word": "yo-yo",
+      "count": 1
+    },
+    {
+      "word": "zoom",
+      "count": 1
+    }
+  ],
+  "by_participant": {
+    "participant_09": {
+      "total_words": 396,
+      "unique_words": 240,
+      "word_usage": [
+        {
+          "word": "medication",
+          "count": 10
+        },
+        {
+          "word": "access",
+          "count": 9
+        },
+        {
+          "word": "weight",
+          "count": 9
+        },
+        {
+          "word": "research",
+          "count": 7
+        },
+        {
+          "word": "doctor",
+          "count": 5
+        },
+        {
+          "word": "hours",
+          "count": 5
+        },
+        {
+          "word": "injection",
+          "count": 5
+        },
+        {
+          "word": "benefit",
+          "count": 4
+        },
+        {
+          "word": "better",
+          "count": 4
+        },
+        {
+          "word": "counseling",
+          "count": 4
+        },
+        {
+          "word": "insurance",
+          "count": 4
+        },
+        {
+          "word": "lost",
+          "count": 4
+        },
+        {
+          "word": "taking",
+          "count": 4
+        },
+        {
+          "word": "telehealth",
+          "count": 4
+        },
+        {
+          "word": "time",
+          "count": 4
+        },
+        {
+          "word": "trials",
+          "count": 4
+        },
+        {
+          "word": "discount",
+          "count": 3
+        },
+        {
+          "word": "done",
+          "count": 3
+        },
+        {
+          "word": "injections",
+          "count": 3
+        },
+        {
+          "word": "learning",
+          "count": 3
+        },
+        {
+          "word": "manager",
+          "count": 3
+        },
+        {
+          "word": "month",
+          "count": 3
+        },
+        {
+          "word": "online",
+          "count": 3
+        },
+        {
+          "word": "order",
+          "count": 3
+        },
+        {
+          "word": "participate",
+          "count": 3
+        },
+        {
+          "word": "people",
+          "count": 3
+        },
+        {
+          "word": "positive",
+          "count": 3
+        },
+        {
+          "word": "stay",
+          "count": 3
+        },
+        {
+          "word": "stop",
+          "count": 3
+        },
+        {
+          "word": "three",
+          "count": 3
+        },
+        {
+          "word": "weekly",
+          "count": 3
+        },
+        {
+          "word": "accessible",
+          "count": 2
+        },
+        {
+          "word": "another",
+          "count": 2
+        },
+        {
+          "word": "approved",
+          "count": 2
+        },
+        {
+          "word": "attractive",
+          "count": 2
+        },
+        {
+          "word": "away",
+          "count": 2
+        },
+        {
+          "word": "blood",
+          "count": 2
+        },
+        {
+          "word": "classes",
+          "count": 2
+        },
+        {
+          "word": "clinical",
+          "count": 2
+        },
+        {
+          "word": "company",
+          "count": 2
+        },
+        {
+          "word": "complication",
+          "count": 2
+        },
+        {
+          "word": "compound",
+          "count": 2
+        },
+        {
+          "word": "cost",
+          "count": 2
+        },
+        {
+          "word": "cover",
+          "count": 2
+        },
+        {
+          "word": "different",
+          "count": 2
+        },
+        {
+          "word": "drive",
+          "count": 2
+        },
+        {
+          "word": "education",
+          "count": 2
+        },
+        {
+          "word": "eli",
+          "count": 2
+        },
+        {
+          "word": "gained",
+          "count": 2
+        },
+        {
+          "word": "heard",
+          "count": 2
+        },
+        {
+          "word": "heartburn",
+          "count": 2
+        },
+        {
+          "word": "lessons",
+          "count": 2
+        },
+        {
+          "word": "lilly",
+          "count": 2
+        },
+        {
+          "word": "live",
+          "count": 2
+        },
+        {
+          "word": "local",
+          "count": 2
+        },
+        {
+          "word": "major",
+          "count": 2
+        },
+        {
+          "word": "manage",
+          "count": 2
+        },
+        {
+          "word": "management",
+          "count": 2
+        },
+        {
+          "word": "medications",
+          "count": 2
+        },
+        {
+          "word": "modules",
+          "count": 2
+        },
+        {
+          "word": "monthly",
+          "count": 2
+        },
+        {
+          "word": "nurse",
+          "count": 2
+        },
+        {
+          "word": "nursing",
+          "count": 2
+        },
+        {
+          "word": "nutritional",
+          "count": 2
+        },
+        {
+          "word": "participated",
+          "count": 2
+        },
+        {
+          "word": "pill",
+          "count": 2
+        },
+        {
+          "word": "plan",
+          "count": 2
+        },
+        {
+          "word": "pocket",
+          "count": 2
+        },
+        {
+          "word": "pressure",
+          "count": 2
+        },
+        {
+          "word": "prohibitive",
+          "count": 2
+        },
+        {
+          "word": "reason",
+          "count": 2
+        },
+        {
+          "word": "sicker",
+          "count": 2
+        },
+        {
+          "word": "sign",
+          "count": 2
+        },
+        {
+          "word": "signed",
+          "count": 2
+        },
+        {
+          "word": "significant",
+          "count": 2
+        },
+        {
+          "word": "six",
+          "count": 2
+        },
+        {
+          "word": "support",
+          "count": 2
+        },
+        {
+          "word": "take",
+          "count": 2
+        },
+        {
+          "word": "taken",
+          "count": 2
+        },
+        {
+          "word": "thousand",
+          "count": 2
+        },
+        {
+          "word": "times",
+          "count": 2
+        },
+        {
+          "word": "try",
+          "count": 2
+        },
+        {
+          "word": "two",
+          "count": 2
+        },
+        {
+          "word": "understand",
+          "count": 2
+        },
+        {
+          "word": "watch",
+          "count": 2
+        },
+        {
+          "word": "week",
+          "count": 2
+        },
+        {
+          "word": "without",
+          "count": 2
+        },
+        {
+          "word": "academic",
+          "count": 1
+        },
+        {
+          "word": "actual",
+          "count": 1
+        },
+        {
+          "word": "ahead",
+          "count": 1
+        },
+        {
+          "word": "amount",
+          "count": 1
+        },
+        {
+          "word": "answer",
+          "count": 1
+        },
+        {
+          "word": "area",
+          "count": 1
+        },
+        {
+          "word": "attract",
+          "count": 1
+        },
+        {
+          "word": "attractiveness",
+          "count": 1
+        },
+        {
+          "word": "attracts",
+          "count": 1
+        },
+        {
+          "word": "authorization",
+          "count": 1
+        },
+        {
+          "word": "available",
+          "count": 1
+        },
+        {
+          "word": "aware",
+          "count": 1
+        },
+        {
+          "word": "back",
+          "count": 1
+        },
+        {
+          "word": "barrier",
+          "count": 1
+        },
+        {
+          "word": "behind",
+          "count": 1
+        },
+        {
+          "word": "benefits",
+          "count": 1
+        },
+        {
+          "word": "brand",
+          "count": 1
+        },
+        {
+          "word": "busy",
+          "count": 1
+        },
+        {
+          "word": "car",
+          "count": 1
+        },
+        {
+          "word": "challenge",
+          "count": 1
+        },
+        {
+          "word": "chances",
+          "count": 1
+        },
+        {
+          "word": "clinic",
+          "count": 1
+        },
+        {
+          "word": "closest",
+          "count": 1
+        },
+        {
+          "word": "completely",
+          "count": 1
+        },
+        {
+          "word": "consent",
+          "count": 1
+        },
+        {
+          "word": "consider",
+          "count": 1
+        },
+        {
+          "word": "continue",
+          "count": 1
+        },
+        {
+          "word": "controlled",
+          "count": 1
+        },
+        {
+          "word": "conversation",
+          "count": 1
+        },
+        {
+          "word": "conversations",
+          "count": 1
+        },
+        {
+          "word": "coverage",
+          "count": 1
+        },
+        {
+          "word": "cut",
+          "count": 1
+        },
+        {
+          "word": "degree",
+          "count": 1
+        },
+        {
+          "word": "depends",
+          "count": 1
+        },
+        {
+          "word": "diabetic",
+          "count": 1
+        },
+        {
+          "word": "diet",
+          "count": 1
+        },
+        {
+          "word": "discuss",
+          "count": 1
+        },
+        {
+          "word": "discussed",
+          "count": 1
+        },
+        {
+          "word": "doctor's",
+          "count": 1
+        },
+        {
+          "word": "doctors",
+          "count": 1
+        },
+        {
+          "word": "dollars",
+          "count": 1
+        },
+        {
+          "word": "dose",
+          "count": 1
+        },
+        {
+          "word": "down",
+          "count": 1
+        },
+        {
+          "word": "driving",
+          "count": 1
+        },
+        {
+          "word": "educated",
+          "count": 1
+        },
+        {
+          "word": "eight",
+          "count": 1
+        },
+        {
+          "word": "ever",
+          "count": 1
+        },
+        {
+          "word": "exactly",
+          "count": 1
+        },
+        {
+          "word": "example",
+          "count": 1
+        },
+        {
+          "word": "experience",
+          "count": 1
+        },
+        {
+          "word": "extremely",
+          "count": 1
+        },
+        {
+          "word": "face",
+          "count": 1
+        },
+        {
+          "word": "facility",
+          "count": 1
+        },
+        {
+          "word": "factors",
+          "count": 1
+        },
+        {
+          "word": "fda",
+          "count": 1
+        },
+        {
+          "word": "find",
+          "count": 1
+        },
+        {
+          "word": "first",
+          "count": 1
+        },
+        {
+          "word": "follow-ups",
+          "count": 1
+        },
+        {
+          "word": "form",
+          "count": 1
+        },
+        {
+          "word": "fully",
+          "count": 1
+        },
+        {
+          "word": "goal",
+          "count": 1
+        },
+        {
+          "word": "half",
+          "count": 1
+        },
+        {
+          "word": "halved",
+          "count": 1
+        },
+        {
+          "word": "happens",
+          "count": 1
+        },
+        {
+          "word": "health",
+          "count": 1
+        },
+        {
+          "word": "history",
+          "count": 1
+        },
+        {
+          "word": "hospital",
+          "count": 1
+        },
+        {
+          "word": "hospitals",
+          "count": 1
+        },
+        {
+          "word": "hour",
+          "count": 1
+        },
+        {
+          "word": "idea",
+          "count": 1
+        },
+        {
+          "word": "influence",
+          "count": 1
+        },
+        {
+          "word": "instead",
+          "count": 1
+        },
+        {
+          "word": "intend",
+          "count": 1
+        },
+        {
+          "word": "lawsuits",
+          "count": 1
+        },
+        {
+          "word": "learn",
+          "count": 1
+        },
+        {
+          "word": "less",
+          "count": 1
+        },
+        {
+          "word": "life",
+          "count": 1
+        },
+        {
+          "word": "likely",
+          "count": 1
+        },
+        {
+          "word": "little",
+          "count": 1
+        },
+        {
+          "word": "lives",
+          "count": 1
+        },
+        {
+          "word": "locally",
+          "count": 1
+        },
+        {
+          "word": "long",
+          "count": 1
+        },
+        {
+          "word": "losing",
+          "count": 1
+        },
+        {
+          "word": "loss",
+          "count": 1
+        },
+        {
+          "word": "maintenance",
+          "count": 1
+        },
+        {
+          "word": "managing",
+          "count": 1
+        },
+        {
+          "word": "master's",
+          "count": 1
+        },
+        {
+          "word": "maximum",
+          "count": 1
+        },
+        {
+          "word": "meal",
+          "count": 1
+        },
+        {
+          "word": "met",
+          "count": 1
+        },
+        {
+          "word": "money",
+          "count": 1
+        },
+        {
+          "word": "multiple",
+          "count": 1
+        },
+        {
+          "word": "name",
+          "count": 1
+        },
+        {
+          "word": "next",
+          "count": 1
+        },
+        {
+          "word": "notifications",
+          "count": 1
+        },
+        {
+          "word": "nowadays",
+          "count": 1
+        },
+        {
+          "word": "offer",
+          "count": 1
+        },
+        {
+          "word": "one-on-one",
+          "count": 1
+        },
+        {
+          "word": "opposed",
+          "count": 1
+        },
+        {
+          "word": "orforglipron",
+          "count": 1
+        },
+        {
+          "word": "outside",
+          "count": 1
+        },
+        {
+          "word": "patient",
+          "count": 1
+        },
+        {
+          "word": "pay",
+          "count": 1
+        },
+        {
+          "word": "percent",
+          "count": 1
+        },
+        {
+          "word": "pharmacy",
+          "count": 1
+        },
+        {
+          "word": "physician",
+          "count": 1
+        },
+        {
+          "word": "placebo",
+          "count": 1
+        },
+        {
+          "word": "planning",
+          "count": 1
+        },
+        {
+          "word": "potential",
+          "count": 1
+        },
+        {
+          "word": "process",
+          "count": 1
+        },
+        {
+          "word": "producing",
+          "count": 1
+        },
+        {
+          "word": "products",
+          "count": 1
+        },
+        {
+          "word": "promising",
+          "count": 1
+        },
+        {
+          "word": "pronounce",
+          "count": 1
+        },
+        {
+          "word": "purely",
+          "count": 1
+        },
+        {
+          "word": "questions",
+          "count": 1
+        },
+        {
+          "word": "randomized",
+          "count": 1
+        },
+        {
+          "word": "read",
+          "count": 1
+        },
+        {
+          "word": "reasoning",
+          "count": 1
+        },
+        {
+          "word": "regular",
+          "count": 1
+        },
+        {
+          "word": "replacements",
+          "count": 1
+        },
+        {
+          "word": "round",
+          "count": 1
+        },
+        {
+          "word": "safer",
+          "count": 1
+        },
+        {
+          "word": "second",
+          "count": 1
+        },
+        {
+          "word": "services",
+          "count": 1
+        },
+        {
+          "word": "set",
+          "count": 1
+        },
+        {
+          "word": "significantly",
+          "count": 1
+        },
+        {
+          "word": "simply",
+          "count": 1
+        },
+        {
+          "word": "since",
+          "count": 1
+        },
+        {
+          "word": "sometimes",
+          "count": 1
+        },
+        {
+          "word": "standpoint",
+          "count": 1
+        },
+        {
+          "word": "started",
+          "count": 1
+        },
+        {
+          "word": "stopping",
+          "count": 1
+        },
+        {
+          "word": "strange",
+          "count": 1
+        },
+        {
+          "word": "students",
+          "count": 1
+        },
+        {
+          "word": "study",
+          "count": 1
+        },
+        {
+          "word": "surprised",
+          "count": 1
+        },
+        {
+          "word": "talk",
+          "count": 1
+        },
+        {
+          "word": "teaching",
+          "count": 1
+        },
+        {
+          "word": "terribly",
+          "count": 1
+        },
+        {
+          "word": "throughout",
+          "count": 1
+        },
+        {
+          "word": "tolerate",
+          "count": 1
+        },
+        {
+          "word": "tried",
+          "count": 1
+        },
+        {
+          "word": "trip",
+          "count": 1
+        },
+        {
+          "word": "trying",
+          "count": 1
+        },
+        {
+          "word": "visits",
+          "count": 1
+        },
+        {
+          "word": "vouchers",
+          "count": 1
+        },
+        {
+          "word": "webinars",
+          "count": 1
+        },
+        {
+          "word": "who's",
+          "count": 1
+        },
+        {
+          "word": "working",
+          "count": 1
+        },
+        {
+          "word": "works",
+          "count": 1
+        },
+        {
+          "word": "yet",
+          "count": 1
+        },
+        {
+          "word": "yo-yo",
+          "count": 1
+        }
+      ]
+    },
+    "participant_10": {
+      "total_words": 451,
+      "unique_words": 308,
+      "word_usage": [
+        {
+          "word": "amazing",
+          "count": 7
+        },
+        {
+          "word": "day",
+          "count": 7
+        },
+        {
+          "word": "different",
+          "count": 6
+        },
+        {
+          "word": "long",
+          "count": 6
+        },
+        {
+          "word": "people",
+          "count": 6
+        },
+        {
+          "word": "stop",
+          "count": 6
+        },
+        {
+          "word": "weight",
+          "count": 6
+        },
+        {
+          "word": "life",
+          "count": 5
+        },
+        {
+          "word": "tried",
+          "count": 5
+        },
+        {
+          "word": "loss",
+          "count": 4
+        },
+        {
+          "word": "stall",
+          "count": 4
+        },
+        {
+          "word": "tirzepatide",
+          "count": 4
+        },
+        {
+          "word": "bigger",
+          "count": 3
+        },
+        {
+          "word": "cause",
+          "count": 3
+        },
+        {
+          "word": "compound",
+          "count": 3
+        },
+        {
+          "word": "done",
+          "count": 3
+        },
+        {
+          "word": "drive",
+          "count": 3
+        },
+        {
+          "word": "drug",
+          "count": 3
+        },
+        {
+          "word": "far",
+          "count": 3
+        },
+        {
+          "word": "first",
+          "count": 3
+        },
+        {
+          "word": "glp-1s",
+          "count": 3
+        },
+        {
+          "word": "heard",
+          "count": 3
+        },
+        {
+          "word": "help",
+          "count": 3
+        },
+        {
+          "word": "huge",
+          "count": 3
+        },
+        {
+          "word": "medications",
+          "count": 3
+        },
+        {
+          "word": "need",
+          "count": 3
+        },
+        {
+          "word": "personally",
+          "count": 3
+        },
+        {
+          "word": "semaglutide",
+          "count": 3
+        },
+        {
+          "word": "studies",
+          "count": 3
+        },
+        {
+          "word": "taking",
+          "count": 3
+        },
+        {
+          "word": "time",
+          "count": 3
+        },
+        {
+          "word": "truly",
+          "count": 3
+        },
+        {
+          "word": "try",
+          "count": 3
+        },
+        {
+          "word": "unless",
+          "count": 3
+        },
+        {
+          "word": "aside",
+          "count": 2
+        },
+        {
+          "word": "better",
+          "count": 2
+        },
+        {
+          "word": "break",
+          "count": 2
+        },
+        {
+          "word": "change",
+          "count": 2
+        },
+        {
+          "word": "clinical",
+          "count": 2
+        },
+        {
+          "word": "continue",
+          "count": 2
+        },
+        {
+          "word": "course",
+          "count": 2
+        },
+        {
+          "word": "currently",
+          "count": 2
+        },
+        {
+          "word": "days",
+          "count": 2
+        },
+        {
+          "word": "depend",
+          "count": 2
+        },
+        {
+          "word": "diet",
+          "count": 2
+        },
+        {
+          "word": "down",
+          "count": 2
+        },
+        {
+          "word": "effects",
+          "count": 2
+        },
+        {
+          "word": "gastric",
+          "count": 2
+        },
+        {
+          "word": "happen",
+          "count": 2
+        },
+        {
+          "word": "helpful",
+          "count": 2
+        },
+        {
+          "word": "injection",
+          "count": 2
+        },
+        {
+          "word": "issues",
+          "count": 2
+        },
+        {
+          "word": "last",
+          "count": 2
+        },
+        {
+          "word": "lasts",
+          "count": 2
+        },
+        {
+          "word": "lifestyle",
+          "count": 2
+        },
+        {
+          "word": "live",
+          "count": 2
+        },
+        {
+          "word": "medication",
+          "count": 2
+        },
+        {
+          "word": "month",
+          "count": 2
+        },
+        {
+          "word": "motivator",
+          "count": 2
+        },
+        {
+          "word": "mounjaro",
+          "count": 2
+        },
+        {
+          "word": "never",
+          "count": 2
+        },
+        {
+          "word": "next",
+          "count": 2
+        },
+        {
+          "word": "nutrition",
+          "count": 2
+        },
+        {
+          "word": "obesity",
+          "count": 2
+        },
+        {
+          "word": "plenty",
+          "count": 2
+        },
+        {
+          "word": "retatrutide",
+          "count": 2
+        },
+        {
+          "word": "save",
+          "count": 2
+        },
+        {
+          "word": "see",
+          "count": 2
+        },
+        {
+          "word": "side",
+          "count": 2
+        },
+        {
+          "word": "started",
+          "count": 2
+        },
+        {
+          "word": "surgery",
+          "count": 2
+        },
+        {
+          "word": "teach",
+          "count": 2
+        },
+        {
+          "word": "though",
+          "count": 2
+        },
+        {
+          "word": "times",
+          "count": 2
+        },
+        {
+          "word": "trial",
+          "count": 2
+        },
+        {
+          "word": "trying",
+          "count": 2
+        },
+        {
+          "word": "two",
+          "count": 2
+        },
+        {
+          "word": "whenever",
+          "count": 2
+        },
+        {
+          "word": "year",
+          "count": 2
+        },
+        {
+          "word": "accepted",
+          "count": 1
+        },
+        {
+          "word": "added",
+          "count": 1
+        },
+        {
+          "word": "advancing",
+          "count": 1
+        },
+        {
+          "word": "affordability",
+          "count": 1
+        },
+        {
+          "word": "affordable",
+          "count": 1
+        },
+        {
+          "word": "allowed",
+          "count": 1
+        },
+        {
+          "word": "along",
+          "count": 1
+        },
+        {
+          "word": "already",
+          "count": 1
+        },
+        {
+          "word": "another",
+          "count": 1
+        },
+        {
+          "word": "anticipate",
+          "count": 1
+        },
+        {
+          "word": "appealing",
+          "count": 1
+        },
+        {
+          "word": "applied",
+          "count": 1
+        },
+        {
+          "word": "arranged",
+          "count": 1
+        },
+        {
+          "word": "asked",
+          "count": 1
+        },
+        {
+          "word": "ate",
+          "count": 1
+        },
+        {
+          "word": "atkins",
+          "count": 1
+        },
+        {
+          "word": "atlanta",
+          "count": 1
+        },
+        {
+          "word": "automatically",
+          "count": 1
+        },
+        {
+          "word": "available",
+          "count": 1
+        },
+        {
+          "word": "away",
+          "count": 1
+        },
+        {
+          "word": "awesome",
+          "count": 1
+        },
+        {
+          "word": "back",
+          "count": 1
+        },
+        {
+          "word": "bad",
+          "count": 1
+        },
+        {
+          "word": "beach",
+          "count": 1
+        },
+        {
+          "word": "beneficial",
+          "count": 1
+        },
+        {
+          "word": "big",
+          "count": 1
+        },
+        {
+          "word": "biggest",
+          "count": 1
+        },
+        {
+          "word": "blood",
+          "count": 1
+        },
+        {
+          "word": "bodies",
+          "count": 1
+        },
+        {
+          "word": "body",
+          "count": 1
+        },
+        {
+          "word": "boss",
+          "count": 1
+        },
+        {
+          "word": "brought",
+          "count": 1
+        },
+        {
+          "word": "burning",
+          "count": 1
+        },
+        {
+          "word": "cagrilintide",
+          "count": 1
+        },
+        {
+          "word": "called",
+          "count": 1
+        },
+        {
+          "word": "carb",
+          "count": 1
+        },
+        {
+          "word": "carbs",
+          "count": 1
+        },
+        {
+          "word": "chances",
+          "count": 1
+        },
+        {
+          "word": "changes",
+          "count": 1
+        },
+        {
+          "word": "changing",
+          "count": 1
+        },
+        {
+          "word": "cities",
+          "count": 1
+        },
+        {
+          "word": "city",
+          "count": 1
+        },
+        {
+          "word": "classes",
+          "count": 1
+        },
+        {
+          "word": "comfortable",
+          "count": 1
+        },
+        {
+          "word": "common",
+          "count": 1
+        },
+        {
+          "word": "comparable",
+          "count": 1
+        },
+        {
+          "word": "compensation",
+          "count": 1
+        },
+        {
+          "word": "compounding",
+          "count": 1
+        },
+        {
+          "word": "concern",
+          "count": 1
+        },
+        {
+          "word": "consider",
+          "count": 1
+        },
+        {
+          "word": "country",
+          "count": 1
+        },
+        {
+          "word": "crazy",
+          "count": 1
+        },
+        {
+          "word": "curious",
+          "count": 1
+        },
+        {
+          "word": "dealt",
+          "count": 1
+        },
+        {
+          "word": "depends",
+          "count": 1
+        },
+        {
+          "word": "deserves",
+          "count": 1
+        },
+        {
+          "word": "diabetes",
+          "count": 1
+        },
+        {
+          "word": "diets",
+          "count": 1
+        },
+        {
+          "word": "difference",
+          "count": 1
+        },
+        {
+          "word": "disease",
+          "count": 1
+        },
+        {
+          "word": "distances",
+          "count": 1
+        },
+        {
+          "word": "doctor",
+          "count": 1
+        },
+        {
+          "word": "doctors",
+          "count": 1
+        },
+        {
+          "word": "dr",
+          "count": 1
+        },
+        {
+          "word": "drugs",
+          "count": 1
+        },
+        {
+          "word": "easier",
+          "count": 1
+        },
+        {
+          "word": "effect",
+          "count": 1
+        },
+        {
+          "word": "either",
+          "count": 1
+        },
+        {
+          "word": "emptying",
+          "count": 1
+        },
+        {
+          "word": "end",
+          "count": 1
+        },
+        {
+          "word": "entire",
+          "count": 1
+        },
+        {
+          "word": "especially",
+          "count": 1
+        },
+        {
+          "word": "ever",
+          "count": 1
+        },
+        {
+          "word": "exercise",
+          "count": 1
+        },
+        {
+          "word": "extra",
+          "count": 1
+        },
+        {
+          "word": "factor",
+          "count": 1
+        },
+        {
+          "word": "family",
+          "count": 1
+        },
+        {
+          "word": "faster",
+          "count": 1
+        },
+        {
+          "word": "feel",
+          "count": 1
+        },
+        {
+          "word": "feeling",
+          "count": 1
+        },
+        {
+          "word": "fifth",
+          "count": 1
+        },
+        {
+          "word": "financial",
+          "count": 1
+        },
+        {
+          "word": "fitness",
+          "count": 1
+        },
+        {
+          "word": "following",
+          "count": 1
+        },
+        {
+          "word": "food",
+          "count": 1
+        },
+        {
+          "word": "forced",
+          "count": 1
+        },
+        {
+          "word": "forefront",
+          "count": 1
+        },
+        {
+          "word": "fully",
+          "count": 1
+        },
+        {
+          "word": "genetics",
+          "count": 1
+        },
+        {
+          "word": "glad",
+          "count": 1
+        },
+        {
+          "word": "glp-1",
+          "count": 1
+        },
+        {
+          "word": "guinea",
+          "count": 1
+        },
+        {
+          "word": "guys",
+          "count": 1
+        },
+        {
+          "word": "gym",
+          "count": 1
+        },
+        {
+          "word": "halfway",
+          "count": 1
+        },
+        {
+          "word": "happened",
+          "count": 1
+        },
+        {
+          "word": "happy",
+          "count": 1
+        },
+        {
+          "word": "health",
+          "count": 1
+        },
+        {
+          "word": "helped",
+          "count": 1
+        },
+        {
+          "word": "helping",
+          "count": 1
+        },
+        {
+          "word": "helps",
+          "count": 1
+        },
+        {
+          "word": "hit",
+          "count": 1
+        },
+        {
+          "word": "honest",
+          "count": 1
+        },
+        {
+          "word": "hope",
+          "count": 1
+        },
+        {
+          "word": "hour",
+          "count": 1
+        },
+        {
+          "word": "hungry",
+          "count": 1
+        },
+        {
+          "word": "hyper",
+          "count": 1
+        },
+        {
+          "word": "idea",
+          "count": 1
+        },
+        {
+          "word": "information",
+          "count": 1
+        },
+        {
+          "word": "insulin",
+          "count": 1
+        },
+        {
+          "word": "interesting",
+          "count": 1
+        },
+        {
+          "word": "journal",
+          "count": 1
+        },
+        {
+          "word": "kinds",
+          "count": 1
+        },
+        {
+          "word": "lasted",
+          "count": 1
+        },
+        {
+          "word": "learner",
+          "count": 1
+        },
+        {
+          "word": "legit",
+          "count": 1
+        },
+        {
+          "word": "lose",
+          "count": 1
+        },
+        {
+          "word": "losing",
+          "count": 1
+        },
+        {
+          "word": "lost",
+          "count": 1
+        },
+        {
+          "word": "love",
+          "count": 1
+        },
+        {
+          "word": "low",
+          "count": 1
+        },
+        {
+          "word": "lowering",
+          "count": 1
+        },
+        {
+          "word": "ma'am",
+          "count": 1
+        },
+        {
+          "word": "main",
+          "count": 1
+        },
+        {
+          "word": "major",
+          "count": 1
+        },
+        {
+          "word": "meds",
+          "count": 1
+        },
+        {
+          "word": "metformin",
+          "count": 1
+        },
+        {
+          "word": "mind",
+          "count": 1
+        },
+        {
+          "word": "mom",
+          "count": 1
+        },
+        {
+          "word": "monthly",
+          "count": 1
+        },
+        {
+          "word": "months",
+          "count": 1
+        },
+        {
+          "word": "mostly",
+          "count": 1
+        },
+        {
+          "word": "motivated",
+          "count": 1
+        },
+        {
+          "word": "move",
+          "count": 1
+        },
+        {
+          "word": "name",
+          "count": 1
+        },
+        {
+          "word": "natural",
+          "count": 1
+        },
+        {
+          "word": "necessarily",
+          "count": 1
+        },
+        {
+          "word": "needed",
+          "count": 1
+        },
+        {
+          "word": "new",
+          "count": 1
+        },
+        {
+          "word": "noise",
+          "count": 1
+        },
+        {
+          "word": "obese",
+          "count": 1
+        },
+        {
+          "word": "open",
+          "count": 1
+        },
+        {
+          "word": "others",
+          "count": 1
+        },
+        {
+          "word": "paleo",
+          "count": 1
+        },
+        {
+          "word": "part",
+          "count": 1
+        },
+        {
+          "word": "participate",
+          "count": 1
+        },
+        {
+          "word": "past",
+          "count": 1
+        },
+        {
+          "word": "patients",
+          "count": 1
+        },
+        {
+          "word": "period",
+          "count": 1
+        },
+        {
+          "word": "person",
+          "count": 1
+        },
+        {
+          "word": "phentermine",
+          "count": 1
+        },
+        {
+          "word": "physical",
+          "count": 1
+        },
+        {
+          "word": "pig",
+          "count": 1
+        },
+        {
+          "word": "placebo",
+          "count": 1
+        },
+        {
+          "word": "plays",
+          "count": 1
+        },
+        {
+          "word": "potentially",
+          "count": 1
+        },
+        {
+          "word": "pounds",
+          "count": 1
+        },
+        {
+          "word": "pray",
+          "count": 1
+        },
+        {
+          "word": "prefer",
+          "count": 1
+        },
+        {
+          "word": "preference",
+          "count": 1
+        },
+        {
+          "word": "prices",
+          "count": 1
+        },
+        {
+          "word": "push",
+          "count": 1
+        },
+        {
+          "word": "ravenous",
+          "count": 1
+        },
+        {
+          "word": "read",
+          "count": 1
+        },
+        {
+          "word": "real",
+          "count": 1
+        },
+        {
+          "word": "research",
+          "count": 1
+        },
+        {
+          "word": "resistant",
+          "count": 1
+        },
+        {
+          "word": "responders",
+          "count": 1
+        },
+        {
+          "word": "rest",
+          "count": 1
+        },
+        {
+          "word": "results",
+          "count": 1
+        },
+        {
+          "word": "role",
+          "count": 1
+        },
+        {
+          "word": "school",
+          "count": 1
+        },
+        {
+          "word": "sell",
+          "count": 1
+        },
+        {
+          "word": "sent",
+          "count": 1
+        },
+        {
+          "word": "shortages",
+          "count": 1
+        },
+        {
+          "word": "shot",
+          "count": 1
+        },
+        {
+          "word": "shots",
+          "count": 1
+        },
+        {
+          "word": "since",
+          "count": 1
+        },
+        {
+          "word": "sixth",
+          "count": 1
+        },
+        {
+          "word": "slow",
+          "count": 1
+        },
+        {
+          "word": "smart",
+          "count": 1
+        },
+        {
+          "word": "sometimes",
+          "count": 1
+        },
+        {
+          "word": "south",
+          "count": 1
+        },
+        {
+          "word": "spikes",
+          "count": 1
+        },
+        {
+          "word": "staff",
+          "count": 1
+        },
+        {
+          "word": "start",
+          "count": 1
+        },
+        {
+          "word": "stay",
+          "count": 1
+        },
+        {
+          "word": "step",
+          "count": 1
+        },
+        {
+          "word": "steps",
+          "count": 1
+        },
+        {
+          "word": "strong",
+          "count": 1
+        },
+        {
+          "word": "sugar",
+          "count": 1
+        },
+        {
+          "word": "super",
+          "count": 1
+        },
+        {
+          "word": "support",
+          "count": 1
+        },
+        {
+          "word": "sustain",
+          "count": 1
+        },
+        {
+          "word": "switched",
+          "count": 1
+        },
+        {
+          "word": "take",
+          "count": 1
+        },
+        {
+          "word": "telehealth",
+          "count": 1
+        },
+        {
+          "word": "three",
+          "count": 1
+        },
+        {
+          "word": "throughout",
+          "count": 1
+        },
+        {
+          "word": "took",
+          "count": 1
+        },
+        {
+          "word": "tool",
+          "count": 1
+        },
+        {
+          "word": "tough",
+          "count": 1
+        },
+        {
+          "word": "track",
+          "count": 1
+        },
+        {
+          "word": "transportation",
+          "count": 1
+        },
+        {
+          "word": "treatment",
+          "count": 1
+        },
+        {
+          "word": "trials",
+          "count": 1
+        },
+        {
+          "word": "two-hour",
+          "count": 1
+        },
+        {
+          "word": "type",
+          "count": 1
+        },
+        {
+          "word": "usually",
+          "count": 1
+        },
+        {
+          "word": "vegan",
+          "count": 1
+        },
+        {
+          "word": "videos",
+          "count": 1
+        },
+        {
+          "word": "visual",
+          "count": 1
+        },
+        {
+          "word": "vitkin's",
+          "count": 1
+        },
+        {
+          "word": "walk",
+          "count": 1
+        },
+        {
+          "word": "walking",
+          "count": 1
+        },
+        {
+          "word": "watchers",
+          "count": 1
+        },
+        {
+          "word": "week",
+          "count": 1
+        },
+        {
+          "word": "weekly",
+          "count": 1
+        },
+        {
+          "word": "wegovy",
+          "count": 1
+        },
+        {
+          "word": "welcome",
+          "count": 1
+        },
+        {
+          "word": "whatever",
+          "count": 1
+        },
+        {
+          "word": "willing",
+          "count": 1
+        },
+        {
+          "word": "without",
+          "count": 1
+        },
+        {
+          "word": "work",
+          "count": 1
+        },
+        {
+          "word": "working",
+          "count": 1
+        },
+        {
+          "word": "world",
+          "count": 1
+        },
+        {
+          "word": "worst",
+          "count": 1
+        },
+        {
+          "word": "yet",
+          "count": 1
+        },
+        {
+          "word": "zoom",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "question_groups": {
+    "stopping_glp1": {
+      "question": "Why would you consider stopping a GLP-1 medication, and what factors would influence that decision?",
+      "top_words": [
+        {
+          "word": "stop",
+          "count": 9
+        },
+        {
+          "word": "medication",
+          "count": 5
+        },
+        {
+          "word": "benefit",
+          "count": 4
+        },
+        {
+          "word": "better",
+          "count": 3
+        },
+        {
+          "word": "life",
+          "count": 3
+        },
+        {
+          "word": "manager",
+          "count": 3
+        },
+        {
+          "word": "stay",
+          "count": 3
+        },
+        {
+          "word": "access",
+          "count": 2
+        },
+        {
+          "word": "blood",
+          "count": 2
+        },
+        {
+          "word": "complication",
+          "count": 2
+        },
+        {
+          "word": "cost",
+          "count": 2
+        },
+        {
+          "word": "different",
+          "count": 2
+        },
+        {
+          "word": "doctor",
+          "count": 2
+        },
+        {
+          "word": "health",
+          "count": 2
+        },
+        {
+          "word": "heartburn",
+          "count": 2
+        },
+        {
+          "word": "major",
+          "count": 2
+        },
+        {
+          "word": "personally",
+          "count": 2
+        },
+        {
+          "word": "plan",
+          "count": 2
+        },
+        {
+          "word": "pocket",
+          "count": 2
+        },
+        {
+          "word": "positive",
+          "count": 2
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "benefit",
+            "count": 4
+          },
+          {
+            "word": "medication",
+            "count": 4
+          },
+          {
+            "word": "better",
+            "count": 3
+          },
+          {
+            "word": "manager",
+            "count": 3
+          },
+          {
+            "word": "stop",
+            "count": 3
+          },
+          {
+            "word": "access",
+            "count": 2
+          },
+          {
+            "word": "blood",
+            "count": 2
+          },
+          {
+            "word": "complication",
+            "count": 2
+          },
+          {
+            "word": "cost",
+            "count": 2
+          },
+          {
+            "word": "doctor",
+            "count": 2
+          },
+          {
+            "word": "heartburn",
+            "count": 2
+          },
+          {
+            "word": "major",
+            "count": 2
+          },
+          {
+            "word": "plan",
+            "count": 2
+          },
+          {
+            "word": "pocket",
+            "count": 2
+          },
+          {
+            "word": "positive",
+            "count": 2
+          }
+        ],
+        "participant_10": [
+          {
+            "word": "stop",
+            "count": 6
+          },
+          {
+            "word": "life",
+            "count": 2
+          },
+          {
+            "word": "personally",
+            "count": 2
+          },
+          {
+            "word": "unless",
+            "count": 2
+          },
+          {
+            "word": "dealt",
+            "count": 1
+          },
+          {
+            "word": "different",
+            "count": 1
+          },
+          {
+            "word": "drugs",
+            "count": 1
+          },
+          {
+            "word": "entire",
+            "count": 1
+          },
+          {
+            "word": "factor",
+            "count": 1
+          },
+          {
+            "word": "forced",
+            "count": 1
+          },
+          {
+            "word": "happened",
+            "count": 1
+          },
+          {
+            "word": "health",
+            "count": 1
+          },
+          {
+            "word": "long",
+            "count": 1
+          },
+          {
+            "word": "medication",
+            "count": 1
+          },
+          {
+            "word": "necessarily",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "try_different_medication": {
+      "question": "Would you consider trying a different medication from the one you currently take?",
+      "top_words": [
+        {
+          "word": "different",
+          "count": 4
+        },
+        {
+          "word": "insurance",
+          "count": 3
+        },
+        {
+          "word": "weight",
+          "count": 3
+        },
+        {
+          "word": "consider",
+          "count": 2
+        },
+        {
+          "word": "cover",
+          "count": 2
+        },
+        {
+          "word": "people",
+          "count": 2
+        },
+        {
+          "word": "studies",
+          "count": 2
+        },
+        {
+          "word": "try",
+          "count": 2
+        },
+        {
+          "word": "trying",
+          "count": 2
+        },
+        {
+          "word": "access",
+          "count": 1
+        },
+        {
+          "word": "advancing",
+          "count": 1
+        },
+        {
+          "word": "amount",
+          "count": 1
+        },
+        {
+          "word": "another",
+          "count": 1
+        },
+        {
+          "word": "break",
+          "count": 1
+        },
+        {
+          "word": "cagrilintide",
+          "count": 1
+        },
+        {
+          "word": "chances",
+          "count": 1
+        },
+        {
+          "word": "changing",
+          "count": 1
+        },
+        {
+          "word": "depends",
+          "count": 1
+        },
+        {
+          "word": "discussed",
+          "count": 1
+        },
+        {
+          "word": "doctors",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "insurance",
+            "count": 3
+          },
+          {
+            "word": "weight",
+            "count": 3
+          },
+          {
+            "word": "cover",
+            "count": 2
+          },
+          {
+            "word": "try",
+            "count": 2
+          },
+          {
+            "word": "access",
+            "count": 1
+          },
+          {
+            "word": "amount",
+            "count": 1
+          },
+          {
+            "word": "another",
+            "count": 1
+          },
+          {
+            "word": "chances",
+            "count": 1
+          },
+          {
+            "word": "consider",
+            "count": 1
+          },
+          {
+            "word": "depends",
+            "count": 1
+          },
+          {
+            "word": "different",
+            "count": 1
+          },
+          {
+            "word": "discussed",
+            "count": 1
+          },
+          {
+            "word": "doctors",
+            "count": 1
+          },
+          {
+            "word": "goal",
+            "count": 1
+          },
+          {
+            "word": "happens",
+            "count": 1
+          }
+        ],
+        "participant_10": [
+          {
+            "word": "different",
+            "count": 3
+          },
+          {
+            "word": "studies",
+            "count": 2
+          },
+          {
+            "word": "trying",
+            "count": 2
+          },
+          {
+            "word": "advancing",
+            "count": 1
+          },
+          {
+            "word": "break",
+            "count": 1
+          },
+          {
+            "word": "cagrilintide",
+            "count": 1
+          },
+          {
+            "word": "changing",
+            "count": 1
+          },
+          {
+            "word": "consider",
+            "count": 1
+          },
+          {
+            "word": "glp-1s",
+            "count": 1
+          },
+          {
+            "word": "heard",
+            "count": 1
+          },
+          {
+            "word": "long",
+            "count": 1
+          },
+          {
+            "word": "name",
+            "count": 1
+          },
+          {
+            "word": "people",
+            "count": 1
+          },
+          {
+            "word": "period",
+            "count": 1
+          },
+          {
+            "word": "results",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "trial_unapproved_medication": {
+      "question": "Would you consider participating in a clinical trial with a new medication that is not yet approved?",
+      "top_words": [
+        {
+          "word": "approved",
+          "count": 1
+        },
+        {
+          "word": "order",
+          "count": 1
+        },
+        {
+          "word": "people",
+          "count": 1
+        },
+        {
+          "word": "started",
+          "count": 1
+        },
+        {
+          "word": "trials",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "approved",
+            "count": 1
+          },
+          {
+            "word": "order",
+            "count": 1
+          },
+          {
+            "word": "people",
+            "count": 1
+          },
+          {
+            "word": "started",
+            "count": 1
+          },
+          {
+            "word": "trials",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "trial_motivation": {
+      "question": "What factors, reasons, or incentives would attract you to taking part in a clinical trial?",
+      "top_words": [
+        {
+          "word": "research",
+          "count": 5
+        },
+        {
+          "word": "day",
+          "count": 4
+        },
+        {
+          "word": "done",
+          "count": 3
+        },
+        {
+          "word": "medications",
+          "count": 3
+        },
+        {
+          "word": "taking",
+          "count": 3
+        },
+        {
+          "word": "access",
+          "count": 2
+        },
+        {
+          "word": "amazing",
+          "count": 2
+        },
+        {
+          "word": "clinical",
+          "count": 2
+        },
+        {
+          "word": "currently",
+          "count": 2
+        },
+        {
+          "word": "drug",
+          "count": 2
+        },
+        {
+          "word": "help",
+          "count": 2
+        },
+        {
+          "word": "huge",
+          "count": 2
+        },
+        {
+          "word": "lifestyle",
+          "count": 2
+        },
+        {
+          "word": "long",
+          "count": 2
+        },
+        {
+          "word": "motivator",
+          "count": 2
+        },
+        {
+          "word": "people",
+          "count": 2
+        },
+        {
+          "word": "stall",
+          "count": 2
+        },
+        {
+          "word": "support",
+          "count": 2
+        },
+        {
+          "word": "year",
+          "count": 2
+        },
+        {
+          "word": "academic",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "research",
+            "count": 5
+          },
+          {
+            "word": "done",
+            "count": 3
+          },
+          {
+            "word": "access",
+            "count": 2
+          },
+          {
+            "word": "academic",
+            "count": 1
+          },
+          {
+            "word": "accessible",
+            "count": 1
+          },
+          {
+            "word": "actual",
+            "count": 1
+          },
+          {
+            "word": "another",
+            "count": 1
+          },
+          {
+            "word": "attract",
+            "count": 1
+          },
+          {
+            "word": "attractive",
+            "count": 1
+          },
+          {
+            "word": "attractiveness",
+            "count": 1
+          },
+          {
+            "word": "attracts",
+            "count": 1
+          },
+          {
+            "word": "back",
+            "count": 1
+          },
+          {
+            "word": "behind",
+            "count": 1
+          },
+          {
+            "word": "busy",
+            "count": 1
+          },
+          {
+            "word": "car",
+            "count": 1
+          }
+        ],
+        "participant_10": [
+          {
+            "word": "day",
+            "count": 4
+          },
+          {
+            "word": "amazing",
+            "count": 2
+          },
+          {
+            "word": "currently",
+            "count": 2
+          },
+          {
+            "word": "drug",
+            "count": 2
+          },
+          {
+            "word": "help",
+            "count": 2
+          },
+          {
+            "word": "huge",
+            "count": 2
+          },
+          {
+            "word": "lifestyle",
+            "count": 2
+          },
+          {
+            "word": "long",
+            "count": 2
+          },
+          {
+            "word": "medications",
+            "count": 2
+          },
+          {
+            "word": "motivator",
+            "count": 2
+          },
+          {
+            "word": "people",
+            "count": 2
+          },
+          {
+            "word": "stall",
+            "count": 2
+          },
+          {
+            "word": "taking",
+            "count": 2
+          },
+          {
+            "word": "year",
+            "count": 2
+          },
+          {
+            "word": "added",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "placebo_controlled_appeal": {
+      "question": "How do you feel about a placebo-controlled study, including one offering commercial medication after the initial period?",
+      "top_words": [
+        {
+          "word": "placebo",
+          "count": 2
+        },
+        {
+          "word": "without",
+          "count": 2
+        },
+        {
+          "word": "appealing",
+          "count": 1
+        },
+        {
+          "word": "chances",
+          "count": 1
+        },
+        {
+          "word": "controlled",
+          "count": 1
+        },
+        {
+          "word": "effect",
+          "count": 1
+        },
+        {
+          "word": "help",
+          "count": 1
+        },
+        {
+          "word": "medications",
+          "count": 1
+        },
+        {
+          "word": "never",
+          "count": 1
+        },
+        {
+          "word": "others",
+          "count": 1
+        },
+        {
+          "word": "pray",
+          "count": 1
+        },
+        {
+          "word": "randomized",
+          "count": 1
+        },
+        {
+          "word": "real",
+          "count": 1
+        },
+        {
+          "word": "studies",
+          "count": 1
+        },
+        {
+          "word": "study",
+          "count": 1
+        },
+        {
+          "word": "take",
+          "count": 1
+        },
+        {
+          "word": "understand",
+          "count": 1
+        },
+        {
+          "word": "willing",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "controlled",
+            "count": 1
+          },
+          {
+            "word": "placebo",
+            "count": 1
+          },
+          {
+            "word": "randomized",
+            "count": 1
+          },
+          {
+            "word": "study",
+            "count": 1
+          },
+          {
+            "word": "understand",
+            "count": 1
+          },
+          {
+            "word": "without",
+            "count": 1
+          }
+        ],
+        "participant_10": [
+          {
+            "word": "appealing",
+            "count": 1
+          },
+          {
+            "word": "chances",
+            "count": 1
+          },
+          {
+            "word": "effect",
+            "count": 1
+          },
+          {
+            "word": "help",
+            "count": 1
+          },
+          {
+            "word": "medications",
+            "count": 1
+          },
+          {
+            "word": "never",
+            "count": 1
+          },
+          {
+            "word": "others",
+            "count": 1
+          },
+          {
+            "word": "placebo",
+            "count": 1
+          },
+          {
+            "word": "pray",
+            "count": 1
+          },
+          {
+            "word": "real",
+            "count": 1
+          },
+          {
+            "word": "studies",
+            "count": 1
+          },
+          {
+            "word": "take",
+            "count": 1
+          },
+          {
+            "word": "willing",
+            "count": 1
+          },
+          {
+            "word": "without",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "monthly_injection_barrier": {
+      "question": "Would taking monthly injections over a 36-week period be a barrier to participating?",
+      "top_words": [
+        {
+          "word": "injections",
+          "count": 2
+        },
+        {
+          "word": "lasts",
+          "count": 2
+        },
+        {
+          "word": "truly",
+          "count": 2
+        },
+        {
+          "word": "weekly",
+          "count": 2
+        },
+        {
+          "word": "amazing",
+          "count": 1
+        },
+        {
+          "word": "better",
+          "count": 1
+        },
+        {
+          "word": "curious",
+          "count": 1
+        },
+        {
+          "word": "day",
+          "count": 1
+        },
+        {
+          "word": "days",
+          "count": 1
+        },
+        {
+          "word": "easier",
+          "count": 1
+        },
+        {
+          "word": "fifth",
+          "count": 1
+        },
+        {
+          "word": "fully",
+          "count": 1
+        },
+        {
+          "word": "halfway",
+          "count": 1
+        },
+        {
+          "word": "hungry",
+          "count": 1
+        },
+        {
+          "word": "injection",
+          "count": 1
+        },
+        {
+          "word": "interesting",
+          "count": 1
+        },
+        {
+          "word": "lasted",
+          "count": 1
+        },
+        {
+          "word": "less",
+          "count": 1
+        },
+        {
+          "word": "long",
+          "count": 1
+        },
+        {
+          "word": "month",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "injections",
+            "count": 2
+          },
+          {
+            "word": "better",
+            "count": 1
+          },
+          {
+            "word": "injection",
+            "count": 1
+          },
+          {
+            "word": "less",
+            "count": 1
+          },
+          {
+            "word": "process",
+            "count": 1
+          },
+          {
+            "word": "tolerate",
+            "count": 1
+          },
+          {
+            "word": "weekly",
+            "count": 1
+          },
+          {
+            "word": "works",
+            "count": 1
+          }
+        ],
+        "participant_10": [
+          {
+            "word": "lasts",
+            "count": 2
+          },
+          {
+            "word": "truly",
+            "count": 2
+          },
+          {
+            "word": "amazing",
+            "count": 1
+          },
+          {
+            "word": "curious",
+            "count": 1
+          },
+          {
+            "word": "day",
+            "count": 1
+          },
+          {
+            "word": "days",
+            "count": 1
+          },
+          {
+            "word": "easier",
+            "count": 1
+          },
+          {
+            "word": "fifth",
+            "count": 1
+          },
+          {
+            "word": "fully",
+            "count": 1
+          },
+          {
+            "word": "halfway",
+            "count": 1
+          },
+          {
+            "word": "hungry",
+            "count": 1
+          },
+          {
+            "word": "interesting",
+            "count": 1
+          },
+          {
+            "word": "lasted",
+            "count": 1
+          },
+          {
+            "word": "long",
+            "count": 1
+          },
+          {
+            "word": "month",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "compounded_vs_approved": {
+      "question": "How likely are you to purchase compounded semaglutide versus an approved product?",
+      "top_words": [
+        {
+          "word": "compound",
+          "count": 4
+        },
+        {
+          "word": "semaglutide",
+          "count": 2
+        },
+        {
+          "word": "taken",
+          "count": 2
+        },
+        {
+          "word": "affordability",
+          "count": 1
+        },
+        {
+          "word": "affordable",
+          "count": 1
+        },
+        {
+          "word": "another",
+          "count": 1
+        },
+        {
+          "word": "anticipate",
+          "count": 1
+        },
+        {
+          "word": "available",
+          "count": 1
+        },
+        {
+          "word": "back",
+          "count": 1
+        },
+        {
+          "word": "better",
+          "count": 1
+        },
+        {
+          "word": "boss",
+          "count": 1
+        },
+        {
+          "word": "brand",
+          "count": 1
+        },
+        {
+          "word": "brought",
+          "count": 1
+        },
+        {
+          "word": "comparable",
+          "count": 1
+        },
+        {
+          "word": "continue",
+          "count": 1
+        },
+        {
+          "word": "depend",
+          "count": 1
+        },
+        {
+          "word": "depends",
+          "count": 1
+        },
+        {
+          "word": "down",
+          "count": 1
+        },
+        {
+          "word": "drug",
+          "count": 1
+        },
+        {
+          "word": "ever",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "taken",
+            "count": 2
+          },
+          {
+            "word": "brand",
+            "count": 1
+          },
+          {
+            "word": "compound",
+            "count": 1
+          },
+          {
+            "word": "ever",
+            "count": 1
+          },
+          {
+            "word": "likely",
+            "count": 1
+          },
+          {
+            "word": "name",
+            "count": 1
+          }
+        ],
+        "participant_10": [
+          {
+            "word": "compound",
+            "count": 3
+          },
+          {
+            "word": "semaglutide",
+            "count": 2
+          },
+          {
+            "word": "affordability",
+            "count": 1
+          },
+          {
+            "word": "affordable",
+            "count": 1
+          },
+          {
+            "word": "another",
+            "count": 1
+          },
+          {
+            "word": "anticipate",
+            "count": 1
+          },
+          {
+            "word": "available",
+            "count": 1
+          },
+          {
+            "word": "back",
+            "count": 1
+          },
+          {
+            "word": "better",
+            "count": 1
+          },
+          {
+            "word": "boss",
+            "count": 1
+          },
+          {
+            "word": "brought",
+            "count": 1
+          },
+          {
+            "word": "comparable",
+            "count": 1
+          },
+          {
+            "word": "continue",
+            "count": 1
+          },
+          {
+            "word": "depend",
+            "count": 1
+          },
+          {
+            "word": "depends",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "trial_barriers": {
+      "question": "What barriers (e.g. fasting blood, glucose monitoring, visit frequency, travel) would affect your participation in a trial?",
+      "top_words": [
+        {
+          "word": "drive",
+          "count": 5
+        },
+        {
+          "word": "live",
+          "count": 3
+        },
+        {
+          "word": "monthly",
+          "count": 3
+        },
+        {
+          "word": "away",
+          "count": 2
+        },
+        {
+          "word": "bigger",
+          "count": 2
+        },
+        {
+          "word": "hours",
+          "count": 2
+        },
+        {
+          "word": "injection",
+          "count": 2
+        },
+        {
+          "word": "participate",
+          "count": 2
+        },
+        {
+          "word": "plenty",
+          "count": 2
+        },
+        {
+          "word": "research",
+          "count": 2
+        },
+        {
+          "word": "telehealth",
+          "count": 2
+        },
+        {
+          "word": "three",
+          "count": 2
+        },
+        {
+          "word": "time",
+          "count": 2
+        },
+        {
+          "word": "whenever",
+          "count": 2
+        },
+        {
+          "word": "access",
+          "count": 1
+        },
+        {
+          "word": "accessible",
+          "count": 1
+        },
+        {
+          "word": "arranged",
+          "count": 1
+        },
+        {
+          "word": "atlanta",
+          "count": 1
+        },
+        {
+          "word": "bad",
+          "count": 1
+        },
+        {
+          "word": "barrier",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "drive",
+            "count": 2
+          },
+          {
+            "word": "hours",
+            "count": 2
+          },
+          {
+            "word": "injection",
+            "count": 2
+          },
+          {
+            "word": "monthly",
+            "count": 2
+          },
+          {
+            "word": "participate",
+            "count": 2
+          },
+          {
+            "word": "research",
+            "count": 2
+          },
+          {
+            "word": "telehealth",
+            "count": 2
+          },
+          {
+            "word": "three",
+            "count": 2
+          },
+          {
+            "word": "time",
+            "count": 2
+          },
+          {
+            "word": "access",
+            "count": 1
+          },
+          {
+            "word": "accessible",
+            "count": 1
+          },
+          {
+            "word": "away",
+            "count": 1
+          },
+          {
+            "word": "barrier",
+            "count": 1
+          },
+          {
+            "word": "challenge",
+            "count": 1
+          },
+          {
+            "word": "closest",
+            "count": 1
+          }
+        ],
+        "participant_10": [
+          {
+            "word": "drive",
+            "count": 3
+          },
+          {
+            "word": "bigger",
+            "count": 2
+          },
+          {
+            "word": "live",
+            "count": 2
+          },
+          {
+            "word": "plenty",
+            "count": 2
+          },
+          {
+            "word": "whenever",
+            "count": 2
+          },
+          {
+            "word": "arranged",
+            "count": 1
+          },
+          {
+            "word": "atlanta",
+            "count": 1
+          },
+          {
+            "word": "away",
+            "count": 1
+          },
+          {
+            "word": "bad",
+            "count": 1
+          },
+          {
+            "word": "blood",
+            "count": 1
+          },
+          {
+            "word": "burning",
+            "count": 1
+          },
+          {
+            "word": "cities",
+            "count": 1
+          },
+          {
+            "word": "city",
+            "count": 1
+          },
+          {
+            "word": "country",
+            "count": 1
+          },
+          {
+            "word": "day",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "trial_concerns": {
+      "question": "Are there any other concerns you would want to discuss with the study doctors before signing up?",
+      "top_words": [
+        {
+          "word": "cause",
+          "count": 2
+        },
+        {
+          "word": "effects",
+          "count": 2
+        },
+        {
+          "word": "gastric",
+          "count": 2
+        },
+        {
+          "word": "need",
+          "count": 2
+        },
+        {
+          "word": "side",
+          "count": 2
+        },
+        {
+          "word": "already",
+          "count": 1
+        },
+        {
+          "word": "aside",
+          "count": 1
+        },
+        {
+          "word": "biggest",
+          "count": 1
+        },
+        {
+          "word": "common",
+          "count": 1
+        },
+        {
+          "word": "concern",
+          "count": 1
+        },
+        {
+          "word": "down",
+          "count": 1
+        },
+        {
+          "word": "emptying",
+          "count": 1
+        },
+        {
+          "word": "first",
+          "count": 1
+        },
+        {
+          "word": "glp-1s",
+          "count": 1
+        },
+        {
+          "word": "guinea",
+          "count": 1
+        },
+        {
+          "word": "issues",
+          "count": 1
+        },
+        {
+          "word": "main",
+          "count": 1
+        },
+        {
+          "word": "major",
+          "count": 1
+        },
+        {
+          "word": "medication",
+          "count": 1
+        },
+        {
+          "word": "mostly",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_10": [
+          {
+            "word": "cause",
+            "count": 2
+          },
+          {
+            "word": "effects",
+            "count": 2
+          },
+          {
+            "word": "gastric",
+            "count": 2
+          },
+          {
+            "word": "need",
+            "count": 2
+          },
+          {
+            "word": "side",
+            "count": 2
+          },
+          {
+            "word": "already",
+            "count": 1
+          },
+          {
+            "word": "aside",
+            "count": 1
+          },
+          {
+            "word": "biggest",
+            "count": 1
+          },
+          {
+            "word": "common",
+            "count": 1
+          },
+          {
+            "word": "concern",
+            "count": 1
+          },
+          {
+            "word": "down",
+            "count": 1
+          },
+          {
+            "word": "emptying",
+            "count": 1
+          },
+          {
+            "word": "first",
+            "count": 1
+          },
+          {
+            "word": "glp-1s",
+            "count": 1
+          },
+          {
+            "word": "guinea",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "educational_support": {
+      "question": "What educational, diet, exercise, or lifestyle support would be most valuable to you?",
+      "top_words": [
+        {
+          "word": "medication",
+          "count": 5
+        },
+        {
+          "word": "access",
+          "count": 3
+        },
+        {
+          "word": "classes",
+          "count": 3
+        },
+        {
+          "word": "counseling",
+          "count": 3
+        },
+        {
+          "word": "discount",
+          "count": 3
+        },
+        {
+          "word": "learning",
+          "count": 3
+        },
+        {
+          "word": "online",
+          "count": 3
+        },
+        {
+          "word": "company",
+          "count": 2
+        },
+        {
+          "word": "education",
+          "count": 2
+        },
+        {
+          "word": "helpful",
+          "count": 2
+        },
+        {
+          "word": "lessons",
+          "count": 2
+        },
+        {
+          "word": "modules",
+          "count": 2
+        },
+        {
+          "word": "month",
+          "count": 2
+        },
+        {
+          "word": "nutrition",
+          "count": 2
+        },
+        {
+          "word": "nutritional",
+          "count": 2
+        },
+        {
+          "word": "participated",
+          "count": 2
+        },
+        {
+          "word": "signed",
+          "count": 2
+        },
+        {
+          "word": "teach",
+          "count": 2
+        },
+        {
+          "word": "telehealth",
+          "count": 2
+        },
+        {
+          "word": "watch",
+          "count": 2
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "medication",
+            "count": 5
+          },
+          {
+            "word": "access",
+            "count": 3
+          },
+          {
+            "word": "counseling",
+            "count": 3
+          },
+          {
+            "word": "discount",
+            "count": 3
+          },
+          {
+            "word": "learning",
+            "count": 3
+          },
+          {
+            "word": "online",
+            "count": 3
+          },
+          {
+            "word": "classes",
+            "count": 2
+          },
+          {
+            "word": "company",
+            "count": 2
+          },
+          {
+            "word": "education",
+            "count": 2
+          },
+          {
+            "word": "lessons",
+            "count": 2
+          },
+          {
+            "word": "modules",
+            "count": 2
+          },
+          {
+            "word": "month",
+            "count": 2
+          },
+          {
+            "word": "nutritional",
+            "count": 2
+          },
+          {
+            "word": "participated",
+            "count": 2
+          },
+          {
+            "word": "signed",
+            "count": 2
+          }
+        ],
+        "participant_10": [
+          {
+            "word": "helpful",
+            "count": 2
+          },
+          {
+            "word": "nutrition",
+            "count": 2
+          },
+          {
+            "word": "teach",
+            "count": 2
+          },
+          {
+            "word": "amazing",
+            "count": 1
+          },
+          {
+            "word": "classes",
+            "count": 1
+          },
+          {
+            "word": "course",
+            "count": 1
+          },
+          {
+            "word": "crazy",
+            "count": 1
+          },
+          {
+            "word": "doctors",
+            "count": 1
+          },
+          {
+            "word": "idea",
+            "count": 1
+          },
+          {
+            "word": "learner",
+            "count": 1
+          },
+          {
+            "word": "life",
+            "count": 1
+          },
+          {
+            "word": "people",
+            "count": 1
+          },
+          {
+            "word": "person",
+            "count": 1
+          },
+          {
+            "word": "preference",
+            "count": 1
+          },
+          {
+            "word": "read",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "weight_loss_history": {
+      "question": "How have you tried to lose weight in the past, before starting a GLP-1?",
+      "top_words": [
+        {
+          "word": "tried",
+          "count": 3
+        },
+        {
+          "word": "weight",
+          "count": 3
+        },
+        {
+          "word": "diet",
+          "count": 2
+        },
+        {
+          "word": "done",
+          "count": 2
+        },
+        {
+          "word": "loss",
+          "count": 2
+        },
+        {
+          "word": "allowed",
+          "count": 1
+        },
+        {
+          "word": "aside",
+          "count": 1
+        },
+        {
+          "word": "atkins",
+          "count": 1
+        },
+        {
+          "word": "beach",
+          "count": 1
+        },
+        {
+          "word": "called",
+          "count": 1
+        },
+        {
+          "word": "carb",
+          "count": 1
+        },
+        {
+          "word": "carbs",
+          "count": 1
+        },
+        {
+          "word": "comfortable",
+          "count": 1
+        },
+        {
+          "word": "diets",
+          "count": 1
+        },
+        {
+          "word": "different",
+          "count": 1
+        },
+        {
+          "word": "dr",
+          "count": 1
+        },
+        {
+          "word": "either",
+          "count": 1
+        },
+        {
+          "word": "ever",
+          "count": 1
+        },
+        {
+          "word": "exercise",
+          "count": 1
+        },
+        {
+          "word": "following",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_10": [
+          {
+            "word": "tried",
+            "count": 3
+          },
+          {
+            "word": "weight",
+            "count": 3
+          },
+          {
+            "word": "diet",
+            "count": 2
+          },
+          {
+            "word": "done",
+            "count": 2
+          },
+          {
+            "word": "loss",
+            "count": 2
+          },
+          {
+            "word": "allowed",
+            "count": 1
+          },
+          {
+            "word": "aside",
+            "count": 1
+          },
+          {
+            "word": "atkins",
+            "count": 1
+          },
+          {
+            "word": "beach",
+            "count": 1
+          },
+          {
+            "word": "called",
+            "count": 1
+          },
+          {
+            "word": "carb",
+            "count": 1
+          },
+          {
+            "word": "carbs",
+            "count": 1
+          },
+          {
+            "word": "comfortable",
+            "count": 1
+          },
+          {
+            "word": "diets",
+            "count": 1
+          },
+          {
+            "word": "different",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "considered_trials_before": {
+      "question": "Have you considered or looked into taking part in a clinical trial before now?",
+      "top_words": [
+        {
+          "word": "hours",
+          "count": 3
+        },
+        {
+          "word": "sign",
+          "count": 2
+        },
+        {
+          "word": "week",
+          "count": 2
+        },
+        {
+          "word": "accepted",
+          "count": 1
+        },
+        {
+          "word": "applied",
+          "count": 1
+        },
+        {
+          "word": "area",
+          "count": 1
+        },
+        {
+          "word": "away",
+          "count": 1
+        },
+        {
+          "word": "change",
+          "count": 1
+        },
+        {
+          "word": "clinic",
+          "count": 1
+        },
+        {
+          "word": "clinical",
+          "count": 1
+        },
+        {
+          "word": "counseling",
+          "count": 1
+        },
+        {
+          "word": "eight",
+          "count": 1
+        },
+        {
+          "word": "eli",
+          "count": 1
+        },
+        {
+          "word": "find",
+          "count": 1
+        },
+        {
+          "word": "injection",
+          "count": 1
+        },
+        {
+          "word": "life",
+          "count": 1
+        },
+        {
+          "word": "lilly",
+          "count": 1
+        },
+        {
+          "word": "love",
+          "count": 1
+        },
+        {
+          "word": "notifications",
+          "count": 1
+        },
+        {
+          "word": "opposed",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "hours",
+            "count": 3
+          },
+          {
+            "word": "sign",
+            "count": 2
+          },
+          {
+            "word": "week",
+            "count": 2
+          },
+          {
+            "word": "area",
+            "count": 1
+          },
+          {
+            "word": "away",
+            "count": 1
+          },
+          {
+            "word": "clinic",
+            "count": 1
+          },
+          {
+            "word": "clinical",
+            "count": 1
+          },
+          {
+            "word": "counseling",
+            "count": 1
+          },
+          {
+            "word": "eight",
+            "count": 1
+          },
+          {
+            "word": "eli",
+            "count": 1
+          },
+          {
+            "word": "find",
+            "count": 1
+          },
+          {
+            "word": "injection",
+            "count": 1
+          },
+          {
+            "word": "lilly",
+            "count": 1
+          },
+          {
+            "word": "notifications",
+            "count": 1
+          },
+          {
+            "word": "opposed",
+            "count": 1
+          }
+        ],
+        "participant_10": [
+          {
+            "word": "accepted",
+            "count": 1
+          },
+          {
+            "word": "applied",
+            "count": 1
+          },
+          {
+            "word": "change",
+            "count": 1
+          },
+          {
+            "word": "life",
+            "count": 1
+          },
+          {
+            "word": "love",
+            "count": 1
+          },
+          {
+            "word": "participate",
+            "count": 1
+          },
+          {
+            "word": "potentially",
+            "count": 1
+          },
+          {
+            "word": "retatrutide",
+            "count": 1
+          },
+          {
+            "word": "trial",
+            "count": 1
+          },
+          {
+            "word": "world",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "oral_glp_awareness": {
+      "question": "How aware are you of other weight-loss drugs in development, such as oral GLP-1s, and what is your perception of them?",
+      "top_words": [
+        {
+          "word": "weight",
+          "count": 6
+        },
+        {
+          "word": "heard",
+          "count": 4
+        },
+        {
+          "word": "doctor",
+          "count": 3
+        },
+        {
+          "word": "amazing",
+          "count": 2
+        },
+        {
+          "word": "loss",
+          "count": 2
+        },
+        {
+          "word": "lost",
+          "count": 2
+        },
+        {
+          "word": "taking",
+          "count": 2
+        },
+        {
+          "word": "yet",
+          "count": 2
+        },
+        {
+          "word": "approved",
+          "count": 1
+        },
+        {
+          "word": "available",
+          "count": 1
+        },
+        {
+          "word": "aware",
+          "count": 1
+        },
+        {
+          "word": "continue",
+          "count": 1
+        },
+        {
+          "word": "conversations",
+          "count": 1
+        },
+        {
+          "word": "day",
+          "count": 1
+        },
+        {
+          "word": "diabetes",
+          "count": 1
+        },
+        {
+          "word": "diet",
+          "count": 1
+        },
+        {
+          "word": "difference",
+          "count": 1
+        },
+        {
+          "word": "done",
+          "count": 1
+        },
+        {
+          "word": "educated",
+          "count": 1
+        },
+        {
+          "word": "eli",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_09": [
+          {
+            "word": "weight",
+            "count": 4
+          },
+          {
+            "word": "doctor",
+            "count": 3
+          },
+          {
+            "word": "heard",
+            "count": 2
+          },
+          {
+            "word": "lost",
+            "count": 2
+          },
+          {
+            "word": "taking",
+            "count": 2
+          },
+          {
+            "word": "approved",
+            "count": 1
+          },
+          {
+            "word": "available",
+            "count": 1
+          },
+          {
+            "word": "aware",
+            "count": 1
+          },
+          {
+            "word": "continue",
+            "count": 1
+          },
+          {
+            "word": "conversations",
+            "count": 1
+          },
+          {
+            "word": "diet",
+            "count": 1
+          },
+          {
+            "word": "educated",
+            "count": 1
+          },
+          {
+            "word": "eli",
+            "count": 1
+          },
+          {
+            "word": "fda",
+            "count": 1
+          },
+          {
+            "word": "fully",
+            "count": 1
+          }
+        ],
+        "participant_10": [
+          {
+            "word": "amazing",
+            "count": 2
+          },
+          {
+            "word": "heard",
+            "count": 2
+          },
+          {
+            "word": "loss",
+            "count": 2
+          },
+          {
+            "word": "weight",
+            "count": 2
+          },
+          {
+            "word": "day",
+            "count": 1
+          },
+          {
+            "word": "diabetes",
+            "count": 1
+          },
+          {
+            "word": "difference",
+            "count": 1
+          },
+          {
+            "word": "done",
+            "count": 1
+          },
+          {
+            "word": "far",
+            "count": 1
+          },
+          {
+            "word": "glp-1s",
+            "count": 1
+          },
+          {
+            "word": "helping",
+            "count": 1
+          },
+          {
+            "word": "honest",
+            "count": 1
+          },
+          {
+            "word": "hyper",
+            "count": 1
+          },
+          {
+            "word": "metformin",
+            "count": 1
+          },
+          {
+            "word": "new",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "oral_vs_injectable": {
+      "question": "What are your thoughts on oral GLP-1s versus injectable medications?",
+      "top_words": [
+        {
+          "word": "injection",
+          "count": 2
+        },
+        {
+          "word": "days",
+          "count": 1
+        },
+        {
+          "word": "faster",
+          "count": 1
+        },
+        {
+          "word": "first",
+          "count": 1
+        },
+        {
+          "word": "food",
+          "count": 1
+        },
+        {
+          "word": "hit",
+          "count": 1
+        },
+        {
+          "word": "legit",
+          "count": 1
+        },
+        {
+          "word": "noise",
+          "count": 1
+        },
+        {
+          "word": "taking",
+          "count": 1
+        },
+        {
+          "word": "two",
+          "count": 1
+        },
+        {
+          "word": "welcome",
+          "count": 1
+        }
+      ],
+      "participant_breakdown": {
+        "participant_10": [
+          {
+            "word": "injection",
+            "count": 2
+          },
+          {
+            "word": "days",
+            "count": 1
+          },
+          {
+            "word": "faster",
+            "count": 1
+          },
+          {
+            "word": "first",
+            "count": 1
+          },
+          {
+            "word": "food",
+            "count": 1
+          },
+          {
+            "word": "hit",
+            "count": 1
+          },
+          {
+            "word": "legit",
+            "count": 1
+          },
+          {
+            "word": "noise",
+            "count": 1
+          },
+          {
+            "word": "taking",
+            "count": 1
+          },
+          {
+            "word": "two",
+            "count": 1
+          },
+          {
+            "word": "welcome",
+            "count": 1
+          }
+        ]
+      }
+    }
+  }
+}

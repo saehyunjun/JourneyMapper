@@ -1,0 +1,873 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "generated_at": "2026-05-17T17:59:35.300Z",
+    "generator": "scripts/build-quote-bank.mjs",
+    "sources": [
+      "src/lib/content/wctglpdemo-data/interviews_structured.json",
+      "src/lib/content/wctglpdemo-data/segments.json",
+      "src/lib/content/wctglpdemo-data/segment_tags.json"
+    ],
+    "labels_status": "ai_proposed",
+    "quote_count": 22,
+    "score_dimensions": [
+      "clarity",
+      "emotional_intensity",
+      "strategic_value",
+      "specificity"
+    ],
+    "notes": [
+      "Quotes are AI-selected and AI-scored; every quote is review_status \"pending\".",
+      "verbatim_verified is true only after the script confirms the quote equals source.slice(char_start, char_end) and contains each constituent segment.",
+      "themes/emotions/sentiment are inherited from segment_tags.json, not re-judged here.",
+      "A quote is one or more contiguous segments from a single participant turn."
+    ]
+  },
+  "quotes": [
+    {
+      "quote_id": "q_participant_09_001",
+      "interview_id": "participant_09",
+      "question_id": "stopping_glp1",
+      "segment_ids": [
+        "participant_09_t03_s03",
+        "participant_09_t03_s04"
+      ],
+      "text": "My doctor has tried to get me insurance coverage for it, and they can't even access our plan benefit manager to get authorization. Their plan benefit manager or the pharmacy benefit manager won't discuss with them at all.",
+      "char_start": 1496,
+      "char_end": 1717,
+      "verbatim_verified": true,
+      "themes": [
+        "insurance_barrier"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "sentiment": -2,
+      "quote_score": {
+        "clarity": 4,
+        "emotional_intensity": 3,
+        "strategic_value": 5,
+        "specificity": 4,
+        "overall": 4
+      },
+      "recommended_uses": [
+        "access barriers",
+        "trial recruitment strategy",
+        "payer engagement"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_09_002",
+      "interview_id": "participant_09",
+      "question_id": "stopping_glp1",
+      "segment_ids": [
+        "participant_09_t03_s05",
+        "participant_09_t03_s06"
+      ],
+      "text": "And so the out of pocket cost for me would be about a thousand dollars a month. So it's completely prohibitive.",
+      "char_start": 1718,
+      "char_end": 1829,
+      "verbatim_verified": true,
+      "themes": [
+        "cost_access"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "semantic_tags": [
+        "cost_benefit_reasoning"
+      ],
+      "sentiment": -2,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 4,
+        "strategic_value": 5,
+        "specificity": 5,
+        "overall": 4.75
+      },
+      "recommended_uses": [
+        "access barriers",
+        "cost messaging",
+        "patient journey map"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_09_003",
+      "interview_id": "participant_09",
+      "question_id": "stopping_glp1",
+      "segment_ids": [
+        "participant_09_t03_s11",
+        "participant_09_t03_s12"
+      ],
+      "text": "My blood pressure has gone down. I've gone off one blood pressure medication and have cut the other medication in half.",
+      "char_start": 2129,
+      "char_end": 2248,
+      "verbatim_verified": true,
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "cardiometabolic"
+      ],
+      "emotions": [
+        "relief"
+      ],
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "sentiment": 2,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 4,
+        "strategic_value": 4,
+        "specificity": 5,
+        "overall": 4.5
+      },
+      "recommended_uses": [
+        "non-weight benefits",
+        "clinical value story"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_09_004",
+      "interview_id": "participant_09",
+      "question_id": "monthly_injection_barrier",
+      "segment_ids": [
+        "participant_09_t13_s01",
+        "participant_09_t13_s02"
+      ],
+      "text": "I mean, I actually don't like the injection process. I tolerate it because it works.",
+      "char_start": 4082,
+      "char_end": 4166,
+      "verbatim_verified": true,
+      "themes": [
+        "injection_experience",
+        "treatment_continuation"
+      ],
+      "subthemes": [
+        "injection_aversion"
+      ],
+      "emotions": [],
+      "semantic_tags": [
+        "cost_benefit_reasoning",
+        "treatment_dependency"
+      ],
+      "sentiment": 0,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 4,
+        "strategic_value": 4,
+        "specificity": 3,
+        "overall": 4
+      },
+      "recommended_uses": [
+        "injection burden",
+        "oral vs injectable",
+        "patient journey map"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_09_005",
+      "interview_id": "participant_09",
+      "question_id": "trial_motivation",
+      "segment_ids": [
+        "participant_09_t17_s02",
+        "participant_09_t17_s03"
+      ],
+      "text": "And another one is I support research. I mean, the more research back we have, the safer these products are.",
+      "char_start": 4816,
+      "char_end": 4924,
+      "verbatim_verified": true,
+      "themes": [
+        "research_altruism"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "semantic_tags": [
+        "altruistic_reasoning",
+        "risk_calculation"
+      ],
+      "sentiment": 1,
+      "quote_score": {
+        "clarity": 4,
+        "emotional_intensity": 3,
+        "strategic_value": 4,
+        "specificity": 3,
+        "overall": 3.5
+      },
+      "recommended_uses": [
+        "trial motivation",
+        "recruitment messaging"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_09_006",
+      "interview_id": "participant_09",
+      "question_id": "trial_barriers",
+      "segment_ids": [
+        "participant_09_t21_s01",
+        "participant_09_t21_s02"
+      ],
+      "text": "I am, the closest, there are two research hospitals, both of them are three hours away. So in order for me to access the trials, I would have to drive three hours weekly to participate because they have to do the injections.",
+      "char_start": 5566,
+      "char_end": 5790,
+      "verbatim_verified": true,
+      "themes": [
+        "travel_burden",
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "distance_to_site",
+        "visit_frequency"
+      ],
+      "emotions": [],
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "sentiment": -1,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 3,
+        "strategic_value": 5,
+        "specificity": 5,
+        "overall": 4.5
+      },
+      "recommended_uses": [
+        "trial barriers",
+        "site selection",
+        "decentralized trial design"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_09_007",
+      "interview_id": "participant_09",
+      "question_id": "trial_barriers",
+      "segment_ids": [
+        "participant_09_t21_s04"
+      ],
+      "text": "If they would offer telehealth services, so let's say this was a monthly injection and I only had to drive to get the monthly injection, but then I was able to participate in the nursing visits and follow-ups through telehealth, that would be more accessible.",
+      "char_start": 5819,
+      "char_end": 6078,
+      "verbatim_verified": true,
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "telehealth"
+      ],
+      "emotions": [
+        "hope"
+      ],
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "sentiment": 1,
+      "quote_score": {
+        "clarity": 4,
+        "emotional_intensity": 3,
+        "strategic_value": 5,
+        "specificity": 4,
+        "overall": 4
+      },
+      "recommended_uses": [
+        "trial design",
+        "decentralized trial design",
+        "barrier mitigation"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_09_008",
+      "interview_id": "participant_09",
+      "question_id": "considered_trials_before",
+      "segment_ids": [
+        "participant_09_t37_s01"
+      ],
+      "text": "And to me it was like, where am I going to find six hours a week?",
+      "char_start": 9528,
+      "char_end": 9593,
+      "verbatim_verified": true,
+      "themes": [
+        "time_burden"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "sentiment": -1,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 4,
+        "strategic_value": 4,
+        "specificity": 4,
+        "overall": 4.25
+      },
+      "recommended_uses": [
+        "time burden",
+        "trial barriers",
+        "patient journey map"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_09_009",
+      "interview_id": "participant_09",
+      "question_id": "oral_glp_awareness",
+      "segment_ids": [
+        "participant_09_t41_s01"
+      ],
+      "text": "And I like the idea of taking a pill more than I do taking injection.",
+      "char_start": 10893,
+      "char_end": 10962,
+      "verbatim_verified": true,
+      "themes": [
+        "oral_medication_interest",
+        "injection_experience"
+      ],
+      "subthemes": [
+        "injection_aversion"
+      ],
+      "emotions": [],
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "sentiment": 1,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 3,
+        "strategic_value": 4,
+        "specificity": 3,
+        "overall": 3.75
+      },
+      "recommended_uses": [
+        "oral vs injectable",
+        "product preference"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_001",
+      "interview_id": "participant_10",
+      "question_id": "stopping_glp1",
+      "segment_ids": [
+        "participant_10_t05_s05"
+      ],
+      "text": "If maybe getting them was a factor, obviously we know that we've had shortages and things like that, so unless I was pretty much forced to stop, I know that this is going to be a medication that I'm probably going to need for the rest of my life and I'll basically do whatever I have to do to stay on it.",
+      "char_start": 1521,
+      "char_end": 1825,
+      "verbatim_verified": true,
+      "themes": [
+        "medication_access",
+        "treatment_continuation"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "determination"
+      ],
+      "semantic_tags": [
+        "treatment_dependency",
+        "access_logic"
+      ],
+      "sentiment": 0,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 5,
+        "strategic_value": 5,
+        "specificity": 4,
+        "overall": 4.75
+      },
+      "recommended_uses": [
+        "treatment dependency",
+        "maintenance positioning",
+        "patient journey map"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_002",
+      "interview_id": "participant_10",
+      "question_id": "try_different_medication",
+      "segment_ids": [
+        "participant_10_t07_s05"
+      ],
+      "text": "I know that if you get in a stall, trying different ones can definitely break that.",
+      "char_start": 2461,
+      "char_end": 2544,
+      "verbatim_verified": true,
+      "themes": [
+        "drug_switching"
+      ],
+      "subthemes": [
+        "stall_management"
+      ],
+      "emotions": [],
+      "semantic_tags": [],
+      "sentiment": 1,
+      "quote_score": {
+        "clarity": 4,
+        "emotional_intensity": 3,
+        "strategic_value": 4,
+        "specificity": 4,
+        "overall": 3.75
+      },
+      "recommended_uses": [
+        "drug switching",
+        "efficacy messaging"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_003",
+      "interview_id": "participant_10",
+      "question_id": "placebo_controlled_appeal",
+      "segment_ids": [
+        "participant_10_t15_s02"
+      ],
+      "text": "I mean, placebo effect is definitely real, and I would be willing to do it just to be able to help others.",
+      "char_start": 4030,
+      "char_end": 4136,
+      "verbatim_verified": true,
+      "themes": [
+        "placebo_concern",
+        "research_altruism"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "semantic_tags": [
+        "altruistic_reasoning"
+      ],
+      "sentiment": 1,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 4,
+        "strategic_value": 4,
+        "specificity": 3,
+        "overall": 4
+      },
+      "recommended_uses": [
+        "placebo acceptance",
+        "trial motivation"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_004",
+      "interview_id": "participant_10",
+      "question_id": "monthly_injection_barrier",
+      "segment_ids": [
+        "participant_10_t19_s00"
+      ],
+      "text": "Maybe how long it truly lasts, because we know that even with Mounjaro, Tirzepatide all of that, for me, I'm getting hungry by that fifth to sixth day.",
+      "char_start": 4467,
+      "char_end": 4618,
+      "verbatim_verified": true,
+      "themes": [
+        "injection_experience"
+      ],
+      "subthemes": [
+        "dosing_durability"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "semantic_tags": [],
+      "sentiment": 0,
+      "quote_score": {
+        "clarity": 4,
+        "emotional_intensity": 3,
+        "strategic_value": 4,
+        "specificity": 5,
+        "overall": 4
+      },
+      "recommended_uses": [
+        "monthly dosing",
+        "product concern",
+        "trial design"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_005",
+      "interview_id": "participant_10",
+      "question_id": "trial_motivation",
+      "segment_ids": [
+        "participant_10_t25_s00"
+      ],
+      "text": "Financial compensation is a huge motivator for a lot of people, so I definitely think that would be amazing.",
+      "char_start": 6370,
+      "char_end": 6478,
+      "verbatim_verified": true,
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "financial_compensation"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "semantic_tags": [],
+      "sentiment": 2,
+      "quote_score": {
+        "clarity": 4,
+        "emotional_intensity": 3,
+        "strategic_value": 4,
+        "specificity": 3,
+        "overall": 3.5
+      },
+      "recommended_uses": [
+        "incentive design",
+        "recruitment strategy"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_006",
+      "interview_id": "participant_10",
+      "question_id": "trial_motivation",
+      "segment_ids": [
+        "participant_10_t31_s00"
+      ],
+      "text": "That would be amazing because that would just save you the day, honestly.",
+      "char_start": 7407,
+      "char_end": 7480,
+      "verbatim_verified": true,
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "home_visits"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "sentiment": 2,
+      "quote_score": {
+        "clarity": 4,
+        "emotional_intensity": 4,
+        "strategic_value": 5,
+        "specificity": 3,
+        "overall": 4
+      },
+      "recommended_uses": [
+        "decentralized trial design",
+        "barrier mitigation"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_007",
+      "interview_id": "participant_10",
+      "question_id": "trial_motivation",
+      "segment_ids": [
+        "participant_10_t35_s04",
+        "participant_10_t35_s05"
+      ],
+      "text": "We know it's a tool, it's not an end all. We have to change our lifestyle to be able to sustain it.",
+      "char_start": 8642,
+      "char_end": 8741,
+      "verbatim_verified": true,
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "semantic_tags": [
+        "lifestyle_change",
+        "maintenance_strategy"
+      ],
+      "sentiment": 1,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 4,
+        "strategic_value": 5,
+        "specificity": 4,
+        "overall": 4.5
+      },
+      "recommended_uses": [
+        "maintenance positioning",
+        "lifestyle support",
+        "patient education"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_008",
+      "interview_id": "participant_10",
+      "question_id": "trial_concerns",
+      "segment_ids": [
+        "participant_10_t47_s00"
+      ],
+      "text": "No. I mean, I would just want to know if other people had already tried the medication before, if I was going to be the first guinea pig for this, maybe that kind of thing.",
+      "char_start": 10777,
+      "char_end": 10949,
+      "verbatim_verified": true,
+      "themes": [
+        "side_effect_concern"
+      ],
+      "subthemes": [
+        "unknown_safety"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "sentiment": -1,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 4,
+        "strategic_value": 4,
+        "specificity": 4,
+        "overall": 4.25
+      },
+      "recommended_uses": [
+        "trial concerns",
+        "safety communication",
+        "recruitment messaging"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_009",
+      "interview_id": "participant_10",
+      "question_id": "educational_support",
+      "segment_ids": [
+        "participant_10_t49_s01"
+      ],
+      "text": "So videos might be helpful or even Zoom classes or of course in person, that would be more my preference, but I definitely think that would be an amazing idea to have because 9 out of 10 people don't know anything about nutrition, so it's crazy they don't teach us that in school and they don't teach us that in life.",
+      "char_start": 11872,
+      "char_end": 12189,
+      "verbatim_verified": true,
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "learning_formats",
+        "nutrition_education"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "semantic_tags": [],
+      "sentiment": 1,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 4,
+        "strategic_value": 4,
+        "specificity": 4,
+        "overall": 4.25
+      },
+      "recommended_uses": [
+        "education need",
+        "lifestyle support"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_010",
+      "interview_id": "participant_10",
+      "question_id": "weight_loss_history",
+      "segment_ids": [
+        "participant_10_t51_s04"
+      ],
+      "text": "But then you took phentermine, I lost 15 pounds on that and it was the worst three months of my life.",
+      "char_start": 12823,
+      "char_end": 12924,
+      "verbatim_verified": true,
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "prior_weight_loss_medication"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "semantic_tags": [],
+      "sentiment": -1,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 5,
+        "strategic_value": 3,
+        "specificity": 4,
+        "overall": 4.25
+      },
+      "recommended_uses": [
+        "weight loss history",
+        "patient journey map"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_011",
+      "interview_id": "participant_10",
+      "question_id": "weight_loss_history",
+      "segment_ids": [
+        "participant_10_t51_s09"
+      ],
+      "text": "So it literally, the GLP-1 was my last hope, aside from having weight loss surgery.",
+      "char_start": 13248,
+      "char_end": 13331,
+      "verbatim_verified": true,
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "weight_loss_surgery"
+      ],
+      "emotions": [
+        "hope"
+      ],
+      "semantic_tags": [],
+      "sentiment": 1,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 5,
+        "strategic_value": 4,
+        "specificity": 3,
+        "overall": 4.25
+      },
+      "recommended_uses": [
+        "weight loss history",
+        "patient journey map",
+        "emotional narrative"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_012",
+      "interview_id": "participant_10",
+      "question_id": "oral_vs_injectable",
+      "segment_ids": [
+        "participant_10_t59_s02"
+      ],
+      "text": "I legit didn't have food noise after two days of taking my first injection.",
+      "char_start": 15094,
+      "char_end": 15169,
+      "verbatim_verified": true,
+      "themes": [
+        "injection_experience",
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "food_noise"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "semantic_tags": [],
+      "sentiment": 2,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 4,
+        "strategic_value": 4,
+        "specificity": 5,
+        "overall": 4.5
+      },
+      "recommended_uses": [
+        "non-weight benefits",
+        "product value story"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "quote_id": "q_participant_10_013",
+      "interview_id": "participant_10",
+      "question_id": "closing",
+      "segment_ids": [
+        "participant_10_t63_s03"
+      ],
+      "text": "The more information we can get out about them and the more research that goes into them, the more people we can save because obesity is a disease that deserves treatment.",
+      "char_start": 15658,
+      "char_end": 15829,
+      "verbatim_verified": true,
+      "themes": [
+        "research_altruism"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "semantic_tags": [
+        "altruistic_reasoning"
+      ],
+      "sentiment": 2,
+      "quote_score": {
+        "clarity": 5,
+        "emotional_intensity": 5,
+        "strategic_value": 5,
+        "specificity": 3,
+        "overall": 4.5
+      },
+      "recommended_uses": [
+        "advocacy messaging",
+        "report headline"
+      ],
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    }
+  ]
+}

@@ -1,0 +1,808 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "generated_at": "2026-05-17T17:18:02.567Z",
+    "generator": "scripts/parse-transcripts.mjs",
+    "source_files": [
+      "Example Interview.md",
+      "Example Interview 2.md"
+    ],
+    "notes": [
+      "Canonical source-of-truth structure. All downstream outputs derive from this.",
+      "char_start/char_end are JS string (UTF-16) indices into the source file; turn text equals source.slice(char_start, char_end).",
+      "One turn per line; question normalization and response segmentation are separate later passes."
+    ]
+  },
+  "interviews": [
+    {
+      "interview_id": "participant_09",
+      "source_file": "Example Interview.md",
+      "source_title": "# WCT_GLP-1 Interviews_Participant 9_Transcript",
+      "participant_metadata": {
+        "condition": "GLP-1 weight maintenance",
+        "demographics_raw": "Caucasian, female",
+        "gender": "female"
+      },
+      "turn_count": 44,
+      "turns": [
+        {
+          "turn_index": 0,
+          "speaker": "interviewer",
+          "text": "First of all, thank you for agreeing to take part, as I said, or as my colleague would have said. So, this is research aiming to gain a better understanding of the experiences of patients who have been taking GLP-1 for weight management and just to measure the awareness of clinical trials and your willingness to take part in trials. So before we start, do you have any questions at all?",
+          "char_start": 88,
+          "char_end": 476
+        },
+        {
+          "turn_index": 1,
+          "speaker": "participant",
+          "text": "I don't think so. I read through the consent form and I think I'm good to go.",
+          "char_start": 490,
+          "char_end": 567
+        },
+        {
+          "turn_index": 2,
+          "speaker": "interviewer",
+          "text": "Okay, no problem. So we are supporting the planning of a trial focused on weight maintenance for those who have previously lost weight on GLP, and have discontinued treatment with Semaglutide at least 28 days prior to taking part and have had stable weight for three months. So the first question is, would you consider stopping GLP-1s and what factors would influence your decision?",
+          "char_start": 585,
+          "char_end": 968
+        },
+        {
+          "turn_index": 3,
+          "speaker": "participant",
+          "text": "So, I mean, I intend to stay on it, and I've had the conversation with my doctor to stay on it. So, I don't know how much history you want, but I've lost and gained weight many times throughout my life, and the medication has been a very positive experience for me. So, the factors that would influence me stopping it, well, for one, I face the potential of losing access to it because of all of the lawsuits that are going on right now and the cost is extremely prohibitive if I have to pay for it out of pocket. My doctor has tried to get me insurance coverage for it, and they can't even access our plan benefit manager to get authorization. Their plan benefit manager or the pharmacy benefit manager won't discuss with them at all. And so the out of pocket cost for me would be about a thousand dollars a month. So it's completely prohibitive. So that would be one reason I would stop. The second reason I would stop is if there was some sort of major health complication that where it made me sicker instead of better. So for me, again, it's made me significantly better. And I've had other positive benefits outside of just the weight loss. My blood pressure has gone down. I've gone off one blood pressure medication and have cut the other medication in half. I've halved my heartburn medication since, and I was on a maximum dose of two different medications to manage heartburn, and we were kind of surprised that I got that benefit out of it. So if there was some sort of major complication that it was making me sicker, than better, then yes, I would stop.",
+          "char_start": 982,
+          "char_end": 2549
+        },
+        {
+          "turn_index": 4,
+          "speaker": "interviewer",
+          "text": "Oh, okay. Sounds positive.",
+          "char_start": 2567,
+          "char_end": 2593
+        },
+        {
+          "turn_index": 5,
+          "speaker": "participant",
+          "text": "Yes.",
+          "char_start": 2608,
+          "char_end": 2612
+        },
+        {
+          "turn_index": 6,
+          "speaker": "interviewer",
+          "text": "So, would you try a different medication?",
+          "char_start": 2630,
+          "char_end": 2671
+        },
+        {
+          "turn_index": 7,
+          "speaker": "participant",
+          "text": "Yeah, I mean, I would try. It depends. That happens a lot, right? Sometimes insurance doesn't cover one, but they cover another, and so it's like, sure, I try a different one. If there was, one of the things that's coming out or is planning on coming out is actually the weight management pill for people who have actually met their goal weight. And my doctors discussed that because now that I've lost such a significant amount of weight, the chances of insurance even letting me stay on it, if I did get access to it would be, again, a lot of it's insurance. So it's like absolutely I would consider things.",
+          "char_start": 2685,
+          "char_end": 3294
+        },
+        {
+          "turn_index": 8,
+          "speaker": "interviewer",
+          "text": "Yeah. Okay. And would you consider participating in a trial with a new medication that's not been approved yet?",
+          "char_start": 3312,
+          "char_end": 3423
+        },
+        {
+          "turn_index": 9,
+          "speaker": "participant",
+          "text": "I mean, yeah, that's kind of how people got started on these because they have to have trials in order to get them approved.",
+          "char_start": 3437,
+          "char_end": 3561
+        },
+        {
+          "turn_index": 10,
+          "speaker": "interviewer",
+          "text": "Yes, that's correct. Yeah. Okay. And would a placebo-controlled study with the possibility to receive commercial medication after an initial treatment period be appealing to you?",
+          "char_start": 3579,
+          "char_end": 3757
+        },
+        {
+          "turn_index": 11,
+          "speaker": "participant",
+          "text": "Well, yeah. I mean, you can't have a randomized controlled study without placebo, so I understand that.",
+          "char_start": 3771,
+          "char_end": 3874
+        },
+        {
+          "turn_index": 12,
+          "speaker": "interviewer",
+          "text": "Absolutely. Okay. And would taking monthly injections over a 36-week period be a barrier to participating in a trial?",
+          "char_start": 3892,
+          "char_end": 4009
+        },
+        {
+          "turn_index": 13,
+          "speaker": "participant",
+          "text": "No. I do weekly injections now, so less injections better. I mean, I actually don't like the injection process. I tolerate it because it works.",
+          "char_start": 4023,
+          "char_end": 4166
+        },
+        {
+          "turn_index": 14,
+          "speaker": "interviewer",
+          "text": "Okay. And the next question is, how likely are you to purchase compounded semaglutide V approved product?",
+          "char_start": 4184,
+          "char_end": 4289
+        },
+        {
+          "turn_index": 15,
+          "speaker": "participant",
+          "text": "Well, so I have only taken compound. I haven't ever taken the name brand, so I'm very likely.",
+          "char_start": 4303,
+          "char_end": 4396
+        },
+        {
+          "turn_index": 16,
+          "speaker": "interviewer",
+          "text": "Oh, okay. That was going to be my next question. Have you done that? So you've just answered that question for me. Okay. And what factors would attract you to actually taking part in a clinical trial?",
+          "char_start": 4414,
+          "char_end": 4614
+        },
+        {
+          "turn_index": 17,
+          "speaker": "participant",
+          "text": "So one of the things, I have looked into some clinical trials and one of the things that attracts me to it is simply being able to have access to it. These are not accessible medications. And another one is I support research. I mean, the more research back we have, the safer these products are. I have a master's degree, so I've done some research. So, I mean, it's purely from an academic standpoint that would be my reasoning behind it.",
+          "char_start": 4628,
+          "char_end": 5068
+        },
+        {
+          "turn_index": 18,
+          "speaker": "interviewer",
+          "text": "Yeah. So what about things like maybe provisions or vouchers for weight loss after the trial? Maybe financial compensation or maybe meal replacement drinks after the trial?",
+          "char_start": 5086,
+          "char_end": 5258
+        },
+        {
+          "turn_index": 19,
+          "speaker": "participant",
+          "text": "Oh, okay. I mean, if it was actual vouchers or things to access the medication, but if it was meal replacements, probably not. Yeah.",
+          "char_start": 5272,
+          "char_end": 5404
+        },
+        {
+          "turn_index": 20,
+          "speaker": "interviewer",
+          "text": "Okay. What about barriers? What would be a barrier for you to actually take part in a trial?",
+          "char_start": 5422,
+          "char_end": 5514
+        },
+        {
+          "turn_index": 21,
+          "speaker": "participant",
+          "text": "So an example I have is where I live. I am, the closest, there are two research hospitals, both of them are three hours away. So in order for me to access the trials, I would have to drive three hours weekly to participate because they have to do the injections. So that would be a barrier. If they would offer telehealth services, so let's say this was a monthly injection and I only had to drive to get the monthly injection, but then I was able to participate in the nursing visits and follow-ups through telehealth, that would be more accessible. But if I had to actually get into the research hospital, that would be a challenge.",
+          "char_start": 5528,
+          "char_end": 6162
+        },
+        {
+          "turn_index": 22,
+          "speaker": "interviewer",
+          "text": "So then going back to my other question about things that would attract you to taking part in a trial. So would maybe travel concierge be something that would attract you to taking part?",
+          "char_start": 6180,
+          "char_end": 6366
+        },
+        {
+          "turn_index": 23,
+          "speaker": "participant",
+          "text": "You mean where somebody was driving me?",
+          "char_start": 6380,
+          "char_end": 6419
+        },
+        {
+          "turn_index": 24,
+          "speaker": "interviewer",
+          "text": "Yeah, and taking you?",
+          "char_start": 6437,
+          "char_end": 6458
+        },
+        {
+          "turn_index": 25,
+          "speaker": "participant",
+          "text": "No, because I have a car. It's more like taking the time. I mean, that would be a six hour round trip, and so we live busy lives. But then if you want to talk about the attractiveness, if it was done, if a local facility could manage it, even if they were nursing students or something like that, that were working on their research and they were managing their research. So if it was done locally, that would be an attractive or something that would attract me to it.",
+          "char_start": 6472,
+          "char_end": 6940
+        },
+        {
+          "turn_index": 26,
+          "speaker": "interviewer",
+          "text": "So I think it sounds like it's time, so even if somebody was taking you, so it's more about the time?",
+          "char_start": 6958,
+          "char_end": 7059
+        },
+        {
+          "turn_index": 27,
+          "speaker": "participant",
+          "text": "Exactly, it is the time, time is money nowadays from what I understand.",
+          "char_start": 7073,
+          "char_end": 7144
+        },
+        {
+          "turn_index": 28,
+          "speaker": "interviewer",
+          "text": "It is, it is. Okay. So what type of exercise or maybe information would you say would be valuable to you? So things like maybe a webinar, like handout, meal planning, recipes, that kind of information. Would that be something that you'd find useful?",
+          "char_start": 7163,
+          "char_end": 7412
+        },
+        {
+          "turn_index": 29,
+          "speaker": "participant",
+          "text": "Yeah. Definitely. So just when I signed up with my telehealth company, and this was, so I have a local physician and we were trying to get access to the medication. And when I signed up with my telehealth company, I had no one-on-one support for taking the compound. My doctor's nurse, she did all the diabetic education, which they thought was kind of strange that somebody would just get access to the medication without any teaching. But what they did have was online learning modules, webinars, classes that you could take. So then I went ahead and participated in all of that just so I could learn everything about it. So I mean, I think those things were very attractive. I liked all of it. And they had, the online learning modules were set up online classes so that you had to watch lessons, watch education, answer questions, and participate in all of it. And that was how they actually did the patient counseling.",
+          "char_start": 7426,
+          "char_end": 8349
+        },
+        {
+          "turn_index": 30,
+          "speaker": "interviewer",
+          "text": "Right, okay. That sounds helpful. Actually, the two go together.",
+          "char_start": 8367,
+          "char_end": 8431
+        },
+        {
+          "turn_index": 31,
+          "speaker": "participant",
+          "text": "Yeah and you had to do, in order to actually access all of it and get, so what it was, I mean, you got your first month of medication and then you got a discount if you participated in all of their lessons the next month. And it was a significant discount, it was a $50 discount on the medication.",
+          "char_start": 8445,
+          "char_end": 8742
+        },
+        {
+          "turn_index": 32,
+          "speaker": "interviewer",
+          "text": "That's good. That's a good way to make sure that you get your information.",
+          "char_start": 8760,
+          "char_end": 8834
+        },
+        {
+          "turn_index": 33,
+          "speaker": "participant",
+          "text": "One of them was nutritional counseling. So, it wasn't just learning about the medication, it was also nutritional counseling.",
+          "char_start": 8849,
+          "char_end": 8974
+        },
+        {
+          "turn_index": 34,
+          "speaker": "interviewer",
+          "text": "Yeah, yeah. Okay. I think you've touched on this already, but have you considered clinical trials? I think you said you had.",
+          "char_start": 8992,
+          "char_end": 9116
+        },
+        {
+          "turn_index": 35,
+          "speaker": "participant",
+          "text": "Yes, I've looked into them. Yeah. So there's, even with Eli Lilly, you can sign up to get notifications if there are clinical trials in your area. So, I did sign up for that and the only one was the one that was three hours away.",
+          "char_start": 9130,
+          "char_end": 9359
+        },
+        {
+          "turn_index": 36,
+          "speaker": "interviewer",
+          "text": "Oh, okay. That's a shame.",
+          "char_start": 9377,
+          "char_end": 9402
+        },
+        {
+          "turn_index": 37,
+          "speaker": "participant",
+          "text": "I know, again, I wasn't a thousand percent opposed, but it was something that I was going to have to do weekly. And to me it was like, where am I going to find six hours a week? And even really by the time you think about getting into the clinic, getting the counseling, getting the injection. So it's really eight to 10 hours a week that I was going to have to do to do it.",
+          "char_start": 9416,
+          "char_end": 9790
+        },
+        {
+          "turn_index": 38,
+          "speaker": "interviewer",
+          "text": "And that's a lot of time to give. Yeah. Okay. Are you aware of other drugs for weight loss being developed such as oral GLPs?",
+          "char_start": 9808,
+          "char_end": 9933
+        },
+        {
+          "turn_index": 39,
+          "speaker": "participant",
+          "text": "Yes, so again, my doctor had told me about, I think it's Orforglipron, I don't know how to pronounce it. That's the one I've heard about, and that's the one that I think Eli Lilly is producing for weight management. So after people have lost the weight, it's maintenance. And that's the only one I've heard about. Again, I know that it's not approved by the FDA yet, and it's not available, but again, this is something that I've had regular conversations with my doctor and her nurse about, so I'm a little aware, but not fully educated on it.",
+          "char_start": 9947,
+          "char_end": 10491
+        },
+        {
+          "turn_index": 40,
+          "speaker": "interviewer",
+          "text": "Even though you're not fully aware. What's your perception of them so far? Of the little that you know.",
+          "char_start": 10509,
+          "char_end": 10612
+        },
+        {
+          "turn_index": 41,
+          "speaker": "participant",
+          "text": "Just my doctor said it looked promising, and she said it would be because I have been somebody who's lost and gained weight multiple times, that this would be a good positive thing for me now that the weight is off, because I wouldn't have to continue to yo-yo diet. And I like the idea of taking a pill more than I do taking injection. Yeah.",
+          "char_start": 10626,
+          "char_end": 10968
+        },
+        {
+          "turn_index": 42,
+          "speaker": "interviewer",
+          "text": "Yeah. It sounds, especially for somebody who's needle phobic, maybe that might be something. Okay. Those are all the questions that they wanted from us. So I'm just going to stop recording.",
+          "char_start": 10986,
+          "char_end": 11175
+        },
+        {
+          "turn_index": 43,
+          "speaker": "participant",
+          "text": "Yeah, I didn't think that it would take terribly long.",
+          "char_start": 11190,
+          "char_end": 11244
+        }
+      ]
+    },
+    {
+      "interview_id": "participant_10",
+      "source_file": "Example Interview 2.md",
+      "source_title": "# WCT_GLP-1 Interviews_Participant 10_Transcript",
+      "participant_metadata": {
+        "condition": "GLP-1 weight maintenance",
+        "demographics_raw": "Female",
+        "gender": "female"
+      },
+      "turn_count": 65,
+      "turns": [
+        {
+          "turn_index": 0,
+          "speaker": "interviewer",
+          "text": "Okay, here we go. Okay. So, I'm just going to start off by telling you about a trial that we're supporting. So, this is focused on weight maintenance for people who have previously lost weight on a GLP-1 and who have discontinued treatment with semaglutide for at least 28 days prior to taking part and to have been at a stable weight for three months. So, what we're asking people to do now is think when they're answering some of these questions, to think about yourself as if you're in a position where you are looking to maintain your weight. So, I know lots of people have been thinking about how they might be planning to do that in the future, et cetera.",
+          "char_start": 80,
+          "char_end": 741
+        },
+        {
+          "turn_index": 1,
+          "speaker": "participant",
+          "text": "Yes ma’am.",
+          "char_start": 756,
+          "char_end": 766
+        },
+        {
+          "turn_index": 2,
+          "speaker": "interviewer",
+          "text": "Yeah, so just keep that in mind while you're answering the questions, if that's okay.",
+          "char_start": 781,
+          "char_end": 866
+        },
+        {
+          "turn_index": 3,
+          "speaker": "participant",
+          "text": "Okay.",
+          "char_start": 880,
+          "char_end": 885
+        },
+        {
+          "turn_index": 4,
+          "speaker": "interviewer",
+          "text": "Okay. So basically, my first question for you is why would you ever consider stopping taking a GLP-1? What factors would influence your decision?",
+          "char_start": 899,
+          "char_end": 1044
+        },
+        {
+          "turn_index": 5,
+          "speaker": "participant",
+          "text": "Well, I think there's just a few. Honestly. Maybe if I had to have surgery and was made to stop, obviously if something happened with my health and I was made to stop and then maybe not necessarily to stop, but maybe try a different one if one wasn't working. I have been on them for a really long time. So honestly, me personally, having dealt with obesity pretty much my entire life, I personally would not stop the drugs unless I was pretty much made to stop. If maybe getting them was a factor, obviously we know that we've had shortages and things like that, so unless I was pretty much forced to stop, I know that this is going to be a medication that I'm probably going to need for the rest of my life and I'll basically do whatever I have to do to stay on it.",
+          "char_start": 1058,
+          "char_end": 1825
+        },
+        {
+          "turn_index": 6,
+          "speaker": "interviewer",
+          "text": "Yeah, of course. And you touched on it briefly there, but would you ever consider trying a different medication to what you're currently on?",
+          "char_start": 1839,
+          "char_end": 1979
+        },
+        {
+          "turn_index": 7,
+          "speaker": "participant",
+          "text": "Yes, I would. I've heard the studies coming out about Retatrutide and Cagrilintide I think is the name of it. So there's a lot of different studies that are advancing these GLP-1s. So yeah, I would definitely consider changing it up because even people that I know that started out on Tirzepatide like me that have been on it for a long period of time have switched over to Semaglutide and had a good results as well. So I mean, even kind, just trying different ones. I know that if you get in a stall, trying different ones can definitely break that. So yeah, I would definitely be up to it.",
+          "char_start": 1993,
+          "char_end": 2585
+        },
+        {
+          "turn_index": 8,
+          "speaker": "interviewer",
+          "text": "Yeah. Okay, great. And would you consider participating in a clinical trial with a new medication which is not yet approved?",
+          "char_start": 2599,
+          "char_end": 2723
+        },
+        {
+          "turn_index": 9,
+          "speaker": "participant",
+          "text": "Yes, I would.",
+          "char_start": 2737,
+          "char_end": 2750
+        },
+        {
+          "turn_index": 10,
+          "speaker": "interviewer",
+          "text": "Okay. Can you expand a little bit on the reasons why you would think about taking part in a clinical trial?",
+          "char_start": 2764,
+          "char_end": 2871
+        },
+        {
+          "turn_index": 11,
+          "speaker": "participant",
+          "text": "I would think about taking part in a clinical trial as long as it was a drug that they, maybe it was something that was better than what I was currently on, or even if I was having issues. So right now I'm currently still losing with Tirzepatide, but I was in a year long stall, I thought that my body was where it was going to be, but last month I added in a different drug to it and the compounding my doctor did and it helped me break my stall. So I definitely would be open to it if they thought it was going to be the next big thing. Yeah, I would definitely try it if I could.",
+          "char_start": 2885,
+          "char_end": 3467
+        },
+        {
+          "turn_index": 12,
+          "speaker": "interviewer",
+          "text": "Sure, thank you. And would a placebo-controlled study with a possibility to receive a commercial medication after the initial period be appealing to you?",
+          "char_start": 3481,
+          "char_end": 3634
+        },
+        {
+          "turn_index": 13,
+          "speaker": "participant",
+          "text": "Absolutely. That would make it more appealing to me.",
+          "char_start": 3648,
+          "char_end": 3700
+        },
+        {
+          "turn_index": 14,
+          "speaker": "interviewer",
+          "text": "Yeah. And how would you feel about taking part in the placebo-controlled study? So if there was 50% chance of you having to take a placebo drug?",
+          "char_start": 3714,
+          "char_end": 3858
+        },
+        {
+          "turn_index": 15,
+          "speaker": "participant",
+          "text": "I mean, without these studies we don't know what these medications can do. So I would take my chances, pray that I got on the good stuff, but you never know. I mean, placebo effect is definitely real, and I would be willing to do it just to be able to help others.",
+          "char_start": 3872,
+          "char_end": 4136
+        },
+        {
+          "turn_index": 16,
+          "speaker": "interviewer",
+          "text": "Yeah, absolutely. Thank you. And would taking monthly injections over 36 weeks be a barrier to participation for you?",
+          "char_start": 4151,
+          "char_end": 4268
+        },
+        {
+          "turn_index": 17,
+          "speaker": "participant",
+          "text": "No, I'd actually prefer that, that would be a lot easier than once weekly.",
+          "char_start": 4282,
+          "char_end": 4356
+        },
+        {
+          "turn_index": 18,
+          "speaker": "interviewer",
+          "text": "Would you have any concerns at all about taking it once a month rather than weekly?",
+          "char_start": 4370,
+          "char_end": 4453
+        },
+        {
+          "turn_index": 19,
+          "speaker": "participant",
+          "text": "Maybe how long it truly lasts, because we know that even with Mounjaro, Tirzepatide all of that, for me, I'm getting hungry by that fifth to sixth day. And so I would be curious to see if it fully lasted that 30 days or maybe halfway through the month am I ravenous, it would be interesting. It would be amazing if it truly lasts.",
+          "char_start": 4467,
+          "char_end": 4797
+        },
+        {
+          "turn_index": 20,
+          "speaker": "interviewer",
+          "text": "Yeah, sure. Okay. And how likely are you to purchase compounded semaglutide versus other approved products? Is that something you've done?",
+          "char_start": 4811,
+          "char_end": 4949
+        },
+        {
+          "turn_index": 21,
+          "speaker": "participant",
+          "text": "That depends. I know that semaglutide, as far as being available like Wegovy and stuff, they're lowering the prices right now to pretty much comparable with the compound. So, I anticipate compound to continue to go down just because of that. But it would just depend, I guess on affordability. I personally am on compound Tirzepatide because it's more affordable than Mounjaro, and I do think it's a better drug for me, even though I've never tried semaglutide. But it's definitely been brought up to my boss because we do sell it at the telehealth that I work at. And if I happen to go back into another stall, that's definitely going to be my next move, I guess for now.",
+          "char_start": 4963,
+          "char_end": 5635
+        },
+        {
+          "turn_index": 22,
+          "speaker": "interviewer",
+          "text": "And then what I'd like to do next is just run through a few, a few items, which we are considering as ways to attract patients or help patients when they're taking part in clinical trials. So the first of these was provision of vouchers for weight loss after the trial. So if that was kind of provision of, for example, meal replacement drink vouchers, vouchers for weight loss books or advice, that type of thing, would that appeal to you? And would that make you feel motivated to join a clinical trial?",
+          "char_start": 5649,
+          "char_end": 6154
+        },
+        {
+          "turn_index": 23,
+          "speaker": "participant",
+          "text": "Absolutely, because it's extra support that's just going to help you out along the way. So yeah, it would make me more motivated.",
+          "char_start": 6168,
+          "char_end": 6297
+        },
+        {
+          "turn_index": 24,
+          "speaker": "interviewer",
+          "text": "Right. And what about financial compensation?",
+          "char_start": 6311,
+          "char_end": 6356
+        },
+        {
+          "turn_index": 25,
+          "speaker": "participant",
+          "text": "Financial compensation is a huge motivator for a lot of people, so I definitely think that would be amazing.",
+          "char_start": 6370,
+          "char_end": 6478
+        },
+        {
+          "turn_index": 26,
+          "speaker": "interviewer",
+          "text": "Yeah, sure. And what about a travel concierge service? So, for clinical trials, a lot of the time you need to travel to sites on quite a regular basis. So, if someone was to arrange the travel, for example, taxis to and from the sites, would that be a motivator for you?",
+          "char_start": 6492,
+          "char_end": 6762
+        },
+        {
+          "turn_index": 27,
+          "speaker": "participant",
+          "text": "Yes. Yes, truly.",
+          "char_start": 6776,
+          "char_end": 6792
+        },
+        {
+          "turn_index": 28,
+          "speaker": "interviewer",
+          "text": "And for these clinical trials when you're going into the sites for the treatment sessions or for follow-up sessions, you might be there for quite a long time or maybe over lunch or something, but if they gave you meal replacement vouchers or trial approved family mailboxes for these clinic days, would you feel that that was supportive and helpful for you?",
+          "char_start": 6806,
+          "char_end": 7163
+        },
+        {
+          "turn_index": 29,
+          "speaker": "participant",
+          "text": "Yes, absolutely.",
+          "char_start": 7177,
+          "char_end": 7193
+        },
+        {
+          "turn_index": 30,
+          "speaker": "interviewer",
+          "text": "Okay. And what about home visits with a nurse? So if a nurse was to come to your house to take your blood work rather than you needing to go to the clinic, how would you feel about that?",
+          "char_start": 7207,
+          "char_end": 7393
+        },
+        {
+          "turn_index": 31,
+          "speaker": "participant",
+          "text": "That would be amazing because that would just save you the day, honestly. That would be awesome.",
+          "char_start": 7407,
+          "char_end": 7503
+        },
+        {
+          "turn_index": 32,
+          "speaker": "interviewer",
+          "text": "Yeah, sure. And then the last one was, if the study was to provide you with a Fitbit throughout the trial, would that act as a motivator for you?",
+          "char_start": 7517,
+          "char_end": 7662
+        },
+        {
+          "turn_index": 33,
+          "speaker": "participant",
+          "text": "Yeah, because it would help me track my steps. And we all know that walking is really the first step in taking on physical fitness. I'm telling you for a year all I did was walk. So it was after that I started going to the gym. And I think that that is a huge motivator for people, especially ones that are in bigger bodies.",
+          "char_start": 7676,
+          "char_end": 8000
+        },
+        {
+          "turn_index": 34,
+          "speaker": "interviewer",
+          "text": "Yeah, absolutely. Okay. And then was there anything else other than those items that I've just mentioned, which you think might be helpful for someone who would be taking part in the clinical trial?",
+          "char_start": 8014,
+          "char_end": 8212
+        },
+        {
+          "turn_index": 35,
+          "speaker": "participant",
+          "text": "I think maybe having them start a journal from day one. I don't know if that's something that they automatically do anyway, but I think that would be really smart. Just kind of even how they're feeling that day on the medications. And then of course what they ate that day would even be beneficial because this is not just about are these medications going to cause you to lose weight but the lifestyle changes too. We know it's a tool, it's not an end all. We have to change our lifestyle to be able to sustain it.",
+          "char_start": 8226,
+          "char_end": 8741
+        },
+        {
+          "turn_index": 36,
+          "speaker": "interviewer",
+          "text": "Absolutely. Thank you. And then in terms of barriers to taking part, so there are a few initial barriers. So for example, fasting blood. So, I don’t know if you've ever had it where you've had blood tests, which you've been asked to fast beforehand for about 12 hours before the blood test. How would you feel about doing that for a clinical trial?",
+          "char_start": 8755,
+          "char_end": 9103
+        },
+        {
+          "turn_index": 37,
+          "speaker": "participant",
+          "text": "Yeah, I would do it. I've had to do that plenty of times.",
+          "char_start": 9117,
+          "char_end": 9174
+        },
+        {
+          "turn_index": 38,
+          "speaker": "interviewer",
+          "text": "Okay. And what about, have you ever done continuous glucose monitoring?",
+          "char_start": 9188,
+          "char_end": 9259
+        },
+        {
+          "turn_index": 39,
+          "speaker": "participant",
+          "text": "I haven't, but I know, I have family that has.",
+          "char_start": 9273,
+          "char_end": 9319
+        },
+        {
+          "turn_index": 40,
+          "speaker": "interviewer",
+          "text": "How would you feel if you were asked to do that for a study?",
+          "char_start": 9333,
+          "char_end": 9393
+        },
+        {
+          "turn_index": 41,
+          "speaker": "participant",
+          "text": "I actually wouldn't mind it because I feel like that helps you to know what you're burning even throughout the day when your blood sugar spikes. We all know that that's whenever they can tell if you're insulin resistant or not to things. So yeah, I would do it.",
+          "char_start": 9407,
+          "char_end": 9668
+        },
+        {
+          "turn_index": 42,
+          "speaker": "interviewer",
+          "text": "Okay, that's good. And what about visit frequency? So how regularly would you be willing to go to a clinical trial site or clinic?",
+          "char_start": 9683,
+          "char_end": 9813
+        },
+        {
+          "turn_index": 43,
+          "speaker": "participant",
+          "text": "If the transportation was arranged I would be happy to go whenever needed. If it were me having to drive, I guess it would depend on how far out it was. I know a lot of those happen in bigger cities usually. So, for me, a bigger city would be Atlanta, which is about an hour away. I wouldn't want to have to do that more than once a week really.",
+          "char_start": 9827,
+          "char_end": 10172
+        },
+        {
+          "turn_index": 44,
+          "speaker": "interviewer",
+          "text": "Yeah, absolutely. And if the visits were more like for example, monthly, how far would you be willing to travel for that?",
+          "char_start": 10186,
+          "char_end": 10307
+        },
+        {
+          "turn_index": 45,
+          "speaker": "participant",
+          "text": "Maybe up to two-hour drive. If it was a monthly thing, it wouldn't be that bad. I've had to drive plenty of long distances from where we live. We live out in the country.",
+          "char_start": 10321,
+          "char_end": 10491
+        },
+        {
+          "turn_index": 46,
+          "speaker": "interviewer",
+          "text": "Right. And then is there anything else when you are thinking about taking part in a clinical trial or trying a new medication, would you have any other concerns that you'd maybe want to talk to the study doctors about or anything like that before signing up?",
+          "char_start": 10505,
+          "char_end": 10763
+        },
+        {
+          "turn_index": 47,
+          "speaker": "participant",
+          "text": "No. I mean, I would just want to know if other people had already tried the medication before, if I was going to be the first guinea pig for this, maybe that kind of thing. But other than that, I mean, I would just want to know what the main side effects would be that I would need to look for. We mostly know that most GLP-1s are going to cause some kind of gastric issues because it does slow down the gastric emptying. But aside from that, if there was any other major side effects I might need to look for too, because we know that they can cause you to have other things that are not so common. But that would basically be my biggest concern, honestly.",
+          "char_start": 10777,
+          "char_end": 11434
+        },
+        {
+          "turn_index": 48,
+          "speaker": "interviewer",
+          "text": "Okay, thank you. And then, if the trial was to offer some sort of diet and exercise information, what would be most valuable to you? So if for example, they offered in-person advice, webinars, handouts, meal planning, recipes, or just general information or macronutrients, what do you think would be most helpful for you or other participants?",
+          "char_start": 11448,
+          "char_end": 11792
+        },
+        {
+          "turn_index": 49,
+          "speaker": "participant",
+          "text": "I think for me, I'm a visual learner, so I don't want to read it. So videos might be helpful or even Zoom classes or of course in person, that would be more my preference, but I definitely think that would be an amazing idea to have because 9 out of 10 people don't know anything about nutrition, so it's crazy they don't teach us that in school and they don't teach us that in life. Even the doctors a lot of times don't know a lot about nutrition. So it's definitely helpful to have somebody on staff that does.",
+          "char_start": 11806,
+          "char_end": 12319
+        },
+        {
+          "turn_index": 50,
+          "speaker": "interviewer",
+          "text": "Yeah, yeah, of course. And then in terms of weight loss generally, can you tell me a little bit about how you tried to lose weight in the past or other options that you considered for weight loss before starting a GLP-1?",
+          "char_start": 12333,
+          "char_end": 12553
+        },
+        {
+          "turn_index": 51,
+          "speaker": "participant",
+          "text": "In the past I tried everything. I mean, I've been obese since the time I was 12. My mom sent me to Dr. Vitkin's weight loss, which was basically following an Atkins diet and very low carb. Actually, I don't think I had any carbs that I was really allowed. But then you took phentermine, I lost 15 pounds on that and it was the worst three months of my life. But other than that, I've tried all kinds of different diets, paleo, vegan, I've tried it all. Then I've done Weight Watchers, the South Beach Diet, I think it was called, something like that. Anyway, I've done a lot. The exercise didn't come natural to me and it wasn't something I was ever comfortable with doing either. So it literally, the GLP-1 was my last hope, aside from having weight loss surgery. But yeah, it's tough because they try to tell us that it's a us thing and sometimes genetics plays a huge role in that too.",
+          "char_start": 12567,
+          "char_end": 13455
+        },
+        {
+          "turn_index": 52,
+          "speaker": "interviewer",
+          "text": "Yeah, absolutely. And have you ever considered taking part in a clinical trial before now?",
+          "char_start": 13469,
+          "char_end": 13559
+        },
+        {
+          "turn_index": 53,
+          "speaker": "participant",
+          "text": "I did. I actually applied for the Retatrutide trial, but I didn't get accepted. But yeah, I definitely would love to be able to participate in something that might potentially change the world and my life.",
+          "char_start": 13573,
+          "char_end": 13778
+        },
+        {
+          "turn_index": 54,
+          "speaker": "interviewer",
+          "text": "That's really, really good to hear. Thank you. And can you tell me a little bit about how aware you are for new drugs that are being developed at the moment? So for example, what are your thoughts around oral GLP-1s?",
+          "char_start": 13792,
+          "char_end": 14008
+        },
+        {
+          "turn_index": 55,
+          "speaker": "participant",
+          "text": "I think that I've heard that they just came out with a new one too the other day, but it's the weight loss, just it's not going to be the same, I don't think as the shot. I can get it as strong as what the shots are, I mean that would be amazing. And I'm not saying that we couldn't get there, but I don't think it's there yet. Unless you're somebody that's one of these super hyper responders to GLP-1s I just don't think you're going to see much of a difference between that and even maybe metformin to be honest. But I have heard that it's done amazing things for helping the type two diabetes patients. So I mean as far as that goes. But for weight loss, no.",
+          "char_start": 14022,
+          "char_end": 14684
+        },
+        {
+          "turn_index": 56,
+          "speaker": "interviewer",
+          "text": "Yeah, sure. And what's your thought of these versus kind of newer or less well known products that would also require you to inject? So for example, if you were offered either one of these pills or a lesser known or newly improved injection, which one would you be more likely to go for?",
+          "char_start": 14698,
+          "char_end": 14985
+        },
+        {
+          "turn_index": 57,
+          "speaker": "participant",
+          "text": "The injection.",
+          "char_start": 14999,
+          "char_end": 15013
+        },
+        {
+          "turn_index": 58,
+          "speaker": "interviewer",
+          "text": "Yeah.",
+          "char_start": 15027,
+          "char_end": 15032
+        },
+        {
+          "turn_index": 59,
+          "speaker": "participant",
+          "text": "Okay. Just because it's going to hit me faster. I legit didn't have food noise after two days of taking my first injection. Yeah.",
+          "char_start": 15046,
+          "char_end": 15175
+        },
+        {
+          "turn_index": 60,
+          "speaker": "interviewer",
+          "text": "Yeah. Okay. Thank you.",
+          "char_start": 15190,
+          "char_end": 15212
+        },
+        {
+          "turn_index": 61,
+          "speaker": "participant",
+          "text": "You're welcome.",
+          "char_start": 15226,
+          "char_end": 15241
+        },
+        {
+          "turn_index": 62,
+          "speaker": "interviewer",
+          "text": "So yeah, that is actually all of the questions that I have for you today. So was there anything that we haven't touched on which you think would be helpful to bring up?",
+          "char_start": 15256,
+          "char_end": 15424
+        },
+        {
+          "turn_index": 63,
+          "speaker": "participant",
+          "text": "No, not really. I mean, I think that you asked everything that I would be able to think of about clinical trials. It is amazing though, and I'm glad that you guys continue to push these meds and things to the forefront. The more information we can get out about them and the more research that goes into them, the more people we can save because obesity is a disease that deserves treatment.",
+          "char_start": 15438,
+          "char_end": 15829
+        },
+        {
+          "turn_index": 64,
+          "speaker": "interviewer",
+          "text": "Yeah, absolutely. I absolutely agree with you there. Thank you. I'm just going to stop the recording in that case. Okay.",
+          "char_start": 15843,
+          "char_end": 15963
+        }
+      ]
+    }
+  ]
+}
