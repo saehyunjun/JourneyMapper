@@ -24,6 +24,11 @@
 			title: "What patients said",
 			url: "/wctglpdemo/interview-words",
 			description: "Sortable word-usage charts"
+		},
+		{
+			title: "Upload transcript",
+			url: "/wctglpdemo/upload",
+			description: "Add a new interview transcript to the dataset"
 		}
 	];
 

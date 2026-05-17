@@ -1,0 +1,4219 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "generated_at": "2026-05-17T22:19:14.115Z",
+    "generator": "scripts/build-keyword-usage.mjs",
+    "sources": [
+      "src/lib/content/wctglpdemo-data/keyword_lexicon.json",
+      "src/lib/content/wctglpdemo-data/segments.json"
+    ],
+    "lexicon_version": "1.0",
+    "scope": "participant segments",
+    "notes": [
+      "Deterministic, code-counted keyword frequencies. Same lexicon + segments produces identical output.",
+      "Counts participant speech only; interviewer prompts are not in segments.json.",
+      "Coverage of each keyword is exactly the variants listed in keyword_lexicon.json — no stemming.",
+      "Keywords are counted independently; overlapping spans across keywords are not de-duplicated.",
+      "Every match carries absolute source char offsets (segment.char_start + local offset)."
+    ]
+  },
+  "totals": {
+    "categories": 7,
+    "keywords": 101,
+    "mentions": 294
+  },
+  "categories": [
+    {
+      "id": "medications",
+      "label": "Medications & products",
+      "description": "GLP-1 drugs, other weight or metabolic medications, formulations, and delivery formats.",
+      "total_mentions": 63,
+      "keywords_present": 13,
+      "keywords_total": 13,
+      "keywords": [
+        {
+          "id": "injection",
+          "label": "Injection / shot",
+          "variants": [
+            "injectable",
+            "injection",
+            "injections",
+            "injecting",
+            "inject",
+            "shot",
+            "shots",
+            "needle"
+          ],
+          "count": 15,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 8,
+            "participant_10": 4
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t51_s06",
+              "interview_id": "participant_06",
+              "question_id": "oral_vs_injectable",
+              "text": "shot",
+              "char_start": 14488,
+              "char_end": 14492
+            },
+            {
+              "segment_id": "participant_06_t53_s00",
+              "interview_id": "participant_06",
+              "question_id": "oral_vs_injectable",
+              "text": "injectable",
+              "char_start": 14815,
+              "char_end": 14825
+            },
+            {
+              "segment_id": "participant_06_t53_s01",
+              "interview_id": "participant_06",
+              "question_id": "oral_vs_injectable",
+              "text": "injectable",
+              "char_start": 14872,
+              "char_end": 14882
+            },
+            {
+              "segment_id": "participant_09_t13_s00",
+              "interview_id": "participant_09",
+              "question_id": "monthly_injection_barrier",
+              "text": "injections",
+              "char_start": 4039,
+              "char_end": 4049
+            },
+            {
+              "segment_id": "participant_09_t13_s00",
+              "interview_id": "participant_09",
+              "question_id": "monthly_injection_barrier",
+              "text": "injections",
+              "char_start": 4063,
+              "char_end": 4073
+            },
+            {
+              "segment_id": "participant_09_t13_s01",
+              "interview_id": "participant_09",
+              "question_id": "monthly_injection_barrier",
+              "text": "injection",
+              "char_start": 4116,
+              "char_end": 4125
+            },
+            {
+              "segment_id": "participant_09_t21_s02",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "injections",
+              "char_start": 5779,
+              "char_end": 5789
+            },
+            {
+              "segment_id": "participant_09_t21_s04",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "injection",
+              "char_start": 5892,
+              "char_end": 5901
+            },
+            {
+              "segment_id": "participant_09_t21_s04",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "injection",
+              "char_start": 5945,
+              "char_end": 5954
+            },
+            {
+              "segment_id": "participant_09_t37_s02",
+              "interview_id": "participant_09",
+              "question_id": "considered_trials_before",
+              "text": "injection",
+              "char_start": 9699,
+              "char_end": 9708
+            },
+            {
+              "segment_id": "participant_09_t41_s01",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "injection",
+              "char_start": 10952,
+              "char_end": 10961
+            },
+            {
+              "segment_id": "participant_10_t55_s00",
+              "interview_id": "participant_10",
+              "question_id": "oral_glp_awareness",
+              "text": "shot",
+              "char_start": 14187,
+              "char_end": 14191
+            },
+            {
+              "segment_id": "participant_10_t55_s01",
+              "interview_id": "participant_10",
+              "question_id": "oral_glp_awareness",
+              "text": "shots",
+              "char_start": 14228,
+              "char_end": 14233
+            },
+            {
+              "segment_id": "participant_10_t57_s00",
+              "interview_id": "participant_10",
+              "question_id": "oral_vs_injectable",
+              "text": "injection",
+              "char_start": 15003,
+              "char_end": 15012
+            },
+            {
+              "segment_id": "participant_10_t59_s02",
+              "interview_id": "participant_10",
+              "question_id": "oral_vs_injectable",
+              "text": "injection",
+              "char_start": 15159,
+              "char_end": 15168
+            }
+          ]
+        },
+        {
+          "id": "glp_1",
+          "label": "GLP-1",
+          "variants": [
+            "glp-1",
+            "glp-1s",
+            "glp1",
+            "glp 1",
+            "glps",
+            "glp"
+          ],
+          "count": 10,
+          "by_participant": {
+            "participant_06": 6,
+            "participant_09": 0,
+            "participant_10": 4
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t03_s00",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "GLP-1",
+              "char_start": 1088,
+              "char_end": 1093
+            },
+            {
+              "segment_id": "participant_06_t03_s00",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "GLP-1",
+              "char_start": 1188,
+              "char_end": 1193
+            },
+            {
+              "segment_id": "participant_06_t07_s02",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "GLP-1s",
+              "char_start": 2491,
+              "char_end": 2497
+            },
+            {
+              "segment_id": "participant_06_t15_s03",
+              "interview_id": "participant_06",
+              "question_id": "monthly_injection_barrier",
+              "text": "GLP-1",
+              "char_start": 5207,
+              "char_end": 5212
+            },
+            {
+              "segment_id": "participant_06_t49_s04",
+              "interview_id": "participant_06",
+              "question_id": "weight_loss_history",
+              "text": "GLP-1",
+              "char_start": 13580,
+              "char_end": 13585
+            },
+            {
+              "segment_id": "participant_06_t51_s00",
+              "interview_id": "participant_06",
+              "question_id": "oral_vs_injectable",
+              "text": "GLP-1s",
+              "char_start": 13946,
+              "char_end": 13952
+            },
+            {
+              "segment_id": "participant_10_t07_s02",
+              "interview_id": "participant_10",
+              "question_id": "try_different_medication",
+              "text": "GLP-1s",
+              "char_start": 2166,
+              "char_end": 2172
+            },
+            {
+              "segment_id": "participant_10_t47_s02",
+              "interview_id": "participant_10",
+              "question_id": "trial_concerns",
+              "text": "GLP-1s",
+              "char_start": 11097,
+              "char_end": 11103
+            },
+            {
+              "segment_id": "participant_10_t51_s09",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "GLP-1",
+              "char_start": 13269,
+              "char_end": 13274
+            },
+            {
+              "segment_id": "participant_10_t55_s03",
+              "interview_id": "participant_10",
+              "question_id": "oral_glp_awareness",
+              "text": "GLP-1s",
+              "char_start": 14419,
+              "char_end": 14425
+            }
+          ]
+        },
+        {
+          "id": "compounded_medication",
+          "label": "Compounded medication",
+          "variants": [
+            "compounded medication",
+            "compound medication",
+            "compounded",
+            "compounding",
+            "compound"
+          ],
+          "count": 9,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 2,
+            "participant_10": 4
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t23_s00",
+              "interview_id": "participant_06",
+              "question_id": "compounded_vs_approved",
+              "text": "compound",
+              "char_start": 6978,
+              "char_end": 6986
+            },
+            {
+              "segment_id": "participant_06_t23_s02",
+              "interview_id": "participant_06",
+              "question_id": "compounded_vs_approved",
+              "text": "compound medication",
+              "char_start": 7276,
+              "char_end": 7295
+            },
+            {
+              "segment_id": "participant_06_t23_s04",
+              "interview_id": "participant_06",
+              "question_id": "compounded_vs_approved",
+              "text": "compounded medication",
+              "char_start": 7534,
+              "char_end": 7555
+            },
+            {
+              "segment_id": "participant_09_t15_s00",
+              "interview_id": "participant_09",
+              "question_id": "compounded_vs_approved",
+              "text": "compound",
+              "char_start": 4330,
+              "char_end": 4338
+            },
+            {
+              "segment_id": "participant_09_t29_s03",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "compound",
+              "char_start": 7683,
+              "char_end": 7691
+            },
+            {
+              "segment_id": "participant_10_t11_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "compounding",
+              "char_start": 3274,
+              "char_end": 3285
+            },
+            {
+              "segment_id": "participant_10_t21_s01",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "compound",
+              "char_start": 5124,
+              "char_end": 5132
+            },
+            {
+              "segment_id": "participant_10_t21_s02",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "compound",
+              "char_start": 5151,
+              "char_end": 5159
+            },
+            {
+              "segment_id": "participant_10_t21_s04",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "compound",
+              "char_start": 5276,
+              "char_end": 5284
+            }
+          ]
+        },
+        {
+          "id": "tirzepatide",
+          "label": "Tirzepatide (Mounjaro / Zepbound)",
+          "variants": [
+            "tirzepatide",
+            "mounjaro",
+            "zepbound"
+          ],
+          "count": 9,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 0,
+            "participant_10": 6
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t07_s00",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "Zepbound",
+              "char_start": 2081,
+              "char_end": 2089
+            },
+            {
+              "segment_id": "participant_06_t11_s02",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "Zepbound",
+              "char_start": 3378,
+              "char_end": 3386
+            },
+            {
+              "segment_id": "participant_06_t23_s02",
+              "interview_id": "participant_06",
+              "question_id": "compounded_vs_approved",
+              "text": "Zepbound",
+              "char_start": 7126,
+              "char_end": 7134
+            },
+            {
+              "segment_id": "participant_10_t07_s03",
+              "interview_id": "participant_10",
+              "question_id": "try_different_medication",
+              "text": "Tirzepatide",
+              "char_start": 2278,
+              "char_end": 2289
+            },
+            {
+              "segment_id": "participant_10_t11_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "Tirzepatide",
+              "char_start": 3119,
+              "char_end": 3130
+            },
+            {
+              "segment_id": "participant_10_t19_s00",
+              "interview_id": "participant_10",
+              "question_id": "monthly_injection_barrier",
+              "text": "Mounjaro",
+              "char_start": 4529,
+              "char_end": 4537
+            },
+            {
+              "segment_id": "participant_10_t19_s00",
+              "interview_id": "participant_10",
+              "question_id": "monthly_injection_barrier",
+              "text": "Tirzepatide",
+              "char_start": 4539,
+              "char_end": 4550
+            },
+            {
+              "segment_id": "participant_10_t21_s04",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "Tirzepatide",
+              "char_start": 5285,
+              "char_end": 5296
+            },
+            {
+              "segment_id": "participant_10_t21_s04",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "Mounjaro",
+              "char_start": 5331,
+              "char_end": 5339
+            }
+          ]
+        },
+        {
+          "id": "oral_medication",
+          "label": "Oral medication / pill",
+          "variants": [
+            "oral glp-1",
+            "oral glp-1s",
+            "oral medication",
+            "orally",
+            "oral",
+            "pill",
+            "pills"
+          ],
+          "count": 5,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 2,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t07_s01",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "pill",
+              "char_start": 2349,
+              "char_end": 2353
+            },
+            {
+              "segment_id": "participant_06_t51_s00",
+              "interview_id": "participant_06",
+              "question_id": "oral_vs_injectable",
+              "text": "orally",
+              "char_start": 13971,
+              "char_end": 13977
+            },
+            {
+              "segment_id": "participant_06_t53_s00",
+              "interview_id": "participant_06",
+              "question_id": "oral_vs_injectable",
+              "text": "oral",
+              "char_start": 14801,
+              "char_end": 14805
+            },
+            {
+              "segment_id": "participant_09_t07_s04",
+              "interview_id": "participant_09",
+              "question_id": "try_different_medication",
+              "text": "pill",
+              "char_start": 2974,
+              "char_end": 2978
+            },
+            {
+              "segment_id": "participant_09_t41_s01",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "pill",
+              "char_start": 10925,
+              "char_end": 10929
+            }
+          ]
+        },
+        {
+          "id": "semaglutide",
+          "label": "Semaglutide (Wegovy / Ozempic)",
+          "variants": [
+            "semaglutide",
+            "wegovy",
+            "ozempic"
+          ],
+          "count": 5,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 0,
+            "participant_10": 4
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t07_s00",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "Semaglutide",
+              "char_start": 2186,
+              "char_end": 2197
+            },
+            {
+              "segment_id": "participant_10_t07_s03",
+              "interview_id": "participant_10",
+              "question_id": "try_different_medication",
+              "text": "Semaglutide",
+              "char_start": 2367,
+              "char_end": 2378
+            },
+            {
+              "segment_id": "participant_10_t21_s01",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "semaglutide",
+              "char_start": 4989,
+              "char_end": 5000
+            },
+            {
+              "segment_id": "participant_10_t21_s01",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "Wegovy",
+              "char_start": 5033,
+              "char_end": 5039
+            },
+            {
+              "segment_id": "participant_10_t21_s04",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "semaglutide",
+              "char_start": 5412,
+              "char_end": 5423
+            }
+          ]
+        },
+        {
+          "id": "name_brand",
+          "label": "Name-brand drug",
+          "variants": [
+            "name brand",
+            "brand name",
+            "name-brand",
+            "branded"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t23_s02",
+              "interview_id": "participant_06",
+              "question_id": "compounded_vs_approved",
+              "text": "name brand",
+              "char_start": 7242,
+              "char_end": 7252
+            },
+            {
+              "segment_id": "participant_09_t15_s01",
+              "interview_id": "participant_09",
+              "question_id": "compounded_vs_approved",
+              "text": "name brand",
+              "char_start": 4365,
+              "char_end": 4375
+            }
+          ]
+        },
+        {
+          "id": "orforglipron",
+          "label": "Orforglipron",
+          "variants": [
+            "orforglipron"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t07_s01",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "orforglipron",
+              "char_start": 2306,
+              "char_end": 2318
+            },
+            {
+              "segment_id": "participant_09_t39_s00",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "Orforglipron",
+              "char_start": 10004,
+              "char_end": 10016
+            }
+          ]
+        },
+        {
+          "id": "retatrutide",
+          "label": "Retatrutide",
+          "variants": [
+            "retatrutide"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t07_s01",
+              "interview_id": "participant_10",
+              "question_id": "try_different_medication",
+              "text": "Retatrutide",
+              "char_start": 2047,
+              "char_end": 2058
+            },
+            {
+              "segment_id": "participant_10_t53_s01",
+              "interview_id": "participant_10",
+              "question_id": "considered_trials_before",
+              "text": "Retatrutide",
+              "char_start": 13607,
+              "char_end": 13618
+            }
+          ]
+        },
+        {
+          "id": "cagrilintide",
+          "label": "Cagrilintide",
+          "variants": [
+            "cagrilintide"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t07_s01",
+              "interview_id": "participant_10",
+              "question_id": "try_different_medication",
+              "text": "Cagrilintide",
+              "char_start": 2063,
+              "char_end": 2075
+            }
+          ]
+        },
+        {
+          "id": "implant",
+          "label": "Implant",
+          "variants": [
+            "implant",
+            "implants"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t21_s01",
+              "interview_id": "participant_06",
+              "question_id": "monthly_injection_barrier",
+              "text": "implant",
+              "char_start": 6099,
+              "char_end": 6106
+            }
+          ]
+        },
+        {
+          "id": "metformin",
+          "label": "Metformin",
+          "variants": [
+            "metformin"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t55_s03",
+              "interview_id": "participant_10",
+              "question_id": "oral_glp_awareness",
+              "text": "metformin",
+              "char_start": 14514,
+              "char_end": 14523
+            }
+          ]
+        },
+        {
+          "id": "phentermine",
+          "label": "Phentermine",
+          "variants": [
+            "phentermine"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t51_s04",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "phentermine",
+              "char_start": 12841,
+              "char_end": 12852
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "insurance_finances",
+      "label": "Insurance & finances",
+      "description": "Insurance coverage, access mechanics, out-of-pocket cost, pricing, and financial support.",
+      "total_mentions": 46,
+      "keywords_present": 16,
+      "keywords_total": 16,
+      "keywords": [
+        {
+          "id": "prohibitive",
+          "label": "Prohibitive",
+          "variants": [
+            "prohibitive"
+          ],
+          "count": 8,
+          "by_participant": {
+            "participant_06": 6,
+            "participant_09": 2,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t03_s00",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "prohibitive",
+              "char_start": 1128,
+              "char_end": 1139
+            },
+            {
+              "segment_id": "participant_06_t03_s01",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "prohibitive",
+              "char_start": 1356,
+              "char_end": 1367
+            },
+            {
+              "segment_id": "participant_06_t03_s02",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "prohibitive",
+              "char_start": 1514,
+              "char_end": 1525
+            },
+            {
+              "segment_id": "participant_06_t03_s03",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "prohibitive",
+              "char_start": 1543,
+              "char_end": 1554
+            },
+            {
+              "segment_id": "participant_06_t03_s03",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "prohibitive",
+              "char_start": 1596,
+              "char_end": 1607
+            },
+            {
+              "segment_id": "participant_06_t07_s00",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "prohibitive",
+              "char_start": 2137,
+              "char_end": 2148
+            },
+            {
+              "segment_id": "participant_09_t03_s02",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "prohibitive",
+              "char_start": 1445,
+              "char_end": 1456
+            },
+            {
+              "segment_id": "participant_09_t03_s06",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "prohibitive",
+              "char_start": 1817,
+              "char_end": 1828
+            }
+          ]
+        },
+        {
+          "id": "insurance",
+          "label": "Insurance",
+          "variants": [
+            "insurance",
+            "insurer",
+            "insurers",
+            "insured"
+          ],
+          "count": 7,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 4,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t47_s01",
+              "interview_id": "participant_06",
+              "question_id": "trial_barriers",
+              "text": "insurance",
+              "char_start": 12550,
+              "char_end": 12559
+            },
+            {
+              "segment_id": "participant_06_t47_s02",
+              "interview_id": "participant_06",
+              "question_id": "trial_barriers",
+              "text": "insurance",
+              "char_start": 12638,
+              "char_end": 12647
+            },
+            {
+              "segment_id": "participant_06_t47_s03",
+              "interview_id": "participant_06",
+              "question_id": "trial_barriers",
+              "text": "insurance",
+              "char_start": 12736,
+              "char_end": 12745
+            },
+            {
+              "segment_id": "participant_09_t03_s03",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "insurance",
+              "char_start": 1526,
+              "char_end": 1535
+            },
+            {
+              "segment_id": "participant_09_t07_s03",
+              "interview_id": "participant_09",
+              "question_id": "try_different_medication",
+              "text": "insurance",
+              "char_start": 2761,
+              "char_end": 2770
+            },
+            {
+              "segment_id": "participant_09_t07_s05",
+              "interview_id": "participant_09",
+              "question_id": "try_different_medication",
+              "text": "insurance",
+              "char_start": 3140,
+              "char_end": 3149
+            },
+            {
+              "segment_id": "participant_09_t07_s05",
+              "interview_id": "participant_09",
+              "question_id": "try_different_medication",
+              "text": "insurance",
+              "char_start": 3235,
+              "char_end": 3244
+            }
+          ]
+        },
+        {
+          "id": "cost",
+          "label": "Cost",
+          "variants": [
+            "cost prohibitive",
+            "cost",
+            "costs",
+            "costing",
+            "costly"
+          ],
+          "count": 5,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 2,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t03_s00",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "cost prohibitive",
+              "char_start": 1123,
+              "char_end": 1139
+            },
+            {
+              "segment_id": "participant_06_t03_s01",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "cost prohibitive",
+              "char_start": 1351,
+              "char_end": 1367
+            },
+            {
+              "segment_id": "participant_06_t07_s00",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "cost prohibitive",
+              "char_start": 2132,
+              "char_end": 2148
+            },
+            {
+              "segment_id": "participant_09_t03_s02",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "cost",
+              "char_start": 1427,
+              "char_end": 1431
+            },
+            {
+              "segment_id": "participant_09_t03_s05",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "cost",
+              "char_start": 1743,
+              "char_end": 1747
+            }
+          ]
+        },
+        {
+          "id": "coverage",
+          "label": "Coverage",
+          "variants": [
+            "coverage",
+            "cover",
+            "covers",
+            "covered",
+            "covering"
+          ],
+          "count": 4,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 3,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t47_s02",
+              "interview_id": "participant_06",
+              "question_id": "trial_barriers",
+              "text": "cover",
+              "char_start": 12697,
+              "char_end": 12702
+            },
+            {
+              "segment_id": "participant_09_t03_s03",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "coverage",
+              "char_start": 1536,
+              "char_end": 1544
+            },
+            {
+              "segment_id": "participant_09_t07_s03",
+              "interview_id": "participant_09",
+              "question_id": "try_different_medication",
+              "text": "cover",
+              "char_start": 2779,
+              "char_end": 2784
+            },
+            {
+              "segment_id": "participant_09_t07_s03",
+              "interview_id": "participant_09",
+              "question_id": "try_different_medication",
+              "text": "cover",
+              "char_start": 2799,
+              "char_end": 2804
+            }
+          ]
+        },
+        {
+          "id": "benefit_manager",
+          "label": "Pharmacy benefit manager",
+          "variants": [
+            "pharmacy benefit manager",
+            "plan benefit manager",
+            "benefit manager",
+            "pbm"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 3,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t03_s03",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "plan benefit manager",
+              "char_start": 1584,
+              "char_end": 1604
+            },
+            {
+              "segment_id": "participant_09_t03_s04",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "plan benefit manager",
+              "char_start": 1633,
+              "char_end": 1653
+            },
+            {
+              "segment_id": "participant_09_t03_s04",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "pharmacy benefit manager",
+              "char_start": 1661,
+              "char_end": 1685
+            }
+          ]
+        },
+        {
+          "id": "cheaper",
+          "label": "Cheaper",
+          "variants": [
+            "cheaper",
+            "cheap",
+            "cheapest"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t07_s00",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "cheaper",
+              "char_start": 2213,
+              "char_end": 2220
+            },
+            {
+              "segment_id": "participant_06_t07_s01",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "cheaper",
+              "char_start": 2383,
+              "char_end": 2390
+            },
+            {
+              "segment_id": "participant_06_t23_s02",
+              "interview_id": "participant_06",
+              "question_id": "compounded_vs_approved",
+              "text": "cheaper",
+              "char_start": 7151,
+              "char_end": 7158
+            }
+          ]
+        },
+        {
+          "id": "discount",
+          "label": "Discount",
+          "variants": [
+            "discount",
+            "discounts",
+            "discounted"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 3,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t31_s00",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "discount",
+              "char_start": 8598,
+              "char_end": 8606
+            },
+            {
+              "segment_id": "participant_09_t31_s01",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "discount",
+              "char_start": 8692,
+              "char_end": 8700
+            },
+            {
+              "segment_id": "participant_09_t31_s01",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "discount",
+              "char_start": 8715,
+              "char_end": 8723
+            }
+          ]
+        },
+        {
+          "id": "affordability",
+          "label": "Affordability",
+          "variants": [
+            "affordability",
+            "affordable",
+            "afford"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t21_s03",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "affordability",
+              "char_start": 5242,
+              "char_end": 5255
+            },
+            {
+              "segment_id": "participant_10_t21_s04",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "affordable",
+              "char_start": 5315,
+              "char_end": 5325
+            }
+          ]
+        },
+        {
+          "id": "financial_compensation",
+          "label": "Financial compensation",
+          "variants": [
+            "financial compensation",
+            "compensation",
+            "compensated"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t27_s02",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "financial compensation",
+              "char_start": 8387,
+              "char_end": 8409
+            },
+            {
+              "segment_id": "participant_10_t25_s00",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "Financial compensation",
+              "char_start": 6370,
+              "char_end": 6392
+            }
+          ]
+        },
+        {
+          "id": "out_of_pocket",
+          "label": "Out of pocket",
+          "variants": [
+            "out of pocket"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 2,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t03_s02",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "out of pocket",
+              "char_start": 1481,
+              "char_end": 1494
+            },
+            {
+              "segment_id": "participant_09_t03_s05",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "out of pocket",
+              "char_start": 1729,
+              "char_end": 1742
+            }
+          ]
+        },
+        {
+          "id": "vouchers",
+          "label": "Vouchers",
+          "variants": [
+            "voucher",
+            "vouchers"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t25_s01",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "vouchers",
+              "char_start": 8159,
+              "char_end": 8167
+            },
+            {
+              "segment_id": "participant_09_t19_s01",
+              "interview_id": "participant_09",
+              "question_id": "trial_motivation",
+              "text": "vouchers",
+              "char_start": 5307,
+              "char_end": 5315
+            }
+          ]
+        },
+        {
+          "id": "expensive",
+          "label": "Expensive",
+          "variants": [
+            "expensive",
+            "inexpensive"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t05_s00",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "expensive",
+              "char_start": 1895,
+              "char_end": 1904
+            }
+          ]
+        },
+        {
+          "id": "healthcare_benefits",
+          "label": "Healthcare / employer benefits",
+          "variants": [
+            "healthcare",
+            "health care",
+            "health insurance",
+            "health benefits"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t11_s00",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "healthcare",
+              "char_start": 2976,
+              "char_end": 2986
+            }
+          ]
+        },
+        {
+          "id": "lawsuits",
+          "label": "Lawsuits",
+          "variants": [
+            "lawsuit",
+            "lawsuits"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t03_s02",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "lawsuits",
+              "char_start": 1382,
+              "char_end": 1390
+            }
+          ]
+        },
+        {
+          "id": "price",
+          "label": "Price",
+          "variants": [
+            "price",
+            "prices",
+            "pricing",
+            "priced"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t21_s01",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "prices",
+              "char_start": 5072,
+              "char_end": 5078
+            }
+          ]
+        },
+        {
+          "id": "prior_authorization",
+          "label": "Prior authorization",
+          "variants": [
+            "prior authorization",
+            "prior auth",
+            "authorization",
+            "authorisation"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t03_s03",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "authorization",
+              "char_start": 1612,
+              "char_end": 1625
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lifestyle",
+      "label": "Lifestyle & behavior change",
+      "description": "Diet, exercise, nutrition, named eating programs, and day-to-day behavior change.",
+      "total_mentions": 30,
+      "keywords_present": 16,
+      "keywords_total": 18,
+      "keywords": [
+        {
+          "id": "diet",
+          "label": "Diet",
+          "variants": [
+            "diet",
+            "diets",
+            "dieting"
+          ],
+          "count": 6,
+          "by_participant": {
+            "participant_06": 2,
+            "participant_09": 1,
+            "participant_10": 3
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t49_s00",
+              "interview_id": "participant_06",
+              "question_id": "weight_loss_history",
+              "text": "diet",
+              "char_start": 13177,
+              "char_end": 13181
+            },
+            {
+              "segment_id": "participant_06_t49_s04",
+              "interview_id": "participant_06",
+              "question_id": "weight_loss_history",
+              "text": "diet",
+              "char_start": 13621,
+              "char_end": 13625
+            },
+            {
+              "segment_id": "participant_09_t41_s00",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "diet",
+              "char_start": 10887,
+              "char_end": 10891
+            },
+            {
+              "segment_id": "participant_10_t51_s02",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "diet",
+              "char_start": 12732,
+              "char_end": 12736
+            },
+            {
+              "segment_id": "participant_10_t51_s05",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "diets",
+              "char_start": 12980,
+              "char_end": 12985
+            },
+            {
+              "segment_id": "participant_10_t51_s06",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "Diet",
+              "char_start": 13068,
+              "char_end": 13072
+            }
+          ]
+        },
+        {
+          "id": "nutrition",
+          "label": "Nutrition",
+          "variants": [
+            "nutrition",
+            "nutritional",
+            "macronutrients",
+            "macros"
+          ],
+          "count": 4,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 2,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t33_s00",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "nutritional",
+              "char_start": 8865,
+              "char_end": 8876
+            },
+            {
+              "segment_id": "participant_09_t33_s01",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "nutritional",
+              "char_start": 8951,
+              "char_end": 8962
+            },
+            {
+              "segment_id": "participant_10_t49_s01",
+              "interview_id": "participant_10",
+              "question_id": "educational_support",
+              "text": "nutrition",
+              "char_start": 12092,
+              "char_end": 12101
+            },
+            {
+              "segment_id": "participant_10_t49_s02",
+              "interview_id": "participant_10",
+              "question_id": "educational_support",
+              "text": "nutrition",
+              "char_start": 12245,
+              "char_end": 12254
+            }
+          ]
+        },
+        {
+          "id": "exercise",
+          "label": "Exercise",
+          "variants": [
+            "exercise",
+            "exercises",
+            "exercising"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 2,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t49_s00",
+              "interview_id": "participant_06",
+              "question_id": "weight_loss_history",
+              "text": "exercise",
+              "char_start": 13186,
+              "char_end": 13194
+            },
+            {
+              "segment_id": "participant_06_t49_s04",
+              "interview_id": "participant_06",
+              "question_id": "weight_loss_history",
+              "text": "exercise",
+              "char_start": 13630,
+              "char_end": 13638
+            },
+            {
+              "segment_id": "participant_10_t51_s08",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "exercise",
+              "char_start": 13147,
+              "char_end": 13155
+            }
+          ]
+        },
+        {
+          "id": "journaling",
+          "label": "Journaling / self-tracking",
+          "variants": [
+            "journaling",
+            "journal",
+            "self-tracking",
+            "tracking",
+            "track"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t33_s00",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "track",
+              "char_start": 7707,
+              "char_end": 7712
+            },
+            {
+              "segment_id": "participant_10_t35_s00",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "journal",
+              "char_start": 8260,
+              "char_end": 8267
+            }
+          ]
+        },
+        {
+          "id": "lifestyle_change",
+          "label": "Lifestyle change",
+          "variants": [
+            "lifestyle change",
+            "lifestyle changes",
+            "lifestyle"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t35_s03",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "lifestyle changes",
+              "char_start": 8619,
+              "char_end": 8636
+            },
+            {
+              "segment_id": "participant_10_t35_s05",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "lifestyle",
+              "char_start": 8706,
+              "char_end": 8715
+            }
+          ]
+        },
+        {
+          "id": "low_carb",
+          "label": "Low-carb / carbs",
+          "variants": [
+            "low carb",
+            "low-carb",
+            "carbs",
+            "carb",
+            "carbohydrates"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t51_s02",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "low carb",
+              "char_start": 12746,
+              "char_end": 12754
+            },
+            {
+              "segment_id": "participant_10_t51_s03",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "carbs",
+              "char_start": 12790,
+              "char_end": 12795
+            }
+          ]
+        },
+        {
+          "id": "walking",
+          "label": "Walking",
+          "variants": [
+            "walking",
+            "walked",
+            "walks",
+            "walk"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t33_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "walking",
+              "char_start": 7744,
+              "char_end": 7751
+            },
+            {
+              "segment_id": "participant_10_t33_s02",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "walk",
+              "char_start": 7849,
+              "char_end": 7853
+            }
+          ]
+        },
+        {
+          "id": "atkins",
+          "label": "Atkins diet",
+          "variants": [
+            "atkins"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t51_s02",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "Atkins",
+              "char_start": 12725,
+              "char_end": 12731
+            }
+          ]
+        },
+        {
+          "id": "food_noise",
+          "label": "Food noise",
+          "variants": [
+            "food noise"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t59_s02",
+              "interview_id": "participant_10",
+              "question_id": "oral_vs_injectable",
+              "text": "food noise",
+              "char_start": 15114,
+              "char_end": 15124
+            }
+          ]
+        },
+        {
+          "id": "gym",
+          "label": "Gym",
+          "variants": [
+            "gym",
+            "gyms"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t33_s03",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "gym",
+              "char_start": 7899,
+              "char_end": 7902
+            }
+          ]
+        },
+        {
+          "id": "paleo",
+          "label": "Paleo diet",
+          "variants": [
+            "paleo"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t51_s05",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "paleo",
+              "char_start": 12987,
+              "char_end": 12992
+            }
+          ]
+        },
+        {
+          "id": "physical_fitness",
+          "label": "Physical fitness",
+          "variants": [
+            "physical fitness",
+            "physical activity",
+            "fitness"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t33_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "physical fitness",
+              "char_start": 7790,
+              "char_end": 7806
+            }
+          ]
+        },
+        {
+          "id": "south_beach",
+          "label": "South Beach Diet",
+          "variants": [
+            "south beach diet",
+            "south beach"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t51_s06",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "South Beach Diet",
+              "char_start": 13056,
+              "char_end": 13072
+            }
+          ]
+        },
+        {
+          "id": "steps",
+          "label": "Steps",
+          "variants": [
+            "steps"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t33_s00",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "steps",
+              "char_start": 7716,
+              "char_end": 7721
+            }
+          ]
+        },
+        {
+          "id": "vegan",
+          "label": "Vegan diet",
+          "variants": [
+            "vegan",
+            "vegetarian"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t51_s05",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "vegan",
+              "char_start": 12994,
+              "char_end": 12999
+            }
+          ]
+        },
+        {
+          "id": "weight_watchers",
+          "label": "Weight Watchers",
+          "variants": [
+            "weight watchers"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t51_s06",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "Weight Watchers",
+              "char_start": 13035,
+              "char_end": 13050
+            }
+          ]
+        },
+        {
+          "id": "meal_planning",
+          "label": "Meal planning",
+          "variants": [
+            "meal planning",
+            "meal plan",
+            "meal plans"
+          ],
+          "count": 0,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": []
+        },
+        {
+          "id": "recipes",
+          "label": "Recipes",
+          "variants": [
+            "recipe",
+            "recipes"
+          ],
+          "count": 0,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": []
+        }
+      ]
+    },
+    {
+      "id": "concerns_risks",
+      "label": "Concerns & risks",
+      "description": "Worries about side effects, complications, supply, weight regain, and trial risk.",
+      "total_mentions": 34,
+      "keywords_present": 13,
+      "keywords_total": 14,
+      "keywords": [
+        {
+          "id": "side_effects",
+          "label": "Side effects",
+          "variants": [
+            "side effects",
+            "side effect"
+          ],
+          "count": 7,
+          "by_participant": {
+            "participant_06": 5,
+            "participant_09": 0,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t03_s02",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "side effect",
+              "char_start": 1473,
+              "char_end": 1484
+            },
+            {
+              "segment_id": "participant_06_t21_s03",
+              "interview_id": "participant_06",
+              "question_id": "monthly_injection_barrier",
+              "text": "side effects",
+              "char_start": 6296,
+              "char_end": 6308
+            },
+            {
+              "segment_id": "participant_06_t21_s04",
+              "interview_id": "participant_06",
+              "question_id": "monthly_injection_barrier",
+              "text": "side effects",
+              "char_start": 6495,
+              "char_end": 6507
+            },
+            {
+              "segment_id": "participant_06_t27_s01",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "side effects",
+              "char_start": 8370,
+              "char_end": 8382
+            },
+            {
+              "segment_id": "participant_06_t47_s02",
+              "interview_id": "participant_06",
+              "question_id": "trial_barriers",
+              "text": "side effect",
+              "char_start": 12675,
+              "char_end": 12686
+            },
+            {
+              "segment_id": "participant_10_t47_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_concerns",
+              "text": "side effects",
+              "char_start": 11019,
+              "char_end": 11031
+            },
+            {
+              "segment_id": "participant_10_t47_s03",
+              "interview_id": "participant_10",
+              "question_id": "trial_concerns",
+              "text": "side effects",
+              "char_start": 11249,
+              "char_end": 11261
+            }
+          ]
+        },
+        {
+          "id": "concern",
+          "label": "Concern (explicit)",
+          "variants": [
+            "concern",
+            "concerns",
+            "concerned",
+            "worried",
+            "worry"
+          ],
+          "count": 4,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t21_s03",
+              "interview_id": "participant_06",
+              "question_id": "monthly_injection_barrier",
+              "text": "concern",
+              "char_start": 6204,
+              "char_end": 6211
+            },
+            {
+              "segment_id": "participant_06_t35_s01",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "concern",
+              "char_start": 10371,
+              "char_end": 10378
+            },
+            {
+              "segment_id": "participant_06_t47_s00",
+              "interview_id": "participant_06",
+              "question_id": "trial_barriers",
+              "text": "concerns",
+              "char_start": 12493,
+              "char_end": 12501
+            },
+            {
+              "segment_id": "participant_10_t47_s04",
+              "interview_id": "participant_10",
+              "question_id": "trial_concerns",
+              "text": "concern",
+              "char_start": 11416,
+              "char_end": 11423
+            }
+          ]
+        },
+        {
+          "id": "stall",
+          "label": "Stall / plateau",
+          "variants": [
+            "stall",
+            "stalls",
+            "stalled",
+            "plateau",
+            "plateaus"
+          ],
+          "count": 4,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 4
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t07_s05",
+              "interview_id": "participant_10",
+              "question_id": "try_different_medication",
+              "text": "stall",
+              "char_start": 2489,
+              "char_end": 2494
+            },
+            {
+              "segment_id": "participant_10_t11_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "stall",
+              "char_start": 3157,
+              "char_end": 3162
+            },
+            {
+              "segment_id": "participant_10_t11_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "stall",
+              "char_start": 3326,
+              "char_end": 3331
+            },
+            {
+              "segment_id": "participant_10_t21_s06",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "stall",
+              "char_start": 5568,
+              "char_end": 5573
+            }
+          ]
+        },
+        {
+          "id": "complication",
+          "label": "Health complication",
+          "variants": [
+            "health complication",
+            "medical side effect",
+            "complications",
+            "complication"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 2,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t03_s02",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "medical side effect",
+              "char_start": 1465,
+              "char_end": 1484
+            },
+            {
+              "segment_id": "participant_09_t03_s08",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "health complication",
+              "char_start": 1938,
+              "char_end": 1957
+            },
+            {
+              "segment_id": "participant_09_t03_s14",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "complication",
+              "char_start": 2470,
+              "char_end": 2482
+            }
+          ]
+        },
+        {
+          "id": "risk",
+          "label": "Risk",
+          "variants": [
+            "risking",
+            "risks",
+            "risk",
+            "risky"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t13_s03",
+              "interview_id": "participant_06",
+              "question_id": "placebo_controlled_appeal",
+              "text": "risk",
+              "char_start": 4735,
+              "char_end": 4739
+            },
+            {
+              "segment_id": "participant_06_t27_s00",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "risking",
+              "char_start": 8303,
+              "char_end": 8310
+            },
+            {
+              "segment_id": "participant_06_t27_s01",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "risking",
+              "char_start": 8362,
+              "char_end": 8369
+            }
+          ]
+        },
+        {
+          "id": "scary",
+          "label": "Scary / scared",
+          "variants": [
+            "scary",
+            "scared",
+            "scare"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t13_s01",
+              "interview_id": "participant_06",
+              "question_id": "placebo_controlled_appeal",
+              "text": "scary",
+              "char_start": 4411,
+              "char_end": 4416
+            },
+            {
+              "segment_id": "participant_06_t19_s00",
+              "interview_id": "participant_06",
+              "question_id": "monthly_injection_barrier",
+              "text": "scary",
+              "char_start": 5776,
+              "char_end": 5781
+            },
+            {
+              "segment_id": "participant_06_t23_s00",
+              "interview_id": "participant_06",
+              "question_id": "compounded_vs_approved",
+              "text": "scare",
+              "char_start": 7011,
+              "char_end": 7016
+            }
+          ]
+        },
+        {
+          "id": "gastric_effects",
+          "label": "Gastric effects",
+          "variants": [
+            "gastric emptying",
+            "gastric issues",
+            "gastric",
+            "gastrointestinal",
+            "nausea"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t47_s02",
+              "interview_id": "participant_10",
+              "question_id": "trial_concerns",
+              "text": "gastric issues",
+              "char_start": 11136,
+              "char_end": 11150
+            },
+            {
+              "segment_id": "participant_10_t47_s02",
+              "interview_id": "participant_10",
+              "question_id": "trial_concerns",
+              "text": "gastric emptying",
+              "char_start": 11181,
+              "char_end": 11197
+            }
+          ]
+        },
+        {
+          "id": "hunger",
+          "label": "Hunger",
+          "variants": [
+            "hungry",
+            "ravenous",
+            "hunger",
+            "appetite"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t19_s00",
+              "interview_id": "participant_10",
+              "question_id": "monthly_injection_barrier",
+              "text": "hungry",
+              "char_start": 4584,
+              "char_end": 4590
+            },
+            {
+              "segment_id": "participant_10_t19_s01",
+              "interview_id": "participant_10",
+              "question_id": "monthly_injection_barrier",
+              "text": "ravenous",
+              "char_start": 4724,
+              "char_end": 4732
+            }
+          ]
+        },
+        {
+          "id": "weight_regain",
+          "label": "Weight regain",
+          "variants": [
+            "weight regain",
+            "regaining weight",
+            "gaining weight",
+            "gain weight",
+            "regain",
+            "yo-yo"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t27_s00",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "gaining weight",
+              "char_start": 8311,
+              "char_end": 8325
+            },
+            {
+              "segment_id": "participant_09_t41_s00",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "yo-yo",
+              "char_start": 10881,
+              "char_end": 10886
+            }
+          ]
+        },
+        {
+          "id": "guinea_pig",
+          "label": "Guinea pig",
+          "variants": [
+            "guinea pig"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t47_s00",
+              "interview_id": "participant_10",
+              "question_id": "trial_concerns",
+              "text": "guinea pig",
+              "char_start": 10903,
+              "char_end": 10913
+            }
+          ]
+        },
+        {
+          "id": "harm",
+          "label": "Harm",
+          "variants": [
+            "harmful",
+            "harm",
+            "harms"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t03_s00",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "harm",
+              "char_start": 1152,
+              "char_end": 1156
+            }
+          ]
+        },
+        {
+          "id": "safety",
+          "label": "Safety",
+          "variants": [
+            "safety",
+            "safe",
+            "safer"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t17_s03",
+              "interview_id": "participant_09",
+              "question_id": "trial_motivation",
+              "text": "safer",
+              "char_start": 4899,
+              "char_end": 4904
+            }
+          ]
+        },
+        {
+          "id": "shortages",
+          "label": "Shortages",
+          "variants": [
+            "shortage",
+            "shortages"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t05_s05",
+              "interview_id": "participant_10",
+              "question_id": "stopping_glp1",
+              "text": "shortages",
+              "char_start": 1590,
+              "char_end": 1599
+            }
+          ]
+        },
+        {
+          "id": "needle_phobia",
+          "label": "Needle phobia",
+          "variants": [
+            "needle phobic",
+            "needle phobia"
+          ],
+          "count": 0,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": []
+        }
+      ]
+    },
+    {
+      "id": "clinical_trial",
+      "label": "Clinical trial & logistics",
+      "description": "Trial design, study procedures, site visits, and the travel and scheduling burden of participation.",
+      "total_mentions": 65,
+      "keywords_present": 12,
+      "keywords_total": 16,
+      "keywords": [
+        {
+          "id": "clinical_trial",
+          "label": "Clinical trial",
+          "variants": [
+            "clinical trial",
+            "clinical trials",
+            "trial",
+            "trials",
+            "study",
+            "studies"
+          ],
+          "count": 16,
+          "by_participant": {
+            "participant_06": 5,
+            "participant_09": 5,
+            "participant_10": 6
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t11_s02",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "clinical trial",
+              "char_start": 3196,
+              "char_end": 3210
+            },
+            {
+              "segment_id": "participant_06_t11_s05",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "clinical trial",
+              "char_start": 3738,
+              "char_end": 3752
+            },
+            {
+              "segment_id": "participant_06_t13_s00",
+              "interview_id": "participant_06",
+              "question_id": "placebo_controlled_appeal",
+              "text": "study",
+              "char_start": 4373,
+              "char_end": 4378
+            },
+            {
+              "segment_id": "participant_06_t15_s01",
+              "interview_id": "participant_06",
+              "question_id": "monthly_injection_barrier",
+              "text": "study",
+              "char_start": 5074,
+              "char_end": 5079
+            },
+            {
+              "segment_id": "participant_06_t21_s03",
+              "interview_id": "participant_06",
+              "question_id": "monthly_injection_barrier",
+              "text": "study",
+              "char_start": 6245,
+              "char_end": 6250
+            },
+            {
+              "segment_id": "participant_09_t09_s00",
+              "interview_id": "participant_09",
+              "question_id": "trial_unapproved_medication",
+              "text": "trials",
+              "char_start": 3524,
+              "char_end": 3530
+            },
+            {
+              "segment_id": "participant_09_t11_s01",
+              "interview_id": "participant_09",
+              "question_id": "placebo_controlled_appeal",
+              "text": "study",
+              "char_start": 3830,
+              "char_end": 3835
+            },
+            {
+              "segment_id": "participant_09_t17_s00",
+              "interview_id": "participant_09",
+              "question_id": "trial_motivation",
+              "text": "clinical trials",
+              "char_start": 4674,
+              "char_end": 4689
+            },
+            {
+              "segment_id": "participant_09_t21_s02",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "trials",
+              "char_start": 5687,
+              "char_end": 5693
+            },
+            {
+              "segment_id": "participant_09_t35_s02",
+              "interview_id": "participant_09",
+              "question_id": "considered_trials_before",
+              "text": "clinical trials",
+              "char_start": 9247,
+              "char_end": 9262
+            },
+            {
+              "segment_id": "participant_10_t07_s01",
+              "interview_id": "participant_10",
+              "question_id": "try_different_medication",
+              "text": "studies",
+              "char_start": 2022,
+              "char_end": 2029
+            },
+            {
+              "segment_id": "participant_10_t07_s02",
+              "interview_id": "participant_10",
+              "question_id": "try_different_medication",
+              "text": "studies",
+              "char_start": 2133,
+              "char_end": 2140
+            },
+            {
+              "segment_id": "participant_10_t11_s00",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "clinical trial",
+              "char_start": 2922,
+              "char_end": 2936
+            },
+            {
+              "segment_id": "participant_10_t15_s00",
+              "interview_id": "participant_10",
+              "question_id": "placebo_controlled_appeal",
+              "text": "studies",
+              "char_start": 3894,
+              "char_end": 3901
+            },
+            {
+              "segment_id": "participant_10_t53_s01",
+              "interview_id": "participant_10",
+              "question_id": "considered_trials_before",
+              "text": "trial",
+              "char_start": 13619,
+              "char_end": 13624
+            },
+            {
+              "segment_id": "participant_10_t63_s01",
+              "interview_id": "participant_10",
+              "question_id": "closing",
+              "text": "clinical trials",
+              "char_start": 15535,
+              "char_end": 15550
+            }
+          ]
+        },
+        {
+          "id": "study_doctor",
+          "label": "Study doctor / provider",
+          "variants": [
+            "study doctor",
+            "study doctors",
+            "medical provider",
+            "medical providers",
+            "doctor",
+            "doctors",
+            "physician"
+          ],
+          "count": 13,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 8,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t03_s02",
+              "interview_id": "participant_06",
+              "question_id": "stopping_glp1",
+              "text": "doctor",
+              "char_start": 1493,
+              "char_end": 1499
+            },
+            {
+              "segment_id": "participant_06_t21_s03",
+              "interview_id": "participant_06",
+              "question_id": "monthly_injection_barrier",
+              "text": "study doctors",
+              "char_start": 6245,
+              "char_end": 6258
+            },
+            {
+              "segment_id": "participant_06_t29_s02",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "medical providers",
+              "char_start": 9151,
+              "char_end": 9168
+            },
+            {
+              "segment_id": "participant_09_t03_s00",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "doctor",
+              "char_start": 1056,
+              "char_end": 1062
+            },
+            {
+              "segment_id": "participant_09_t03_s03",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "doctor",
+              "char_start": 1499,
+              "char_end": 1505
+            },
+            {
+              "segment_id": "participant_09_t07_s05",
+              "interview_id": "participant_09",
+              "question_id": "try_different_medication",
+              "text": "doctors",
+              "char_start": 3038,
+              "char_end": 3045
+            },
+            {
+              "segment_id": "participant_09_t29_s02",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "physician",
+              "char_start": 7529,
+              "char_end": 7538
+            },
+            {
+              "segment_id": "participant_09_t29_s04",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "doctor",
+              "char_start": 7696,
+              "char_end": 7702
+            },
+            {
+              "segment_id": "participant_09_t39_s00",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "doctor",
+              "char_start": 9965,
+              "char_end": 9971
+            },
+            {
+              "segment_id": "participant_09_t39_s04",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "doctor",
+              "char_start": 10411,
+              "char_end": 10417
+            },
+            {
+              "segment_id": "participant_09_t41_s00",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "doctor",
+              "char_start": 10634,
+              "char_end": 10640
+            },
+            {
+              "segment_id": "participant_10_t11_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "doctor",
+              "char_start": 3289,
+              "char_end": 3295
+            },
+            {
+              "segment_id": "participant_10_t49_s02",
+              "interview_id": "participant_10",
+              "question_id": "educational_support",
+              "text": "doctors",
+              "char_start": 12199,
+              "char_end": 12206
+            }
+          ]
+        },
+        {
+          "id": "dosing_schedule",
+          "label": "Dosing schedule",
+          "variants": [
+            "monthly injection",
+            "weekly injection",
+            "once a month",
+            "once weekly",
+            "once a week",
+            "monthly",
+            "weekly"
+          ],
+          "count": 9,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 5,
+            "participant_10": 3
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t45_s00",
+              "interview_id": "participant_06",
+              "question_id": "trial_barriers",
+              "text": "Once a month",
+              "char_start": 11882,
+              "char_end": 11894
+            },
+            {
+              "segment_id": "participant_09_t13_s00",
+              "interview_id": "participant_09",
+              "question_id": "monthly_injection_barrier",
+              "text": "weekly",
+              "char_start": 4032,
+              "char_end": 4038
+            },
+            {
+              "segment_id": "participant_09_t21_s02",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "weekly",
+              "char_start": 5729,
+              "char_end": 5735
+            },
+            {
+              "segment_id": "participant_09_t21_s04",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "monthly injection",
+              "char_start": 5884,
+              "char_end": 5901
+            },
+            {
+              "segment_id": "participant_09_t21_s04",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "monthly injection",
+              "char_start": 5937,
+              "char_end": 5954
+            },
+            {
+              "segment_id": "participant_09_t37_s00",
+              "interview_id": "participant_09",
+              "question_id": "considered_trials_before",
+              "text": "weekly",
+              "char_start": 9520,
+              "char_end": 9526
+            },
+            {
+              "segment_id": "participant_10_t17_s00",
+              "interview_id": "participant_10",
+              "question_id": "monthly_injection_barrier",
+              "text": "once weekly",
+              "char_start": 4344,
+              "char_end": 4355
+            },
+            {
+              "segment_id": "participant_10_t43_s04",
+              "interview_id": "participant_10",
+              "question_id": "trial_barriers",
+              "text": "once a week",
+              "char_start": 10153,
+              "char_end": 10164
+            },
+            {
+              "segment_id": "participant_10_t45_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_barriers",
+              "text": "monthly",
+              "char_start": 10361,
+              "char_end": 10368
+            }
+          ]
+        },
+        {
+          "id": "travel_burden",
+          "label": "Travel burden",
+          "variants": [
+            "round trip",
+            "transportation",
+            "driving",
+            "drive",
+            "drove",
+            "mileage",
+            "travel"
+          ],
+          "count": 9,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 4,
+            "participant_10": 4
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t29_s01",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "mileage",
+              "char_start": 8903,
+              "char_end": 8910
+            },
+            {
+              "segment_id": "participant_09_t21_s02",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "drive",
+              "char_start": 5711,
+              "char_end": 5716
+            },
+            {
+              "segment_id": "participant_09_t21_s04",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "drive",
+              "char_start": 5920,
+              "char_end": 5925
+            },
+            {
+              "segment_id": "participant_09_t23_s00",
+              "interview_id": "participant_09",
+              "question_id": "trial_motivation",
+              "text": "driving",
+              "char_start": 6408,
+              "char_end": 6415
+            },
+            {
+              "segment_id": "participant_09_t25_s02",
+              "interview_id": "participant_09",
+              "question_id": "trial_motivation",
+              "text": "round trip",
+              "char_start": 6563,
+              "char_end": 6573
+            },
+            {
+              "segment_id": "participant_10_t43_s00",
+              "interview_id": "participant_10",
+              "question_id": "trial_barriers",
+              "text": "transportation",
+              "char_start": 9834,
+              "char_end": 9848
+            },
+            {
+              "segment_id": "participant_10_t43_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_barriers",
+              "text": "drive",
+              "char_start": 9926,
+              "char_end": 9931
+            },
+            {
+              "segment_id": "participant_10_t45_s00",
+              "interview_id": "participant_10",
+              "question_id": "trial_barriers",
+              "text": "drive",
+              "char_start": 10342,
+              "char_end": 10347
+            },
+            {
+              "segment_id": "participant_10_t45_s02",
+              "interview_id": "participant_10",
+              "question_id": "trial_barriers",
+              "text": "drive",
+              "char_start": 10413,
+              "char_end": 10418
+            }
+          ]
+        },
+        {
+          "id": "telehealth",
+          "label": "Telehealth",
+          "variants": [
+            "telehealth",
+            "telemedicine"
+          ],
+          "count": 5,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 4,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t21_s04",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "telehealth",
+              "char_start": 5839,
+              "char_end": 5849
+            },
+            {
+              "segment_id": "participant_09_t21_s04",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "telehealth",
+              "char_start": 6036,
+              "char_end": 6046
+            },
+            {
+              "segment_id": "participant_09_t29_s02",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "telehealth",
+              "char_start": 7477,
+              "char_end": 7487
+            },
+            {
+              "segment_id": "participant_09_t29_s03",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "telehealth",
+              "char_start": 7620,
+              "char_end": 7630
+            },
+            {
+              "segment_id": "participant_10_t21_s05",
+              "interview_id": "participant_10",
+              "question_id": "compounded_vs_approved",
+              "text": "telehealth",
+              "char_start": 5501,
+              "char_end": 5511
+            }
+          ]
+        },
+        {
+          "id": "nurse",
+          "label": "Nurse",
+          "variants": [
+            "nurse",
+            "nurses",
+            "nursing"
+          ],
+          "count": 4,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 4,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t21_s04",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "nursing",
+              "char_start": 5998,
+              "char_end": 6005
+            },
+            {
+              "segment_id": "participant_09_t25_s03",
+              "interview_id": "participant_09",
+              "question_id": "trial_motivation",
+              "text": "nursing",
+              "char_start": 6728,
+              "char_end": 6735
+            },
+            {
+              "segment_id": "participant_09_t29_s04",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "nurse",
+              "char_start": 7705,
+              "char_end": 7710
+            },
+            {
+              "segment_id": "participant_09_t39_s04",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "nurse",
+              "char_start": 10426,
+              "char_end": 10431
+            }
+          ]
+        },
+        {
+          "id": "placebo",
+          "label": "Placebo",
+          "variants": [
+            "placebo-controlled",
+            "placebo controlled",
+            "placebo effect",
+            "placebo"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 1,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t27_s00",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "placebo",
+              "char_start": 8342,
+              "char_end": 8349
+            },
+            {
+              "segment_id": "participant_09_t11_s01",
+              "interview_id": "participant_09",
+              "question_id": "placebo_controlled_appeal",
+              "text": "placebo",
+              "char_start": 3844,
+              "char_end": 3851
+            },
+            {
+              "segment_id": "participant_10_t15_s02",
+              "interview_id": "participant_10",
+              "question_id": "placebo_controlled_appeal",
+              "text": "placebo effect",
+              "char_start": 4038,
+              "char_end": 4052
+            }
+          ]
+        },
+        {
+          "id": "trial_site",
+          "label": "Trial site / clinic",
+          "variants": [
+            "research hospital",
+            "trial site",
+            "sites",
+            "site",
+            "clinics",
+            "clinic"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 2,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t21_s05",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "research hospital",
+              "char_start": 6117,
+              "char_end": 6134
+            },
+            {
+              "segment_id": "participant_09_t37_s02",
+              "interview_id": "participant_09",
+              "question_id": "considered_trials_before",
+              "text": "clinic",
+              "char_start": 9655,
+              "char_end": 9661
+            }
+          ]
+        },
+        {
+          "id": "fasting_blood",
+          "label": "Fasting blood",
+          "variants": [
+            "fasting blood",
+            "fasting"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t39_s01",
+              "interview_id": "participant_06",
+              "question_id": "trial_barriers",
+              "text": "fasting",
+              "char_start": 11196,
+              "char_end": 11203
+            }
+          ]
+        },
+        {
+          "id": "follow_up",
+          "label": "Follow-up",
+          "variants": [
+            "follow-up",
+            "follow-ups",
+            "followup",
+            "follow up"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t21_s04",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "follow-ups",
+              "char_start": 6017,
+              "char_end": 6027
+            }
+          ]
+        },
+        {
+          "id": "randomized",
+          "label": "Randomized",
+          "variants": [
+            "randomized",
+            "randomised",
+            "randomization",
+            "randomisation"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t11_s01",
+              "interview_id": "participant_09",
+              "question_id": "placebo_controlled_appeal",
+              "text": "randomized",
+              "char_start": 3808,
+              "char_end": 3818
+            }
+          ]
+        },
+        {
+          "id": "visit_frequency",
+          "label": "Visit frequency",
+          "variants": [
+            "visit frequency",
+            "visits",
+            "visit"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t21_s04",
+              "interview_id": "participant_09",
+              "question_id": "trial_barriers",
+              "text": "visits",
+              "char_start": 6006,
+              "char_end": 6012
+            }
+          ]
+        },
+        {
+          "id": "blood_work",
+          "label": "Blood work / draws",
+          "variants": [
+            "blood work",
+            "blood draw",
+            "blood draws",
+            "blood test",
+            "blood tests"
+          ],
+          "count": 0,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": []
+        },
+        {
+          "id": "glucose_monitoring",
+          "label": "Continuous glucose monitoring",
+          "variants": [
+            "continuous glucose monitoring",
+            "glucose monitoring",
+            "glucose monitor",
+            "cgm"
+          ],
+          "count": 0,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": []
+        },
+        {
+          "id": "home_visits",
+          "label": "Home visits",
+          "variants": [
+            "home visit",
+            "home visits"
+          ],
+          "count": 0,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": []
+        },
+        {
+          "id": "travel_concierge",
+          "label": "Travel concierge",
+          "variants": [
+            "travel concierge",
+            "concierge"
+          ],
+          "count": 0,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": []
+        }
+      ]
+    },
+    {
+      "id": "health_conditions",
+      "label": "Health conditions & outcomes",
+      "description": "Obesity, weight outcomes, and the metabolic conditions participants connect to GLP-1 use.",
+      "total_mentions": 29,
+      "keywords_present": 10,
+      "keywords_total": 12,
+      "keywords": [
+        {
+          "id": "weight_maintenance",
+          "label": "Weight maintenance",
+          "variants": [
+            "weight maintenance",
+            "weight management",
+            "maintenance",
+            "maintain",
+            "maintaining"
+          ],
+          "count": 7,
+          "by_participant": {
+            "participant_06": 4,
+            "participant_09": 3,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t07_s01",
+              "interview_id": "participant_06",
+              "question_id": "try_different_medication",
+              "text": "maintenance",
+              "char_start": 2419,
+              "char_end": 2430
+            },
+            {
+              "segment_id": "participant_06_t11_s05",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "maintenance",
+              "char_start": 3825,
+              "char_end": 3836
+            },
+            {
+              "segment_id": "participant_06_t15_s04",
+              "interview_id": "participant_06",
+              "question_id": "monthly_injection_barrier",
+              "text": "maintenance",
+              "char_start": 5252,
+              "char_end": 5263
+            },
+            {
+              "segment_id": "participant_06_t53_s03",
+              "interview_id": "participant_06",
+              "question_id": "oral_vs_injectable",
+              "text": "maintenance",
+              "char_start": 15105,
+              "char_end": 15116
+            },
+            {
+              "segment_id": "participant_09_t07_s04",
+              "interview_id": "participant_09",
+              "question_id": "try_different_medication",
+              "text": "weight management",
+              "char_start": 2956,
+              "char_end": 2973
+            },
+            {
+              "segment_id": "participant_09_t39_s01",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "weight management",
+              "char_start": 10144,
+              "char_end": 10161
+            },
+            {
+              "segment_id": "participant_09_t39_s02",
+              "interview_id": "participant_09",
+              "question_id": "oral_glp_awareness",
+              "text": "maintenance",
+              "char_start": 10206,
+              "char_end": 10217
+            }
+          ]
+        },
+        {
+          "id": "weight_loss",
+          "label": "Weight loss",
+          "variants": [
+            "weight loss",
+            "lose weight",
+            "losing weight",
+            "lost weight"
+          ],
+          "count": 6,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 1,
+            "participant_10": 5
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t03_s10",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "weight loss",
+              "char_start": 2116,
+              "char_end": 2127
+            },
+            {
+              "segment_id": "participant_10_t35_s03",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "lose weight",
+              "char_start": 8599,
+              "char_end": 8610
+            },
+            {
+              "segment_id": "participant_10_t51_s02",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "weight loss",
+              "char_start": 12679,
+              "char_end": 12690
+            },
+            {
+              "segment_id": "participant_10_t51_s09",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "weight loss",
+              "char_start": 13311,
+              "char_end": 13322
+            },
+            {
+              "segment_id": "participant_10_t55_s00",
+              "interview_id": "participant_10",
+              "question_id": "oral_glp_awareness",
+              "text": "weight loss",
+              "char_start": 14117,
+              "char_end": 14128
+            },
+            {
+              "segment_id": "participant_10_t55_s06",
+              "interview_id": "participant_10",
+              "question_id": "oral_glp_awareness",
+              "text": "weight loss",
+              "char_start": 14668,
+              "char_end": 14679
+            }
+          ]
+        },
+        {
+          "id": "diabetes",
+          "label": "Diabetes",
+          "variants": [
+            "type 2 diabetes",
+            "type two diabetes",
+            "type 2",
+            "type two",
+            "diabetes",
+            "diabetic"
+          ],
+          "count": 4,
+          "by_participant": {
+            "participant_06": 2,
+            "participant_09": 1,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t11_s03",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "diabetic",
+              "char_start": 3481,
+              "char_end": 3489
+            },
+            {
+              "segment_id": "participant_06_t41_s01",
+              "interview_id": "participant_06",
+              "question_id": "trial_barriers",
+              "text": "diabetic",
+              "char_start": 11447,
+              "char_end": 11455
+            },
+            {
+              "segment_id": "participant_09_t29_s04",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "diabetic",
+              "char_start": 7728,
+              "char_end": 7736
+            },
+            {
+              "segment_id": "participant_10_t55_s04",
+              "interview_id": "participant_10",
+              "question_id": "oral_glp_awareness",
+              "text": "type two diabetes",
+              "char_start": 14601,
+              "char_end": 14618
+            }
+          ]
+        },
+        {
+          "id": "obesity",
+          "label": "Obesity",
+          "variants": [
+            "obesity",
+            "obese"
+          ],
+          "count": 4,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 0,
+            "participant_10": 3
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t11_s00",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "obesity",
+              "char_start": 3062,
+              "char_end": 3069
+            },
+            {
+              "segment_id": "participant_10_t05_s04",
+              "interview_id": "participant_10",
+              "question_id": "stopping_glp1",
+              "text": "obesity",
+              "char_start": 1408,
+              "char_end": 1415
+            },
+            {
+              "segment_id": "participant_10_t51_s01",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "obese",
+              "char_start": 12617,
+              "char_end": 12622
+            },
+            {
+              "segment_id": "participant_10_t63_s03",
+              "interview_id": "participant_10",
+              "question_id": "closing",
+              "text": "obesity",
+              "char_start": 15784,
+              "char_end": 15791
+            }
+          ]
+        },
+        {
+          "id": "blood_pressure",
+          "label": "Blood pressure",
+          "variants": [
+            "blood pressure"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 2,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t03_s11",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "blood pressure",
+              "char_start": 2132,
+              "char_end": 2146
+            },
+            {
+              "segment_id": "participant_09_t03_s12",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "blood pressure",
+              "char_start": 2180,
+              "char_end": 2194
+            }
+          ]
+        },
+        {
+          "id": "heartburn",
+          "label": "Heartburn / reflux",
+          "variants": [
+            "heartburn",
+            "acid reflux",
+            "reflux"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 2,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t03_s13",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "heartburn",
+              "char_start": 2264,
+              "char_end": 2273
+            },
+            {
+              "segment_id": "participant_09_t03_s13",
+              "interview_id": "participant_09",
+              "question_id": "stopping_glp1",
+              "text": "heartburn",
+              "char_start": 2359,
+              "char_end": 2368
+            }
+          ]
+        },
+        {
+          "id": "blood_sugar",
+          "label": "Blood sugar",
+          "variants": [
+            "blood sugar"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t41_s00",
+              "interview_id": "participant_10",
+              "question_id": "trial_barriers",
+              "text": "blood sugar",
+              "char_start": 9532,
+              "char_end": 9543
+            }
+          ]
+        },
+        {
+          "id": "genetics",
+          "label": "Genetics",
+          "variants": [
+            "genetics",
+            "genetic",
+            "genes"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t51_s10",
+              "interview_id": "participant_10",
+              "question_id": "weight_loss_history",
+              "text": "genetics",
+              "char_start": 13416,
+              "char_end": 13424
+            }
+          ]
+        },
+        {
+          "id": "insulin_resistance",
+          "label": "Insulin resistance",
+          "variants": [
+            "insulin resistant",
+            "insulin resistance",
+            "insulin"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t41_s01",
+              "interview_id": "participant_10",
+              "question_id": "trial_barriers",
+              "text": "insulin resistant",
+              "char_start": 9609,
+              "char_end": 9626
+            }
+          ]
+        },
+        {
+          "id": "pre_diabetic",
+          "label": "Pre-diabetic",
+          "variants": [
+            "pre-diabetic",
+            "prediabetic",
+            "pre diabetic"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t11_s03",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "pre-diabetic",
+              "char_start": 3477,
+              "char_end": 3489
+            }
+          ]
+        },
+        {
+          "id": "cholesterol",
+          "label": "Cholesterol",
+          "variants": [
+            "cholesterol"
+          ],
+          "count": 0,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": []
+        },
+        {
+          "id": "quality_of_life",
+          "label": "Quality of life",
+          "variants": [
+            "quality of life"
+          ],
+          "count": 0,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": []
+        }
+      ]
+    },
+    {
+      "id": "education_support",
+      "label": "Education & support",
+      "description": "Educational formats, counseling, devices, and other support offered alongside treatment or a trial.",
+      "total_mentions": 27,
+      "keywords_present": 11,
+      "keywords_total": 12,
+      "keywords": [
+        {
+          "id": "education",
+          "label": "Education / teaching",
+          "variants": [
+            "diabetic education",
+            "education",
+            "educational",
+            "educate",
+            "teaching",
+            "teach"
+          ],
+          "count": 5,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 3,
+            "participant_10": 2
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t29_s04",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "diabetic education",
+              "char_start": 7728,
+              "char_end": 7746
+            },
+            {
+              "segment_id": "participant_09_t29_s04",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "teaching",
+              "char_start": 7853,
+              "char_end": 7861
+            },
+            {
+              "segment_id": "participant_09_t29_s09",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "education",
+              "char_start": 8232,
+              "char_end": 8241
+            },
+            {
+              "segment_id": "participant_10_t49_s01",
+              "interview_id": "participant_10",
+              "question_id": "educational_support",
+              "text": "teach",
+              "char_start": 12128,
+              "char_end": 12133
+            },
+            {
+              "segment_id": "participant_10_t49_s01",
+              "interview_id": "participant_10",
+              "question_id": "educational_support",
+              "text": "teach",
+              "char_start": 12167,
+              "char_end": 12172
+            }
+          ]
+        },
+        {
+          "id": "counseling",
+          "label": "Counseling",
+          "variants": [
+            "nutritional counseling",
+            "patient counseling",
+            "counseling",
+            "counselling"
+          ],
+          "count": 4,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 4,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t29_s10",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "patient counseling",
+              "char_start": 8330,
+              "char_end": 8348
+            },
+            {
+              "segment_id": "participant_09_t33_s00",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "nutritional counseling",
+              "char_start": 8865,
+              "char_end": 8887
+            },
+            {
+              "segment_id": "participant_09_t33_s01",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "nutritional counseling",
+              "char_start": 8951,
+              "char_end": 8973
+            },
+            {
+              "segment_id": "participant_09_t37_s02",
+              "interview_id": "participant_09",
+              "question_id": "considered_trials_before",
+              "text": "counseling",
+              "char_start": 9675,
+              "char_end": 9685
+            }
+          ]
+        },
+        {
+          "id": "apple_watch",
+          "label": "Apple Watch",
+          "variants": [
+            "apple watch"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 3,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t37_s00",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "Apple watch",
+              "char_start": 10595,
+              "char_end": 10606
+            },
+            {
+              "segment_id": "participant_06_t37_s01",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "Apple watch",
+              "char_start": 10665,
+              "char_end": 10676
+            },
+            {
+              "segment_id": "participant_06_t37_s02",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "Apple watch",
+              "char_start": 10717,
+              "char_end": 10728
+            }
+          ]
+        },
+        {
+          "id": "classes",
+          "label": "Classes",
+          "variants": [
+            "zoom classes",
+            "online classes",
+            "classes",
+            "class"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 2,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t29_s05",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "classes",
+              "char_start": 7925,
+              "char_end": 7932
+            },
+            {
+              "segment_id": "participant_09_t29_s09",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "online classes",
+              "char_start": 8177,
+              "char_end": 8191
+            },
+            {
+              "segment_id": "participant_10_t49_s01",
+              "interview_id": "participant_10",
+              "question_id": "educational_support",
+              "text": "Zoom classes",
+              "char_start": 11907,
+              "char_end": 11919
+            }
+          ]
+        },
+        {
+          "id": "meal_replacement",
+          "label": "Meal replacement",
+          "variants": [
+            "meal replacement drinks",
+            "meal replacements",
+            "meal replacement",
+            "fairlife",
+            "shakes"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 2,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t25_s00",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "Fairlife",
+              "char_start": 8021,
+              "char_end": 8029
+            },
+            {
+              "segment_id": "participant_06_t25_s00",
+              "interview_id": "participant_06",
+              "question_id": "educational_support",
+              "text": "shakes",
+              "char_start": 8030,
+              "char_end": 8036
+            },
+            {
+              "segment_id": "participant_09_t19_s01",
+              "interview_id": "participant_09",
+              "question_id": "trial_motivation",
+              "text": "meal replacements",
+              "char_start": 5366,
+              "char_end": 5383
+            }
+          ]
+        },
+        {
+          "id": "support",
+          "label": "Support",
+          "variants": [
+            "supportive",
+            "support"
+          ],
+          "count": 3,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 2,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t17_s02",
+              "interview_id": "participant_09",
+              "question_id": "trial_motivation",
+              "text": "support",
+              "char_start": 4837,
+              "char_end": 4844
+            },
+            {
+              "segment_id": "participant_09_t29_s03",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "support",
+              "char_start": 7660,
+              "char_end": 7667
+            },
+            {
+              "segment_id": "participant_10_t23_s00",
+              "interview_id": "participant_10",
+              "question_id": "trial_motivation",
+              "text": "support",
+              "char_start": 6199,
+              "char_end": 6206
+            }
+          ]
+        },
+        {
+          "id": "learning_modules",
+          "label": "Online learning modules",
+          "variants": [
+            "online learning modules",
+            "learning modules",
+            "learning module",
+            "modules",
+            "module"
+          ],
+          "count": 2,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 2,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t29_s05",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "online learning modules",
+              "char_start": 7890,
+              "char_end": 7913
+            },
+            {
+              "segment_id": "participant_09_t29_s09",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "online learning modules",
+              "char_start": 8141,
+              "char_end": 8164
+            }
+          ]
+        },
+        {
+          "id": "fitbit",
+          "label": "Fitbit",
+          "variants": [
+            "fitbit"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 1,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_06_t37_s00",
+              "interview_id": "participant_06",
+              "question_id": "trial_motivation",
+              "text": "Fitbit",
+              "char_start": 10637,
+              "char_end": 10643
+            }
+          ]
+        },
+        {
+          "id": "in_person_advice",
+          "label": "In-person advice",
+          "variants": [
+            "in-person advice",
+            "in person advice",
+            "in-person",
+            "in person"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t49_s01",
+              "interview_id": "participant_10",
+              "question_id": "educational_support",
+              "text": "in person",
+              "char_start": 11933,
+              "char_end": 11942
+            }
+          ]
+        },
+        {
+          "id": "videos",
+          "label": "Videos",
+          "variants": [
+            "video",
+            "videos"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 1
+          },
+          "matches": [
+            {
+              "segment_id": "participant_10_t49_s01",
+              "interview_id": "participant_10",
+              "question_id": "educational_support",
+              "text": "videos",
+              "char_start": 11875,
+              "char_end": 11881
+            }
+          ]
+        },
+        {
+          "id": "webinars",
+          "label": "Webinars",
+          "variants": [
+            "webinar",
+            "webinars"
+          ],
+          "count": 1,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 1,
+            "participant_10": 0
+          },
+          "matches": [
+            {
+              "segment_id": "participant_09_t29_s05",
+              "interview_id": "participant_09",
+              "question_id": "educational_support",
+              "text": "webinars",
+              "char_start": 7915,
+              "char_end": 7923
+            }
+          ]
+        },
+        {
+          "id": "handouts",
+          "label": "Handouts",
+          "variants": [
+            "handout",
+            "handouts"
+          ],
+          "count": 0,
+          "by_participant": {
+            "participant_06": 0,
+            "participant_09": 0,
+            "participant_10": 0
+          },
+          "matches": []
+        }
+      ]
+    }
+  ],
+  "by_participant": {
+    "participant_06": {
+      "total_mentions": 89,
+      "by_category": {
+        "medications": 22,
+        "insurance_finances": 20,
+        "lifestyle": 4,
+        "concerns_risks": 17,
+        "clinical_trial": 12,
+        "health_conditions": 8,
+        "education_support": 6
+      }
+    },
+    "participant_09": {
+      "total_mentions": 103,
+      "by_category": {
+        "medications": 14,
+        "insurance_finances": 22,
+        "lifestyle": 3,
+        "concerns_risks": 4,
+        "clinical_trial": 36,
+        "health_conditions": 9,
+        "education_support": 15
+      }
+    },
+    "participant_10": {
+      "total_mentions": 102,
+      "by_category": {
+        "medications": 27,
+        "insurance_finances": 4,
+        "lifestyle": 23,
+        "concerns_risks": 13,
+        "clinical_trial": 17,
+        "health_conditions": 12,
+        "education_support": 6
+      }
+    }
+  }
+}

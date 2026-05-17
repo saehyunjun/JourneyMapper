@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "description": "Analyst-starred highlights. starred_segment_ids reference segments.json; starred_quote_ids reference quote_bank.json.",
+    "updated_at": "2026-05-17T20:40:22.258Z"
+  },
+  "starred_segment_ids": [
+    "participant_06_t07_s01",
+    "participant_06_t11_s02",
+    "participant_06_t11_s03",
+    "participant_06_t15_s03",
+    "participant_06_t23_s02",
+    "participant_06_t29_s01",
+    "participant_06_t29_s02",
+    "participant_06_t47_s01",
+    "participant_06_t47_s02",
+    "participant_06_t49_s00",
+    "participant_06_t51_s00",
+    "participant_06_t51_s01",
+    "participant_06_t51_s07",
+    "participant_06_t53_s01"
+  ],
+  "starred_quote_ids": [
+    "q_participant_10_001"
+  ]
+}

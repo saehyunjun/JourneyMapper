@@ -11,6 +11,9 @@
     ],
     "labels_status": "ai_proposed",
     "quote_count": 22,
+    "pending_interviews": [
+      "participant_06"
+    ],
     "score_dimensions": [
       "clarity",
       "emotional_intensity",

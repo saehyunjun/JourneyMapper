@@ -1,0 +1,169 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "description": "Categorized keyword lexicon for the WCT GLP-1 study. Each category groups domain terms participants used; each keyword carries the surface variants (spellings, brand/generic pairs, plurals, phrasings) that should count toward it. build-keyword-usage.mjs matches this lexicon against segments.json and writes deterministic, reproducible counts to keyword_usage.json. Editable and versioned; bump schema_version when categories or keywords change.",
+    "changelog": [
+      "1.0 — initial lexicon: 7 categories, derived from participant_06, participant_09, participant_10 transcripts."
+    ],
+    "matching_notes": [
+      "Matching is case-insensitive. Within a variant, runs of spaces/hyphens match any run of whitespace or hyphens (so 'out of pocket' also matches 'out-of-pocket').",
+      "Variants with no separator (e.g. 'glp1') are listed explicitly because the separator in multi-word variants is required, not optional.",
+      "Brand and generic names for the same molecule are grouped under one keyword (semaglutide groups Wegovy/Ozempic; tirzepatide groups Mounjaro/Zepbound).",
+      "Keywords are matched independently, so a span like 'oral GLP-1' counts toward both the 'oral_medication' and 'glp_1' keywords. Categories and keywords may therefore overlap textually; counts are not de-duplicated across keywords.",
+      "Single-word terms (e.g. 'support', 'site', 'blood pressure') are precise enough for this corpus but can capture incidental uses; multi-word phrases are the most precise entries."
+    ]
+  },
+  "categories": [
+    {
+      "id": "medications",
+      "label": "Medications & products",
+      "description": "GLP-1 drugs, other weight or metabolic medications, formulations, and delivery formats.",
+      "keywords": [
+        { "id": "glp_1", "label": "GLP-1", "variants": ["glp-1", "glp-1s", "glp1", "glp 1", "glps", "glp"] },
+        { "id": "semaglutide", "label": "Semaglutide (Wegovy / Ozempic)", "variants": ["semaglutide", "wegovy", "ozempic"] },
+        { "id": "tirzepatide", "label": "Tirzepatide (Mounjaro / Zepbound)", "variants": ["tirzepatide", "mounjaro", "zepbound"] },
+        { "id": "orforglipron", "label": "Orforglipron", "variants": ["orforglipron"] },
+        { "id": "retatrutide", "label": "Retatrutide", "variants": ["retatrutide"] },
+        { "id": "cagrilintide", "label": "Cagrilintide", "variants": ["cagrilintide"] },
+        { "id": "metformin", "label": "Metformin", "variants": ["metformin"] },
+        { "id": "phentermine", "label": "Phentermine", "variants": ["phentermine"] },
+        { "id": "compounded_medication", "label": "Compounded medication", "variants": ["compounded medication", "compound medication", "compounded", "compounding", "compound"] },
+        { "id": "name_brand", "label": "Name-brand drug", "variants": ["name brand", "brand name", "name-brand", "branded"] },
+        { "id": "oral_medication", "label": "Oral medication / pill", "variants": ["oral glp-1", "oral glp-1s", "oral medication", "orally", "oral", "pill", "pills"] },
+        { "id": "injection", "label": "Injection / shot", "variants": ["injectable", "injection", "injections", "injecting", "inject", "shot", "shots", "needle"] },
+        { "id": "implant", "label": "Implant", "variants": ["implant", "implants"] }
+      ]
+    },
+    {
+      "id": "insurance_finances",
+      "label": "Insurance & finances",
+      "description": "Insurance coverage, access mechanics, out-of-pocket cost, pricing, and financial support.",
+      "keywords": [
+        { "id": "insurance", "label": "Insurance", "variants": ["insurance", "insurer", "insurers", "insured"] },
+        { "id": "coverage", "label": "Coverage", "variants": ["coverage", "cover", "covers", "covered", "covering"] },
+        { "id": "prior_authorization", "label": "Prior authorization", "variants": ["prior authorization", "prior auth", "authorization", "authorisation"] },
+        { "id": "benefit_manager", "label": "Pharmacy benefit manager", "variants": ["pharmacy benefit manager", "plan benefit manager", "benefit manager", "pbm"] },
+        { "id": "out_of_pocket", "label": "Out of pocket", "variants": ["out of pocket"] },
+        { "id": "cost", "label": "Cost", "variants": ["cost prohibitive", "cost", "costs", "costing", "costly"] },
+        { "id": "prohibitive", "label": "Prohibitive", "variants": ["prohibitive"] },
+        { "id": "price", "label": "Price", "variants": ["price", "prices", "pricing", "priced"] },
+        { "id": "expensive", "label": "Expensive", "variants": ["expensive", "inexpensive"] },
+        { "id": "affordability", "label": "Affordability", "variants": ["affordability", "affordable", "afford"] },
+        { "id": "cheaper", "label": "Cheaper", "variants": ["cheaper", "cheap", "cheapest"] },
+        { "id": "discount", "label": "Discount", "variants": ["discount", "discounts", "discounted"] },
+        { "id": "lawsuits", "label": "Lawsuits", "variants": ["lawsuit", "lawsuits"] },
+        { "id": "financial_compensation", "label": "Financial compensation", "variants": ["financial compensation", "compensation", "compensated"] },
+        { "id": "vouchers", "label": "Vouchers", "variants": ["voucher", "vouchers"] },
+        { "id": "healthcare_benefits", "label": "Healthcare / employer benefits", "variants": ["healthcare", "health care", "health insurance", "health benefits"] }
+      ]
+    },
+    {
+      "id": "lifestyle",
+      "label": "Lifestyle & behavior change",
+      "description": "Diet, exercise, nutrition, named eating programs, and day-to-day behavior change.",
+      "keywords": [
+        { "id": "diet", "label": "Diet", "variants": ["diet", "diets", "dieting"] },
+        { "id": "exercise", "label": "Exercise", "variants": ["exercise", "exercises", "exercising"] },
+        { "id": "walking", "label": "Walking", "variants": ["walking", "walked", "walks", "walk"] },
+        { "id": "gym", "label": "Gym", "variants": ["gym", "gyms"] },
+        { "id": "nutrition", "label": "Nutrition", "variants": ["nutrition", "nutritional", "macronutrients", "macros"] },
+        { "id": "meal_planning", "label": "Meal planning", "variants": ["meal planning", "meal plan", "meal plans"] },
+        { "id": "recipes", "label": "Recipes", "variants": ["recipe", "recipes"] },
+        { "id": "low_carb", "label": "Low-carb / carbs", "variants": ["low carb", "low-carb", "carbs", "carb", "carbohydrates"] },
+        { "id": "atkins", "label": "Atkins diet", "variants": ["atkins"] },
+        { "id": "paleo", "label": "Paleo diet", "variants": ["paleo"] },
+        { "id": "vegan", "label": "Vegan diet", "variants": ["vegan", "vegetarian"] },
+        { "id": "weight_watchers", "label": "Weight Watchers", "variants": ["weight watchers"] },
+        { "id": "south_beach", "label": "South Beach Diet", "variants": ["south beach diet", "south beach"] },
+        { "id": "lifestyle_change", "label": "Lifestyle change", "variants": ["lifestyle change", "lifestyle changes", "lifestyle"] },
+        { "id": "journaling", "label": "Journaling / self-tracking", "variants": ["journaling", "journal", "self-tracking", "tracking", "track"] },
+        { "id": "food_noise", "label": "Food noise", "variants": ["food noise"] },
+        { "id": "physical_fitness", "label": "Physical fitness", "variants": ["physical fitness", "physical activity", "fitness"] },
+        { "id": "steps", "label": "Steps", "variants": ["steps"] }
+      ]
+    },
+    {
+      "id": "concerns_risks",
+      "label": "Concerns & risks",
+      "description": "Worries about side effects, complications, supply, weight regain, and trial risk.",
+      "keywords": [
+        { "id": "side_effects", "label": "Side effects", "variants": ["side effects", "side effect"] },
+        { "id": "gastric_effects", "label": "Gastric effects", "variants": ["gastric emptying", "gastric issues", "gastric", "gastrointestinal", "nausea"] },
+        { "id": "complication", "label": "Health complication", "variants": ["health complication", "medical side effect", "complications", "complication"] },
+        { "id": "shortages", "label": "Shortages", "variants": ["shortage", "shortages"] },
+        { "id": "scary", "label": "Scary / scared", "variants": ["scary", "scared", "scare"] },
+        { "id": "guinea_pig", "label": "Guinea pig", "variants": ["guinea pig"] },
+        { "id": "weight_regain", "label": "Weight regain", "variants": ["weight regain", "regaining weight", "gaining weight", "gain weight", "regain", "yo-yo"] },
+        { "id": "stall", "label": "Stall / plateau", "variants": ["stall", "stalls", "stalled", "plateau", "plateaus"] },
+        { "id": "hunger", "label": "Hunger", "variants": ["hungry", "ravenous", "hunger", "appetite"] },
+        { "id": "safety", "label": "Safety", "variants": ["safety", "safe", "safer"] },
+        { "id": "needle_phobia", "label": "Needle phobia", "variants": ["needle phobic", "needle phobia"] },
+        { "id": "risk", "label": "Risk", "variants": ["risking", "risks", "risk", "risky"] },
+        { "id": "harm", "label": "Harm", "variants": ["harmful", "harm", "harms"] },
+        { "id": "concern", "label": "Concern (explicit)", "variants": ["concern", "concerns", "concerned", "worried", "worry"] }
+      ]
+    },
+    {
+      "id": "clinical_trial",
+      "label": "Clinical trial & logistics",
+      "description": "Trial design, study procedures, site visits, and the travel and scheduling burden of participation.",
+      "keywords": [
+        { "id": "clinical_trial", "label": "Clinical trial", "variants": ["clinical trial", "clinical trials", "trial", "trials", "study", "studies"] },
+        { "id": "placebo", "label": "Placebo", "variants": ["placebo-controlled", "placebo controlled", "placebo effect", "placebo"] },
+        { "id": "randomized", "label": "Randomized", "variants": ["randomized", "randomised", "randomization", "randomisation"] },
+        { "id": "telehealth", "label": "Telehealth", "variants": ["telehealth", "telemedicine"] },
+        { "id": "home_visits", "label": "Home visits", "variants": ["home visit", "home visits"] },
+        { "id": "nurse", "label": "Nurse", "variants": ["nurse", "nurses", "nursing"] },
+        { "id": "fasting_blood", "label": "Fasting blood", "variants": ["fasting blood", "fasting"] },
+        { "id": "glucose_monitoring", "label": "Continuous glucose monitoring", "variants": ["continuous glucose monitoring", "glucose monitoring", "glucose monitor", "cgm"] },
+        { "id": "blood_work", "label": "Blood work / draws", "variants": ["blood work", "blood draw", "blood draws", "blood test", "blood tests"] },
+        { "id": "travel_concierge", "label": "Travel concierge", "variants": ["travel concierge", "concierge"] },
+        { "id": "visit_frequency", "label": "Visit frequency", "variants": ["visit frequency", "visits", "visit"] },
+        { "id": "trial_site", "label": "Trial site / clinic", "variants": ["research hospital", "trial site", "sites", "site", "clinics", "clinic"] },
+        { "id": "follow_up", "label": "Follow-up", "variants": ["follow-up", "follow-ups", "followup", "follow up"] },
+        { "id": "study_doctor", "label": "Study doctor / provider", "variants": ["study doctor", "study doctors", "medical provider", "medical providers", "doctor", "doctors", "physician"] },
+        { "id": "dosing_schedule", "label": "Dosing schedule", "variants": ["monthly injection", "weekly injection", "once a month", "once weekly", "once a week", "monthly", "weekly"] },
+        { "id": "travel_burden", "label": "Travel burden", "variants": ["round trip", "transportation", "driving", "drive", "drove", "mileage", "travel"] }
+      ]
+    },
+    {
+      "id": "health_conditions",
+      "label": "Health conditions & outcomes",
+      "description": "Obesity, weight outcomes, and the metabolic conditions participants connect to GLP-1 use.",
+      "keywords": [
+        { "id": "obesity", "label": "Obesity", "variants": ["obesity", "obese"] },
+        { "id": "weight_loss", "label": "Weight loss", "variants": ["weight loss", "lose weight", "losing weight", "lost weight"] },
+        { "id": "weight_maintenance", "label": "Weight maintenance", "variants": ["weight maintenance", "weight management", "maintenance", "maintain", "maintaining"] },
+        { "id": "blood_pressure", "label": "Blood pressure", "variants": ["blood pressure"] },
+        { "id": "heartburn", "label": "Heartburn / reflux", "variants": ["heartburn", "acid reflux", "reflux"] },
+        { "id": "cholesterol", "label": "Cholesterol", "variants": ["cholesterol"] },
+        { "id": "diabetes", "label": "Diabetes", "variants": ["type 2 diabetes", "type two diabetes", "type 2", "type two", "diabetes", "diabetic"] },
+        { "id": "pre_diabetic", "label": "Pre-diabetic", "variants": ["pre-diabetic", "prediabetic", "pre diabetic"] },
+        { "id": "insulin_resistance", "label": "Insulin resistance", "variants": ["insulin resistant", "insulin resistance", "insulin"] },
+        { "id": "blood_sugar", "label": "Blood sugar", "variants": ["blood sugar"] },
+        { "id": "genetics", "label": "Genetics", "variants": ["genetics", "genetic", "genes"] },
+        { "id": "quality_of_life", "label": "Quality of life", "variants": ["quality of life"] }
+      ]
+    },
+    {
+      "id": "education_support",
+      "label": "Education & support",
+      "description": "Educational formats, counseling, devices, and other support offered alongside treatment or a trial.",
+      "keywords": [
+        { "id": "webinars", "label": "Webinars", "variants": ["webinar", "webinars"] },
+        { "id": "handouts", "label": "Handouts", "variants": ["handout", "handouts"] },
+        { "id": "learning_modules", "label": "Online learning modules", "variants": ["online learning modules", "learning modules", "learning module", "modules", "module"] },
+        { "id": "classes", "label": "Classes", "variants": ["zoom classes", "online classes", "classes", "class"] },
+        { "id": "counseling", "label": "Counseling", "variants": ["nutritional counseling", "patient counseling", "counseling", "counselling"] },
+        { "id": "education", "label": "Education / teaching", "variants": ["diabetic education", "education", "educational", "educate", "teaching", "teach"] },
+        { "id": "videos", "label": "Videos", "variants": ["video", "videos"] },
+        { "id": "in_person_advice", "label": "In-person advice", "variants": ["in-person advice", "in person advice", "in-person", "in person"] },
+        { "id": "fitbit", "label": "Fitbit", "variants": ["fitbit"] },
+        { "id": "apple_watch", "label": "Apple Watch", "variants": ["apple watch"] },
+        { "id": "meal_replacement", "label": "Meal replacement", "variants": ["meal replacement drinks", "meal replacements", "meal replacement", "fairlife", "shakes"] },
+        { "id": "support", "label": "Support", "variants": ["supportive", "support"] }
+      ]
+    }
+  ]
+}

@@ -54,6 +54,21 @@ export type Annotation = {
 	review_status: string;
 };
 
+export type Segment = {
+	segment_id: string;
+	interview_id: string;
+	turn_index: number;
+	segment_index: number;
+	/** null for freshly-uploaded segments not yet through question normalization. */
+	question_id: string | null;
+	speaker: string;
+	text: string;
+	char_start: number;
+	char_end: number;
+	word_count: number;
+	flags: string[];
+};
+
 export type Question = {
 	question_id: string;
 	type: string;
@@ -70,11 +85,24 @@ export type ThemeTag = {
 type Interview = { interview_id: string; turn_count: number };
 
 export const quotes = (quoteBankRaw as { quotes: Quote[] }).quotes;
-export const annotations = (segmentTagsRaw as { annotations: Annotation[] }).annotations;
+
+const segmentTags = segmentTagsRaw as {
+	meta: { tagged_interviews: string[]; pending_interviews: string[] };
+	annotations: Annotation[];
+};
+export const annotations = segmentTags.annotations;
+
+/**
+ * Interviews that have been parsed + segmented but not yet run through the
+ * tagging / quote-bank stages — so they carry no themes, emotions, or quotes.
+ * Surfaced in the UI so a freshly-uploaded interview reads as "pending" rather
+ * than silently missing.
+ */
+export const pendingInterviews: string[] = segmentTags.meta.pending_interviews ?? [];
 export const questions = (questionsRaw as { questions: Question[] }).questions;
 export const themeTags = (codebookRaw as { theme_tags: ThemeTag[] }).theme_tags;
 export const interviews = (interviewsRaw as { interviews: Interview[] }).interviews;
-export const segments = (segmentsRaw as { segments: unknown[] }).segments;
+export const segments = (segmentsRaw as { segments: Segment[] }).segments;
 export const wordUsage = wordUsageRaw as {
 	overall_word_usage: WordCount[];
 	by_participant: Record<string, { total_words: number; unique_words: number; word_usage: WordCount[] }>;
@@ -138,6 +166,73 @@ export function themeCounts(
 	predicate: (a: Annotation) => boolean = () => true
 ): { id: string; count: number }[] {
 	return tally(annotations.filter(predicate).map((a) => a.themes));
+}
+
+export type ThemeBlock = { sentiment: number; interview_id: string };
+
+/**
+ * Per-theme breakdown: one block per contributing segment annotation, carrying
+ * the data needed to colour it (sentiment, interviewee). Sorted by count desc.
+ */
+export function themeBreakdown(
+	predicate: (a: Annotation) => boolean = () => true
+): { id: string; count: number; blocks: ThemeBlock[] }[] {
+	const rows = new Map<string, ThemeBlock[]>();
+	for (const a of annotations.filter(predicate)) {
+		for (const t of a.themes) {
+			const list = rows.get(t) ?? [];
+			list.push({ sentiment: a.sentiment, interview_id: a.interview_id });
+			rows.set(t, list);
+		}
+	}
+	return [...rows.entries()]
+		.map(([id, blocks]) => ({ id, count: blocks.length, blocks }))
+		.sort((a, b) => b.count - a.count);
+}
+
+// segment_id -> the pull quote that contains it (if any).
+const quoteBySegment = new Map<string, string>();
+for (const q of quotes) for (const sid of q.segment_ids) quoteBySegment.set(sid, q.quote_id);
+
+export type ThemeFragment = {
+	segment_id: string;
+	text: string;
+	char_start: number;
+	char_end: number;
+	interview_id: string;
+	question_id: string;
+	sentiment: number;
+	flags: string[];
+	in_pull_quote: boolean;
+	quote_id: string | null;
+};
+
+/**
+ * Every segment fragment tagged with `themeId` (optionally filtered), joined to
+ * its text and flagged with whether it is already part of a pull quote.
+ */
+export function segmentsForTheme(
+	themeId: string,
+	predicate: (a: Annotation) => boolean = () => true
+): ThemeFragment[] {
+	const segById = new Map(segments.map((s) => [s.segment_id, s]));
+	return annotations
+		.filter((a) => a.themes.includes(themeId) && predicate(a))
+		.map((a) => {
+			const seg = segById.get(a.segment_id);
+			return {
+				segment_id: a.segment_id,
+				text: seg?.text ?? '',
+				char_start: seg?.char_start ?? 0,
+				char_end: seg?.char_end ?? 0,
+				interview_id: a.interview_id,
+				question_id: a.question_id,
+				sentiment: a.sentiment,
+				flags: seg?.flags ?? [],
+				in_pull_quote: quoteBySegment.has(a.segment_id),
+				quote_id: quoteBySegment.get(a.segment_id) ?? null
+			};
+		});
 }
 
 const questionOrder = new Map(questions.map((q) => [q.question_id, q.order]));

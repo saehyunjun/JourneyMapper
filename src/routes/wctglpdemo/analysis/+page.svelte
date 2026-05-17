@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
+	import StarIcon from '@lucide/svelte/icons/star';
 	import {
 		quotes,
 		wordUsage,
@@ -9,16 +11,46 @@
 		themeFrequency,
 		emotionFrequency,
 		sentimentDistribution,
+		pendingInterviews,
 		SENTIMENT_LABELS
 	} from '$lib/content/wctglpdemo-data/analysis';
+	import { keywordTags, categories as keywordCategories } from '$lib/content/wctglpdemo-data/keywords';
+	import KeywordText from '$lib/components/KeywordText.svelte';
+	import type { PageProps } from './$types';
+
+	let { data }: PageProps = $props();
 
 	type Tab = 'quotes' | 'themes' | 'words';
 	let activeTab = $state<Tab>('quotes');
+
+	// Analyst-starred quotes — seeded once from the server, then updated
+	// locally on each toggle.
+	let starredQuotes = $state(new Set<string>(untrack(() => data.starredQuoteIds)));
+	let togglingQuote = $state('');
+
+	async function toggleStar(quoteId: string) {
+		if (togglingQuote) return;
+		togglingQuote = quoteId;
+		try {
+			const res = await fetch('/wctglpdemo/highlights', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({ kind: 'quote', id: quoteId })
+			});
+			if (res.ok) {
+				const { starredQuoteIds } = await res.json();
+				starredQuotes = new Set<string>(starredQuoteIds);
+			}
+		} finally {
+			togglingQuote = '';
+		}
+	}
 
 	// --- Quote-bank filters ---
 	let fParticipant = $state('all');
 	let fQuestion = $state('all');
 	let fTheme = $state('all');
+	let fCategory = $state('all');
 	let fSentiment = $state('all');
 	let fMinScore = $state(1);
 
@@ -26,12 +58,21 @@
 	const questionIds = [...new Set(quotes.map((q) => q.question_id))];
 	const themeIds = [...new Set(quotes.flatMap((q) => q.themes))].sort();
 
+	// Deterministic keyword tags per quote, derived from the keyword lexicon —
+	// computed once and reused by both the filter and the quote cards.
+	const quoteKeywordTags = new Map(quotes.map((q) => [q.quote_id, keywordTags(q.text)]));
+
 	const filteredQuotes = $derived(
 		quotes
 			.filter((q) => {
 				if (fParticipant !== 'all' && q.interview_id !== fParticipant) return false;
 				if (fQuestion !== 'all' && q.question_id !== fQuestion) return false;
 				if (fTheme !== 'all' && !q.themes.includes(fTheme)) return false;
+				if (
+					fCategory !== 'all' &&
+					!quoteKeywordTags.get(q.quote_id)?.categories.some((c) => c.id === fCategory)
+				)
+					return false;
 				if (fSentiment === 'positive' && q.sentiment <= 0) return false;
 				if (fSentiment === 'neutral' && q.sentiment !== 0) return false;
 				if (fSentiment === 'negative' && q.sentiment >= 0) return false;
@@ -45,6 +86,7 @@
 		fParticipant = 'all';
 		fQuestion = 'all';
 		fTheme = 'all';
+		fCategory = 'all';
 		fSentiment = 'all';
 		fMinScore = 1;
 	}
@@ -86,6 +128,34 @@
 		<span class="text-3xl font-light text-primary-foreground">{value}</span>
 		<span class="text-xs uppercase tracking-wide text-primary-foreground/70">{label}</span>
 	</div>
+{/snippet}
+
+{#snippet pendingNotice(what: string)}
+	{#if pendingInterviews.length > 0}
+		<div class="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+			<p class="font-semibold">
+				{pendingInterviews.length}
+				{pendingInterviews.length === 1 ? 'interview is' : 'interviews are'} pending tagging
+			</p>
+			<p class="mt-1 text-amber-800">
+				{pendingInterviews.map(participantLabel).join(', ')}
+				{pendingInterviews.length === 1 ? 'has' : 'have'} been parsed and segmented but not yet run
+				through the tagging and quote-bank stages, so {pendingInterviews.length === 1
+					? 'it does'
+					: 'they do'} not appear in {what} below.
+			</p>
+			<div class="mt-3 flex flex-wrap gap-2">
+				{#each pendingInterviews as id (id)}
+					<a
+						href="/wctglpdemo/tag?interview={id}"
+						class="rounded bg-amber-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-amber-700"
+					>
+						Tag {participantLabel(id)} →
+					</a>
+				{/each}
+			</div>
+		</div>
+	{/if}
 {/snippet}
 
 {#snippet bar(label: string, count: number, max: number, tint: string)}
@@ -144,6 +214,7 @@
 		</nav>
 
 		{#if activeTab === 'quotes'}
+			{@render pendingNotice('the quote bank')}
 			<!-- Filters -->
 			<div class="flex flex-wrap items-end gap-4 rounded-lg border border-slate-200 bg-white p-4">
 				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
@@ -161,10 +232,17 @@
 					</select>
 				</label>
 				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
-					Theme
+					Theme <span class="font-normal text-slate-400">· AI</span>
 					<select bind:value={fTheme} class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
 						<option value="all">All</option>
 						{#each themeIds as id (id)}<option value={id}>{titleCase(id)}</option>{/each}
+					</select>
+				</label>
+				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
+					Keyword category <span class="font-normal text-slate-400">· deterministic</span>
+					<select bind:value={fCategory} class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
+						<option value="all">All</option>
+						{#each keywordCategories as c (c.id)}<option value={c.id}>{c.label}</option>{/each}
 					</select>
 				</label>
 				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
@@ -191,27 +269,45 @@
 			<!-- Quote cards -->
 			<div class="flex flex-col gap-4">
 				{#each filteredQuotes as q (q.quote_id)}
+					{@const kw = quoteKeywordTags.get(q.quote_id)}
 					<article class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
 						<div class="flex items-center justify-between gap-4">
-							<span class="font-mono text-xs text-slate-400">{q.quote_id}</span>
+							<span class="font-medium text-muted-foreground text-sm uppercase">{participantLabel(q.interview_id)}</span>
 							<div class="flex items-center gap-2">
 								{#if q.verbatim_verified}
 									<span class="rounded bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700">✓ verbatim</span>
 								{/if}
 								<span class="rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800">{q.review_status}</span>
+								<button
+									type="button"
+									onclick={() => toggleStar(q.quote_id)}
+									disabled={togglingQuote === q.quote_id}
+									aria-pressed={starredQuotes.has(q.quote_id)}
+									title={starredQuotes.has(q.quote_id)
+										? 'Starred highlight — click to unstar'
+										: 'Star as an important highlight'}
+									class="rounded p-1 transition-colors hover:bg-amber-50 disabled:opacity-40
+										{starredQuotes.has(q.quote_id)
+										? 'text-amber-400'
+										: 'text-slate-300 hover:text-amber-400'}"
+								>
+									<StarIcon
+										size={18}
+										fill={starredQuotes.has(q.quote_id) ? 'currentColor' : 'none'}
+									/>
+								</button>
 							</div>
 						</div>
 
-						<blockquote class="mt-3 border-l-2 border-accent-mint pl-4 text-lg leading-relaxed text-slate-800">
-							{q.text}
+					<div class="mt-3 text-sm text-slate-500">
+						 {questionLabel(q.question_id)}
+					</div>
+
+						<blockquote class="my-4 border-l-2 border-accent-mint pl-4 text-xl text-slate-800">
+							"<KeywordText text={q.text} />"
 						</blockquote>
 
-						<div class="mt-3 text-sm text-slate-500">
-							<span class="font-medium text-slate-700">{participantLabel(q.interview_id)}</span>
-							· {questionLabel(q.question_id)}
-						</div>
-
-						<!-- Tag chips -->
+						<!-- Tag chips · AI-proposed -->
 						<div class="mt-3 flex flex-wrap gap-1.5">
 							{#each q.themes as t (t)}
 								<span class="rounded-full bg-accent-mint/15 px-2.5 py-0.5 text-xs text-accent-mint">{titleCase(t)}</span>
@@ -226,6 +322,25 @@
 								{SENTIMENT_LABELS[q.sentiment]}
 							</span>
 						</div>
+
+						<!-- Keyword tags · deterministic, matched from the keyword lexicon -->
+						{#if kw && kw.categories.length}
+							<div class="mt-2 flex flex-wrap items-center gap-1.5">
+								<span class="mr-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+									Keywords
+								</span>
+								{#each kw.categories as c (c.id)}
+									<span class="rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-700">
+										{c.label}
+									</span>
+								{/each}
+								{#each kw.keywords as k (k.id)}
+									<span class="rounded-full border border-slate-200 px-2.5 py-0.5 text-xs text-slate-500">
+										{k.label}
+									</span>
+								{/each}
+							</div>
+						{/if}
 
 						<!-- Scores -->
 						<div class="mt-4 flex flex-wrap items-end gap-x-6 gap-y-2">
@@ -263,6 +378,7 @@
 				{/each}
 			</div>
 		{:else if activeTab === 'themes'}
+			{@render pendingNotice('the theme and emotion counts')}
 			<div class="grid gap-8 lg:grid-cols-2">
 				<!-- Theme frequency -->
 				<section class="flex flex-col gap-3">
