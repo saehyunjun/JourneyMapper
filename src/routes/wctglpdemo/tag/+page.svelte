@@ -5,6 +5,7 @@
 	import codebook from '$lib/content/wctglpdemo-data/codebook.json';
 	import questionsRaw from '$lib/content/wctglpdemo-data/questions.json';
 	import KeywordText from '$lib/components/KeywordText.svelte';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
@@ -59,6 +60,9 @@
 
 	let tags = $state<Record<string, SegTag>>(initTags());
 	let saving = $state(false);
+	// Opened by a successful save so the reviewer notices the tags are now
+	// explorable, with a one-click path to the updated interview-words view.
+	let showSavedDialog = $state(false);
 
 	// Navigating to another interview reruns `load`; re-seed the form when the
 	// selected interview actually changes (not on a post-save reload).
@@ -172,9 +176,12 @@
 				action="?/saveTags"
 				use:enhance={() => {
 					saving = true;
-					return async ({ update }) => {
+					return async ({ result, update }) => {
 						await update();
 						saving = false;
+						if (result.type === 'success' && result.data?.success) {
+							showSavedDialog = true;
+						}
 					};
 				}}
 				class="sticky top-2 z-10 flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
@@ -394,3 +401,28 @@
 		{/if}
 	</div>
 </div>
+
+<!-- Surfaced after a save so the reviewer knows the data is now explorable. -->
+<AlertDialog.Root bind:open={showSavedDialog}>
+	<AlertDialog.Content>
+		<AlertDialog.Header>
+			<AlertDialog.Title>Tags updated</AlertDialog.Title>
+			<AlertDialog.Description>
+				{#if form?.success}
+					{form.segmentCount} segments annotated · {form.themedCount} carry at least one theme{form.discardedCount
+						? ` · ${form.discardedCount} discarded`
+						: ''}. The Interview Words view now reflects these tags — explore it, or keep
+					refining here.
+				{:else}
+					Your tags were saved. The Interview Words view now reflects them.
+				{/if}
+			</AlertDialog.Description>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Cancel>Keep tagging</AlertDialog.Cancel>
+			<AlertDialog.Action onclick={() => goto('/wctglpdemo/interview-words')}>
+				View updated interview words
+			</AlertDialog.Action>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>
