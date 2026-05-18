@@ -18,6 +18,7 @@ export default defineConfig({
 				'**/wctglpdemo-data/question_map.json',
 				'**/wctglpdemo-data/segment_tags.json',
 				'**/wctglpdemo-data/highlights.json',
+				'**/wctglpdemo-data/quote_reviews.json',
 				'**/wctglpdemo-data/uploads/**'
 			]
 		}

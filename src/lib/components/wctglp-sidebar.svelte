@@ -7,7 +7,9 @@
 		ClipboardList,
 		MessageSquareQuote,
 		Network,
-		Upload
+		Upload,
+		Tags,
+		Fingerprint
 	} from "@lucide/svelte";
 
 	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
@@ -46,6 +48,18 @@
 			url: "/wctglpdemo/upload",
 			description: "Add a new interview transcript to the dataset",
 			icon: Upload
+		},
+		{
+			title: "Tag segments",
+			url: "/wctglpdemo/tag",
+			description: "Confirm theme, emotion, sentiment, and semantic tags per segment",
+			icon: Tags
+		},
+		{
+			title: "Participant fingerprint",
+			url: "/wctglpdemo/fingerprint",
+			description: "Each interviewee's distinctive theme profile",
+			icon: Fingerprint
 		}
 	];
 
@@ -56,26 +70,24 @@
 	}
 </script>
 
-<Sidebar.Root {...restProps} bind:ref>
+<Sidebar.Root {...restProps} bind:ref collapsible="icon">
 	<Sidebar.Header>
-		<Sidebar.Menu>
-			<Sidebar.MenuItem>
-				<Sidebar.MenuButton size="lg">
-					{#snippet child({ props })}
-						<a href="/wctglpdemo" {...props}>
-							<div class="flex flex-col gap-0.5 leading-none pb-2 mr-4 border-b border-primary w-full">
-								<span class="font-bold text-base uppercase text-accent-foreground">
-									GLP-1 Insights
-								</span>
-								<span class="text-xs text-muted-foreground">
-									Interview analysis · Patiently Studio
-								</span>
-							</div>
-						</a>
-					{/snippet}
-				</Sidebar.MenuButton>
-			</Sidebar.MenuItem>
-		</Sidebar.Menu>
+		<div
+			class="flex items-center justify-between gap-2 group-data-[collapsible=icon]:justify-center"
+		>
+			<a
+				href="/wctglpdemo"
+				class="flex min-w-0 flex-col gap-0.5 leading-none group-data-[collapsible=icon]:hidden"
+			>
+				<span class="truncate text-base font-bold uppercase text-accent-foreground">
+					GLP-1 Insights
+				</span>
+				<span class="truncate text-xs text-muted-foreground">
+					Interview analysis · Patiently Studio
+				</span>
+			</a>
+			<Sidebar.Trigger class="shrink-0" />
+		</div>
 	</Sidebar.Header>
 	<Sidebar.Content>
 		<Sidebar.Group>

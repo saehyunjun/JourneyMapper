@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
 	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 	import StarIcon from '@lucide/svelte/icons/star';
 	import questionBankRaw from '$lib/content/wctglpdemo-data/questions.json';
+	import SegmentTagDrawer from '$lib/components/SegmentTagDrawer.svelte';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
+	import type { Annotation, TaggableSegment } from '$lib/types/segment-tags';
 	import type { PageProps } from './$types';
 
 	let { form, data }: PageProps = $props();
@@ -48,8 +52,9 @@
 		reader.readAsText(file);
 	}
 
-	// Either action returns the interview's turns + segments for the review view.
-	const result = $derived(form?.success ? form : null);
+	// The review view is driven by either a form action (a fresh parse / save)
+	// or, when no form result is present, an interview loaded via ?interview=.
+	const result = $derived(form?.success ? form : (data.review ?? null));
 
 	const segmentsByTurn = $derived.by(() => {
 		const segs = result?.segments ?? [];
@@ -65,20 +70,36 @@
 
 	const interviewerTurns = $derived((result?.turns ?? []).filter((t) => t.speaker === 'interviewer'));
 
-	// turn_index -> question_id, assigned by the reviewer. Reset per interview.
+	// turn_index -> question_id. Seeded per interview from question_map.json
+	// (the AI proposal written by scripts/propose-questions.mjs), then edited
+	// by the reviewer.
 	let questionAssignments = $state<Record<number, string>>({});
 	let lastInterview = '';
 	$effect(() => {
 		const id = result?.interviewId ?? '';
 		if (id && id !== lastInterview) {
 			lastInterview = id;
-			questionAssignments = {};
+			const seed: Record<number, string> = {};
+			for (const m of result?.questionMap ?? []) seed[m.turn_index] = m.question_id;
+			questionAssignments = seed;
+			annotations = { ...(result?.annotations ?? {}) };
 		}
 	});
 
 	const assignedCount = $derived(
 		interviewerTurns.filter((t) => questionAssignments[t.turn_index]).length
 	);
+
+	const titleCase = (id: string) => id.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+	// Per-segment tag annotations — seeded from the server per interview, then
+	// kept in sync as the drawer saves. `openSegment` drives the tag drawer.
+	let annotations = $state<Record<string, Annotation>>({});
+	let openSegment = $state<TaggableSegment | null>(null);
+
+	// Surfaced after a drawer save so the reviewer can jump to the fingerprint.
+	let showSavedDialog = $state(false);
+	let savedInterviewId = $state('');
 </script>
 
 <div class="flex flex-1 flex-col bg-slate-50">
@@ -106,10 +127,31 @@
 				into <code class="text-xs">segments.json</code>.
 			</p>
 			<p class="mt-2">
-				In the review step below you assign each interviewer turn its interview question — that
-				question normalization is saved to <code class="text-xs">question_map.json</code> and
-				propagated into the segments. Tagging and the quote bank run separately.
+				Question normalization is auto-proposed by
+				<code class="text-xs">scripts/propose-questions.mjs</code> — run it after parsing, then
+				pick the interview below to review the proposal. In the review step you confirm or correct
+				each interviewer turn's question; that is saved to
+				<code class="text-xs">question_map.json</code> and propagated into the segments. Tagging and
+				the quote bank run separately.
 			</p>
+		</div>
+
+		<!-- Reopen the review view for an already-ingested interview, no re-paste. -->
+		<div class="flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white p-4">
+			<span class="text-sm font-medium text-slate-700">Review an ingested interview</span>
+			<select
+				value={data.review?.interviewId ?? ''}
+				onchange={(e) => goto(`?interview=${e.currentTarget.value}`, { keepFocus: true })}
+				class="rounded border border-slate-300 px-2 py-1 text-sm text-slate-700"
+			>
+				<option value="">— pick an interview —</option>
+				{#each data.interviewIds as id (id)}
+					<option value={id}>{id}</option>
+				{/each}
+			</select>
+			<span class="text-xs text-slate-400">
+				Opens its question mapping and segments below — no need to re-paste the transcript.
+			</span>
 		</div>
 
 		{#if form?.stage === 'upload'}
@@ -126,7 +168,9 @@
 				</p>
 				<p class="mt-1 text-emerald-800">
 					Added to <code class="text-xs">interviews_structured.json</code> and
-					<code class="text-xs">segments.json</code>. Now assign the interview questions below.
+					<code class="text-xs">segments.json</code>. Next, run
+					<code class="text-xs">node scripts/propose-questions.mjs {form.interviewId}</code> to
+					auto-propose the question mapping, then pick it from “Review an ingested interview” above.
 				</p>
 				{#if form.warnings?.length}
 					<ul class="mt-2 list-disc pl-5 text-xs text-emerald-800">
@@ -156,8 +200,10 @@
 						Review · {result.interviewId}
 					</h2>
 					<p class="text-sm text-muted-foreground">
-						Assign each interviewer turn its question from the bank, and review the participant
-						segment splits. Each tinted box is one segment — the unit that will carry tags.
+						Each interviewer turn's question is auto-proposed by
+						<code class="text-xs">scripts/propose-questions.mjs</code> — confirm or correct it. Each
+						tinted box is one participant segment; click it to confirm or edit its theme, emotion,
+						sentiment, and semantic tags.
 					</p>
 				</div>
 
@@ -178,7 +224,7 @@
 					<input type="hidden" name="assignments" value={JSON.stringify(questionAssignments)} />
 					<span class="text-sm text-slate-600">
 						<span class="font-medium text-slate-800">{assignedCount}</span>
-						of {interviewerTurns.length} interviewer turns assigned a question
+						of {interviewerTurns.length} interviewer turns have a question
 					</span>
 					<button
 						type="submit"
@@ -219,12 +265,25 @@
 									Participant
 								</span>
 								{#each segmentsByTurn.get(turn.turn_index) ?? [] as seg (seg.segment_id)}
+									{@const ann = annotations[seg.segment_id]}
 									<div
-										class="relative rounded-md border-l-2 border-accent-mint bg-accent-mint/5 py-1.5 pr-9 pl-3"
+										role="button"
+										tabindex="0"
+										onclick={() => (openSegment = seg)}
+										onkeydown={(e) => {
+											if (e.key === 'Enter' || e.key === ' ') {
+												e.preventDefault();
+												openSegment = seg;
+											}
+										}}
+										class="relative cursor-pointer rounded-md border-l-2 border-accent-mint bg-accent-mint/5 py-1.5 pr-9 pl-3 transition-colors hover:bg-accent-mint/10"
 									>
 										<button
 											type="button"
-											onclick={() => toggleStar(seg.segment_id)}
+											onclick={(e) => {
+												e.stopPropagation();
+												toggleStar(seg.segment_id);
+											}}
 											disabled={togglingSegment === seg.segment_id}
 											aria-pressed={starredSegments.has(seg.segment_id)}
 											title={starredSegments.has(seg.segment_id)
@@ -242,7 +301,7 @@
 										</button>
 										<p class="text-sm leading-relaxed text-slate-800">{seg.text}</p>
 										<div
-											class="mt-1 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs text-slate-400"
+											class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-slate-400"
 										>
 											<span>{seg.segment_id}</span>
 											<span>{seg.word_count} words</span>
@@ -253,7 +312,35 @@
 											{#if seg.flags.includes('very_short')}
 												<span class="text-amber-600">very short</span>
 											{/if}
+											<span class="ml-auto font-sans font-medium text-accent-mint">
+												{ann ? 'Edit tags' : 'Add tags'}
+											</span>
 										</div>
+										{#if ann && (ann.themes.length || ann.emotions.length || ann.semantic_tags.length)}
+											<div class="mt-1.5 flex flex-wrap gap-1">
+												{#each ann.themes as th (th)}
+													<span
+														class="rounded-full bg-accent-mint/15 px-1.5 py-0.5 text-[10px] font-medium text-accent-mint"
+													>
+														{titleCase(th)}
+													</span>
+												{/each}
+												{#each ann.emotions as em (em)}
+													<span
+														class="rounded-full bg-slate-200 px-1.5 py-0.5 text-[10px] font-medium text-slate-600"
+													>
+														{titleCase(em)}
+													</span>
+												{/each}
+												{#each ann.semantic_tags as st (st)}
+													<span
+														class="rounded-full bg-violet-100 px-1.5 py-0.5 text-[10px] font-medium text-violet-700"
+													>
+														{titleCase(st)}
+													</span>
+												{/each}
+											</div>
+										{/if}
 									</div>
 								{/each}
 							</div>
@@ -313,3 +400,36 @@
 		</form>
 	</div>
 </div>
+
+<!-- Per-segment tag editing — opened by clicking a segment in the review view. -->
+<SegmentTagDrawer
+	segment={openSegment}
+	annotation={openSegment ? (annotations[openSegment.segment_id] ?? null) : null}
+	onclose={() => (openSegment = null)}
+	onsaved={(a) => {
+		annotations = { ...annotations, [a.segment_id]: a };
+		savedInterviewId = a.interview_id;
+		showSavedDialog = true;
+	}}
+/>
+
+<!-- After a tag save, offer a jump to the interview's theme fingerprint. -->
+<AlertDialog.Root bind:open={showSavedDialog}>
+	<AlertDialog.Content>
+		<AlertDialog.Header>
+			<AlertDialog.Title>Tags saved</AlertDialog.Title>
+			<AlertDialog.Description>
+				Confirmed tags for a segment of {titleCase(savedInterviewId)}. See how its themes stack up
+				as a fingerprint, or keep tagging.
+			</AlertDialog.Description>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Cancel>Keep tagging</AlertDialog.Cancel>
+			<AlertDialog.Action
+				onclick={() => goto(`/wctglpdemo/fingerprint?interview=${savedInterviewId}`)}
+			>
+				View {titleCase(savedInterviewId)}'s fingerprint
+			</AlertDialog.Action>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>

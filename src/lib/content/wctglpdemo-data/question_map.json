@@ -2,19 +2,20 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-18T01:48:03.441Z",
-    "generator": "scripts/build-question-map.mjs",
+    "generated_at": "2026-05-18T04:56:28.737Z",
+    "generator": "scripts/propose-questions.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
       "src/lib/content/wctglpdemo-data/questions.json"
     ],
     "labels_status": "ai_proposed",
     "notes": [
-      "Maps interviewer turns to canonical question_ids. Labels are AI-proposed.",
-      "Every mapping has review_status \"pending\" and should be analyst-confirmed before downstream use.",
+      "Maps interviewer turns to canonical question_ids. AI-proposed mappings are written by scripts/propose-questions.mjs.",
+      "Every AI mapping has review_status \"pending\"; confirm or correct it on the upload review view, which writes source \"human\".",
       "turn_role distinguishes canonical questions from probes, acknowledgments, and admin turns.",
       "Acknowledgment/admin turns carry the surrounding question_id for response continuity."
-    ]
+    ],
+    "model": "claude-opus-4-7"
   },
   "interviews": [
     {
@@ -607,6 +608,381 @@
           "turn_index": 74,
           "question_id": "trial_barriers",
           "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        }
+      ]
+    },
+    {
+      "interview_id": "participant_08",
+      "mapping_count": 41,
+      "mappings": [
+        {
+          "turn_index": 0,
+          "question_id": "study_intro",
+          "turn_role": "admin",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 2,
+          "question_id": "study_intro",
+          "turn_role": "admin",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Framing instructions"
+        },
+        {
+          "turn_index": 4,
+          "question_id": "stopping_glp1",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 6,
+          "question_id": "stopping_glp1",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Probe on benefits"
+        },
+        {
+          "turn_index": 8,
+          "question_id": "stopping_glp1",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 10,
+          "question_id": "try_different_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 12,
+          "question_id": "trial_unapproved_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 14,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Asks what makes them open to trials"
+        },
+        {
+          "turn_index": 16,
+          "question_id": "placebo_controlled_appeal",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 18,
+          "question_id": "monthly_injection_barrier",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 20,
+          "question_id": "monthly_injection_barrier",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 22,
+          "question_id": "compounded_vs_approved",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 24,
+          "question_id": "compounded_vs_approved",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 26,
+          "question_id": "trial_motivation",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Vouchers as motivation"
+        },
+        {
+          "turn_index": 28,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Financial compensation"
+        },
+        {
+          "turn_index": 30,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Travel arranged"
+        },
+        {
+          "turn_index": 32,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Weekend/evening appointments"
+        },
+        {
+          "turn_index": 34,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Meals during visits"
+        },
+        {
+          "turn_index": 36,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Home nurse"
+        },
+        {
+          "turn_index": 38,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Fitbit"
+        },
+        {
+          "turn_index": 40,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Other supports"
+        },
+        {
+          "turn_index": 42,
+          "question_id": "trial_concerns",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Other concerns/barriers"
+        },
+        {
+          "turn_index": 44,
+          "question_id": "trial_barriers",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Fasting blood"
+        },
+        {
+          "turn_index": 46,
+          "question_id": "trial_barriers",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Glucose monitoring"
+        },
+        {
+          "turn_index": 48,
+          "question_id": "trial_barriers",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "CGM"
+        },
+        {
+          "turn_index": 50,
+          "question_id": "trial_barriers",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "CGM newcomers"
+        },
+        {
+          "turn_index": 52,
+          "question_id": "trial_barriers",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Finger pricking"
+        },
+        {
+          "turn_index": 54,
+          "question_id": "trial_barriers",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Visit frequency"
+        },
+        {
+          "turn_index": 56,
+          "question_id": "trial_barriers",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Travel distance"
+        },
+        {
+          "turn_index": 58,
+          "question_id": "educational_support",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 60,
+          "question_id": "educational_support",
+          "turn_role": "acknowledgment",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 62,
+          "question_id": "considered_trials_before",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 64,
+          "question_id": "weight_loss_history",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 66,
+          "question_id": "oral_glp_awareness",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 68,
+          "question_id": "oral_vs_injectable",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 70,
+          "question_id": "oral_vs_injectable",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 72,
+          "question_id": "closing",
+          "turn_role": "admin",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 74,
+          "question_id": "trial_concerns",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Answering participant question about adverse events"
+        },
+        {
+          "turn_index": 76,
+          "question_id": "trial_concerns",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Continuation on patient safety"
+        },
+        {
+          "turn_index": 78,
+          "question_id": "closing",
+          "turn_role": "admin",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "Costs covered"
+        },
+        {
+          "turn_index": 80,
+          "question_id": "closing",
+          "turn_role": "admin",
           "confidence": 1,
           "source": "human",
           "review_status": "confirmed",

@@ -7,7 +7,11 @@
       "Bash(node -e \"const a=require\\('./src/lib/content/wctglpdemo-data/segment_tags.json'\\).annotations[2]; console.log\\('annotation now has topics field:', JSON.stringify\\({segment_id:a.segment_id,topics:a.topics,themes:a.themes}\\)\\);\")",
       "Bash(node --check scripts/__TRACKED_VAR__.mjs)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Read(//Users/aaronjun/**)",
+      "Bash(git push *)",
+      "Bash(node -e \"const d=require\\('./src/lib/content/wctglpdemo-data/quote_bank.json'\\); console.log\\(JSON.stringify\\(d.meta,null,1\\)\\)\")",
+      "Bash(node -e \"console.log\\(require\\('/Users/aaronjun/JourneyMapper/package.json'\\).dependencies['bits-ui'] || 'not in deps'\\)\")"
     ]
   }
 }

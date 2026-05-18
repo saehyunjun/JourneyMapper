@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "description": "Analyst review decisions on AI-proposed pull quotes, keyed by quote_id (references quote_bank.json). A quote with no entry here is still pending. Kept separate from quote_bank.json so a decision survives a quote-bank rebuild.",
+    "updated_at": "2026-05-18T04:14:31.480Z"
+  },
+  "reviews": {
+    "q_participant_09_001": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_09_002": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_09_003": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_09_004": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_09_005": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_09_006": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_09_007": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_09_008": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_09_009": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_001": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_002": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_003": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_004": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_005": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_006": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_007": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_008": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_009": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_010": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_011": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_012": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    },
+    "q_participant_10_013": {
+      "status": "approved",
+      "updated_at": "2026-05-18T04:14:31.480Z"
+    }
+  }
+}

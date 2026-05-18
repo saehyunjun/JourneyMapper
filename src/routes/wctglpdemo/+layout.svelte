@@ -1,7 +1,6 @@
 <script lang="ts">
 	import WctglpSidebar from "$lib/components/wctglp-sidebar.svelte";
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
-	import { Separator } from "$lib/components/ui/separator/index.js";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 	import { sidebarState } from "$lib/sidebar-state.svelte.js";
 	import { page } from "$app/state";
@@ -47,8 +46,8 @@
 	<Sidebar.Inset>
 		<header class="flex h-fit py-1 shrink-0 items-center gap-2 border-b top-0 z-99 bg-accent w-full">
 			<div class="flex items-center gap-2 px-3">
-				<Sidebar.Trigger />
-				<Separator orientation="vertical" class="me-2 h-4" />
+				<!-- Mobile only — the off-canvas sidebar can't be reopened from inside itself. -->
+				<Sidebar.Trigger class="md:hidden" />
 				<Breadcrumb.Root>
 					<Breadcrumb.List>
 						{#each crumbs as crumb, i (i)}

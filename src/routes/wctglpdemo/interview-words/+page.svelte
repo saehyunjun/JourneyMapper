@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/Button/index.ts';
 	import {
 		quotes,
 		themeTags,
@@ -16,6 +15,7 @@
 	import SortableBarChart from '$lib/charts/glp/SortableBarChart.svelte';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import KeywordText from '$lib/components/KeywordText.svelte';
+	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
 	import { keywordCounts } from '$lib/content/wctglpdemo-data/keywords';
 
 	/** Theme breakdown rows -> the {word,count,blocks} shape SortableBarChart expects. */
@@ -234,7 +234,7 @@
 			<!-- Topic groups -->
 			<div class="flex flex-wrap gap-2">
 				{#each questionGroups as group (group.id)}
-					<Button
+					<button
 						type="button"
 						class="rounded-full border px-4 py-1.5 text-sm font-medium transition-colors duration-150 capitalize
 							{selectedGroup === group.id
@@ -245,14 +245,14 @@
 					>
 						{group.label}
 						<span class="ml-1.5 opacity-60">{group.ids.length}</span>
-					</Button>
+					</button>
 				{/each}
 			</div>
 
 			<!-- Questions within the selected group -->
 			<div class="flex flex-row gap-2 overflow-x-scroll pb-4">
 				{#each groupQuestionIds as id (id)}
-					<Button
+					<button
 						class="rounded-full border px-3.5 py-1.5 text-sm transition-colors duration-150
 							{selectedQuestion === id
 							? 'border-(--darkgrayblue) bg-(--darkgrayblue) text-(--paper)'
@@ -261,7 +261,7 @@
 						onclick={() => (selectedQuestion = id)}
 					>
 						{questionLabel(id)}
-					</Button>
+					</button>
 				{/each}
 			</div>
 
@@ -297,17 +297,18 @@
 
 			<div class="flex flex-wrap gap-2">
 				{#each themedParticipantIds as id (id)}
-					<Button
+					<button
 						type="button"
-						class="rounded-full border px-3.5 py-1.5 text-sm transition-colors duration-150
+						class="flex items-center gap-2 rounded-full border py-1 pr-3.5 pl-1 text-sm transition-colors duration-150
 							{selectedParticipant === id
 							? 'border-(--orange) bg-(--orange) text-(--paper)'
 							: 'border-(--ink)/20 bg-(--paper) text-foreground hover:bg-(--ink)/5'}"
 						aria-pressed={selectedParticipant === id}
 						onclick={() => (selectedParticipant = id)}
 					>
+						<ParticipantAvatar interviewId={id} size="sm" />
 						{participantLabel(id)}
-					</Button>
+					</button>
 				{/each}
 			</div>
 
@@ -388,7 +389,7 @@
 							Pull quotes · {drawerQuotes.length}
 						</h3>
 						{#each drawerQuotes as q (q.quote_id)}
-							<article class="rounded-lg border border-slate-200 bg-white p-4">
+							<article class="rounded border border-slate-200 bg-white p-4">
 								<div class="flex items-center justify-between gap-3">
 									<span class="font-mono text-xs text-slate-400">{q.quote_id}</span>
 									<span class="text-xs text-slate-400">
@@ -430,7 +431,7 @@
 
 				<!-- All coded fragments -->
 				<section class="flex flex-col gap-2">
-					<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+					<h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">
 						Coded fragments · {drawerFragments.length}
 					</h3>
 					<p class="text-xs text-muted-foreground">
@@ -439,7 +440,7 @@
 					</p>
 					{#each drawerFragments as f (f.segment_id)}
 						<div
-							class="rounded-md border-l-2 py-1.5 pr-2 pl-3
+							class="p-2 border-2 border-muted/60
 								{f.in_pull_quote ? 'border-accent-mint bg-accent-mint/5' : 'border-muted-foreground'}"
 						>
 							<p class="text-sm leading-relaxed text-slate-700">

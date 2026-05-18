@@ -3,10 +3,14 @@
  *
  * parse         — runs the deterministic pipeline stages on pasted/uploaded
  *                 transcript text: step 1 parse, step 4 segment. Writes the raw
- *                 text, interviews_structured.json, and segments.json.
- * saveQuestions — records the human question-normalization (step 3): maps each
- *                 interviewer turn to a question from the question bank, writes
+ *                 text, interviews_structured.json, and segments.json. Returns
+ *                 any existing question_map.json mappings so the review view
+ *                 pre-fills with them.
+ * saveQuestions — records the human review of question-normalization (step 3):
+ *                 confirms/corrects the per-turn question, writes
  *                 question_map.json, and propagates question_ids into segments.
+ *                 The initial mapping is auto-proposed by
+ *                 scripts/propose-questions.mjs; this action only confirms it.
  *
  * Note: these write into the source tree, so they are dev/demo-time operations.
  */
@@ -16,6 +20,8 @@ import { resolve } from 'node:path';
 import type { Actions, PageServerLoad } from './$types';
 import questionBank from '$lib/content/wctglpdemo-data/questions.json';
 import { readHighlights } from '$lib/server/highlights';
+import { readAnnotationsFor } from '$lib/server/segment-tags';
+import type { Annotation } from '$lib/types/segment-tags';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const STRUCTURED_PATH = `${DATA_DIR}/interviews_structured.json`;
@@ -195,10 +201,63 @@ function buildSegments(interviewId: string, turns: Turn[]): Segment[] {
 	return segments;
 }
 
-// Current starred segment ids — so the review view paints stars correctly.
-export const load: PageServerLoad = () => {
+/** turn_index -> question_id from question_map.json, for one interview. */
+function readQuestionMap(interviewId: string): { turn_index: number; question_id: string }[] {
+	let qmap: { interviews?: { interview_id: string; mappings: { turn_index: number; question_id: string }[] }[] };
+	try {
+		qmap = JSON.parse(readFileSync(resolve(QUESTION_MAP_PATH), 'utf8'));
+	} catch {
+		return [];
+	}
+	const entry = qmap.interviews?.find((iv) => iv.interview_id === interviewId);
+	return (entry?.mappings ?? []).map((m) => ({
+		turn_index: m.turn_index,
+		question_id: m.question_id
+	}));
+}
+
+// Page data: starred segment ids for the review view, the list of ingested
+// interviews, and — when ?interview=<id> is set — that interview's turns,
+// segments, and question mapping, so its review view reopens without the
+// transcript being re-pasted and re-parsed.
+export const load: PageServerLoad = ({ url }) => {
 	const { starredSegmentIds } = readHighlights();
-	return { starredSegmentIds };
+
+	const structured = JSON.parse(readFileSync(resolve(STRUCTURED_PATH), 'utf8'));
+	const interviewIds: string[] = structured.interviews
+		.map((iv: { interview_id: string }) => iv.interview_id)
+		.sort();
+
+	const wanted = url.searchParams.get('interview');
+	let review:
+		| {
+				interviewId: string;
+				turns: Turn[];
+				segments: Segment[];
+				questionMap: { turn_index: number; question_id: string }[];
+				annotations: Record<string, Annotation>;
+		  }
+		| null = null;
+	if (wanted) {
+		const interview = structured.interviews.find(
+			(iv: { interview_id: string }) => iv.interview_id === wanted
+		);
+		if (interview) {
+			const segData = JSON.parse(readFileSync(resolve(SEGMENTS_PATH), 'utf8'));
+			const segments = (segData.segments as Segment[])
+				.filter((s) => s.interview_id === wanted)
+				.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
+			review = {
+				interviewId: wanted,
+				turns: interview.turns as Turn[],
+				segments,
+				questionMap: readQuestionMap(wanted),
+				annotations: readAnnotationsFor(wanted)
+			};
+		}
+	}
+
+	return { starredSegmentIds, interviewIds, review };
 };
 
 export const actions: Actions = {
@@ -313,7 +372,10 @@ export const actions: Actions = {
 			demographics: demographicsRaw || null,
 			warnings,
 			turns,
-			segments
+			segments,
+			// Pre-fills the review view if scripts/propose-questions.mjs has run.
+			questionMap: readQuestionMap(interviewId),
+			annotations: readAnnotationsFor(interviewId)
 		};
 	},
 
@@ -349,21 +411,41 @@ export const actions: Actions = {
 		const turns: Turn[] = interview.turns;
 		const interviewerTurns = turns.filter((t) => t.speaker === 'interviewer');
 
+		// Existing mappings — the AI proposal from scripts/propose-questions.mjs.
+		// Confirming a proposed turn keeps its turn_role/notes; only a changed
+		// question_id falls back to the plain "question" role.
+		const qmap = JSON.parse(readFileSync(resolve(QUESTION_MAP_PATH), 'utf8'));
+		const priorEntry = qmap.interviews.find(
+			(iv: { interview_id: string }) => iv.interview_id === interviewId
+		);
+		const priorByTurn = new Map<number, { question_id: string; turn_role: string; reviewer_notes?: string }>(
+			(priorEntry?.mappings ?? []).map(
+				(m: { turn_index: number; question_id: string; turn_role: string; reviewer_notes?: string }) => [
+					m.turn_index,
+					m
+				]
+			)
+		);
+
 		// Mappings: only interviewer turns the reviewer actually assigned.
 		const mappings = interviewerTurns
 			.filter((t) => byTurn.has(t.turn_index))
-			.map((t) => ({
-				turn_index: t.turn_index,
-				question_id: byTurn.get(t.turn_index),
-				turn_role: 'question',
-				confidence: 1,
-				source: 'human',
-				review_status: 'confirmed',
-				reviewer_notes: ''
-			}));
+			.map((t) => {
+				const questionId = byTurn.get(t.turn_index);
+				const prior = priorByTurn.get(t.turn_index);
+				const kept = prior && prior.question_id === questionId;
+				return {
+					turn_index: t.turn_index,
+					question_id: questionId,
+					turn_role: kept ? prior.turn_role : 'question',
+					confidence: 1,
+					source: 'human',
+					review_status: 'confirmed',
+					reviewer_notes: kept ? (prior.reviewer_notes ?? '') : ''
+				};
+			});
 
 		// Write question_map.json.
-		const qmap = JSON.parse(readFileSync(resolve(QUESTION_MAP_PATH), 'utf8'));
 		qmap.interviews = qmap.interviews.filter(
 			(iv: { interview_id: string }) => iv.interview_id !== interviewId
 		);
@@ -408,7 +490,9 @@ export const actions: Actions = {
 			interviewerCount: interviewerTurns.length,
 			segmentsUpdated,
 			turns,
-			segments
+			segments,
+			questionMap: mappings.map((m) => ({ turn_index: m.turn_index, question_id: m.question_id! })),
+			annotations: readAnnotationsFor(interviewId)
 		};
 	}
 };
