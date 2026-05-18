@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const cb=require\\('./src/lib/content/wctglpdemo-data/codebook.json'\\); console.log\\('meta:', JSON.stringify\\(cb.meta\\)\\); console.log\\('theme_tags[0]:', JSON.stringify\\(cb.theme_tags[0],null,1\\)\\); console.log\\('emotion_tags[0]:', JSON.stringify\\(cb.emotion_tags[0]\\)\\); console.log\\('semantic_tags[0]:', JSON.stringify\\(cb.semantic_tags[0]\\)\\); console.log\\('keys:', Object.keys\\(cb\\)\\);\")",
+      "Bash(ANTHROPIC_API_KEY='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' node scripts/propose-segment-tags.mjs participant_06)",
+      "Bash(node scripts/build-segment-tags.mjs)",
+      "Bash(node -e \"const a=require\\('./src/lib/content/wctglpdemo-data/segment_tags.json'\\).annotations[2]; console.log\\('annotation now has topics field:', JSON.stringify\\({segment_id:a.segment_id,topics:a.topics,themes:a.themes}\\)\\);\")",
+      "Bash(node --check scripts/__TRACKED_VAR__.mjs)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

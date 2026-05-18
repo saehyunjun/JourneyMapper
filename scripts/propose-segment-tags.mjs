@@ -42,9 +42,12 @@ const PROPOSED_FILE = 'src/lib/content/wctglpdemo-data/segment_tags.proposed.jso
 // Swap to 'claude-sonnet-4-6' for a cheaper run; quality is close for this task.
 const MODEL = 'claude-opus-4-7';
 
+// Load ANTHROPIC_API_KEY from JourneyMapper/.env if present (.env is gitignored).
+if (existsSync(resolve(ROOT, '.env'))) process.loadEnvFile(resolve(ROOT, '.env'));
+
 if (!process.env.ANTHROPIC_API_KEY) {
-	console.error('x ANTHROPIC_API_KEY is not set. Export it, then re-run:');
-	console.error('  export ANTHROPIC_API_KEY=sk-ant-...');
+	console.error('x ANTHROPIC_API_KEY is not set.');
+	console.error('  Add it to JourneyMapper/.env  (ANTHROPIC_API_KEY=sk-ant-...)  or export it.');
 	process.exit(1);
 }
 

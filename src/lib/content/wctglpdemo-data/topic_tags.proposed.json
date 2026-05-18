@@ -1,0 +1,1784 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "generated_at": "2026-05-18T02:18:12.670Z",
+    "generator": "scripts/propose-topics.mjs",
+    "model": "claude-opus-4-7",
+    "processed_interviews": [
+      "participant_06",
+      "participant_07",
+      "participant_09",
+      "participant_10"
+    ],
+    "notes": [
+      "AI-proposed conversation-topic ids, keyed by segment_id; a segment may carry 0+ topics.",
+      "Topic ids resolve against topics.json (an open, growing vocabulary).",
+      "build-segment-tags.mjs folds these into segment_tags.json as a `topics` array.",
+      "Run normalize-topics.mjs to merge near-duplicate topics across transcripts."
+    ]
+  },
+  "assignments": {
+    "participant_06_t01_s00": [],
+    "participant_06_t03_s00": [
+      "reasons_to_stop_glp1",
+      "cost_of_glp1",
+      "financial_impact_on_family"
+    ],
+    "participant_06_t03_s01": [
+      "cost_of_glp1"
+    ],
+    "participant_06_t03_s02": [
+      "reasons_to_stop_glp1",
+      "side_effects"
+    ],
+    "participant_06_t03_s03": [
+      "reasons_to_stop_glp1",
+      "financial_impact_on_family",
+      "side_effects"
+    ],
+    "participant_06_t05_s00": [
+      "switching_glp1_medication",
+      "cost_of_glp1"
+    ],
+    "participant_06_t05_s01": [
+      "current_medication_zepbound"
+    ],
+    "participant_06_t07_s00": [
+      "current_medication_zepbound",
+      "switching_glp1_medication",
+      "cost_of_glp1"
+    ],
+    "participant_06_t07_s01": [
+      "switching_glp1_medication",
+      "oral_vs_injection",
+      "cost_of_glp1"
+    ],
+    "participant_06_t07_s02": [
+      "switching_glp1_medication"
+    ],
+    "participant_06_t09_s00": [],
+    "participant_06_t11_s00": [
+      "insurance_coverage",
+      "obesity_as_disease"
+    ],
+    "participant_06_t11_s01": [
+      "obesity_as_disease"
+    ],
+    "participant_06_t11_s02": [
+      "willingness_to_join_trial",
+      "insurance_coverage",
+      "current_medication_zepbound",
+      "weight_loss_outcomes"
+    ],
+    "participant_06_t11_s03": [
+      "health_improvements",
+      "weight_loss_outcomes"
+    ],
+    "participant_06_t11_s04": [
+      "health_improvements"
+    ],
+    "participant_06_t11_s05": [
+      "willingness_to_join_trial",
+      "lifelong_maintenance"
+    ],
+    "participant_06_t13_s00": [
+      "trial_duration"
+    ],
+    "participant_06_t13_s01": [
+      "placebo_concerns",
+      "weight_loss_outcomes"
+    ],
+    "participant_06_t13_s02": [
+      "weight_loss_outcomes"
+    ],
+    "participant_06_t13_s03": [
+      "weight_regain_fear",
+      "placebo_concerns"
+    ],
+    "participant_06_t15_s00": [
+      "trial_duration"
+    ],
+    "participant_06_t15_s01": [
+      "current_medication_zepbound",
+      "trial_duration"
+    ],
+    "participant_06_t15_s02": [
+      "trial_duration"
+    ],
+    "participant_06_t15_s03": [
+      "lifelong_maintenance"
+    ],
+    "participant_06_t15_s04": [
+      "lifelong_maintenance"
+    ],
+    "participant_06_t15_s05": [
+      "lifelong_maintenance",
+      "trial_duration"
+    ],
+    "participant_06_t15_s06": [
+      "trial_duration"
+    ],
+    "participant_06_t17_s00": [],
+    "participant_06_t19_s00": [
+      "placebo_concerns"
+    ],
+    "participant_06_t21_s00": [
+      "long_acting_implant",
+      "dosing_frequency"
+    ],
+    "participant_06_t21_s01": [
+      "long_acting_implant"
+    ],
+    "participant_06_t21_s02": [
+      "long_acting_implant"
+    ],
+    "participant_06_t21_s03": [
+      "side_effects",
+      "side_effect_management_protocol",
+      "dosing_frequency"
+    ],
+    "participant_06_t21_s04": [
+      "side_effects",
+      "side_effect_management_protocol"
+    ],
+    "participant_06_t23_s00": [
+      "compounded_medication",
+      "medication_shortage"
+    ],
+    "participant_06_t23_s01": [
+      "medication_shortage"
+    ],
+    "participant_06_t23_s02": [
+      "compounded_medication",
+      "medication_shortage",
+      "cost_of_glp1"
+    ],
+    "participant_06_t23_s03": [
+      "compounded_medication"
+    ],
+    "participant_06_t23_s04": [
+      "compounded_medication"
+    ],
+    "participant_06_t25_s00": [
+      "food_vouchers_supplements"
+    ],
+    "participant_06_t25_s01": [
+      "food_vouchers_supplements"
+    ],
+    "participant_06_t27_s00": [
+      "placebo_concerns",
+      "weight_regain_fear",
+      "financial_compensation"
+    ],
+    "participant_06_t27_s01": [
+      "side_effects",
+      "financial_compensation"
+    ],
+    "participant_06_t27_s02": [
+      "financial_compensation"
+    ],
+    "participant_06_t29_s00": [
+      "travel_reimbursement"
+    ],
+    "participant_06_t29_s01": [
+      "travel_reimbursement"
+    ],
+    "participant_06_t29_s02": [
+      "study_visit_logistics",
+      "provider_contact_during_trial"
+    ],
+    "participant_06_t29_s03": [
+      "travel_reimbursement"
+    ],
+    "participant_06_t31_s00": [],
+    "participant_06_t33_s00": [],
+    "participant_06_t35_s00": [
+      "study_visit_logistics"
+    ],
+    "participant_06_t35_s01": [
+      "provider_contact_during_trial"
+    ],
+    "participant_06_t37_s00": [
+      "wearable_devices_incentive"
+    ],
+    "participant_06_t37_s01": [
+      "wearable_devices_incentive"
+    ],
+    "participant_06_t37_s02": [
+      "wearable_devices_incentive"
+    ],
+    "participant_06_t39_s00": [
+      "fasting_requirement"
+    ],
+    "participant_06_t39_s01": [
+      "fasting_requirement"
+    ],
+    "participant_06_t41_s00": [
+      "blood_glucose_testing"
+    ],
+    "participant_06_t41_s01": [
+      "family_diabetes_history",
+      "blood_glucose_testing"
+    ],
+    "participant_06_t43_s00": [
+      "blood_draws"
+    ],
+    "participant_06_t43_s01": [
+      "blood_draws"
+    ],
+    "participant_06_t45_s00": [
+      "study_visit_logistics"
+    ],
+    "participant_06_t45_s01": [
+      "study_visit_logistics"
+    ],
+    "participant_06_t45_s02": [
+      "study_visit_logistics"
+    ],
+    "participant_06_t45_s03": [],
+    "participant_06_t47_s00": [],
+    "participant_06_t47_s01": [
+      "insurance_coverage"
+    ],
+    "participant_06_t47_s02": [
+      "insurance_coverage",
+      "side_effects"
+    ],
+    "participant_06_t47_s03": [
+      "insurance_coverage"
+    ],
+    "participant_06_t47_s04": [
+      "insurance_coverage"
+    ],
+    "participant_06_t49_s00": [
+      "diet_and_exercise_history",
+      "weight_loss_outcomes"
+    ],
+    "participant_06_t49_s01": [
+      "weight_loss_outcomes"
+    ],
+    "participant_06_t49_s02": [
+      "weight_loss_outcomes"
+    ],
+    "participant_06_t49_s03": [
+      "weight_loss_outcomes"
+    ],
+    "participant_06_t49_s04": [
+      "weight_loss_outcomes",
+      "diet_and_exercise_history"
+    ],
+    "participant_06_t51_s00": [
+      "oral_vs_injection",
+      "medication_adherence"
+    ],
+    "participant_06_t51_s01": [
+      "oral_vs_injection",
+      "medication_adherence"
+    ],
+    "participant_06_t51_s02": [
+      "oral_vs_injection",
+      "medication_adherence"
+    ],
+    "participant_06_t51_s03": [
+      "medication_adherence",
+      "oral_vs_injection"
+    ],
+    "participant_06_t51_s04": [
+      "oral_vs_injection"
+    ],
+    "participant_06_t51_s05": [
+      "oral_vs_injection"
+    ],
+    "participant_06_t51_s06": [
+      "oral_vs_injection",
+      "dosing_frequency"
+    ],
+    "participant_06_t51_s07": [
+      "oral_vs_injection"
+    ],
+    "participant_06_t53_s00": [
+      "oral_vs_injection"
+    ],
+    "participant_06_t53_s01": [
+      "oral_vs_injection"
+    ],
+    "participant_06_t53_s02": [
+      "long_acting_implant",
+      "dosing_frequency"
+    ],
+    "participant_06_t53_s03": [
+      "dosing_frequency",
+      "lifelong_maintenance"
+    ],
+    "participant_06_t55_s00": [],
+    "participant_06_t55_s01": [],
+    "participant_07_t01_s00": [],
+    "participant_07_t01_s01": [],
+    "participant_07_t01_s02": [
+      "current_medication_zepbound"
+    ],
+    "participant_07_t01_s03": [
+      "current_medication_zepbound",
+      "dosing_frequency"
+    ],
+    "participant_07_t01_s04": [
+      "current_medication_zepbound"
+    ],
+    "participant_07_t01_s05": [
+      "current_medication_zepbound"
+    ],
+    "participant_07_t01_s06": [
+      "current_medication_zepbound"
+    ],
+    "participant_07_t01_s07": [
+      "weight_loss_outcomes"
+    ],
+    "participant_07_t01_s08": [
+      "weight_loss_outcomes"
+    ],
+    "participant_07_t01_s09": [
+      "weight_loss_outcomes"
+    ],
+    "participant_07_t03_s00": [],
+    "participant_07_t03_s01": [
+      "weight_loss_outcomes"
+    ],
+    "participant_07_t05_s00": [],
+    "participant_07_t05_s01": [
+      "health_improvements"
+    ],
+    "participant_07_t05_s02": [
+      "health_improvements",
+      "weight_loss_outcomes"
+    ],
+    "participant_07_t05_s03": [
+      "health_improvements"
+    ],
+    "participant_07_t05_s04": [
+      "weight_loss_outcomes"
+    ],
+    "participant_07_t05_s05": [],
+    "participant_07_t07_s00": [
+      "health_improvements"
+    ],
+    "participant_07_t07_s01": [
+      "food_noise_reduction",
+      "health_improvements"
+    ],
+    "participant_07_t07_s02": [
+      "food_noise_reduction"
+    ],
+    "participant_07_t07_s03": [
+      "food_noise_reduction"
+    ],
+    "participant_07_t07_s04": [
+      "food_noise_reduction"
+    ],
+    "participant_07_t07_s05": [
+      "food_noise_reduction"
+    ],
+    "participant_07_t07_s06": [
+      "health_improvements"
+    ],
+    "participant_07_t07_s07": [
+      "weight_loss_outcomes"
+    ],
+    "participant_07_t07_s08": [
+      "health_improvements"
+    ],
+    "participant_07_t07_s09": [
+      "health_improvements"
+    ],
+    "participant_07_t07_s10": [
+      "health_improvements"
+    ],
+    "participant_07_t07_s11": [
+      "health_improvements"
+    ],
+    "participant_07_t07_s12": [
+      "health_improvements"
+    ],
+    "participant_07_t07_s13": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t07_s14": [
+      "diet_and_exercise_history",
+      "insulin_resistance"
+    ],
+    "participant_07_t07_s15": [
+      "health_improvements"
+    ],
+    "participant_07_t07_s16": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t07_s17": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t09_s00": [],
+    "participant_07_t101_s00": [],
+    "participant_07_t101_s01": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t101_s02": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t103_s00": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t103_s01": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t103_s02": [
+      "oral_vs_injection",
+      "dosing_frequency"
+    ],
+    "participant_07_t103_s03": [
+      "oral_vs_injection",
+      "dosing_frequency"
+    ],
+    "participant_07_t103_s04": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t103_s05": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t103_s06": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t103_s07": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t103_s08": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t103_s09": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t105_s00": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t107_s00": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t107_s01": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t107_s02": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t107_s03": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t107_s04": [],
+    "participant_07_t107_s05": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t107_s06": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t107_s07": [
+      "oral_vs_injection"
+    ],
+    "participant_07_t109_s00": [],
+    "participant_07_t111_s00": [
+      "research_and_knowledge"
+    ],
+    "participant_07_t111_s01": [
+      "research_and_knowledge"
+    ],
+    "participant_07_t111_s02": [
+      "research_and_knowledge"
+    ],
+    "participant_07_t113_s00": [
+      "research_and_knowledge"
+    ],
+    "participant_07_t113_s01": [
+      "research_and_knowledge"
+    ],
+    "participant_07_t113_s02": [
+      "research_and_knowledge"
+    ],
+    "participant_07_t113_s03": [
+      "research_and_knowledge",
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t113_s04": [],
+    "participant_07_t113_s05": [
+      "research_and_knowledge",
+      "oral_vs_injection"
+    ],
+    "participant_07_t113_s06": [
+      "research_and_knowledge"
+    ],
+    "participant_07_t113_s07": [
+      "research_and_knowledge"
+    ],
+    "participant_07_t113_s08": [
+      "research_and_knowledge"
+    ],
+    "participant_07_t113_s09": [
+      "research_and_knowledge"
+    ],
+    "participant_07_t115_s00": [],
+    "participant_07_t115_s01": [],
+    "participant_07_t117_s00": [],
+    "participant_07_t117_s01": [],
+    "participant_07_t117_s02": [],
+    "participant_07_t117_s03": [],
+    "participant_07_t119_s00": [],
+    "participant_07_t119_s01": [],
+    "participant_07_t11_s00": [
+      "lifelong_maintenance"
+    ],
+    "participant_07_t11_s01": [
+      "lifelong_maintenance"
+    ],
+    "participant_07_t11_s02": [
+      "lifelong_maintenance"
+    ],
+    "participant_07_t121_s00": [],
+    "participant_07_t121_s01": [],
+    "participant_07_t121_s02": [],
+    "participant_07_t123_s00": [],
+    "participant_07_t13_s00": [
+      "lifelong_maintenance",
+      "reasons_to_stop_glp1"
+    ],
+    "participant_07_t13_s01": [
+      "reasons_to_stop_glp1",
+      "health_improvements"
+    ],
+    "participant_07_t13_s02": [
+      "maintenance_dose"
+    ],
+    "participant_07_t13_s03": [
+      "maintenance_dose"
+    ],
+    "participant_07_t13_s04": [
+      "maintenance_dose"
+    ],
+    "participant_07_t13_s05": [
+      "maintenance_dose",
+      "placebo_concerns"
+    ],
+    "participant_07_t13_s06": [
+      "placebo_concerns",
+      "weight_regain_fear"
+    ],
+    "participant_07_t13_s07": [
+      "willingness_to_join_trial",
+      "placebo_concerns"
+    ],
+    "participant_07_t15_s00": [],
+    "participant_07_t15_s01": [
+      "insurance_coverage",
+      "lifelong_maintenance"
+    ],
+    "participant_07_t15_s02": [
+      "maintenance_dose",
+      "cost_of_glp1"
+    ],
+    "participant_07_t15_s03": [
+      "lifelong_maintenance",
+      "insurance_coverage"
+    ],
+    "participant_07_t17_s00": [
+      "reasons_to_stop_glp1"
+    ],
+    "participant_07_t17_s01": [
+      "reasons_to_stop_glp1",
+      "insulin_resistance",
+      "health_improvements"
+    ],
+    "participant_07_t17_s02": [
+      "reasons_to_stop_glp1"
+    ],
+    "participant_07_t19_s00": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t19_s01": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t19_s02": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t19_s03": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t21_s00": [
+      "willingness_to_join_trial",
+      "switching_glp1_medication"
+    ],
+    "participant_07_t21_s01": [
+      "switching_glp1_medication"
+    ],
+    "participant_07_t21_s02": [
+      "current_medication_zepbound"
+    ],
+    "participant_07_t21_s03": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t23_s00": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t23_s01": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t23_s02": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t23_s03": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t23_s04": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t23_s05": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t23_s06": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t23_s07": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t25_s00": [
+      "placebo_concerns"
+    ],
+    "participant_07_t25_s01": [
+      "placebo_concerns"
+    ],
+    "participant_07_t27_s00": [
+      "placebo_concerns",
+      "trial_duration"
+    ],
+    "participant_07_t27_s01": [
+      "trial_duration"
+    ],
+    "participant_07_t29_s00": [
+      "trial_duration"
+    ],
+    "participant_07_t29_s01": [
+      "trial_duration"
+    ],
+    "participant_07_t29_s02": [
+      "trial_duration"
+    ],
+    "participant_07_t29_s03": [],
+    "participant_07_t29_s04": [
+      "placebo_concerns",
+      "weight_regain_fear"
+    ],
+    "participant_07_t29_s05": [
+      "placebo_concerns"
+    ],
+    "participant_07_t29_s06": [
+      "placebo_concerns"
+    ],
+    "participant_07_t29_s07": [
+      "placebo_concerns"
+    ],
+    "participant_07_t31_s00": [
+      "placebo_concerns",
+      "willingness_to_join_trial",
+      "trial_duration"
+    ],
+    "participant_07_t31_s01": [
+      "weight_regain_fear",
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t31_s02": [],
+    "participant_07_t33_s00": [
+      "dosing_frequency"
+    ],
+    "participant_07_t33_s01": [
+      "placebo_concerns",
+      "dosing_frequency"
+    ],
+    "participant_07_t33_s02": [
+      "placebo_concerns"
+    ],
+    "participant_07_t33_s03": [],
+    "participant_07_t33_s04": [
+      "placebo_concerns",
+      "weight_regain_fear"
+    ],
+    "participant_07_t33_s05": [
+      "placebo_concerns"
+    ],
+    "participant_07_t33_s06": [
+      "placebo_concerns"
+    ],
+    "participant_07_t33_s07": [
+      "placebo_concerns"
+    ],
+    "participant_07_t33_s08": [],
+    "participant_07_t33_s09": [
+      "willingness_to_join_trial",
+      "placebo_concerns"
+    ],
+    "participant_07_t33_s10": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t33_s11": [
+      "placebo_concerns",
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t35_s00": [
+      "placebo_concerns"
+    ],
+    "participant_07_t35_s01": [],
+    "participant_07_t35_s02": [],
+    "participant_07_t37_s00": [],
+    "participant_07_t37_s01": [
+      "health_improvements"
+    ],
+    "participant_07_t37_s02": [
+      "health_improvements"
+    ],
+    "participant_07_t37_s03": [],
+    "participant_07_t37_s04": [
+      "health_improvements"
+    ],
+    "participant_07_t37_s05": [
+      "health_improvements",
+      "weight_regain_fear"
+    ],
+    "participant_07_t37_s06": [],
+    "participant_07_t39_s00": [
+      "compounded_medication"
+    ],
+    "participant_07_t39_s01": [
+      "compounded_medication"
+    ],
+    "participant_07_t39_s02": [
+      "compounded_medication"
+    ],
+    "participant_07_t41_s00": [
+      "compounded_medication",
+      "switching_glp1_medication"
+    ],
+    "participant_07_t41_s01": [
+      "switching_glp1_medication"
+    ],
+    "participant_07_t41_s02": [
+      "compounded_medication",
+      "insurance_coverage"
+    ],
+    "participant_07_t41_s03": [
+      "insurance_coverage"
+    ],
+    "participant_07_t41_s04": [
+      "insurance_coverage"
+    ],
+    "participant_07_t41_s05": [
+      "compounded_medication",
+      "cost_of_glp1"
+    ],
+    "participant_07_t41_s06": [
+      "compounded_medication"
+    ],
+    "participant_07_t41_s07": [
+      "compounded_medication"
+    ],
+    "participant_07_t41_s08": [
+      "compounded_medication"
+    ],
+    "participant_07_t41_s09": [
+      "compounded_medication"
+    ],
+    "participant_07_t43_s00": [
+      "compounded_medication"
+    ],
+    "participant_07_t43_s01": [
+      "compounded_medication"
+    ],
+    "participant_07_t45_s00": [
+      "compounded_medication"
+    ],
+    "participant_07_t45_s01": [
+      "compounded_medication",
+      "cost_of_glp1"
+    ],
+    "participant_07_t45_s02": [
+      "compounded_medication"
+    ],
+    "participant_07_t47_s00": [],
+    "participant_07_t49_s00": [
+      "financial_compensation"
+    ],
+    "participant_07_t49_s01": [
+      "financial_compensation"
+    ],
+    "participant_07_t51_s00": [
+      "financial_compensation",
+      "weight_regain_fear"
+    ],
+    "participant_07_t51_s01": [
+      "financial_compensation"
+    ],
+    "participant_07_t51_s02": [
+      "financial_compensation"
+    ],
+    "participant_07_t51_s03": [
+      "financial_compensation"
+    ],
+    "participant_07_t51_s04": [
+      "financial_compensation",
+      "financial_impact_on_family"
+    ],
+    "participant_07_t51_s05": [
+      "financial_impact_on_family"
+    ],
+    "participant_07_t51_s06": [
+      "financial_impact_on_family"
+    ],
+    "participant_07_t51_s07": [
+      "financial_compensation"
+    ],
+    "participant_07_t53_s00": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t53_s01": [
+      "willingness_to_join_trial"
+    ],
+    "participant_07_t53_s02": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t53_s03": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t53_s04": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t55_s00": [],
+    "participant_07_t55_s01": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t55_s02": [],
+    "participant_07_t55_s03": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t55_s04": [
+      "study_visit_logistics",
+      "travel_reimbursement"
+    ],
+    "participant_07_t55_s05": [
+      "travel_reimbursement"
+    ],
+    "participant_07_t55_s06": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t57_s00": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t57_s01": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t57_s02": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t57_s03": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t57_s04": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t59_s00": [],
+    "participant_07_t59_s01": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t59_s02": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t61_s00": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t61_s01": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t61_s02": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t61_s03": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t63_s00": [
+      "blood_draws"
+    ],
+    "participant_07_t63_s01": [
+      "blood_draws"
+    ],
+    "participant_07_t63_s02": [
+      "blood_draws"
+    ],
+    "participant_07_t63_s03": [
+      "blood_draws"
+    ],
+    "participant_07_t63_s04": [],
+    "participant_07_t63_s05": [
+      "blood_draws"
+    ],
+    "participant_07_t63_s06": [
+      "blood_draws"
+    ],
+    "participant_07_t63_s07": [
+      "blood_draws",
+      "study_visit_logistics"
+    ],
+    "participant_07_t63_s08": [
+      "blood_draws",
+      "study_visit_logistics"
+    ],
+    "participant_07_t65_s00": [
+      "wearable_devices_incentive"
+    ],
+    "participant_07_t65_s01": [
+      "wearable_devices_incentive"
+    ],
+    "participant_07_t65_s02": [
+      "wearable_devices_incentive"
+    ],
+    "participant_07_t65_s03": [
+      "wearable_devices_incentive"
+    ],
+    "participant_07_t65_s04": [
+      "wearable_devices_incentive"
+    ],
+    "participant_07_t67_s00": [
+      "wearable_devices_incentive"
+    ],
+    "participant_07_t67_s01": [
+      "wearable_devices_incentive"
+    ],
+    "participant_07_t67_s02": [
+      "wearable_devices_incentive"
+    ],
+    "participant_07_t67_s03": [
+      "wearable_devices_incentive"
+    ],
+    "participant_07_t69_s00": [
+      "fasting_requirement"
+    ],
+    "participant_07_t69_s01": [
+      "fasting_requirement"
+    ],
+    "participant_07_t69_s02": [
+      "fasting_requirement"
+    ],
+    "participant_07_t69_s03": [
+      "fasting_requirement"
+    ],
+    "participant_07_t71_s00": [
+      "fasting_requirement"
+    ],
+    "participant_07_t71_s01": [
+      "fasting_requirement"
+    ],
+    "participant_07_t71_s02": [
+      "fasting_requirement"
+    ],
+    "participant_07_t71_s03": [
+      "fasting_requirement",
+      "study_visit_logistics"
+    ],
+    "participant_07_t71_s04": [
+      "fasting_requirement"
+    ],
+    "participant_07_t71_s05": [
+      "fasting_requirement"
+    ],
+    "participant_07_t73_s00": [],
+    "participant_07_t75_s00": [
+      "fasting_requirement",
+      "study_visit_logistics"
+    ],
+    "participant_07_t75_s01": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t75_s02": [
+      "fasting_requirement",
+      "study_visit_logistics"
+    ],
+    "participant_07_t75_s03": [
+      "fasting_requirement",
+      "study_visit_logistics"
+    ],
+    "participant_07_t75_s04": [],
+    "participant_07_t75_s05": [
+      "fasting_requirement",
+      "blood_glucose_testing"
+    ],
+    "participant_07_t75_s06": [
+      "fasting_requirement"
+    ],
+    "participant_07_t77_s00": [],
+    "participant_07_t79_s00": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t79_s01": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t81_s00": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t81_s01": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t83_s00": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t83_s01": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t83_s02": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t83_s03": [],
+    "participant_07_t83_s04": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t83_s05": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t83_s06": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t83_s07": [],
+    "participant_07_t83_s08": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t85_s00": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t85_s01": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t85_s02": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t85_s03": [
+      "blood_glucose_testing"
+    ],
+    "participant_07_t87_s00": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t87_s01": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t87_s02": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t87_s03": [
+      "study_visit_logistics"
+    ],
+    "participant_07_t89_s00": [
+      "travel_reimbursement",
+      "study_visit_logistics"
+    ],
+    "participant_07_t89_s01": [
+      "travel_reimbursement"
+    ],
+    "participant_07_t89_s02": [
+      "travel_reimbursement"
+    ],
+    "participant_07_t89_s03": [
+      "travel_reimbursement"
+    ],
+    "participant_07_t91_s00": [],
+    "participant_07_t91_s01": [
+      "travel_reimbursement"
+    ],
+    "participant_07_t93_s00": [
+      "travel_reimbursement"
+    ],
+    "participant_07_t93_s01": [
+      "travel_reimbursement",
+      "study_visit_logistics"
+    ],
+    "participant_07_t95_s00": [
+      "nutritionist_support",
+      "provider_contact_during_trial"
+    ],
+    "participant_07_t95_s01": [
+      "nutritionist_support"
+    ],
+    "participant_07_t95_s02": [
+      "nutritionist_support"
+    ],
+    "participant_07_t95_s03": [
+      "nutritionist_support"
+    ],
+    "participant_07_t95_s04": [],
+    "participant_07_t95_s05": [
+      "nutritionist_support",
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t95_s06": [
+      "nutritionist_support"
+    ],
+    "participant_07_t95_s07": [
+      "nutritionist_support"
+    ],
+    "participant_07_t97_s00": [
+      "nutritionist_support"
+    ],
+    "participant_07_t97_s01": [
+      "nutritionist_support"
+    ],
+    "participant_07_t97_s02": [
+      "nutritionist_support"
+    ],
+    "participant_07_t99_s00": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t99_s01": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t99_s02": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t99_s03": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t99_s04": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t99_s05": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t99_s06": [
+      "diet_and_exercise_history",
+      "food_noise_reduction"
+    ],
+    "participant_07_t99_s07": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t99_s08": [
+      "insulin_resistance",
+      "food_noise_reduction"
+    ],
+    "participant_07_t99_s09": [
+      "food_noise_reduction",
+      "insulin_resistance"
+    ],
+    "participant_07_t99_s10": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t99_s11": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t99_s12": [
+      "alcohol_reduction"
+    ],
+    "participant_07_t99_s13": [
+      "alcohol_reduction",
+      "health_improvements"
+    ],
+    "participant_07_t99_s14": [
+      "alcohol_reduction"
+    ],
+    "participant_07_t99_s15": [
+      "diet_and_exercise_history"
+    ],
+    "participant_07_t99_s16": [
+      "diet_and_exercise_history"
+    ],
+    "participant_09_t01_s00": [],
+    "participant_09_t01_s01": [],
+    "participant_09_t03_s00": [
+      "lifelong_maintenance",
+      "reasons_to_stop_glp1"
+    ],
+    "participant_09_t03_s01": [
+      "diet_and_exercise_history",
+      "yo_yo_dieting"
+    ],
+    "participant_09_t03_s02": [
+      "reasons_to_stop_glp1",
+      "cost_of_glp1",
+      "medication_shortage"
+    ],
+    "participant_09_t03_s03": [
+      "insurance_coverage"
+    ],
+    "participant_09_t03_s04": [
+      "insurance_coverage"
+    ],
+    "participant_09_t03_s05": [
+      "cost_of_glp1"
+    ],
+    "participant_09_t03_s06": [
+      "cost_of_glp1"
+    ],
+    "participant_09_t03_s07": [
+      "reasons_to_stop_glp1"
+    ],
+    "participant_09_t03_s08": [
+      "reasons_to_stop_glp1",
+      "side_effects"
+    ],
+    "participant_09_t03_s09": [
+      "health_improvements"
+    ],
+    "participant_09_t03_s10": [
+      "health_improvements"
+    ],
+    "participant_09_t03_s11": [
+      "health_improvements"
+    ],
+    "participant_09_t03_s12": [
+      "health_improvements"
+    ],
+    "participant_09_t03_s13": [
+      "health_improvements"
+    ],
+    "participant_09_t03_s14": [
+      "reasons_to_stop_glp1",
+      "side_effects"
+    ],
+    "participant_09_t05_s00": [],
+    "participant_09_t07_s00": [
+      "switching_glp1_medication"
+    ],
+    "participant_09_t07_s01": [],
+    "participant_09_t07_s02": [
+      "switching_glp1_medication"
+    ],
+    "participant_09_t07_s03": [
+      "switching_glp1_medication",
+      "insurance_coverage"
+    ],
+    "participant_09_t07_s04": [
+      "maintenance_dose",
+      "oral_vs_injection"
+    ],
+    "participant_09_t07_s05": [
+      "insurance_coverage",
+      "lifelong_maintenance"
+    ],
+    "participant_09_t07_s06": [
+      "switching_glp1_medication"
+    ],
+    "participant_09_t09_s00": [
+      "willingness_to_join_trial"
+    ],
+    "participant_09_t11_s00": [],
+    "participant_09_t11_s01": [
+      "placebo_concerns"
+    ],
+    "participant_09_t13_s00": [
+      "dosing_frequency"
+    ],
+    "participant_09_t13_s01": [
+      "oral_vs_injection"
+    ],
+    "participant_09_t13_s02": [
+      "oral_vs_injection"
+    ],
+    "participant_09_t15_s00": [
+      "compounded_medication"
+    ],
+    "participant_09_t15_s01": [
+      "compounded_medication",
+      "switching_glp1_medication"
+    ],
+    "participant_09_t17_s00": [
+      "willingness_to_join_trial",
+      "medication_shortage"
+    ],
+    "participant_09_t17_s01": [
+      "medication_shortage"
+    ],
+    "participant_09_t17_s02": [
+      "supporting_research"
+    ],
+    "participant_09_t17_s03": [
+      "supporting_research"
+    ],
+    "participant_09_t17_s04": [
+      "supporting_research"
+    ],
+    "participant_09_t17_s05": [
+      "supporting_research"
+    ],
+    "participant_09_t19_s00": [],
+    "participant_09_t19_s01": [
+      "food_vouchers_supplements"
+    ],
+    "participant_09_t19_s02": [],
+    "participant_09_t21_s00": [
+      "trial_distance_to_site"
+    ],
+    "participant_09_t21_s01": [
+      "trial_distance_to_site"
+    ],
+    "participant_09_t21_s02": [
+      "trial_distance_to_site",
+      "study_visit_logistics"
+    ],
+    "participant_09_t21_s03": [
+      "trial_distance_to_site"
+    ],
+    "participant_09_t21_s04": [
+      "telehealth_for_trial_visits",
+      "dosing_frequency"
+    ],
+    "participant_09_t21_s05": [
+      "trial_distance_to_site"
+    ],
+    "participant_09_t23_s00": [],
+    "participant_09_t25_s00": [
+      "travel_reimbursement"
+    ],
+    "participant_09_t25_s01": [
+      "study_visit_logistics"
+    ],
+    "participant_09_t25_s02": [
+      "study_visit_logistics",
+      "trial_distance_to_site"
+    ],
+    "participant_09_t25_s03": [
+      "study_visit_logistics",
+      "telehealth_for_trial_visits"
+    ],
+    "participant_09_t25_s04": [
+      "study_visit_logistics"
+    ],
+    "participant_09_t27_s00": [
+      "study_visit_logistics"
+    ],
+    "participant_09_t29_s00": [],
+    "participant_09_t29_s01": [],
+    "participant_09_t29_s02": [
+      "medication_shortage",
+      "provider_contact_during_trial"
+    ],
+    "participant_09_t29_s03": [
+      "compounded_medication",
+      "provider_contact_during_trial"
+    ],
+    "participant_09_t29_s04": [
+      "provider_contact_during_trial",
+      "patient_education_materials"
+    ],
+    "participant_09_t29_s05": [
+      "patient_education_materials"
+    ],
+    "participant_09_t29_s06": [
+      "patient_education_materials",
+      "research_and_knowledge"
+    ],
+    "participant_09_t29_s07": [
+      "patient_education_materials"
+    ],
+    "participant_09_t29_s08": [
+      "patient_education_materials"
+    ],
+    "participant_09_t29_s09": [
+      "patient_education_materials"
+    ],
+    "participant_09_t29_s10": [
+      "patient_education_materials"
+    ],
+    "participant_09_t31_s00": [
+      "patient_education_materials",
+      "cost_of_glp1"
+    ],
+    "participant_09_t31_s01": [
+      "cost_of_glp1"
+    ],
+    "participant_09_t33_s00": [
+      "nutritionist_support"
+    ],
+    "participant_09_t33_s01": [
+      "nutritionist_support",
+      "patient_education_materials"
+    ],
+    "participant_09_t35_s00": [
+      "willingness_to_join_trial"
+    ],
+    "participant_09_t35_s01": [],
+    "participant_09_t35_s02": [
+      "willingness_to_join_trial"
+    ],
+    "participant_09_t35_s03": [
+      "trial_distance_to_site"
+    ],
+    "participant_09_t37_s00": [
+      "study_visit_logistics",
+      "dosing_frequency"
+    ],
+    "participant_09_t37_s01": [
+      "study_visit_logistics"
+    ],
+    "participant_09_t37_s02": [
+      "study_visit_logistics"
+    ],
+    "participant_09_t37_s03": [
+      "study_visit_logistics"
+    ],
+    "participant_09_t39_s00": [
+      "switching_glp1_medication",
+      "maintenance_dose"
+    ],
+    "participant_09_t39_s01": [
+      "maintenance_dose",
+      "oral_vs_injection"
+    ],
+    "participant_09_t39_s02": [
+      "maintenance_dose"
+    ],
+    "participant_09_t39_s03": [
+      "maintenance_dose"
+    ],
+    "participant_09_t39_s04": [
+      "research_and_knowledge"
+    ],
+    "participant_09_t41_s00": [
+      "maintenance_dose",
+      "yo_yo_dieting"
+    ],
+    "participant_09_t41_s01": [
+      "oral_vs_injection"
+    ],
+    "participant_09_t41_s02": [],
+    "participant_09_t43_s00": [
+      "trial_duration"
+    ],
+    "participant_10_t01_s00": [],
+    "participant_10_t03_s00": [],
+    "participant_10_t05_s00": [],
+    "participant_10_t05_s01": [],
+    "participant_10_t05_s02": [
+      "reasons_to_stop_glp1",
+      "switching_glp1_medication"
+    ],
+    "participant_10_t05_s03": [
+      "lifelong_maintenance"
+    ],
+    "participant_10_t05_s04": [
+      "reasons_to_stop_glp1",
+      "lifelong_maintenance"
+    ],
+    "participant_10_t05_s05": [
+      "reasons_to_stop_glp1",
+      "medication_shortage",
+      "lifelong_maintenance"
+    ],
+    "participant_10_t07_s00": [
+      "switching_glp1_medication"
+    ],
+    "participant_10_t07_s01": [
+      "research_and_knowledge",
+      "switching_glp1_medication"
+    ],
+    "participant_10_t07_s02": [
+      "research_and_knowledge"
+    ],
+    "participant_10_t07_s03": [
+      "switching_glp1_medication"
+    ],
+    "participant_10_t07_s04": [
+      "switching_glp1_medication"
+    ],
+    "participant_10_t07_s05": [
+      "switching_glp1_medication",
+      "stalls_and_plateaus"
+    ],
+    "participant_10_t07_s06": [
+      "switching_glp1_medication"
+    ],
+    "participant_10_t09_s00": [
+      "willingness_to_join_trial"
+    ],
+    "participant_10_t11_s00": [
+      "willingness_to_join_trial"
+    ],
+    "participant_10_t11_s01": [
+      "current_medication_zepbound",
+      "stalls_and_plateaus",
+      "compounded_medication"
+    ],
+    "participant_10_t11_s02": [
+      "willingness_to_join_trial"
+    ],
+    "participant_10_t11_s03": [
+      "willingness_to_join_trial"
+    ],
+    "participant_10_t13_s00": [
+      "willingness_to_join_trial"
+    ],
+    "participant_10_t13_s01": [
+      "willingness_to_join_trial"
+    ],
+    "participant_10_t15_s00": [
+      "supporting_research"
+    ],
+    "participant_10_t15_s01": [
+      "placebo_concerns"
+    ],
+    "participant_10_t15_s02": [
+      "placebo_concerns",
+      "supporting_research"
+    ],
+    "participant_10_t17_s00": [
+      "dosing_frequency",
+      "long_acting_implant"
+    ],
+    "participant_10_t19_s00": [
+      "dosing_frequency"
+    ],
+    "participant_10_t19_s01": [
+      "dosing_frequency"
+    ],
+    "participant_10_t19_s02": [
+      "dosing_frequency"
+    ],
+    "participant_10_t21_s00": [],
+    "participant_10_t21_s01": [
+      "cost_of_glp1",
+      "compounded_medication"
+    ],
+    "participant_10_t21_s02": [
+      "cost_of_glp1",
+      "compounded_medication"
+    ],
+    "participant_10_t21_s03": [
+      "cost_of_glp1"
+    ],
+    "participant_10_t21_s04": [
+      "compounded_medication",
+      "cost_of_glp1"
+    ],
+    "participant_10_t21_s05": [
+      "compounded_medication"
+    ],
+    "participant_10_t21_s06": [
+      "switching_glp1_medication",
+      "stalls_and_plateaus"
+    ],
+    "participant_10_t23_s00": [
+      "food_vouchers_supplements"
+    ],
+    "participant_10_t23_s01": [
+      "food_vouchers_supplements"
+    ],
+    "participant_10_t25_s00": [
+      "financial_compensation"
+    ],
+    "participant_10_t27_s00": [],
+    "participant_10_t27_s01": [
+      "financial_compensation"
+    ],
+    "participant_10_t29_s00": [
+      "provider_contact_during_trial"
+    ],
+    "participant_10_t31_s00": [
+      "travel_reimbursement"
+    ],
+    "participant_10_t31_s01": [
+      "travel_reimbursement"
+    ],
+    "participant_10_t33_s00": [
+      "wearable_devices_incentive"
+    ],
+    "participant_10_t33_s01": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t33_s02": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t33_s03": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t33_s04": [
+      "wearable_devices_incentive"
+    ],
+    "participant_10_t35_s00": [
+      "journaling_food_mood"
+    ],
+    "participant_10_t35_s01": [
+      "journaling_food_mood"
+    ],
+    "participant_10_t35_s02": [
+      "journaling_food_mood",
+      "side_effect_management_protocol"
+    ],
+    "participant_10_t35_s03": [
+      "journaling_food_mood",
+      "lifestyle_change_alongside_medication"
+    ],
+    "participant_10_t35_s04": [
+      "lifestyle_change_alongside_medication"
+    ],
+    "participant_10_t35_s05": [
+      "lifestyle_change_alongside_medication"
+    ],
+    "participant_10_t37_s00": [
+      "fasting_requirement"
+    ],
+    "participant_10_t37_s01": [
+      "fasting_requirement"
+    ],
+    "participant_10_t39_s00": [
+      "family_diabetes_history"
+    ],
+    "participant_10_t41_s00": [
+      "blood_glucose_testing",
+      "insulin_resistance"
+    ],
+    "participant_10_t41_s01": [
+      "insulin_resistance",
+      "blood_glucose_testing"
+    ],
+    "participant_10_t41_s02": [
+      "blood_glucose_testing"
+    ],
+    "participant_10_t43_s00": [
+      "travel_reimbursement",
+      "trial_distance_to_site"
+    ],
+    "participant_10_t43_s01": [
+      "trial_distance_to_site"
+    ],
+    "participant_10_t43_s02": [
+      "trial_distance_to_site"
+    ],
+    "participant_10_t43_s03": [
+      "trial_distance_to_site"
+    ],
+    "participant_10_t43_s04": [
+      "trial_distance_to_site",
+      "study_visit_logistics"
+    ],
+    "participant_10_t45_s00": [
+      "trial_distance_to_site"
+    ],
+    "participant_10_t45_s01": [
+      "trial_distance_to_site",
+      "study_visit_logistics"
+    ],
+    "participant_10_t45_s02": [
+      "trial_distance_to_site"
+    ],
+    "participant_10_t45_s03": [
+      "trial_distance_to_site"
+    ],
+    "participant_10_t47_s00": [
+      "willingness_to_join_trial"
+    ],
+    "participant_10_t47_s01": [
+      "side_effects"
+    ],
+    "participant_10_t47_s02": [
+      "side_effects"
+    ],
+    "participant_10_t47_s03": [
+      "side_effects"
+    ],
+    "participant_10_t47_s04": [
+      "side_effects"
+    ],
+    "participant_10_t49_s00": [
+      "patient_education_materials"
+    ],
+    "participant_10_t49_s01": [
+      "patient_education_materials",
+      "nutritionist_support"
+    ],
+    "participant_10_t49_s02": [
+      "nutritionist_support"
+    ],
+    "participant_10_t49_s03": [
+      "nutritionist_support"
+    ],
+    "participant_10_t51_s00": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t51_s01": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t51_s02": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t51_s03": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t51_s04": [
+      "diet_and_exercise_history",
+      "weight_loss_outcomes"
+    ],
+    "participant_10_t51_s05": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t51_s06": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t51_s07": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t51_s08": [
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t51_s09": [
+      "weight_loss_surgery",
+      "diet_and_exercise_history"
+    ],
+    "participant_10_t51_s10": [
+      "genetics_of_obesity"
+    ],
+    "participant_10_t53_s00": [
+      "willingness_to_join_trial"
+    ],
+    "participant_10_t53_s01": [
+      "willingness_to_join_trial"
+    ],
+    "participant_10_t53_s02": [
+      "supporting_research",
+      "willingness_to_join_trial"
+    ],
+    "participant_10_t55_s00": [
+      "oral_vs_injection"
+    ],
+    "participant_10_t55_s01": [
+      "oral_vs_injection"
+    ],
+    "participant_10_t55_s02": [
+      "oral_vs_injection"
+    ],
+    "participant_10_t55_s03": [
+      "oral_vs_injection"
+    ],
+    "participant_10_t55_s04": [
+      "oral_vs_injection",
+      "health_improvements"
+    ],
+    "participant_10_t55_s05": [],
+    "participant_10_t55_s06": [
+      "oral_vs_injection"
+    ],
+    "participant_10_t57_s00": [
+      "oral_vs_injection"
+    ],
+    "participant_10_t59_s00": [],
+    "participant_10_t59_s01": [
+      "oral_vs_injection"
+    ],
+    "participant_10_t59_s02": [
+      "food_noise_reduction"
+    ],
+    "participant_10_t59_s03": [],
+    "participant_10_t61_s00": [],
+    "participant_10_t63_s00": [],
+    "participant_10_t63_s01": [],
+    "participant_10_t63_s02": [
+      "supporting_research"
+    ],
+    "participant_10_t63_s03": [
+      "supporting_research",
+      "obesity_as_disease"
+    ]
+  }
+}

@@ -3,7 +3,7 @@
     "schema_version": "1.0",
     "study_id": "wct_glp1",
     "description": "Analyst-starred highlights. starred_segment_ids reference segments.json; starred_quote_ids reference quote_bank.json.",
-    "updated_at": "2026-05-17T20:40:22.258Z"
+    "updated_at": "2026-05-18T01:43:27.265Z"
   },
   "starred_segment_ids": [
     "participant_06_t07_s01",
@@ -19,9 +19,17 @@
     "participant_06_t51_s00",
     "participant_06_t51_s01",
     "participant_06_t51_s07",
-    "participant_06_t53_s01"
+    "participant_06_t53_s01",
+    "participant_07_t49_s01",
+    "participant_07_t55_s04",
+    "participant_07_t57_s04",
+    "participant_07_t61_s01",
+    "participant_07_t61_s02",
+    "participant_07_t65_s01"
   ],
   "starred_quote_ids": [
-    "q_participant_10_001"
+    "q_participant_09_002",
+    "q_participant_10_001",
+    "q_participant_10_012"
   ]
 }

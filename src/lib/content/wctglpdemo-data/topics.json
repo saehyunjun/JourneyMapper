@@ -1,0 +1,360 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "generated_at": "2026-05-18T02:18:12.664Z",
+    "generator": "scripts/propose-topics.mjs",
+    "description": "Emergent conversation-topic vocabulary. Unlike codebook.json (a fixed, pre-authored analytic taxonomy), topics accumulate as transcripts are ingested by propose-topics.mjs and are consolidated by normalize-topics.mjs. A topic describes what a stretch of conversation is concretely about, independent of any question script.",
+    "topic_count": 49,
+    "notes": [
+      "Topics are an OPEN vocabulary: propose-topics.mjs may add new ids; they are not pre-authored and not enum-locked at generation time.",
+      "A segment may carry several topics; a topic spans many segments. Run normalize-topics.mjs to merge near-duplicates.",
+      "Per-segment assignments live in topic_tags.proposed.json (keyed by segment_id); build-segment-tags.mjs folds them into segment_tags.json as a `topics` array."
+    ]
+  },
+  "topics": [
+    {
+      "id": "alcohol_reduction",
+      "label": "Reduced alcohol consumption",
+      "description": "Discussion of GLP-1 medications reducing desire for alcohol.",
+      "first_seen": "participant_07",
+      "added_at": "2026-05-18T02:16:57.146Z"
+    },
+    {
+      "id": "blood_draws",
+      "label": "Blood draws in trial",
+      "description": "Discussion of having blood drawn for study procedures.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "blood_glucose_testing",
+      "label": "Blood glucose / fingerstick testing",
+      "description": "Discussion of self-monitoring blood glucose or fingerstick testing.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "compounded_medication",
+      "label": "Compounded GLP-1 medication",
+      "description": "Discussion of using compounded versions of GLP-1 medications versus name brand.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "cost_of_glp1",
+      "label": "Cost and affordability of GLP-1 medication",
+      "description": "Discussion of the financial cost, price, and affordability of GLP-1 medications.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "current_medication_zepbound",
+      "label": "Current use of Zepbound",
+      "description": "Discussion of the participant's current use of Zepbound (tirzepatide).",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "diet_and_exercise_history",
+      "label": "Past diet and exercise attempts",
+      "description": "Discussion of prior weight loss attempts through diet and exercise.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "dosing_frequency",
+      "label": "Dosing frequency and schedule",
+      "description": "Discussion of how often medication is taken (weekly, monthly, etc.).",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "family_diabetes_history",
+      "label": "Family history of diabetes",
+      "description": "Discussion of family members with diabetes and related experience.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "fasting_requirement",
+      "label": "Fasting for study procedures",
+      "description": "Discussion of being required to fast for tests or visits.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "financial_compensation",
+      "label": "Financial compensation for participation",
+      "description": "Discussion of payment or compensation for participating in a clinical trial.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "financial_impact_on_family",
+      "label": "Financial impact on family",
+      "description": "Discussion of how the cost of medication affects family finances and decisions.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "food_noise_reduction",
+      "label": "Reduction of food noise/cravings",
+      "description": "Discussion of GLP-1 medication reducing food noise, food chatter, hunger thoughts, or cravings.",
+      "first_seen": "participant_07",
+      "added_at": "2026-05-18T02:16:57.146Z"
+    },
+    {
+      "id": "food_vouchers_supplements",
+      "label": "Food vouchers and protein shakes",
+      "description": "Discussion of supplementary food, vouchers, or protein shakes (e.g., Fairlife) related to GLP-1 use.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "genetics_of_obesity",
+      "label": "Genetic factors in obesity",
+      "description": "Discussion of how genetics contribute to obesity and weight struggles.",
+      "first_seen": "participant_10",
+      "added_at": "2026-05-18T02:18:12.655Z"
+    },
+    {
+      "id": "health_improvements",
+      "label": "Health improvements from GLP-1",
+      "description": "Discussion of improved health markers, quality of life, or reduced disease risk from GLP-1 use.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "insulin_resistance",
+      "label": "Insulin resistance and endocrine issues",
+      "description": "Discussion of insulin resistance, endocrine system issues, or hormonal causes of weight gain.",
+      "first_seen": "participant_07",
+      "added_at": "2026-05-18T02:16:57.146Z"
+    },
+    {
+      "id": "insurance_coverage",
+      "label": "Insurance coverage for GLP-1",
+      "description": "Discussion of employer or health insurance coverage for GLP-1 medications.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "journaling_food_mood",
+      "label": "Journaling food and feelings",
+      "description": "Discussion of keeping a journal of food intake, mood, or how one feels on the medication.",
+      "first_seen": "participant_10",
+      "added_at": "2026-05-18T02:18:12.655Z"
+    },
+    {
+      "id": "lifelong_maintenance",
+      "label": "Lifelong maintenance on GLP-1",
+      "description": "Discussion of staying on GLP-1 medication long-term or for life for weight maintenance.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "lifestyle_change_alongside_medication",
+      "label": "Lifestyle changes alongside medication",
+      "description": "Discussion of GLP-1 medication as a tool that must be paired with lifestyle changes to sustain results.",
+      "first_seen": "participant_10",
+      "added_at": "2026-05-18T02:18:12.655Z"
+    },
+    {
+      "id": "long_acting_implant",
+      "label": "Long-acting implant or extended dosing",
+      "description": "Discussion of implants or longer-interval dosing forms of GLP-1 medication.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "maintenance_dose",
+      "label": "Maintenance dosing and microdosing",
+      "description": "Discussion of finding a maintenance dose, microdosing, or staying on a lower dose for weight maintenance.",
+      "first_seen": "participant_07",
+      "added_at": "2026-05-18T02:16:57.146Z"
+    },
+    {
+      "id": "medication_adherence",
+      "label": "Medication adherence and remembering doses",
+      "description": "Discussion of challenges with remembering to take medication on schedule.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "medication_shortage",
+      "label": "Medication shortages and access",
+      "description": "Discussion of supply shortages affecting access to GLP-1 medications.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "nutritionist_support",
+      "label": "Nutritionist or dietitian support",
+      "description": "Discussion of working with a nutritionist or dietitian as part of weight management or trial support.",
+      "first_seen": "participant_07",
+      "added_at": "2026-05-18T02:16:57.146Z"
+    },
+    {
+      "id": "obesity_as_disease",
+      "label": "Obesity as a disease",
+      "description": "Discussion of whether obesity is recognized or treated as a disease.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "oral_vs_injection",
+      "label": "Oral pill vs injection preference",
+      "description": "Discussion comparing oral GLP-1 pills versus injectable forms.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "patient_education_materials",
+      "label": "Patient education and learning modules",
+      "description": "Discussion of online learning modules, webinars, or educational classes about the medication.",
+      "first_seen": "participant_09",
+      "added_at": "2026-05-18T02:17:30.252Z"
+    },
+    {
+      "id": "placebo_concerns",
+      "label": "Concerns about placebo arm",
+      "description": "Discussion of worries about being randomized to placebo and losing medication access.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "provider_contact_during_trial",
+      "label": "Access to providers during trial",
+      "description": "Discussion of being able to contact or check in with medical providers during the study.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "reasons_to_stop_glp1",
+      "label": "Reasons to stop GLP-1 medication",
+      "description": "Discussion of conditions or factors that would lead someone to discontinue a GLP-1 medication.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.478Z"
+    },
+    {
+      "id": "research_and_knowledge",
+      "label": "Researching the medication",
+      "description": "Discussion of personally researching, reading about, or learning about GLP-1 medications.",
+      "first_seen": "participant_07",
+      "added_at": "2026-05-18T02:16:57.146Z"
+    },
+    {
+      "id": "side_effect_management_protocol",
+      "label": "Side effect management and reporting in trial",
+      "description": "Discussion of how side effects would be managed and communicated with study staff.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "side_effects",
+      "label": "Medication side effects",
+      "description": "Discussion of physical side effects from GLP-1 medications and managing them.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "stalls_and_plateaus",
+      "label": "Weight loss stalls and plateaus",
+      "description": "Discussion of weight loss stalls or plateaus and strategies to break through them.",
+      "first_seen": "participant_10",
+      "added_at": "2026-05-18T02:18:12.655Z"
+    },
+    {
+      "id": "study_visit_logistics",
+      "label": "Study visit scheduling and logistics",
+      "description": "Discussion of scheduling study visits, work flexibility, and conflicts with life events.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "supporting_research",
+      "label": "Motivation to support research",
+      "description": "Discussion of altruistic or academic motivations for supporting medical research through trial participation.",
+      "first_seen": "participant_09",
+      "added_at": "2026-05-18T02:17:30.252Z"
+    },
+    {
+      "id": "switching_glp1_medication",
+      "label": "Switching GLP-1 medication",
+      "description": "Discussion of switching between different GLP-1 medications (e.g., Zepbound, Semaglutide, orforglipron).",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "telehealth_for_trial_visits",
+      "label": "Telehealth for trial follow-ups",
+      "description": "Discussion of using telehealth or remote visits for clinical trial follow-up appointments to reduce travel burden.",
+      "first_seen": "participant_09",
+      "added_at": "2026-05-18T02:17:30.252Z"
+    },
+    {
+      "id": "travel_reimbursement",
+      "label": "Travel reimbursement and logistics",
+      "description": "Discussion of reimbursement for travel, flights, mileage, or logistics of attending study visits.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "trial_distance_to_site",
+      "label": "Distance to research site",
+      "description": "Discussion of how far the participant lives from the clinical trial or research site and the impact on participation.",
+      "first_seen": "participant_09",
+      "added_at": "2026-05-18T02:17:30.252Z"
+    },
+    {
+      "id": "trial_duration",
+      "label": "Clinical trial duration",
+      "description": "Discussion of how long a clinical trial lasts and acceptable study length.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "wearable_devices_incentive",
+      "label": "Wearable devices as incentive",
+      "description": "Discussion of Apple Watch, Fitbit, or other wearables as study incentives or tools.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "weight_loss_outcomes",
+      "label": "Weight loss results and outcomes",
+      "description": "Discussion of personal weight loss achieved and changes in body weight.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "weight_loss_surgery",
+      "label": "Weight loss surgery as alternative",
+      "description": "Discussion of bariatric or weight loss surgery as an alternative or last resort for weight management.",
+      "first_seen": "participant_10",
+      "added_at": "2026-05-18T02:18:12.655Z"
+    },
+    {
+      "id": "weight_regain_fear",
+      "label": "Fear of weight regain",
+      "description": "Discussion of anxiety about regaining lost weight.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "willingness_to_join_trial",
+      "label": "Willingness to join a clinical trial",
+      "description": "Discussion of factors influencing willingness to participate in a clinical trial.",
+      "first_seen": "participant_06",
+      "added_at": "2026-05-18T02:15:20.482Z"
+    },
+    {
+      "id": "yo_yo_dieting",
+      "label": "Yo-yo dieting and weight cycling",
+      "description": "Discussion of repeated cycles of losing and regaining weight over a lifetime.",
+      "first_seen": "participant_09",
+      "added_at": "2026-05-18T02:17:30.252Z"
+    }
+  ]
+}

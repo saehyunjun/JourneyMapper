@@ -18,23 +18,24 @@
 	</div>
 
 	<!-- Data tools -->
-	<div class="flex flex-col gap-4 px-8 md:w-7xl mx-auto pt-8">
-		<h2 class="text-sm uppercase tracking-wide text-accent-mint font-medium">Explore the data</h2>
-		<div class="flex flex-col md:flex-row gap-4">
+	<div class="flex flex-col gap-4 px-8 mx-auto pt-8">
+		<h2 class="text-2xl uppercase tracking-wide text-accent-mint font-medium">Explore the data</h2>
+
+		<div class="flex flex-col gap-4 md:flex-row">
 			<a
 				href="/wctglpdemo/analysis"
-				class="flex flex-1 flex-col gap-2 border p-6 duration-400 ease-in-out hover:-translate-y-2 hover:text-muted-foreground hover:cursor-pointer"
+				class="flex w-md flex-row py-2 px-4 border duration-400 ease-in-out hover:-translate-y-2 hover:text-muted-foreground hover:cursor-pointer"
 			>
-				<div class="flex flex-row items-start justify-between">
+				<div class="flex flex-col items-start justify-center gap-2">
 					<h3 class="text-lg font-medium uppercase tracking-tight text-accent-mint">
 						Interview analysis workspace
 					</h3>
-					<MoveUpRight class="shrink-0 text-accent-mint" />
+					<p class="text-sm">
+						Filter and review the AI-proposed quote bank, theme and emotion tags, and word counts
+						across the interviews — every item flagged pending analyst review.
+					</p>
 				</div>
-				<p class="text-sm">
-					Filter and review the AI-proposed quote bank, theme and emotion tags, and word counts
-					across the interviews — every item flagged pending analyst review.
-				</p>
+				<MoveUpRight class="size-8 text-accent-mint" />
 			</a>
 			<a
 				href="/wctglpdemo/interview-words"

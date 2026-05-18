@@ -124,15 +124,15 @@
 </script>
 
 {#snippet statTile(label: string, value: number)}
-	<div class="flex flex-col gap-1 px-5 py-4">
-		<span class="text-3xl font-light text-primary-foreground">{value}</span>
-		<span class="text-xs uppercase tracking-wide text-primary-foreground/70">{label}</span>
+	<div class="flex flex-col px-5 py-4">
+		<span class="text-3xl font-medium text-primary-foreground">{value}</span>
+		<span class="text-sm uppercase tracking-wide text-primary-foreground/70">{label}</span>
 	</div>
 {/snippet}
 
 {#snippet pendingNotice(what: string)}
 	{#if pendingInterviews.length > 0}
-		<div class="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+		<div class=" border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
 			<p class="font-semibold">
 				{pendingInterviews.length}
 				{pendingInterviews.length === 1 ? 'interview is' : 'interviews are'} pending tagging
@@ -178,7 +178,7 @@
 			<h1 class="font-heading text-5xl font-light uppercase text-primary-foreground md:text-6xl">
 				Interview analysis
 			</h1>
-			<p class="max-w-2xl text-lg leading-7 text-primary-foreground/85">
+			<p class="max-w-2xl text-lg leading-7 text-primary-foreground">
 				Review-stage workspace over the structured pipeline outputs — every quote, tag, and count
 				is AI-proposed and pending analyst review.
 			</p>
@@ -186,10 +186,9 @@
 	</div>
 
 	<!-- Stat bar -->
-	<div class="w-full bg-primary">
-		<div class="mx-auto flex max-w-7xl flex-wrap divide-x divide-white/15 px-4">
+	<div class="w-full bg-accent-mint">
+		<div class="mx-auto flex flex-wrap divide-x divide-white/15 px-4">
 			{@render statTile('Interviews', studyStats.interviews)}
-			{@render statTile('Turns', studyStats.turns)}
 			{@render statTile('Segments', studyStats.segments)}
 			{@render statTile('Tagged', studyStats.annotations)}
 			{@render statTile('Quotes', studyStats.quotes)}
@@ -216,8 +215,8 @@
 		{#if activeTab === 'quotes'}
 			{@render pendingNotice('the quote bank')}
 			<!-- Filters -->
-			<div class="flex flex-wrap items-end gap-4 rounded-lg border border-slate-200 bg-white p-4">
-				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
+			<div class="flex flex-wrap items-end gap-4  border border-slate-200 bg-white p-4">
+				<label class="flex flex-col gap-1 text-xs font-semibold text-slate-500">
 					Participant
 					<select bind:value={fParticipant} class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
 						<option value="all">All</option>
@@ -270,33 +269,50 @@
 			<div class="flex flex-col gap-4">
 				{#each filteredQuotes as q (q.quote_id)}
 					{@const kw = quoteKeywordTags.get(q.quote_id)}
-					<article class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+					<article class=" border border-gray-100 bg-white p-4">
+
+						<div class="flex flex-row w-full border-b justify-between items-center gap-2">
+						<div class="flex flex-row gap-1">
+							{#if q.verbatim_verified}
+							<span class="rounded bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700">✓ verbatim</span>
+							{/if}
+							<span class="rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800">{q.review_status}</span>
+						</div>
+							<button
+								type="button"
+								onclick={() => toggleStar(q.quote_id)}
+								disabled={togglingQuote === q.quote_id}
+								aria-pressed={starredQuotes.has(q.quote_id)}
+								title={starredQuotes.has(q.quote_id)
+									? 'Starred highlight — click to unstar'
+									: 'Star as an important highlight'}
+								class="rounded p-1 transition-colors hover:bg-amber-50 disabled:opacity-40
+									{starredQuotes.has(q.quote_id)
+									? 'text-amber-400'
+									: 'text-slate-300 hover:text-amber-400'}"
+							>
+								<StarIcon
+									size={18}
+									fill={starredQuotes.has(q.quote_id) ? 'currentColor' : 'none'}
+								/>
+							</button>
+						</div>
+					<!-- Sentiment + Emotion -->
+					<div class="flex flex-wrap items-center gap-1.5">
+						<span class="mr-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+							Sentiment / Emotion
+						</span>
+						<span class="rounded-full px-2.5 py-0.5 text-xs {sentimentClass(q.sentiment)}">
+							{SENTIMENT_LABELS[q.sentiment]}		
+						</span>
+						{#each q.emotions as e (e)}
+							<span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-600">
+								{titleCase(e)}
+							</span>
+						{/each}
+					</div>
 						<div class="flex items-center justify-between gap-4">
 							<span class="font-medium text-muted-foreground text-sm uppercase">{participantLabel(q.interview_id)}</span>
-							<div class="flex items-center gap-2">
-								{#if q.verbatim_verified}
-									<span class="rounded bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700">✓ verbatim</span>
-								{/if}
-								<span class="rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800">{q.review_status}</span>
-								<button
-									type="button"
-									onclick={() => toggleStar(q.quote_id)}
-									disabled={togglingQuote === q.quote_id}
-									aria-pressed={starredQuotes.has(q.quote_id)}
-									title={starredQuotes.has(q.quote_id)
-										? 'Starred highlight — click to unstar'
-										: 'Star as an important highlight'}
-									class="rounded p-1 transition-colors hover:bg-amber-50 disabled:opacity-40
-										{starredQuotes.has(q.quote_id)
-										? 'text-amber-400'
-										: 'text-slate-300 hover:text-amber-400'}"
-								>
-									<StarIcon
-										size={18}
-										fill={starredQuotes.has(q.quote_id) ? 'currentColor' : 'none'}
-									/>
-								</button>
-							</div>
 						</div>
 
 					<div class="mt-3 text-sm text-slate-500">
@@ -307,41 +323,49 @@
 							"<KeywordText text={q.text} />"
 						</blockquote>
 
-						<!-- Tag chips · AI-proposed -->
-						<div class="mt-3 flex flex-wrap gap-1.5">
-							{#each q.themes as t (t)}
-								<span class="rounded-full bg-accent-mint/15 px-2.5 py-0.5 text-xs text-accent-mint">{titleCase(t)}</span>
-							{/each}
-							{#each q.subthemes as s (s)}
-								<span class="rounded-full border border-accent-mint/30 px-2.5 py-0.5 text-xs text-accent-mint/80">{titleCase(s)}</span>
-							{/each}
-							{#each q.emotions as e (e)}
-								<span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-600">{titleCase(e)}</span>
-							{/each}
-							<span class="rounded-full px-2.5 py-0.5 text-xs {sentimentClass(q.sentiment)}">
-								{SENTIMENT_LABELS[q.sentiment]}
-							</span>
-						</div>
+					<!-- Tags -->
 
-						<!-- Keyword tags · deterministic, matched from the keyword lexicon -->
-						{#if kw && kw.categories.length}
-							<div class="mt-2 flex flex-wrap items-center gap-1.5">
-								<span class="mr-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
-									Keywords
-								</span>
-								{#each kw.categories as c (c.id)}
-									<span class="rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-700">
-										{c.label}
-									</span>
-								{/each}
-								{#each kw.keywords as k (k.id)}
-									<span class="rounded-full border border-slate-200 px-2.5 py-0.5 text-xs text-slate-500">
-										{k.label}
-									</span>
-								{/each}
-							</div>
-						{/if}
+<div class="mt-4 flex flex-col gap-3">
 
+	<!-- Themes -->
+	{#if q.themes.length || q.subthemes.length}
+		<div class="flex flex-wrap items-center gap-1.5">
+			<span class="mr-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+				Themes
+			</span>
+			{#each q.themes as t (t)}
+				<span class="rounded-full bg-accent-mint/15 px-2.5 py-0.5 text-xs text-accent-mint">
+					{titleCase(t)}
+				</span>
+			{/each}
+			{#each q.subthemes as s (s)}
+				<span class="rounded-full border border-accent-mint/30 px-2.5 py-0.5 text-xs text-accent-mint/80">
+					{titleCase(s)}
+				</span>
+			{/each}
+		</div>
+	{/if}
+	
+	<!-- Keywords -->
+	{#if kw && kw.categories.length}
+		<div class="flex flex-wrap items-center gap-1.5">
+			<span class="mr-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+				Keywords
+			</span>
+			{#each kw.categories as c (c.id)}
+				<span class="rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-700">
+					{c.label}
+				</span>
+			{/each}
+			<!-- {#each kw.keywords as k (k.id)}
+				<span class="rounded-full border border-slate-200 px-2.5 py-0.5 text-xs text-slate-500">
+					{k.label}
+				</span>
+			{/each} -->
+		</div>
+	{/if}
+
+</div>
 						<!-- Scores -->
 						<div class="mt-4 flex flex-wrap items-end gap-x-6 gap-y-2">
 							{#each scoreDims as [key, label] (key)}
@@ -372,7 +396,7 @@
 						</div>
 					</article>
 				{:else}
-					<p class="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
+					<p class=" border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
 						No quotes match the current filters.
 					</p>
 				{/each}
@@ -385,7 +409,7 @@
 					<h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">
 						Theme frequency · {studyStats.annotations} tagged segments
 					</h2>
-					<div class="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-5">
+					<div class="flex flex-col gap-3  border border-slate-200 bg-white p-5">
 						{#each themeRows as t (t.id)}
 							<div class="flex flex-col gap-1.5">
 								{@render bar(titleCase(t.id), t.count, maxTheme, 'bg-accent-mint')}
@@ -405,7 +429,7 @@
 					<!-- Emotions -->
 					<section class="flex flex-col gap-3">
 						<h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Emotion frequency</h2>
-						<div class="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-5">
+						<div class="flex flex-col gap-2  border border-slate-200 bg-white p-5">
 							{#each emotionRows as e (e.id)}
 								{@render bar(titleCase(e.id), e.count, maxEmotion, 'bg-slate-400')}
 							{/each}
@@ -415,7 +439,7 @@
 					<!-- Sentiment -->
 					<section class="flex flex-col gap-3">
 						<h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Sentiment distribution</h2>
-						<div class="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-5">
+						<div class="flex flex-col gap-2  border border-slate-200 bg-white p-5">
 							{#each sentimentRows as s (s.value)}
 								{@render bar(
 									SENTIMENT_LABELS[s.value],
@@ -442,7 +466,7 @@
 						{/each}
 					</select>
 				</div>
-				<div class="grid gap-x-8 gap-y-2 rounded-lg border border-slate-200 bg-white p-5 sm:grid-cols-2">
+				<div class="grid gap-x-8 gap-y-2  border border-slate-200 bg-white p-5 sm:grid-cols-2">
 					{#each topWords as w (w.word)}
 						{@render bar(w.word, w.count, maxWord, 'bg-accent-mint')}
 					{/each}

@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-17T20:26:07.226Z",
+    "generated_at": "2026-05-18T01:48:03.441Z",
     "generator": "scripts/build-question-map.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -267,6 +267,345 @@
         {
           "turn_index": 54,
           "question_id": "closing",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        }
+      ]
+    },
+    {
+      "interview_id": "participant_07",
+      "mapping_count": 37,
+      "mappings": [
+        {
+          "turn_index": 0,
+          "question_id": "stopping_glp1",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 2,
+          "question_id": "stopping_glp1",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 4,
+          "question_id": "stopping_glp1",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 6,
+          "question_id": "stopping_glp1",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 8,
+          "question_id": "trial_unapproved_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 10,
+          "question_id": "trial_unapproved_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 12,
+          "question_id": "trial_unapproved_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 14,
+          "question_id": "trial_unapproved_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 16,
+          "question_id": "stopping_glp1",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 18,
+          "question_id": "try_different_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 20,
+          "question_id": "trial_unapproved_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 22,
+          "question_id": "trial_unapproved_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 24,
+          "question_id": "placebo_controlled_appeal",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 26,
+          "question_id": "placebo_controlled_appeal",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 28,
+          "question_id": "monthly_injection_barrier",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 30,
+          "question_id": "monthly_injection_barrier",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 32,
+          "question_id": "monthly_injection_barrier",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 34,
+          "question_id": "trial_barriers",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 36,
+          "question_id": "trial_barriers",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 38,
+          "question_id": "compounded_vs_approved",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 40,
+          "question_id": "compounded_vs_approved",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 42,
+          "question_id": "compounded_vs_approved",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 44,
+          "question_id": "compounded_vs_approved",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 46,
+          "question_id": "trial_motivation",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 48,
+          "question_id": "trial_motivation",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 50,
+          "question_id": "trial_motivation",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 52,
+          "question_id": "educational_support",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 54,
+          "question_id": "educational_support",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 56,
+          "question_id": "educational_support",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 58,
+          "question_id": "trial_barriers",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 62,
+          "question_id": "educational_support",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 64,
+          "question_id": "trial_motivation",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 66,
+          "question_id": "trial_motivation",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 68,
+          "question_id": "trial_barriers",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 70,
+          "question_id": "trial_barriers",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 72,
+          "question_id": "trial_barriers",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 74,
+          "question_id": "trial_barriers",
           "turn_role": "question",
           "confidence": 1,
           "source": "human",
