@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import { Button } from '$lib/components/ui/Button/index.ts';
+	import { Button } from "$lib/components/ui/button/index.js";
 
 	export type ColorMode = 'sentiment' | 'interviewee';
 	export type ChartBlock = { sentiment: number; interview_id: string };
@@ -110,12 +110,11 @@
 			</div>
 		</div>
 
-		<div class="flex flex-row overflow-hidden rounded-md border border-(--ink)/25" role="group">
+		<div class="flex flex-row overflow-hidden gap-1" role="group">
 			{#each colorModes as opt, i (opt.id)}
 				<Button
-					type="Button"
-					class="px-3 py-1.5 text-xs font-medium transition-colors duration-150
-						{i > 0 ? 'border-l border-(--ink)/25' : ''}
+					class="px-2 py-1.5 text-xs font-medium transition-colors duration-150
+						{i > 0 ? 'border-l border(color-primary-foreground))' : ''}
 						{colorMode === opt.id
 						? 'bg-(--darkgrayblue) text-(--paper)'
 						: 'bg-(--paper) text-foreground hover:bg-(--ink)/5'}"

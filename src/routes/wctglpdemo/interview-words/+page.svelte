@@ -25,8 +25,72 @@
 	const overallThemes = toBars(themeBreakdown());
 	const participantCount = themedParticipantIds.length;
 
-	let selectedQuestion = $state(themedQuestionIds[0]);
+	// --- Question groups (Viz 2) ---
+	// Broader buckets the interview-guide questions fall into; the question row
+	// below shows only the questions belonging to the selected group.
+	const QUESTION_GROUPS: { id: string; label: string; ids: string[] }[] = [
+		{
+			id: 'medication',
+			label: 'Medication preferences',
+			ids: [
+				'stopping_glp1',
+				'try_different_medication',
+				'compounded_vs_approved',
+				'oral_glp_awareness',
+				'oral_vs_injectable'
+			]
+		},
+		{
+			id: 'trial-interest',
+			label: 'Clinical trials interest',
+			ids: ['trial_unapproved_medication', 'trial_motivation', 'considered_trials_before']
+		},
+		{
+			id: 'trial-barriers',
+			label: 'Clinical trial barriers',
+			ids: [
+				'placebo_controlled_appeal',
+				'monthly_injection_barrier',
+				'trial_barriers',
+				'trial_concerns'
+			]
+		},
+		{
+			id: 'support',
+			label: 'Lifestyle & support',
+			ids: ['weight_loss_history', 'educational_support']
+		}
+	];
+
+	// Keep only questions that actually have themed annotations, in guide order;
+	// sweep any uncategorized ones into a trailing group so nothing is hidden.
+	const questionGroups = (() => {
+		const groups = QUESTION_GROUPS.map((g) => ({
+			id: g.id,
+			label: g.label,
+			ids: g.ids.filter((id) => themedQuestionIds.includes(id))
+		})).filter((g) => g.ids.length);
+		const placed = new Set(groups.flatMap((g) => g.ids));
+		const rest = themedQuestionIds.filter((id) => !placed.has(id));
+		if (rest.length) groups.push({ id: 'other', label: 'Other questions', ids: rest });
+		return groups;
+	})();
+
+	let selectedGroup = $state(questionGroups[0]?.id);
+	const activeGroup = $derived(
+		questionGroups.find((g) => g.id === selectedGroup) ?? questionGroups[0]
+	);
+	const groupQuestionIds = $derived(activeGroup?.ids ?? []);
+
+	let selectedQuestion = $state(questionGroups[0]?.ids[0] ?? themedQuestionIds[0]);
 	let selectedParticipant = $state(themedParticipantIds[0]);
+
+	// When the group changes, keep the selected question valid for it.
+	$effect(() => {
+		if (groupQuestionIds.length && !groupQuestionIds.includes(selectedQuestion)) {
+			selectedQuestion = groupQuestionIds[0];
+		}
+	});
 
 	const questionThemes = $derived(toBars(themeBreakdown((a) => a.question_id === selectedQuestion)));
 	const participantThemes = $derived(
@@ -130,11 +194,11 @@
 		</div>
 	</div>
 
-	<div class="mx-auto flex w-full max-w-6xl flex-col gap-20 px-8 py-16">
+	<div class="mx-auto flex w-full flex-col gap-20 px-8 py-16">
 		<!-- Viz 1 — Overall theme frequency -->
 		<section class="flex flex-col gap-5">
 			<div class="flex flex-col gap-2 border-b border-(--primary)/15 pb-4">
-				<span class="caption uppercase text-accent-mint">01 · Across all interviews</span>
+				<span class="figcaption text-accent-mint">01 · Across all interviews</span>
 				<h2 class="font-heading text-4xl font-light uppercase text-primary">
 					The shared themes
 				</h2>
@@ -157,17 +221,37 @@
 		<!-- Viz 2 — By interview question -->
 		<section class="flex flex-col gap-5">
 			<div class="flex flex-col gap-2 border-b border-(--ink)/15 pb-4">
-				<span class="caption uppercase text-accent-mint">02 · By interview question</span>
+				<span class="figcaption text-accent-mint">02 · By interview question</span>
 				<h2 class="font-heading text-4xl font-light uppercase text-primary">
 					What each question surfaced
 				</h2>
 				<p class="max-w-2xl text-base text-muted-foreground">
-					Pick a question to see the themes that came up when patients answered it.
+					Pick a topic group, then a question within it, to see the themes that came up
+					when patients answered it.
 				</p>
 			</div>
 
-			<div class="flex flex-row overflow-x-scroll pb-4 gap-2">
-				{#each themedQuestionIds as id (id)}
+			<!-- Topic groups -->
+			<div class="flex flex-wrap gap-2">
+				{#each questionGroups as group (group.id)}
+					<Button
+						type="button"
+						class="rounded-full border px-4 py-1.5 text-sm font-medium transition-colors duration-150 capitalize
+							{selectedGroup === group.id
+							? 'border-accent-mint bg-accent-mint text-accent-mint-foreground'
+							: 'border-(--ink)/20 bg-(--paper) text-foreground hover:bg-(--ink)/5'}"
+						aria-pressed={selectedGroup === group.id}
+						onclick={() => (selectedGroup = group.id)}
+					>
+						{group.label}
+						<span class="ml-1.5 opacity-60">{group.ids.length}</span>
+					</Button>
+				{/each}
+			</div>
+
+			<!-- Questions within the selected group -->
+			<div class="flex flex-row gap-2 overflow-x-scroll pb-4">
+				{#each groupQuestionIds as id (id)}
 					<Button
 						class="rounded-full border px-3.5 py-1.5 text-sm transition-colors duration-150
 							{selectedQuestion === id
@@ -201,7 +285,7 @@
 		<!-- Viz 3 — Participant fingerprint -->
 		<section class="flex flex-col gap-5">
 			<div class="flex flex-col gap-2 border-b border-(--ink)/15 pb-4">
-				<span class="caption uppercase text-accent-mint">03 · By participant</span>
+				<span class="figcaption text-accent-mint">03 · By participant</span>
 				<h2 class="font-heading text-4xl font-light uppercase text-primary">
 					Each patient's fingerprint
 				</h2>
@@ -249,7 +333,7 @@
 	<Sheet.Content side="right" class="data-[side=right]:sm:max-w-xl">
 		<div class="flex h-full flex-col">
 			<div class="flex flex-col gap-1 border-b border-slate-200 p-6">
-				<span class="caption uppercase text-accent-mint">Quotes · {drawerContextLabel}</span>
+				<span class="figcaption text-accent-mint">Quotes · {drawerContextLabel}</span>
 				<h2 class="font-heading text-3xl font-light uppercase text-primary">
 					{drawerTheme ? titleCase(drawerTheme) : ''}
 				</h2>
@@ -356,7 +440,7 @@
 					{#each drawerFragments as f (f.segment_id)}
 						<div
 							class="rounded-md border-l-2 py-1.5 pr-2 pl-3
-								{f.in_pull_quote ? 'border-accent-mint bg-accent-mint/5' : 'border-slate-200'}"
+								{f.in_pull_quote ? 'border-accent-mint bg-accent-mint/5' : 'border-muted-foreground'}"
 						>
 							<p class="text-sm leading-relaxed text-slate-700">
 								<KeywordText text={f.text} />
