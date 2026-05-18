@@ -40,9 +40,12 @@ const ASSIGNMENTS_FILE = 'src/lib/content/wctglpdemo-data/topic_tags.proposed.js
 // Swap to 'claude-sonnet-4-6' for a cheaper run.
 const MODEL = 'claude-opus-4-7';
 
+// Load ANTHROPIC_API_KEY from JourneyMapper/.env if present (.env is gitignored).
+if (existsSync(resolve(ROOT, '.env'))) process.loadEnvFile(resolve(ROOT, '.env'));
+
 if (!process.env.ANTHROPIC_API_KEY) {
-	console.error('x ANTHROPIC_API_KEY is not set. Export it, then re-run:');
-	console.error('  export ANTHROPIC_API_KEY=sk-ant-...');
+	console.error('x ANTHROPIC_API_KEY is not set.');
+	console.error('  Add it to JourneyMapper/.env  (ANTHROPIC_API_KEY=sk-ant-...)  or export it.');
 	process.exit(1);
 }
 
@@ -176,7 +179,7 @@ async function proposeForInterview(interviewId) {
 
 	const stream = client.messages.stream({
 		model: MODEL,
-		max_tokens: 24000,
+		max_tokens: 32000,
 		thinking: { type: 'adaptive' },
 		output_config: { effort: 'high', format: { type: 'json_schema', schema: responseSchema } },
 		system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],

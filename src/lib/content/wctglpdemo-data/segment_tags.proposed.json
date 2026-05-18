@@ -2,12 +2,13 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-18T01:16:16.387Z",
+    "generated_at": "2026-05-18T02:11:41.282Z",
     "generator": "scripts/propose-segment-tags.mjs",
     "model": "claude-opus-4-7",
     "codebook_schema_version": "1.2",
     "proposed_interviews": [
       "participant_06",
+      "participant_07",
       "participant_09",
       "participant_10"
     ],
@@ -1252,6 +1253,3741 @@
       "semantic_tags": [],
       "confidence": 0.5,
       "note": "closing"
+    },
+    "participant_07_t01_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "filler"
+    },
+    "participant_07_t01_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "bare affirmation"
+    },
+    "participant_07_t01_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": "factual start date"
+    },
+    "participant_07_t01_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": "dose detail"
+    },
+    "participant_07_t01_s04": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": "current dose"
+    },
+    "participant_07_t01_s05": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t01_s06": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t01_s07": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.6,
+      "note": "weight stats"
+    },
+    "participant_07_t01_s08": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t01_s09": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t03_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "affirmation"
+    },
+    "participant_07_t03_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": "weight loss difficulty near goal"
+    },
+    "participant_07_t05_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "filler"
+    },
+    "participant_07_t05_s01": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_07_t05_s02": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_07_t05_s03": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_07_t05_s04": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": "avg weight loss per week"
+    },
+    "participant_07_t05_s05": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "very short"
+    },
+    "participant_07_t07_s00": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.75,
+      "note": "inflammation reduction"
+    },
+    "participant_07_t07_s01": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "food_noise"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.9,
+      "note": ""
+    },
+    "participant_07_t07_s02": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "food_noise"
+      ],
+      "emotions": [],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_07_t07_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t07_s04": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "food_noise"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t07_s05": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "food_noise"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t07_s06": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t07_s07": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "weight loss factual"
+    },
+    "participant_07_t07_s08": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "sleep_mood"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.75,
+      "note": "mental outlook"
+    },
+    "participant_07_t07_s09": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "sleep_mood"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_07_t07_s10": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "sleep_mood"
+      ],
+      "emotions": [
+        "relief"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_07_t07_s11": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "sleep_mood"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_07_t07_s12": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "sleep_mood"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t07_s13": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "exercise_history"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t07_s14": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "exercise_history",
+        "prior_diets"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": "insulin resistance context"
+    },
+    "participant_07_t07_s15": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "enthusiasm",
+        "relief"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t07_s16": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": "prior plateau"
+    },
+    "participant_07_t07_s17": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t09_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "backchannel"
+    },
+    "participant_07_t101_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "affirmation"
+    },
+    "participant_07_t101_s01": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": "aware of orals"
+    },
+    "participant_07_t101_s02": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.75,
+      "note": "sublingual semaglutide"
+    },
+    "participant_07_t103_s00": {
+      "themes": [
+        "oral_medication_interest",
+        "injection_experience"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.8,
+      "note": "easier to transport pills"
+    },
+    "participant_07_t103_s01": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_07_t103_s02": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t103_s03": {
+      "themes": [
+        "oral_medication_interest",
+        "injection_experience"
+      ],
+      "subthemes": [
+        "dosing_durability"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t103_s04": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t103_s05": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t103_s06": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": "tried sublingual"
+    },
+    "participant_07_t103_s07": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t103_s08": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t103_s09": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "very short"
+    },
+    "participant_07_t105_s00": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t107_s00": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t107_s01": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.55,
+      "note": "very short"
+    },
+    "participant_07_t107_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "travel context"
+    },
+    "participant_07_t107_s03": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t107_s04": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.45,
+      "note": "very short"
+    },
+    "participant_07_t107_s05": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "other peptide use"
+    },
+    "participant_07_t107_s06": {
+      "themes": [
+        "injection_experience"
+      ],
+      "subthemes": [
+        "injection_aversion"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_07_t107_s07": {
+      "themes": [
+        "injection_experience"
+      ],
+      "subthemes": [
+        "injection_aversion"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_07_t109_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "filler"
+    },
+    "participant_07_t111_s00": {
+      "themes": [
+        "trial_awareness"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t111_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t111_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t113_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t113_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t113_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t113_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t113_s04": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "very short"
+    },
+    "participant_07_t113_s05": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t113_s06": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": "knee surgery context"
+    },
+    "participant_07_t113_s07": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t113_s08": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t113_s09": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t115_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t115_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "curiosity"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t117_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "very short"
+    },
+    "participant_07_t117_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t117_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "closing"
+    },
+    "participant_07_t117_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "gratitude"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t119_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "gratitude"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "closing"
+    },
+    "participant_07_t119_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "gratitude"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t11_s00": {
+      "themes": [
+        "treatment_continuation"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t11_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "affirmation"
+    },
+    "participant_07_t11_s02": {
+      "themes": [
+        "treatment_continuation"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "maintenance_strategy"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t121_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "affirmation"
+    },
+    "participant_07_t121_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "gratitude"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t121_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "closing"
+    },
+    "participant_07_t123_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "closing"
+    },
+    "participant_07_t13_s00": {
+      "themes": [
+        "treatment_continuation",
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "treatment_dependency",
+        "maintenance_strategy"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_07_t13_s01": {
+      "themes": [
+        "fear_of_weight_regain",
+        "non_weight_benefits"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "treatment_dependency"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_07_t13_s02": {
+      "themes": [
+        "treatment_continuation"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "maintenance_strategy"
+      ],
+      "confidence": 0.7,
+      "note": "dose tapering plan"
+    },
+    "participant_07_t13_s03": {
+      "themes": [
+        "treatment_continuation"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "maintenance_strategy"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t13_s04": {
+      "themes": [
+        "treatment_continuation"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [
+        "maintenance_strategy"
+      ],
+      "confidence": 0.6,
+      "note": "microdosing"
+    },
+    "participant_07_t13_s05": {
+      "themes": [
+        "treatment_continuation",
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "treatment_dependency"
+      ],
+      "confidence": 0.7,
+      "note": "28 day washout aversion"
+    },
+    "participant_07_t13_s06": {
+      "themes": [
+        "treatment_continuation",
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "treatment_dependency"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_07_t13_s07": {
+      "themes": [
+        "trial_participation_motivation"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t15_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "affirmation"
+    },
+    "participant_07_t15_s01": {
+      "themes": [
+        "insurance_barrier",
+        "treatment_continuation"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "relief"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.75,
+      "note": "insurance coverage"
+    },
+    "participant_07_t15_s02": {
+      "themes": [
+        "cost_access",
+        "treatment_continuation"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "access_logic",
+        "cost_benefit_reasoning"
+      ],
+      "confidence": 0.7,
+      "note": "microdosing affordability"
+    },
+    "participant_07_t15_s03": {
+      "themes": [
+        "treatment_continuation",
+        "cost_access"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "access_logic",
+        "treatment_dependency"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t17_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t17_s01": {
+      "themes": [
+        "non_weight_benefits",
+        "drug_switching"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t17_s02": {
+      "themes": [
+        "treatment_continuation"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision",
+        "treatment_dependency"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t19_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "affirmation"
+    },
+    "participant_07_t19_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "affirmation"
+    },
+    "participant_07_t19_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "factual"
+    },
+    "participant_07_t19_s03": {
+      "themes": [
+        "drug_switching",
+        "trial_participation_motivation"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t21_s00": {
+      "themes": [
+        "trial_awareness",
+        "trial_participation_motivation"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "confidence": 0.7,
+      "note": "Retatrutide disqualification"
+    },
+    "participant_07_t21_s01": {
+      "themes": [
+        "trial_awareness"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "relief"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t21_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t21_s03": {
+      "themes": [
+        "research_altruism",
+        "trial_participation_motivation"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "altruistic_reasoning",
+        "conditional_decision"
+      ],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_07_t23_s00": {
+      "themes": [
+        "trial_awareness"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t23_s01": {
+      "themes": [
+        "trial_participation_motivation",
+        "trial_awareness"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t23_s02": {
+      "themes": [
+        "trial_awareness"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t23_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t23_s04": {
+      "themes": [
+        "side_effect_concern"
+      ],
+      "subthemes": [
+        "unknown_safety"
+      ],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.65,
+      "note": "low risk view"
+    },
+    "participant_07_t23_s05": {
+      "themes": [
+        "side_effect_concern"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t23_s06": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t23_s07": {
+      "themes": [
+        "side_effect_concern"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t25_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "filler"
+    },
+    "participant_07_t25_s01": {
+      "themes": [
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "curiosity"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t27_s00": {
+      "themes": [
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t27_s01": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "curiosity"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.5,
+      "note": "asking duration"
+    },
+    "participant_07_t29_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "filler"
+    },
+    "participant_07_t29_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t29_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.45,
+      "note": ""
+    },
+    "participant_07_t29_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "affirmation"
+    },
+    "participant_07_t29_s04": {
+      "themes": [
+        "placebo_concern",
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "fear",
+        "anxiety"
+      ],
+      "sentiment": -2,
+      "semantic_tags": [
+        "risk_calculation",
+        "treatment_dependency"
+      ],
+      "confidence": 0.9,
+      "note": ""
+    },
+    "participant_07_t29_s05": {
+      "themes": [
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t29_s06": {
+      "themes": [
+        "placebo_concern",
+        "trial_awareness"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t29_s07": {
+      "themes": [
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t31_s00": {
+      "themes": [
+        "placebo_concern",
+        "trial_participation_motivation"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "conditional_decision",
+        "risk_calculation"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_07_t31_s01": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t31_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "filler"
+    },
+    "participant_07_t33_s00": {
+      "themes": [
+        "injection_experience"
+      ],
+      "subthemes": [
+        "injection_frequency"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.45,
+      "note": "very short"
+    },
+    "participant_07_t33_s01": {
+      "themes": [
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t33_s02": {
+      "themes": [
+        "placebo_concern",
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t33_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "affirmation"
+    },
+    "participant_07_t33_s04": {
+      "themes": [
+        "placebo_concern",
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation",
+        "health_transformation"
+      ],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_07_t33_s05": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.5,
+      "note": "analogy"
+    },
+    "participant_07_t33_s06": {
+      "themes": [
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t33_s07": {
+      "themes": [
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t33_s08": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "very short decline"
+    },
+    "participant_07_t33_s09": {
+      "themes": [
+        "trial_participation_motivation",
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t33_s10": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t33_s11": {
+      "themes": [
+        "trial_participation_motivation",
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t35_s00": {
+      "themes": [
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "others will feel same"
+    },
+    "participant_07_t35_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t35_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "very short"
+    },
+    "participant_07_t37_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "filler"
+    },
+    "participant_07_t37_s01": {
+      "themes": [
+        "non_weight_benefits",
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [
+        "sleep_mood"
+      ],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "health_transformation",
+        "treatment_dependency"
+      ],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_07_t37_s02": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "sleep_mood"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_07_t37_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "filler"
+    },
+    "participant_07_t37_s04": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t37_s05": {
+      "themes": [
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "treatment_dependency"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t37_s06": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t39_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "affirmation"
+    },
+    "participant_07_t39_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "very short"
+    },
+    "participant_07_t39_s02": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t41_s00": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t41_s01": {
+      "themes": [
+        "drug_switching"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t41_s02": {
+      "themes": [
+        "compounded_medication",
+        "insurance_barrier"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "confidence",
+        "frustration"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.8,
+      "note": "PBM constraint"
+    },
+    "participant_07_t41_s03": {
+      "themes": [
+        "insurance_barrier"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_07_t41_s04": {
+      "themes": [
+        "insurance_barrier"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t41_s05": {
+      "themes": [
+        "compounded_medication",
+        "cost_access"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t41_s06": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_07_t41_s07": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t41_s08": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": "B12 added"
+    },
+    "participant_07_t41_s09": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t43_s00": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t43_s01": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t45_s00": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.75,
+      "note": "pharmacy grade"
+    },
+    "participant_07_t45_s01": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "skepticism"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t45_s02": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t47_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "curiosity"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "clarifying question"
+    },
+    "participant_07_t49_s00": {
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": "already has support"
+    },
+    "participant_07_t49_s01": {
+      "themes": [
+        "incentives_support",
+        "trial_participation_motivation"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "cost_benefit_reasoning"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t51_s00": {
+      "themes": [
+        "incentives_support",
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [
+        "financial_compensation"
+      ],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "cost_benefit_reasoning"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t51_s01": {
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "financial_compensation"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t51_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "gratitude"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t51_s03": {
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "financial_compensation"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t51_s04": {
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "financial_compensation"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t51_s05": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t51_s06": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t51_s07": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t53_s00": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "home_visits"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t53_s01": {
+      "themes": [
+        "placebo_concern"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t53_s02": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "home_visits"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t53_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "skepticism"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t53_s04": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t55_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "affirmation"
+    },
+    "participant_07_t55_s01": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "home_visits"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t55_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t55_s03": {
+      "themes": [
+        "time_burden"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": "works from home"
+    },
+    "participant_07_t55_s04": {
+      "themes": [
+        "travel_burden",
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "distance_to_site",
+        "local_site"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t55_s05": {
+      "themes": [
+        "travel_burden"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": "likely meant 'wouldn't'"
+    },
+    "participant_07_t55_s06": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "home_visits"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t57_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t57_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t57_s02": {
+      "themes": [
+        "time_burden"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "curiosity"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t57_s03": {
+      "themes": [
+        "time_burden"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t57_s04": {
+      "themes": [
+        "time_burden"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t59_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t59_s01": {
+      "themes": [
+        "time_burden"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t59_s02": {
+      "themes": [
+        "time_burden"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t61_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t61_s01": {
+      "themes": [
+        "time_burden",
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "visit_frequency"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t61_s02": {
+      "themes": [
+        "time_burden",
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "visit_frequency"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t61_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t63_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "affirmation"
+    },
+    "participant_07_t63_s01": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "home_visits"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t63_s02": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "home_visits"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t63_s03": {
+      "themes": [
+        "injection_experience"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t63_s04": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t63_s05": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t63_s06": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t63_s07": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "home_visits"
+      ],
+      "emotions": [
+        "relief"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t63_s08": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "home_visits"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t65_s00": {
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "device_provision"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": "already has smartwatch"
+    },
+    "participant_07_t65_s01": {
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "device_provision"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t65_s02": {
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "device_provision"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t65_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t65_s04": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t67_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t67_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t67_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t67_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t69_s00": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t69_s01": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t69_s02": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t69_s03": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t71_s00": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.45,
+      "note": ""
+    },
+    "participant_07_t71_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t71_s02": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t71_s03": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "scheduling"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t71_s04": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t71_s05": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t73_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t75_s00": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "scheduling"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t75_s01": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "scheduling"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t75_s02": {
+      "themes": [
+        "visit_logistics",
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "scheduling",
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t75_s03": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "scheduling"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t75_s04": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t75_s05": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t75_s06": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t77_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "very short"
+    },
+    "participant_07_t79_s00": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t79_s01": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t81_s00": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t81_s01": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t83_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t83_s01": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t83_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t83_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t83_s04": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t83_s05": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.65,
+      "note": "prefer CGM over finger sticks"
+    },
+    "participant_07_t83_s06": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t83_s07": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t83_s08": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t85_s00": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t85_s01": {
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t85_s02": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t85_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t87_s00": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "visit_frequency"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t87_s01": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "visit_frequency"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t87_s02": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "visit_frequency"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t87_s03": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t89_s00": {
+      "themes": [
+        "travel_burden"
+      ],
+      "subthemes": [
+        "distance_to_site"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t89_s01": {
+      "themes": [
+        "travel_burden"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t89_s02": {
+      "themes": [
+        "travel_burden"
+      ],
+      "subthemes": [
+        "distance_to_site"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t89_s03": {
+      "themes": [
+        "travel_burden"
+      ],
+      "subthemes": [
+        "distance_to_site"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t91_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "affirmation"
+    },
+    "participant_07_t91_s01": {
+      "themes": [
+        "travel_burden"
+      ],
+      "subthemes": [
+        "distance_to_site"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t93_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": "affirmation"
+    },
+    "participant_07_t93_s01": {
+      "themes": [
+        "travel_burden",
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "distance_to_site",
+        "visit_frequency"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t95_s00": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t95_s01": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t95_s02": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t95_s03": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t95_s04": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.4,
+      "note": ""
+    },
+    "participant_07_t95_s05": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_07_t95_s06": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [
+        "gratitude"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t95_s07": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t97_s00": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t97_s01": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t97_s02": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t99_s00": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "exercise_history"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "lifestyle_change"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t99_s01": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "exercise_history"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "lifestyle_change"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t99_s02": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "exercise_history"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t99_s03": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "exercise_history"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "lifestyle_change"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t99_s04": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "exercise_history"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "lifestyle_change"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t99_s05": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "prior_diets"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "lifestyle_change"
+      ],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t99_s06": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "prior_diets",
+        "lifelong_struggle"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t99_s07": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_07_t99_s08": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_07_t99_s09": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t99_s10": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t99_s11": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "prior_diets"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": ""
+    },
+    "participant_07_t99_s12": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "lifestyle_change",
+        "health_transformation"
+      ],
+      "confidence": 0.6,
+      "note": "alcohol reduction"
+    },
+    "participant_07_t99_s13": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.7,
+      "note": "alcohol craving reduction"
+    },
+    "participant_07_t99_s14": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "lifestyle_change"
+      ],
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_07_t99_s15": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "prior_diets",
+        "exercise_history"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "lifestyle_change"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_07_t99_s16": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "prior_diets"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "lifestyle_change"
+      ],
+      "confidence": 0.6,
+      "note": ""
     },
     "participant_09_t01_s00": {
       "themes": [],

@@ -33,8 +33,12 @@ const ASSIGNMENTS_FILE = 'src/lib/content/wctglpdemo-data/topic_tags.proposed.js
 const MODEL = 'claude-opus-4-7';
 const dryRun = process.argv.includes('--dry-run');
 
+// Load ANTHROPIC_API_KEY from JourneyMapper/.env if present (.env is gitignored).
+if (existsSync(resolve(ROOT, '.env'))) process.loadEnvFile(resolve(ROOT, '.env'));
+
 if (!process.env.ANTHROPIC_API_KEY) {
 	console.error('x ANTHROPIC_API_KEY is not set.');
+	console.error('  Add it to JourneyMapper/.env  (ANTHROPIC_API_KEY=sk-ant-...)  or export it.');
 	process.exit(1);
 }
 if (!existsSync(resolve(ROOT, TOPICS_FILE))) {
