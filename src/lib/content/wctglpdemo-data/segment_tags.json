@@ -2,14 +2,17 @@
   "meta": {
     "schema_version": "1.2",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-17T21:02:29.702Z",
+    "generated_at": "2026-05-18T01:16:42.974Z",
     "generator": "scripts/build-segment-tags.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/segments.json",
-      "src/lib/content/wctglpdemo-data/codebook.json"
+      "src/lib/content/wctglpdemo-data/codebook.json",
+      "src/lib/content/wctglpdemo-data/segment_tags.proposed.json"
     ],
     "codebook_schema_version": "1.2",
     "labels_status": "ai_proposed",
+    "labels_model": "claude-opus-4-7",
+    "proposals_generated_at": "2026-05-18T01:16:16.387Z",
     "tagged_interviews": [
       "participant_06",
       "participant_09",
@@ -18,7 +21,7 @@
     "pending_interviews": [],
     "notes": [
       "Theme/subtheme/emotion/sentiment/semantic tags are AI-proposed; every annotation is review_status \"pending\".",
-      "Tags draw exclusively from codebook.json; the script rejects any tag not in the codebook.",
+      "Tags are proposed by scripts/propose-segment-tags.mjs and re-validated here against codebook.json.",
       "A subtheme is only valid when its parent theme is also applied to the segment.",
       "Annotations are keyed by segment_id and join back to segments.json (which carries char offsets).",
       "pending_interviews lists interviews not yet tagged, so their segments are not mistaken for untagged-by-analysis."
@@ -28,23 +31,349 @@
     {
       "segment_id": "participant_06_t01_s00",
       "interview_id": "participant_06",
-      "question_id": "study_intro",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "bare affirmation"
     },
     {
       "segment_id": "participant_06_t03_s00",
       "interview_id": "participant_06",
-      "question_id": "stopping_glp1",
+      "question_id": null,
+      "themes": [
+        "cost_access",
+        "side_effect_concern",
+        "treatment_continuation"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost",
+        "serious_complication"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "cost_benefit_reasoning",
+        "risk_calculation",
+        "conditional_decision"
+      ],
+      "confidence": 0.9,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t03_s01",
+      "interview_id": "participant_06",
+      "question_id": null,
       "themes": [
         "cost_access"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.9,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t03_s02",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "side_effect_concern"
+      ],
+      "subthemes": [
+        "serious_complication"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation",
+        "conditional_decision"
+      ],
+      "confidence": 0.9,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t03_s03",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "cost_access",
+        "side_effect_concern"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost",
+        "serious_complication"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "cost_benefit_reasoning"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "summary recap"
+    },
+    {
+      "segment_id": "participant_06_t05_s00",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "drug_switching",
+        "cost_access"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "cost_benefit_reasoning",
+        "conditional_decision"
+      ],
+      "confidence": 0.75,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t05_s01",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "procedural lead-in"
+    },
+    {
+      "segment_id": "participant_06_t07_s00",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "drug_switching",
+        "cost_access"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "access_logic",
+        "cost_benefit_reasoning"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t07_s01",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "drug_switching",
+        "oral_medication_interest",
+        "cost_access"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "cost_benefit_reasoning",
+        "conditional_decision"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t07_s02",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "treatment_continuation"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "confidence"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t09_s00",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "bare affirmation"
+    },
+    {
+      "segment_id": "participant_06_t11_s00",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "insurance_barrier"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t11_s01",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "aside"
+    },
+    {
+      "segment_id": "participant_06_t11_s02",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "trial_participation_motivation",
+        "placebo_concern",
+        "insurance_barrier"
+      ],
+      "subthemes": [
+        "access_motivation"
+      ],
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "access_logic",
+        "conditional_decision"
+      ],
+      "confidence": 0.9,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t11_s03",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "cardiometabolic"
+      ],
+      "emotions": [
+        "gratitude",
+        "hope"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.9,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t11_s04",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "gratitude"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t11_s05",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "trial_participation_motivation",
+        "research_altruism"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "altruistic_reasoning"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": ""
+    },
+    {
+      "segment_id": "participant_06_t13_s00",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "themes": [
+        "placebo_concern"
       ],
       "subthemes": [],
       "emotions": [
@@ -52,1249 +381,1336 @@
       ],
       "sentiment": 0,
       "semantic_tags": [
-        "access_logic"
+        "conditional_decision"
       ],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t03_s01",
-      "interview_id": "participant_06",
-      "question_id": "stopping_glp1",
-      "themes": [
-        "cost_access",
-        "insurance_barrier"
-      ],
-      "subthemes": [],
-      "emotions": [
-        "frustration"
-      ],
-      "sentiment": -2,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t03_s02",
-      "interview_id": "participant_06",
-      "question_id": "stopping_glp1",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 1,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t03_s03",
-      "interview_id": "participant_06",
-      "question_id": "stopping_glp1",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t05_s00",
-      "interview_id": "participant_06",
-      "question_id": "try_different_medication",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t05_s01",
-      "interview_id": "participant_06",
-      "question_id": "try_different_medication",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t07_s00",
-      "interview_id": "participant_06",
-      "question_id": "try_different_medication",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t07_s01",
-      "interview_id": "participant_06",
-      "question_id": "try_different_medication",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t07_s02",
-      "interview_id": "participant_06",
-      "question_id": "try_different_medication",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t09_s00",
-      "interview_id": "participant_06",
-      "question_id": "trial_unapproved_medication",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t11_s00",
-      "interview_id": "participant_06",
-      "question_id": "trial_motivation",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t11_s01",
-      "interview_id": "participant_06",
-      "question_id": "trial_motivation",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t11_s02",
-      "interview_id": "participant_06",
-      "question_id": "trial_motivation",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t11_s03",
-      "interview_id": "participant_06",
-      "question_id": "trial_motivation",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t11_s04",
-      "interview_id": "participant_06",
-      "question_id": "trial_motivation",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t11_s05",
-      "interview_id": "participant_06",
-      "question_id": "trial_motivation",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t13_s00",
-      "interview_id": "participant_06",
-      "question_id": "placebo_controlled_appeal",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t13_s01",
       "interview_id": "participant_06",
-      "question_id": "placebo_controlled_appeal",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "question_id": null,
+      "themes": [
+        "placebo_concern",
+        "fear_of_weight_regain",
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.9,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t13_s02",
       "interview_id": "participant_06",
-      "question_id": "placebo_controlled_appeal",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": 1,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t13_s03",
       "interview_id": "participant_06",
-      "question_id": "placebo_controlled_appeal",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "fear_of_weight_regain",
+        "placebo_concern"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.9,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t15_s00",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "acceptance of study length"
     },
     {
       "segment_id": "participant_06_t15_s01",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "treatment_continuation"
+      ],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t15_s02",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "fragment"
     },
     {
       "segment_id": "participant_06_t15_s03",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "treatment_continuation"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "treatment_dependency",
+        "maintenance_strategy"
+      ],
+      "confidence": 0.95,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t15_s04",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "treatment_continuation"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "maintenance_strategy",
+        "treatment_dependency"
+      ],
+      "confidence": 0.9,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t15_s05",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
+      "emotions": [
+        "hope"
+      ],
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "humorous aside"
     },
     {
       "segment_id": "participant_06_t15_s06",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "acceptance"
     },
     {
       "segment_id": "participant_06_t17_s00",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "short qualified response"
     },
     {
       "segment_id": "participant_06_t19_s00",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "placebo_concern",
+        "fear_of_weight_regain"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
+      "emotions": [
+        "fear"
+      ],
+      "sentiment": -1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "likely about placebo arm based on context"
     },
     {
       "segment_id": "participant_06_t21_s00",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "trial_awareness"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "emotions": [
+        "enthusiasm",
+        "curiosity"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t21_s01",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "trial_awareness"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "emotions": [
+        "curiosity"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "implant reference"
     },
     {
       "segment_id": "participant_06_t21_s02",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "trial_awareness"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t21_s03",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
+      "question_id": null,
+      "themes": [
+        "side_effect_concern",
+        "education_need"
+      ],
+      "subthemes": [
+        "medication_education"
+      ],
+      "emotions": [
+        "anxiety"
+      ],
       "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t21_s04",
       "interview_id": "participant_06",
-      "question_id": "monthly_injection_barrier",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
+      "question_id": null,
+      "themes": [
+        "side_effect_concern",
+        "education_need"
+      ],
+      "subthemes": [
+        "medication_education"
+      ],
+      "emotions": [
+        "anxiety"
+      ],
       "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t23_s00",
       "interview_id": "participant_06",
-      "question_id": "compounded_vs_approved",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "compounded_medication",
+        "medication_access"
+      ],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t23_s01",
       "interview_id": "participant_06",
-      "question_id": "compounded_vs_approved",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "medication_access"
+      ],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.6,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "context about shortage"
     },
     {
       "segment_id": "participant_06_t23_s02",
       "interview_id": "participant_06",
-      "question_id": "compounded_vs_approved",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "compounded_medication",
+        "medication_access",
+        "cost_access"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost"
+      ],
       "emotions": [],
       "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "semantic_tags": [
+        "access_logic",
+        "cost_benefit_reasoning"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t23_s03",
       "interview_id": "participant_06",
-      "question_id": "compounded_vs_approved",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "compounded_medication"
+      ],
       "subthemes": [],
-      "emotions": [],
+      "emotions": [
+        "skepticism"
+      ],
       "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t23_s04",
       "interview_id": "participant_06",
-      "question_id": "compounded_vs_approved",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "compounded_medication"
+      ],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t25_s00",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "meal_support",
+        "vouchers"
+      ],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "Fairlife protein shake vouchers"
     },
     {
       "segment_id": "participant_06_t25_s01",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "meal_support",
+        "vouchers"
+      ],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t27_s00",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "placebo_concern",
+        "fear_of_weight_regain"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "emotions": [
+        "anxiety"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t27_s01",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "side_effect_concern"
+      ],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.75,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t27_s02",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "financial_compensation"
+      ],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": 1,
+      "semantic_tags": [
+        "cost_benefit_reasoning"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t29_s00",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "affirmation in context of travel support"
     },
     {
       "segment_id": "participant_06_t29_s01",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "incentives_support",
+        "travel_burden"
+      ],
+      "subthemes": [
+        "travel_concierge"
+      ],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t29_s02",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "visit_logistics",
+        "time_burden"
+      ],
+      "subthemes": [
+        "scheduling"
+      ],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.75,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t29_s03",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
+      "question_id": null,
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "travel_concierge"
+      ],
+      "emotions": [
+        "gratitude"
+      ],
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.6,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t31_s00",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "affirmation"
     },
     {
       "segment_id": "participant_06_t33_s00",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "acceptance"
     },
     {
       "segment_id": "participant_06_t35_s00",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "visit_logistics"
+      ],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.6,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t35_s01",
       "interview_id": "participant_06",
-      "question_id": "educational_support",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "visit_logistics",
+        "education_need"
+      ],
+      "subthemes": [
+        "telehealth",
+        "medication_education"
+      ],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t37_s00",
       "interview_id": "participant_06",
-      "question_id": "trial_motivation",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
+      "question_id": null,
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "device_provision"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.9,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t37_s01",
       "interview_id": "participant_06",
-      "question_id": "trial_motivation",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
+      "question_id": null,
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [
+        "device_provision"
+      ],
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t37_s02",
       "interview_id": "participant_06",
-      "question_id": "trial_motivation",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "aside"
     },
     {
       "segment_id": "participant_06_t39_s00",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "acceptance"
     },
     {
       "segment_id": "participant_06_t39_s01",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t41_s00",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t41_s01",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "glucose_monitoring"
+      ],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t43_s00",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "monitoring_burden"
+      ],
+      "subthemes": [
+        "fasting_blood"
+      ],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t43_s01",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "monitoring_burden"
+      ],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.6,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t45_s00",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "visit_frequency"
+      ],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.6,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "clarifying question"
     },
     {
       "segment_id": "participant_06_t45_s01",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "visit_logistics",
+        "time_burden"
+      ],
+      "subthemes": [
+        "scheduling"
+      ],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.75,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t45_s02",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "scheduling"
+      ],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.6,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t45_s03",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "bare affirmation"
     },
     {
       "segment_id": "participant_06_t47_s00",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "refers to two prior concerns"
     },
     {
       "segment_id": "participant_06_t47_s01",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "insurance_barrier"
+      ],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": -1,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t47_s02",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "insurance_barrier",
+        "side_effect_concern"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "emotions": [
+        "anxiety"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t47_s03",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "insurance_barrier"
+      ],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t47_s04",
       "interview_id": "participant_06",
-      "question_id": "trial_barriers",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "closing comment"
     },
     {
       "segment_id": "participant_06_t49_s00",
       "interview_id": "participant_06",
-      "question_id": "weight_loss_history",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "prior_diets",
+        "exercise_history",
+        "lifelong_struggle"
+      ],
       "emotions": [],
       "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t49_s01",
       "interview_id": "participant_06",
-      "question_id": "weight_loss_history",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t49_s02",
       "interview_id": "participant_06",
-      "question_id": "weight_loss_history",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "weight_loss_history"
+      ],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": 1,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.65,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t49_s03",
       "interview_id": "participant_06",
-      "question_id": "weight_loss_history",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "emotions": [
+        "enthusiasm"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.6,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t49_s04",
       "interview_id": "participant_06",
-      "question_id": "weight_loss_history",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "prior_diets",
+        "exercise_history"
+      ],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": 1,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t51_s00",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "oral_medication_interest"
+      ],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": -1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.75,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t51_s01",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "oral_medication_interest"
+      ],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": -1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t51_s02",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "oral_medication_interest"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": -1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t51_s03",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "oral_medication_interest"
+      ],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "sentiment": -1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.75,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t51_s04",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
+      "question_id": null,
+      "themes": [
+        "oral_medication_interest",
+        "education_need"
+      ],
+      "subthemes": [
+        "medication_education"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
       "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t51_s05",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "oral_medication_interest"
+      ],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": -1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.6,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t51_s06",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "injection_experience",
+        "oral_medication_interest"
+      ],
+      "subthemes": [
+        "injection_frequency"
+      ],
       "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "prefers weekly shot to pills"
     },
     {
       "segment_id": "participant_06_t51_s07",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "oral_medication_interest",
+        "treatment_continuation"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "conditional_decision",
+        "access_logic"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t53_s00",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "clarifying question"
     },
     {
       "segment_id": "participant_06_t53_s01",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
-      "subthemes": [],
+      "question_id": null,
+      "themes": [
+        "injection_experience",
+        "oral_medication_interest"
+      ],
+      "subthemes": [
+        "injection_frequency"
+      ],
       "emotions": [],
-      "sentiment": 0,
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t53_s02",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
+      "question_id": null,
+      "themes": [
+        "trial_awareness"
+      ],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "emotions": [
+        "enthusiasm",
+        "curiosity"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.8,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t53_s03",
       "interview_id": "participant_06",
-      "question_id": "oral_vs_injectable",
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "question_id": null,
+      "themes": [
+        "injection_experience",
+        "treatment_continuation"
+      ],
+      "subthemes": [
+        "injection_frequency",
+        "dosing_durability"
+      ],
+      "emotions": [
+        "hope"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "maintenance_strategy",
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t55_s00",
       "interview_id": "participant_06",
-      "question_id": "closing",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
+      "emotions": [
+        "gratitude"
+      ],
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "closing"
     },
     {
       "segment_id": "participant_06_t55_s01",
       "interview_id": "participant_06",
-      "question_id": "closing",
+      "question_id": null,
       "themes": [],
       "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
+      "emotions": [
+        "gratitude"
+      ],
+      "sentiment": 1,
       "semantic_tags": [],
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
-      "reviewer_notes": ""
+      "confidence": 0.5,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "closing"
     },
     {
       "segment_id": "participant_09_t01_s00",
