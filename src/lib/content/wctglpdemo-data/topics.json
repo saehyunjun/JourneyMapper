@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "generated_at": "2026-05-17T00:00:00.000Z",
+    "generator": "scripts/propose-topics.mjs",
+    "description": "Emergent conversation-topic vocabulary. Unlike codebook.json (a fixed, pre-authored analytic taxonomy), topics accumulate as transcripts are ingested by propose-topics.mjs and are consolidated by normalize-topics.mjs. A topic describes what a stretch of conversation is concretely about, independent of any question script.",
+    "topic_count": 0,
+    "notes": [
+      "Topics are an OPEN vocabulary: propose-topics.mjs may add new ids; they are not pre-authored and not enum-locked at generation time.",
+      "A segment may carry several topics; a topic spans many segments. Run normalize-topics.mjs to merge near-duplicates.",
+      "Per-segment assignments live in topic_tags.proposed.json (keyed by segment_id); build-segment-tags.mjs folds them into segment_tags.json as a `topics` array."
+    ]
+  },
+  "topics": []
+}

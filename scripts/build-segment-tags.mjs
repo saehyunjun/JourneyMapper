@@ -21,6 +21,10 @@
  *  - every theme / subtheme / emotion / semantic id exists in codebook.json
  *  - every subtheme's parent theme is also applied to the segment
  *  - sentiment is an integer in [-2, 2]; confidence is a number in [0, 1]
+ *  - every topic id (if topic tagging has run) exists in topics.json
+ *
+ * Conversation topics are an optional, additive dimension produced by
+ * propose-topics.mjs. If that step has not run, annotations get topics: [].
  *
  * Run:
  *   node scripts/propose-segment-tags.mjs   # first, to generate proposals
@@ -37,6 +41,8 @@ const ROOT = resolve(__dirname, '..');
 const SEGMENTS_FILE = 'src/lib/content/wctglpdemo-data/segments.json';
 const CODEBOOK_FILE = 'src/lib/content/wctglpdemo-data/codebook.json';
 const PROPOSED_FILE = 'src/lib/content/wctglpdemo-data/segment_tags.proposed.json';
+const TOPICS_FILE = 'src/lib/content/wctglpdemo-data/topics.json';
+const TOPIC_ASSIGNMENTS_FILE = 'src/lib/content/wctglpdemo-data/topic_tags.proposed.json';
 const OUTPUT_FILE = 'src/lib/content/wctglpdemo-data/segment_tags.json';
 
 // --- Load inputs ---
@@ -50,6 +56,24 @@ const segmentsData = JSON.parse(readFileSync(resolve(ROOT, SEGMENTS_FILE), 'utf8
 const codebook = JSON.parse(readFileSync(resolve(ROOT, CODEBOOK_FILE), 'utf8'));
 const proposedData = JSON.parse(readFileSync(resolve(ROOT, PROPOSED_FILE), 'utf8'));
 const PROPOSALS = proposedData.proposals ?? {};
+
+// Topics are an optional, additive dimension (an open, emergent vocabulary).
+// If propose-topics.mjs has not run, every annotation simply gets topics: [].
+let topicAssignments = {};
+let validTopics = new Set();
+let topicsStatus = 'not_run';
+if (existsSync(resolve(ROOT, TOPIC_ASSIGNMENTS_FILE))) {
+	if (!existsSync(resolve(ROOT, TOPICS_FILE))) {
+		console.error(`x ${TOPIC_ASSIGNMENTS_FILE} exists but ${TOPICS_FILE} is missing.`);
+		process.exit(1);
+	}
+	topicAssignments =
+		JSON.parse(readFileSync(resolve(ROOT, TOPIC_ASSIGNMENTS_FILE), 'utf8')).assignments ?? {};
+	validTopics = new Set(
+		JSON.parse(readFileSync(resolve(ROOT, TOPICS_FILE), 'utf8')).topics.map((t) => t.id)
+	);
+	topicsStatus = 'present';
+}
 
 const validThemes = new Set(codebook.theme_tags.map((t) => t.id));
 const validEmotions = new Set(codebook.emotion_tags.map((t) => t.id));
@@ -126,10 +150,16 @@ for (const [segmentId, value] of Object.entries(PROPOSALS)) {
 		errors.push(`${segmentId}: confidence must be between 0 and 1, got ${confidence}.`);
 	}
 
+	const topics = topicAssignments[segmentId] ?? [];
+	for (const tp of topics) {
+		if (!validTopics.has(tp)) errors.push(`${segmentId}: unknown topic "${tp}" (not in topics.json).`);
+	}
+
 	annotations.push({
 		segment_id: segmentId,
 		interview_id: seg.interview_id,
 		question_id: seg.question_id,
+		topics,
 		themes,
 		subthemes,
 		emotions,
@@ -161,12 +191,14 @@ const output = {
 		labels_status: 'ai_proposed',
 		labels_model: proposedData.meta?.model ?? 'unknown',
 		proposals_generated_at: proposedData.meta?.generated_at ?? null,
+		topics_status: topicsStatus,
 		tagged_interviews: taggedInterviews,
 		pending_interviews: pendingInterviews,
 		notes: [
 			'Theme/subtheme/emotion/sentiment/semantic tags are AI-proposed; every annotation is review_status "pending".',
 			'Tags are proposed by scripts/propose-segment-tags.mjs and re-validated here against codebook.json.',
 			'A subtheme is only valid when its parent theme is also applied to the segment.',
+			'`topics` is an open, emergent vocabulary from scripts/propose-topics.mjs (topics.json); [] when topic tagging has not run.',
 			'Annotations are keyed by segment_id and join back to segments.json (which carries char offsets).',
 			'pending_interviews lists interviews not yet tagged, so their segments are not mistaken for untagged-by-analysis.'
 		]
@@ -192,6 +224,19 @@ const topThemes = Object.entries(themeFreq)
 console.log(`  top themes: ${topThemes.map(([t, n]) => `${t}(${n})`).join(', ')}`);
 const subCount = Object.values(subFreq).reduce((n, v) => n + v, 0);
 console.log(`  ${subCount} subtheme tags across ${Object.keys(subFreq).length} distinct subthemes`);
+
+if (topicsStatus === 'present') {
+	const topicFreq = {};
+	for (const a of annotations) for (const t of a.topics) topicFreq[t] = (topicFreq[t] ?? 0) + 1;
+	const topTopics = Object.entries(topicFreq)
+		.sort((a, b) => b[1] - a[1])
+		.slice(0, 6);
+	console.log(
+		`  topics: ${Object.keys(topicFreq).length} distinct; top: ${topTopics.map(([t, n]) => `${t}(${n})`).join(', ')}`
+	);
+} else {
+	console.log(`  topics: not run (node scripts/propose-topics.mjs)`);
+}
 
 const lowConf = annotations.filter((a) => a.confidence < 0.7);
 console.log(`  ${lowConf.length} annotation(s) below 0.7 confidence flagged for priority review`);
