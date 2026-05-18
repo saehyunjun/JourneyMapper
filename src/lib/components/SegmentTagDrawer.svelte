@@ -180,18 +180,33 @@
 
 		<!-- Scrollable body -->
 		<div class="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
-			<!-- Segment text + current status -->
+			<!-- Segment text, technical notes, and current status -->
 			<div>
 				<p
 					class="rounded-md border-l-2 border-accent-mint bg-accent-mint/5 p-3 text-sm leading-relaxed text-slate-800"
 				>
 					{segment.text}
 				</p>
-				<div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-400">
+				<!-- Technical notes — kept here, off the review card, so the card
+					 stays streamlined. -->
+				<div
+					class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-slate-400"
+				>
 					<span>{segment.word_count} words</span>
+					{#if segment.char_start != null}
+						<span>chars {segment.char_start}–{segment.char_end}</span>
+					{/if}
+					{#if segment.question_id}
+						<span class="text-accent-mint">{segment.question_id}</span>
+					{/if}
+					{#if segment.flags.includes('merged')}
+						<span class="text-violet-600">merged</span>
+					{/if}
 					{#if segment.flags.includes('very_short')}
 						<span class="text-amber-600">very short</span>
 					{/if}
+				</div>
+				<div class="mt-1.5 text-xs">
 					{#if annotation && annotation.source === 'human'}
 						<span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-emerald-700">confirmed</span>
 					{:else if annotation}

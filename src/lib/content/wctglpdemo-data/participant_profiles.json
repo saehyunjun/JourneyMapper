@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "description": "Analyst-maintained participant profiles. Keyed by interview_id; references avatars under static/content-assets/avatars.",
+    "updated_at": "2026-05-18T19:31:55.052Z"
+  },
+  "profiles": {
+    "participant_10": {
+      "first_name": "Jane",
+      "last_initial": "W",
+      "gender": "female",
+      "country": "United States",
+      "age_range": "26-30",
+      "participant_type": "individual",
+      "avatar_url": null
+    },
+    "participant_09": {
+      "first_name": "Isabelle",
+      "last_initial": "D",
+      "gender": "female",
+      "country": "United States",
+      "age_range": "41-45",
+      "participant_type": "individual",
+      "avatar_url": null
+    },
+    "participant_06": {
+      "first_name": "Mathew",
+      "last_initial": "P",
+      "gender": "male",
+      "country": "United States",
+      "age_range": "41-45",
+      "participant_type": "individual",
+      "avatar_url": null
+    },
+    "participant_07": {
+      "first_name": "Kayla",
+      "last_initial": "P",
+      "gender": "female",
+      "country": "United States",
+      "age_range": "46-50",
+      "participant_type": "individual",
+      "avatar_url": null
+    }
+  }
+}

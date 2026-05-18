@@ -136,3 +136,26 @@ export function upsertAnnotation(draft: SegmentTagDraft): Annotation {
 	writeFileSync(resolve(TAGS_PATH), JSON.stringify(tagData, null, 2) + '\n', 'utf8');
 	return updated;
 }
+
+/**
+ * Untag one segment: drop its annotation from segment_tags.json. The segment's
+ * interview can no longer be fully reviewed, so it is removed from
+ * `tagged_interviews`. Returns the affected interview id, or null if the
+ * segment had no annotation to remove.
+ */
+export function deleteAnnotation(segmentId: string): { interview_id: string } | null {
+	const tagData = read(TAGS_PATH);
+	const annotations = tagData.annotations as Annotation[];
+	const idx = annotations.findIndex((a) => a.segment_id === segmentId);
+	if (idx === -1) return null;
+
+	const [removed] = annotations.splice(idx, 1);
+
+	const tagged = new Set<string>(tagData.meta.tagged_interviews ?? []);
+	tagged.delete(removed.interview_id);
+	tagData.meta.tagged_interviews = [...tagged].sort();
+	tagData.meta.generated_at = new Date().toISOString();
+
+	writeFileSync(resolve(TAGS_PATH), JSON.stringify(tagData, null, 2) + '\n', 'utf8');
+	return { interview_id: removed.interview_id };
+}

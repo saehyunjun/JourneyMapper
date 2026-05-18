@@ -19,7 +19,8 @@
 		itemNoun = 'terms',
 		blockLabel = 'mention',
 		onselect,
-		selected = null
+		selected = null,
+		colorModeOptions = ['sentiment', 'interviewee']
 	}: {
 		data: ChartRow[];
 		unitLabel?: string;
@@ -30,15 +31,18 @@
 		onselect?: (datum: ChartRow) => void;
 		/** `word` of the currently-selected row, highlighted and never dimmed. */
 		selected?: string | null;
+		/** Which colour modes are offered; a single option hides the toggle. */
+		colorModeOptions?: ColorMode[];
 	} = $props();
 
-	let colorMode = $state<ColorMode>('sentiment');
-	let hovered = $state<string | null>(null);
-
-	const colorModes: { id: ColorMode; label: string }[] = [
+	const ALL_COLOR_MODES: { id: ColorMode; label: string }[] = [
 		{ id: 'sentiment', label: 'By sentiment' },
 		{ id: 'interviewee', label: 'By interviewee' }
 	];
+	const colorModes = $derived(ALL_COLOR_MODES.filter((m) => colorModeOptions.includes(m.id)));
+
+	let colorMode = $state<ColorMode>(colorModeOptions[0] ?? 'sentiment');
+	let hovered = $state<string | null>(null);
 
 	// -2..2 diverging scale.
 	const SENTIMENT_COLORS: Record<number, string> = {
@@ -110,6 +114,7 @@
 			</div>
 		</div>
 
+		{#if colorModes.length > 1}
 		<div class="flex flex-row overflow-hidden gap-1" role="group">
 			{#each colorModes as opt, i (opt.id)}
 				<Button
@@ -125,6 +130,7 @@
 				</Button>
 			{/each}
 		</div>
+		{/if}
 	</div>
 
 	<div style:height="{chartHeight}px" class="w-full">
@@ -219,7 +225,7 @@
 
 	<p class="caption text-xs text-muted-foreground">
 		Each block is one {blockLabel}, coloured by {colorMode} · bar length = {unitLabel}. Hover a
-		row to isolate it; use the toggle above to recolour.
+		row to isolate it{colorModes.length > 1 ? '; use the toggle above to recolour' : ''}.
 	</p>
 </div>
 

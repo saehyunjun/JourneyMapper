@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-18T04:56:28.737Z",
+    "generated_at": "2026-05-18T19:56:31.025Z",
     "generator": "scripts/propose-questions.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -1203,6 +1203,309 @@
           "question_id": "study_intro",
           "turn_role": "admin",
           "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 2,
+          "question_id": "study_intro",
+          "turn_role": "admin",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 4,
+          "question_id": "stopping_glp1",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 6,
+          "question_id": "try_different_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 8,
+          "question_id": "trial_unapproved_medication",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 10,
+          "question_id": "trial_motivation",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "phrased as a follow-up to the prior question; serves as the trial-motivation question"
+        },
+        {
+          "turn_index": 12,
+          "question_id": "placebo_controlled_appeal",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 14,
+          "question_id": "placebo_controlled_appeal",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 16,
+          "question_id": "monthly_injection_barrier",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 18,
+          "question_id": "monthly_injection_barrier",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 20,
+          "question_id": "compounded_vs_approved",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 22,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "introduces the incentive battery; trial_motivation re-opened"
+        },
+        {
+          "turn_index": 24,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 26,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 28,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 30,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 32,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 34,
+          "question_id": "trial_motivation",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "open-ended close of the incentive battery"
+        },
+        {
+          "turn_index": 36,
+          "question_id": "trial_barriers",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 38,
+          "question_id": "trial_barriers",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 40,
+          "question_id": "trial_barriers",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 42,
+          "question_id": "trial_barriers",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 44,
+          "question_id": "trial_barriers",
+          "turn_role": "probe",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 46,
+          "question_id": "trial_concerns",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 48,
+          "question_id": "educational_support",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 50,
+          "question_id": "weight_loss_history",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 52,
+          "question_id": "considered_trials_before",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 54,
+          "question_id": "oral_glp_awareness",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 56,
+          "question_id": "oral_vs_injectable",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 58,
+          "question_id": "oral_vs_injectable",
+          "turn_role": "acknowledgment",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 60,
+          "question_id": "oral_vs_injectable",
+          "turn_role": "acknowledgment",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        },
+        {
+          "turn_index": 62,
+          "question_id": "closing",
+          "turn_role": "question",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": "open closing question"
+        },
+        {
+          "turn_index": 64,
+          "question_id": "closing",
+          "turn_role": "admin",
+          "confidence": 1,
+          "source": "human",
+          "review_status": "confirmed",
+          "reviewer_notes": ""
+        }
+      ]
+    },
+    {
+      "interview_id": "participant_12",
+      "mapping_count": 20,
+      "mappings": [
+        {
+          "turn_index": 0,
+          "question_id": "study_intro",
+          "turn_role": "admin",
+          "confidence": 0.95,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
@@ -1211,7 +1514,7 @@
           "turn_index": 2,
           "question_id": "study_intro",
           "turn_role": "admin",
-          "confidence": 1,
+          "confidence": 0.95,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
@@ -1227,16 +1530,16 @@
         },
         {
           "turn_index": 6,
-          "question_id": "try_different_medication",
-          "turn_role": "question",
-          "confidence": 0.96,
+          "question_id": "stopping_glp1",
+          "turn_role": "probe",
+          "confidence": 0.7,
           "source": "ai_proposed",
           "review_status": "pending",
-          "reviewer_notes": ""
+          "reviewer_notes": "Follow-up about changes experienced; remains in stopping_glp1 context"
         },
         {
           "turn_index": 8,
-          "question_id": "trial_unapproved_medication",
+          "question_id": "try_different_medication",
           "turn_role": "question",
           "confidence": 0.97,
           "source": "ai_proposed",
@@ -1245,18 +1548,18 @@
         },
         {
           "turn_index": 10,
-          "question_id": "trial_motivation",
+          "question_id": "trial_unapproved_medication",
           "turn_role": "question",
-          "confidence": 0.8,
+          "confidence": 0.98,
           "source": "ai_proposed",
           "review_status": "pending",
-          "reviewer_notes": "phrased as a follow-up to the prior question; serves as the trial-motivation question"
+          "reviewer_notes": ""
         },
         {
           "turn_index": 12,
-          "question_id": "placebo_controlled_appeal",
-          "turn_role": "question",
-          "confidence": 0.96,
+          "question_id": "trial_unapproved_medication",
+          "turn_role": "probe",
+          "confidence": 0.85,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
@@ -1264,8 +1567,8 @@
         {
           "turn_index": 14,
           "question_id": "placebo_controlled_appeal",
-          "turn_role": "probe",
-          "confidence": 0.93,
+          "turn_role": "question",
+          "confidence": 0.98,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
@@ -1274,25 +1577,25 @@
           "turn_index": 16,
           "question_id": "monthly_injection_barrier",
           "turn_role": "question",
-          "confidence": 0.97,
+          "confidence": 0.98,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
         },
         {
           "turn_index": 18,
-          "question_id": "monthly_injection_barrier",
+          "question_id": "trial_barriers",
           "turn_role": "probe",
-          "confidence": 0.93,
+          "confidence": 0.7,
           "source": "ai_proposed",
           "review_status": "pending",
-          "reviewer_notes": ""
+          "reviewer_notes": "Probe on logistics/visits"
         },
         {
           "turn_index": 20,
           "question_id": "compounded_vs_approved",
           "turn_role": "question",
-          "confidence": 0.96,
+          "confidence": 0.98,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
@@ -1300,197 +1603,80 @@
         {
           "turn_index": 22,
           "question_id": "trial_motivation",
-          "turn_role": "probe",
-          "confidence": 0.9,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": "introduces the incentive battery; trial_motivation re-opened"
-        },
-        {
-          "turn_index": 24,
-          "question_id": "trial_motivation",
-          "turn_role": "probe",
-          "confidence": 0.93,
+          "turn_role": "question",
+          "confidence": 0.97,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
         },
         {
-          "turn_index": 26,
-          "question_id": "trial_motivation",
+          "turn_index": 24,
+          "question_id": "trial_barriers",
           "turn_role": "probe",
-          "confidence": 0.93,
+          "confidence": 0.7,
+          "source": "ai_proposed",
+          "review_status": "pending",
+          "reviewer_notes": "Transportation barrier probe"
+        },
+        {
+          "turn_index": 26,
+          "question_id": "educational_support",
+          "turn_role": "question",
+          "confidence": 0.95,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
         },
         {
           "turn_index": 28,
-          "question_id": "trial_motivation",
-          "turn_role": "probe",
-          "confidence": 0.9,
+          "question_id": "considered_trials_before",
+          "turn_role": "question",
+          "confidence": 0.98,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
         },
         {
           "turn_index": 30,
-          "question_id": "trial_motivation",
-          "turn_role": "probe",
-          "confidence": 0.9,
+          "question_id": "weight_loss_history",
+          "turn_role": "question",
+          "confidence": 0.98,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
         },
         {
           "turn_index": 32,
-          "question_id": "trial_motivation",
-          "turn_role": "probe",
-          "confidence": 0.9,
+          "question_id": "oral_glp_awareness",
+          "turn_role": "question",
+          "confidence": 0.98,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
         },
         {
           "turn_index": 34,
-          "question_id": "trial_motivation",
+          "question_id": "oral_glp_awareness",
           "turn_role": "probe",
-          "confidence": 0.85,
+          "confidence": 0.8,
           "source": "ai_proposed",
           "review_status": "pending",
-          "reviewer_notes": "open-ended close of the incentive battery"
+          "reviewer_notes": ""
         },
         {
           "turn_index": 36,
-          "question_id": "trial_barriers",
+          "question_id": "oral_vs_injectable",
           "turn_role": "question",
-          "confidence": 0.95,
+          "confidence": 0.97,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
         },
         {
           "turn_index": 38,
-          "question_id": "trial_barriers",
-          "turn_role": "probe",
-          "confidence": 0.92,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 40,
-          "question_id": "trial_barriers",
-          "turn_role": "probe",
-          "confidence": 0.9,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 42,
-          "question_id": "trial_barriers",
-          "turn_role": "probe",
-          "confidence": 0.92,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 44,
-          "question_id": "trial_barriers",
-          "turn_role": "probe",
-          "confidence": 0.92,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 46,
-          "question_id": "trial_concerns",
-          "turn_role": "question",
-          "confidence": 0.9,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 48,
-          "question_id": "educational_support",
-          "turn_role": "question",
-          "confidence": 0.96,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 50,
-          "question_id": "weight_loss_history",
-          "turn_role": "question",
-          "confidence": 0.95,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 52,
-          "question_id": "considered_trials_before",
-          "turn_role": "question",
-          "confidence": 0.96,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 54,
-          "question_id": "oral_glp_awareness",
-          "turn_role": "question",
-          "confidence": 0.95,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 56,
-          "question_id": "oral_vs_injectable",
-          "turn_role": "question",
-          "confidence": 0.93,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 58,
-          "question_id": "oral_vs_injectable",
-          "turn_role": "acknowledgment",
-          "confidence": 0.85,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 60,
-          "question_id": "oral_vs_injectable",
-          "turn_role": "acknowledgment",
-          "confidence": 0.9,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": ""
-        },
-        {
-          "turn_index": 62,
-          "question_id": "closing",
-          "turn_role": "question",
-          "confidence": 0.85,
-          "source": "ai_proposed",
-          "review_status": "pending",
-          "reviewer_notes": "open closing question"
-        },
-        {
-          "turn_index": 64,
           "question_id": "closing",
           "turn_role": "admin",
-          "confidence": 1,
+          "confidence": 0.95,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""

@@ -2,15 +2,15 @@
 	import { tv, type VariantProps } from "tailwind-variants";
 
 	export const sidebarMenuButtonVariants = tv({
-		base: "ring-sidebar-ring mx-2 font-bold hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:text-sidebar-muted-foreground data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground gap-2 py-2 mb-2 text-left text-base uppercase transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! focus-visible:ring-2  peer/menu-button group/menu-button flex w-full items-center overflow-hidden outline-hidden disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
+		base: "ring-sidebar-ring mx-2 font-normal hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-color-accent-mint active:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:text-sidebar-muted-foreground data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground gap-2 py-2 mb-2 text-left text-sm capitalize transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! focus-visible:ring-2  peer/menu-button group/menu-button flex w-full items-center overflow-hidden outline-hidden disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
 		variants: {
 			variant: {
-				default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+				default: "hover:bg-sidebar-accent hover:font-medium",
 				outline: "bg-background hover:bg-sidebar-accent hover:text-sidebar-accent shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
 				underline: "border-b border-slate-500"
 			},
 			size: {
-				default: "h-8 mb-2 mt-6",
+				default: "h-8 py-4",
 				sm: "h-8 text-xs",
 				lg: "h-14 px-3-sm group-data-[collapsible=icon]:p-0!",
 			},

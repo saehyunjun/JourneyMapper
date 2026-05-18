@@ -16,6 +16,7 @@
 	} from '$lib/content/wctglpdemo-data/analysis';
 	import { keywordTags, categories as keywordCategories } from '$lib/content/wctglpdemo-data/keywords';
 	import KeywordText from '$lib/components/KeywordText.svelte';
+	import StatBar from '$lib/components/StatBar.svelte';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
 	import type { PageProps } from './$types';
 
@@ -235,10 +236,10 @@
 			<div class="mt-3 flex flex-wrap gap-2">
 				{#each pendingInterviews as id (id)}
 					<a
-						href="/wctglpdemo/tag?interview={id}"
+						href="/wctglpdemo/upload?interview={id}"
 						class="rounded bg-amber-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-amber-700"
 					>
-						Tag {participantLabel(id)} →
+						Review {participantLabel(id)} →
 					</a>
 				{/each}
 			</div>
@@ -246,15 +247,6 @@
 	{/if}
 {/snippet}
 
-{#snippet bar(label: string, count: number, max: number, tint: string)}
-	<div class="flex items-center gap-3 text-sm">
-		<span class="w-44 shrink-0 truncate text-slate-700">{label}</span>
-		<div class="h-4 flex-1 rounded-sm bg-slate-100">
-			<div class="h-full rounded-sm {tint}" style="width: {(count / max) * 100}%"></div>
-		</div>
-		<span class="w-8 shrink-0 text-right tabular-nums text-slate-500">{count}</span>
-	</div>
-{/snippet}
 
 <div class="flex flex-1 flex-col bg-slate-50">
 	<!-- Hero -->
@@ -579,11 +571,16 @@
 					<div class="flex flex-col gap-3  border border-slate-200 bg-white p-5">
 						{#each themeRows as t (t.id)}
 							<div class="flex flex-col gap-1.5">
-								{@render bar(titleCase(t.id), t.count, maxTheme, 'bg-accent-mint')}
+								<StatBar label={titleCase(t.id)} count={t.count} max={maxTheme} />
 								{#if t.subthemes.length}
 									<div class="ml-4 flex flex-col gap-1">
 										{#each t.subthemes as s (s.id)}
-											{@render bar(titleCase(s.id), s.count, maxTheme, 'bg-accent-mint/45')}
+											<StatBar
+												label={titleCase(s.id)}
+												count={s.count}
+												max={maxTheme}
+												tint="bg-accent-mint/45"
+											/>
 										{/each}
 									</div>
 								{/if}
@@ -598,7 +595,7 @@
 						<h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Emotion frequency</h2>
 						<div class="flex flex-col gap-2  border border-slate-200 bg-white p-5">
 							{#each emotionRows as e (e.id)}
-								{@render bar(titleCase(e.id), e.count, maxEmotion, 'bg-slate-400')}
+								<StatBar label={titleCase(e.id)} count={e.count} max={maxEmotion} tint="bg-slate-400" />
 							{/each}
 						</div>
 					</section>
@@ -608,12 +605,16 @@
 						<h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Sentiment distribution</h2>
 						<div class="flex flex-col gap-2  border border-slate-200 bg-white p-5">
 							{#each sentimentRows as s (s.value)}
-								{@render bar(
-									SENTIMENT_LABELS[s.value],
-									s.count,
-									maxSentiment,
-									s.value > 0 ? 'bg-emerald-400' : s.value < 0 ? 'bg-rose-400' : 'bg-slate-300'
-								)}
+								<StatBar
+									label={SENTIMENT_LABELS[s.value]}
+									count={s.count}
+									max={maxSentiment}
+									tint={s.value > 0
+										? 'bg-emerald-400'
+										: s.value < 0
+											? 'bg-rose-400'
+											: 'bg-slate-300'}
+								/>
 							{/each}
 						</div>
 					</section>
@@ -635,7 +636,7 @@
 				</div>
 				<div class="grid gap-x-8 gap-y-2  border border-slate-200 bg-white p-5 sm:grid-cols-2">
 					{#each topWords as w (w.word)}
-						{@render bar(w.word, w.count, maxWord, 'bg-accent-mint')}
+						<StatBar label={w.word} count={w.count} max={maxWord} />
 					{/each}
 				</div>
 			</section>

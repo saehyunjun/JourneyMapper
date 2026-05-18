@@ -21,6 +21,7 @@ import type { Actions, PageServerLoad } from './$types';
 import questionBank from '$lib/content/wctglpdemo-data/questions.json';
 import { readHighlights } from '$lib/server/highlights';
 import { readAnnotationsFor } from '$lib/server/segment-tags';
+import { getJob, startAutotag, type AutotagJob } from '$lib/server/autotag';
 import type { Annotation } from '$lib/types/segment-tags';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
@@ -236,6 +237,7 @@ export const load: PageServerLoad = ({ url }) => {
 				segments: Segment[];
 				questionMap: { turn_index: number; question_id: string }[];
 				annotations: Record<string, Annotation>;
+				autotagJob: AutotagJob | null;
 		  }
 		| null = null;
 	if (wanted) {
@@ -252,7 +254,8 @@ export const load: PageServerLoad = ({ url }) => {
 				turns: interview.turns as Turn[],
 				segments,
 				questionMap: readQuestionMap(wanted),
-				annotations: readAnnotationsFor(wanted)
+				annotations: readAnnotationsFor(wanted),
+				autotagJob: getJob(wanted)
 			};
 		}
 	}
@@ -360,6 +363,10 @@ export const actions: Actions = {
 		segData.meta.segment_count = segData.segments.length;
 		writeFileSync(resolve(SEGMENTS_PATH), JSON.stringify(segData, null, 2) + '\n', 'utf8');
 
+		// Kick off the AI judgement steps (question mapping + segment tagging) in
+		// the background; the review view polls and fills in when they finish.
+		startAutotag(interviewId);
+
 		return {
 			stage: 'upload',
 			success: true,
@@ -370,12 +377,7 @@ export const actions: Actions = {
 			participantTurns: turns.filter((t) => t.speaker === 'participant').length,
 			segmentCount: segments.length,
 			demographics: demographicsRaw || null,
-			warnings,
-			turns,
-			segments,
-			// Pre-fills the review view if scripts/propose-questions.mjs has run.
-			questionMap: readQuestionMap(interviewId),
-			annotations: readAnnotationsFor(interviewId)
+			warnings
 		};
 	},
 

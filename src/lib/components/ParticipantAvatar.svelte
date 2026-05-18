@@ -43,27 +43,31 @@
 		interviewId,
 		size = 'md',
 		preview = false,
+		src: srcOverride = null,
 		class: className = ''
 	}: {
 		interviewId: string;
-		size?: 'sm' | 'md' | 'lg';
+		size?: 'sm' | 'md' | 'lg' | 'xl';
 		preview?: boolean;
+		/** An uploaded avatar URL to show instead of the bundled image. */
+		src?: string | null;
 		class?: string;
 	} = $props();
 
 	const SIZES = {
 		sm: 'size-7 text-[10px]',
 		md: 'size-9 text-xs',
-		lg: 'size-12 text-sm'
+		lg: 'size-12 text-sm',
+		xl: 'size-20 text-xl'
 	} as const;
 
 	const label = $derived(participantLabel(interviewId));
-	const src = $derived(participantAvatarUrl(interviewId));
+	const src = $derived(srcOverride ?? participantAvatarUrl(interviewId));
 	const initials = $derived(interviewId.match(/\d+/)?.[0] ?? '?');
 	const meta = $derived(META.get(interviewId));
 </script>
 
-{#snippet avatarEl(s: 'sm' | 'md' | 'lg', extra: string)}
+{#snippet avatarEl(s: 'sm' | 'md' | 'lg' | 'xl', extra: string)}
 	<Avatar.Root
 		class="inline-flex shrink-0 items-center justify-center rounded-full bg-accent-mint/15 font-semibold uppercase text-accent-mint {SIZES[
 			s

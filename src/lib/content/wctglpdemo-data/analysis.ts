@@ -144,11 +144,17 @@ function tally(rows: string[][]): { id: string; count: number }[] {
 	return [...counts].map(([id, count]) => ({ id, count })).sort((a, b) => b.count - a.count);
 }
 
-/** Theme counts across all segment annotations, each with its subtheme breakdown. */
-export function themeFrequency(): { id: string; count: number; subthemes: { id: string; count: number }[] }[] {
-	const themeRows = tally(annotations.map((a) => a.themes));
+/**
+ * Theme counts across the segment annotations matching an optional predicate,
+ * each with its subtheme breakdown. With no predicate, counts every annotation.
+ */
+export function themeFrequency(
+	predicate: (a: Annotation) => boolean = () => true
+): { id: string; count: number; subthemes: { id: string; count: number }[] }[] {
+	const rows = annotations.filter(predicate);
+	const themeRows = tally(rows.map((a) => a.themes));
 	const subCounts = new Map<string, number>();
-	for (const a of annotations) for (const s of a.subthemes) subCounts.set(s, (subCounts.get(s) ?? 0) + 1);
+	for (const a of rows) for (const s of a.subthemes) subCounts.set(s, (subCounts.get(s) ?? 0) + 1);
 	return themeRows.map((t) => ({
 		...t,
 		subthemes: [...subCounts]
@@ -158,8 +164,10 @@ export function themeFrequency(): { id: string; count: number; subthemes: { id: 
 	}));
 }
 
-export const emotionFrequency = (): { id: string; count: number }[] =>
-	tally(annotations.map((a) => a.emotions));
+/** Emotion counts across the segment annotations matching an optional predicate. */
+export const emotionFrequency = (
+	predicate: (a: Annotation) => boolean = () => true
+): { id: string; count: number }[] => tally(annotations.filter(predicate).map((a) => a.emotions));
 
 /** Theme counts across the segment annotations matching an optional predicate. */
 export function themeCounts(
@@ -247,11 +255,17 @@ export const themedParticipantIds: string[] = [
 	...new Set(annotations.map((a) => a.interview_id))
 ].sort();
 
-/** Counts of each sentiment value (-2..2) across annotations. */
-export function sentimentDistribution(): { value: number; count: number }[] {
+/**
+ * Counts of each sentiment value (-2..2) across the segment annotations
+ * matching an optional predicate. With no predicate, counts every annotation.
+ */
+export function sentimentDistribution(
+	predicate: (a: Annotation) => boolean = () => true
+): { value: number; count: number }[] {
+	const rows = annotations.filter(predicate);
 	return [-2, -1, 0, 1, 2].map((value) => ({
 		value,
-		count: annotations.filter((a) => a.sentiment === value).length
+		count: rows.filter((a) => a.sentiment === value).length
 	}));
 }
 

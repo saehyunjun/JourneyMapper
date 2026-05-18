@@ -31,4 +31,7 @@ export type TaggableSegment = {
 	text: string;
 	word_count: number;
 	flags: string[];
+	/** Character offsets into the raw transcript — shown in the tag drawer. */
+	char_start?: number;
+	char_end?: number;
 };

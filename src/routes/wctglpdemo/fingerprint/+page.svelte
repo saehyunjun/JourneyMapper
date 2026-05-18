@@ -7,19 +7,66 @@
 	modal; the participant row lets you browse the other interviewees.
 -->
 <script lang="ts">
+	import { untrack } from 'svelte';
 	import { goto } from '$app/navigation';
+	import StarIcon from '@lucide/svelte/icons/star';
 	import {
+		annotations,
 		themeBreakdown,
+		themeTags,
+		segmentsForTheme,
 		themedParticipantIds,
 		participantLabel,
+		questionLabel,
 		titleCase,
+		SENTIMENT_LABELS,
 		type ThemeBlock
 	} from '$lib/content/wctglpdemo-data/analysis';
 	import SortableBarChart from '$lib/charts/glp/SortableBarChart.svelte';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
+	import KeyQuotesSection from '$lib/components/KeyQuotesSection.svelte';
+	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
+	import KeywordText from '$lib/components/KeywordText.svelte';
+	import RightDrawer from '$lib/components/RightDrawer.svelte';
+	import { profileName } from '$lib/types/participant-profile';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
+
+	// Participant profiles, seeded from the server load and updated locally
+	// when the drawer persists an edit.
+	let profiles = $state(untrack(() => data.participantProfiles));
+
+	// Analyst-starred segments — seeded from the server, updated on each toggle.
+	let starredSegments = $state(new Set<string>(untrack(() => data.starredSegmentIds)));
+	let togglingSegment = $state('');
+
+	async function toggleSegmentStar(segmentId: string) {
+		if (togglingSegment) return;
+		togglingSegment = segmentId;
+		try {
+			const res = await fetch('/wctglpdemo/highlights', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({ kind: 'segment', id: segmentId })
+			});
+			if (res.ok) {
+				const { starredSegmentIds } = await res.json();
+				starredSegments = new Set<string>(starredSegmentIds);
+			}
+		} finally {
+			togglingSegment = '';
+		}
+	}
+
+	// --- Participant details drawer ---
+	let participantDrawerOpen = $state(false);
+	let participantDrawerId = $state<string | null>(null);
+
+	function openParticipant(id: string) {
+		participantDrawerId = id;
+		participantDrawerOpen = true;
+	}
 
 	/** Theme breakdown rows -> the {word,count,blocks} shape SortableBarChart expects. */
 	const toBars = (rows: { id: string; count: number; blocks: ThemeBlock[] }[]) =>
@@ -35,10 +82,53 @@
 	const themeCount = $derived(fingerprint.length);
 	const segmentCount = $derived(fingerprint.reduce((n, b) => n + b.count, 0));
 
+	// Negative / neutral / positive tagged-segment counts for the selected
+	// participant, taken from the per-segment annotations.
+	const sentimentCounts = $derived.by(() => {
+		const counts = { negative: 0, neutral: 0, positive: 0 };
+		for (const a of annotations) {
+			if (a.interview_id !== selectedParticipant) continue;
+			if (a.sentiment < 0) counts.negative++;
+			else if (a.sentiment > 0) counts.positive++;
+			else counts.neutral++;
+		}
+		return counts;
+	});
+
 	function select(id: string) {
 		selectedParticipant = id;
 		// Keep the URL shareable/refreshable without a full navigation.
 		goto(`?interview=${id}`, { replaceState: true, keepFocus: true, noScroll: true });
+	}
+
+	// --- Theme drawer — the selected participant's segments for one theme ---
+	const labelToTheme = new Map(themeTags.map((t) => [titleCase(t.id), t.id]));
+
+	let themeDrawerOpen = $state(false);
+	let drawerTheme = $state<string | null>(null);
+
+	function openThemeDrawer(datum: { word: string }) {
+		const themeId = labelToTheme.get(datum.word);
+		if (!themeId) return;
+		drawerTheme = themeId;
+		themeDrawerOpen = true;
+	}
+
+	// Every segment the selected participant has tagged with the open theme.
+	const drawerFragments = $derived.by(() => {
+		if (!drawerTheme) return [];
+		return segmentsForTheme(drawerTheme, (a) => a.interview_id === selectedParticipant);
+	});
+
+	// `word` of the chart row whose drawer is open, so it stays highlighted.
+	const selectedRow = $derived(
+		themeDrawerOpen && drawerTheme ? titleCase(drawerTheme) : null
+	);
+
+	function sentimentClass(s: number) {
+		if (s > 0) return 'bg-emerald-100 text-emerald-800';
+		if (s < 0) return 'bg-rose-100 text-rose-800';
+		return 'bg-slate-100 text-slate-700';
 	}
 </script>
 
@@ -59,7 +149,7 @@
 		</div>
 	</div>
 
-	<div class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-8 py-14">
+	<div class="mx-auto flex w-full max-w-6xl flex-col gap-8 px-8 py-14">
 		{#if themedParticipantIds.length}
 			<!-- Participant browser -->
 			<div class="flex flex-col gap-3 border-b border-(--ink)/15 pb-5">
@@ -82,21 +172,50 @@
 				</div>
 			</div>
 
-			<!-- The selected participant's fingerprint -->
-			<section class="flex flex-col gap-4">
-				<div class="flex items-center gap-4">
-					<ParticipantAvatar interviewId={selectedParticipant} size="lg" preview />
-					<div class="flex flex-col gap-1">
+			<!-- The selected participant -->
+			<section class="flex flex-col gap-6">
+				<button
+					type="button"
+					onclick={() => openParticipant(selectedParticipant)}
+					class="flex items-center gap-4 rounded-lg text-left transition-colors hover:bg-(--ink)/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-mint"
+					title="View participant details"
+				>
+					<ParticipantAvatar
+						interviewId={selectedParticipant}
+						size="lg"
+						src={profiles[selectedParticipant]?.avatar_url}
+					/>
+					<div class="flex flex-col gap-1.5">
 						<h2 class="font-heading text-3xl font-light uppercase text-primary">
-							{participantLabel(selectedParticipant)}
+							{profileName(profiles[selectedParticipant], participantLabel(selectedParticipant))}
 						</h2>
 						<p class="text-sm text-muted-foreground">
 							{themeCount}
 							{themeCount === 1 ? 'theme' : 'themes'} ·
-							{segmentCount} tagged {segmentCount === 1 ? 'segment' : 'segments'}
+							{segmentCount} tagged {segmentCount === 1 ? 'segment' : 'segments'} ·
+							<span class="text-accent-mint">view details →</span>
 						</p>
+						<div class="flex flex-wrap gap-1.5">
+							<span class="rounded-full bg-rose-100 px-2 py-0.5 text-xs text-rose-800">
+								{sentimentCounts.negative} negative
+							</span>
+							<span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">
+								{sentimentCounts.neutral} neutral
+							</span>
+							<span class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-800">
+								{sentimentCounts.positive} positive
+							</span>
+						</div>
 					</div>
-				</div>
+				</button>
+
+				<!-- Key quotes — analyst-starred highlights for this participant -->
+				<KeyQuotesSection
+					starredQuoteIds={data.starredQuoteIds}
+					{profiles}
+					onparticipant={openParticipant}
+					participantId={selectedParticipant}
+				/>
 
 				{#if fingerprint.length}
 					<SortableBarChart
@@ -105,6 +224,9 @@
 						itemNoun="themes"
 						blockLabel="tagged segment"
 						rowHeight={36}
+						colorModeOptions={['sentiment']}
+						onselect={openThemeDrawer}
+						selected={selectedRow}
 					/>
 				{:else}
 					<p
@@ -124,3 +246,77 @@
 		{/if}
 	</div>
 </div>
+
+<!-- Participant details drawer -->
+<ParticipantDrawer
+	bind:open={participantDrawerOpen}
+	interviewId={participantDrawerId}
+	bind:profiles
+/>
+
+<!-- Theme drawer — the selected participant's segments for one theme -->
+<RightDrawer bind:open={themeDrawerOpen}>
+	<div class="flex h-full flex-col">
+		<div class="flex flex-col gap-1 border-b border-slate-200 p-6">
+			<span class="figcaption text-accent-mint">
+				Theme · {profileName(profiles[selectedParticipant], participantLabel(selectedParticipant))}
+			</span>
+			<h2 class="font-heading text-3xl font-light uppercase text-primary">
+				{drawerTheme ? titleCase(drawerTheme) : ''}
+			</h2>
+			<p class="text-sm text-muted-foreground">
+				{drawerFragments.length} coded
+				{drawerFragments.length === 1 ? 'segment' : 'segments'} · star the ones worth keeping.
+			</p>
+		</div>
+
+		<div class="flex flex-1 flex-col gap-3 overflow-y-auto p-6">
+			{#each drawerFragments as f (f.segment_id)}
+				<div
+					class="border-2 p-3
+						{f.in_pull_quote ? 'border-accent-mint bg-accent-mint/5' : 'border-muted-foreground/40'}"
+				>
+					<div class="flex items-start justify-between gap-3">
+						<p class="text-sm leading-relaxed text-slate-700">
+							<KeywordText text={f.text} />
+						</p>
+						<button
+							type="button"
+							onclick={() => toggleSegmentStar(f.segment_id)}
+							disabled={togglingSegment === f.segment_id}
+							aria-pressed={starredSegments.has(f.segment_id)}
+							title={starredSegments.has(f.segment_id)
+								? 'Starred — click to unstar'
+								: 'Star this segment'}
+							class="shrink-0 rounded p-1 transition-colors hover:bg-amber-50 disabled:opacity-40
+								{starredSegments.has(f.segment_id)
+								? 'text-amber-400'
+								: 'text-slate-300 hover:text-amber-400'}"
+						>
+							<StarIcon
+								size={18}
+								fill={starredSegments.has(f.segment_id) ? 'currentColor' : 'none'}
+							/>
+						</button>
+					</div>
+					<div class="mt-1 text-xs text-slate-500">{questionLabel(f.question_id)}</div>
+					<div class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-400">
+						<span class="rounded-full px-1.5 py-0.5 {sentimentClass(f.sentiment)}">
+							{SENTIMENT_LABELS[f.sentiment]}
+						</span>
+						{#if f.in_pull_quote}
+							<span class="font-mono text-accent-mint">↑ in {f.quote_id}</span>
+						{/if}
+						<span class="font-mono">chars {f.char_start}–{f.char_end}</span>
+					</div>
+				</div>
+			{:else}
+				<p
+					class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500"
+				>
+					No coded segments for this theme.
+				</p>
+			{/each}
+		</div>
+	</div>
+</RightDrawer>

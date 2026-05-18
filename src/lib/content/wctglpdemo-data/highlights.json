@@ -3,12 +3,15 @@
     "schema_version": "1.0",
     "study_id": "wct_glp1",
     "description": "Analyst-starred highlights. starred_segment_ids reference segments.json; starred_quote_ids reference quote_bank.json.",
-    "updated_at": "2026-05-18T05:49:11.196Z"
+    "updated_at": "2026-05-18T19:43:07.899Z"
   },
   "starred_segment_ids": [
     "participant_06_t07_s01",
+    "participant_06_t11_s00",
+    "participant_06_t11_s01",
     "participant_06_t11_s02",
     "participant_06_t11_s03",
+    "participant_06_t13_s01",
     "participant_06_t15_s03",
     "participant_06_t23_s02",
     "participant_06_t29_s01",
@@ -20,13 +23,22 @@
     "participant_06_t51_s01",
     "participant_06_t51_s07",
     "participant_06_t53_s01",
+    "participant_07_t05_s00",
+    "participant_07_t21_s02",
+    "participant_07_t27_s01",
     "participant_07_t49_s01",
     "participant_07_t55_s04",
     "participant_07_t57_s04",
-    "participant_07_t61_s01",
     "participant_07_t61_s02",
     "participant_07_t65_s01",
-    "participant_08_t19_s01"
+    "participant_08_t05_s00",
+    "participant_08_t19_s01",
+    "participant_08_t23_s00",
+    "participant_09_t03_s00",
+    "participant_09_t03_s14",
+    "participant_09_t09_s00",
+    "participant_10_t05_s00",
+    "participant_10_t21_s01"
   ],
   "starred_quote_ids": [
     "q_participant_09_002",

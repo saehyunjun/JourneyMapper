@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
 	import {
 		quotes,
 		themeTags,
@@ -12,11 +13,31 @@
 		SENTIMENT_LABELS,
 		type ThemeBlock
 	} from '$lib/content/wctglpdemo-data/analysis';
+	import { Badge } from "$lib/components/ui/badge/index.js";
+	import { Button } from "$lib/components/ui/button/index.js";
 	import SortableBarChart from '$lib/charts/glp/SortableBarChart.svelte';
-	import * as Sheet from '$lib/components/ui/sheet/index.js';
+	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import KeywordText from '$lib/components/KeywordText.svelte';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
+	import KeyQuotesSection from '$lib/components/KeyQuotesSection.svelte';
+	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
 	import { keywordCounts } from '$lib/content/wctglpdemo-data/keywords';
+	import type { PageProps } from './$types';
+
+	let { data }: PageProps = $props();
+
+	// Participant profiles, seeded from the server load and updated locally
+	// when the drawer persists an edit.
+	let profiles = $state(untrack(() => data.participantProfiles));
+
+	// --- Participant details drawer ---
+	let participantDrawerOpen = $state(false);
+	let participantDrawerId = $state<string | null>(null);
+
+	function openParticipant(id: string) {
+		participantDrawerId = id;
+		participantDrawerOpen = true;
+	}
 
 	/** Theme breakdown rows -> the {word,count,blocks} shape SortableBarChart expects. */
 	const toBars = (rows: { id: string; count: number; blocks: ThemeBlock[] }[]) =>
@@ -195,6 +216,13 @@
 	</div>
 
 	<div class="mx-auto flex w-full flex-col gap-20 px-8 py-16">
+		<!-- Key quotes — analyst-starred highlights -->
+		<KeyQuotesSection
+			starredQuoteIds={data.starredQuoteIds}
+			{profiles}
+			onparticipant={openParticipant}
+		/>
+
 		<!-- Viz 1 — Overall theme frequency -->
 		<section class="flex flex-col gap-5">
 			<div class="flex flex-col gap-2 border-b border-(--primary)/15 pb-4">
@@ -234,26 +262,27 @@
 			<!-- Topic groups -->
 			<div class="flex flex-wrap gap-2">
 				{#each questionGroups as group (group.id)}
-					<button
-						type="button"
-						class="rounded-full border px-4 py-1.5 text-sm font-medium transition-colors duration-150 capitalize
+					<Button
+						variant="link"
+						class="border-b-2 hover:cursor-pointer px-2 py-1.5 text-sm font-medium transition-colors duration-150 capitalize
 							{selectedGroup === group.id
-							? 'border-accent-mint bg-accent-mint text-accent-mint-foreground'
-							: 'border-(--ink)/20 bg-(--paper) text-foreground hover:bg-(--ink)/5'}"
+							? 'border-accent-mint text-accent-mint-background'
+							: 'border-b-secondary-foreground/20 text-foreground/50 hover:text-foreground hover:border-b-secondary-foreground/50'}"
 						aria-pressed={selectedGroup === group.id}
 						onclick={() => (selectedGroup = group.id)}
 					>
 						{group.label}
-						<span class="ml-1.5 opacity-60">{group.ids.length}</span>
-					</button>
+						<Badge variant="secondary">
+							{group.ids.length}</Badge>
+						</Button>
 				{/each}
 			</div>
 
 			<!-- Questions within the selected group -->
-			<div class="flex flex-row gap-2 overflow-x-scroll pb-4">
+			<div class="flex flex-row gap-2 pb-4">
 				{#each groupQuestionIds as id (id)}
 					<button
-						class="rounded-full border px-3.5 py-1.5 text-sm transition-colors duration-150
+						class="rounded-full px-2.5 py-1.5 text-sm transition-colors duration-150
 							{selectedQuestion === id
 							? 'border-(--darkgrayblue) bg-(--darkgrayblue) text-(--paper)'
 							: 'border-(--ink)/20 bg-(--paper) text-foreground hover:bg-(--ink)/5'}"
@@ -330,145 +359,150 @@
 </div>
 
 <!-- Related-quotes drawer -->
-<Sheet.Root bind:open={drawerOpen}>
-	<Sheet.Content side="right" class="data-[side=right]:sm:max-w-xl">
-		<div class="flex h-full flex-col">
-			<div class="flex flex-col gap-1 border-b border-slate-200 p-6">
-				<span class="figcaption text-accent-mint">Quotes · {drawerContextLabel}</span>
-				<h2 class="font-heading text-3xl font-light uppercase text-primary">
-					{drawerTheme ? titleCase(drawerTheme) : ''}
-				</h2>
-				<p class="text-sm text-muted-foreground">
-					{drawerQuotes.length} pull {drawerQuotes.length === 1 ? 'quote' : 'quotes'} ·
-					{drawerFragments.length} coded {drawerFragments.length === 1 ? 'fragment' : 'fragments'}
-				</p>
-			</div>
+<RightDrawer bind:open={drawerOpen}>
+	<div class="flex h-full flex-col">
+		<div class="flex flex-col gap-1 border-b border-slate-200 p-6">
+			<span class="figcaption text-accent-mint">Quotes · {drawerContextLabel}</span>
+			<h2 class="font-heading text-3xl font-light uppercase text-primary">
+				{drawerTheme ? titleCase(drawerTheme) : ''}
+			</h2>
+			<p class="text-sm text-muted-foreground">
+				{drawerQuotes.length} pull {drawerQuotes.length === 1 ? 'quote' : 'quotes'} ·
+				{drawerFragments.length} coded {drawerFragments.length === 1 ? 'fragment' : 'fragments'}
+			</p>
+		</div>
 
-			<div class="flex flex-1 flex-col gap-7 overflow-y-auto p-6">
-				<!-- Keyword usage — deterministic word counts across this theme's fragments -->
-				{#if drawerKeywordCounts.length}
-					<section class="flex flex-col gap-2">
-						<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
-							Keyword usage · {drawerKeywordCounts.length}
-							{drawerKeywordCounts.length === 1 ? 'keyword' : 'keywords'}
-						</h3>
-						<p class="text-xs text-muted-foreground">
-							Lexicon keywords found in the {drawerFragments.length} coded
-							{drawerFragments.length === 1 ? 'fragment' : 'fragments'} for this theme, by mention count.
-						</p>
-						<div class="mt-1 flex flex-col gap-1.5">
-							{#each drawerKeywordCounts.slice(0, 12) as kc (kc.keywordId)}
-								<div class="flex items-center gap-2 text-xs">
-									<span class="w-36 shrink-0 truncate text-slate-700" title={kc.categoryLabel}>
-										{kc.keywordLabel}
-									</span>
-									<div class="h-3 flex-1 rounded-sm bg-slate-100">
-										<div
-											class="h-full rounded-sm bg-accent-mint"
-											style="width: {(kc.count / maxKeywordCount) * 100}%"
-										></div>
-									</div>
-									<span class="w-5 shrink-0 text-right tabular-nums text-slate-500">{kc.count}</span>
-								</div>
-							{/each}
-						</div>
-						{#if drawerKeywordCounts.length > 12}
-							<p class="text-xs text-slate-400">
-								+{drawerKeywordCounts.length - 12} more {drawerKeywordCounts.length - 12 === 1
-									? 'keyword'
-									: 'keywords'}
-							</p>
-						{/if}
-					</section>
-				{/if}
-
-				<!-- Pull quotes -->
-				{#if drawerQuotes.length}
-					<section class="flex flex-col gap-3">
-						<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
-							Pull quotes · {drawerQuotes.length}
-						</h3>
-						{#each drawerQuotes as q (q.quote_id)}
-							<article class="rounded border border-slate-200 bg-white p-4">
-								<div class="flex items-center justify-between gap-3">
-									<span class="font-mono text-xs text-slate-400">{q.quote_id}</span>
-									<span class="text-xs text-slate-400">
-										score
-										<span class="ml-1 text-base font-light text-accent-mint">
-											{q.quote_score.overall}
-										</span>
-									</span>
-								</div>
-								<blockquote
-									class="mt-2 border-l-2 border-accent-mint pl-3 text-base leading-relaxed text-slate-800"
-								>
-									<KeywordText text={q.text} />
-								</blockquote>
-								<div class="mt-2 text-xs text-slate-500">
-									<span class="font-medium text-slate-700">
-										{participantLabel(q.interview_id)}
-									</span>
-									· {questionLabel(q.question_id)}
-								</div>
-								<div class="mt-2 flex flex-wrap gap-1">
-									{#each q.emotions as e (e)}
-										<span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
-											{titleCase(e)}
-										</span>
-									{/each}
-									<span class="rounded-full px-2 py-0.5 text-xs {sentimentClass(q.sentiment)}">
-										{SENTIMENT_LABELS[q.sentiment]}
-									</span>
-								</div>
-								<div class="mt-2 font-mono text-xs text-slate-400">
-									{q.segment_ids.length}
-									{q.segment_ids.length === 1 ? 'fragment' : 'fragments'} · chars {q.char_start}–{q.char_end}
-								</div>
-							</article>
-						{/each}
-					</section>
-				{/if}
-
-				<!-- All coded fragments -->
+		<div class="flex flex-1 flex-col gap-7 overflow-y-auto p-6">
+			<!-- Keyword usage — deterministic word counts across this theme's fragments -->
+			{#if drawerKeywordCounts.length}
 				<section class="flex flex-col gap-2">
-					<h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">
-						Coded fragments · {drawerFragments.length}
+					<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+						Keyword usage · {drawerKeywordCounts.length}
+						{drawerKeywordCounts.length === 1 ? 'keyword' : 'keywords'}
 					</h3>
 					<p class="text-xs text-muted-foreground">
-						Every response segment tagged with this theme. Tinted rows are already part of a pull
-						quote above; the rest are coded but not pulled.
+						Lexicon keywords found in the {drawerFragments.length} coded
+						{drawerFragments.length === 1 ? 'fragment' : 'fragments'} for this theme, by mention count.
 					</p>
-					{#each drawerFragments as f (f.segment_id)}
-						<div
-							class="p-2 border-2 border-muted/60
-								{f.in_pull_quote ? 'border-accent-mint bg-accent-mint/5' : 'border-muted-foreground'}"
-						>
-							<p class="text-sm leading-relaxed text-slate-700">
-								<KeywordText text={f.text} />
-							</p>
-							<div class="mt-1 text-xs text-slate-500">
-								<span class="font-medium text-slate-700">{participantLabel(f.interview_id)}</span>
-								· {questionLabel(f.question_id)}
-							</div>
-							<div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-400">
-								<span class="rounded-full px-1.5 py-0.5 {sentimentClass(f.sentiment)}">
-									{SENTIMENT_LABELS[f.sentiment]}
+					<div class="mt-1 flex flex-col gap-1.5">
+						{#each drawerKeywordCounts.slice(0, 12) as kc (kc.keywordId)}
+							<div class="flex items-center gap-2 text-xs">
+								<span class="w-36 shrink-0 truncate text-slate-700" title={kc.categoryLabel}>
+									{kc.keywordLabel}
 								</span>
-								{#if f.in_pull_quote}
-									<span class="font-mono text-accent-mint">↑ in {f.quote_id}</span>
-								{/if}
-								<span class="font-mono">chars {f.char_start}–{f.char_end}</span>
+								<div class="h-3 flex-1 rounded-sm bg-slate-100">
+									<div
+										class="h-full rounded-sm bg-accent-mint"
+										style="width: {(kc.count / maxKeywordCount) * 100}%"
+									></div>
+								</div>
+								<span class="w-5 shrink-0 text-right tabular-nums text-slate-500">{kc.count}</span>
 							</div>
-						</div>
-					{:else}
-						<p
-							class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500"
-						>
-							No coded fragments for this theme in this view.
+						{/each}
+					</div>
+					{#if drawerKeywordCounts.length > 12}
+						<p class="text-xs text-slate-400">
+							+{drawerKeywordCounts.length - 12} more {drawerKeywordCounts.length - 12 === 1
+								? 'keyword'
+								: 'keywords'}
 						</p>
+					{/if}
+				</section>
+			{/if}
+
+			<!-- Pull quotes -->
+			{#if drawerQuotes.length}
+				<section class="flex flex-col gap-3">
+					<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+						Pull quotes · {drawerQuotes.length}
+					</h3>
+					{#each drawerQuotes as q (q.quote_id)}
+						<article class="rounded border border-slate-200 bg-white p-4">
+							<div class="flex items-center justify-between gap-3">
+								<span class="font-mono text-xs text-slate-400">{q.quote_id}</span>
+								<span class="text-xs text-slate-400">
+									score
+									<span class="ml-1 text-base font-light text-accent-mint">
+										{q.quote_score.overall}
+									</span>
+								</span>
+							</div>
+							<blockquote
+								class="mt-2 border-l-2 border-accent-mint pl-3 text-base text-slate-800"
+							>
+								<KeywordText text={q.text} />
+							</blockquote>
+							<div class="mt-2 text-xs text-slate-500">
+								<span class="font-medium text-slate-700">
+									{participantLabel(q.interview_id)}
+								</span>
+								· {questionLabel(q.question_id)}
+							</div>
+							<div class="mt-2 flex flex-wrap gap-1">
+								{#each q.emotions as e (e)}
+									<span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
+										{titleCase(e)}
+									</span>
+								{/each}
+								<span class="rounded-full px-2 py-0.5 text-xs {sentimentClass(q.sentiment)}">
+									{SENTIMENT_LABELS[q.sentiment]}
+								</span>
+							</div>
+							<div class="mt-2 font-mono text-xs text-slate-400">
+								{q.segment_ids.length}
+								{q.segment_ids.length === 1 ? 'fragment' : 'fragments'} · chars {q.char_start}–{q.char_end}
+							</div>
+						</article>
 					{/each}
 				</section>
-			</div>
+			{/if}
+
+			<!-- All coded fragments -->
+			<section class="flex flex-col gap-2">
+				<h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">
+					Coded fragments · {drawerFragments.length}
+				</h3>
+				<p class="text-xs text-muted-foreground">
+					Every response segment tagged with this theme. Tinted rows are already part of a pull
+					quote above; the rest are coded but not pulled.
+				</p>
+				{#each drawerFragments as f (f.segment_id)}
+					<div
+						class="p-2 border-2 border-muted/60
+							{f.in_pull_quote ? 'border-accent-mint bg-accent-mint/5' : 'border-muted-foreground'}"
+					>
+						<p class="text-sm leading-relaxed text-slate-700">
+							<KeywordText text={f.text} />
+						</p>
+						<div class="mt-1 text-xs text-slate-500">
+							<span class="font-medium text-slate-700">{participantLabel(f.interview_id)}</span>
+							· {questionLabel(f.question_id)}
+						</div>
+						<div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-400">
+							<span class="rounded-full px-1.5 py-0.5 {sentimentClass(f.sentiment)}">
+								{SENTIMENT_LABELS[f.sentiment]}
+							</span>
+							{#if f.in_pull_quote}
+								<span class="font-mono text-accent-mint">↑ in {f.quote_id}</span>
+							{/if}
+							<span class="font-mono">chars {f.char_start}–{f.char_end}</span>
+						</div>
+					</div>
+				{:else}
+					<p
+						class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500"
+					>
+						No coded fragments for this theme in this view.
+					</p>
+				{/each}
+			</section>
 		</div>
-	</Sheet.Content>
-</Sheet.Root>
+	</div>
+</RightDrawer>
+
+<!-- Participant details drawer -->
+<ParticipantDrawer
+	bind:open={participantDrawerOpen}
+	interviewId={participantDrawerId}
+	bind:profiles
+/>

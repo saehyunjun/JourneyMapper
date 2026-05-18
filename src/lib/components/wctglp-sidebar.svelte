@@ -8,7 +8,6 @@
 		MessageSquareQuote,
 		Network,
 		Upload,
-		Tags,
 		Fingerprint
 	} from "@lucide/svelte";
 
@@ -18,19 +17,31 @@
 
 	type NavItem = { title: string; url: string; description: string; icon: Component };
 
-	const nav: NavItem[] = [
+	const overview: NavItem = {
+		title: "Overview",
+		url: "/wctglpdemo",
+		description: "GLP-1 Insights Magazine demo home",
+		icon: LayoutDashboard
+	};
+
+	// The pipeline group mirrors the ordered review stages on the overview page.
+	const pipeline: NavItem[] = [
 		{
-			title: "Overview",
-			url: "/wctglpdemo",
-			description: "GLP-1 Insights Magazine demo home",
-			icon: LayoutDashboard
+			title: "Upload & review",
+			url: "/wctglpdemo/upload",
+			description: "Upload a transcript, then review its AI-tagged segments and questions",
+			icon: Upload
 		},
 		{
-			title: "Interview analysis",
+			title: "Review quote bank",
 			url: "/wctglpdemo/analysis",
-			description: "Review the quote bank, themes, and word counts",
+			description: "Approve or reject AI-proposed quotes; review themes and word counts",
 			icon: ClipboardList
-		},
+		}
+	];
+
+	// Read-only views over the reviewed data.
+	const explore: NavItem[] = [
 		{
 			title: "What patients said",
 			url: "/wctglpdemo/interview-words",
@@ -42,18 +53,6 @@
 			url: "/wctglpdemo/topic-tree",
 			description: "Zoomable radial tree: theme → subtheme → word",
 			icon: Network
-		},
-		{
-			title: "Upload transcript",
-			url: "/wctglpdemo/upload",
-			description: "Add a new interview transcript to the dataset",
-			icon: Upload
-		},
-		{
-			title: "Tag segments",
-			url: "/wctglpdemo/tag",
-			description: "Confirm theme, emotion, sentiment, and semantic tags per segment",
-			icon: Tags
 		},
 		{
 			title: "Participant fingerprint",
@@ -73,11 +72,11 @@
 <Sidebar.Root {...restProps} bind:ref collapsible="icon">
 	<Sidebar.Header>
 		<div
-			class="flex items-center justify-between gap-2 group-data-[collapsible=icon]:justify-center"
+			class="flex flex-row items-center justify-between gap-2 group-data-[collapsible=icon]:justify-center [collapsible=icon]:mx-auto"
 		>
 			<a
 				href="/wctglpdemo"
-				class="flex min-w-0 flex-col gap-0.5 leading-none group-data-[collapsible=icon]:hidden"
+				class="flex min-w-0 flex-col gap-0.5 leading-none justify-center group-data-[collapsible=icon]:hidden"
 			>
 				<span class="truncate text-base font-bold uppercase text-accent-foreground">
 					GLP-1 Insights
@@ -90,9 +89,9 @@
 		</div>
 	</Sidebar.Header>
 	<Sidebar.Content>
-		<Sidebar.Group>
+		{#snippet navMenu(items: NavItem[])}
 			<Sidebar.Menu>
-				{#each nav as item (item.url)}
+				{#each items as item (item.url)}
 					{@const Icon = item.icon}
 					<Sidebar.MenuItem>
 						<Sidebar.MenuButton tooltipContent={item.description} isActive={isActive(item.url)}>
@@ -106,6 +105,18 @@
 					</Sidebar.MenuItem>
 				{/each}
 			</Sidebar.Menu>
+		{/snippet}
+
+		<Sidebar.Group>
+			{@render navMenu([overview])}
+		</Sidebar.Group>
+		<Sidebar.Group>
+			<Sidebar.GroupLabel>Pipeline</Sidebar.GroupLabel>
+			{@render navMenu(pipeline)}
+		</Sidebar.Group>
+		<Sidebar.Group>
+			<Sidebar.GroupLabel>Explore</Sidebar.GroupLabel>
+			{@render navMenu(explore)}
 		</Sidebar.Group>
 	</Sidebar.Content>
 	<Sidebar.Rail />

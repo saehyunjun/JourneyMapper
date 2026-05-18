@@ -113,6 +113,16 @@
 		data.interviewOptions.find((o) => o.id === data.interviewId)?.status ?? 'pending'
 	);
 
+	// A save reruns `load`, so `interviewOptions` already reflects the new
+	// statuses — the post-save hand-off reads from it to point at what's next.
+	const nextPending = $derived(
+		data.interviewOptions.find((o) => o.status === 'pending' && o.id !== data.interviewId)?.id ??
+			null
+	);
+	const pendingCount = $derived(
+		data.interviewOptions.filter((o) => o.status === 'pending').length
+	);
+
 	function selectInterview(event: Event) {
 		const id = (event.currentTarget as HTMLSelectElement).value;
 		goto(`?interview=${id}`, { keepFocus: true, noScroll: true });
@@ -402,7 +412,7 @@
 	</div>
 </div>
 
-<!-- Surfaced after a save so the reviewer knows the data is now explorable. -->
+<!-- Surfaced after a save so the reviewer can advance through the pipeline. -->
 <AlertDialog.Root bind:open={showSavedDialog}>
 	<AlertDialog.Content>
 		<AlertDialog.Header>
@@ -411,18 +421,31 @@
 				{#if form?.success}
 					{form.segmentCount} segments annotated · {form.themedCount} carry at least one theme{form.discardedCount
 						? ` · ${form.discardedCount} discarded`
-						: ''}. The Interview Words view now reflects these tags — explore it, or keep
-					refining here.
+						: ''}. These tags feed the Themes and Word views.
+					{#if nextPending}
+						{pendingCount}
+						{pendingCount === 1 ? 'interview' : 'interviews'} still need tagging.
+					{:else}
+						Every interview is now tagged — the quote bank is the next review stage.
+					{/if}
 				{:else}
-					Your tags were saved. The Interview Words view now reflects them.
+					Your tags were saved.
 				{/if}
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
-			<AlertDialog.Cancel>Keep tagging</AlertDialog.Cancel>
-			<AlertDialog.Action onclick={() => goto('/wctglpdemo/interview-words')}>
-				View updated interview words
-			</AlertDialog.Action>
+			<AlertDialog.Cancel>Stay on this interview</AlertDialog.Cancel>
+			{#if nextPending}
+				<AlertDialog.Action
+					onclick={() => goto(`?interview=${nextPending}`, { keepFocus: true, noScroll: true })}
+				>
+					Tag next: {titleCase(nextPending)}
+				</AlertDialog.Action>
+			{:else}
+				<AlertDialog.Action onclick={() => goto('/wctglpdemo')}>
+					Back to pipeline overview
+				</AlertDialog.Action>
+			{/if}
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

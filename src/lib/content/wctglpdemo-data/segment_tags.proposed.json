@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-18T05:45:45.392Z",
+    "generated_at": "2026-05-18T19:45:43.146Z",
     "generator": "scripts/propose-segment-tags.mjs",
     "model": "claude-opus-4-7",
     "codebook_schema_version": "1.2",
@@ -11,7 +11,8 @@
       "participant_07",
       "participant_08",
       "participant_09",
-      "participant_10"
+      "participant_10",
+      "participant_12"
     ],
     "notes": [
       "AI-proposed theme/subtheme/emotion/sentiment/semantic tags, one entry per segment_id.",
@@ -7211,6 +7212,837 @@
       ],
       "confidence": 0.82,
       "note": ""
+    },
+    "participant_12_t01_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "admin reply"
+    },
+    "participant_12_t01_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "curiosity"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.6,
+      "note": "expression of interest"
+    },
+    "participant_12_t03_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "affirmation"
+    },
+    "participant_12_t05_s00": {
+      "themes": [
+        "cost_access"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "access_logic",
+        "cost_benefit_reasoning"
+      ],
+      "confidence": 0.9,
+      "note": ""
+    },
+    "participant_12_t05_s01": {
+      "themes": [
+        "cost_access",
+        "insurance_barrier"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "anxiety"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t05_s02": {
+      "themes": [
+        "medication_access",
+        "cost_access"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "anxiety"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.85,
+      "note": "shortages and policy worries"
+    },
+    "participant_12_t05_s03": {
+      "themes": [
+        "side_effect_concern"
+      ],
+      "subthemes": [
+        "serious_complication"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation",
+        "conditional_decision"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t05_s04": {
+      "themes": [
+        "treatment_continuation"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "determination"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "treatment_dependency"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t07_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "very short affirmation"
+    },
+    "participant_12_t07_s01": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "food_noise"
+      ],
+      "emotions": [],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.8,
+      "note": "mental changes hint at food noise"
+    },
+    "participant_12_t07_s02": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "food_noise"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t07_s03": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "food_noise"
+      ],
+      "emotions": [
+        "relief"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_12_t07_s04": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "cardiometabolic"
+      ],
+      "emotions": [],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.75,
+      "note": "inflammation/knees - cardiometabolic best fit"
+    },
+    "participant_12_t07_s05": {
+      "themes": [
+        "non_weight_benefits"
+      ],
+      "subthemes": [
+        "sleep_mood"
+      ],
+      "emotions": [
+        "relief"
+      ],
+      "sentiment": 2,
+      "semantic_tags": [
+        "health_transformation"
+      ],
+      "confidence": 0.7,
+      "note": "emotional/social benefit"
+    },
+    "participant_12_t09_s00": {
+      "themes": [
+        "drug_switching"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": "very short, in context of switching"
+    },
+    "participant_12_t09_s01": {
+      "themes": [
+        "drug_switching",
+        "trial_awareness"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "curiosity"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_12_t09_s02": {
+      "themes": [
+        "drug_switching",
+        "cost_access",
+        "side_effect_concern",
+        "injection_experience"
+      ],
+      "subthemes": [
+        "injection_frequency"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "conditional_decision",
+        "cost_benefit_reasoning"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t11_s00": {
+      "themes": [
+        "trial_participation_motivation"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": "willing to join unapproved trial"
+    },
+    "participant_12_t13_s00": {
+      "themes": [
+        "trial_participation_motivation"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_12_t13_s01": {
+      "themes": [
+        "side_effect_concern",
+        "trial_participation_motivation"
+      ],
+      "subthemes": [
+        "unknown_safety"
+      ],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [
+        "risk_calculation",
+        "information_seeking"
+      ],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_12_t13_s02": {
+      "themes": [
+        "incentives_support",
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [
+        "post_trial_access"
+      ],
+      "emotions": [
+        "anxiety"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "access_logic"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_12_t15_s00": {
+      "themes": [
+        "placebo_concern",
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "anxiety"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.9,
+      "note": ""
+    },
+    "participant_12_t15_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "transitional fragment"
+    },
+    "participant_12_t15_s02": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
+      "emotions": [
+        "anxiety"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": "shame about weight regain"
+    },
+    "participant_12_t15_s03": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.65,
+      "note": "mental stress/shame from weight cycling"
+    },
+    "participant_12_t17_s00": {
+      "themes": [
+        "injection_experience"
+      ],
+      "subthemes": [
+        "injection_frequency"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t17_s01": {
+      "themes": [
+        "injection_experience"
+      ],
+      "subthemes": [
+        "injection_frequency"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t17_s02": {
+      "themes": [
+        "visit_logistics",
+        "time_burden"
+      ],
+      "subthemes": [
+        "scheduling"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_12_t19_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.5,
+      "note": "very short affirmation"
+    },
+    "participant_12_t19_s01": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "telehealth"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.9,
+      "note": ""
+    },
+    "participant_12_t19_s02": {
+      "themes": [
+        "visit_logistics"
+      ],
+      "subthemes": [
+        "telehealth"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t21_s00": {
+      "themes": [
+        "compounded_medication"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "uncertainty"
+      ],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_12_t21_s01": {
+      "themes": [
+        "compounded_medication",
+        "side_effect_concern"
+      ],
+      "subthemes": [
+        "unknown_safety"
+      ],
+      "emotions": [
+        "skepticism"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "risk_calculation"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_12_t21_s02": {
+      "themes": [
+        "compounded_medication",
+        "cost_access"
+      ],
+      "subthemes": [
+        "out_of_pocket_cost"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "cost_benefit_reasoning"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_12_t23_s00": {
+      "themes": [
+        "incentives_support",
+        "time_burden"
+      ],
+      "subthemes": [
+        "financial_compensation"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t23_s01": {
+      "themes": [
+        "education_need",
+        "incentives_support"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_12_t23_s02": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_12_t25_s00": {
+      "themes": [
+        "time_burden",
+        "travel_burden"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_12_t25_s01": {
+      "themes": [
+        "time_burden",
+        "travel_burden"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t27_s00": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_12_t27_s01": {
+      "themes": [
+        "education_need"
+      ],
+      "subthemes": [
+        "nutrition_education"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "lifestyle_change"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t27_s02": {
+      "themes": [
+        "education_need",
+        "fear_of_weight_regain"
+      ],
+      "subthemes": [
+        "medication_education"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "maintenance_strategy"
+      ],
+      "confidence": 0.8,
+      "note": ""
+    },
+    "participant_12_t29_s00": {
+      "themes": [
+        "trial_awareness"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_12_t29_s01": {
+      "themes": [
+        "travel_burden",
+        "time_burden"
+      ],
+      "subthemes": [
+        "distance_to_site"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t31_s00": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": "very short"
+    },
+    "participant_12_t31_s01": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "prior_diets",
+        "exercise_history"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [],
+      "confidence": 0.9,
+      "note": ""
+    },
+    "participant_12_t31_s02": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_12_t31_s03": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_12_t33_s00": {
+      "themes": [
+        "oral_medication_interest",
+        "trial_awareness"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "information_seeking"
+      ],
+      "confidence": 0.65,
+      "note": ""
+    },
+    "participant_12_t35_s00": {
+      "themes": [
+        "oral_medication_interest",
+        "injection_experience"
+      ],
+      "subthemes": [
+        "injection_aversion"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_12_t35_s01": {
+      "themes": [
+        "injection_experience",
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_12_t35_s02": {
+      "themes": [
+        "injection_experience"
+      ],
+      "subthemes": [
+        "injection_frequency"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_12_t35_s03": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [
+        "anxiety"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.75,
+      "note": "concern about daily pill adherence"
+    },
+    "participant_12_t37_s00": {
+      "themes": [
+        "oral_medication_interest",
+        "injection_experience"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "conditional_decision"
+      ],
+      "confidence": 0.75,
+      "note": ""
+    },
+    "participant_12_t37_s01": {
+      "themes": [
+        "oral_medication_interest"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "semantic_tags": [
+        "cost_benefit_reasoning",
+        "convenience_tradeoff"
+      ],
+      "confidence": 0.7,
+      "note": ""
+    },
+    "participant_12_t39_s00": {
+      "themes": [
+        "weight_loss_history"
+      ],
+      "subthemes": [
+        "lifelong_struggle"
+      ],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": "closing meta-comment on shame"
+    },
+    "participant_12_t39_s01": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "frustration"
+      ],
+      "sentiment": -1,
+      "semantic_tags": [],
+      "confidence": 0.55,
+      "note": "general comment about stigma"
+    },
+    "participant_12_t39_s02": {
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": -1,
+      "semantic_tags": [
+        "clinical_trial_friction"
+      ],
+      "confidence": 0.6,
+      "note": "dropout risk"
+    },
+    "participant_12_t39_s03": {
+      "themes": [
+        "incentives_support"
+      ],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "semantic_tags": [],
+      "confidence": 0.6,
+      "note": "importance of supportive environment"
     }
   }
 }

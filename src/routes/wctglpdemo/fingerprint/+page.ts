@@ -7,11 +7,12 @@
 import type { PageLoad } from './$types';
 import { themedParticipantIds } from '$lib/content/wctglpdemo-data/analysis';
 
-export const load: PageLoad = ({ url }) => {
+export const load: PageLoad = ({ url, data }) => {
 	const requested = url.searchParams.get('interview');
 	const interview =
 		requested && themedParticipantIds.includes(requested)
 			? requested
 			: (themedParticipantIds[themedParticipantIds.length - 1] ?? null);
-	return { interview };
+	// Merge in the server load's output (starred quotes + participant profiles).
+	return { ...data, interview };
 };
