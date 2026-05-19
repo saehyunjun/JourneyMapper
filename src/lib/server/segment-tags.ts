@@ -37,7 +37,6 @@ function codebookLookups() {
 	return {
 		themeIds: new Set(themes.map((t) => t.id)),
 		emotionIds: new Set((codebook.emotion_tags as { id: string }[]).map((e) => e.id)),
-		semanticIds: new Set((codebook.semantic_tags as { id: string }[]).map((s) => s.id)),
 		subthemeParent
 	};
 }
@@ -51,7 +50,6 @@ export type SegmentTagDraft = {
 	subthemes: string[];
 	emotions: string[];
 	sentiment: number;
-	semantic_tags: string[];
 	reviewer_notes: string;
 };
 
@@ -78,16 +76,12 @@ export function upsertAnnotation(draft: SegmentTagDraft): Annotation {
 	const themes = dedupe(draft.themes);
 	const subthemes = dedupe(draft.subthemes);
 	const emotions = dedupe(draft.emotions);
-	const semanticTags = dedupe(draft.semantic_tags);
 	let sentiment = Number(draft.sentiment ?? 0);
 	if (!Number.isInteger(sentiment) || sentiment < -2 || sentiment > 2) sentiment = 0;
 
-	const { themeIds, emotionIds, semanticIds, subthemeParent } = codebookLookups();
+	const { themeIds, emotionIds, subthemeParent } = codebookLookups();
 	for (const t of themes) if (!themeIds.has(t)) throw new Error(`Unknown theme "${t}".`);
 	for (const e of emotions) if (!emotionIds.has(e)) throw new Error(`Unknown emotion "${e}".`);
-	for (const s of semanticTags) {
-		if (!semanticIds.has(s)) throw new Error(`Unknown semantic tag "${s}".`);
-	}
 	for (const s of subthemes) {
 		const parent = subthemeParent.get(s);
 		if (!parent) throw new Error(`Unknown subtheme "${s}".`);
@@ -110,7 +104,6 @@ export function upsertAnnotation(draft: SegmentTagDraft): Annotation {
 		subthemes,
 		emotions,
 		sentiment,
-		semantic_tags: semanticTags,
 		confidence: 1,
 		source: 'human',
 		review_status: 'confirmed',

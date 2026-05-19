@@ -4,26 +4,38 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import StarIcon from '@lucide/svelte/icons/star';
 	import MergeIcon from '@lucide/svelte/icons/merge';
+	import SplitIcon from '@lucide/svelte/icons/split';
 	import EraserIcon from '@lucide/svelte/icons/eraser';
 	import ArrowRightIcon from '@lucide/svelte/icons/arrow-right';
 	import UploadIcon from '@lucide/svelte/icons/upload';
 	import LoaderIcon from '@lucide/svelte/icons/loader-circle';
+	import XIcon from '@lucide/svelte/icons/x';
+
+
 	import questionBankRaw from '$lib/content/wctglpdemo-data/questions.json';
 	import SegmentTagDrawer from '$lib/components/SegmentTagDrawer.svelte';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
 	import wctLogoUrl from '$lib/content/wctglpdemo-data/avatars/WCTLogo.png?url';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import * as ButtonGroup from '$lib/components/ui/button-group/index.js';
 	import * as Popover from '$lib/components/ui/popover/index.js';
+	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
+	import { Checkbox } from '$lib/components/ui/checkbox/index.js';
 	import KeywordText from '$lib/components/KeywordText.svelte';
 	import { toasts } from '$lib/stores/toasts.svelte.js';
 	import type { AutotagJob } from '$lib/server/autotag';
+	import {
+		AGE_RANGES,
+		GENDERS,
+		emptyProfile,
+		type ParticipantProfile,
+		type ParticipantType
+	} from '$lib/types/participant-profile';
 
 	// Tags shown inline on a segment card before the rest collapse into a +N
 	// badge. A fixed cap keeps the row predictable — no layout measurement.
 	const TAG_CAP = 5;
-	type CardTag = { kind: 'theme' | 'emotion' | 'semantic'; id: string };
+	type CardTag = { kind: 'theme' | 'emotion'; id: string };
 	import type { Annotation, TaggableSegment } from '$lib/types/segment-tags';
 	import type { PageProps } from './$types';
 
@@ -122,6 +134,7 @@
 			annotations = { ...(result?.annotations ?? {}) };
 			autotagJob = data.review?.autotagJob ?? null;
 			autotagStep = autotagJob?.step ?? '';
+			seedPersona(data.review?.profile ?? emptyProfile(id));
 		}
 	});
 
@@ -178,6 +191,7 @@
 	// --- Segment selection — drives the merge / untag toolbar ---
 	let selectedSegments = $state(new Set<string>());
 	let merging = $state(false);
+	let unmerging = $state(false);
 	let untagging = $state(false);
 	let segmentActionError = $state('');
 
@@ -223,6 +237,11 @@
 		return idx.every((n, i) => i === 0 || n === idx[i - 1] + 1);
 	});
 
+	// Unmerge needs exactly one selected segment that was previously merged.
+	const canUnmerge = $derived(
+		selectedList.length === 1 && (selectedList[0].flags ?? []).includes('merged')
+	);
+
 	// Untag applies to whichever selected segments actually carry an annotation.
 	const untaggable = $derived(selectedList.filter((s) => annotations[s.segment_id]));
 
@@ -258,6 +277,39 @@
 		}
 	}
 
+	async function unmergeSelected() {
+		if (!canUnmerge || unmerging || !result) return;
+		unmerging = true;
+		segmentActionError = '';
+		try {
+			const res = await fetch('/wctglpdemo/segments', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action: 'unmerge',
+					interview_id: result.interviewId,
+					segment_id: selectedList[0].segment_id
+				})
+			});
+			const body = await res.json();
+			if (res.ok && body.ok) {
+				selectedSegments = new Set();
+				// Renumbered ids come from a fresh load; clearing lastInterview lets
+				// the seeding effect re-run.
+				lastInterview = '';
+				await goto(`?interview=${result.interviewId}`, {
+					invalidateAll: true,
+					keepFocus: true,
+					noScroll: true
+				});
+			} else {
+				segmentActionError = body.error ?? 'Could not unmerge segment.';
+			}
+		} finally {
+			unmerging = false;
+		}
+	}
+
 	async function untagSelected() {
 		if (untaggable.length === 0 || untagging) return;
 		untagging = true;
@@ -283,14 +335,104 @@
 		}
 	}
 
-	// Themes, emotions, and semantic tags of an annotation, flattened and
+	// --- Persona details panel ---
+	// The interview-in-review's participant profile, edited inline beside the
+	// transcript. Mirrors the fields of the ParticipantDrawer; seeded from the
+	// server per interview, then kept current as saves come back.
+	let personaProfile = $state<ParticipantProfile | null>(null);
+	let personaFirstName = $state('');
+	let personaLastInitial = $state('');
+	let personaGender = $state('');
+	let personaCountry = $state('');
+	let personaAgeRange = $state('');
+	let personaType = $state<ParticipantType>('individual');
+	let personaSaving = $state(false);
+	let personaUploading = $state(false);
+	let personaJustSaved = $state(false);
+	let personaError = $state('');
+	let personaFileInput = $state<HTMLInputElement | null>(null);
+
+	// Seed the persona form from a stored profile.
+	function seedPersona(p: ParticipantProfile) {
+		personaProfile = p;
+		personaFirstName = p.first_name;
+		personaLastInitial = p.last_initial;
+		personaGender = p.gender;
+		personaCountry = p.country;
+		personaAgeRange = p.age_range;
+		personaType = p.participant_type;
+		personaJustSaved = false;
+		personaError = '';
+	}
+
+	async function savePersona() {
+		const id = result?.interviewId;
+		if (!id || personaSaving) return;
+		personaSaving = true;
+		personaError = '';
+		try {
+			const res = await fetch('/wctglpdemo/participant-profiles', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					interviewId: id,
+					profile: {
+						first_name: personaFirstName,
+						last_initial: personaLastInitial,
+						gender: personaGender,
+						country: personaCountry,
+						age_range: personaAgeRange,
+						participant_type: personaType
+					}
+				})
+			});
+			if (!res.ok) {
+				personaError = 'Could not save persona details.';
+				return;
+			}
+			const { profile: saved } = await res.json();
+			personaProfile = saved;
+			personaJustSaved = true;
+		} catch {
+			personaError = 'Could not save persona details.';
+		} finally {
+			personaSaving = false;
+		}
+	}
+
+	async function uploadPersonaAvatar(event: Event) {
+		const input = event.currentTarget as HTMLInputElement;
+		const file = input.files?.[0];
+		const id = result?.interviewId;
+		if (!file || !id || personaUploading) return;
+		personaUploading = true;
+		personaError = '';
+		try {
+			const body = new FormData();
+			body.append('interviewId', id);
+			body.append('file', file);
+			const res = await fetch('/wctglpdemo/participant-avatar', { method: 'POST', body });
+			if (!res.ok) {
+				personaError = 'Could not upload avatar.';
+				return;
+			}
+			const { profile: saved } = await res.json();
+			personaProfile = saved;
+		} catch {
+			personaError = 'Could not upload avatar.';
+		} finally {
+			personaUploading = false;
+			input.value = '';
+		}
+	}
+
+	// Themes and emotions of an annotation, flattened and
 	// type-tagged for the segment card's tag row + overflow popover.
 	function cardTags(ann: Annotation | undefined): CardTag[] {
 		if (!ann) return [];
 		return [
 			...ann.themes.map((id): CardTag => ({ kind: 'theme', id })),
-			...ann.emotions.map((id): CardTag => ({ kind: 'emotion', id })),
-			...ann.semantic_tags.map((id): CardTag => ({ kind: 'semantic', id }))
+			...ann.emotions.map((id): CardTag => ({ kind: 'emotion', id }))
 		];
 	}
 </script>
@@ -302,9 +444,7 @@
 		class="rounded-full px-2 py-0.5 text-[10px] font-medium
 			{kind === 'theme'
 			? 'bg-accent-mint/15 text-accent-mint'
-			: kind === 'emotion'
-				? 'bg-slate-200 text-slate-600'
-				: 'bg-violet-100 text-violet-700'}"
+				: 'bg-slate-200 text-slate-600'}"
 	>
 		{label}
 	</span>
@@ -322,31 +462,35 @@
 			</h1>
 		</div>
 	</div>
+	<div
+		class="flex flex-row justify-between gap-2 border-b border-primary-foreground bg-white p-4"
+	>
+	<div class="flex flex-row">
+		<label class="flex flex-wrap items-center gap-3">
+			<span class="text-sm font-medium text-slate-700">
+				Select a previously-processed interview to review the transcript.
+			</span>
+			<select
+				value={data.review?.interviewId ?? ''}
+				onchange={(e) => goto(`?interview=${e.currentTarget.value}`, { keepFocus: true })}
+				class="rounded border border-slate-300 px-2 py-1 text-sm text-slate-700"
+			>
+				<option value="">— pick an interview —</option>
+				{#each data.interviewIds as id (id)}
+					<option value={id}>{id}</option>
+				{/each}
+			</select>
+		</label>
+	</div>
+		<Button onclick={() => { uploadError = ''; uploadOpen = true; }}>
+			<UploadIcon />
+			Upload transcript
+		</Button>
+	</div>
 
-	<div class="mx-auto flex w-full max-w-3xl flex-col gap-6 px-8 py-10">
+	<div class="mx-auto flex w-full max-w-5xl flex-col gap-6 px-8 py-10">
 		<!-- Primary action: pick an ingested interview to review, or upload one. -->
-		<div
-			class="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-4"
-		>
-			<label class="flex flex-wrap items-center gap-3">
-				<span class="text-sm font-medium text-slate-700">Review an ingested interview</span>
-				<select
-					value={data.review?.interviewId ?? ''}
-					onchange={(e) => goto(`?interview=${e.currentTarget.value}`, { keepFocus: true })}
-					class="rounded border border-slate-300 px-2 py-1 text-sm text-slate-700"
-				>
-					<option value="">— pick an interview —</option>
-					{#each data.interviewIds as id (id)}
-						<option value={id}>{id}</option>
-					{/each}
-				</select>
-			</label>
-			<Button onclick={() => { uploadError = ''; uploadOpen = true; }}>
-				<UploadIcon />
-				Upload transcript
-			</Button>
-		</div>
-
+		
 		<!-- Autotag status — shown while a freshly uploaded interview is being
 			 tagged by the AI pipeline, or if that run failed. -->
 		{#if autotagJob && autotagJob.state !== 'done'}
@@ -373,7 +517,18 @@
 							{autotagJob.error ?? 'The tagging pipeline errored.'}
 						</p>
 					</div>
-					<Button variant="outline" size="sm" onclick={retryAutotag}>Retry autotag</Button>
+					<div class="flex items-center gap-2">
+						<Button variant="outline" size="sm" onclick={retryAutotag}>Retry autotag</Button>
+						<Button
+							variant="ghost"
+							size="icon-sm"
+							onclick={() => (autotagJob = null)}
+							aria-label="Dismiss"
+							title="Dismiss"
+						>
+							<XIcon />
+						</Button>
+					</div>
 				</div>
 			{/if}
 		{/if}
@@ -402,103 +557,309 @@
 					<p class="text-sm text-muted-foreground">
 						Each interviewer turn's question is AI-proposed — confirm or correct it. Each tinted
 						box is one participant segment; click it to confirm or edit its theme, emotion,
-						sentiment, and semantic tags. Tick the checkboxes to select segments — then merge
-						sequential ones, or untag them, from the toolbar.
+						and sentiment. Tick the checkboxes to select segments — then merge
+						sequential ones, or untag them, from the toolbar beside the transcript.
 					</p>
 				</div>
 
-				<!-- Question-mapping save bar -->
-				<form
-					method="POST"
-					action="?/saveQuestions"
-					class="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-4"
-					use:enhance={() => {
-						savingQuestions = true;
-						return async ({ update }) => {
-							await update({ reset: false });
-							savingQuestions = false;
-						};
-					}}
-				>
-					<input type="hidden" name="interviewId" value={result.interviewId} />
-					<input type="hidden" name="assignments" value={JSON.stringify(questionAssignments)} />
-					<span class="text-sm text-slate-600">
-						<span class="font-medium text-slate-800">{assignedCount}</span>
-						of {interviewerTurns.length} interviewer turns have a question
-					</span>
-					<button
-						type="submit"
-						disabled={savingQuestions || assignedCount === 0}
-						class="rounded bg-accent-mint px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-mint/90 disabled:cursor-not-allowed disabled:opacity-50"
+				<!-- Persona panel + transcript. The panel sticks to the left while the
+					 transcript scrolls; below lg it stacks above the transcript. -->
+				<div class="flex flex-col gap-6 lg:flex-row lg:items-start">
+					<!-- Persona details — editable participant profile for the interview
+						 in review, mirroring the fields of the participant drawer. -->
+					<aside
+						class="flex w-full shrink-0 flex-col gap-4 self-start rounded-lg border border-slate-200 bg-white p-5 lg:sticky lg:top-6 lg:w-72"
 					>
-						{savingQuestions ? 'Saving…' : 'Save question mapping'}
-					</button>
-				</form>
+						<div class="flex flex-col gap-0.5">
+							<span class="figcaption text-accent-mint">Participant details</span>
+							<p class="text-xs text-slate-500">
+								Persona details for this interviewee — saved to their profile.
+							</p>
+						</div>
 
-				<!-- Transcript, with the segment-selection toolbar beside it on md+.
-					 On md+ the toolbar sits in the left gutter (absolutely positioned)
-					 so it never narrows the transcript column. -->
-				<div class="relative flex flex-col gap-3" bind:this={transcriptWrap}>
+						<!-- Avatar -->
+						<div class="flex items-center gap-3">
+							<ParticipantAvatar
+								interviewId={result.interviewId}
+								size="lg"
+								src={personaProfile?.avatar_url}
+							/>
+							<Button
+								variant="link"
+								size="xs"
+								onclick={() => personaFileInput?.click()}
+								disabled={personaUploading}
+							>
+								{personaUploading
+									? 'Uploading…'
+									: personaProfile?.avatar_url
+										? 'Change avatar'
+										: 'Upload avatar'}
+							</Button>
+							<input
+								bind:this={personaFileInput}
+								type="file"
+								accept="image/png,image/jpeg,image/webp,image/gif"
+								class="hidden"
+								onchange={uploadPersonaAvatar}
+							/>
+						</div>
+
+						<!-- Name -->
+						<div class="grid grid-cols-[1fr_4rem] gap-2">
+							<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
+								First name
+								<input
+									type="text"
+									bind:value={personaFirstName}
+									placeholder="Jane"
+									class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800"
+								/>
+							</label>
+							<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
+								Last init.
+								<input
+									type="text"
+									bind:value={personaLastInitial}
+									maxlength="1"
+									placeholder="D"
+									class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800"
+								/>
+							</label>
+						</div>
+
+						<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
+							Gender
+							<select
+								bind:value={personaGender}
+								class="rounded border border-slate-300 px-2 py-1.5 text-sm capitalize text-slate-800"
+							>
+								<option value="">—</option>
+								{#each GENDERS as g (g)}
+									<option value={g} class="capitalize">{g}</option>
+								{/each}
+							</select>
+						</label>
+
+						<div class="grid grid-cols-2 gap-2">
+							<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
+								Country
+								<input
+									type="text"
+									bind:value={personaCountry}
+									placeholder="United States"
+									class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800"
+								/>
+							</label>
+							<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
+								Age range
+								<select
+									bind:value={personaAgeRange}
+									class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800"
+								>
+									<option value="">—</option>
+									{#each AGE_RANGES as a (a)}
+										<option value={a}>{a}</option>
+									{/each}
+								</select>
+							</label>
+						</div>
+
+						<div class="flex flex-col gap-1.5">
+							<span class="text-xs font-medium text-slate-500">Participant type</span>
+							<div class="flex overflow-hidden rounded-md border border-slate-200">
+								{#each ['individual', 'composite'] as const as type (type)}
+									<button
+										type="button"
+										onclick={() => (personaType = type)}
+										aria-pressed={personaType === type}
+										class="flex-1 px-2 py-1.5 text-xs font-medium capitalize transition-colors
+											{personaType === type
+											? 'bg-accent-mint text-white'
+											: 'bg-white text-slate-600 hover:bg-slate-50'}"
+									>
+										{type}
+									</button>
+								{/each}
+							</div>
+							<p class="text-xs text-slate-400">
+								{personaType === 'composite'
+									? 'A blended persona drawn from several interviews.'
+									: 'A single, real interviewee.'}
+							</p>
+						</div>
+
+						{#if personaError}
+							<p
+								class="rounded border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs text-rose-700"
+							>
+								{personaError}
+							</p>
+						{/if}
+
+						<div class="flex items-center gap-3">
+							<Button size="sm" onclick={savePersona} disabled={personaSaving}>
+								{personaSaving ? 'Saving…' : 'Save details'}
+							</Button>
+							{#if personaJustSaved}
+								<span class="text-xs font-medium text-emerald-600">✓ Saved</span>
+							{/if}
+						</div>
+					</aside>
+
+					<!-- Main column — question-mapping save bar + transcript -->
+					<div class="flex min-w-0 flex-1 flex-col gap-3">
+						<!-- Question-mapping save bar -->
+						<form
+							method="POST"
+							action="?/saveQuestions"
+							class="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-4"
+							use:enhance={() => {
+								savingQuestions = true;
+								return async ({ update }) => {
+									await update({ reset: false });
+									savingQuestions = false;
+								};
+							}}
+						>
+							<input type="hidden" name="interviewId" value={result.interviewId} />
+							<input
+								type="hidden"
+								name="assignments"
+								value={JSON.stringify(questionAssignments)}
+							/>
+							<span class="text-sm text-slate-600">
+								<span class="font-medium text-slate-800">{assignedCount}</span>
+								of {interviewerTurns.length} interviewer turns have a question
+							</span>
+							<button
+								type="submit"
+								disabled={savingQuestions || assignedCount === 0}
+								class="rounded bg-accent-mint px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-mint/90 disabled:cursor-not-allowed disabled:opacity-50"
+							>
+								{savingQuestions ? 'Saving…' : 'Save question mapping'}
+							</button>
+						</form>
+
+						<!-- Transcript, with the segment-selection toolbar beside it on lg+.
+							 On lg+ the toolbar sits in the right gutter (absolutely
+							 positioned) so it never narrows the transcript column. -->
+						<div class="relative flex flex-col gap-3" bind:this={transcriptWrap}>
 					<!-- Segment-selection toolbar — appears once a segment is ticked,
-						 aligned beside the topmost selected segment. -->
+						 aligned beside the topmost selected segment. Icon-only buttons;
+						 each names its action in a hover tooltip. -->
 					{#if selectedSegments.size > 0}
 						<div
-							class="md:absolute md:right-full md:mr-4 md:w-60"
+							class="lg:absolute lg:left-full lg:ml-4 lg:w-auto"
 							style="top: {toolbarTop}px"
 						>
-							<div
-								class="z-10 flex flex-col gap-3 rounded-lg border border-accent-mint/50 bg-white p-3 shadow-sm"
-							>
-							<div class="flex flex-col gap-0.5 text-sm text-slate-600">
-								<span>
-									<span class="font-medium text-slate-800">{selectedSegments.size}</span>
-									segment{selectedSegments.size === 1 ? '' : 's'} selected
-								</span>
-								{#if segmentActionError}
-									<span class="text-xs text-rose-600">{segmentActionError}</span>
-								{/if}
-							</div>
-							<div class="flex flex-col gap-2">
-								<ButtonGroup.Root class="w-full">
-									<Button
-										variant="default"
-										size="sm"
-										class="flex-1 justify-center"
-										disabled={!canMerge || merging}
-										title={canMerge
-											? 'Merge the selected segments into one'
-											: 'Select 2 or more sequential segments in the same turn'}
-										onclick={mergeSelected}
+							<Tooltip.Provider delayDuration={150}>
+								<div class="flex w-sm items-center gap-2 lg:flex-col lg:items-start">
+									<span
+										class="inline-flex h-6 shrink-0 items-center rounded-full bg-accent-mint/10 px-2 text-xs font-semibold text-accent-mint"
+										title="{selectedSegments.size} segment{selectedSegments.size === 1
+											? ''
+											: 's'} selected"
 									>
-										<MergeIcon />
-										{merging ? 'Merging…' : 'Merge'}
-									</Button>
-									<Button
-										variant="outline"
-										size="sm"
-										class="flex-1 justify-center"
-										disabled={untaggable.length === 0 || untagging}
-										title={untaggable.length > 0
-											? 'Remove tags from the selected segments'
-											: 'No selected segment has tags to remove'}
-										onclick={untagSelected}
-									>
-										<EraserIcon />
-										{untagging
-											? 'Untagging…'
-											: `Untag${untaggable.length ? ` (${untaggable.length})` : ''}`}
-									</Button>
-								</ButtonGroup.Root>
-									<Button
-										variant="ghost"
-										size="sm"
-										class="justify-center"
-										onclick={() => (selectedSegments = new Set())}
-									>
-										Clear
-									</Button>
+										{selectedSegments.size} selected
+									</span>
+									<div class="flex items-center gap-1 lg:flex-col">
+										<Tooltip.Root>
+											<Tooltip.Trigger>
+												{#snippet child({ props })}
+													<Button
+														{...props}
+														variant="default"
+														size="icon-sm"
+														disabled={!canMerge || merging}
+														onclick={mergeSelected}
+														aria-label="Merge segments"
+													>
+														<MergeIcon />
+													</Button>
+												{/snippet}
+											</Tooltip.Trigger>
+											<Tooltip.Content side="right">
+												{canMerge
+													? merging
+														? 'Merging…'
+														: 'Merge selected segments'
+													: 'Select 2+ sequential segments in one turn'}
+											</Tooltip.Content>
+										</Tooltip.Root>
+
+										<Tooltip.Root>
+											<Tooltip.Trigger>
+												{#snippet child({ props })}
+													<Button
+														{...props}
+														variant="outline"
+														size="icon-sm"
+														disabled={!canUnmerge || unmerging}
+														onclick={unmergeSelected}
+														aria-label="Unmerge segment"
+													>
+														<SplitIcon />
+													</Button>
+												{/snippet}
+											</Tooltip.Trigger>
+											<Tooltip.Content side="right">
+												{canUnmerge
+													? unmerging
+														? 'Unmerging…'
+														: 'Split this merged segment back into sentences'
+													: 'Select one merged segment to unmerge'}
+											</Tooltip.Content>
+										</Tooltip.Root>
+
+										<Tooltip.Root>
+											<Tooltip.Trigger>
+												{#snippet child({ props })}
+													<Button
+														{...props}
+														variant="secondary"
+														size="icon-sm"
+														disabled={untaggable.length === 0 || untagging}
+														onclick={untagSelected}
+														aria-label="Untag segments"
+													>
+														<EraserIcon />
+													</Button>
+												{/snippet}
+											</Tooltip.Trigger>
+											<Tooltip.Content side="right">
+												{untaggable.length > 0
+													? untagging
+														? 'Untagging…'
+														: `Untag ${untaggable.length} segment${
+																untaggable.length === 1 ? '' : 's'
+															}`
+													: 'No selected segment has tags'}
+											</Tooltip.Content>
+										</Tooltip.Root>
+
+										<Tooltip.Root>
+											<Tooltip.Trigger>
+												{#snippet child({ props })}
+													<Button
+														{...props}
+														variant="ghost"
+														size="icon-sm"
+														onclick={() => (selectedSegments = new Set())}
+														aria-label="Clear selection"
+													>
+														<XIcon />
+													</Button>
+												{/snippet}
+											</Tooltip.Trigger>
+											<Tooltip.Content side="right">Clear selection</Tooltip.Content>
+										</Tooltip.Root>
+									</div>
 								</div>
-							</div>
+							</Tooltip.Provider>
+							{#if segmentActionError}
+								<p class="mt-1.5 max-w-[13rem] text-xs text-rose-600">{segmentActionError}</p>
+							{/if}
 						</div>
 					{/if}
 
@@ -648,31 +1009,17 @@
 																	</div>
 																</div>
 															{/if}
-															{#if ann?.semantic_tags.length}
-																<div>
-																	<p
-																		class="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400"
-																	>
-																		Semantic
-																	</p>
-																	<div class="flex flex-wrap gap-1">
-																		{#each ann.semantic_tags as st (st)}
-																			{@render tagChip('semantic', titleCase(st))}
-																		{/each}
-																	</div>
-																</div>
-															{/if}
 														</div>
 													</Popover.Content>
 												</Popover.Root>
 											{/if}
 											<Button
 												variant="link"
+												size="xs"
 												onclick={(e) => {
 													e.stopPropagation();
 													openSegment = seg;
 												}}
-												class="ml-auto text-xs font-medium capitalize text-accent-mint hover:underline"
 											>
 												{ann ? 'click to edit tags' : 'click to add tags'}
 												<ArrowRightIcon />
@@ -683,6 +1030,8 @@
 							</div>
 						{/if}
 					{/each}
+					</div>
+				</div>
 					</div>
 				</div>
 			</section>

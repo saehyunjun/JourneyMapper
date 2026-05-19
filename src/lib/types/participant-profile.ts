@@ -61,3 +61,45 @@ export function profileName(profile: ParticipantProfile | undefined, fallback: s
 	if (!first) return fallback;
 	return last ? `${first} ${last.toUpperCase()}.` : first;
 }
+
+/** Join phrases into prose: "A", "A and B", "A, B, and C". */
+function proseList(items: string[]): string {
+	if (items.length <= 1) return items[0] ?? '';
+	if (items.length === 2) return `${items[0]} and ${items[1]}`;
+	return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
+}
+
+/**
+ * A generated two-sentence bio for the fingerprint page. The first sentence
+ * places the participant (age, country, individual/composite); the second
+ * names the themes their tagged segments returned to most. `themeLabels`
+ * should be human-readable and ordered most-raised first.
+ */
+export function participantBio(
+	profile: ParticipantProfile | undefined,
+	fallback: string,
+	themeLabels: string[],
+	segmentCount: number
+): string {
+	const name = profileName(profile, fallback);
+	const age = profile?.age_range?.trim() ?? '';
+	const country = profile?.country?.trim() ?? '';
+	const composite = profile?.participant_type === 'composite';
+
+	// Sentence 1 — who they are.
+	const noun = composite ? 'composite persona' : 'patient';
+	const ageClause = age ? `${age.replace(/-/g, '–')}-year-old ` : '';
+	let identity = `${name} is a ${ageClause}${noun}`;
+	if (country) identity += ` from ${country}`;
+	if (composite) identity += ', blended from several interviews';
+	identity += '.';
+
+	// Sentence 2 — what their interview returned to.
+	const themes = themeLabels.slice(0, 3);
+	const concern = themes.length
+		? `Across ${segmentCount} tagged ${segmentCount === 1 ? 'segment' : 'segments'}, ` +
+			`${composite ? 'this persona' : 'they'} returned most often to ${proseList(themes)}.`
+		: 'No interview themes have been tagged for this participant yet.';
+
+	return `${identity} ${concern}`;
+}

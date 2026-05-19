@@ -5,7 +5,7 @@
  *
  * Replaces the old hand-coded TAGS table inside build-segment-tags.mjs. For each
  * untagged interview it sends every segment of that interview to Claude in one
- * call and gets back theme/subtheme/emotion/sentiment/semantic tags, then merges
+ * call and gets back theme/subtheme/emotion/sentiment tags, then merges
  * the result into segment_tags.proposed.json.
  *
  * This is the judgement step. Output is unreviewed: build-segment-tags.mjs
@@ -66,7 +66,21 @@ let existing = { meta: {}, proposals: {} };
 if (existsSync(resolve(ROOT, PROPOSED_FILE))) {
 	existing = JSON.parse(readFileSync(resolve(ROOT, PROPOSED_FILE), 'utf8'));
 }
-const proposals = { ...existing.proposals };
+
+// Carry forward existing proposals, but drop any whose segment_id is no longer
+// in segments.json. Re-segmentation can delete or renumber segments, and a
+// stale proposal key would otherwise linger here forever and fail the
+// integrity check in build-segment-tags.mjs.
+const currentSegmentIds = new Set(segmentsData.segments.map((s) => s.segment_id));
+const proposals = {};
+let prunedStale = 0;
+for (const [id, proposal] of Object.entries(existing.proposals ?? {})) {
+	if (currentSegmentIds.has(id)) proposals[id] = proposal;
+	else prunedStale++;
+}
+if (prunedStale > 0) {
+	console.log(`Pruned ${prunedStale} stale proposal(s) for segments no longer in segments.json.`);
+}
 
 const isFullyProposed = (iv) =>
 	segmentsByInterview.get(iv).every((s) => s.segment_id in proposals);
@@ -97,7 +111,6 @@ if (targets.length === 0) {
 const themeIds = codebook.theme_tags.map((t) => t.id);
 const subthemeIds = codebook.theme_tags.flatMap((t) => (t.subthemes ?? []).map((s) => s.id));
 const emotionIds = codebook.emotion_tags.map((e) => e.id);
-const semanticIds = codebook.semantic_tags.map((s) => s.id);
 
 const annotationSchema = {
 	type: 'object',
@@ -114,7 +127,6 @@ const annotationSchema = {
 					subthemes: { type: 'array', items: { type: 'string', enum: subthemeIds } },
 					emotions: { type: 'array', items: { type: 'string', enum: emotionIds } },
 					sentiment: { type: 'integer', enum: [-2, -1, 0, 1, 2] },
-					semantic_tags: { type: 'array', items: { type: 'string', enum: semanticIds } },
 					confidence: { type: 'number' },
 					note: { type: 'string' }
 				},
@@ -124,7 +136,6 @@ const annotationSchema = {
 					'subthemes',
 					'emotions',
 					'sentiment',
-					'semantic_tags',
 					'confidence',
 					'note'
 				]
@@ -141,7 +152,6 @@ Each segment is one sentence of participant speech. For every segment you are gi
 - subthemes: subtheme ids (0 or more). A subtheme may ONLY be used if its parent theme is also in "themes".
 - emotions: emotion ids the participant expresses (0 or more; often none — do not over-tag).
 - sentiment: an integer on the scale below.
-- semantic_tags: semantic-pattern ids (0 or more).
 - confidence: your confidence in the annotation, 0.0–1.0.
 - note: a short reviewer note, or "" if none. Use it to flag ambiguity or explain a low-confidence call.
 
@@ -161,10 +171,7 @@ THEMES (with their subthemes):
 ${JSON.stringify(codebook.theme_tags, null, 2)}
 
 EMOTIONS:
-${JSON.stringify(codebook.emotion_tags, null, 2)}
-
-SEMANTIC TAGS:
-${JSON.stringify(codebook.semantic_tags, null, 2)}`;
+${JSON.stringify(codebook.emotion_tags, null, 2)}`;
 
 // --- Propose tags for one interview (one API call) ---
 const client = new Anthropic();
@@ -255,7 +262,6 @@ for (const iv of targets) {
 			subthemes: a.subthemes,
 			emotions: a.emotions,
 			sentiment: a.sentiment,
-			semantic_tags: a.semantic_tags,
 			confidence: a.confidence,
 			note: a.note ?? ''
 		};
@@ -278,7 +284,7 @@ const output = {
 		codebook_schema_version: codebook.meta.schema_version,
 		proposed_interviews: proposedInterviews,
 		notes: [
-			'AI-proposed theme/subtheme/emotion/sentiment/semantic tags, one entry per segment_id.',
+			'AI-proposed theme/subtheme/emotion/sentiment tags, one entry per segment_id.',
 			'Tag ids are constrained to codebook.json at generation time (JSON-schema enum) and re-validated by build-segment-tags.mjs.',
 			'Every entry is unreviewed — build-segment-tags.mjs writes them as review_status "pending".',
 			'Re-propose an interview with: node scripts/propose-segment-tags.mjs <interview_id> --force'

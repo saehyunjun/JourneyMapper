@@ -71,7 +71,7 @@
 			<!-- Headline counts -->
 			<div class="grid grid-cols-3 gap-2">
 				{#each [{ n: stats.invocations, u: stats.invocationUnit }, { n: stats.segmentCount, u: 'segments' }, { n: stats.participantCount, u: 'participants' }] as cell (cell.u)}
-					<div class="rounded-lg border border-slate-200 p-3">
+					<div class="border-b border-accent pb-2">
 						<p class="text-2xl font-semibold tabular-nums text-slate-800">{cell.n}</p>
 						<p class="text-xs text-slate-500">{cell.u}</p>
 					</div>

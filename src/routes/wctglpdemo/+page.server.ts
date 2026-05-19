@@ -1,11 +1,14 @@
 /**
- * Pipeline overview — loads the analyst's quote-review decisions so the landing
- * page can show how far quote review has progressed. Interview and tagging
- * counts are derived statically in the page from the analysis data module.
+ * Executive summary — loads the analyst-starred quote ids (so each finding can
+ * prefer a starred quote over a merely high-scored one) and every participant's
+ * profile (for the participant chips / drawer). Both files are read fresh on
+ * each load, so the page always reflects the latest stars and profile edits.
  */
-import { readQuoteReviews } from '$lib/server/quote-reviews';
+import { readHighlights } from '$lib/server/highlights';
+import { readProfiles } from '$lib/server/participant-profiles';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = () => {
-	return { quoteReviews: readQuoteReviews() };
+	const { starredQuoteIds } = readHighlights();
+	return { starredQuoteIds, participantProfiles: readProfiles() };
 };

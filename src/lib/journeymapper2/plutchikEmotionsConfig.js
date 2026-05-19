@@ -87,10 +87,11 @@ export const EMOTION_COLOR_MAP = Object.fromEntries(
 );
 
 export const EMOTION_LEVELS_MAP = Object.fromEntries(
-  PLUTCHIK_EMOTIONS.map(e => [e.id, e.levels])
+  PLUTCHIK_EMOTIONS.map(e => [e.id, [e.level_1, e.level_2, e.level_3]])
 );
 
 // Attach colors to dyads
+/** @param {{ emotion_1: string, emotion_2: string, label: string }[]} dyads */
 const withColors = (dyads) =>
   dyads.map(d => ({
     ...d,
@@ -139,3 +140,44 @@ export const PLUTCHIK_DYADS = {
     { emotion_1: 'surprise', emotion_2: 'anticipation', label: 'confusion' },
   ]),
 };
+
+// ── Segment-tag drawer picker ────────────────────────────────────────────
+// Picker-ready Plutchik taxonomy: each primary emotion paired with its three
+// intensity levels and every dyad it takes part in. SegmentTagDrawer uses
+// this to drive the "click a primary → reveal its levels + blends" flow.
+//
+// Tag ids are the lowercased emotion words and MUST stay in sync with
+// codebook.json `emotion_tags`, which the server validates saved emotions
+// against (ALL_EMOTION_IDS is the full list, for that cross-check).
+
+const ALL_DYADS = [
+  ...PLUTCHIK_DYADS.primary,
+  ...PLUTCHIK_DYADS.secondary,
+  ...PLUTCHIK_DYADS.tertiary,
+  ...PLUTCHIK_DYADS.opposite,
+];
+
+export const EMOTION_PICKER = PLUTCHIK_EMOTIONS.map((e) => ({
+  id: e.id,
+  label: e.label,
+  color: e.color,
+  textColor: e.textColor,
+  valence: e.valence,
+  levels: [
+    { id: e.level_1, intensity: 'low' },
+    { id: e.level_2, intensity: 'medium' },
+    { id: e.level_3, intensity: 'high' },
+  ],
+  dyads: ALL_DYADS.filter(
+    (d) => d.emotion_1 === e.id || d.emotion_2 === e.id
+  ).map((d) => ({
+    id: d.label,
+    with: d.emotion_1 === e.id ? d.emotion_2 : d.emotion_1,
+  })),
+}));
+
+// Every valid emotion tag id — 24 intensity levels + 28 dyads.
+export const ALL_EMOTION_IDS = [
+  ...PLUTCHIK_EMOTIONS.flatMap((e) => [e.level_1, e.level_2, e.level_3]),
+  ...ALL_DYADS.map((d) => d.label),
+];

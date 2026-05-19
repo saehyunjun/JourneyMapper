@@ -47,9 +47,6 @@
       "emotions": [
         "frustration"
       ],
-      "semantic_tags": [
-        "access_logic"
-      ],
       "sentiment": -2,
       "quote_score": {
         "clarity": 4,
@@ -87,9 +84,6 @@
       ],
       "emotions": [
         "frustration"
-      ],
-      "semantic_tags": [
-        "cost_benefit_reasoning"
       ],
       "sentiment": -2,
       "quote_score": {
@@ -129,9 +123,6 @@
       "emotions": [
         "relief"
       ],
-      "semantic_tags": [
-        "health_transformation"
-      ],
       "sentiment": 2,
       "quote_score": {
         "clarity": 5,
@@ -168,10 +159,6 @@
         "injection_aversion"
       ],
       "emotions": [],
-      "semantic_tags": [
-        "cost_benefit_reasoning",
-        "treatment_dependency"
-      ],
       "sentiment": 0,
       "quote_score": {
         "clarity": 5,
@@ -206,10 +193,6 @@
       ],
       "subthemes": [],
       "emotions": [],
-      "semantic_tags": [
-        "altruistic_reasoning",
-        "risk_calculation"
-      ],
       "sentiment": 1,
       "quote_score": {
         "clarity": 4,
@@ -247,9 +230,6 @@
         "visit_frequency"
       ],
       "emotions": [],
-      "semantic_tags": [
-        "clinical_trial_friction"
-      ],
       "sentiment": -1,
       "quote_score": {
         "clarity": 5,
@@ -287,9 +267,6 @@
       "emotions": [
         "hope"
       ],
-      "semantic_tags": [
-        "convenience_tradeoff"
-      ],
       "sentiment": 1,
       "quote_score": {
         "clarity": 4,
@@ -324,9 +301,6 @@
       "subthemes": [],
       "emotions": [
         "frustration"
-      ],
-      "semantic_tags": [
-        "clinical_trial_friction"
       ],
       "sentiment": -1,
       "quote_score": {
@@ -364,9 +338,6 @@
         "injection_aversion"
       ],
       "emotions": [],
-      "semantic_tags": [
-        "convenience_tradeoff"
-      ],
       "sentiment": 1,
       "quote_score": {
         "clarity": 5,
@@ -401,10 +372,6 @@
       "subthemes": [],
       "emotions": [
         "determination"
-      ],
-      "semantic_tags": [
-        "treatment_dependency",
-        "access_logic"
       ],
       "sentiment": 0,
       "quote_score": {
@@ -441,7 +408,6 @@
         "stall_management"
       ],
       "emotions": [],
-      "semantic_tags": [],
       "sentiment": 1,
       "quote_score": {
         "clarity": 4,
@@ -475,9 +441,6 @@
       ],
       "subthemes": [],
       "emotions": [],
-      "semantic_tags": [
-        "altruistic_reasoning"
-      ],
       "sentiment": 1,
       "quote_score": {
         "clarity": 5,
@@ -514,7 +477,6 @@
       "emotions": [
         "uncertainty"
       ],
-      "semantic_tags": [],
       "sentiment": 0,
       "quote_score": {
         "clarity": 4,
@@ -552,7 +514,6 @@
       "emotions": [
         "enthusiasm"
       ],
-      "semantic_tags": [],
       "sentiment": 2,
       "quote_score": {
         "clarity": 4,
@@ -589,9 +550,6 @@
       "emotions": [
         "enthusiasm"
       ],
-      "semantic_tags": [
-        "convenience_tradeoff"
-      ],
       "sentiment": 2,
       "quote_score": {
         "clarity": 4,
@@ -623,10 +581,6 @@
       "themes": [],
       "subthemes": [],
       "emotions": [],
-      "semantic_tags": [
-        "lifestyle_change",
-        "maintenance_strategy"
-      ],
       "sentiment": 1,
       "quote_score": {
         "clarity": 5,
@@ -663,9 +617,6 @@
       ],
       "emotions": [
         "uncertainty"
-      ],
-      "semantic_tags": [
-        "risk_calculation"
       ],
       "sentiment": -1,
       "quote_score": {
@@ -705,7 +656,6 @@
       "emotions": [
         "enthusiasm"
       ],
-      "semantic_tags": [],
       "sentiment": 1,
       "quote_score": {
         "clarity": 5,
@@ -742,7 +692,6 @@
       "emotions": [
         "frustration"
       ],
-      "semantic_tags": [],
       "sentiment": -1,
       "quote_score": {
         "clarity": 5,
@@ -779,7 +728,6 @@
       "emotions": [
         "hope"
       ],
-      "semantic_tags": [],
       "sentiment": 1,
       "quote_score": {
         "clarity": 5,
@@ -818,7 +766,6 @@
       "emotions": [
         "enthusiasm"
       ],
-      "semantic_tags": [],
       "sentiment": 2,
       "quote_score": {
         "clarity": 5,
@@ -852,9 +799,6 @@
       "subthemes": [],
       "emotions": [
         "enthusiasm"
-      ],
-      "semantic_tags": [
-        "altruistic_reasoning"
       ],
       "sentiment": 2,
       "quote_score": {

@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-19T00:01:13.078Z",
+    "generated_at": "2026-05-19T21:21:36.438Z",
     "generator": "scripts/build-segments.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -15,7 +15,7 @@
       "idea_unit_grouping": "deferred",
       "short_segment_handling": "flagged (\"very_short\"), not merged"
     },
-    "segment_count": 636,
+    "segment_count": 619,
     "notes": [
       "One segment per sentence of participant speech; offsets round-trip against the source file.",
       "question_id is inherited from the most recent interviewer turn in question_map.json.",
@@ -177,43 +177,19 @@
       "segment_index": 0,
       "question_id": null,
       "speaker": "participant",
-      "text": "In 2026 I anticipate that my job, which as we know in the United States, our jobs, healthcare influences what medications we can and can get on if they offer it because obesity is not considered a disease, which is false.",
+      "text": "In 2026 I anticipate that my job, which as we know in the United States, our jobs, healthcare influences what medications we can and can get on if they offer it because obesity is not considered a disease, which is false. But I have very strong opinions on that as I'm sure you're aware. If there was a clinical trial and if there was a high probability that I could get the actual medication or a hundred percent probability that I could get the medication and my company had dropped Zepbound for me, then yeah I would because I've lost 46, almost 47% of my body weight.",
       "char_start": 2893,
-      "char_end": 3114,
-      "word_count": 41,
-      "flags": []
+      "char_end": 3464,
+      "word_count": 107,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_06_t11_s01",
       "interview_id": "participant_06",
       "turn_index": 11,
       "segment_index": 1,
-      "question_id": null,
-      "speaker": "participant",
-      "text": "But I have very strong opinions on that as I'm sure you're aware.",
-      "char_start": 3115,
-      "char_end": 3180,
-      "word_count": 13,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_06_t11_s02",
-      "interview_id": "participant_06",
-      "turn_index": 11,
-      "segment_index": 2,
-      "question_id": null,
-      "speaker": "participant",
-      "text": "If there was a clinical trial and if there was a high probability that I could get the actual medication or a hundred percent probability that I could get the medication and my company had dropped Zepbound for me, then yeah I would because I've lost 46, almost 47% of my body weight.",
-      "char_start": 3181,
-      "char_end": 3464,
-      "word_count": 53,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_06_t11_s03",
-      "interview_id": "participant_06",
-      "turn_index": 11,
-      "segment_index": 3,
       "question_id": null,
       "speaker": "participant",
       "text": "I went from pre-diabetic with a lot of physical problems to, I have perfect numbers in all my things now and my life has just dramatically increased.",
@@ -223,10 +199,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_06_t11_s04",
+      "segment_id": "participant_06_t11_s02",
       "interview_id": "participant_06",
       "turn_index": 11,
-      "segment_index": 4,
+      "segment_index": 2,
       "question_id": null,
       "speaker": "participant",
       "text": "The quality of my life has dramatically increased in the last 18 months.",
@@ -236,10 +212,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_06_t11_s05",
+      "segment_id": "participant_06_t11_s03",
       "interview_id": "participant_06",
       "turn_index": 11,
-      "segment_index": 5,
+      "segment_index": 3,
       "question_id": null,
       "speaker": "participant",
       "text": "So that would be a huge factor for me in trying a clinical trial and being on the cusp of helping others who are going to be coming into maintenance after they take these medications as well.",
@@ -2898,10 +2874,10 @@
       "segment_index": 2,
       "question_id": "stopping_glp1",
       "speaker": "participant",
-      "text": "So my inflammation is definitely improved. My sleep is dramatically improved, like sleep apnea.",
+      "text": "So my inflammation is definitely improved. My sleep is dramatically improved, like sleep apnea. It has a challenge and I've noticed that even surprisingly, I went to the dentist this week and my dentist told me that, hey, what has changed?",
       "char_start": 1482,
-      "char_end": 1577,
-      "word_count": 14,
+      "char_end": 1721,
+      "word_count": 41,
       "flags": [
         "merged"
       ]
@@ -2913,10 +2889,10 @@
       "segment_index": 3,
       "question_id": "stopping_glp1",
       "speaker": "participant",
-      "text": "It has a challenge and I've noticed that even surprisingly, I went to the dentist this week and my dentist told me that, hey, what has changed?",
-      "char_start": 1578,
-      "char_end": 1721,
-      "word_count": 27,
+      "text": "You're not grinding your teeth at night anymore.",
+      "char_start": 1722,
+      "char_end": 1770,
+      "word_count": 8,
       "flags": []
     },
     {
@@ -2926,19 +2902,6 @@
       "segment_index": 4,
       "question_id": "stopping_glp1",
       "speaker": "participant",
-      "text": "You're not grinding your teeth at night anymore.",
-      "char_start": 1722,
-      "char_end": 1770,
-      "word_count": 8,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_08_t07_s05",
-      "interview_id": "participant_08",
-      "turn_index": 7,
-      "segment_index": 5,
-      "question_id": "stopping_glp1",
-      "speaker": "participant",
       "text": "So these small things I'm attributing to being, I'm only on the medication for three months, so these are the only changes really that have happened.",
       "char_start": 1771,
       "char_end": 1920,
@@ -2946,10 +2909,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_08_t07_s06",
+      "segment_id": "participant_08_t07_s05",
       "interview_id": "participant_08",
       "turn_index": 7,
-      "segment_index": 6,
+      "segment_index": 5,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "So if I were to go off of those, I anticipate that those might come back even though I have achieved the goal weight, so to say.",
@@ -4542,69 +4505,19 @@
       "segment_index": 2,
       "question_id": "stopping_glp1",
       "speaker": "participant",
-      "text": "My doctor has tried to get me insurance coverage for it, and they can't even access our plan benefit manager to get authorization.",
+      "text": "My doctor has tried to get me insurance coverage for it, and they can't even access our plan benefit manager to get authorization. Their plan benefit manager or the pharmacy benefit manager won't discuss with them at all. And so the out of pocket cost for me would be about a thousand dollars a month. So it's completely prohibitive. So that would be one reason I would stop.",
       "char_start": 1496,
-      "char_end": 1626,
-      "word_count": 23,
-      "flags": []
+      "char_end": 1871,
+      "word_count": 68,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_09_t03_s03",
       "interview_id": "participant_09",
       "turn_index": 3,
       "segment_index": 3,
-      "question_id": "stopping_glp1",
-      "speaker": "participant",
-      "text": "Their plan benefit manager or the pharmacy benefit manager won't discuss with them at all.",
-      "char_start": 1627,
-      "char_end": 1717,
-      "word_count": 15,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_09_t03_s04",
-      "interview_id": "participant_09",
-      "turn_index": 3,
-      "segment_index": 4,
-      "question_id": "stopping_glp1",
-      "speaker": "participant",
-      "text": "And so the out of pocket cost for me would be about a thousand dollars a month.",
-      "char_start": 1718,
-      "char_end": 1797,
-      "word_count": 17,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_09_t03_s05",
-      "interview_id": "participant_09",
-      "turn_index": 3,
-      "segment_index": 5,
-      "question_id": "stopping_glp1",
-      "speaker": "participant",
-      "text": "So it's completely prohibitive.",
-      "char_start": 1798,
-      "char_end": 1829,
-      "word_count": 4,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_09_t03_s06",
-      "interview_id": "participant_09",
-      "turn_index": 3,
-      "segment_index": 6,
-      "question_id": "stopping_glp1",
-      "speaker": "participant",
-      "text": "So that would be one reason I would stop.",
-      "char_start": 1830,
-      "char_end": 1871,
-      "word_count": 9,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_09_t03_s07",
-      "interview_id": "participant_09",
-      "turn_index": 3,
-      "segment_index": 7,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "The second reason I would stop is if there was some sort of major health complication that where it made me sicker instead of better.",
@@ -4614,10 +4527,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_09_t03_s08",
+      "segment_id": "participant_09_t03_s04",
       "interview_id": "participant_09",
       "turn_index": 3,
-      "segment_index": 8,
+      "segment_index": 4,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "So for me, again, it's made me significantly better.",
@@ -4627,10 +4540,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_09_t03_s09",
+      "segment_id": "participant_09_t03_s05",
       "interview_id": "participant_09",
       "turn_index": 3,
-      "segment_index": 9,
+      "segment_index": 5,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "And I've had other positive benefits outside of just the weight loss.",
@@ -4640,10 +4553,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_09_t03_s10",
+      "segment_id": "participant_09_t03_s06",
       "interview_id": "participant_09",
       "turn_index": 3,
-      "segment_index": 10,
+      "segment_index": 6,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "My blood pressure has gone down.",
@@ -4653,10 +4566,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_09_t03_s11",
+      "segment_id": "participant_09_t03_s07",
       "interview_id": "participant_09",
       "turn_index": 3,
-      "segment_index": 11,
+      "segment_index": 7,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "I've gone off one blood pressure medication and have cut the other medication in half.",
@@ -4666,10 +4579,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_09_t03_s12",
+      "segment_id": "participant_09_t03_s08",
       "interview_id": "participant_09",
       "turn_index": 3,
-      "segment_index": 12,
+      "segment_index": 8,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "I've halved my heartburn medication since, and I was on a maximum dose of two different medications to manage heartburn, and we were kind of surprised that I got that benefit out of it.",
@@ -4679,10 +4592,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_09_t03_s13",
+      "segment_id": "participant_09_t03_s09",
       "interview_id": "participant_09",
       "turn_index": 3,
-      "segment_index": 13,
+      "segment_index": 9,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "So if there was some sort of major complication that it was making me sicker, than better, then yes, I would stop.",
@@ -4808,37 +4721,13 @@
       "segment_index": 0,
       "question_id": "monthly_injection_barrier",
       "speaker": "participant",
-      "text": "No. I do weekly injections now, so less injections better.",
+      "text": "No. I do weekly injections now, so less injections better. I mean, I actually don't like the injection process. I tolerate it because it works.",
       "char_start": 4023,
-      "char_end": 4081,
-      "word_count": 10,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_09_t13_s01",
-      "interview_id": "participant_09",
-      "turn_index": 13,
-      "segment_index": 1,
-      "question_id": "monthly_injection_barrier",
-      "speaker": "participant",
-      "text": "I mean, I actually don't like the injection process.",
-      "char_start": 4082,
-      "char_end": 4134,
-      "word_count": 9,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_09_t13_s02",
-      "interview_id": "participant_09",
-      "turn_index": 13,
-      "segment_index": 2,
-      "question_id": "monthly_injection_barrier",
-      "speaker": "participant",
-      "text": "I tolerate it because it works.",
-      "char_start": 4135,
       "char_end": 4166,
-      "word_count": 6,
-      "flags": []
+      "word_count": 25,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_09_t15_s00",
@@ -4847,24 +4736,13 @@
       "segment_index": 0,
       "question_id": "compounded_vs_approved",
       "speaker": "participant",
-      "text": "Well, so I have only taken compound.",
+      "text": "Well, so I have only taken compound. I haven't ever taken the name brand, so I'm very likely.",
       "char_start": 4303,
-      "char_end": 4339,
-      "word_count": 7,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_09_t15_s01",
-      "interview_id": "participant_09",
-      "turn_index": 15,
-      "segment_index": 1,
-      "question_id": "compounded_vs_approved",
-      "speaker": "participant",
-      "text": "I haven't ever taken the name brand, so I'm very likely.",
-      "char_start": 4340,
       "char_end": 4396,
-      "word_count": 11,
-      "flags": []
+      "word_count": 18,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_09_t17_s00",
@@ -4873,30 +4751,19 @@
       "segment_index": 0,
       "question_id": "trial_motivation",
       "speaker": "participant",
-      "text": "So one of the things, I have looked into some clinical trials and one of the things that attracts me to it is simply being able to have access to it.",
+      "text": "So one of the things, I have looked into some clinical trials and one of the things that attracts me to it is simply being able to have access to it. These are not accessible medications.",
       "char_start": 4628,
-      "char_end": 4777,
-      "word_count": 31,
-      "flags": []
+      "char_end": 4815,
+      "word_count": 36,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_09_t17_s01",
       "interview_id": "participant_09",
       "turn_index": 17,
       "segment_index": 1,
-      "question_id": "trial_motivation",
-      "speaker": "participant",
-      "text": "These are not accessible medications.",
-      "char_start": 4778,
-      "char_end": 4815,
-      "word_count": 5,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_09_t17_s02",
-      "interview_id": "participant_09",
-      "turn_index": 17,
-      "segment_index": 2,
       "question_id": "trial_motivation",
       "speaker": "participant",
       "text": "And another one is I support research.",
@@ -4906,10 +4773,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_09_t17_s03",
+      "segment_id": "participant_09_t17_s02",
       "interview_id": "participant_09",
       "turn_index": 17,
-      "segment_index": 3,
+      "segment_index": 2,
       "question_id": "trial_motivation",
       "speaker": "participant",
       "text": "I mean, the more research back we have, the safer these products are.",
@@ -4919,10 +4786,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_09_t17_s04",
+      "segment_id": "participant_09_t17_s03",
       "interview_id": "participant_09",
       "turn_index": 17,
-      "segment_index": 4,
+      "segment_index": 3,
       "question_id": "trial_motivation",
       "speaker": "participant",
       "text": "I have a master's degree, so I've done some research.",
@@ -4932,10 +4799,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_09_t17_s05",
+      "segment_id": "participant_09_t17_s04",
       "interview_id": "participant_09",
       "turn_index": 17,
-      "segment_index": 5,
+      "segment_index": 4,
       "question_id": "trial_motivation",
       "speaker": "participant",
       "text": "So, I mean, it's purely from an academic standpoint that would be my reasoning behind it.",
@@ -5779,26 +5646,13 @@
       "segment_index": 0,
       "question_id": "placebo_controlled_appeal",
       "speaker": "participant",
-      "text": "Absolutely.",
+      "text": "Absolutely. That would make it more appealing to me.",
       "char_start": 3648,
-      "char_end": 3659,
-      "word_count": 1,
-      "flags": [
-        "very_short"
-      ]
-    },
-    {
-      "segment_id": "participant_10_t13_s01",
-      "interview_id": "participant_10",
-      "turn_index": 13,
-      "segment_index": 1,
-      "question_id": "placebo_controlled_appeal",
-      "speaker": "participant",
-      "text": "That would make it more appealing to me.",
-      "char_start": 3660,
       "char_end": 3700,
-      "word_count": 8,
-      "flags": []
+      "word_count": 9,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_10_t15_s00",
@@ -5898,12 +5752,12 @@
       "segment_index": 0,
       "question_id": "compounded_vs_approved",
       "speaker": "participant",
-      "text": "That depends.",
+      "text": "That depends. I know that semaglutide, as far as being available like Wegovy and stuff, they're lowering the prices right now to pretty much comparable with the compound. So, I anticipate compound to continue to go down just because of that. But it would just depend, I guess on affordability.",
       "char_start": 4963,
-      "char_end": 4976,
-      "word_count": 2,
+      "char_end": 5256,
+      "word_count": 50,
       "flags": [
-        "very_short"
+        "merged"
       ]
     },
     {
@@ -5913,21 +5767,6 @@
       "segment_index": 1,
       "question_id": "compounded_vs_approved",
       "speaker": "participant",
-      "text": "I know that semaglutide, as far as being available like Wegovy and stuff, they're lowering the prices right now to pretty much comparable with the compound. So, I anticipate compound to continue to go down just because of that. But it would just depend, I guess on affordability.",
-      "char_start": 4977,
-      "char_end": 5256,
-      "word_count": 48,
-      "flags": [
-        "merged"
-      ]
-    },
-    {
-      "segment_id": "participant_10_t21_s02",
-      "interview_id": "participant_10",
-      "turn_index": 21,
-      "segment_index": 2,
-      "question_id": "compounded_vs_approved",
-      "speaker": "participant",
       "text": "I personally am on compound Tirzepatide because it's more affordable than Mounjaro, and I do think it's a better drug for me, even though I've never tried semaglutide.",
       "char_start": 5257,
       "char_end": 5424,
@@ -5935,10 +5774,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_10_t21_s03",
+      "segment_id": "participant_10_t21_s02",
       "interview_id": "participant_10",
       "turn_index": 21,
-      "segment_index": 3,
+      "segment_index": 2,
       "question_id": "compounded_vs_approved",
       "speaker": "participant",
       "text": "But it's definitely been brought up to my boss because we do sell it at the telehealth that I work at.",
@@ -5948,10 +5787,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_10_t21_s04",
+      "segment_id": "participant_10_t21_s03",
       "interview_id": "participant_10",
       "turn_index": 21,
-      "segment_index": 4,
+      "segment_index": 3,
       "question_id": "compounded_vs_approved",
       "speaker": "participant",
       "text": "And if I happen to go back into another stall, that's definitely going to be my next move, I guess for now.",
@@ -6051,24 +5890,13 @@
       "segment_index": 0,
       "question_id": "trial_motivation",
       "speaker": "participant",
-      "text": "That would be amazing because that would just save you the day, honestly.",
+      "text": "That would be amazing because that would just save you the day, honestly. That would be awesome.",
       "char_start": 7407,
-      "char_end": 7480,
-      "word_count": 13,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_10_t31_s01",
-      "interview_id": "participant_10",
-      "turn_index": 31,
-      "segment_index": 1,
-      "question_id": "trial_motivation",
-      "speaker": "participant",
-      "text": "That would be awesome.",
-      "char_start": 7481,
       "char_end": 7503,
-      "word_count": 4,
-      "flags": []
+      "word_count": 17,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_10_t33_s00",
@@ -6837,30 +6665,19 @@
       "segment_index": 1,
       "question_id": "oral_vs_injectable",
       "speaker": "participant",
-      "text": "Just because it's going to hit me faster.",
+      "text": "Just because it's going to hit me faster. I legit didn't have food noise after two days of taking my first injection.",
       "char_start": 15052,
-      "char_end": 15093,
-      "word_count": 8,
-      "flags": []
+      "char_end": 15169,
+      "word_count": 22,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_10_t59_s02",
       "interview_id": "participant_10",
       "turn_index": 59,
       "segment_index": 2,
-      "question_id": "oral_vs_injectable",
-      "speaker": "participant",
-      "text": "I legit didn't have food noise after two days of taking my first injection.",
-      "char_start": 15094,
-      "char_end": 15169,
-      "word_count": 14,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_10_t59_s03",
-      "interview_id": "participant_10",
-      "turn_index": 59,
-      "segment_index": 3,
       "question_id": "oral_vs_injectable",
       "speaker": "participant",
       "text": "Yeah.",
@@ -7256,30 +7073,19 @@
       "segment_index": 0,
       "question_id": null,
       "speaker": "participant",
-      "text": "Monthly injections sound manageable.",
+      "text": "Monthly injections sound manageable. Honestly better than weekly.",
       "char_start": 3590,
-      "char_end": 3626,
-      "word_count": 4,
-      "flags": []
+      "char_end": 3655,
+      "word_count": 8,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_11_t17_s01",
       "interview_id": "participant_11",
       "turn_index": 17,
       "segment_index": 1,
-      "question_id": null,
-      "speaker": "participant",
-      "text": "Honestly better than weekly.",
-      "char_start": 3627,
-      "char_end": 3655,
-      "word_count": 4,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_11_t17_s02",
-      "interview_id": "participant_11",
-      "turn_index": 17,
-      "segment_index": 2,
       "question_id": null,
       "speaker": "participant",
       "text": "The bigger issue would probably be logistics around appointments.",
@@ -8059,7 +7865,7 @@
       "interview_id": "participant_12",
       "turn_index": 19,
       "segment_index": 0,
-      "question_id": "trial_barriers",
+      "question_id": "monthly_injection_barrier",
       "speaker": "participant",
       "text": "Yeah, definitely.",
       "char_start": 3789,
@@ -8074,7 +7880,7 @@
       "interview_id": "participant_12",
       "turn_index": 19,
       "segment_index": 1,
-      "question_id": "trial_barriers",
+      "question_id": "monthly_injection_barrier",
       "speaker": "participant",
       "text": "Telehealth would make a huge difference.",
       "char_start": 3807,
@@ -8087,7 +7893,7 @@
       "interview_id": "participant_12",
       "turn_index": 19,
       "segment_index": 2,
-      "question_id": "trial_barriers",
+      "question_id": "monthly_injection_barrier",
       "speaker": "participant",
       "text": "Even if only some visits could happen virtually, that would make participation feel much more realistic for me.",
       "char_start": 3848,
@@ -8206,30 +8012,19 @@
       "segment_index": 0,
       "question_id": "educational_support",
       "speaker": "participant",
-      "text": "I’d like practical information.",
+      "text": "I’d like practical information. Meal planning, grocery shopping guidance, realistic exercise ideas, things like that.",
       "char_start": 5152,
-      "char_end": 5183,
-      "word_count": 4,
-      "flags": []
+      "char_end": 5269,
+      "word_count": 15,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_12_t27_s01",
       "interview_id": "participant_12",
       "turn_index": 27,
       "segment_index": 1,
-      "question_id": "educational_support",
-      "speaker": "participant",
-      "text": "Meal planning, grocery shopping guidance, realistic exercise ideas, things like that.",
-      "char_start": 5184,
-      "char_end": 5269,
-      "word_count": 11,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_12_t27_s02",
-      "interview_id": "participant_12",
-      "turn_index": 27,
-      "segment_index": 2,
       "question_id": "educational_support",
       "speaker": "participant",
       "text": "Also information about what happens after stopping medication because I don’t think people talk enough about maintenance.",

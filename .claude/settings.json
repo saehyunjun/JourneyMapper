@@ -12,7 +12,21 @@
       "Bash(git push *)",
       "Bash(node -e \"const d=require\\('./src/lib/content/wctglpdemo-data/quote_bank.json'\\); console.log\\(JSON.stringify\\(d.meta,null,1\\)\\)\")",
       "Bash(node -e \"console.log\\(require\\('/Users/aaronjun/JourneyMapper/package.json'\\).dependencies['bits-ui'] || 'not in deps'\\)\")",
-      "Bash(npx svelte-check *)"
+      "Bash(npx svelte-check *)",
+      "Bash(node -e ' *)",
+      "Bash(python3 -c \"import json;d=json.load\\(open\\('questions.json'\\)\\);print\\(json.dumps\\(d,indent=1\\)[:3000]\\)\")",
+      "Bash(python3 -c \"import json;d=json.load\\(open\\('codebook.json'\\)\\);[print\\(t.get\\('id'\\),'|',t.get\\('label'\\),'|',t.get\\('description',''\\)[:80]\\) for t in d.get\\('themes',[]\\)]\")",
+      "Bash(python3 -c \"import json;d=json.load\\(open\\('questions.json'\\)\\);print\\(json.dumps\\(d,indent=1\\)[:3500]\\)\")",
+      "Bash(python3 -c \"import json;d=json.load\\(open\\('codebook.json'\\)\\);[print\\(t.get\\('id'\\),'|',t.get\\('label'\\)\\) for t in d.get\\('themes',[]\\)]\")",
+      "Bash(python3 -c ' *)",
+      "Bash(node -e \"const d=require\\('./question_map.json'\\); console.log\\(Object.keys\\(d\\)\\); console.log\\(JSON.stringify\\(d\\).slice\\(0,800\\)\\);\")",
+      "Bash(node -e \"const d=require\\('./codebook.json'\\); console.log\\('groups:',JSON.stringify\\(d.tag_groups,null,1\\)\\); console.log\\('theme sample:',JSON.stringify\\(d.theme_tags[0],null,1\\)\\); console.log\\('themes:',d.theme_tags.length\\);\")",
+      "Bash(node -e \"console.log\\(require\\('./package.json'\\).dependencies.layerchart || 'NOT in deps', '| devDeps:', require\\('./package.json'\\).devDependencies.layerchart||'-'\\)\")",
+      "Bash(sed -n '338,400p' src/routes/wctglpdemo/fingerprint/+page.svelte)",
+      "Bash(sed -n '1,45p' src/lib/components/RightDrawer.svelte)",
+      "Bash(node -e \"const d=require\\('./src/lib/content/wctglpdemo-data/keyword_usage.json'\\); d.categories.forEach\\(c=>console.log\\(c.id,'|',c.label,'| kws:',c.keywords.length, c.keywords.slice\\(0,8\\).map\\(k=>k.id+'\\('+k.count+'\\)'\\).join\\(', '\\)\\)\\);\")",
+      "Bash(node -e 'const k=require\\(\"./src/lib/content/wctglpdemo-data/keyword_lexicon.json\"\\); console.log\\(JSON.stringify\\(k,null,1\\).slice\\(0,1200\\)\\)')",
+      "Bash(perl -0pi -e 's/labelClass=\"w-32\"/labelClass=\"w-40\"/g' src/lib/components/ParticipantDrawer.svelte)"
     ]
   }
 }

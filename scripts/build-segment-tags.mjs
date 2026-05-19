@@ -8,7 +8,7 @@
  * integrity, and writes the canonical segment_tags.json.
  *
  * This script makes NO tagging judgements of its own — it is a pure validator.
- * All semantic labels come from segment_tags.proposed.json; every annotation is
+ * All tag labels come from segment_tags.proposed.json; every annotation is
  * written review_status "pending" for analyst review before downstream use.
  *
  * (Tagging used to live in a hand-coded TAGS table here. That table is now
@@ -18,7 +18,7 @@
  * Integrity checks — any failure exits non-zero and writes nothing:
  *  - every proposal key is a real segment_id
  *  - an interview is either fully proposed or not at all (no partial coverage)
- *  - every theme / subtheme / emotion / semantic id exists in codebook.json
+ *  - every theme / subtheme / emotion id exists in codebook.json
  *  - every subtheme's parent theme is also applied to the segment
  *  - sentiment is an integer in [-2, 2]; confidence is a number in [0, 1]
  *  - every topic id (if topic tagging has run) exists in topics.json
@@ -77,7 +77,6 @@ if (existsSync(resolve(ROOT, TOPIC_ASSIGNMENTS_FILE))) {
 
 const validThemes = new Set(codebook.theme_tags.map((t) => t.id));
 const validEmotions = new Set(codebook.emotion_tags.map((t) => t.id));
-const validSemantic = new Set(codebook.semantic_tags.map((t) => t.id));
 // subtheme id -> parent theme id
 const subthemeParent = new Map();
 for (const theme of codebook.theme_tags) {
@@ -125,14 +124,11 @@ for (const [segmentId, value] of Object.entries(PROPOSALS)) {
 	const themes = value.themes ?? [];
 	const subthemes = value.subthemes ?? [];
 	const emotions = value.emotions ?? [];
-	const semanticTags = value.semantic_tags ?? [];
 	const { sentiment, confidence } = value;
 	const note = value.note ?? '';
 
 	for (const t of themes) if (!validThemes.has(t)) errors.push(`${segmentId}: unknown theme "${t}".`);
 	for (const e of emotions) if (!validEmotions.has(e)) errors.push(`${segmentId}: unknown emotion "${e}".`);
-	for (const s of semanticTags)
-		if (!validSemantic.has(s)) errors.push(`${segmentId}: unknown semantic tag "${s}".`);
 	for (const st of subthemes) {
 		const parent = subthemeParent.get(st);
 		if (!parent) {
@@ -164,7 +160,6 @@ for (const [segmentId, value] of Object.entries(PROPOSALS)) {
 		subthemes,
 		emotions,
 		sentiment,
-		semantic_tags: semanticTags,
 		confidence,
 		source: 'ai_proposed',
 		review_status: 'pending',
@@ -195,7 +190,7 @@ const output = {
 		tagged_interviews: taggedInterviews,
 		pending_interviews: pendingInterviews,
 		notes: [
-			'Theme/subtheme/emotion/sentiment/semantic tags are AI-proposed; every annotation is review_status "pending".',
+			'Theme/subtheme/emotion/sentiment tags are AI-proposed; every annotation is review_status "pending".',
 			'Tags are proposed by scripts/propose-segment-tags.mjs and re-validated here against codebook.json.',
 			'A subtheme is only valid when its parent theme is also applied to the segment.',
 			'`topics` is an open, emergent vocabulary from scripts/propose-topics.mjs (topics.json); [] when topic tagging has not run.',

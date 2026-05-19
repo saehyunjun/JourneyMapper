@@ -3,7 +3,7 @@
     "schema_version": "1.0",
     "study_id": "wct_glp1",
     "description": "Analyst-maintained participant profiles. Keyed by interview_id; references avatars under static/content-assets/avatars.",
-    "updated_at": "2026-05-19T00:54:11.156Z"
+    "updated_at": "2026-05-19T19:05:39.104Z"
   },
   "profiles": {
     "participant_10": {
@@ -39,6 +39,24 @@
       "gender": "female",
       "country": "United States",
       "age_range": "46-50",
+      "participant_type": "individual",
+      "avatar_url": null
+    },
+    "participant_12": {
+      "first_name": "Carrie",
+      "last_initial": "C",
+      "gender": "female",
+      "country": "United States",
+      "age_range": "36-40",
+      "participant_type": "individual",
+      "avatar_url": null
+    },
+    "participant_08": {
+      "first_name": "",
+      "last_initial": "",
+      "gender": "male",
+      "country": "",
+      "age_range": "",
       "participant_type": "individual",
       "avatar_url": null
     }

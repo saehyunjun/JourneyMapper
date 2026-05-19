@@ -224,7 +224,6 @@ QUOTES.forEach((entry, i) => {
 	const themes = new Set();
 	const subthemes = new Set();
 	const emotions = new Set();
-	const semantic = new Set();
 	const sentiments = [];
 	for (const s of ordered) {
 		const ann = tagsBySegment.get(s.segment_id);
@@ -235,7 +234,6 @@ QUOTES.forEach((entry, i) => {
 		ann.themes.forEach((t) => themes.add(t));
 		ann.subthemes.forEach((t) => subthemes.add(t));
 		ann.emotions.forEach((t) => emotions.add(t));
-		ann.semantic_tags.forEach((t) => semantic.add(t));
 		sentiments.push(ann.sentiment);
 	}
 	const sentiment = Math.round(sentiments.reduce((n, v) => n + v, 0) / sentiments.length);
@@ -258,7 +256,6 @@ QUOTES.forEach((entry, i) => {
 		themes: [...themes],
 		subthemes: [...subthemes],
 		emotions: [...emotions],
-		semantic_tags: [...semantic],
 		sentiment,
 		quote_score: {
 			clarity,

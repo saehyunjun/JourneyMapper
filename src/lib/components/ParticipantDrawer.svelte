@@ -12,16 +12,20 @@
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
-	import StatBar from '$lib/components/StatBar.svelte';
+	import SentimentBar from '$lib/components/SentimentBar.svelte';
+	import SentimentRing from '$lib/components/SentimentRing.svelte';
 	import {
+		annotations,
 		wordUsage,
 		participantLabel,
 		titleCase,
-		themeFrequency,
-		emotionFrequency,
-		sentimentDistribution,
-		SENTIMENT_LABELS
+		themeBreakdown,
+		emotionBreakdown,
+		fragmentsMatching
 	} from '$lib/content/wctglpdemo-data/analysis';
+	import ParticipantFragmentsDrawer, {
+		type FragmentSelection
+	} from '$lib/components/ParticipantFragmentsDrawer.svelte';
 	import {
 		AGE_RANGES,
 		GENDERS,
@@ -82,6 +86,7 @@
 		editing = false;
 		justSaved = false;
 		errorMsg = '';
+		fragmentSelection = null;
 	});
 
 	function cancelEdit() {
@@ -90,14 +95,12 @@
 		errorMsg = '';
 	}
 
-	// Label/value rows shown in place of the form when not editing.
-	const detailRows = $derived([
-		{ label: 'First name', value: firstName.trim() || '—' },
-		{ label: 'Last initial', value: lastInitial.trim() || '—' },
+	// Compact identity facts shown as chips in the drawer's top bar.
+	const detailChips = $derived([
 		{ label: 'Gender', value: gender ? titleCase(gender) : '—' },
 		{ label: 'Country', value: country.trim() || '—' },
 		{ label: 'Age range', value: ageRange || '—' },
-		{ label: 'Participant type', value: titleCase(participantType) }
+		{ label: 'Type', value: titleCase(participantType) }
 	]);
 
 	// Deterministic word usage for this participant, if the pipeline produced it.
@@ -106,22 +109,68 @@
 	const maxWord = $derived(Math.max(1, ...topWords.map((w) => w.count)));
 
 	// Themes / emotions / sentiment — the analysis page's "Themes & emotions"
-	// tab, scoped to this participant's segment annotations.
+	// tab, scoped to this participant's segment annotations. Each row carries
+	// its contributing segments so SentimentBar can split it by sentiment.
+	const segs = $derived(
+		interviewId ? annotations.filter((a) => a.interview_id === interviewId) : []
+	);
 	const themeRows = $derived(
-		interviewId ? themeFrequency((a) => a.interview_id === interviewId) : []
+		interviewId ? themeBreakdown((a) => a.interview_id === interviewId) : []
 	);
 	const maxTheme = $derived(Math.max(1, ...themeRows.map((t) => t.count)));
 	const emotionRows = $derived(
-		interviewId ? emotionFrequency((a) => a.interview_id === interviewId) : []
+		interviewId ? emotionBreakdown((a) => a.interview_id === interviewId) : []
 	);
 	const maxEmotion = $derived(Math.max(1, ...emotionRows.map((e) => e.count)));
-	const sentimentRows = $derived(
-		interviewId ? sentimentDistribution((a) => a.interview_id === interviewId) : []
-	);
-	const maxSentiment = $derived(Math.max(1, ...sentimentRows.map((s) => s.count)));
 	const hasBreakdown = $derived(themeRows.length > 0 || emotionRows.length > 0);
 
 	let fileInput = $state<HTMLInputElement | null>(null);
+
+	// --- Secondary drawer: tagged fragments behind a clicked row ---
+	// Clicking a theme, subtheme, emotion, or word-usage row opens a stacked
+	// drawer listing every coded fragment behind it, scoped to this participant.
+	const participantName = $derived(
+		profile ? profileName(profile, participantLabel(interviewId ?? '')) : ''
+	);
+	let fragmentSelection = $state<FragmentSelection | null>(null);
+
+	function showFragments(
+		kind: string,
+		label: string,
+		fragments: FragmentSelection['fragments']
+	) {
+		fragmentSelection = { kind, label, subtitle: participantName, fragments };
+	}
+	function openThemeFragments(themeId: string) {
+		showFragments(
+			'Theme',
+			titleCase(themeId),
+			fragmentsMatching((a) => a.interview_id === interviewId && a.themes.includes(themeId))
+		);
+	}
+	function openSubthemeFragments(subId: string) {
+		showFragments(
+			'Subtheme',
+			titleCase(subId),
+			fragmentsMatching((a) => a.interview_id === interviewId && a.subthemes.includes(subId))
+		);
+	}
+	function openEmotionFragments(emotionId: string) {
+		showFragments(
+			'Emotion',
+			titleCase(emotionId),
+			fragmentsMatching((a) => a.interview_id === interviewId && a.emotions.includes(emotionId))
+		);
+	}
+	function openWordFragments(word: string) {
+		// Match the whole word, case-insensitively, against each fragment's text.
+		const re = new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+		showFragments(
+			'Word',
+			word,
+			fragmentsMatching((a) => a.interview_id === interviewId).filter((f) => re.test(f.text))
+		);
+	}
 
 	async function saveDetails() {
 		if (!interviewId || saving) return;
@@ -187,35 +236,71 @@
 <RightDrawer bind:open>
 	{#if interviewId && profile}
 		<div class="flex h-full flex-col">
-			<!-- Header — avatar + identity -->
-			<div class="flex items-center gap-4 border-b border-slate-200 p-6">
-				<div class="flex flex-col items-center gap-1.5">
-					<ParticipantAvatar {interviewId} size="xl" src={profile.avatar_url} />
-					{#if editing}
-						<Button
-							variant="link"
-							size="sm"
-							onclick={() => fileInput?.click()}
-							disabled={uploading}
-						>
-							{uploading ? 'Uploading…' : profile.avatar_url ? 'Change avatar' : 'Upload avatar'}
-				</Button>
-					{/if}
-					<input
-						bind:this={fileInput}
-						type="file"
-						accept="image/png,image/jpeg,image/webp,image/gif"
-						class="hidden"
-						onchange={uploadAvatar}
-					/>
-				</div>
-				<div class="flex flex-col gap-1">
-					<span class="figcaption text-accent-mint">Participant details</span>
-					<h2 class="font-heading text-3xl font-light uppercase text-primary">
-						{profileName(profile, participantLabel(interviewId))}
-					</h2>
-					<p class="text-xs text-slate-500">{participantLabel(interviewId)}</p>
-				</div>
+			<!-- Top bar — avatar, identity, and the profile facts -->
+			<div class="flex flex-col gap-4 border-b border-slate-200 p-6">
+				<div class="flex items-start gap-4">
+					<div class="flex flex-col items-center gap-1.5">
+						<!-- Avatar framed by a donut of the participant's sentiment mix -->
+						<div class="relative grid size-28 place-items-center">
+							<SentimentRing blocks={segs} size={112} class="absolute inset-0" />
+							<ParticipantAvatar {interviewId} size="xl" src={profile.avatar_url} />
+						</div>
+						{#if editing}
+							<Button
+								variant="link"
+								size="sm"
+								onclick={() => fileInput?.click()}
+								disabled={uploading}
+							>
+								{uploading ? 'Uploading…' : profile.avatar_url ? 'Change avatar' : 'Upload avatar'}
+							</Button>
+						{/if}
+						<input
+							bind:this={fileInput}
+							type="file"
+							accept="image/png,image/jpeg,image/webp,image/gif"
+							class="hidden"
+							onchange={uploadAvatar}
+						/>
+					</div>
+					
+					<div class="flex min-w-0 flex-1 flex-col gap-1">
+						<span class="figcaption capitalize text-accent-mint">Participant details</span>
+						<h2 class="font-heading text-3xl font-light uppercase text-primary">
+							{profileName(profile, participantLabel(interviewId))}
+						</h2>
+						<p class="text-xs text-slate-500">{participantLabel(interviewId)}</p>
+						<Button variant="link" size="sm" 
+						onclick={() => (editing = true)}>
+							Edit
+							<LucideEdit />
+						</Button>			
+					</div>
+					{#if !editing}
+						<div class="flex shrink-0 items-center gap-2">
+							{#if justSaved}
+								<span class="text-xs font-medium text-emerald-600">✓ Saved</span>
+							{/if}
+						</div>
+						{/if}
+					</div>
+					
+					<!-- Profile facts — gender, country, age range, participant type -->
+			
+				{#if !editing}
+					<dl class="grid grid-cols-4 gap-2">
+						{#each detailChips as chip (chip.label)}
+							<div class="flex flex-col gap-0.5 rounded-md bg-none px-2.5 py-1.5">
+								<dt class="text-[10px] font-medium uppercase tracking-wide text-slate-400">
+									{chip.label}
+								</dt>
+								<dd class="truncate text-sm text-slate-800" title={chip.value}>
+									{chip.value}
+								</dd>
+							</div>
+						{/each}
+					</dl>
+				{/if}
 			</div>
 
 			<div class="flex flex-1 flex-col gap-7 overflow-y-auto p-6">
@@ -225,22 +310,12 @@
 					</p>
 				{/if}
 
-				<!-- Details — read-only by default, editable via "Edit" -->
-				<section class="flex flex-col gap-4">
-					<div class="flex items-center justify-between">
-						<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Profile</h3>
-						{#if !editing}
-							<Button
-								variant="link"
-								onclick={() => (editing = true)}
-							>
-								Edit
-								<LucideEdit />
-							</Button>
-						{/if}
-					</div>
-
-					{#if editing}
+				<!-- Edit form — only while editing; the facts otherwise live in the top bar -->
+				{#if editing}
+					<section class="flex flex-col gap-4">
+						<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+							Edit profile
+						</h3>
 						<div class="grid grid-cols-2 gap-3">
 						<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
 							First name
@@ -311,7 +386,7 @@
 									class="
 										{participantType === type
 										? 'bg-accent-mint text-white'
-										: 'bg-white text-slate-600 hover:bg-slate-50'}"
+										: 'bg-white text-slate-600 hover:bg-none'}"
 								>
 									{type}
 						</Button>
@@ -336,91 +411,96 @@
 								Cancel
 							</button>
 						</div>
-					{:else}
-						<dl class="flex flex-col divide-y divide-slate-100">
-							{#each detailRows as row (row.label)}
-								<div class="flex items-baseline justify-between gap-4 py-2">
-									<dt class="text-xs font-medium uppercase tracking-wide text-slate-400">
-										{row.label}
-									</dt>
-									<dd class="text-right text-sm text-slate-800">{row.value}</dd>
-								</div>
-							{/each}
-						</dl>
-						{#if justSaved}
-							<span class="text-xs font-medium text-emerald-600">✓ Saved</span>
-						{/if}
-					{/if}
-				</section>
+					</section>
+				{/if}
 
-				<!-- Themes & emotions — analysis-page breakdowns, scoped here -->
-				<section class="flex flex-col gap-4 border-t border-slate-100 pt-6">
-					<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
-						Themes &amp; emotions
-					</h3>
+				<!-- Themes & emotions — sentiment-split breakdowns, scoped here -->
+				<section class="flex flex-col gap-5 border-t border-slate-100 pt-6">
+					<div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5">
+						<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+							Themes &amp; emotions
+						</h3>
+						{#if hasBreakdown}
+							<div class="flex items-center gap-1.5 text-[10px] text-slate-400">
+								<span>Negative</span>
+								<span class="flex gap-[2px]">
+									{#each ['#e11d48', '#fb7185', '#cbd5e1', '#34d399', '#059669'] as c (c)}
+										<span class="h-2.5 w-2.5" style="background-color: {c}"></span>
+									{/each}
+								</span>
+								<span>Positive</span>
+							</div>
+						{/if}
+					</div>
+
 					{#if hasBreakdown}
-						<!-- Theme frequency -->
+						<!-- Themes — each bar's width is its frequency, split by sentiment -->
 						<div class="flex flex-col gap-1.5">
-							<p class="text-xs text-muted-foreground">
-								Theme frequency · {themeRows.length}
-								{themeRows.length === 1 ? 'theme' : 'themes'}
+							<p class="text-xs font-medium text-muted-foreground uppercase font-heading">
+								Themes · {themeRows.length}
 							</p>
 							{#each themeRows as t (t.id)}
-								<StatBar
-									label={titleCase(t.id)}
-									count={t.count}
-									max={maxTheme}
-									labelClass="w-32"
-								/>
+								<button
+									type="button"
+									onclick={() => openThemeFragments(t.id)}
+									title="View tagged segments"
+									class="font-medium px-1.5 py-0.5 text-left transition-colors hover:bg-accent-mint-foreground 
+									hover:font-semibold hover:cursor-pointer" 
+								>
+									<SentimentBar
+										label={titleCase(t.id)}
+										blocks={t.blocks}
+										max={maxTheme}
+										labelClass="w-40"
+									/>
+								</button>
 								{#if t.subthemes.length}
-									<div class="ml-3 flex flex-col gap-1">
+									<div class="ml-4 flex flex-col gap-1 border-l border-muted-foreground pl-2">
 										{#each t.subthemes as s (s.id)}
-											<StatBar
-												label={titleCase(s.id)}
-												count={s.count}
-												max={maxTheme}
-												tint="bg-accent-mint/45"
-												labelClass="w-28"
-											/>
+											<button
+												type="button"
+												onclick={() => openSubthemeFragments(s.id)}
+												title="View tagged segments"
+												class="px-1.5 py-.5 text-left transition-colors hover:bg-accent-mint-foreground
+												hover:font-medium hover:cursor-pointer"
+											>
+												<SentimentBar
+													label={titleCase(s.id)}
+													blocks={s.blocks}
+													max={maxTheme}
+													labelClass="w-40"
+													shape="dots"
+												/>
+											</button>
 										{/each}
 									</div>
 								{/if}
 							{/each}
 						</div>
 
-						<!-- Emotion frequency -->
+						<!-- Emotions -->
 						{#if emotionRows.length}
 							<div class="flex flex-col gap-1.5">
-								<p class="text-xs text-muted-foreground">Emotion frequency</p>
+								<p class="text-xs font-medium text-slate-500">
+									Emotions · {emotionRows.length}
+								</p>
 								{#each emotionRows as e (e.id)}
-									<StatBar
-										label={titleCase(e.id)}
-										count={e.count}
-										max={maxEmotion}
-										tint="bg-slate-400"
-										labelClass="w-32"
-									/>
+									<button
+										type="button"
+										onclick={() => openEmotionFragments(e.id)}
+										title="View tagged segments"
+										class="-mx-1.5 rounded px-1.5 py-0.5 text-left transition-colors hover:bg-none"
+									>
+										<SentimentBar
+											label={titleCase(e.id)}
+											blocks={e.blocks}
+											max={maxEmotion}
+											labelClass="w-40"
+										/>
+									</button>
 								{/each}
 							</div>
 						{/if}
-
-						<!-- Sentiment distribution -->
-						<div class="flex flex-col gap-1.5">
-							<p class="text-xs text-muted-foreground">Sentiment distribution</p>
-							{#each sentimentRows as s (s.value)}
-								<StatBar
-									label={SENTIMENT_LABELS[s.value]}
-									count={s.count}
-									max={maxSentiment}
-									tint={s.value > 0
-										? 'bg-emerald-400'
-										: s.value < 0
-											? 'bg-rose-400'
-											: 'bg-slate-300'}
-									labelClass="w-32"
-								/>
-							{/each}
-						</div>
 					{:else}
 						<p class="text-xs text-muted-foreground">
 							No tagged segments for this participant yet.
@@ -440,8 +520,13 @@
 						</p>
 						<div class="mt-1 flex flex-col gap-1.5">
 							{#each topWords as w (w.word)}
-								<div class="flex items-center gap-2 text-xs">
-									<span class="w-28 shrink-0 truncate text-slate-700">{w.word}</span>
+								<button
+									type="button"
+									onclick={() => openWordFragments(w.word)}
+									title="View segments using this word"
+									class="-mx-1.5 flex items-center gap-2 rounded px-1.5 py-0.5 text-xs transition-colors hover:bg-none"
+								>
+									<span class="w-28 shrink-0 truncate text-left text-slate-700">{w.word}</span>
 									<div class="h-3 flex-1 rounded-sm bg-slate-100">
 										<div
 											class="h-full rounded-sm bg-accent-mint"
@@ -449,7 +534,7 @@
 										></div>
 									</div>
 									<span class="w-5 shrink-0 text-right tabular-nums text-slate-500">{w.count}</span>
-								</div>
+								</button>
 							{/each}
 						</div>
 					{:else}
@@ -459,6 +544,13 @@
 					{/if}
 				</section>
 			</div>
+
+			<!-- Secondary drawer — tagged fragments behind a clicked row -->
+			<ParticipantFragmentsDrawer
+				selection={fragmentSelection}
+				{profiles}
+				onclose={() => (fragmentSelection = null)}
+			/>
 		</div>
 	{/if}
 </RightDrawer>

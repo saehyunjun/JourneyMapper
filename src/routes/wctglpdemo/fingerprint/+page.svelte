@@ -2,15 +2,14 @@
 	Fingerprint — one interviewee's distinctive theme profile.
 
 	The themes a single participant raised, pooled across every interview
-	question, drawn with the same SortableBarChart as the "fingerprint" section
-	of /wctglpdemo/interview-words. Reached from the upload page's post-tag
-	modal; the participant row lets you browse the other interviewees.
+	question, drawn as a SortableBarChart, plus a word cloud of their spoken
+	vocabulary. Reached from the upload page's post-tag modal; the participant
+	row lets you browse the other interviewees.
 -->
 <script lang="ts">
 	import { untrack } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { Button } from "$lib/components/ui/button/index.ts";
-	import StarIcon from '@lucide/svelte/icons/star';
 	import {
 		annotations,
 		themeBreakdown,
@@ -18,18 +17,21 @@
 		segmentsForTheme,
 		themedParticipantIds,
 		participantLabel,
-		questionLabel,
 		titleCase,
-		SENTIMENT_LABELS,
+		tagGroups,
+		themeGroupOf,
 		type ThemeBlock
 	} from '$lib/content/wctglpdemo-data/analysis';
-	import SortableBarChart from '$lib/charts/glp/SortableBarChart.svelte';
+	import RadialThemeChart from '$lib/charts/glp/RadialThemeChart.svelte';
+	import WordCloud from '$lib/charts/glp/WordCloud.svelte';
+	import { participantWords } from '$lib/content/wctglpdemo-data/word-frequency';
+	import { scaleLinear } from 'd3-scale';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
 	import KeyQuotesSection from '$lib/components/KeyQuotesSection.svelte';
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
-	import KeywordText from '$lib/components/KeywordText.svelte';
+	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
-	import { profileName } from '$lib/types/participant-profile';
+	import { profileName, participantBio } from '$lib/types/participant-profile';
 	import type { PageProps } from './$types';
 	import { ArrowRight } from '@lucide/svelte';
 
@@ -70,19 +72,53 @@
 		participantDrawerOpen = true;
 	}
 
-	/** Theme breakdown rows -> the {word,count,blocks} shape SortableBarChart expects. */
-	const toBars = (rows: { id: string; count: number; blocks: ThemeBlock[] }[]) =>
-		rows.map((r) => ({ word: titleCase(r.id), count: r.count, blocks: r.blocks }));
+	/** Theme breakdown rows -> the {word,count,group,blocks} shape RadialThemeChart expects. */
+	const toRadial = (rows: { id: string; count: number; blocks: ThemeBlock[] }[]) =>
+		rows.map((r) => ({
+			word: titleCase(r.id),
+			count: r.count,
+			blocks: r.blocks,
+			group: themeGroupOf.get(r.id) ?? 'other'
+		}));
 
 	let selectedParticipant = $state(
 		data.interview ?? themedParticipantIds[themedParticipantIds.length - 1] ?? ''
 	);
 
 	const fingerprint = $derived(
-		toBars(themeBreakdown((a) => a.interview_id === selectedParticipant))
+		toRadial(themeBreakdown((a) => a.interview_id === selectedParticipant))
 	);
 	const themeCount = $derived(fingerprint.length);
 	const segmentCount = $derived(fingerprint.reduce((n, b) => n + b.count, 0));
+
+	// Programmatic prose bio — demographics plus the participant's top themes.
+	const bio = $derived(
+		participantBio(
+			profiles[selectedParticipant],
+			participantLabel(selectedParticipant),
+			fingerprint.map((b) => b.word),
+			segmentCount
+		)
+	);
+
+	// --- Word cloud — the participant's spoken vocabulary ---
+	// 'common' sizes by raw frequency; 'distinctive' surfaces the words this
+	// participant over-indexes on versus the other interviewees.
+	let wordMode = $state<'common' | 'distinctive'>('common');
+	const participantCloud = $derived(
+		participantWords(selectedParticipant, { mode: wordMode, limit: 60 })
+	);
+	const WORD_MODES: { id: 'common' | 'distinctive'; label: string }[] = [
+		{ id: 'common', label: 'Most common' },
+		{ id: 'distinctive', label: 'Most distinctive' }
+	];
+
+	// Diverging colour for a word's average sentiment: rose (negative) →
+	// slate (neutral) → emerald (positive), echoing the bar chart's palette.
+	const sentimentColor = scaleLinear<string>()
+		.domain([-2, 0, 2])
+		.range(['#e11d48', '#94a3b8', '#059669'])
+		.clamp(true);
 
 	// Negative / neutral / positive tagged-segment counts for the selected
 	// participant, taken from the per-segment annotations.
@@ -127,11 +163,6 @@
 		themeDrawerOpen && drawerTheme ? titleCase(drawerTheme) : null
 	);
 
-	function sentimentClass(s: number) {
-		if (s > 0) return 'bg-emerald-100 text-emerald-800';
-		if (s < 0) return 'bg-rose-100 text-rose-800';
-		return 'bg-slate-100 text-slate-700';
-	}
 </script>
 
 <div class="flex flex-1 flex-col">
@@ -168,7 +199,7 @@
 							onclick={() => select(id)}
 						>
 							<ParticipantAvatar interviewId={id} size="sm" />
-							{participantLabel(id)}
+							{profileName(profiles[id], participantLabel(id))}
 						</Button>
 					{/each}
 				</div>
@@ -176,44 +207,53 @@
 
 			<!-- The selected participant -->
 			<section class="flex flex-col gap-6">
-			<div class="flex flex-row w-full justify-between">
-				<ParticipantAvatar
-				interviewId={selectedParticipant}
-				size="lg"
-				src={profiles[selectedParticipant]?.avatar_url}
-			/>
-				<Button
-					variant="default"
-					onclick={() => openParticipant(selectedParticipant)}
-					title="View participant details"
-				>
-				View Participant Details
-				<ArrowRight />
-				</Button>
-			</div>
-					<div class="flex flex-col gap-1.5">
-						<h2 class="font-heading text-3xl font-light uppercase text-primary">
-							{profileName(profiles[selectedParticipant], participantLabel(selectedParticipant))}
-						</h2>
-						<p class="text-sm text-muted-foreground">
-							{themeCount}
-							{themeCount === 1 ? 'theme' : 'themes'} ·
-							{segmentCount} tagged {segmentCount === 1 ? 'segment' : 'segments'} ·
-							
-						</p>
-						<div class="flex flex-wrap gap-1.5">
-							<span class="rounded-full bg-rose-100 px-2 py-0.5 text-xs text-rose-800">
-								{sentimentCounts.negative} negative
-							</span>
-							<span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">
-								{sentimentCounts.neutral} neutral
-							</span>
-							<span class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-800">
-								{sentimentCounts.positive} positive
-							</span>
+				<!-- Identity header — avatar, name, generated bio, and details link -->
+				<header class="flex flex-col gap-4 border-b border-(--ink)/15 pb-6">
+					<div class="flex items-start gap-5">
+						<ParticipantAvatar
+							interviewId={selectedParticipant}
+							size="lg"
+							src={profiles[selectedParticipant]?.avatar_url}
+						/>
+						<div class="flex min-w-0 flex-1 flex-col gap-2">
+							<h2 class="font-heading text-3xl font-light uppercase text-primary">
+								{profileName(profiles[selectedParticipant], participantLabel(selectedParticipant))}
+							</h2>
+							<p class="max-w-2xl text-base leading-7 text-muted-foreground">
+								{bio}
+							</p>
 						</div>
+						<Button
+							variant="default"
+							class="shrink-0"
+							onclick={() => openParticipant(selectedParticipant)}
+							title="View participant details"
+						>
+							View Participant Details
+							<ArrowRight />
+						</Button>
 					</div>
 
+					<!-- At-a-glance stats — theme / segment counts and sentiment mix -->
+					<div class="flex flex-wrap items-center gap-1.5">
+						<span class="rounded-full bg-(--ink)/5 px-2.5 py-0.5 text-xs text-foreground">
+							{themeCount} {themeCount === 1 ? 'theme' : 'themes'}
+						</span>
+						<span class="rounded-full bg-(--ink)/5 px-2.5 py-0.5 text-xs text-foreground">
+							{segmentCount} tagged {segmentCount === 1 ? 'segment' : 'segments'}
+						</span>
+						<span class="mx-1 text-(--ink)/25">·</span>
+						<span class="rounded-full bg-rose-100 px-2.5 py-0.5 text-xs text-rose-800">
+							{sentimentCounts.negative} negative
+						</span>
+						<span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-700">
+							{sentimentCounts.neutral} neutral
+						</span>
+						<span class="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs text-emerald-800">
+							{sentimentCounts.positive} positive
+						</span>
+					</div>
+				</header>
 
 				<!-- Key quotes — analyst-starred highlights for this participant -->
 				<KeyQuotesSection
@@ -224,14 +264,76 @@
 					participantId={selectedParticipant}
 				/>
 
+				<!-- Word cloud — the participant's spoken vocabulary -->
+				<div class="flex flex-col gap-3 rounded-xl border border-(--ink)/10 bg-(--paper) p-5">
+					<div class="flex flex-wrap items-center justify-between gap-3">
+						<div class="flex flex-col gap-0.5">
+							<span class="figcaption text-accent-mint">
+								In their own words
+							</span>
+							
+							<p class="caption text-muted-foreground">
+								{participantCloud.totalWords} counted words · {participantCloud.uniqueWords} unique ·
+								{participantCloud.hapaxWords.length} said just once
+							</p>
+						</div>
+						<div class="flex flex-row gap-1" role="group">
+							{#each WORD_MODES as opt (opt.id)}
+								<Button
+									variant="secondary"
+									class="px-2.5 py-1.5 text-xs font-medium transition-colors duration-150
+										{wordMode === opt.id
+										? 'bg-(--darkgrayblue) text-(--paper)'
+										: 'bg-(--paper) text-foreground hover:bg-(--ink)/5'}"
+									aria-pressed={wordMode === opt.id}
+									onclick={() => (wordMode = opt.id)}
+								>
+									{opt.label}
+								</Button>
+							{/each}
+						</div>
+					</div>
+
+					<!-- Sentiment legend -->
+					<div class="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+						<span>Word colour = average sentiment of its segments</span>
+						<span class="flex items-center gap-1.5">
+							<span>negative</span>
+							<span
+								class="h-2 w-24 rounded-full"
+								style="background: linear-gradient(to right, #e11d48, #94a3b8, #059669)"
+							></span>
+							<span>positive</span>
+						</span>
+					</div>
+
+					{#if participantCloud.words.length}
+						<WordCloud
+							words={participantCloud.words}
+							color={(d) => sentimentColor(d.sentiment ?? 0)}
+						/>
+					{:else}
+						<p class="text-sm text-muted-foreground">No words to show for this participant.</p>
+					{/if}
+
+					<p class="caption text-xs text-muted-foreground">
+						{#if wordMode === 'common'}
+							Word size = times spoken; function words and speech fillers are removed before
+							counting.
+						{:else}
+							Word size = how strongly {participantLabel(selectedParticipant)} over-indexes on the
+							word versus the other participants — their distinctive voice.
+						{/if}
+					</p>
+				</div>
+
 				{#if fingerprint.length}
-					<SortableBarChart
+					<RadialThemeChart
 						data={fingerprint}
+						groups={tagGroups}
 						unitLabel="segments tagged for {participantLabel(selectedParticipant)}"
 						itemNoun="themes"
 						blockLabel="tagged segment"
-						rowHeight={36}
-						colorModeOptions={['sentiment']}
 						onselect={openThemeDrawer}
 						selected={selectedRow}
 					/>
@@ -279,44 +381,13 @@
 
 		<div class="flex flex-1 flex-col gap-3 overflow-y-auto p-6">
 			{#each drawerFragments as f (f.segment_id)}
-				<div
-					class="border-2 p-3
-						{f.in_pull_quote ? 'border-accent-mint bg-accent-mint/5' : 'border-muted-foreground/40'}"
-				>
-					<div class="flex items-start justify-between gap-3">
-						<p class="text-sm leading-relaxed text-slate-700">
-							<KeywordText text={f.text} />
-						</p>
-						<button
-							type="button"
-							onclick={() => toggleSegmentStar(f.segment_id)}
-							disabled={togglingSegment === f.segment_id}
-							aria-pressed={starredSegments.has(f.segment_id)}
-							title={starredSegments.has(f.segment_id)
-								? 'Starred — click to unstar'
-								: 'Star this segment'}
-							class="shrink-0 rounded p-1 transition-colors hover:bg-amber-50 disabled:opacity-40
-								{starredSegments.has(f.segment_id)
-								? 'text-amber-400'
-								: 'text-slate-300 hover:text-amber-400'}"
-						>
-							<StarIcon
-								size={18}
-								fill={starredSegments.has(f.segment_id) ? 'currentColor' : 'none'}
-							/>
-						</button>
-					</div>
-					<div class="mt-1 text-xs text-slate-500">{questionLabel(f.question_id)}</div>
-					<div class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-400">
-						<span class="rounded-full px-1.5 py-0.5 {sentimentClass(f.sentiment)}">
-							{SENTIMENT_LABELS[f.sentiment]}
-						</span>
-						{#if f.in_pull_quote}
-							<span class="font-mono text-accent-mint">↑ in {f.quote_id}</span>
-						{/if}
-						<span class="font-mono">chars {f.char_start}–{f.char_end}</span>
-					</div>
-				</div>
+				<CodedFragmentCard
+					fragment={f}
+					{profiles}
+					starred={starredSegments.has(f.segment_id)}
+					togglingStar={togglingSegment === f.segment_id}
+					onToggleStar={toggleSegmentStar}
+				/>
 			{:else}
 				<p
 					class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500"

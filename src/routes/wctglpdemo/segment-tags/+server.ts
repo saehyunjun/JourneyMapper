@@ -39,7 +39,6 @@ export const POST: RequestHandler = async ({ request }) => {
 			subthemes: asArray(body.subthemes),
 			emotions: asArray(body.emotions),
 			sentiment: Number(body.sentiment ?? 0),
-			semantic_tags: asArray(body.semantic_tags),
 			reviewer_notes: typeof body.reviewer_notes === 'string' ? body.reviewer_notes : ''
 		});
 		return json({ ok: true, annotation });

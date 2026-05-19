@@ -7,18 +7,19 @@
 		segmentsForTheme,
 		themedQuestionIds,
 		themedParticipantIds,
+		tagGroups,
+		themeGroupOf,
 		questionLabel,
 		titleCase,
 		participantLabel,
 		SENTIMENT_LABELS,
 		type ThemeBlock
 	} from '$lib/content/wctglpdemo-data/analysis';
-	import { Badge } from "$lib/components/ui/badge/index.js";
 	import { Button } from "$lib/components/ui/button/index.js";
-	import SortableBarChart from '$lib/charts/glp/SortableBarChart.svelte';
+	import RadialThemeChart from '$lib/charts/glp/RadialThemeChart.svelte';
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import KeywordText from '$lib/components/KeywordText.svelte';
-	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
+	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
 	import KeyQuotesSection from '$lib/components/KeyQuotesSection.svelte';
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
 	import { keywordCounts } from '$lib/content/wctglpdemo-data/keywords';
@@ -39,83 +40,35 @@
 		participantDrawerOpen = true;
 	}
 
-	/** Theme breakdown rows -> the {word,count,blocks} shape SortableBarChart expects. */
-	const toBars = (rows: { id: string; count: number; blocks: ThemeBlock[] }[]) =>
-		rows.map((r) => ({ word: titleCase(r.id), count: r.count, blocks: r.blocks }));
+	/** themeBreakdown rows -> the {word,count,group,blocks} shape RadialThemeChart expects. */
+	const toRadial = (rows: { id: string; count: number; blocks: ThemeBlock[] }[]) =>
+		rows.map((r) => ({
+			word: titleCase(r.id),
+			count: r.count,
+			blocks: r.blocks,
+			group: themeGroupOf.get(r.id) ?? 'other'
+		}));
 
-	const overallThemes = toBars(themeBreakdown());
 	const participantCount = themedParticipantIds.length;
 
-	// --- Question groups (Viz 2) ---
-	// Broader buckets the interview-guide questions fall into; the question row
-	// below shows only the questions belonging to the selected group.
-	const QUESTION_GROUPS: { id: string; label: string; ids: string[] }[] = [
-		{
-			id: 'medication',
-			label: 'Medication preferences',
-			ids: [
-				'stopping_glp1',
-				'try_different_medication',
-				'compounded_vs_approved',
-				'oral_glp_awareness',
-				'oral_vs_injectable'
-			]
-		},
-		{
-			id: 'trial-interest',
-			label: 'Clinical trials interest',
-			ids: ['trial_unapproved_medication', 'trial_motivation', 'considered_trials_before']
-		},
-		{
-			id: 'trial-barriers',
-			label: 'Clinical trial barriers',
-			ids: [
-				'placebo_controlled_appeal',
-				'monthly_injection_barrier',
-				'trial_barriers',
-				'trial_concerns'
-			]
-		},
-		{
-			id: 'support',
-			label: 'Lifestyle & support',
-			ids: ['weight_loss_history', 'educational_support']
-		}
+	// One radial chart, many views: an "all interviews" view plus one per themed
+	// question, in interview-guide order. The all view is the default.
+	const views: { id: string; label: string }[] = [
+		{ id: 'all', label: 'Across all interviews' },
+		...themedQuestionIds.map((id) => ({ id, label: questionLabel(id) }))
 	];
-
-	// Keep only questions that actually have themed annotations, in guide order;
-	// sweep any uncategorized ones into a trailing group so nothing is hidden.
-	const questionGroups = (() => {
-		const groups = QUESTION_GROUPS.map((g) => ({
-			id: g.id,
-			label: g.label,
-			ids: g.ids.filter((id) => themedQuestionIds.includes(id))
-		})).filter((g) => g.ids.length);
-		const placed = new Set(groups.flatMap((g) => g.ids));
-		const rest = themedQuestionIds.filter((id) => !placed.has(id));
-		if (rest.length) groups.push({ id: 'other', label: 'Other questions', ids: rest });
-		return groups;
-	})();
-
-	let selectedGroup = $state(questionGroups[0]?.id);
-	const activeGroup = $derived(
-		questionGroups.find((g) => g.id === selectedGroup) ?? questionGroups[0]
+	let selectedView = $state('all');
+	const selectedIndex = $derived(
+		Math.max(0, views.findIndex((v) => v.id === selectedView))
 	);
-	const groupQuestionIds = $derived(activeGroup?.ids ?? []);
 
-	let selectedQuestion = $state(questionGroups[0]?.ids[0] ?? themedQuestionIds[0]);
-	let selectedParticipant = $state(themedParticipantIds[0]);
+	const overallThemes = toRadial(themeBreakdown());
 
-	// When the group changes, keep the selected question valid for it.
-	$effect(() => {
-		if (groupQuestionIds.length && !groupQuestionIds.includes(selectedQuestion)) {
-			selectedQuestion = groupQuestionIds[0];
-		}
-	});
-
-	const questionThemes = $derived(toBars(themeBreakdown((a) => a.question_id === selectedQuestion)));
-	const participantThemes = $derived(
-		toBars(themeBreakdown((a) => a.interview_id === selectedParticipant))
+	// Themes for whichever view is selected — recomputed when the user refines.
+	const currentThemes = $derived(
+		selectedView === 'all'
+			? overallThemes
+			: toRadial(themeBreakdown((a) => a.question_id === selectedView))
 	);
 
 	// --- Quote drawer ---
@@ -177,15 +130,14 @@
 				: 'All interviews'
 	);
 
-	// Highlight the active row in whichever chart the drawer was opened from.
-	const overallSelected = $derived(
-		drawerOpen && drawerContext.kind === 'overall' && drawerTheme ? titleCase(drawerTheme) : null
-	);
-	const questionSelected = $derived(
-		drawerOpen && drawerContext.kind === 'question' && drawerTheme ? titleCase(drawerTheme) : null
-	);
-	const participantSelected = $derived(
-		drawerOpen && drawerContext.kind === 'participant' && drawerTheme ? titleCase(drawerTheme) : null
+	// Highlight the active theme in the radial chart when its drawer is open and
+	// the drawer's context still matches the view on screen.
+	const chartSelected = $derived(
+		drawerOpen && drawerTheme &&
+			((selectedView === 'all' && drawerContext.kind === 'overall') ||
+				(drawerContext.kind === 'question' && drawerContext.id === selectedView))
+			? titleCase(drawerTheme)
+			: null
 	);
 
 	function sentimentClass(s: number) {
@@ -209,8 +161,7 @@
 			</h1>
 			<p class="max-w-2xl text-lg leading-7 text-primary-foreground/85">
 				The analytical themes that surfaced across {participantCount} GLP-1 patient interviews,
-				counted from coded response segments. Sort the bars to re-read the data — or click any
-				theme to see the quotes behind it.
+				counted from coded response segments. Click any theme to see the quotes behind it.
 			</p>
 		</div>
 	</div>
@@ -224,135 +175,61 @@
 			onparticipant={openParticipant}
 		/>
 
-		<!-- Viz 1 — Overall theme frequency -->
+		<!-- Theme frequency — one radial chart, all interviews or one question -->
 		<section class="flex flex-col gap-5">
 			<div class="flex flex-col gap-2 border-b border-(--primary)/15 pb-4">
-				<span class="figcaption text-accent-mint">01 · Across all interviews</span>
+				<span class="figcaption text-accent-mint">
+					{String(selectedIndex + 1).padStart(2, '0')} · {views[selectedIndex].label}
+				</span>
 				<h2 class="font-heading text-4xl font-light uppercase text-primary">
-					The shared themes
+					The themes that surfaced
 				</h2>
 				<p class="max-w-2xl text-base text-muted-foreground">
-					How many response segments carried each theme across all {participantCount} interviews.
-					Click a theme to open the quotes behind it.
+					{#if selectedView === 'all'}
+						How many response segments carried each theme across all {participantCount}
+						interviews. Click a theme to open the quotes behind it.
+					{:else}
+						The themes patients raised when answering this question. Click a theme to open
+						the quotes behind it.
+					{/if}
 				</p>
 			</div>
 
-			<SortableBarChart
-				data={overallThemes}
-				unitLabel="tagged segments"
-				itemNoun="themes"
-				blockLabel="tagged segment"
-				selected={overallSelected}
-				onselect={(d) => openDrawer(d, { kind: 'overall' })}
-			/>
-		</section>
-
-		<!-- Viz 2 — By interview question -->
-		<section class="flex flex-col gap-5">
-			<div class="flex flex-col gap-2 border-b border-(--ink)/15 pb-4">
-				<span class="figcaption text-accent-mint">02 · By interview question</span>
-				<h2 class="font-heading text-4xl font-light uppercase text-primary">
-					What each question surfaced
-				</h2>
-				<p class="max-w-2xl text-base text-muted-foreground">
-					Pick a topic group, then a question within it, to see the themes that came up
-					when patients answered it.
-				</p>
-			</div>
-
-			<!-- Topic groups -->
-			<div class="flex flex-wrap gap-2">
-				{#each questionGroups as group (group.id)}
-					<Button
-						variant="link"
-						class="border-b-2 hover:cursor-pointer px-2 py-1.5 text-sm font-medium transition-colors duration-150 capitalize
-							{selectedGroup === group.id
-							? 'border-accent-mint text-accent-mint-background'
-							: 'border-b-secondary-foreground/20 text-foreground/50 hover:text-foreground hover:border-b-secondary-foreground/50'}"
-						aria-pressed={selectedGroup === group.id}
-						onclick={() => (selectedGroup = group.id)}
-					>
-						{group.label}
-						<Badge variant="secondary">
-							{group.ids.length}</Badge>
-						</Button>
-				{/each}
-			</div>
-
-			<!-- Questions within the selected group -->
-			<div class="flex flex-row gap-2 overflow-x-scroll  pb-4">
-				{#each groupQuestionIds as id (id)}
+			<!-- View selector — start with all interviews, refine to one question -->
+			<div class="flex flex-row gap-2 overflow-x-scroll pb-4">
+				{#each views as v, i (v.id)}
 					<Button
 						variant="default"
-						class="rounded-full px-2.5 py-1.5 text-sm transition-colors duration-150
-							{selectedQuestion === id
+						class="shrink-0 rounded-full px-2.5 py-1.5 text-sm transition-colors duration-150
+							{selectedView === v.id
 							? 'border-(--darkgrayblue) bg-(--darkgrayblue) text-(--paper)'
 							: 'border-(--ink)/20 bg-(--paper) text-foreground hover:bg-(--ink)/5'}"
-						aria-pressed={selectedQuestion === id}
-						onclick={() => (selectedQuestion = id)}
+						aria-pressed={selectedView === v.id}
+						onclick={() => (selectedView = v.id)}
 					>
-						{questionLabel(id)}
-			</Button>
+						{String(i + 1).padStart(2, '0')} · {v.label}
+					</Button>
 				{/each}
 			</div>
 
-			{#if questionThemes.length}
-				<SortableBarChart
-					data={questionThemes}
-					unitLabel="segments for this question"
+			{#if currentThemes.length}
+				<RadialThemeChart
+					data={currentThemes}
+					groups={tagGroups}
+					unitLabel="tagged segments"
 					itemNoun="themes"
 					blockLabel="tagged segment"
-					rowHeight={38}
-					selected={questionSelected}
-					onselect={(d) => openDrawer(d, { kind: 'question', id: selectedQuestion })}
+					selected={chartSelected}
+					onselect={(d) =>
+						openDrawer(
+							d,
+							selectedView === 'all'
+								? { kind: 'overall' }
+								: { kind: 'question', id: selectedView }
+						)}
 				/>
 			{:else}
 				<p class="text-muted-foreground">No themes tagged for this question.</p>
-			{/if}
-		</section>
-
-		<!-- Viz 3 — Participant fingerprint -->
-		<section class="flex flex-col gap-5">
-			<div class="flex flex-col gap-2 border-b border-(--ink)/15 pb-4">
-				<span class="figcaption text-accent-mint">03 · By participant</span>
-				<h2 class="font-heading text-4xl font-light uppercase text-primary">
-					Each patient's fingerprint
-				</h2>
-				<p class="max-w-2xl text-base text-muted-foreground">
-					The themes each participant raised, pooled across every question. Switch
-					participants to compare what mattered most to each person.
-				</p>
-			</div>
-
-			<div class="flex flex-row overflow-x-scroll gap-2">
-				{#each themedParticipantIds as id (id)}
-					<Button
-						type="outline"
-						class="flex items-center gap-2 rounded-full border py-1 pr-3.5 pl-1 text-sm transition-colors duration-150
-							{selectedParticipant === id
-							? 'border-(--orange) bg-(--orange) text-(--paper)'
-							: 'border-(--ink)/20 bg-(--paper) text-foreground hover:bg-(--ink)/5'}"
-						aria-pressed={selectedParticipant === id}
-						onclick={() => (selectedParticipant = id)}
-					>
-						<ParticipantAvatar interviewId={id} size="sm" />
-						{participantLabel(id)}
-			</Button>
-				{/each}
-			</div>
-
-			{#if participantThemes.length}
-				<SortableBarChart
-					data={participantThemes}
-					unitLabel="segments tagged for {participantLabel(selectedParticipant)}"
-					itemNoun="themes"
-					blockLabel="tagged segment"
-					rowHeight={36}
-					selected={participantSelected}
-					onselect={(d) => openDrawer(d, { kind: 'participant', id: selectedParticipant })}
-				/>
-			{:else}
-				<p class="text-muted-foreground">No themes tagged for this participant.</p>
 			{/if}
 		</section>
 	</div>
@@ -467,27 +344,7 @@
 					quote above; the rest are coded but not pulled.
 				</p>
 				{#each drawerFragments as f (f.segment_id)}
-					<div
-						class="p-2 border-2 border-muted/60
-							{f.in_pull_quote ? 'border-accent-mint bg-accent-mint/5' : 'border-muted-foreground'}"
-					>
-						<p class="text-sm leading-relaxed text-slate-700">
-							<KeywordText text={f.text} />
-						</p>
-						<div class="mt-1 text-xs text-slate-500">
-							<span class="font-medium text-slate-700">{participantLabel(f.interview_id)}</span>
-							· {questionLabel(f.question_id)}
-						</div>
-						<div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-400">
-							<span class="rounded-full px-1.5 py-0.5 {sentimentClass(f.sentiment)}">
-								{SENTIMENT_LABELS[f.sentiment]}
-							</span>
-							{#if f.in_pull_quote}
-								<span class="font-mono text-accent-mint">↑ in {f.quote_id}</span>
-							{/if}
-							<span class="font-mono">chars {f.char_start}–{f.char_end}</span>
-						</div>
-					</div>
+					<CodedFragmentCard fragment={f} {profiles} />
 				{:else}
 					<p
 						class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500"

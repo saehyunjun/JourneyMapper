@@ -11,6 +11,7 @@ import segmentsRaw from './segments.json';
 import segmentTagsRaw from './segment_tags.json';
 import codebookRaw from './codebook.json';
 import quoteBankRaw from './quote_bank.json';
+import keywordUsageRaw from './keyword_usage.json';
 
 export type WordCount = { word: string; count: number };
 
@@ -26,7 +27,6 @@ export type Quote = {
 	themes: string[];
 	subthemes: string[];
 	emotions: string[];
-	semantic_tags: string[];
 	sentiment: number;
 	quote_score: {
 		clarity: number;
@@ -49,7 +49,6 @@ export type Annotation = {
 	subthemes: string[];
 	emotions: string[];
 	sentiment: number;
-	semantic_tags: string[];
 	confidence: number;
 	review_status: string;
 };
@@ -78,9 +77,13 @@ export type Question = {
 
 export type ThemeTag = {
 	id: string;
+	/** Broader tag-group this theme belongs to — see `tagGroups`. */
+	group?: string;
 	description: string;
 	subthemes?: { id: string; description: string }[];
 };
+
+export type TagGroup = { id: string; label: string; description: string };
 
 type Interview = { interview_id: string; turn_count: number };
 
@@ -101,12 +104,52 @@ export const annotations = segmentTags.annotations;
 export const pendingInterviews: string[] = segmentTags.meta.pending_interviews ?? [];
 export const questions = (questionsRaw as { questions: Question[] }).questions;
 export const themeTags = (codebookRaw as { theme_tags: ThemeTag[] }).theme_tags;
+/** Broader theme groups from the codebook; each theme references one by `group`. */
+export const tagGroups = (codebookRaw as { tag_groups: TagGroup[] }).tag_groups;
+/** theme id -> its tag-group id */
+export const themeGroupOf = new Map<string, string | undefined>(
+	themeTags.map((t) => [t.id, t.group])
+);
 export const interviews = (interviewsRaw as { interviews: Interview[] }).interviews;
 export const segments = (segmentsRaw as { segments: Segment[] }).segments;
 export const wordUsage = wordUsageRaw as {
 	overall_word_usage: WordCount[];
 	by_participant: Record<string, { total_words: number; unique_words: number; word_usage: WordCount[] }>;
 };
+
+type KeywordUsage = {
+	categories: {
+		id: string;
+		label: string;
+		keywords: {
+			id: string;
+			label: string;
+			count: number;
+			matches: { segment_id: string; text?: string }[];
+		}[];
+	}[];
+};
+
+/** A keyword a segment matched, plus the literal surface form spoken in it. */
+export type SegmentKeyword = { id: string; label: string; surface: string };
+
+/**
+ * segment_id -> the single strongest keyword it matched in keyword_usage.json,
+ * where "strongest" is the keyword with the highest corpus-wide mention count.
+ * `surface` is the verbatim form spoken in that segment. Segments matching no
+ * lexicon keyword are simply absent from the map.
+ */
+export const keywordBySegment: Map<string, SegmentKeyword> = (() => {
+	const map = new Map<string, SegmentKeyword>();
+	const ranked = (keywordUsageRaw as KeywordUsage).categories
+		.flatMap((c) => c.keywords)
+		.sort((a, b) => b.count - a.count);
+	for (const kw of ranked)
+		for (const m of kw.matches)
+			if (!map.has(m.segment_id))
+				map.set(m.segment_id, { id: kw.id, label: kw.label, surface: m.text ?? '' });
+	return map;
+})();
 
 const questionById = new Map(questions.map((q) => [q.question_id, q]));
 
@@ -178,19 +221,58 @@ export function themeCounts(
 
 export type ThemeBlock = { sentiment: number; interview_id: string };
 
+export type BreakdownRow = { id: string; count: number; blocks: ThemeBlock[] };
+export type ThemeBreakdownRow = BreakdownRow & { subthemes: BreakdownRow[] };
+
 /**
  * Per-theme breakdown: one block per contributing segment annotation, carrying
- * the data needed to colour it (sentiment, interviewee). Sorted by count desc.
+ * the data needed to colour it (sentiment, interviewee). Each theme also lists
+ * its subthemes with the same per-block detail. Sorted by count desc.
  */
 export function themeBreakdown(
 	predicate: (a: Annotation) => boolean = () => true
-): { id: string; count: number; blocks: ThemeBlock[] }[] {
+): ThemeBreakdownRow[] {
+	const themeBlocks = new Map<string, ThemeBlock[]>();
+	const subBlocks = new Map<string, ThemeBlock[]>();
+	for (const a of annotations.filter(predicate)) {
+		const block: ThemeBlock = { sentiment: a.sentiment, interview_id: a.interview_id };
+		for (const t of a.themes) {
+			const list = themeBlocks.get(t) ?? [];
+			list.push(block);
+			themeBlocks.set(t, list);
+		}
+		for (const s of a.subthemes) {
+			const list = subBlocks.get(s) ?? [];
+			list.push(block);
+			subBlocks.set(s, list);
+		}
+	}
+	return [...themeBlocks.entries()]
+		.map(([id, blocks]) => ({
+			id,
+			count: blocks.length,
+			blocks,
+			subthemes: [...subBlocks.entries()]
+				.filter(([sid]) => subthemeParent.get(sid) === id)
+				.map(([sid, b]) => ({ id: sid, count: b.length, blocks: b }))
+				.sort((a, b) => b.count - a.count)
+		}))
+		.sort((a, b) => b.count - a.count);
+}
+
+/**
+ * Per-emotion breakdown: one block per contributing segment annotation, so each
+ * emotion's segments can be split by sentiment. Sorted by count desc.
+ */
+export function emotionBreakdown(
+	predicate: (a: Annotation) => boolean = () => true
+): BreakdownRow[] {
 	const rows = new Map<string, ThemeBlock[]>();
 	for (const a of annotations.filter(predicate)) {
-		for (const t of a.themes) {
-			const list = rows.get(t) ?? [];
+		for (const e of a.emotions) {
+			const list = rows.get(e) ?? [];
 			list.push({ sentiment: a.sentiment, interview_id: a.interview_id });
-			rows.set(t, list);
+			rows.set(e, list);
 		}
 	}
 	return [...rows.entries()]
@@ -273,10 +355,38 @@ export type ThemeFragment = {
 	interview_id: string;
 	question_id: string;
 	sentiment: number;
+	emotions: string[];
 	flags: string[];
 	in_pull_quote: boolean;
 	quote_id: string | null;
 };
+
+/** Join one coded annotation to its segment text and pull-quote provenance. */
+function fragmentForAnnotation(a: Annotation): ThemeFragment {
+	const seg = segmentById.get(a.segment_id);
+	return {
+		segment_id: a.segment_id,
+		text: seg?.text ?? '',
+		char_start: seg?.char_start ?? 0,
+		char_end: seg?.char_end ?? 0,
+		interview_id: a.interview_id,
+		question_id: a.question_id,
+		sentiment: a.sentiment,
+		emotions: a.emotions,
+		flags: seg?.flags ?? [],
+		in_pull_quote: quoteBySegment.has(a.segment_id),
+		quote_id: quoteBySegment.get(a.segment_id) ?? null
+	};
+}
+
+/**
+ * Every coded fragment whose annotation matches `predicate`, joined to its
+ * segment text. The general join behind `segmentsForTheme` and the
+ * participant drawer's theme / emotion / word row drill-downs.
+ */
+export function fragmentsMatching(predicate: (a: Annotation) => boolean): ThemeFragment[] {
+	return annotations.filter(predicate).map(fragmentForAnnotation);
+}
 
 /**
  * Every segment fragment tagged with `themeId` (optionally filtered), joined to
@@ -286,24 +396,7 @@ export function segmentsForTheme(
 	themeId: string,
 	predicate: (a: Annotation) => boolean = () => true
 ): ThemeFragment[] {
-	const segById = new Map(segments.map((s) => [s.segment_id, s]));
-	return annotations
-		.filter((a) => a.themes.includes(themeId) && predicate(a))
-		.map((a) => {
-			const seg = segById.get(a.segment_id);
-			return {
-				segment_id: a.segment_id,
-				text: seg?.text ?? '',
-				char_start: seg?.char_start ?? 0,
-				char_end: seg?.char_end ?? 0,
-				interview_id: a.interview_id,
-				question_id: a.question_id,
-				sentiment: a.sentiment,
-				flags: seg?.flags ?? [],
-				in_pull_quote: quoteBySegment.has(a.segment_id),
-				quote_id: quoteBySegment.get(a.segment_id) ?? null
-			};
-		});
+	return fragmentsMatching((a) => a.themes.includes(themeId) && predicate(a));
 }
 
 const questionOrder = new Map(questions.map((q) => [q.question_id, q.order]));

@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "schema_version": "2.0",
+    "study_id": "wct_glp1",
+    "description": "Booth quiz over the WCT GLP-1 study. Every question is a 'rank_barrier' — the visitor guesses which of two options patients raised more often, then sees the live count. Theme-based options are scored against themeCounts() in analysis.ts; keyword-based options against keyword_usage.json. leaderboard.votes are seeded conference-goer tallies — booth-session votes are added client-side from localStorage.",
+    "updated_at": "2026-05-19T21:00:00.000Z",
+    "notes": [
+      "rank_barrier options reference either theme/subtheme ids (codebook.json) or keyword ids (keyword_lexicon.json); the correct answer is whichever option's count is higher, resolved at load time — never hard-coded here.",
+      "domain.label names the competency a question probes; domain.wctEdge is the matching Worldwide Clinical Trials capability, surfaced in the results 'so-what'.",
+      "leaderboard.votes is a believable seed, not real telemetry; each question's counts sum to leaderboard.seed_players."
+    ]
+  },
+  "questions": [
+    {
+      "id": "barrier_travel_vs_monitoring",
+      "type": "rank_barrier",
+      "kicker": "Rank the barrier",
+      "prompt": "Patients told us what would make a trial hard to join. Which came up more often?",
+      "options": [
+        {
+          "key": "travel",
+          "label": "The travel",
+          "sublabel": "How far away the clinic is",
+          "theme_ids": ["travel_burden"]
+        },
+        {
+          "key": "monitoring",
+          "label": "The procedures",
+          "sublabel": "Fasting blood draws & glucose monitors",
+          "theme_ids": ["monitoring_burden"]
+        }
+      ],
+      "domain": {
+        "label": "site logistics & travel burden",
+        "wctEdge": "decentralized trial design and site-network planning"
+      },
+      "takeaway": "Distance beat needles. Patients raised the drive to a site more than any blood draw — where you put a site matters more than which procedures you run."
+    },
+    {
+      "id": "barrier_cost_vs_sideeffects",
+      "type": "rank_barrier",
+      "kicker": "Rank the worry",
+      "prompt": "GLP-1 drugs are famous for their price. But across these interviews, which did patients raise more often?",
+      "options": [
+        {
+          "key": "cost",
+          "label": "What it costs",
+          "sublabel": "Out-of-pocket price & coverage",
+          "theme_ids": ["cost_access"]
+        },
+        {
+          "key": "side_effects",
+          "label": "Its side effects",
+          "sublabel": "Adverse effects & complications",
+          "theme_ids": ["side_effect_concern"]
+        }
+      ],
+      "domain": {
+        "label": "how patients weigh safety against cost",
+        "wctEdge": "risk communication and safety monitoring"
+      },
+      "takeaway": "The sticker price gets the headlines, but worry about side effects came up even more often than cost — the bigger story in the room was safety, not money."
+    },
+    {
+      "id": "drug_tirzepatide_vs_semaglutide",
+      "type": "rank_barrier",
+      "kicker": "Rank the drug",
+      "prompt": "Two GLP-1 drug families dominate the market. Which did patients name more often in these interviews?",
+      "options": [
+        {
+          "key": "tirzepatide",
+          "label": "Tirzepatide",
+          "sublabel": "Sold as Mounjaro & Zepbound",
+          "keyword_ids": ["tirzepatide"]
+        },
+        {
+          "key": "semaglutide",
+          "label": "Semaglutide",
+          "sublabel": "Sold as Ozempic & Wegovy",
+          "keyword_ids": ["semaglutide"]
+        }
+      ],
+      "domain": {
+        "label": "the GLP-1 treatment landscape",
+        "wctEdge": "metabolic and obesity therapeutic strategy"
+      },
+      "takeaway": "Closer than you'd think. Ozempic and Wegovy own the headlines, but in these interviews patients named the two drug families almost evenly — tirzepatide (Mounjaro/Zepbound) just edged it."
+    },
+    {
+      "id": "barrier_altruism_vs_incentives",
+      "type": "rank_barrier",
+      "kicker": "Rank the motivator",
+      "prompt": "What pulled patients toward joining a trial more strongly?",
+      "options": [
+        {
+          "key": "altruism",
+          "label": "Helping research",
+          "sublabel": "Contributing to science & other patients",
+          "theme_ids": ["research_altruism"]
+        },
+        {
+          "key": "incentives",
+          "label": "The support offered",
+          "sublabel": "Compensation, vouchers & travel help",
+          "theme_ids": ["incentives_support"]
+        }
+      ],
+      "domain": {
+        "label": "what actually drives enrollment",
+        "wctEdge": "patient recruitment and engagement"
+      },
+      "takeaway": "Altruism is real — but concrete support was raised nearly twice as often. Patients want to help; they also need the logistics solved."
+    },
+    {
+      "id": "edu_nutrition_vs_medication",
+      "type": "rank_barrier",
+      "kicker": "Rank the need",
+      "prompt": "GLP-1 patients told us they want more education and support. Which did they ask for more often?",
+      "options": [
+        {
+          "key": "nutrition",
+          "label": "Help with food",
+          "sublabel": "Nutrition counseling, meal planning & recipes",
+          "theme_ids": ["nutrition_education"]
+        },
+        {
+          "key": "medication",
+          "label": "Help with the drug",
+          "sublabel": "How the medication works & how to take it",
+          "theme_ids": ["medication_education"]
+        }
+      ],
+      "domain": {
+        "label": "patient education & retention",
+        "wctEdge": "patient-support and retention program design"
+      },
+      "takeaway": "Even on a medication that quiets appetite, the louder ask was for help with food — what to actually eat, how to plan meals. Nutrition guidance came up about twice as often as questions about the drug itself, and weight-loss patients say no one ever taught them this."
+    }
+  ],
+  "leaderboard": {
+    "seed_players": 1247,
+    "description": "Seeded conference-goer tallies, keyed by question id then option key. Booth-session votes are added on top from localStorage.",
+    "votes": {
+      "barrier_travel_vs_monitoring": { "travel": 573, "monitoring": 674 },
+      "barrier_cost_vs_sideeffects": { "cost": 848, "side_effects": 399 },
+      "drug_tirzepatide_vs_semaglutide": { "tirzepatide": 521, "semaglutide": 726 },
+      "barrier_altruism_vs_incentives": { "altruism": 636, "incentives": 611 },
+      "edu_nutrition_vs_medication": { "nutrition": 557, "medication": 690 }
+    }
+  }
+}

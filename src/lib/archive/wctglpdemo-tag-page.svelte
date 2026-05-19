@@ -156,7 +156,7 @@
 	</div>
 
 	<div class="mx-auto flex w-full max-w-4xl flex-col gap-5 px-8 py-8">
-		<div class="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">
+		<div class="border-b border-muted p-4 text-sm text-slate-600">
 			Apply <span class="font-medium text-slate-800">theme, emotion, sentiment, and semantic</span>
 			tags from the codebook to each participant segment. Tags are saved to
 			<code class="text-xs">segment_tags.json</code> as confirmed, human-sourced annotations, and
@@ -194,7 +194,7 @@
 						}
 					};
 				}}
-				class="sticky top-2 z-10 flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
+				class="sticky top-2 z-10 flex flex-wrap items-center gap-3 border-b border-accent pb-2 bg-white p-4 shadow-sm"
 			>
 				<input type="hidden" name="interviewId" value={data.interviewId} />
 				<input type="hidden" name="annotations" value={JSON.stringify(tags)} />

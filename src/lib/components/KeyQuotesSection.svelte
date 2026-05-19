@@ -50,6 +50,30 @@
 			: null
 	);
 
+	// --- Theme filter -------------------------------------------------------
+	let selectedTheme = $state<string | null>(null);
+
+	// Themes present across the starred quotes, by frequency — the filter buttons.
+	const themeFilters = $derived.by(() => {
+		const counts = new Map<string, number>();
+		for (const q of starred) for (const t of q.themes) counts.set(t, (counts.get(t) ?? 0) + 1);
+		return [...counts.entries()]
+			.sort((a, b) => b[1] - a[1])
+			.map(([id, count]) => ({ id, count }));
+	});
+
+	// Drop the filter if its theme is no longer present (e.g. a participant change).
+	$effect(() => {
+		if (selectedTheme && !themeFilters.some((t) => t.id === selectedTheme)) {
+			selectedTheme = null;
+		}
+	});
+
+	const visible = $derived.by(() => {
+		const t = selectedTheme;
+		return t ? starred.filter((q) => q.themes.includes(t)) : starred;
+	});
+
 	function sentimentClass(s: number) {
 		if (s > 0) return 'bg-emerald-100 text-emerald-800';
 		if (s < 0) return 'bg-rose-100 text-rose-800';
@@ -62,22 +86,49 @@
 
 		<h2 class="font-heading text-4xl font-light uppercase text-primary">
 			Key quotes</h2>
-		<p class="max-w-2xl text-sm text-muted-foreground">
-			{#if scopedTo}
-			{scopedTo} has <span class="font-medium">{starred.length}
-				{starred.length === 1 ? 'quote' : 'quotes'}</span> starred quotes. Highlight their key quotes here.
-				{:else}
-			{scopedTo}'s <span class="font-medium">{starred.length}
-				{starred.length === 1 ? 'quote' : 'quotes'}</span> starred quotes. 
-			{/if}
-		</p>
+		{#if scopedTo}
+			<p class="max-w-2xl text-sm text-muted-foreground">
+				{scopedTo} has <span class="font-medium">{starred.length}
+					{starred.length === 1 ? 'quote' : 'quotes'}</span> starred. Their key quotes are
+				highlighted here.
+			</p>
+		{/if}
 	</div>
+
+	{#if themeFilters.length}
+		<!-- Theme filter — narrow the key quotes to one theme -->
+		<div class="flex flex-wrap gap-2">
+			<button
+				type="button"
+				class="rounded-full px-3 py-1 text-xs font-medium transition-colors {selectedTheme === null
+					? 'bg-accent-mint text-white'
+					: 'bg-slate-100 text-slate-600 hover:bg-slate-200'}"
+				aria-pressed={selectedTheme === null}
+				onclick={() => (selectedTheme = null)}
+			>
+				All <span class="opacity-70">{starred.length}</span>
+			</button>
+			{#each themeFilters as t (t.id)}
+				<button
+					type="button"
+					class="rounded-full px-3 py-1 text-xs font-medium transition-colors {selectedTheme === t.id
+						? 'bg-accent-mint text-white'
+						: 'bg-slate-100 text-slate-600 hover:bg-slate-200'}"
+					aria-pressed={selectedTheme === t.id}
+					onclick={() => (selectedTheme = t.id)}
+				>
+					{titleCase(t.id)} <span class="opacity-70">{t.count}</span>
+				</button>
+			{/each}
+		</div>
+	{/if}
 
 	{#if starred.length}
 	<div class="px-12">
+		{#key selectedTheme}
 		<Carousel.Root opts={{ align: 'start' }}>
 			<Carousel.Content class="py-3">
-		{#each starred as q (q.id)}
+		{#each visible as q (q.id)}
 		<Carousel.Item class="basis-full md:basis-1/2 lg:basis-1/3">
 			<article class="flex h-full flex-col gap-3 border border-slate-200 bg-white p-4">
 	<button
@@ -129,6 +180,7 @@
 			<Carousel.Previous />
 			<Carousel.Next />
 		</Carousel.Root>
+		{/key}
 	</div>
 	{:else}
 		<p class="border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">

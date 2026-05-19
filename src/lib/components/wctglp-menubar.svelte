@@ -1,0 +1,78 @@
+<!--
+	wctglp-menubar — a floating, bottom-centred navigation bar.
+
+	Replaces the left sidebar with a compact dark pill that hovers over the
+	bottom of the window (à la a design-tool toolbar). The active route shows
+	its text label; every other item collapses to an icon and reveals its
+	label in a hover popover.
+-->
+<script lang="ts">
+	import { page } from '$app/state';
+	import type { Component } from 'svelte';
+	import { NotebookPen, NotebookText, FingerprintPattern, Sparkles, Atom, FlaskConical, MessageSquareText, Route, Trophy } from '@lucide/svelte';
+	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
+
+	type NavItem = { title: string; url: string; icon: Component };
+
+	const items: NavItem[] = [
+		{ title: 'Executive Summary', url: '/wctglpdemo', icon: NotebookText },
+		{ title: 'Transcript Review', url: '/wctglpdemo/upload', icon: NotebookPen },
+		{ title: 'Fingerprint', url: '/wctglpdemo/fingerprint', icon: FingerprintPattern },
+		{ title: 'Interview Words', url: '/wctglpdemo/interview-words', icon: MessageSquareText },
+		{ title: 'Journey', url: '/wctglpdemo/journey', icon: Route },
+		{ title: 'Constellation', url: '/wctglpdemo/constellation', icon: Sparkles },
+		{ title: 'Ambient Booth', url: '/wctglpdemo/segment-cloud', icon: Atom },
+		{ title: 'Booth Quiz', url: '/wctglpdemo/quiz', icon: Trophy },
+		{ title: 'Trial Designer', url: '/wctglpdemo/trial-designer', icon: FlaskConical }
+	];
+
+	const path = $derived(page.url.pathname);
+
+	function isActive(url: string): boolean {
+		return url === '/wctglpdemo'
+			? path === url
+			: path === url || path.startsWith(url + '/');
+	}
+</script>
+
+<nav
+	class="fixed bottom-6 left-1/2 z-50 -translate-x-1/2"
+	aria-label="Primary"
+>
+	<Tooltip.Provider delayDuration={150}>
+		<ul class="flex items-center gap-1 rounded-full bg-slate-900 p-1.5 shadow-xl ring-1 ring-white/10">
+			{#each items as item (item.url)}
+				{@const Icon = item.icon}
+				{@const active = isActive(item.url)}
+				<li>
+					{#if active}
+						<a
+							href={item.url}
+							aria-current="page"
+							class="flex items-center gap-2 rounded-full bg-accent-mint px-3 py-2 text-sm font-medium text-white transition-colors duration-150"
+						>
+							<Icon class="size-4 shrink-0" />
+							<span>{item.title}</span>
+						</a>
+					{:else}
+						<Tooltip.Root>
+							<Tooltip.Trigger>
+								{#snippet child({ props })}
+									<a
+										{...props}
+										href={item.url}
+										aria-label={item.title}
+										class="flex items-center rounded-full px-3 py-2 text-slate-300 transition-all ease-in-out duration-350 hover:bg-white/10 hover:text-white"
+									>
+										<Icon class="size-4 shrink-0" />
+									</a>
+								{/snippet}
+							</Tooltip.Trigger>
+							<Tooltip.Content side="top">{item.title}</Tooltip.Content>
+						</Tooltip.Root>
+					{/if}
+				</li>
+			{/each}
+		</ul>
+	</Tooltip.Provider>
+</nav>

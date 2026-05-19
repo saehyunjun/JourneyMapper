@@ -22,7 +22,9 @@ import questionBank from '$lib/content/wctglpdemo-data/questions.json';
 import { readHighlights } from '$lib/server/highlights';
 import { readAnnotationsFor } from '$lib/server/segment-tags';
 import { getJob, startAutotag, type AutotagJob } from '$lib/server/autotag';
+import { readProfile } from '$lib/server/participant-profiles';
 import type { Annotation } from '$lib/types/segment-tags';
+import type { ParticipantProfile } from '$lib/types/participant-profile';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const STRUCTURED_PATH = `${DATA_DIR}/interviews_structured.json`;
@@ -238,6 +240,7 @@ export const load: PageServerLoad = ({ url }) => {
 				questionMap: { turn_index: number; question_id: string }[];
 				annotations: Record<string, Annotation>;
 				autotagJob: AutotagJob | null;
+				profile: ParticipantProfile;
 		  }
 		| null = null;
 	if (wanted) {
@@ -255,7 +258,8 @@ export const load: PageServerLoad = ({ url }) => {
 				segments,
 				questionMap: readQuestionMap(wanted),
 				annotations: readAnnotationsFor(wanted),
-				autotagJob: getJob(wanted)
+				autotagJob: getJob(wanted),
+				profile: readProfile(wanted)
 			};
 		}
 	}

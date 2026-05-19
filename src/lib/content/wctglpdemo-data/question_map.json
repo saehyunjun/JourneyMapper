@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-18T22:51:29.812Z",
+    "generated_at": "2026-05-19T02:57:15.068Z",
     "generator": "scripts/propose-questions.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -1517,7 +1517,7 @@
           "confidence": 0.95,
           "source": "ai_proposed",
           "review_status": "pending",
-          "reviewer_notes": ""
+          "reviewer_notes": "Protocol explanation"
         },
         {
           "turn_index": 4,
@@ -1535,7 +1535,7 @@
           "confidence": 0.7,
           "source": "ai_proposed",
           "review_status": "pending",
-          "reviewer_notes": "Follow-up about changes experienced; remains in stopping_glp1 context"
+          "reviewer_notes": "Probe about changes since treatment, within stopping context"
         },
         {
           "turn_index": 8,
@@ -1562,13 +1562,13 @@
           "confidence": 0.85,
           "source": "ai_proposed",
           "review_status": "pending",
-          "reviewer_notes": ""
+          "reviewer_notes": "Factors influencing decision"
         },
         {
           "turn_index": 14,
           "question_id": "placebo_controlled_appeal",
           "turn_role": "question",
-          "confidence": 0.98,
+          "confidence": 0.97,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
@@ -1584,18 +1584,18 @@
         },
         {
           "turn_index": 18,
-          "question_id": "trial_barriers",
+          "question_id": "monthly_injection_barrier",
           "turn_role": "probe",
-          "confidence": 0.7,
+          "confidence": 0.85,
           "source": "ai_proposed",
           "review_status": "pending",
-          "reviewer_notes": "Probe on logistics/visits"
+          "reviewer_notes": "Remote visits probe"
         },
         {
           "turn_index": 20,
           "question_id": "compounded_vs_approved",
           "turn_role": "question",
-          "confidence": 0.98,
+          "confidence": 0.97,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
@@ -1604,7 +1604,7 @@
           "turn_index": 22,
           "question_id": "trial_motivation",
           "turn_role": "question",
-          "confidence": 0.97,
+          "confidence": 0.96,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""
@@ -1616,7 +1616,7 @@
           "confidence": 0.7,
           "source": "ai_proposed",
           "review_status": "pending",
-          "reviewer_notes": "Transportation barrier probe"
+          "reviewer_notes": "Transportation - could be motivation or barrier"
         },
         {
           "turn_index": 26,
@@ -1649,7 +1649,7 @@
           "turn_index": 32,
           "question_id": "oral_glp_awareness",
           "turn_role": "question",
-          "confidence": 0.98,
+          "confidence": 0.97,
           "source": "ai_proposed",
           "review_status": "pending",
           "reviewer_notes": ""

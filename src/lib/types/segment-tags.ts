@@ -16,7 +16,6 @@ export type Annotation = {
 	subthemes: string[];
 	emotions: string[];
 	sentiment: number;
-	semantic_tags: string[];
 	confidence: number;
 	source: string;
 	review_status: string;

@@ -28,6 +28,7 @@
 	import { themePalette } from '$lib/content/wctglpdemo-data/topicTree';
 	import { keywordCounts } from '$lib/content/wctglpdemo-data/keywords';
 	import KeywordText from '$lib/components/KeywordText.svelte';
+	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 
 	type Axis = 'participant' | 'question';
@@ -416,23 +417,7 @@
 					pull quote above.
 				</p>
 				{#each drawerFragments as f (f.segment_id)}
-					<div
-						class="rounded-md border-l-2 py-1.5 pr-2 pl-3
-							{f.in_pull_quote ? 'border-accent-mint bg-accent-mint/5' : 'border-slate-200'}"
-					>
-						<p class="text-sm leading-relaxed text-slate-700">
-							<KeywordText text={f.text} />
-						</p>
-						<div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-400">
-							<span class="rounded-full px-1.5 py-0.5 {sentimentClass(f.sentiment)}">
-								{SENTIMENT_LABELS[f.sentiment]}
-							</span>
-							{#if f.in_pull_quote}
-								<span class="font-mono text-accent-mint">↑ in {f.quote_id}</span>
-							{/if}
-							<span class="font-mono">chars {f.char_start}–{f.char_end}</span>
-						</div>
-					</div>
+					<CodedFragmentCard fragment={f} />
 				{:else}
 					<p
 						class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500"
