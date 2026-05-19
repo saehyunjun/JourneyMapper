@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-18T19:56:31.028Z",
+    "generated_at": "2026-05-19T00:01:13.078Z",
     "generator": "scripts/build-segments.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -15,7 +15,7 @@
       "idea_unit_grouping": "deferred",
       "short_segment_handling": "flagged (\"very_short\"), not merged"
     },
-    "segment_count": 646,
+    "segment_count": 636,
     "notes": [
       "One segment per sentence of participant speech; offsets round-trip against the source file.",
       "question_id is inherited from the most recent interviewer turn in question_map.json.",
@@ -2447,30 +2447,19 @@
       "segment_index": 2,
       "question_id": "trial_barriers",
       "speaker": "participant",
-      "text": "So informing them about nutrition so they could have the tools to make better decisions and then a plan to follow.",
+      "text": "So informing them about nutrition so they could have the tools to make better decisions and then a plan to follow. I think that is something people may see valuable, they may not have access to that and finding it on their own may be a challenge.",
       "char_start": 14131,
-      "char_end": 14245,
-      "word_count": 21,
-      "flags": []
+      "char_end": 14377,
+      "word_count": 47,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_07_t59_s03",
       "interview_id": "participant_07",
       "turn_index": 59,
       "segment_index": 3,
-      "question_id": "trial_barriers",
-      "speaker": "participant",
-      "text": "I think that is something people may see valuable, they may not have access to that and finding it on their own may be a challenge.",
-      "char_start": 14246,
-      "char_end": 14377,
-      "word_count": 26,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_07_t59_s04",
-      "interview_id": "participant_07",
-      "turn_index": 59,
-      "segment_index": 4,
       "question_id": "trial_barriers",
       "speaker": "participant",
       "text": "So having it available would be good.",
@@ -2685,37 +2674,13 @@
       "segment_index": 1,
       "question_id": "trial_barriers",
       "speaker": "participant",
-      "text": "I guess the question I have is when you're going through these trials, what is medical care for, let's say adverse reactions happen?",
+      "text": "I guess the question I have is when you're going through these trials, what is medical care for, let's say adverse reactions happen? How does that, I take part in a trial, we discover there's some heart related issue. How do people handle that?",
       "char_start": 16932,
-      "char_end": 17064,
-      "word_count": 23,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_07_t73_s02",
-      "interview_id": "participant_07",
-      "turn_index": 73,
-      "segment_index": 2,
-      "question_id": "trial_barriers",
-      "speaker": "participant",
-      "text": "How does that, I take part in a trial, we discover there's some heart related issue.",
-      "char_start": 17065,
-      "char_end": 17149,
-      "word_count": 16,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_07_t73_s03",
-      "interview_id": "participant_07",
-      "turn_index": 73,
-      "segment_index": 3,
-      "question_id": "trial_barriers",
-      "speaker": "participant",
-      "text": "How do people handle that?",
-      "char_start": 17150,
       "char_end": 17176,
-      "word_count": 5,
-      "flags": []
+      "word_count": 44,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_07_t75_s00",
@@ -5719,11 +5684,13 @@
       "segment_index": 1,
       "question_id": "try_different_medication",
       "speaker": "participant",
-      "text": "I've heard the studies coming out about Retatrutide and Cagrilintide I think is the name of it.",
+      "text": "I've heard the studies coming out about Retatrutide and Cagrilintide I think is the name of it. So there's a lot of different studies that are advancing these GLP-1s. So yeah, I would definitely consider changing it up because even people that I know that started out on Tirzepatide like me that have been on it for a long period of time have switched over to Semaglutide and had a good results as well.",
       "char_start": 2007,
-      "char_end": 2102,
-      "word_count": 17,
-      "flags": []
+      "char_end": 2410,
+      "word_count": 74,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_10_t07_s02",
@@ -5732,63 +5699,13 @@
       "segment_index": 2,
       "question_id": "try_different_medication",
       "speaker": "participant",
-      "text": "So there's a lot of different studies that are advancing these GLP-1s.",
-      "char_start": 2103,
-      "char_end": 2173,
-      "word_count": 12,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_10_t07_s03",
-      "interview_id": "participant_10",
-      "turn_index": 7,
-      "segment_index": 3,
-      "question_id": "try_different_medication",
-      "speaker": "participant",
-      "text": "So yeah, I would definitely consider changing it up because even people that I know that started out on Tirzepatide like me that have been on it for a long period of time have switched over to Semaglutide and had a good results as well.",
-      "char_start": 2174,
-      "char_end": 2410,
-      "word_count": 45,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_10_t07_s04",
-      "interview_id": "participant_10",
-      "turn_index": 7,
-      "segment_index": 4,
-      "question_id": "try_different_medication",
-      "speaker": "participant",
-      "text": "So I mean, even kind, just trying different ones.",
+      "text": "So I mean, even kind, just trying different ones. I know that if you get in a stall, trying different ones can definitely break that. So yeah, I would definitely be up to it.",
       "char_start": 2411,
-      "char_end": 2460,
-      "word_count": 9,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_10_t07_s05",
-      "interview_id": "participant_10",
-      "turn_index": 7,
-      "segment_index": 5,
-      "question_id": "try_different_medication",
-      "speaker": "participant",
-      "text": "I know that if you get in a stall, trying different ones can definitely break that.",
-      "char_start": 2461,
-      "char_end": 2544,
-      "word_count": 16,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_10_t07_s06",
-      "interview_id": "participant_10",
-      "turn_index": 7,
-      "segment_index": 6,
-      "question_id": "try_different_medication",
-      "speaker": "participant",
-      "text": "So yeah, I would definitely be up to it.",
-      "char_start": 2545,
       "char_end": 2585,
-      "word_count": 9,
-      "flags": []
+      "word_count": 34,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_10_t09_s00",
@@ -7108,24 +7025,13 @@
       "segment_index": 3,
       "question_id": null,
       "speaker": "participant",
-      "text": "The other thing would probably be if I developed some kind of serious side effect or complication.",
+      "text": "The other thing would probably be if I developed some kind of serious side effect or complication. But overall the medication has improved my quality of life enough that I really don’t want to stop.",
       "char_start": 1421,
-      "char_end": 1519,
-      "word_count": 17,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_11_t05_s04",
-      "interview_id": "participant_11",
-      "turn_index": 5,
-      "segment_index": 4,
-      "question_id": null,
-      "speaker": "participant",
-      "text": "But overall the medication has improved my quality of life enough that I really don’t want to stop.",
-      "char_start": 1520,
       "char_end": 1619,
-      "word_count": 18,
-      "flags": []
+      "word_count": 35,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_11_t07_s00",
@@ -7162,24 +7068,13 @@
       "segment_index": 2,
       "question_id": null,
       "speaker": "participant",
-      "text": "I didn’t realize how much mental energy I spent thinking about food all day until it stopped.",
+      "text": "I didn’t realize how much mental energy I spent thinking about food all day until it stopped. It’s quieter in my head now.",
       "char_start": 1861,
-      "char_end": 1954,
-      "word_count": 17,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_11_t07_s03",
-      "interview_id": "participant_11",
-      "turn_index": 7,
-      "segment_index": 3,
-      "question_id": null,
-      "speaker": "participant",
-      "text": "It’s quieter in my head now.",
-      "char_start": 1955,
       "char_end": 1983,
-      "word_count": 6,
-      "flags": []
+      "word_count": 23,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_11_t09_s00",
@@ -7268,30 +7163,19 @@
       "segment_index": 2,
       "question_id": null,
       "speaker": "participant",
-      "text": "Access is another factor.",
+      "text": "Access is another factor. If participation meant I could continue receiving treatment, that would honestly be pretty motivating.",
       "char_start": 2718,
-      "char_end": 2743,
-      "word_count": 4,
-      "flags": []
+      "char_end": 2846,
+      "word_count": 18,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_11_t13_s03",
       "interview_id": "participant_11",
       "turn_index": 13,
       "segment_index": 3,
-      "question_id": null,
-      "speaker": "participant",
-      "text": "If participation meant I could continue receiving treatment, that would honestly be pretty motivating.",
-      "char_start": 2744,
-      "char_end": 2846,
-      "word_count": 14,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_11_t13_s04",
-      "interview_id": "participant_11",
-      "turn_index": 13,
-      "segment_index": 4,
       "question_id": null,
       "speaker": "participant",
       "text": "I also generally support medical research.",
@@ -7301,10 +7185,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_11_t13_s05",
+      "segment_id": "participant_11_t13_s04",
       "interview_id": "participant_11",
       "turn_index": 13,
-      "segment_index": 5,
+      "segment_index": 4,
       "question_id": null,
       "speaker": "participant",
       "text": "I work in tech, so I’m probably more comfortable than average with experimental systems and iteration.",

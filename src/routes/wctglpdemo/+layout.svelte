@@ -1,5 +1,7 @@
 <script lang="ts">
 	import WctglpSidebar from "$lib/components/wctglp-sidebar.svelte";
+	import ToastViewport from "$lib/components/ToastViewport.svelte";
+	import GroupStatsDrawer from "$lib/components/GroupStatsDrawer.svelte";
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 	import { sidebarState } from "$lib/sidebar-state.svelte.js";
@@ -73,3 +75,6 @@
 <div class="footer h-64 bg-accent-mint-background">
 
 </div>
+
+<GroupStatsDrawer />
+<ToastViewport />

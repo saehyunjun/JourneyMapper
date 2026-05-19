@@ -52,6 +52,8 @@
     "@thisux/sveltednd": "^0.4.1",
     "d3": "^7.9.0",
     "d3-cloud": "^1.2.9",
+    "embla-carousel-svelte": "^8.6.0",
+    "flag-icons": "^7.5.0",
     "layerchart": "^1.0.13",
     "tailwindcss-animate": "^1.0.7"
   }

@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-18T19:56:31.025Z",
+    "generated_at": "2026-05-18T22:51:29.812Z",
     "generator": "scripts/propose-questions.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",

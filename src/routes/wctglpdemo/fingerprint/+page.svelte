@@ -9,6 +9,7 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { Button } from "$lib/components/ui/button/index.ts";
 	import StarIcon from '@lucide/svelte/icons/star';
 	import {
 		annotations,
@@ -30,6 +31,7 @@
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import { profileName } from '$lib/types/participant-profile';
 	import type { PageProps } from './$types';
+	import { ArrowRight } from '@lucide/svelte';
 
 	let { data }: PageProps = $props();
 
@@ -153,11 +155,11 @@
 		{#if themedParticipantIds.length}
 			<!-- Participant browser -->
 			<div class="flex flex-col gap-3 border-b border-(--ink)/15 pb-5">
-				<span class="figcaption text-accent-mint">Browse participants</span>
+				<span class="figcaption text-accent-mint">Narrative Explorer</span>
 				<div class="flex flex-wrap gap-2">
 					{#each themedParticipantIds as id (id)}
-						<button
-							type="button"
+						<Button
+							variant="secondary"
 							class="flex items-center gap-2 rounded-full border py-1 pr-3.5 pl-1 text-sm transition-colors duration-150
 								{selectedParticipant === id
 								? 'border-(--orange) bg-(--orange) text-(--paper)'
@@ -167,24 +169,28 @@
 						>
 							<ParticipantAvatar interviewId={id} size="sm" />
 							{participantLabel(id)}
-						</button>
+						</Button>
 					{/each}
 				</div>
 			</div>
 
 			<!-- The selected participant -->
 			<section class="flex flex-col gap-6">
-				<button
-					type="button"
+			<div class="flex flex-row w-full justify-between">
+				<ParticipantAvatar
+				interviewId={selectedParticipant}
+				size="lg"
+				src={profiles[selectedParticipant]?.avatar_url}
+			/>
+				<Button
+					variant="default"
 					onclick={() => openParticipant(selectedParticipant)}
-					class="flex items-center gap-4 rounded-lg text-left transition-colors hover:bg-(--ink)/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-mint"
 					title="View participant details"
 				>
-					<ParticipantAvatar
-						interviewId={selectedParticipant}
-						size="lg"
-						src={profiles[selectedParticipant]?.avatar_url}
-					/>
+				View Participant Details
+				<ArrowRight />
+				</Button>
+			</div>
 					<div class="flex flex-col gap-1.5">
 						<h2 class="font-heading text-3xl font-light uppercase text-primary">
 							{profileName(profiles[selectedParticipant], participantLabel(selectedParticipant))}
@@ -193,7 +199,7 @@
 							{themeCount}
 							{themeCount === 1 ? 'theme' : 'themes'} ·
 							{segmentCount} tagged {segmentCount === 1 ? 'segment' : 'segments'} ·
-							<span class="text-accent-mint">view details →</span>
+							
 						</p>
 						<div class="flex flex-wrap gap-1.5">
 							<span class="rounded-full bg-rose-100 px-2 py-0.5 text-xs text-rose-800">
@@ -207,11 +213,12 @@
 							</span>
 						</div>
 					</div>
-				</button>
+
 
 				<!-- Key quotes — analyst-starred highlights for this participant -->
 				<KeyQuotesSection
 					starredQuoteIds={data.starredQuoteIds}
+					starredSegmentIds={[...starredSegments]}
 					{profiles}
 					onparticipant={openParticipant}
 					participantId={selectedParticipant}
@@ -266,7 +273,7 @@
 			</h2>
 			<p class="text-sm text-muted-foreground">
 				{drawerFragments.length} coded
-				{drawerFragments.length === 1 ? 'segment' : 'segments'} · star the ones worth keeping.
+				{drawerFragments.length === 1 ? 'segment' : 'segments'} · Starring segments will highlight them as key quotes across the Lab Book.
 			</p>
 		</div>
 

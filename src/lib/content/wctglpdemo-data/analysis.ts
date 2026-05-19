@@ -202,6 +202,69 @@ export function themeBreakdown(
 const quoteBySegment = new Map<string, string>();
 for (const q of quotes) for (const sid of q.segment_ids) quoteBySegment.set(sid, q.quote_id);
 
+// segment_id lookups, shared by the join helpers below.
+const segmentById = new Map(segments.map((s) => [s.segment_id, s]));
+const annotationBySegment = new Map(annotations.map((a) => [a.segment_id, a]));
+
+export type KeyQuote = {
+	/** Unique key — a quote_id for quote-bank quotes, a segment_id for segments. */
+	id: string;
+	interview_id: string;
+	question_id: string;
+	text: string;
+	sentiment: number;
+	themes: string[];
+	/** Quote-bank overall score, or null for a plain starred segment. */
+	score: number | null;
+};
+
+/**
+ * The analyst's "key quotes": every starred quote-bank quote plus every starred
+ * segment that isn't already covered by one. Segments are starred on the review
+ * page and the fingerprint theme drawer; quotes are starred on the analysis
+ * page — this folds both into one ranked card list for KeyQuotesSection.
+ */
+export function keyQuotes(
+	starredQuoteIds: string[],
+	starredSegmentIds: string[] = []
+): KeyQuote[] {
+	const cards: KeyQuote[] = [];
+	const covered = new Set<string>();
+
+	for (const q of quotes) {
+		if (!starredQuoteIds.includes(q.quote_id)) continue;
+		for (const sid of q.segment_ids) covered.add(sid);
+		cards.push({
+			id: q.quote_id,
+			interview_id: q.interview_id,
+			question_id: q.question_id,
+			text: q.text,
+			sentiment: q.sentiment,
+			themes: q.themes,
+			score: q.quote_score.overall
+		});
+	}
+
+	for (const sid of starredSegmentIds) {
+		if (covered.has(sid)) continue;
+		const seg = segmentById.get(sid);
+		if (!seg) continue;
+		const ann = annotationBySegment.get(sid);
+		cards.push({
+			id: sid,
+			interview_id: seg.interview_id,
+			question_id: seg.question_id ?? ann?.question_id ?? '',
+			text: seg.text,
+			sentiment: ann?.sentiment ?? 0,
+			themes: ann?.themes ?? [],
+			score: null
+		});
+	}
+
+	// Scored quotes first, best score down; starred segments after.
+	return cards.sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
+}
+
 export type ThemeFragment = {
 	segment_id: string;
 	text: string;

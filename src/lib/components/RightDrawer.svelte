@@ -20,7 +20,10 @@
 </script>
 
 <Sheet.Root bind:open>
-	<Sheet.Content side="right" class="data-[side=right]:sm:max-w-2xl">
+	<Sheet.Content
+		side="right"
+		class="data-[side=right]:sm:max-w-2xl data-[side=right]:md:max-w-3xl data-[side=right]:xl:max-w-4xl"
+	>
 		{@render children()}
 	</Sheet.Content>
 </Sheet.Root>

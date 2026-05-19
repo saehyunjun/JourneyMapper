@@ -219,6 +219,7 @@
 		<!-- Key quotes — analyst-starred highlights -->
 		<KeyQuotesSection
 			starredQuoteIds={data.starredQuoteIds}
+			starredSegmentIds={data.starredSegmentIds}
 			{profiles}
 			onparticipant={openParticipant}
 		/>
@@ -279,9 +280,10 @@
 			</div>
 
 			<!-- Questions within the selected group -->
-			<div class="flex flex-row gap-2 pb-4">
+			<div class="flex flex-row gap-2 overflow-x-scroll  pb-4">
 				{#each groupQuestionIds as id (id)}
-					<button
+					<Button
+						variant="default"
 						class="rounded-full px-2.5 py-1.5 text-sm transition-colors duration-150
 							{selectedQuestion === id
 							? 'border-(--darkgrayblue) bg-(--darkgrayblue) text-(--paper)'
@@ -290,11 +292,9 @@
 						onclick={() => (selectedQuestion = id)}
 					>
 						{questionLabel(id)}
-					</button>
+			</Button>
 				{/each}
 			</div>
-
-			<p class="text-lg italic text-foreground">“{questionLabel(selectedQuestion)}”</p>
 
 			{#if questionThemes.length}
 				<SortableBarChart
@@ -324,10 +324,10 @@
 				</p>
 			</div>
 
-			<div class="flex flex-wrap gap-2">
+			<div class="flex flex-row overflow-x-scroll gap-2">
 				{#each themedParticipantIds as id (id)}
-					<button
-						type="button"
+					<Button
+						type="outline"
 						class="flex items-center gap-2 rounded-full border py-1 pr-3.5 pl-1 text-sm transition-colors duration-150
 							{selectedParticipant === id
 							? 'border-(--orange) bg-(--orange) text-(--paper)'
@@ -337,7 +337,7 @@
 					>
 						<ParticipantAvatar interviewId={id} size="sm" />
 						{participantLabel(id)}
-					</button>
+			</Button>
 				{/each}
 			</div>
 

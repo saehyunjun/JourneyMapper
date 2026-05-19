@@ -1,18 +1,63 @@
 <!--
   KeywordText.svelte
 
-  Renders a span of participant speech with every keyword-lexicon match shown
-  semibold. Matching is deterministic (see keywords.ts) so the same words bold
-  wherever participant text appears. Emits inline content only — no wrapper
-  element — so it drops into a <blockquote>, <p>, etc. without affecting layout.
+  The shared renderer for participant speech. Highlights it deterministically
+  (see quote-text.ts): keyword-lexicon matches shown semibold, theme-term
+  matches underlined with a dotted line. A word can be both.
+
+  Each highlighted keyword/theme is clickable — it opens the secondary
+  group-stats drawer (groupDrawer store). Pass `onpick` to also react to the
+  click (e.g. open the segment's edit-tags drawer first). Emits inline content
+  only — no wrapper element — so it drops into a <blockquote>, <p>, etc.
 -->
 <script lang="ts">
-	import { keywordRuns } from '$lib/content/wctglpdemo-data/keywords';
+	import { quoteRuns, type QuoteRun } from '$lib/content/wctglpdemo-data/quote-text';
+	import { groupDrawer } from '$lib/stores/group-drawer.svelte.js';
 
-	let { text }: { text: string } = $props();
+	type Pick = { kind: 'keyword' | 'theme'; id: string; label: string };
 
-	const runs = $derived(keywordRuns(text ?? ''));
+	let { text, onpick }: { text: string; onpick?: (sel: Pick) => void } = $props();
+
+	const runs = $derived(quoteRuns(text ?? ''));
+
+	function runTitle(run: QuoteRun): string {
+		const parts: string[] = [];
+		if (run.keyword) parts.push(`${run.keyword.keywordLabel} · ${run.keyword.categoryLabel}`);
+		if (run.theme) parts.push(`Theme: ${run.theme.themeLabel}`);
+		return parts.length ? `${parts.join(' — ')} — click for stats` : '';
+	}
+
+	// A run can be both keyword and theme; the keyword wins the click target.
+	function selectionFor(run: QuoteRun): Pick | null {
+		if (run.keyword) {
+			return { kind: 'keyword', id: run.keyword.keywordId, label: run.keyword.keywordLabel };
+		}
+		if (run.theme) {
+			return { kind: 'theme', id: run.theme.themeId, label: run.theme.themeLabel };
+		}
+		return null;
+	}
+
+	function pick(event: Event, run: QuoteRun) {
+		const sel = selectionFor(run);
+		if (!sel) return;
+		// Don't let the click bubble to a surrounding card/quote handler.
+		event.stopPropagation();
+		onpick?.(sel);
+		groupDrawer.open(sel.kind, sel.id);
+	}
 </script>
-{#each runs as run, i (i)}{#if run.span}<strong
-			class="font-semibold text-inherit"
-			title="{run.span.keywordLabel} · {run.span.categoryLabel}">{run.text}</strong>{:else}{run.text}{/if}{/each}
+{#each runs as run, i (i)}{#if run.keyword || run.theme}<span
+			role="button"
+			tabindex="0"
+			title={runTitle(run)}
+			class="cursor-pointer rounded-sm text-inherit hover:bg-accent-mint/15{run.keyword
+				? ' font-semibold'
+				: ''}{run.theme ? ' underline decoration-dotted decoration-1 underline-offset-2' : ''}"
+			onclick={(e) => pick(e, run)}
+			onkeydown={(e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					pick(e, run);
+				}
+			}}>{run.text}</span>{:else}{run.text}{/if}{/each}

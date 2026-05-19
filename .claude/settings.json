@@ -11,7 +11,8 @@
       "Read(//Users/aaronjun/**)",
       "Bash(git push *)",
       "Bash(node -e \"const d=require\\('./src/lib/content/wctglpdemo-data/quote_bank.json'\\); console.log\\(JSON.stringify\\(d.meta,null,1\\)\\)\")",
-      "Bash(node -e \"console.log\\(require\\('/Users/aaronjun/JourneyMapper/package.json'\\).dependencies['bits-ui'] || 'not in deps'\\)\")"
+      "Bash(node -e \"console.log\\(require\\('/Users/aaronjun/JourneyMapper/package.json'\\).dependencies['bits-ui'] || 'not in deps'\\)\")",
+      "Bash(npx svelte-check *)"
     ]
   }
 }

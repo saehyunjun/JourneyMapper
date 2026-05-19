@@ -12,11 +12,12 @@
 	import SegmentTagDrawer from '$lib/components/SegmentTagDrawer.svelte';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
 	import wctLogoUrl from '$lib/content/wctglpdemo-data/avatars/WCTLogo.png?url';
-	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as ButtonGroup from '$lib/components/ui/button-group/index.js';
 	import * as Popover from '$lib/components/ui/popover/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
+	import KeywordText from '$lib/components/KeywordText.svelte';
+	import { toasts } from '$lib/stores/toasts.svelte.js';
 	import type { AutotagJob } from '$lib/server/autotag';
 
 	// Tags shown inline on a segment card before the rest collapse into a +N
@@ -45,6 +46,14 @@
 			if (res.ok) {
 				const { starredSegmentIds } = await res.json();
 				starredSegments = new Set<string>(starredSegmentIds);
+				const starred = starredSegments.has(segmentId);
+				toasts.push({
+					message: starred
+						? 'Quote starred — added to highlights.'
+						: 'Quote removed from highlights.',
+					href: starred && result ? `/wctglpdemo/fingerprint?interview=${result.interviewId}` : undefined,
+					linkLabel: 'View on the fingerprint →'
+				});
 			}
 		} finally {
 			togglingSegment = '';
@@ -166,10 +175,6 @@
 	let annotations = $state<Record<string, Annotation>>({});
 	let openSegment = $state<TaggableSegment | null>(null);
 
-	// Surfaced after a drawer save so the reviewer can jump to the fingerprint.
-	let showSavedDialog = $state(false);
-	let savedInterviewId = $state('');
-
 	// --- Segment selection — drives the merge / untag toolbar ---
 	let selectedSegments = $state(new Set<string>());
 	let merging = $state(false);
@@ -182,6 +187,28 @@
 		else next.add(segmentId);
 		selectedSegments = next;
 	}
+
+	// --- Merge / untag toolbar position ---
+	// The toolbar aligns to the topmost selected segment (rather than sticking
+	// to the top of the gutter), so it sits beside what the analyst picked.
+	let transcriptWrap = $state<HTMLElement | null>(null);
+	let toolbarTop = $state(0);
+
+	function alignToolbar() {
+		if (selectedSegments.size === 0 || !transcriptWrap) return;
+		const wrapTop = transcriptWrap.getBoundingClientRect().top;
+		let top = Infinity;
+		for (const id of selectedSegments) {
+			const el = transcriptWrap.querySelector(`[data-segment-id="${CSS.escape(id)}"]`);
+			if (el) top = Math.min(top, el.getBoundingClientRect().top - wrapTop);
+		}
+		if (top !== Infinity) toolbarTop = Math.max(0, top);
+	}
+
+	$effect(() => {
+		selectedSegments; // re-align whenever the selection changes
+		alignToolbar();
+	});
 
 	const selectedList = $derived(
 		(result?.segments ?? []).filter((s) => selectedSegments.has(s.segment_id))
@@ -267,6 +294,8 @@
 		];
 	}
 </script>
+
+<svelte:window onresize={alignToolbar} />
 
 {#snippet tagChip(kind: CardTag['kind'], label: string)}
 	<span
@@ -409,12 +438,16 @@
 				<!-- Transcript, with the segment-selection toolbar beside it on md+.
 					 On md+ the toolbar sits in the left gutter (absolutely positioned)
 					 so it never narrows the transcript column. -->
-				<div class="relative flex flex-col gap-3">
-					<!-- Segment-selection toolbar — appears once a segment is ticked. -->
+				<div class="relative flex flex-col gap-3" bind:this={transcriptWrap}>
+					<!-- Segment-selection toolbar — appears once a segment is ticked,
+						 aligned beside the topmost selected segment. -->
 					{#if selectedSegments.size > 0}
-						<div class="md:absolute md:top-0 md:bottom-0 md:right-full md:mr-4 md:w-60">
+						<div
+							class="md:absolute md:right-full md:mr-4 md:w-60"
+							style="top: {toolbarTop}px"
+						>
 							<div
-								class="sticky top-2 z-10 flex flex-col gap-3 rounded-lg border border-accent-mint/50 bg-white p-3 shadow-sm md:top-4"
+								class="z-10 flex flex-col gap-3 rounded-lg border border-accent-mint/50 bg-white p-3 shadow-sm"
 							>
 							<div class="flex flex-col gap-0.5 text-sm text-slate-600">
 								<span>
@@ -428,7 +461,7 @@
 							<div class="flex flex-col gap-2">
 								<ButtonGroup.Root class="w-full">
 									<Button
-										variant="outline"
+										variant="default"
 										size="sm"
 										class="flex-1 justify-center"
 										disabled={!canMerge || merging}
@@ -519,6 +552,7 @@
 									<div
 										role="button"
 										tabindex="0"
+										data-segment-id={seg.segment_id}
 										onclick={() => (openSegment = seg)}
 										onkeydown={(e) => {
 											if (e.key === 'Enter' || e.key === ' ') {
@@ -565,7 +599,9 @@
 											</button>
 										</div>
 
-										<p class="pr-12 text-sm leading-relaxed text-slate-800">{seg.text}</p>
+										<p class="pr-12 text-sm leading-relaxed text-slate-800">
+											<KeywordText text={seg.text} onpick={() => (openSegment = seg)} />
+										</p>
 
 										<!-- Tag row — current tags, an overflow badge, and the edit-tags link. -->
 										<div class="mt-2 flex flex-wrap items-center gap-1.5">
@@ -747,28 +783,10 @@
 	onclose={() => (openSegment = null)}
 	onsaved={(a) => {
 		annotations = { ...annotations, [a.segment_id]: a };
-		savedInterviewId = a.interview_id;
-		showSavedDialog = true;
+		toasts.push({
+			message: `Tags saved for ${titleCase(a.interview_id)}.`,
+			href: `/wctglpdemo/fingerprint?interview=${a.interview_id}`,
+			linkLabel: "View this participant's fingerprint →"
+		});
 	}}
 />
-
-<!-- After a tag save, offer a jump to the interview's theme fingerprint. -->
-<AlertDialog.Root bind:open={showSavedDialog}>
-	<AlertDialog.Content>
-		<AlertDialog.Header>
-			<AlertDialog.Title>Tags saved</AlertDialog.Title>
-			<AlertDialog.Description>
-				Confirmed tags for a segment of {titleCase(savedInterviewId)}. See how its themes stack up
-				as a fingerprint, or keep tagging.
-			</AlertDialog.Description>
-		</AlertDialog.Header>
-		<AlertDialog.Footer>
-			<AlertDialog.Cancel>Keep tagging</AlertDialog.Cancel>
-			<AlertDialog.Action
-				onclick={() => goto(`/wctglpdemo/fingerprint?interview=${savedInterviewId}`)}
-			>
-				View {titleCase(savedInterviewId)}'s fingerprint
-			</AlertDialog.Action>
-		</AlertDialog.Footer>
-	</AlertDialog.Content>
-</AlertDialog.Root>

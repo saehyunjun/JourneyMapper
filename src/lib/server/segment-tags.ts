@@ -11,25 +11,36 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import codebook from '$lib/content/wctglpdemo-data/codebook.json';
 import type { Annotation } from '$lib/types/segment-tags';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const SEGMENTS_PATH = `${DATA_DIR}/segments.json`;
 const TAGS_PATH = `${DATA_DIR}/segment_tags.json`;
-
-// Codebook lookups — the same integrity rules build-segment-tags.mjs enforces.
-const THEME_IDS = new Set(codebook.theme_tags.map((t) => t.id));
-const EMOTION_IDS = new Set(codebook.emotion_tags.map((e) => e.id));
-const SEMANTIC_IDS = new Set(codebook.semantic_tags.map((s) => s.id));
-const SUBTHEME_PARENT = new Map<string, string>();
-for (const t of codebook.theme_tags) {
-	for (const s of (t as { subthemes?: { id: string }[] }).subthemes ?? []) {
-		SUBTHEME_PARENT.set(s.id, t.id);
-	}
-}
+const CODEBOOK_PATH = `${DATA_DIR}/codebook.json`;
 
 const read = (path: string) => JSON.parse(readFileSync(resolve(path), 'utf8'));
+
+type CodebookTheme = { id: string; subthemes?: { id: string }[] };
+
+/**
+ * Codebook integrity lookups — the same rules build-segment-tags.mjs enforces.
+ * Read fresh from disk on each call so themes added via the tag drawer's
+ * keyword/theme menu are immediately valid to tag.
+ */
+function codebookLookups() {
+	const codebook = read(CODEBOOK_PATH);
+	const themes = codebook.theme_tags as CodebookTheme[];
+	const subthemeParent = new Map<string, string>();
+	for (const t of themes) {
+		for (const s of t.subthemes ?? []) subthemeParent.set(s.id, t.id);
+	}
+	return {
+		themeIds: new Set(themes.map((t) => t.id)),
+		emotionIds: new Set((codebook.emotion_tags as { id: string }[]).map((e) => e.id)),
+		semanticIds: new Set((codebook.semantic_tags as { id: string }[]).map((s) => s.id)),
+		subthemeParent
+	};
+}
 
 /** One segment's tags, as posted by the drawer (pre-validation). */
 export type SegmentTagDraft = {
@@ -71,13 +82,14 @@ export function upsertAnnotation(draft: SegmentTagDraft): Annotation {
 	let sentiment = Number(draft.sentiment ?? 0);
 	if (!Number.isInteger(sentiment) || sentiment < -2 || sentiment > 2) sentiment = 0;
 
-	for (const t of themes) if (!THEME_IDS.has(t)) throw new Error(`Unknown theme "${t}".`);
-	for (const e of emotions) if (!EMOTION_IDS.has(e)) throw new Error(`Unknown emotion "${e}".`);
+	const { themeIds, emotionIds, semanticIds, subthemeParent } = codebookLookups();
+	for (const t of themes) if (!themeIds.has(t)) throw new Error(`Unknown theme "${t}".`);
+	for (const e of emotions) if (!emotionIds.has(e)) throw new Error(`Unknown emotion "${e}".`);
 	for (const s of semanticTags) {
-		if (!SEMANTIC_IDS.has(s)) throw new Error(`Unknown semantic tag "${s}".`);
+		if (!semanticIds.has(s)) throw new Error(`Unknown semantic tag "${s}".`);
 	}
 	for (const s of subthemes) {
-		const parent = SUBTHEME_PARENT.get(s);
+		const parent = subthemeParent.get(s);
 		if (!parent) throw new Error(`Unknown subtheme "${s}".`);
 		if (!themes.includes(parent)) {
 			throw new Error(`Subtheme "${s}" needs its parent theme "${parent}".`);

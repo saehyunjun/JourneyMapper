@@ -30,6 +30,7 @@
 		type ParticipantProfile,
 		type ParticipantType
 	} from '$lib/types/participant-profile';
+	import LucideEdit from '@lucide/svelte/icons/square-pen';
 
 	let {
 		open = $bindable(false),
@@ -57,11 +58,13 @@
 	let uploading = $state(false);
 	let justSaved = $state(false);
 	let errorMsg = $state('');
+	// The profile shows read-only until the analyst clicks "Edit".
+	let editing = $state(false);
 
-	// Re-seed the form whenever the open participant changes. The profile read
-	// is untracked so persisting an edit (which mutates `profiles`) does not
-	// re-run this and wipe the "saved" confirmation.
-	$effect(() => {
+	// Seed the editable form from the stored profile. The profile read is
+	// untracked so persisting an edit (which mutates `profiles`) does not
+	// re-run the re-seed effect and wipe the "saved" confirmation.
+	function seedForm() {
 		const id = interviewId;
 		const p = id ? untrack(() => profiles[id]) : null;
 		firstName = p?.first_name ?? '';
@@ -70,9 +73,32 @@
 		country = p?.country ?? '';
 		ageRange = p?.age_range ?? '';
 		participantType = p?.participant_type ?? 'individual';
+	}
+
+	// Re-seed and drop back to read-only view whenever the participant changes.
+	$effect(() => {
+		interviewId;
+		seedForm();
+		editing = false;
 		justSaved = false;
 		errorMsg = '';
 	});
+
+	function cancelEdit() {
+		seedForm();
+		editing = false;
+		errorMsg = '';
+	}
+
+	// Label/value rows shown in place of the form when not editing.
+	const detailRows = $derived([
+		{ label: 'First name', value: firstName.trim() || '—' },
+		{ label: 'Last initial', value: lastInitial.trim() || '—' },
+		{ label: 'Gender', value: gender ? titleCase(gender) : '—' },
+		{ label: 'Country', value: country.trim() || '—' },
+		{ label: 'Age range', value: ageRange || '—' },
+		{ label: 'Participant type', value: titleCase(participantType) }
+	]);
 
 	// Deterministic word usage for this participant, if the pipeline produced it.
 	const usage = $derived(interviewId ? wordUsage.by_participant[interviewId] : undefined);
@@ -124,6 +150,7 @@
 			const { profile: saved } = await res.json();
 			profiles[interviewId] = saved;
 			justSaved = true;
+			editing = false;
 		} catch {
 			errorMsg = 'Could not save details.';
 		} finally {
@@ -164,14 +191,16 @@
 			<div class="flex items-center gap-4 border-b border-slate-200 p-6">
 				<div class="flex flex-col items-center gap-1.5">
 					<ParticipantAvatar {interviewId} size="xl" src={profile.avatar_url} />
-					<button
-						type="button"
-						onclick={() => fileInput?.click()}
-						disabled={uploading}
-						class="text-xs font-medium text-accent-mint hover:underline disabled:opacity-40"
-					>
-						{uploading ? 'Uploading…' : profile.avatar_url ? 'Change avatar' : 'Upload avatar'}
-					</button>
+					{#if editing}
+						<Button
+							variant="link"
+							size="sm"
+							onclick={() => fileInput?.click()}
+							disabled={uploading}
+						>
+							{uploading ? 'Uploading…' : profile.avatar_url ? 'Change avatar' : 'Upload avatar'}
+				</Button>
+					{/if}
 					<input
 						bind:this={fileInput}
 						type="file"
@@ -196,11 +225,23 @@
 					</p>
 				{/if}
 
-				<!-- Details form -->
+				<!-- Details — read-only by default, editable via "Edit" -->
 				<section class="flex flex-col gap-4">
-					<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Profile</h3>
+					<div class="flex items-center justify-between">
+						<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Profile</h3>
+						{#if !editing}
+							<Button
+								variant="link"
+								onclick={() => (editing = true)}
+							>
+								Edit
+								<LucideEdit />
+							</Button>
+						{/if}
+					</div>
 
-					<div class="grid grid-cols-2 gap-3">
+					{#if editing}
+						<div class="grid grid-cols-2 gap-3">
 						<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
 							First name
 							<input
@@ -261,19 +302,19 @@
 
 					<div class="flex flex-col gap-1.5">
 						<span class="text-xs font-medium text-slate-500">Participant type</span>
-						<div class="flex overflow-hidden rounded border border-slate-300">
+						<div class="flex overflow-hidden">
 							{#each ['individual', 'composite'] as const as type (type)}
-								<button
-									type="button"
+								<Button
+									variant="ghost"
 									onclick={() => (participantType = type)}
 									aria-pressed={participantType === type}
-									class="flex-1 px-3 py-1.5 text-sm font-medium capitalize transition-colors
+									class="
 										{participantType === type
 										? 'bg-accent-mint text-white'
 										: 'bg-white text-slate-600 hover:bg-slate-50'}"
 								>
 									{type}
-								</button>
+						</Button>
 							{/each}
 						</div>
 						<p class="text-xs text-slate-400">
@@ -283,14 +324,33 @@
 						</p>
 					</div>
 
-					<div class="flex items-center gap-3">
-						<Button onclick={saveDetails} disabled={saving}>
-							{saving ? 'Saving…' : 'Save details'}
-						</Button>
+						<div class="flex items-center gap-3">
+							<Button onclick={saveDetails} disabled={saving}>
+								{saving ? 'Saving…' : 'Save details'}
+							</Button>
+							<button
+								type="button"
+								onclick={cancelEdit}
+								class="text-sm font-medium text-slate-500 hover:underline"
+							>
+								Cancel
+							</button>
+						</div>
+					{:else}
+						<dl class="flex flex-col divide-y divide-slate-100">
+							{#each detailRows as row (row.label)}
+								<div class="flex items-baseline justify-between gap-4 py-2">
+									<dt class="text-xs font-medium uppercase tracking-wide text-slate-400">
+										{row.label}
+									</dt>
+									<dd class="text-right text-sm text-slate-800">{row.value}</dd>
+								</div>
+							{/each}
+						</dl>
 						{#if justSaved}
 							<span class="text-xs font-medium text-emerald-600">✓ Saved</span>
 						{/if}
-					</div>
+					{/if}
 				</section>
 
 				<!-- Themes & emotions — analysis-page breakdowns, scoped here -->

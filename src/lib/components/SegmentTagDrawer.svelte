@@ -10,6 +10,10 @@
 	import { fly, fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import codebook from '$lib/content/wctglpdemo-data/codebook.json';
+	import lexiconRaw from '$lib/content/wctglpdemo-data/keyword_lexicon.json';
+	import * as ContextMenu from '$lib/components/ui/context-menu/index.js';
+	import KeywordText from '$lib/components/KeywordText.svelte';
+	import CircleCheckIcon from '@lucide/svelte/icons/circle-check';
 	import type { Annotation, TaggableSegment } from '$lib/types/segment-tags';
 
 	let {
@@ -28,11 +32,18 @@
 		id: string;
 		description: string;
 		subthemes?: { id: string; description: string }[];
+		terms?: string[];
 	};
-	const themeTags = codebook.theme_tags as Theme[];
+	type Keyword = { id: string; label: string; variants: string[] };
+	type Category = { id: string; label: string; description: string; keywords: Keyword[] };
+
 	const emotionTags = codebook.emotion_tags;
 	const semanticTags = codebook.semantic_tags;
-	const themeById = new Map(themeTags.map((t) => [t.id, t]));
+	// Themes and the keyword lexicon are reactive: the right-click "add to
+	// keyword / theme" menu replaces them with the server's updated copy.
+	let themeTags = $state<Theme[]>(codebook.theme_tags as Theme[]);
+	let lexicon = $state<{ categories: Category[] }>(lexiconRaw as { categories: Category[] });
+	const themeById = $derived(new Map(themeTags.map((t) => [t.id, t])));
 	const sentimentScale = codebook.meta.sentiment_scale as Record<string, string>;
 	const sentiments = [
 		{ v: -2, label: '−2' },
@@ -53,6 +64,12 @@
 	let saving = $state(false);
 	let errorMsg = $state('');
 
+	// Right-click "add to keyword / theme" menu state.
+	let selectionText = $state('');
+	let lexBusy = $state(false);
+	let flashMsg = $state('');
+	let flashTimer: ReturnType<typeof setTimeout> | undefined;
+
 	let seededFor = '';
 	$effect(() => {
 		const id = segment?.segment_id ?? '';
@@ -65,6 +82,9 @@
 			sentiment = annotation ? annotation.sentiment : 0;
 			note = annotation ? annotation.reviewer_notes : '';
 			errorMsg = '';
+			flashMsg = '';
+			selectionText = '';
+			clearTimeout(flashTimer);
 		} else if (!id) {
 			seededFor = '';
 		}
@@ -82,6 +102,47 @@
 	}
 	const toggle = (list: string[], id: string) =>
 		list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
+
+	const truncate = (s: string, n = 36) => (s.length > n ? s.slice(0, n) + '…' : s);
+
+	// Snapshot the current text selection — read on right-click, before the
+	// context menu opens, so we know which phrase the reviewer highlighted.
+	function captureSelection() {
+		const sel = typeof window !== 'undefined' ? window.getSelection() : null;
+		selectionText = sel ? sel.toString().replace(/\s+/g, ' ').trim() : '';
+	}
+
+	// File the highlighted phrase into a keyword or theme. The server persists
+	// the edit and returns the refreshed lists, keeping the menus consistent.
+	async function applyLexicon(action: string, payload: Record<string, string>) {
+		if (lexBusy || !selectionText) return;
+		lexBusy = true;
+		flashMsg = '';
+		errorMsg = '';
+		try {
+			const res = await fetch('/wctglpdemo/lexicon', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({ action, text: selectionText, ...payload })
+			});
+			const data = await res.json().catch(() => null);
+			if (!res.ok || !data?.ok) {
+				errorMsg = data?.error ?? 'Could not update the list.';
+				return;
+			}
+			lexicon = { categories: data.categories as Category[] };
+			themeTags = data.themes as Theme[];
+			// Surface a success alert overlaid on the drawer; the drawer itself
+			// stays open so the reviewer can keep tagging the same segment.
+			flashMsg = data.message ?? 'List updated.';
+			clearTimeout(flashTimer);
+			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
+		} catch {
+			errorMsg = 'Could not reach the server.';
+		} finally {
+			lexBusy = false;
+		}
+	}
 
 	const tagCount = $derived(
 		themes.length + subthemes.length + emotions.length + semantic.length
@@ -152,16 +213,36 @@
 	<div
 		class="fixed inset-0 z-40 bg-slate-900/30"
 		transition:fade={{ duration: 200 }}
-		onclick={onclose}
+		onclick={(e) => {
+			// Only a direct click on the backdrop closes the drawer — never a
+			// click that bubbled out of the context menu portaled inside it.
+			if (e.target === e.currentTarget) onclose();
+		}}
 		aria-hidden="true"
 	></div>
 
 	<!-- Drawer -->
 	<aside
-		class="fixed inset-y-0 right-0 z-50 flex w-full max-w-[30rem] flex-col bg-white shadow-2xl"
+		class="fixed inset-y-0 right-0 z-50 flex w-full max-w-120 flex-col bg-white shadow-2xl md:max-w-xl xl:max-w-2xl"
 		transition:fly={{ x: 120, duration: 320, easing: cubicOut }}
 		aria-label="Edit segment tags"
 	>
+		<!-- Success alert — overlaid on the drawer after a keyword/theme edit -->
+		{#if flashMsg}
+			<div
+				class="pointer-events-none absolute inset-x-0 top-3 z-30 flex justify-center px-4"
+				transition:fly={{ y: -14, duration: 220, easing: cubicOut }}
+			>
+				<div
+					role="status"
+					class="pointer-events-auto flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-800 shadow-lg"
+				>
+					<CircleCheckIcon class="size-4 shrink-0 text-emerald-600" />
+					<span>{flashMsg}</span>
+				</div>
+			</div>
+		{/if}
+
 		<!-- Header -->
 		<div class="flex items-start justify-between gap-3 border-b border-slate-200 p-4">
 			<div class="min-w-0">
@@ -182,11 +263,82 @@
 		<div class="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
 			<!-- Segment text, technical notes, and current status -->
 			<div>
-				<p
-					class="rounded-md border-l-2 border-accent-mint bg-accent-mint/5 p-3 text-sm leading-relaxed text-slate-800"
-				>
-					{segment.text}
-				</p>
+				<ContextMenu.Root>
+					<ContextMenu.Trigger>
+						{#snippet child({ props })}
+							<p
+								{...props}
+								oncontextmenu={(e: MouseEvent) => {
+									// Snapshot the selection, then hand off to bits-ui to open the menu.
+									captureSelection();
+									(props.oncontextmenu as ((e: MouseEvent) => void) | undefined)?.(e);
+								}}
+								class="cursor-text rounded-md border-l-2 border-accent-mint bg-accent-mint/5 p-3 text-sm leading-relaxed text-slate-800 select-text"
+							>
+								<KeywordText text={segment.text} />
+							</p>
+						{/snippet}
+					</ContextMenu.Trigger>
+					<ContextMenu.Content class="w-72">
+						{#if !selectionText}
+							<ContextMenu.Label>
+								Select a word or phrase in the text, then right-click to add it to a keyword or
+								theme.
+							</ContextMenu.Label>
+						{:else}
+							<ContextMenu.Label>
+								Add <span class="font-medium text-slate-700">“{truncate(selectionText)}”</span> to…
+							</ContextMenu.Label>
+							<ContextMenu.Separator />
+							<!-- Keywords — each category is its own submenu of keywords -->
+							<ContextMenu.Group>
+								<ContextMenu.GroupHeading>As a keyword</ContextMenu.GroupHeading>
+								{#each lexicon.categories as cat (cat.id)}
+									<ContextMenu.Sub>
+										<ContextMenu.SubTrigger>{cat.label}</ContextMenu.SubTrigger>
+										<ContextMenu.SubContent side="left" class="max-h-80">
+											{#each cat.keywords as kw (kw.id)}
+												<ContextMenu.Item
+													onSelect={() =>
+														applyLexicon('add_keyword_variant', { keyword_id: kw.id })}
+												>
+													{kw.label}
+												</ContextMenu.Item>
+											{/each}
+											<ContextMenu.Separator />
+											<ContextMenu.Item
+												onSelect={() => applyLexicon('create_keyword', { category_id: cat.id })}
+											>
+												New keyword from “{truncate(selectionText, 20)}”
+											</ContextMenu.Item>
+										</ContextMenu.SubContent>
+									</ContextMenu.Sub>
+								{/each}
+							</ContextMenu.Group>
+							<ContextMenu.Separator />
+							<!-- Add as theme — single submenu of existing themes -->
+							<ContextMenu.Group>
+								<ContextMenu.GroupHeading>As a theme</ContextMenu.GroupHeading>
+								<ContextMenu.Sub>
+									<ContextMenu.SubTrigger>Choose a theme…</ContextMenu.SubTrigger>
+								<ContextMenu.SubContent side="left" class="max-h-80">
+									{#each themeTags as theme (theme.id)}
+										<ContextMenu.Item
+											onSelect={() => applyLexicon('add_theme_term', { theme_id: theme.id })}
+										>
+											{titleCase(theme.id)}
+										</ContextMenu.Item>
+									{/each}
+									<ContextMenu.Separator />
+									<ContextMenu.Item onSelect={() => applyLexicon('create_theme', {})}>
+										New theme from “{truncate(selectionText, 22)}”
+									</ContextMenu.Item>
+									</ContextMenu.SubContent>
+								</ContextMenu.Sub>
+							</ContextMenu.Group>
+						{/if}
+					</ContextMenu.Content>
+				</ContextMenu.Root>
 				<!-- Technical notes — kept here, off the review card, so the card
 					 stays streamlined. -->
 				<div
