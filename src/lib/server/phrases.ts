@@ -11,18 +11,18 @@
  * matching), key-phrase variants are semantic: two variants under one phrase
  * may share no surface form. Tagging is always manual from the drawer.
  *
- * Note: writes into the source tree, so this is a dev/demo-time operation —
- * same caveat as $lib/server/segment-tags.
+ * Backed by the local source file in dev and the KV store in prod.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import bundledPhrases from '$lib/content/wctglpdemo-data/phrase_lexicon.json';
+import { loadDoc, saveDoc } from './kv-store';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const PHRASES_PATH = `${DATA_DIR}/phrase_lexicon.json`;
+const KV_KEY = 'wctglpdemo:phrase_lexicon';
 
-const read = (path: string) => JSON.parse(readFileSync(resolve(path), 'utf8'));
-const write = (path: string, data: unknown) =>
-	writeFileSync(resolve(path), JSON.stringify(data, null, 2) + '\n', 'utf8');
+type PhrasesFile = { key_phrases: KeyPhrase[]; [k: string]: unknown };
+
+const read = () => loadDoc<PhrasesFile>(KV_KEY, PHRASES_PATH, bundledPhrases as PhrasesFile);
 
 export type PhraseVariant = {
 	text: string;
@@ -72,24 +72,25 @@ function uniqueId(base: string, taken: Set<string>): string {
 	return id;
 }
 
-function snapshot(): PhraseState {
-	return { key_phrases: read(PHRASES_PATH).key_phrases ?? [] };
+async function snapshot(): Promise<PhraseState> {
+	const data = await read();
+	return { key_phrases: data.key_phrases ?? [] };
 }
 
 /**
  * Add a highlighted snippet as a variant of an existing key phrase. Skips the
  * write if the same segment already contributes the same text.
  */
-export function addPhraseVariant(
+export async function addPhraseVariant(
 	keyPhraseId: string,
 	rawText: string,
 	segmentId: string,
 	interviewId: string
-): PhraseState {
+): Promise<PhraseState> {
 	const text = cleanText(rawText);
 	if (!segmentId || !interviewId) throw new Error('segment_id and interview_id are required.');
-	const data = read(PHRASES_PATH);
-	const phrases = data.key_phrases as KeyPhrase[];
+	const data = await read();
+	const phrases = data.key_phrases;
 	const phrase = phrases.find((p) => p.id === keyPhraseId);
 	if (!phrase) throw new Error(`Unknown key phrase "${keyPhraseId}".`);
 	const dup = phrase.variants.some(
@@ -102,7 +103,7 @@ export function addPhraseVariant(
 			interview_id: interviewId,
 			created_at: new Date().toISOString()
 		});
-		write(PHRASES_PATH, data);
+		await saveDoc(KV_KEY, PHRASES_PATH, data);
 	}
 	return snapshot();
 }
@@ -112,16 +113,16 @@ export function addPhraseVariant(
  * variant. Label defaults to a title-cased version of the snippet; the
  * reviewer can rename later by editing phrase_lexicon.json directly.
  */
-export function createKeyPhrase(
+export async function createKeyPhrase(
 	rawText: string,
 	segmentId: string,
 	interviewId: string,
 	label?: string
-): PhraseState {
+): Promise<PhraseState> {
 	const text = cleanText(rawText);
 	if (!segmentId || !interviewId) throw new Error('segment_id and interview_id are required.');
-	const data = read(PHRASES_PATH);
-	const phrases = data.key_phrases as KeyPhrase[];
+	const data = await read();
+	const phrases = data.key_phrases;
 	const taken = new Set(phrases.map((p) => p.id));
 	const cleanLabel = label ? cleanText(label) : titleCase(text);
 	phrases.push({
@@ -136,6 +137,6 @@ export function createKeyPhrase(
 			}
 		]
 	});
-	write(PHRASES_PATH, data);
+	await saveDoc(KV_KEY, PHRASES_PATH, data);
 	return snapshot();
 }

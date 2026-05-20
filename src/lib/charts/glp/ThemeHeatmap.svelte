@@ -26,10 +26,11 @@
 		SENTIMENT_LABELS
 	} from '$lib/content/wctglpdemo-data/analysis';
 	import { themePalette } from '$lib/content/wctglpdemo-data/topicTree';
-	import { keywordCounts } from '$lib/content/wctglpdemo-data/keywords';
+	import { keywordBlocks } from '$lib/content/wctglpdemo-data/keywords';
 	import KeywordText from '$lib/components/KeywordText.svelte';
 	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
+	import SentimentBar from '$lib/components/SentimentBar.svelte';
 
 	type Axis = 'participant' | 'question';
 	type Metric = 'count' | 'sentiment';
@@ -148,8 +149,10 @@
 			.sort((a, b) => b.quote_score.overall - a.quote_score.overall);
 	});
 
-	const drawerKeywordCounts = $derived(keywordCounts(drawerFragments.map((f) => f.text)));
-	const maxKeywordCount = $derived(Math.max(1, ...drawerKeywordCounts.map((k) => k.count)));
+	const drawerKeywordBlocks = $derived(keywordBlocks(drawerFragments));
+	const maxKeywordCount = $derived(
+		Math.max(1, ...drawerKeywordBlocks.map((k) => k.blocks.length))
+	);
 
 	const drawerThemeLabel = $derived(drawerCell ? titleCase(drawerCell.themeId) : '');
 	const drawerContextLabel = $derived(
@@ -333,11 +336,11 @@
 
 		<div class="flex flex-1 flex-col gap-7 overflow-y-auto p-6">
 			<!-- Keyword usage across this cell's coded fragments -->
-			{#if drawerKeywordCounts.length}
+			{#if drawerKeywordBlocks.length}
 				<section class="flex flex-col gap-2">
 					<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
-						Word usage · {drawerKeywordCounts.length}
-						{drawerKeywordCounts.length === 1 ? 'keyword' : 'keywords'}
+						Word usage · {drawerKeywordBlocks.length}
+						{drawerKeywordBlocks.length === 1 ? 'keyword' : 'keywords'}
 					</h3>
 					<p class="text-xs text-muted-foreground">
 						Lexicon keywords found in the {drawerFragments.length} coded
@@ -345,26 +348,20 @@
 						mention count.
 					</p>
 					<div class="mt-1 flex flex-col gap-1.5">
-						{#each drawerKeywordCounts.slice(0, 12) as kc (kc.keywordId)}
-							<div class="flex items-center gap-2 text-xs">
-								<span class="w-36 shrink-0 truncate text-slate-700" title={kc.categoryLabel}>
-									{kc.keywordLabel}
-								</span>
-								<div class="h-3 flex-1 rounded-sm bg-slate-100">
-									<div
-										class="h-full rounded-sm bg-accent-mint"
-										style="width: {(kc.count / maxKeywordCount) * 100}%"
-									></div>
-								</div>
-								<span class="w-5 shrink-0 text-right tabular-nums text-slate-500">
-									{kc.count}
-								</span>
+						{#each drawerKeywordBlocks.slice(0, 12) as kb (kb.keywordId)}
+							<div title={kb.categoryLabel}>
+								<SentimentBar
+									label={kb.keywordLabel}
+									blocks={kb.blocks}
+									max={maxKeywordCount}
+									labelClass="w-36"
+								/>
 							</div>
 						{/each}
 					</div>
-					{#if drawerKeywordCounts.length > 12}
+					{#if drawerKeywordBlocks.length > 12}
 						<p class="text-xs text-slate-400">
-							+{drawerKeywordCounts.length - 12} more
+							+{drawerKeywordBlocks.length - 12} more
 						</p>
 					{/if}
 				</section>

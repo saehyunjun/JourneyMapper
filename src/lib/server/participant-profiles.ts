@@ -1,25 +1,23 @@
 /**
  * Participant profiles — shared read/write helpers.
  *
- * Backed by wctglpdemo-data/participant_profiles.json: analyst-maintained
- * details (name, demographics, individual/composite flag, uploaded avatar) for
- * each interviewee. The file is created lazily on first save; until then every
+ * Backed by wctglpdemo-data/participant_profiles.json (dev) or the KV store
+ * (prod). Analyst-maintained details (name, demographics, individual/composite
+ * flag, uploaded avatar) for each interviewee. Until first save, every
  * participant reads as a blank profile, with gender seeded from the structured
  * interview metadata where it is known.
- *
- * Note: this writes into the source tree, so it is a dev/demo-time operation —
- * see the matching note in $lib/server/highlights.
  */
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import interviewsRaw from '$lib/content/wctglpdemo-data/interviews_structured.json';
+import bundledProfiles from '$lib/content/wctglpdemo-data/participant_profiles.json';
 import {
 	emptyProfile,
 	type Gender,
 	type ParticipantProfile
 } from '$lib/types/participant-profile';
+import { loadDoc, saveDoc } from './kv-store';
 
 const PROFILES_PATH = 'src/lib/content/wctglpdemo-data/participant_profiles.json';
+const KV_KEY = 'wctglpdemo:participant_profiles';
 
 type StoredProfile = Omit<ParticipantProfile, 'interview_id'>;
 
@@ -47,28 +45,8 @@ for (const iv of interviews) {
 	if (g === 'male' || g === 'female') seededGender.set(iv.interview_id, g);
 }
 
-function emptyFile(): ProfilesFile {
-	return {
-		meta: {
-			schema_version: '1.0',
-			study_id: 'wct_glp1',
-			description:
-				'Analyst-maintained participant profiles. Keyed by interview_id; references avatars under static/content-assets/avatars.',
-			updated_at: new Date().toISOString()
-		},
-		profiles: {}
-	};
-}
-
-function read(): ProfilesFile {
-	const path = resolve(PROFILES_PATH);
-	if (!existsSync(path)) return emptyFile();
-	try {
-		return JSON.parse(readFileSync(path, 'utf8')) as ProfilesFile;
-	} catch {
-		return emptyFile();
-	}
-}
+const read = () =>
+	loadDoc<ProfilesFile>(KV_KEY, PROFILES_PATH, bundledProfiles as ProfilesFile);
 
 /** Build a full, defaulted profile for one interview from its stored fields. */
 function hydrate(interviewId: string, stored: StoredProfile | undefined): ParticipantProfile {
@@ -78,8 +56,8 @@ function hydrate(interviewId: string, stored: StoredProfile | undefined): Partic
 }
 
 /** Profiles for every known interview, defaulted and seeded — safe to call from a page `load`. */
-export function readProfiles(): Record<string, ParticipantProfile> {
-	const file = read();
+export async function readProfiles(): Promise<Record<string, ParticipantProfile>> {
+	const file = await read();
 	const out: Record<string, ParticipantProfile> = {};
 	for (const id of knownInterviewIds) out[id] = hydrate(id, file.profiles[id]);
 	// Include any stored profile whose interview is not in the structured set.
@@ -90,22 +68,23 @@ export function readProfiles(): Record<string, ParticipantProfile> {
 }
 
 /** One participant's profile, defaulted/seeded. */
-export function readProfile(interviewId: string): ParticipantProfile {
-	return hydrate(interviewId, read().profiles[interviewId]);
+export async function readProfile(interviewId: string): Promise<ParticipantProfile> {
+	const file = await read();
+	return hydrate(interviewId, file.profiles[interviewId]);
 }
 
 /** Merge a partial update into one profile and persist; returns the saved profile. */
-export function saveProfile(
+export async function saveProfile(
 	interviewId: string,
 	patch: Partial<Omit<ParticipantProfile, 'interview_id'>>
-): ParticipantProfile {
-	const file = read();
+): Promise<ParticipantProfile> {
+	const file = await read();
 	const current = hydrate(interviewId, file.profiles[interviewId]);
 	const next: ParticipantProfile = { ...current, ...patch, interview_id: interviewId };
 	const { interview_id, ...stored } = next;
 	void interview_id;
 	file.profiles[interviewId] = stored;
 	file.meta.updated_at = new Date().toISOString();
-	writeFileSync(resolve(PROFILES_PATH), JSON.stringify(file, null, 2) + '\n', 'utf8');
+	await saveDoc(KV_KEY, PROFILES_PATH, file);
 	return next;
 }

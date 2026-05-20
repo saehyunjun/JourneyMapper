@@ -6,37 +6,66 @@
  * action: it validates one segment's tags against codebook.json and merges
  * the result into segment_tags.json as a confirmed, human-sourced annotation.
  *
- * Note: writes into the source tree, so this is a dev/demo-time operation —
- * see the matching note in $lib/server/highlights.
+ * Backed by the local source files in dev and the KV store in prod.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import bundledSegments from '$lib/content/wctglpdemo-data/segments.json';
+import bundledTags from '$lib/content/wctglpdemo-data/segment_tags.json';
+import bundledCodebook from '$lib/content/wctglpdemo-data/codebook.json';
 import type { Annotation } from '$lib/types/segment-tags';
+import { loadDoc, saveDoc } from './kv-store';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const SEGMENTS_PATH = `${DATA_DIR}/segments.json`;
 const TAGS_PATH = `${DATA_DIR}/segment_tags.json`;
 const CODEBOOK_PATH = `${DATA_DIR}/codebook.json`;
+const SEGMENTS_KEY = 'wctglpdemo:segments';
+const TAGS_KEY = 'wctglpdemo:segment_tags';
+const CODEBOOK_KEY = 'wctglpdemo:codebook';
 
-const read = (path: string) => JSON.parse(readFileSync(resolve(path), 'utf8'));
+type SegmentsFile = {
+	segments: { segment_id: string; interview_id: string }[];
+	meta: Record<string, unknown>;
+	[k: string]: unknown;
+};
+type TagsFile = {
+	annotations: Annotation[];
+	meta: {
+		tagged_interviews?: string[];
+		pending_interviews?: string[];
+		generated_at?: string;
+		[k: string]: unknown;
+	};
+	[k: string]: unknown;
+};
+type CodebookFile = {
+	theme_tags: CodebookTheme[];
+	emotion_tags: { id: string }[];
+	[k: string]: unknown;
+};
+
+const readSegments = () =>
+	loadDoc<SegmentsFile>(SEGMENTS_KEY, SEGMENTS_PATH, bundledSegments as SegmentsFile);
+const readTags = () => loadDoc<TagsFile>(TAGS_KEY, TAGS_PATH, bundledTags as TagsFile);
+const readCodebook = () =>
+	loadDoc<CodebookFile>(CODEBOOK_KEY, CODEBOOK_PATH, bundledCodebook as CodebookFile);
 
 type CodebookTheme = { id: string; subthemes?: { id: string }[] };
 
 /**
  * Codebook integrity lookups — the same rules build-segment-tags.mjs enforces.
- * Read fresh from disk on each call so themes added via the tag drawer's
- * keyword/theme menu are immediately valid to tag.
+ * Read fresh on each call so themes added via the tag drawer's keyword/theme
+ * menu are immediately valid to tag.
  */
-function codebookLookups() {
-	const codebook = read(CODEBOOK_PATH);
-	const themes = codebook.theme_tags as CodebookTheme[];
+async function codebookLookups() {
+	const codebook = await readCodebook();
+	const themes = codebook.theme_tags;
 	const subthemeParent = new Map<string, string>();
 	for (const t of themes) {
 		for (const s of t.subthemes ?? []) subthemeParent.set(s.id, t.id);
 	}
 	return {
 		themeIds: new Set(themes.map((t) => t.id)),
-		emotionIds: new Set((codebook.emotion_tags as { id: string }[]).map((e) => e.id)),
+		emotionIds: new Set(codebook.emotion_tags.map((e) => e.id)),
 		subthemeParent
 	};
 }
@@ -54,10 +83,12 @@ export type SegmentTagDraft = {
 };
 
 /** Existing annotations for one interview, keyed by segment_id. */
-export function readAnnotationsFor(interviewId: string): Record<string, Annotation> {
-	const tagData = read(TAGS_PATH);
+export async function readAnnotationsFor(
+	interviewId: string
+): Promise<Record<string, Annotation>> {
+	const tagData = await readTags();
 	const out: Record<string, Annotation> = {};
-	for (const a of tagData.annotations as Annotation[]) {
+	for (const a of tagData.annotations) {
 		if (a.interview_id === interviewId) out[a.segment_id] = a;
 	}
 	return out;
@@ -65,10 +96,10 @@ export function readAnnotationsFor(interviewId: string): Record<string, Annotati
 
 /**
  * Confirm one segment's tags: validate against the codebook, upsert into
- * segment_tags.json as a human-sourced, confirmed annotation, and recompute
- * the interview's tagged/pending status. Throws on invalid input.
+ * segment_tags as a human-sourced, confirmed annotation, and recompute the
+ * interview's tagged/pending status. Throws on invalid input.
  */
-export function upsertAnnotation(draft: SegmentTagDraft): Annotation {
+export async function upsertAnnotation(draft: SegmentTagDraft): Promise<Annotation> {
 	const dedupe = (xs: unknown): string[] => [
 		...new Set(Array.isArray(xs) ? xs.map((x) => String(x)) : [])
 	];
@@ -79,7 +110,7 @@ export function upsertAnnotation(draft: SegmentTagDraft): Annotation {
 	let sentiment = Number(draft.sentiment ?? 0);
 	if (!Number.isInteger(sentiment) || sentiment < -2 || sentiment > 2) sentiment = 0;
 
-	const { themeIds, emotionIds, subthemeParent } = codebookLookups();
+	const { themeIds, emotionIds, subthemeParent } = await codebookLookups();
 	for (const t of themes) if (!themeIds.has(t)) throw new Error(`Unknown theme "${t}".`);
 	for (const e of emotions) if (!emotionIds.has(e)) throw new Error(`Unknown emotion "${e}".`);
 	for (const s of subthemes) {
@@ -90,8 +121,8 @@ export function upsertAnnotation(draft: SegmentTagDraft): Annotation {
 		}
 	}
 
-	const tagData = read(TAGS_PATH);
-	const annotations = tagData.annotations as Annotation[];
+	const [tagData, segData] = await Promise.all([readTags(), readSegments()]);
+	const annotations = tagData.annotations;
 	const existing = annotations.find((a) => a.segment_id === draft.segment_id);
 
 	const updated: Annotation = {
@@ -116,8 +147,7 @@ export function upsertAnnotation(draft: SegmentTagDraft): Annotation {
 
 	// An interview is "tagged" once every participant segment carries a
 	// confirmed (or discarded) annotation; until then it stays "pending".
-	const segData = read(SEGMENTS_PATH);
-	const segIds = (segData.segments as { segment_id: string; interview_id: string }[])
+	const segIds = segData.segments
 		.filter((s) => s.interview_id === draft.interview_id)
 		.map((s) => s.segment_id);
 	const byId = new Map(annotations.map((a) => [a.segment_id, a]));
@@ -138,19 +168,21 @@ export function upsertAnnotation(draft: SegmentTagDraft): Annotation {
 	tagData.meta.pending_interviews = [...pending].sort();
 	tagData.meta.generated_at = new Date().toISOString();
 
-	writeFileSync(resolve(TAGS_PATH), JSON.stringify(tagData, null, 2) + '\n', 'utf8');
+	await saveDoc(TAGS_KEY, TAGS_PATH, tagData);
 	return updated;
 }
 
 /**
- * Untag one segment: drop its annotation from segment_tags.json. The segment's
+ * Untag one segment: drop its annotation from segment_tags. The segment's
  * interview can no longer be fully reviewed, so it is removed from
  * `tagged_interviews`. Returns the affected interview id, or null if the
  * segment had no annotation to remove.
  */
-export function deleteAnnotation(segmentId: string): { interview_id: string } | null {
-	const tagData = read(TAGS_PATH);
-	const annotations = tagData.annotations as Annotation[];
+export async function deleteAnnotation(
+	segmentId: string
+): Promise<{ interview_id: string } | null> {
+	const tagData = await readTags();
+	const annotations = tagData.annotations;
 	const idx = annotations.findIndex((a) => a.segment_id === segmentId);
 	if (idx === -1) return null;
 
@@ -161,6 +193,6 @@ export function deleteAnnotation(segmentId: string): { interview_id: string } | 
 	tagData.meta.tagged_interviews = [...tagged].sort();
 	tagData.meta.generated_at = new Date().toISOString();
 
-	writeFileSync(resolve(TAGS_PATH), JSON.stringify(tagData, null, 2) + '\n', 'utf8');
+	await saveDoc(TAGS_KEY, TAGS_PATH, tagData);
 	return { interview_id: removed.interview_id };
 }

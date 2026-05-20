@@ -39,19 +39,19 @@ export const POST: RequestHandler = async ({ request }) => {
 		let message: string;
 		switch (action) {
 			case 'add_keyword_variant':
-				state = addKeywordVariant(str(body.keyword_id), text);
+				state = await addKeywordVariant(str(body.keyword_id), text);
 				message = `Added “${trimmed}” as a keyword variant.`;
 				break;
 			case 'create_keyword':
-				state = createKeyword(str(body.category_id), text);
+				state = await createKeyword(str(body.category_id), text);
 				message = `Created a new keyword from “${trimmed}”.`;
 				break;
 			case 'add_theme_term':
-				state = addThemeTerm(str(body.theme_id), text);
+				state = await addThemeTerm(str(body.theme_id), text);
 				message = `Added “${trimmed}” to a theme.`;
 				break;
 			case 'create_theme':
-				state = createTheme(text);
+				state = await createTheme(text);
 				message = `Created a new theme from “${trimmed}”.`;
 				break;
 			default:

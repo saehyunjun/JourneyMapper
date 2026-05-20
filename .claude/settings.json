@@ -31,7 +31,12 @@
       "Bash(read d *)",
       "Bash([ -f \"$d/+server.ts\" ])",
       "Bash([ -f \"$d/+page.svelte\" ])",
-      "Bash(npx --no-install vite build --logLevel error)"
+      "Bash(npx --no-install vite build --logLevel error)",
+      "WebFetch(domain:patiently-iq-mapper-yaks.vercel.app)",
+      "Bash(xargs -n1 basename)",
+      "Bash(awk '{print $5, $NF}')",
+      "Bash(npm uninstall *)",
+      "Bash(npm install *)"
     ]
   }
 }

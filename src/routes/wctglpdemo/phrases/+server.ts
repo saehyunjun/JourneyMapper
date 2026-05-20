@@ -34,11 +34,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		let message: string;
 		switch (action) {
 			case 'add_phrase_variant':
-				state = addPhraseVariant(str(body.key_phrase_id), text, segmentId, interviewId);
+				state = await addPhraseVariant(str(body.key_phrase_id), text, segmentId, interviewId);
 				message = `Added “${trimmed}” as a key-phrase variant.`;
 				break;
 			case 'create_key_phrase':
-				state = createKeyPhrase(text, segmentId, interviewId, str(body.label) || undefined);
+				state = await createKeyPhrase(text, segmentId, interviewId, str(body.label) || undefined);
 				message = `Created a new key phrase from “${trimmed}”.`;
 				break;
 			default:

@@ -33,5 +33,5 @@ export const POST: RequestHandler = async ({ request }) => {
 		error(400, 'No review updates provided.');
 	}
 
-	return json({ reviews: applyQuoteReviews(clean) });
+	return json({ reviews: await applyQuoteReviews(clean) });
 };

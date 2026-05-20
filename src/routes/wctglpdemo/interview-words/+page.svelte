@@ -22,7 +22,8 @@
 	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
 	import KeyQuotesSection from '$lib/components/KeyQuotesSection.svelte';
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
-	import { keywordCounts } from '$lib/content/wctglpdemo-data/keywords';
+	import SentimentBar from '$lib/components/SentimentBar.svelte';
+	import { keywordBlocks } from '$lib/content/wctglpdemo-data/keywords';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -118,9 +119,11 @@
 	});
 
 	// Deterministic keyword usage across the coded fragments in the drawer —
-	// a word-usage tally for whatever theme/context is currently open.
-	const drawerKeywordCounts = $derived(keywordCounts(drawerFragments.map((f) => f.text)));
-	const maxKeywordCount = $derived(Math.max(1, ...drawerKeywordCounts.map((k) => k.count)));
+	// one sentiment-coloured block per fragment that mentions each keyword.
+	const drawerKeywordBlocks = $derived(keywordBlocks(drawerFragments));
+	const maxKeywordCount = $derived(
+		Math.max(1, ...drawerKeywordBlocks.map((k) => k.blocks.length))
+	);
 
 	const drawerContextLabel = $derived(
 		drawerContext.kind === 'question'
@@ -251,35 +254,31 @@
 
 		<div class="flex flex-1 flex-col gap-7 overflow-y-auto p-6">
 			<!-- Keyword usage — deterministic word counts across this theme's fragments -->
-			{#if drawerKeywordCounts.length}
+			{#if drawerKeywordBlocks.length}
 				<section class="flex flex-col gap-2">
 					<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
-						Keyword usage · {drawerKeywordCounts.length}
-						{drawerKeywordCounts.length === 1 ? 'keyword' : 'keywords'}
+						Keyword usage · {drawerKeywordBlocks.length}
+						{drawerKeywordBlocks.length === 1 ? 'keyword' : 'keywords'}
 					</h3>
 					<p class="text-xs text-muted-foreground">
 						Lexicon keywords found in the {drawerFragments.length} coded
 						{drawerFragments.length === 1 ? 'fragment' : 'fragments'} for this theme, by mention count.
 					</p>
 					<div class="mt-1 flex flex-col gap-1.5">
-						{#each drawerKeywordCounts.slice(0, 12) as kc (kc.keywordId)}
-							<div class="flex items-center gap-2 text-xs">
-								<span class="w-36 shrink-0 truncate text-slate-700" title={kc.categoryLabel}>
-									{kc.keywordLabel}
-								</span>
-								<div class="h-3 flex-1 rounded-sm bg-slate-100">
-									<div
-										class="h-full rounded-sm bg-accent-mint"
-										style="width: {(kc.count / maxKeywordCount) * 100}%"
-									></div>
-								</div>
-								<span class="w-5 shrink-0 text-right tabular-nums text-slate-500">{kc.count}</span>
+						{#each drawerKeywordBlocks.slice(0, 12) as kb (kb.keywordId)}
+							<div title={kb.categoryLabel}>
+								<SentimentBar
+									label={kb.keywordLabel}
+									blocks={kb.blocks}
+									max={maxKeywordCount}
+									labelClass="w-36"
+								/>
 							</div>
 						{/each}
 					</div>
-					{#if drawerKeywordCounts.length > 12}
+					{#if drawerKeywordBlocks.length > 12}
 						<p class="text-xs text-slate-400">
-							+{drawerKeywordCounts.length - 12} more {drawerKeywordCounts.length - 12 === 1
+							+{drawerKeywordBlocks.length - 12} more {drawerKeywordBlocks.length - 12 === 1
 								? 'keyword'
 								: 'keywords'}
 						</p>

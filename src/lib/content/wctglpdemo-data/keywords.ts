@@ -145,6 +145,14 @@ export type KeywordCount = {
 	count: number;
 };
 
+export type KeywordBlocks = {
+	keywordId: string;
+	keywordLabel: string;
+	categoryId: string;
+	categoryLabel: string;
+	blocks: { sentiment: number }[];
+};
+
 /**
  * Total keyword mentions across a set of texts, ranked by count. Every match is
  * counted (overlaps included, same as keywordTags), so this is a deterministic
@@ -171,4 +179,46 @@ export function keywordCounts(texts: string[]): KeywordCount[] {
 		}
 	}
 	return out.sort((a, b) => b.count - a.count || a.keywordLabel.localeCompare(b.keywordLabel));
+}
+
+/**
+ * Per-keyword sentiment blocks across a set of coded fragments — one block per
+ * fragment that contains the keyword at least once, carrying that fragment's
+ * sentiment. Feeds SentimentBar so keyword usage reads the same as the
+ * theme/emotion bars elsewhere in the app.
+ */
+export function keywordBlocks(
+	fragments: { text: string; sentiment: number }[]
+): KeywordBlocks[] {
+	const blocksByKw = new Map<string, { sentiment: number }[]>();
+	for (const f of fragments) {
+		const ids = new Set<string>();
+		for (const m of rawMatches(f.text)) ids.add(m.keywordId);
+		for (const id of ids) {
+			let list = blocksByKw.get(id);
+			if (!list) {
+				list = [];
+				blocksByKw.set(id, list);
+			}
+			list.push({ sentiment: f.sentiment });
+		}
+	}
+	const out: KeywordBlocks[] = [];
+	for (const category of categories) {
+		for (const kw of category.keywords) {
+			const blocks = blocksByKw.get(kw.id);
+			if (blocks && blocks.length) {
+				out.push({
+					keywordId: kw.id,
+					keywordLabel: kw.label,
+					categoryId: category.id,
+					categoryLabel: category.label,
+					blocks
+				});
+			}
+		}
+	}
+	return out.sort(
+		(a, b) => b.blocks.length - a.blocks.length || a.keywordLabel.localeCompare(b.keywordLabel)
+	);
 }

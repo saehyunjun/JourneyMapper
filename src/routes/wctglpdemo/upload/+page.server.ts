@@ -223,8 +223,8 @@ function readQuestionMap(interviewId: string): { turn_index: number; question_id
 // interviews, and — when ?interview=<id> is set — that interview's turns,
 // segments, and question mapping, so its review view reopens without the
 // transcript being re-pasted and re-parsed.
-export const load: PageServerLoad = ({ url }) => {
-	const { starredSegmentIds } = readHighlights();
+export const load: PageServerLoad = async ({ url }) => {
+	const { starredSegmentIds } = await readHighlights();
 
 	const structured = JSON.parse(readFileSync(resolve(STRUCTURED_PATH), 'utf8'));
 	const interviewIds: string[] = structured.interviews
@@ -252,14 +252,18 @@ export const load: PageServerLoad = ({ url }) => {
 			const segments = (segData.segments as Segment[])
 				.filter((s) => s.interview_id === wanted)
 				.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
+			const [annotations, profile] = await Promise.all([
+				readAnnotationsFor(wanted),
+				readProfile(wanted)
+			]);
 			review = {
 				interviewId: wanted,
 				turns: interview.turns as Turn[],
 				segments,
 				questionMap: readQuestionMap(wanted),
-				annotations: readAnnotationsFor(wanted),
+				annotations,
 				autotagJob: getJob(wanted),
-				profile: readProfile(wanted)
+				profile
 			};
 		}
 	}
@@ -498,7 +502,7 @@ export const actions: Actions = {
 			turns,
 			segments,
 			questionMap: mappings.map((m) => ({ turn_index: m.turn_index, question_id: m.question_id! })),
-			annotations: readAnnotationsFor(interviewId)
+			annotations: await readAnnotationsFor(interviewId)
 		};
 	}
 };

@@ -5,19 +5,21 @@
  * Backs the upload review page's "merge" and "unmerge" actions. Sentence
  * segmentation can over-split a turn; merging lets a reviewer recombine
  * adjacent segments, and unmerging reverses that by re-running the sentence
- * splitter on the merged text. Both mutate segments.json and re-key
- * segment_tags.json so annotations follow the renumbered segment ids.
+ * splitter on the merged text. Both mutate the segments doc and re-key the
+ * segment_tags doc so annotations follow the renumbered segment ids.
  *
- * Note: writes into the source tree, so this is a dev/demo-time operation —
- * see the matching note in $lib/server/segment-tags.
+ * Backed by the local source files in dev and the KV store in prod.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import bundledSegments from '$lib/content/wctglpdemo-data/segments.json';
+import bundledTags from '$lib/content/wctglpdemo-data/segment_tags.json';
 import type { Annotation } from '$lib/types/segment-tags';
+import { loadDoc, saveDoc } from './kv-store';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const SEGMENTS_PATH = `${DATA_DIR}/segments.json`;
 const TAGS_PATH = `${DATA_DIR}/segment_tags.json`;
+const SEGMENTS_KEY = 'wctglpdemo:segments';
+const TAGS_KEY = 'wctglpdemo:segment_tags';
 
 type Segment = {
 	segment_id: string;
@@ -33,7 +35,21 @@ type Segment = {
 	flags: string[];
 };
 
-const read = (path: string) => JSON.parse(readFileSync(resolve(path), 'utf8'));
+type SegmentsFile = {
+	segments: Segment[];
+	meta: { generated_at?: string; segment_count?: number; [k: string]: unknown };
+	[k: string]: unknown;
+};
+type TagsFile = {
+	annotations: Annotation[];
+	meta: { generated_at?: string; [k: string]: unknown };
+	[k: string]: unknown;
+};
+
+const readSegments = () =>
+	loadDoc<SegmentsFile>(SEGMENTS_KEY, SEGMENTS_PATH, bundledSegments as SegmentsFile);
+const readTags = () => loadDoc<TagsFile>(TAGS_KEY, TAGS_PATH, bundledTags as TagsFile);
+
 const pad = (n: number) => String(n).padStart(2, '0');
 
 // --- Sentence splitter ------------------------------------------------------
@@ -91,11 +107,14 @@ const wordCountOf = (text: string) => text.split(/\s+/).filter(Boolean).length;
  * the merged segments collapse into one (union of tags) under the new id.
  * Returns the interview's full updated, sorted segment list.
  */
-export function mergeSegments(interviewId: string, segmentIds: string[]): Segment[] {
+export async function mergeSegments(
+	interviewId: string,
+	segmentIds: string[]
+): Promise<Segment[]> {
 	if (segmentIds.length < 2) throw new Error('Select at least two segments to merge.');
 
-	const segData = read(SEGMENTS_PATH);
-	const all = segData.segments as Segment[];
+	const segData = await readSegments();
+	const all = segData.segments;
 
 	const ids = new Set(segmentIds);
 	const picked = all.filter((s) => ids.has(s.segment_id));
@@ -154,12 +173,12 @@ export function mergeSegments(interviewId: string, segmentIds: string[]): Segmen
 		.sort((a: Segment, b: Segment) => a.segment_id.localeCompare(b.segment_id));
 	segData.meta.generated_at = new Date().toISOString();
 	segData.meta.segment_count = segData.segments.length;
-	writeFileSync(resolve(SEGMENTS_PATH), JSON.stringify(segData, null, 2) + '\n', 'utf8');
+	await saveDoc(SEGMENTS_KEY, SEGMENTS_PATH, segData);
 
 	// Re-key annotations: renumbered survivors follow their new id; the merged
 	// group's annotations (if any) collapse into one under the merged id.
-	const tagData = read(TAGS_PATH);
-	const annotations = tagData.annotations as Annotation[];
+	const tagData = await readTags();
+	const annotations = tagData.annotations;
 	const mergedAnns = annotations.filter((a) => ids.has(a.segment_id));
 	const kept = annotations.filter((a) => !ids.has(a.segment_id));
 	for (const a of kept) {
@@ -189,9 +208,9 @@ export function mergeSegments(interviewId: string, segmentIds: string[]): Segmen
 	kept.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
 	tagData.annotations = kept;
 	tagData.meta.generated_at = new Date().toISOString();
-	writeFileSync(resolve(TAGS_PATH), JSON.stringify(tagData, null, 2) + '\n', 'utf8');
+	await saveDoc(TAGS_KEY, TAGS_PATH, tagData);
 
-	return (segData.segments as Segment[])
+	return segData.segments
 		.filter((s) => s.interview_id === interviewId)
 		.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
 }
@@ -212,16 +231,16 @@ export function mergeSegments(interviewId: string, segmentIds: string[]): Segmen
  * Char offsets stay anchored to the original transcript span and so become
  * approximate after an edit — matching the unmerge convention.
  */
-export function editSegmentText(
+export async function editSegmentText(
 	interviewId: string,
 	segmentId: string,
 	find: string,
 	replace: string
-): Segment[] {
+): Promise<Segment[]> {
 	if (!find) throw new Error('No text to replace.');
 
-	const segData = read(SEGMENTS_PATH);
-	const all = segData.segments as Segment[];
+	const segData = await readSegments();
+	const all = segData.segments;
 	const target = all.find(
 		(s) => s.segment_id === segmentId && s.interview_id === interviewId
 	);
@@ -247,16 +266,19 @@ export function editSegmentText(
 	if (target.word_count < 3) target.flags = [...target.flags, 'very_short'];
 
 	segData.meta.generated_at = new Date().toISOString();
-	writeFileSync(resolve(SEGMENTS_PATH), JSON.stringify(segData, null, 2) + '\n', 'utf8');
+	await saveDoc(SEGMENTS_KEY, SEGMENTS_PATH, segData);
 
-	return (segData.segments as Segment[])
+	return segData.segments
 		.filter((s) => s.interview_id === interviewId)
 		.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
 }
 
-export function unmergeSegment(interviewId: string, segmentId: string): Segment[] {
-	const segData = read(SEGMENTS_PATH);
-	const all = segData.segments as Segment[];
+export async function unmergeSegment(
+	interviewId: string,
+	segmentId: string
+): Promise<Segment[]> {
+	const segData = await readSegments();
+	const all = segData.segments;
 
 	const target = all.find(
 		(s) => s.segment_id === segmentId && s.interview_id === interviewId
@@ -321,12 +343,12 @@ export function unmergeSegment(interviewId: string, segmentId: string): Segment[
 		.sort((a: Segment, b: Segment) => a.segment_id.localeCompare(b.segment_id));
 	segData.meta.generated_at = new Date().toISOString();
 	segData.meta.segment_count = segData.segments.length;
-	writeFileSync(resolve(SEGMENTS_PATH), JSON.stringify(segData, null, 2) + '\n', 'utf8');
+	await saveDoc(SEGMENTS_KEY, SEGMENTS_PATH, segData);
 
 	// Re-key annotations: drop any on the merged segment (its unioned tags
 	// don't split back cleanly), and follow the renumbered survivors.
-	const tagData = read(TAGS_PATH);
-	const annotations = tagData.annotations as Annotation[];
+	const tagData = await readTags();
+	const annotations = tagData.annotations;
 	const kept = annotations.filter((a) => a.segment_id !== segmentId);
 	for (const a of kept) {
 		const newId = idRemap.get(a.segment_id);
@@ -335,9 +357,9 @@ export function unmergeSegment(interviewId: string, segmentId: string): Segment[
 	kept.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
 	tagData.annotations = kept;
 	tagData.meta.generated_at = new Date().toISOString();
-	writeFileSync(resolve(TAGS_PATH), JSON.stringify(tagData, null, 2) + '\n', 'utf8');
+	await saveDoc(TAGS_KEY, TAGS_PATH, tagData);
 
-	return (segData.segments as Segment[])
+	return segData.segments
 		.filter((s) => s.interview_id === interviewId)
 		.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
 }

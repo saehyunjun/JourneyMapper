@@ -8,7 +8,10 @@ import { readHighlights } from '$lib/server/highlights';
 import { readQuoteReviews } from '$lib/server/quote-reviews';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = () => {
-	const { starredQuoteIds } = readHighlights();
-	return { starredQuoteIds, quoteReviews: readQuoteReviews() };
+export const load: PageServerLoad = async () => {
+	const [{ starredQuoteIds }, quoteReviews] = await Promise.all([
+		readHighlights(),
+		readQuoteReviews()
+	]);
+	return { starredQuoteIds, quoteReviews };
 };

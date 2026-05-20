@@ -36,7 +36,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			);
 		}
 		try {
-			const segments = editSegmentText(interviewId, segmentId, find, replace);
+			const segments = await editSegmentText(interviewId, segmentId, find, replace);
 			return json({ ok: true, segments });
 		} catch (e) {
 			return json(
@@ -55,7 +55,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			);
 		}
 		try {
-			const segments = unmergeSegment(interviewId, segmentId);
+			const segments = await unmergeSegment(interviewId, segmentId);
 			return json({ ok: true, segments });
 		} catch (e) {
 			return json(
@@ -76,7 +76,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	try {
-		const segments = mergeSegments(interviewId, segmentIds);
+		const segments = await mergeSegments(interviewId, segmentIds);
 		return json({ ok: true, segments });
 	} catch (e) {
 		return json(

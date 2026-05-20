@@ -50,6 +50,8 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.96.0",
     "@thisux/sveltednd": "^0.4.1",
+    "@upstash/redis": "^1.38.0",
+    "@vercel/blob": "^2.4.0",
     "d3": "^7.9.0",
     "d3-cloud": "^1.2.9",
     "embla-carousel-svelte": "^8.6.0",

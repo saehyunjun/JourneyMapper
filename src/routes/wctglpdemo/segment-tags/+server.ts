@@ -31,7 +31,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : [];
 
 	try {
-		const annotation = upsertAnnotation({
+		const annotation = await upsertAnnotation({
 			segment_id: segmentId,
 			interview_id: interviewId,
 			question_id: typeof body.question_id === 'string' ? body.question_id : null,
@@ -63,6 +63,6 @@ export const DELETE: RequestHandler = async ({ request }) => {
 		return json({ ok: false, error: 'segment_id is required.' }, { status: 400 });
 	}
 
-	const removed = deleteAnnotation(segmentId);
+	const removed = await deleteAnnotation(segmentId);
 	return json({ ok: true, removed: !!removed });
 };

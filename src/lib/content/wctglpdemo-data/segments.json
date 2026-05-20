@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T03:40:38.958Z",
+    "generated_at": "2026-05-20T03:48:05.430Z",
     "generator": "scripts/build-segments.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -15,7 +15,7 @@
       "idea_unit_grouping": "deferred",
       "short_segment_handling": "flagged (\"very_short\"), not merged"
     },
-    "segment_count": 619,
+    "segment_count": 617,
     "notes": [
       "One segment per sentence of participant speech; offsets round-trip against the source file.",
       "question_id is inherited from the most recent interviewer turn in question_map.json.",
@@ -3742,30 +3742,19 @@
       "segment_index": 0,
       "question_id": "trial_barriers",
       "speaker": "participant",
-      "text": "It's not a problem.",
+      "text": "[12-hour fasting] is not a problem. I don't see that.",
       "char_start": 11174,
-      "char_end": 11193,
-      "word_count": 4,
-      "flags": []
+      "char_end": 11211,
+      "word_count": 10,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_08_t45_s01",
       "interview_id": "participant_08",
       "turn_index": 45,
       "segment_index": 1,
-      "question_id": "trial_barriers",
-      "speaker": "participant",
-      "text": "I don't see that.",
-      "char_start": 11194,
-      "char_end": 11211,
-      "word_count": 4,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_08_t45_s02",
-      "interview_id": "participant_08",
-      "turn_index": 45,
-      "segment_index": 2,
       "question_id": "trial_barriers",
       "speaker": "participant",
       "text": "No, I don't see it as a problem.",
@@ -7631,30 +7620,19 @@
       "segment_index": 1,
       "question_id": "stopping_glp1",
       "speaker": "participant",
-      "text": "The obvious one is weight loss, but honestly the mental changes have been just as important.",
+      "text": "The obvious one is weight loss, but honestly the mental changes have been just as important. I used to think about food constantly.",
       "char_start": 1681,
-      "char_end": 1773,
-      "word_count": 16,
-      "flags": []
+      "char_end": 1812,
+      "word_count": 23,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_12_t07_s02",
       "interview_id": "participant_12",
       "turn_index": 7,
       "segment_index": 2,
-      "question_id": "stopping_glp1",
-      "speaker": "participant",
-      "text": "I used to think about food constantly.",
-      "char_start": 1774,
-      "char_end": 1812,
-      "word_count": 7,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_12_t07_s03",
-      "interview_id": "participant_12",
-      "turn_index": 7,
-      "segment_index": 3,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "I didn’t realize how exhausting that was until it stopped.",
@@ -7664,10 +7642,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_12_t07_s04",
+      "segment_id": "participant_12_t07_s03",
       "interview_id": "participant_12",
       "turn_index": 7,
-      "segment_index": 4,
+      "segment_index": 3,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "My inflammation is lower, my knees hurt less, and I feel more comfortable socially now too.",
@@ -7677,10 +7655,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_12_t07_s05",
+      "segment_id": "participant_12_t07_s04",
       "interview_id": "participant_12",
       "turn_index": 7,
-      "segment_index": 5,
+      "segment_index": 4,
       "question_id": "stopping_glp1",
       "speaker": "participant",
       "text": "I’m not avoiding pictures anymore, which sounds small but it’s a huge emotional shift.",

@@ -19,5 +19,5 @@ export const POST: RequestHandler = async ({ request }) => {
 		error(400, 'Expected a JSON body { kind: "segment" | "quote", id: string }.');
 	}
 
-	return json(toggleHighlight(kind, id));
+	return json(await toggleHighlight(kind, id));
 };

@@ -6,19 +6,25 @@
  * codebook.json (`terms` list, schema 1.3+). Both are surface phrases a
  * reviewer highlighted in a transcript segment.
  *
- * Note: writes into the source tree, so this is a dev/demo-time operation —
- * the same caveat as $lib/server/segment-tags.
+ * Backed by the local source files in dev and the KV store in prod.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import bundledLexicon from '$lib/content/wctglpdemo-data/keyword_lexicon.json';
+import bundledCodebook from '$lib/content/wctglpdemo-data/codebook.json';
+import { loadDoc, saveDoc } from './kv-store';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const LEXICON_PATH = `${DATA_DIR}/keyword_lexicon.json`;
 const CODEBOOK_PATH = `${DATA_DIR}/codebook.json`;
+const LEXICON_KEY = 'wctglpdemo:keyword_lexicon';
+const CODEBOOK_KEY = 'wctglpdemo:codebook';
 
-const read = (path: string) => JSON.parse(readFileSync(resolve(path), 'utf8'));
-const write = (path: string, data: unknown) =>
-	writeFileSync(resolve(path), JSON.stringify(data, null, 2) + '\n', 'utf8');
+type LexiconFile = { categories: Category[] };
+type CodebookFile = { theme_tags: Theme[]; [k: string]: unknown };
+
+const readLexicon = () =>
+	loadDoc<LexiconFile>(LEXICON_KEY, LEXICON_PATH, bundledLexicon as LexiconFile);
+const readCodebook = () =>
+	loadDoc<CodebookFile>(CODEBOOK_KEY, CODEBOOK_PATH, bundledCodebook as CodebookFile);
 
 export type Keyword = { id: string; label: string; variants: string[] };
 export type Category = { id: string; label: string; description: string; keywords: Keyword[] };
@@ -67,68 +73,72 @@ function uniqueId(base: string, taken: Set<string>): string {
 	return id;
 }
 
-function snapshot(): LexiconState {
-	return { categories: read(LEXICON_PATH).categories, themes: read(CODEBOOK_PATH).theme_tags };
+async function snapshot(): Promise<LexiconState> {
+	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
+	return { categories: lex.categories, themes: codebook.theme_tags };
 }
 
 /** Add a highlighted phrase as a new variant of an existing keyword. */
-export function addKeywordVariant(keywordId: string, rawText: string): LexiconState {
+export async function addKeywordVariant(
+	keywordId: string,
+	rawText: string
+): Promise<LexiconState> {
 	const variant = normalize(rawText);
-	const lex = read(LEXICON_PATH);
+	const lex = await readLexicon();
 	let keyword: Keyword | undefined;
-	for (const cat of lex.categories as Category[]) {
+	for (const cat of lex.categories) {
 		keyword = cat.keywords.find((k) => k.id === keywordId);
 		if (keyword) break;
 	}
 	if (!keyword) throw new Error(`Unknown keyword "${keywordId}".`);
 	if (!keyword.variants.some((v) => v.toLowerCase() === variant)) {
 		keyword.variants.push(variant);
-		write(LEXICON_PATH, lex);
+		await saveDoc(LEXICON_KEY, LEXICON_PATH, lex);
 	}
 	return snapshot();
 }
 
 /** Create a new keyword in a category, seeded from the highlighted phrase. */
-export function createKeyword(categoryId: string, rawText: string): LexiconState {
+export async function createKeyword(categoryId: string, rawText: string): Promise<LexiconState> {
 	const text = cleanText(rawText);
-	const lex = read(LEXICON_PATH);
-	const category = (lex.categories as Category[]).find((c) => c.id === categoryId);
+	const lex = await readLexicon();
+	const category = lex.categories.find((c) => c.id === categoryId);
 	if (!category) throw new Error(`Unknown category "${categoryId}".`);
 	const taken = new Set<string>();
-	for (const c of lex.categories as Category[]) for (const k of c.keywords) taken.add(k.id);
+	for (const c of lex.categories) for (const k of c.keywords) taken.add(k.id);
 	category.keywords.push({
 		id: uniqueId(slugify(text), taken),
 		label: titleCase(text),
 		variants: [text.toLowerCase()]
 	});
-	write(LEXICON_PATH, lex);
+	await saveDoc(LEXICON_KEY, LEXICON_PATH, lex);
 	return snapshot();
 }
 
 /** Add a highlighted phrase to an existing theme's `terms` list. */
-export function addThemeTerm(themeId: string, rawText: string): LexiconState {
+export async function addThemeTerm(themeId: string, rawText: string): Promise<LexiconState> {
 	const term = normalize(rawText);
-	const codebook = read(CODEBOOK_PATH);
-	const theme = (codebook.theme_tags as Theme[]).find((t) => t.id === themeId);
+	const codebook = await readCodebook();
+	const theme = codebook.theme_tags.find((t) => t.id === themeId);
 	if (!theme) throw new Error(`Unknown theme "${themeId}".`);
 	if (!Array.isArray(theme.terms)) theme.terms = [];
 	if (!theme.terms.some((v) => v.toLowerCase() === term)) {
 		theme.terms.push(term);
-		write(CODEBOOK_PATH, codebook);
+		await saveDoc(CODEBOOK_KEY, CODEBOOK_PATH, codebook);
 	}
 	return snapshot();
 }
 
 /** Create a new theme, seeded from the highlighted phrase as its first term. */
-export function createTheme(rawText: string): LexiconState {
+export async function createTheme(rawText: string): Promise<LexiconState> {
 	const text = cleanText(rawText);
-	const codebook = read(CODEBOOK_PATH);
-	const taken = new Set<string>((codebook.theme_tags as Theme[]).map((t) => t.id));
-	(codebook.theme_tags as Theme[]).push({
+	const codebook = await readCodebook();
+	const taken = new Set<string>(codebook.theme_tags.map((t) => t.id));
+	codebook.theme_tags.push({
 		id: uniqueId(slugify(text), taken),
 		description: 'Added from the segment tag drawer; edit this description in codebook.json.',
 		terms: [text.toLowerCase()]
 	});
-	write(CODEBOOK_PATH, codebook);
+	await saveDoc(CODEBOOK_KEY, CODEBOOK_PATH, codebook);
 	return snapshot();
 }

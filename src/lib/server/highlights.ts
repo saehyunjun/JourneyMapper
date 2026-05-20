@@ -1,17 +1,16 @@
 /**
  * Analyst-starred highlights — shared read/write helpers.
  *
- * Backed by wctglpdemo-data/highlights.json. Segments (review page) and quotes
- * (analysis page) are starred independently; their ids never collide, but they
- * are kept in separate lists so each page only loads what it needs.
- *
- * Note: this writes into the source tree, so it is a dev/demo-time operation —
- * see the matching note in the transcript-upload action.
+ * Backed by wctglpdemo-data/highlights.json (dev) or the KV store (prod).
+ * Segments (review page) and quotes (analysis page) are starred independently;
+ * their ids never collide, but they are kept in separate lists so each page
+ * only loads what it needs.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import bundledHighlights from '$lib/content/wctglpdemo-data/highlights.json';
+import { loadDoc, saveDoc } from './kv-store';
 
 const HIGHLIGHTS_PATH = 'src/lib/content/wctglpdemo-data/highlights.json';
+const KV_KEY = 'wctglpdemo:highlights';
 
 export type HighlightKind = 'segment' | 'quote';
 
@@ -26,9 +25,7 @@ export type HighlightState = {
 	starredQuoteIds: string[];
 };
 
-function read(): HighlightsFile {
-	return JSON.parse(readFileSync(resolve(HIGHLIGHTS_PATH), 'utf8'));
-}
+const read = () => loadDoc<HighlightsFile>(KV_KEY, HIGHLIGHTS_PATH, bundledHighlights as HighlightsFile);
 
 function project(file: HighlightsFile): HighlightState {
 	return {
@@ -38,19 +35,19 @@ function project(file: HighlightsFile): HighlightState {
 }
 
 /** Current starred ids — safe to call from a page `load`. */
-export function readHighlights(): HighlightState {
-	return project(read());
+export async function readHighlights(): Promise<HighlightState> {
+	return project(await read());
 }
 
 /** Toggle one id on/off and persist; returns the updated state. */
-export function toggleHighlight(kind: HighlightKind, id: string): HighlightState {
-	const file = read();
+export async function toggleHighlight(kind: HighlightKind, id: string): Promise<HighlightState> {
+	const file = await read();
 	const key = kind === 'segment' ? 'starred_segment_ids' : 'starred_quote_ids';
 	const set = new Set(file[key]);
 	if (set.has(id)) set.delete(id);
 	else set.add(id);
 	file[key] = [...set].sort();
 	file.meta.updated_at = new Date().toISOString();
-	writeFileSync(resolve(HIGHLIGHTS_PATH), JSON.stringify(file, null, 2) + '\n', 'utf8');
+	await saveDoc(KV_KEY, HIGHLIGHTS_PATH, file);
 	return project(file);
 }

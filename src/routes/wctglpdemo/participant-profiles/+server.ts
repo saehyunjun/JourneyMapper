@@ -51,5 +51,5 @@ export const POST: RequestHandler = async ({ request }) => {
 		participant_type: participantType as ParticipantType
 	};
 
-	return json({ profile: saveProfile(interviewId, patch) });
+	return json({ profile: await saveProfile(interviewId, patch) });
 };
