@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.2",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T02:19:10.055Z",
+    "generated_at": "2026-05-20T03:40:38.964Z",
     "generator": "scripts/build-segment-tags.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/segments.json",
@@ -15,7 +15,6 @@
     "proposals_generated_at": "2026-05-19T03:29:10.011Z",
     "topics_status": "present",
     "tagged_interviews": [
-      "participant_08",
       "participant_11",
       "participant_12"
     ],
@@ -4190,20 +4189,6 @@
       "reviewer_notes": "closing"
     },
     {
-      "segment_id": "participant_08_t01_s00",
-      "interview_id": "participant_08",
-      "question_id": "study_intro",
-      "topics": [],
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.5,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "admin/filler"
-    },
-    {
       "segment_id": "participant_08_t03_s00",
       "interview_id": "participant_08",
       "question_id": "study_intro",
@@ -4216,27 +4201,6 @@
       "source": "ai_proposed",
       "review_status": "pending",
       "reviewer_notes": "bare affirmation"
-    },
-    {
-      "segment_id": "participant_08_t05_s00",
-      "interview_id": "participant_08",
-      "question_id": "stopping_glp1",
-      "topics": [],
-      "themes": [
-        "maintenance_strategy",
-        "non_weight_benefits",
-        "treatment_continuation",
-        "treatment_dependency"
-      ],
-      "subthemes": [],
-      "emotions": [
-        "anticipation"
-      ],
-      "sentiment": 1,
-      "confidence": 0.8,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "plans continued use beyond goal weight due to other benefits"
     },
     {
       "segment_id": "participant_08_t07_s00",
