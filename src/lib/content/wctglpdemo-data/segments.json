@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T03:48:05.430Z",
+    "generated_at": "2026-05-20T14:57:38.580Z",
     "generator": "scripts/build-segments.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -5475,10 +5475,10 @@
       "segment_index": 0,
       "question_id": "stopping_glp1",
       "speaker": "participant",
-      "text": "Well, I think there's just a few. Honestly. Maybe if I had to have surgery and was made to stop, obviously if something happened with my health and I was made to stop and then maybe not necessarily to stop, but maybe try a different one if one wasn't working.",
+      "text": "Well, I think there's just a [few reasons I would stop taking GLP-1s]. Honestly. Maybe if I had to have surgery and was made to stop, obviously if something happened with my health and I was made to stop and then maybe not necessarily to stop, but maybe try a different one if one wasn't working.",
       "char_start": 1058,
       "char_end": 1317,
-      "word_count": 50,
+      "word_count": 56,
       "flags": [
         "merged"
       ]

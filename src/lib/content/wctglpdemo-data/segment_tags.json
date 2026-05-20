@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.2",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T03:48:34.212Z",
+    "generated_at": "2026-05-20T14:58:11.605Z",
     "generator": "scripts/build-segment-tags.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/segments.json",
@@ -7771,11 +7771,13 @@
       "subthemes": [
         "serious_complication"
       ],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.75,
-      "source": "ai_proposed",
-      "review_status": "pending",
+      "emotions": [
+        "trust"
+      ],
+      "sentiment": 1,
+      "confidence": 1,
+      "source": "human",
+      "review_status": "confirmed",
       "reviewer_notes": ""
     },
     {

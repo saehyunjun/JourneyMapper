@@ -9,12 +9,16 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { getJob, startAutotag } from '$lib/server/autotag';
 
-export const GET: RequestHandler = ({ url }) => {
+// The POST handler blocks on the autotag chain in prod (two Claude calls +
+// validation). Requires Vercel Pro + Fluid Compute.
+export const config = { maxDuration: 800 };
+
+export const GET: RequestHandler = async ({ url }) => {
 	const interviewId = url.searchParams.get('interview') ?? '';
 	if (!interviewId) {
 		return json({ ok: false, error: 'interview query param is required.' }, { status: 400 });
 	}
-	return json({ ok: true, job: getJob(interviewId) });
+	return json({ ok: true, job: await getJob(interviewId) });
 };
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -30,5 +34,9 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json({ ok: false, error: 'interview_id is required.' }, { status: 400 });
 	}
 
-	return json({ ok: true, job: startAutotag(interviewId) });
+	const { job, completion } = await startAutotag(interviewId);
+	// In prod, block on the chain so the serverless function instance stays
+	// alive until autotag finishes. In dev this is already resolved.
+	await completion;
+	return json({ ok: true, job: await getJob(interviewId) });
 };

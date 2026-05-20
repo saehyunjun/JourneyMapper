@@ -17,14 +17,24 @@
 import { fail } from '@sveltejs/kit';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { dev } from '$app/environment';
 import type { Actions, PageServerLoad } from './$types';
 import questionBank from '$lib/content/wctglpdemo-data/questions.json';
+import bundledStructured from '$lib/content/wctglpdemo-data/interviews_structured.json';
+import bundledSegments from '$lib/content/wctglpdemo-data/segments.json';
+import bundledQuestionMap from '$lib/content/wctglpdemo-data/question_map.json';
 import { readHighlights } from '$lib/server/highlights';
 import { readAnnotationsFor } from '$lib/server/segment-tags';
 import { getJob, startAutotag, type AutotagJob } from '$lib/server/autotag';
 import { readProfile } from '$lib/server/participant-profiles';
+import { loadDoc, saveDoc } from '$lib/server/kv-store';
 import type { Annotation } from '$lib/types/segment-tags';
 import type { ParticipantProfile } from '$lib/types/participant-profile';
+
+// The parse action awaits the autotag chain in prod (two Claude calls +
+// validation), which can take several minutes. Requires Vercel Pro + Fluid
+// Compute to allow durations beyond the default 300s ceiling.
+export const config = { maxDuration: 800 };
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const STRUCTURED_PATH = `${DATA_DIR}/interviews_structured.json`;
@@ -204,15 +214,37 @@ function buildSegments(interviewId: string, turns: Turn[]): Segment[] {
 	return segments;
 }
 
+type QuestionMapMapping = {
+	turn_index: number;
+	question_id: string;
+	turn_role?: string;
+	confidence?: number;
+	source?: string;
+	review_status?: string;
+	reviewer_notes?: string;
+};
+type QuestionMapFile = {
+	meta?: Record<string, unknown>;
+	interviews: {
+		interview_id: string;
+		mapping_count?: number;
+		mappings: QuestionMapMapping[];
+	}[];
+};
+
 /** turn_index -> question_id from question_map.json, for one interview. */
 function readQuestionMap(interviewId: string): { turn_index: number; question_id: string }[] {
-	let qmap: { interviews?: { interview_id: string; mappings: { turn_index: number; question_id: string }[] }[] };
-	try {
-		qmap = JSON.parse(readFileSync(resolve(QUESTION_MAP_PATH), 'utf8'));
-	} catch {
-		return [];
+	let qmap: QuestionMapFile;
+	if (dev) {
+		try {
+			qmap = JSON.parse(readFileSync(resolve(QUESTION_MAP_PATH), 'utf8'));
+		} catch {
+			return [];
+		}
+	} else {
+		qmap = bundledQuestionMap as QuestionMapFile;
 	}
-	const entry = qmap.interviews?.find((iv) => iv.interview_id === interviewId);
+	const entry = qmap.interviews.find((iv) => iv.interview_id === interviewId);
 	return (entry?.mappings ?? []).map((m) => ({
 		turn_index: m.turn_index,
 		question_id: m.question_id
@@ -226,9 +258,14 @@ function readQuestionMap(interviewId: string): { turn_index: number; question_id
 export const load: PageServerLoad = async ({ url }) => {
 	const { starredSegmentIds } = await readHighlights();
 
-	const structured = JSON.parse(readFileSync(resolve(STRUCTURED_PATH), 'utf8'));
+	// interviews_structured.json is owned by the upload pipeline (still fs-only
+	// in prod), so in prod we use the bundled snapshot — new interviews can only
+	// arrive via a redeploy.
+	const structured: { interviews: { interview_id: string; turns: Turn[] }[] } = dev
+		? JSON.parse(readFileSync(resolve(STRUCTURED_PATH), 'utf8'))
+		: (bundledStructured as { interviews: { interview_id: string; turns: Turn[] }[] });
 	const interviewIds: string[] = structured.interviews
-		.map((iv: { interview_id: string }) => iv.interview_id)
+		.map((iv) => iv.interview_id)
 		.sort();
 
 	const wanted = url.searchParams.get('interview');
@@ -244,17 +281,22 @@ export const load: PageServerLoad = async ({ url }) => {
 		  }
 		| null = null;
 	if (wanted) {
-		const interview = structured.interviews.find(
-			(iv: { interview_id: string }) => iv.interview_id === wanted
-		);
+		const interview = structured.interviews.find((iv) => iv.interview_id === wanted);
 		if (interview) {
-			const segData = JSON.parse(readFileSync(resolve(SEGMENTS_PATH), 'utf8'));
-			const segments = (segData.segments as Segment[])
+			// Reads from KV in prod, fs in dev — kept in sync with the migrated
+			// merge/unmerge writers via the shared kv-store helper.
+			const segData = await loadDoc<{ segments: Segment[] }>(
+				'wctglpdemo:segments',
+				SEGMENTS_PATH,
+				bundledSegments as { segments: Segment[] }
+			);
+			const segments = segData.segments
 				.filter((s) => s.interview_id === wanted)
 				.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
-			const [annotations, profile] = await Promise.all([
+			const [annotations, profile, autotagJob] = await Promise.all([
 				readAnnotationsFor(wanted),
-				readProfile(wanted)
+				readProfile(wanted),
+				getJob(wanted)
 			]);
 			review = {
 				interviewId: wanted,
@@ -262,7 +304,7 @@ export const load: PageServerLoad = async ({ url }) => {
 				segments,
 				questionMap: readQuestionMap(wanted),
 				annotations,
-				autotagJob: getJob(wanted),
+				autotagJob,
 				profile
 			};
 		}
@@ -323,15 +365,22 @@ export const actions: Actions = {
 			}
 		}
 
-		mkdirSync(resolve(UPLOADS_DIR), { recursive: true });
-		writeFileSync(resolve(sourceFile), text, 'utf8');
+		// The raw .txt archive is only useful for dev (the source-file lookup is
+		// just metadata; nothing reads the file back). Skip it in prod, where
+		// the function FS is read-only.
+		if (dev) {
+			mkdirSync(resolve(UPLOADS_DIR), { recursive: true });
+			writeFileSync(resolve(sourceFile), text, 'utf8');
+		}
 
-		const structured = JSON.parse(readFileSync(resolve(STRUCTURED_PATH), 'utf8'));
-		const existed = structured.interviews.some(
-			(iv: { interview_id: string }) => iv.interview_id === interviewId
+		const structured = await loadDoc<typeof bundledStructured>(
+			'wctglpdemo:interviews_structured',
+			STRUCTURED_PATH,
+			bundledStructured
 		);
+		const existed = structured.interviews.some((iv) => iv.interview_id === interviewId);
 		structured.interviews = structured.interviews.filter(
-			(iv: { interview_id: string }) => iv.interview_id !== interviewId
+			(iv) => iv.interview_id !== interviewId
 		);
 		structured.interviews.push({
 			interview_id: interviewId,
@@ -346,34 +395,32 @@ export const actions: Actions = {
 			},
 			turn_count: turns.length,
 			turns
-		});
-		structured.interviews.sort((a: { interview_id: string }, b: { interview_id: string }) =>
-			a.interview_id.localeCompare(b.interview_id)
-		);
-		structured.meta.generated_at = new Date().toISOString();
-		if (
-			Array.isArray(structured.meta.source_files) &&
-			!structured.meta.source_files.includes(sourceFile)
-		) {
-			structured.meta.source_files.push(sourceFile);
+		} as unknown as (typeof structured.interviews)[number]);
+		structured.interviews.sort((a, b) => a.interview_id.localeCompare(b.interview_id));
+		(structured.meta as { generated_at?: string }).generated_at = new Date().toISOString();
+		const sourceFiles = (structured.meta as { source_files?: string[] }).source_files;
+		if (Array.isArray(sourceFiles) && !sourceFiles.includes(sourceFile)) {
+			sourceFiles.push(sourceFile);
 		}
-		writeFileSync(resolve(STRUCTURED_PATH), JSON.stringify(structured, null, 2) + '\n', 'utf8');
+		await saveDoc('wctglpdemo:interviews_structured', STRUCTURED_PATH, structured);
 
-		const segData = JSON.parse(readFileSync(resolve(SEGMENTS_PATH), 'utf8'));
-		segData.segments = segData.segments.filter(
-			(s: { interview_id: string }) => s.interview_id !== interviewId
+		const segData = await loadDoc<{ segments: Segment[]; meta: Record<string, unknown> }>(
+			'wctglpdemo:segments',
+			SEGMENTS_PATH,
+			bundledSegments as { segments: Segment[]; meta: Record<string, unknown> }
 		);
+		segData.segments = segData.segments.filter((s) => s.interview_id !== interviewId);
 		segData.segments.push(...segments);
-		segData.segments.sort((a: { segment_id: string }, b: { segment_id: string }) =>
-			a.segment_id.localeCompare(b.segment_id)
-		);
+		segData.segments.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
 		segData.meta.generated_at = new Date().toISOString();
 		segData.meta.segment_count = segData.segments.length;
-		writeFileSync(resolve(SEGMENTS_PATH), JSON.stringify(segData, null, 2) + '\n', 'utf8');
+		await saveDoc('wctglpdemo:segments', SEGMENTS_PATH, segData);
 
-		// Kick off the AI judgement steps (question mapping + segment tagging) in
-		// the background; the review view polls and fills in when they finish.
-		startAutotag(interviewId);
+		// AI judgement steps. In dev these spawn as background scripts and the
+		// page polls. In prod we await the chain so the serverless function
+		// instance stays alive until tagging completes (needs maxDuration set).
+		const { completion } = await startAutotag(interviewId);
+		if (!dev) await completion;
 
 		return {
 			stage: 'upload',
@@ -412,42 +459,41 @@ export const actions: Actions = {
 			byTurn.set(Number(k), v);
 		}
 
-		const structured = JSON.parse(readFileSync(resolve(STRUCTURED_PATH), 'utf8'));
-		const interview = structured.interviews.find(
-			(iv: { interview_id: string }) => iv.interview_id === interviewId
+		const structured = await loadDoc<typeof bundledStructured>(
+			'wctglpdemo:interviews_structured',
+			STRUCTURED_PATH,
+			bundledStructured
 		);
+		const interview = structured.interviews.find((iv) => iv.interview_id === interviewId);
 		if (!interview) return fail(404, { error: `Interview ${interviewId} not found.` });
 
-		const turns: Turn[] = interview.turns;
+		const turns: Turn[] = (interview as unknown as { turns: Turn[] }).turns;
 		const interviewerTurns = turns.filter((t) => t.speaker === 'interviewer');
 
-		// Existing mappings — the AI proposal from scripts/propose-questions.mjs.
+		// Existing mappings — the AI proposal from propose-questions / autotag.
 		// Confirming a proposed turn keeps its turn_role/notes; only a changed
 		// question_id falls back to the plain "question" role.
-		const qmap = JSON.parse(readFileSync(resolve(QUESTION_MAP_PATH), 'utf8'));
-		const priorEntry = qmap.interviews.find(
-			(iv: { interview_id: string }) => iv.interview_id === interviewId
+		const qmap = await loadDoc<QuestionMapFile>(
+			'wctglpdemo:question_map',
+			QUESTION_MAP_PATH,
+			bundledQuestionMap as QuestionMapFile
 		);
-		const priorByTurn = new Map<number, { question_id: string; turn_role: string; reviewer_notes?: string }>(
-			(priorEntry?.mappings ?? []).map(
-				(m: { turn_index: number; question_id: string; turn_role: string; reviewer_notes?: string }) => [
-					m.turn_index,
-					m
-				]
-			)
+		const priorEntry = qmap.interviews.find((iv) => iv.interview_id === interviewId);
+		const priorByTurn = new Map<number, QuestionMapMapping>(
+			(priorEntry?.mappings ?? []).map((m) => [m.turn_index, m])
 		);
 
 		// Mappings: only interviewer turns the reviewer actually assigned.
-		const mappings = interviewerTurns
+		const mappings: QuestionMapMapping[] = interviewerTurns
 			.filter((t) => byTurn.has(t.turn_index))
 			.map((t) => {
-				const questionId = byTurn.get(t.turn_index);
+				const questionId = byTurn.get(t.turn_index)!;
 				const prior = priorByTurn.get(t.turn_index);
 				const kept = prior && prior.question_id === questionId;
 				return {
 					turn_index: t.turn_index,
 					question_id: questionId,
-					turn_role: kept ? prior.turn_role : 'question',
+					turn_role: kept ? (prior.turn_role ?? 'question') : 'question',
 					confidence: 1,
 					source: 'human',
 					review_status: 'confirmed',
@@ -455,16 +501,16 @@ export const actions: Actions = {
 				};
 			});
 
-		// Write question_map.json.
-		qmap.interviews = qmap.interviews.filter(
-			(iv: { interview_id: string }) => iv.interview_id !== interviewId
-		);
-		qmap.interviews.push({ interview_id: interviewId, mapping_count: mappings.length, mappings });
-		qmap.interviews.sort((a: { interview_id: string }, b: { interview_id: string }) =>
-			a.interview_id.localeCompare(b.interview_id)
-		);
-		qmap.meta.generated_at = new Date().toISOString();
-		writeFileSync(resolve(QUESTION_MAP_PATH), JSON.stringify(qmap, null, 2) + '\n', 'utf8');
+		// Write question_map.
+		qmap.interviews = qmap.interviews.filter((iv) => iv.interview_id !== interviewId);
+		qmap.interviews.push({
+			interview_id: interviewId,
+			mapping_count: mappings.length,
+			mappings
+		});
+		qmap.interviews.sort((a, b) => a.interview_id.localeCompare(b.interview_id));
+		(qmap.meta ??= {}).generated_at = new Date().toISOString();
+		await saveDoc('wctglpdemo:question_map', QUESTION_MAP_PATH, qmap);
 
 		// Propagate question_id into segments — each inherits the most recent
 		// assigned interviewer turn before it.
@@ -478,7 +524,11 @@ export const actions: Actions = {
 			return qid;
 		};
 
-		const segData = JSON.parse(readFileSync(resolve(SEGMENTS_PATH), 'utf8'));
+		const segData = await loadDoc<{ segments: Segment[]; meta: Record<string, unknown> }>(
+			'wctglpdemo:segments',
+			SEGMENTS_PATH,
+			bundledSegments as { segments: Segment[]; meta: Record<string, unknown> }
+		);
 		let segmentsUpdated = 0;
 		for (const s of segData.segments) {
 			if (s.interview_id !== interviewId) continue;
@@ -486,9 +536,9 @@ export const actions: Actions = {
 			segmentsUpdated++;
 		}
 		segData.meta.generated_at = new Date().toISOString();
-		writeFileSync(resolve(SEGMENTS_PATH), JSON.stringify(segData, null, 2) + '\n', 'utf8');
+		await saveDoc('wctglpdemo:segments', SEGMENTS_PATH, segData);
 
-		const segments: Segment[] = (segData.segments as Segment[])
+		const segments: Segment[] = segData.segments
 			.filter((s) => s.interview_id === interviewId)
 			.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
 
