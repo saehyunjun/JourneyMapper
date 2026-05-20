@@ -27,7 +27,11 @@
       "Bash(node -e \"const d=require\\('./src/lib/content/wctglpdemo-data/keyword_usage.json'\\); d.categories.forEach\\(c=>console.log\\(c.id,'|',c.label,'| kws:',c.keywords.length, c.keywords.slice\\(0,8\\).map\\(k=>k.id+'\\('+k.count+'\\)'\\).join\\(', '\\)\\)\\);\")",
       "Bash(node -e 'const k=require\\(\"./src/lib/content/wctglpdemo-data/keyword_lexicon.json\"\\); console.log\\(JSON.stringify\\(k,null,1\\).slice\\(0,1200\\)\\)')",
       "Bash(perl -0pi -e 's/labelClass=\"w-32\"/labelClass=\"w-40\"/g' src/lib/components/ParticipantDrawer.svelte)",
-      "Bash(npx --no-install svelte-check --output human)"
+      "Bash(npx --no-install svelte-check --output human)",
+      "Bash(read d *)",
+      "Bash([ -f \"$d/+server.ts\" ])",
+      "Bash([ -f \"$d/+page.svelte\" ])",
+      "Bash(npx --no-install vite build --logLevel error)"
     ]
   }
 }

@@ -223,6 +223,19 @@
 	let editReplace = $state('');
 	let editBusy = $state(false);
 
+	// Live document selection — drives the enabled state of the key-phrase
+	// chips so the reviewer knows when clicking will actually tag.
+	let hasLiveSelection = $state(false);
+	$effect(() => {
+		if (typeof document === 'undefined') return;
+		const update = () => {
+			hasLiveSelection = (window.getSelection()?.toString().trim().length ?? 0) > 0;
+		};
+		update();
+		document.addEventListener('selectionchange', update);
+		return () => document.removeEventListener('selectionchange', update);
+	});
+
 	let seededFor = '';
 	$effect(() => {
 		const id = segment?.segment_id ?? '';
@@ -741,7 +754,7 @@
 					<!-- Sentiment — a diverging colour scale; hover a swatch for its label -->
 					<section>
 					{@render sectionHead('Sentiment', 'How positive or negative the segment reads overall.')}
-					<div class="flex gap-1.5">
+					<div class="flex">
 						{#each sentiments as s (s.v)}
 							<Tooltip.Root>
 								<Tooltip.Trigger>
@@ -752,9 +765,9 @@
 											onclick={() => (sentiment = s.v)}
 											aria-pressed={sentiment === s.v}
 											aria-label={sentimentLabel(s.v)}
-											class="h-7 flex-1 rounded-md border transition-all
+											class="h-7 hover:cursor-pointer flex-1 border transition-all
 												{sentiment === s.v
-												? 'ring-2 ring-slate-900 ring-offset-1'
+												? 'ring-2 ring-primary ring-offset-1'
 												: 'opacity-40 hover:opacity-75'}"
 											style="background-color: {s.color}; border-color: {s.color}"
 										></button>
@@ -910,6 +923,69 @@
 
 			<!-- RIGHT — themes, grouped into the codebook's tag groups -->
 			<div class="flex flex-1 flex-col gap-6 p-5 md:overflow-y-auto">
+				<!-- Key phrases — the global bank of canonical labels. Highlight a
+					 phrase in the quote, then click a key phrase to file the snippet
+					 under it, or create a new one. -->
+				<section>
+					{@render sectionHead(
+						'Key phrases',
+						'Canonical phrases that unify disparate participant phrasings. Highlight a quote, then click to file the snippet.'
+					)}
+					{#if selectionText && hasLiveSelection}
+						<p class="mb-2 text-[11px] text-slate-500">
+							Tagging:
+							<span class="font-medium text-slate-700">“{truncate(selectionText)}”</span>
+						</p>
+					{:else if !hasLiveSelection}
+						<p class="mb-2 text-[11px] text-slate-400">
+							Highlight a phrase in the quote above, then click a key phrase to tag it.
+						</p>
+					{/if}
+					<div class="flex flex-wrap gap-1.5">
+						{#each keyPhrases as kp (kp.id)}
+							<button
+								type="button"
+								title={kp.variants
+									.slice(0, 4)
+									.map((v) => `“${v.text}”`)
+									.join('\n') || 'No variants yet'}
+								onmousedown={captureSelection}
+								onclick={() =>
+									applyPhrase('add_phrase_variant', { key_phrase_id: kp.id })}
+								disabled={!hasLiveSelection || lexBusy}
+								class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-colors
+									{!hasLiveSelection || lexBusy
+									? 'cursor-not-allowed border-slate-200 bg-slate-50 text-slate-400'
+									: 'border-slate-200 bg-white text-slate-700 hover:border-accent-mint hover:bg-accent-mint/10'}"
+							>
+								{kp.label}
+								<span
+									class="rounded-full bg-slate-100 px-1.5 text-[10px] leading-tight text-slate-500"
+								>
+									{kp.variants.length}
+								</span>
+							</button>
+						{/each}
+						<button
+							type="button"
+							onmousedown={captureSelection}
+							onclick={() => applyPhrase('create_key_phrase', {})}
+							disabled={!hasLiveSelection || lexBusy}
+							class="inline-flex items-center gap-1 rounded-full border border-dashed px-2.5 py-1 text-xs transition-colors
+								{!hasLiveSelection || lexBusy
+								? 'cursor-not-allowed border-slate-200 text-slate-400'
+								: 'border-accent-mint text-accent-mint hover:bg-accent-mint/10'}"
+						>
+							+ New key phrase
+						</button>
+					</div>
+					{#if !keyPhrases.length}
+						<p class="mt-2 text-[11px] text-slate-400">
+							No key phrases yet — highlight a snippet and click <em>+ New key phrase</em> to start the bank.
+						</p>
+					{/if}
+				</section>
+
 				<section>
 					{@render sectionHead(
 						'Themes',
@@ -924,7 +1000,7 @@
 									type="button"
 									onclick={() => toggleGroup(g.id)}
 									aria-expanded={open}
-									class="flex w-full items-center justify-between gap-3 px-3 py-2 text-left transition-colors hover:bg-slate-50"
+									class="flex w-full items-center justify-between gap-3 px-3 py-2 text-left transition-colors hover:cursor-pointer hover:bg-slate-50"
 								>
 									<span class="min-w-0">
 										<span class="text-sm font-medium text-slate-700">{g.label}</span>

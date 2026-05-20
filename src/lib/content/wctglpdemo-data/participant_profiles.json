@@ -3,7 +3,7 @@
     "schema_version": "1.0",
     "study_id": "wct_glp1",
     "description": "Analyst-maintained participant profiles. Keyed by interview_id; references avatars under static/content-assets/avatars.",
-    "updated_at": "2026-05-19T19:05:39.104Z"
+    "updated_at": "2026-05-20T02:04:15.165Z"
   },
   "profiles": {
     "participant_10": {

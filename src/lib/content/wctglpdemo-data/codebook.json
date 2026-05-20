@@ -1,6 +1,6 @@
 {
   "meta": {
-    "schema_version": "1.6",
+    "schema_version": "1.7",
     "study_id": "wct_glp1",
     "description": "Tagging taxonomy for the WCT GLP-1 study. Segment annotations in segment_tags.json draw their theme, subtheme, emotion, and sentiment values from this codebook. Editable and versioned; bump schema_version when tags are added or revised.",
     "changelog": [
@@ -10,7 +10,8 @@
       "1.3 — added a `terms` list to every theme: literal surface phrases tagged from the segment tag drawer, parallel to keyword variants.",
       "1.4 — replaced the emotion vocabulary with the Plutchik model (24 intensity levels + 28 dyads); added `tag_groups` and a `group` field on every theme and semantic tag so the segment tag drawer can nest them.",
       "1.5 — added the `decision_factors` tag group; moved risk_calculation, cost_benefit_reasoning, convenience_tradeoff, and conditional_decision into it as the study's core reasoning moves.",
-      "1.6 — folded semantic_tags into theme_tags and removed the semantic dimension; former semantic tags are now themes that keep their group."
+      "1.6 — folded semantic_tags into theme_tags and removed the semantic dimension; former semantic tags are now themes that keep their group.",
+      "1.7 — split the `trial_logistics` group into `trial_motivators` (what draws people in) and `trial_barriers` (what gets in the way), so the two halves can be analysed separately."
     ],
     "sentiment_scale": {
       "0": "neutral / mixed",
@@ -45,9 +46,14 @@
       "description": "Living with the medication: staying on it, switching, route, and benefits."
     },
     {
-      "id": "trial_logistics",
-      "label": "Clinical Trial Motivators & Barriers",
-      "description": "What draws participants to a trial and what gets in the way."
+      "id": "trial_motivators",
+      "label": "Clinical Trial Motivators",
+      "description": "What draws participants to a clinical trial: attractors, incentives, awareness, and reasons to join."
+    },
+    {
+      "id": "trial_barriers",
+      "label": "Clinical Trial Barriers",
+      "description": "What gets in the way of participation: travel, time, visit logistics, monitoring procedures, and other practical friction."
     },
     {
       "id": "education_support",
@@ -218,7 +224,7 @@
     {
       "id": "trial_participation_motivation",
       "description": "Factors that attract the participant to joining a clinical trial.",
-      "group": "trial_logistics",
+      "group": "trial_motivators",
       "subthemes": [
         {
           "id": "access_motivation",
@@ -236,13 +242,13 @@
     {
       "id": "research_altruism",
       "description": "Contributing to science, helping others, or supporting research as a motivation.",
-      "group": "trial_logistics",
+      "group": "trial_motivators",
       "terms": []
     },
     {
       "id": "travel_burden",
       "description": "Distance and travel required to reach trial or clinic sites.",
-      "group": "trial_logistics",
+      "group": "trial_barriers",
       "subthemes": [
         {
           "id": "distance_to_site",
@@ -258,13 +264,13 @@
     {
       "id": "time_burden",
       "description": "Time cost of participation: hours per week, round trips, scheduling load.",
-      "group": "trial_logistics",
+      "group": "trial_barriers",
       "terms": []
     },
     {
       "id": "visit_logistics",
       "description": "Visit frequency, home visits, telehealth, and scheduling arrangements.",
-      "group": "trial_logistics",
+      "group": "trial_barriers",
       "subthemes": [
         {
           "id": "telehealth",
@@ -292,7 +298,7 @@
     {
       "id": "monitoring_burden",
       "description": "Trial procedures such as fasting blood draws or continuous glucose monitoring.",
-      "group": "trial_logistics",
+      "group": "trial_barriers",
       "subthemes": [
         {
           "id": "fasting_blood",
@@ -308,7 +314,7 @@
     {
       "id": "incentives_support",
       "description": "Vouchers, financial compensation, travel concierge, devices, or other support offered.",
-      "group": "trial_logistics",
+      "group": "trial_motivators",
       "subthemes": [
         {
           "id": "financial_compensation",
@@ -397,7 +403,7 @@
     {
       "id": "trial_awareness",
       "description": "Awareness of clinical trials or new drugs in development.",
-      "group": "trial_logistics",
+      "group": "trial_motivators",
       "terms": []
     },
     {
@@ -433,7 +439,7 @@
     {
       "id": "clinical_trial_friction",
       "description": "Practical obstacles that make trial participation harder.",
-      "group": "trial_logistics",
+      "group": "trial_barriers",
       "terms": []
     },
     {
@@ -463,7 +469,7 @@
     {
       "id": "altruistic_reasoning",
       "description": "Justifying a choice by benefit to others or to science.",
-      "group": "trial_logistics",
+      "group": "trial_motivators",
       "terms": []
     },
     {

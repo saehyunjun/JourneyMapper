@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.2",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T01:51:32.204Z",
+    "generated_at": "2026-05-20T02:19:10.055Z",
     "generator": "scripts/build-segment-tags.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/segments.json",
@@ -6644,20 +6644,6 @@
       "reviewer_notes": ""
     },
     {
-      "segment_id": "participant_09_t05_s00",
-      "interview_id": "participant_09",
-      "question_id": "stopping_glp1",
-      "topics": [],
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.4,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "very short affirmation"
-    },
-    {
       "segment_id": "participant_09_t07_s00",
       "interview_id": "participant_09",
       "question_id": "try_different_medication",
@@ -6952,20 +6938,6 @@
       "reviewer_notes": ""
     },
     {
-      "segment_id": "participant_09_t19_s00",
-      "interview_id": "participant_09",
-      "question_id": "trial_motivation",
-      "topics": [],
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.4,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "very short filler"
-    },
-    {
       "segment_id": "participant_09_t19_s01",
       "interview_id": "participant_09",
       "question_id": "trial_motivation",
@@ -6986,20 +6958,6 @@
       "source": "ai_proposed",
       "review_status": "pending",
       "reviewer_notes": "prefers med vouchers not meal replacements"
-    },
-    {
-      "segment_id": "participant_09_t19_s02",
-      "interview_id": "participant_09",
-      "question_id": "trial_motivation",
-      "topics": [],
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.4,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "very short"
     },
     {
       "segment_id": "participant_09_t21_s00",

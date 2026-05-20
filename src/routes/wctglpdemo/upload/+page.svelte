@@ -6,6 +6,7 @@
 	import MergeIcon from '@lucide/svelte/icons/merge';
 	import SplitIcon from '@lucide/svelte/icons/split';
 	import EraserIcon from '@lucide/svelte/icons/eraser';
+	import TagIcon from '@lucide/svelte/icons/tag';
 	import ArrowRightIcon from '@lucide/svelte/icons/arrow-right';
 	import UploadIcon from '@lucide/svelte/icons/upload';
 	import LoaderIcon from '@lucide/svelte/icons/loader-circle';
@@ -132,6 +133,7 @@
 			for (const m of result?.questionMap ?? []) seed[m.turn_index] = m.question_id;
 			questionAssignments = seed;
 			annotations = { ...(result?.annotations ?? {}) };
+			recentlyUntagged = {};
 			autotagJob = data.review?.autotagJob ?? null;
 			autotagStep = autotagJob?.step ?? '';
 			seedPersona(data.review?.profile ?? emptyProfile(id));
@@ -188,6 +190,13 @@
 	let annotations = $state<Record<string, Annotation>>({});
 	let openSegment = $state<TaggableSegment | null>(null);
 
+	// In-session cache of just-untagged annotations so the bubble's retag button
+	// can undo an accidental untag by re-POSTing the same annotation. Cleared
+	// when the interview changes (annotations re-seed from disk) and when a
+	// retag succeeds. Not persisted across page reloads — by then the user
+	// would have to re-tag manually from the drawer.
+	let recentlyUntagged = $state<Record<string, Annotation>>({});
+
 	// --- Segment selection — drives the merge / untag toolbar ---
 	let selectedSegments = $state(new Set<string>());
 	let merging = $state(false);
@@ -241,9 +250,6 @@
 	const canUnmerge = $derived(
 		selectedList.length === 1 && (selectedList[0].flags ?? []).includes('merged')
 	);
-
-	// Untag applies to whichever selected segments actually carry an annotation.
-	const untaggable = $derived(selectedList.filter((s) => annotations[s.segment_id]));
 
 	async function mergeSelected() {
 		if (!canMerge || merging || !result) return;
@@ -310,26 +316,66 @@
 		}
 	}
 
-	async function untagSelected() {
-		if (untaggable.length === 0 || untagging) return;
+	// Per-segment untag — drops one segment's annotation. Caches the prior
+	// annotation in `recentlyUntagged` so the retag button can undo the action
+	// by re-POSTing the same tags.
+	async function untagSegment(segmentId: string) {
+		const prev = annotations[segmentId];
+		if (!prev || untagging) return;
 		untagging = true;
 		segmentActionError = '';
 		try {
-			for (const seg of untaggable) {
-				const res = await fetch('/wctglpdemo/segment-tags', {
-					method: 'DELETE',
-					headers: { 'content-type': 'application/json' },
-					body: JSON.stringify({ segment_id: seg.segment_id })
-				});
-				if (res.ok) {
-					const next = { ...annotations };
-					delete next[seg.segment_id];
-					annotations = next;
-				} else {
-					segmentActionError = 'Could not untag one or more segments.';
-				}
+			const res = await fetch('/wctglpdemo/segment-tags', {
+				method: 'DELETE',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({ segment_id: segmentId })
+			});
+			if (res.ok) {
+				recentlyUntagged = { ...recentlyUntagged, [segmentId]: prev };
+				const next = { ...annotations };
+				delete next[segmentId];
+				annotations = next;
+			} else {
+				segmentActionError = 'Could not untag the segment.';
 			}
-			selectedSegments = new Set();
+		} finally {
+			untagging = false;
+		}
+	}
+
+	// Per-segment retag — restores the annotation that the previous untag
+	// removed, by POSTing the cached payload back at /wctglpdemo/segment-tags.
+	// Only operates when the cache has an entry for the segment; if there's
+	// nothing to undo, the bubble button falls back to opening the drawer.
+	async function retagSegment(segmentId: string) {
+		const prev = recentlyUntagged[segmentId];
+		if (!prev || untagging) return;
+		untagging = true;
+		segmentActionError = '';
+		try {
+			const res = await fetch('/wctglpdemo/segment-tags', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					segment_id: prev.segment_id,
+					interview_id: prev.interview_id,
+					question_id: prev.question_id,
+					themes: prev.themes,
+					subthemes: prev.subthemes,
+					emotions: prev.emotions,
+					sentiment: prev.sentiment,
+					reviewer_notes: prev.reviewer_notes
+				})
+			});
+			const data = await res.json().catch(() => null);
+			if (res.ok && data?.ok) {
+				annotations = { ...annotations, [segmentId]: data.annotation as Annotation };
+				const nextCache = { ...recentlyUntagged };
+				delete nextCache[segmentId];
+				recentlyUntagged = nextCache;
+			} else {
+				segmentActionError = data?.error ?? 'Could not re-tag the segment.';
+			}
 		} finally {
 			untagging = false;
 		}
@@ -741,132 +787,62 @@
 							</button>
 						</form>
 
-						<!-- Transcript, with the segment-selection toolbar beside it on lg+.
-							 On lg+ the toolbar sits in the right gutter (absolutely
-							 positioned) so it never narrows the transcript column. -->
-						<div class="relative flex flex-col gap-3" bind:this={transcriptWrap}>
-					<!-- Segment-selection toolbar — appears once a segment is ticked,
-						 aligned beside the topmost selected segment. Icon-only buttons;
-						 each names its action in a hover tooltip. -->
-					{#if selectedSegments.size > 0}
-						<div
-							class="lg:absolute lg:left-full lg:ml-4 lg:w-auto"
-							style="top: {toolbarTop}px"
-						>
-							<Tooltip.Provider delayDuration={150}>
-								<div class="flex w-sm items-center gap-2 lg:flex-col lg:items-start">
-									<span
-										class="inline-flex h-6 shrink-0 items-center rounded-full bg-accent-mint/10 px-2 text-xs font-semibold text-accent-mint"
-										title="{selectedSegments.size} segment{selectedSegments.size === 1
-											? ''
-											: 's'} selected"
-									>
-										{selectedSegments.size} selected
-									</span>
-									<div class="flex items-center gap-1 lg:flex-col">
-										<Tooltip.Root>
-											<Tooltip.Trigger>
-												{#snippet child({ props })}
-													<Button
-														{...props}
-														variant="default"
-														size="icon-sm"
-														disabled={!canMerge || merging}
-														onclick={mergeSelected}
-														aria-label="Merge segments"
-													>
-														<MergeIcon />
-													</Button>
-												{/snippet}
-											</Tooltip.Trigger>
-											<Tooltip.Content side="right">
-												{canMerge
-													? merging
-														? 'Merging…'
-														: 'Merge selected segments'
-													: 'Select 2+ sequential segments in one turn'}
-											</Tooltip.Content>
-										</Tooltip.Root>
-
-										<Tooltip.Root>
-											<Tooltip.Trigger>
-												{#snippet child({ props })}
-													<Button
-														{...props}
-														variant="outline"
-														size="icon-sm"
-														disabled={!canUnmerge || unmerging}
-														onclick={unmergeSelected}
-														aria-label="Unmerge segment"
-													>
-														<SplitIcon />
-													</Button>
-												{/snippet}
-											</Tooltip.Trigger>
-											<Tooltip.Content side="right">
-												{canUnmerge
-													? unmerging
-														? 'Unmerging…'
-														: 'Split this merged segment back into sentences'
-													: 'Select one merged segment to unmerge'}
-											</Tooltip.Content>
-										</Tooltip.Root>
-
-										<Tooltip.Root>
-											<Tooltip.Trigger>
-												{#snippet child({ props })}
-													<Button
-														{...props}
-														variant="secondary"
-														size="icon-sm"
-														disabled={untaggable.length === 0 || untagging}
-														onclick={untagSelected}
-														aria-label="Untag segments"
-													>
-														<EraserIcon />
-													</Button>
-												{/snippet}
-											</Tooltip.Trigger>
-											<Tooltip.Content side="right">
-												{untaggable.length > 0
-													? untagging
-														? 'Untagging…'
-														: `Untag ${untaggable.length} segment${
-																untaggable.length === 1 ? '' : 's'
-															}`
-													: 'No selected segment has tags'}
-											</Tooltip.Content>
-										</Tooltip.Root>
-
-										<Tooltip.Root>
-											<Tooltip.Trigger>
-												{#snippet child({ props })}
-													<Button
-														{...props}
-														variant="ghost"
-														size="icon-sm"
-														onclick={() => (selectedSegments = new Set())}
-														aria-label="Clear selection"
-													>
-														<XIcon />
-													</Button>
-												{/snippet}
-											</Tooltip.Trigger>
-											<Tooltip.Content side="right">Clear selection</Tooltip.Content>
-										</Tooltip.Root>
-									</div>
-								</div>
-							</Tooltip.Provider>
-							{#if segmentActionError}
-								<p class="mt-1.5 max-w-[13rem] text-xs text-rose-600">{segmentActionError}</p>
-							{/if}
-						</div>
-					{/if}
-
-					<!-- Transcript with per-turn question assignment + segments -->
+						<!-- Transcript window — a single context-aware merge/unmerge button
+							 sits absolutely at the left edge, beside the topmost selected
+							 segment. Per-bubble controls (select / untag / star) live in a
+							 column outside each bubble to its left. -->
+						<div class="flex flex-col gap-3">
+					<!-- Transcript with per-turn question assignment + segments. The
+						 Tooltip.Provider wraps everything so the merge/unmerge button and
+						 every per-bubble icon button share one delayed hover behaviour. -->
 					<div
-						class="flex min-w-0 flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5 md:flex-1"
+						class="relative flex min-w-0 flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5 md:flex-1"
+						bind:this={transcriptWrap}
 					>
+						<Tooltip.Provider delayDuration={150}>
+						<!-- Single merge/unmerge button — visible when a selection is
+							 actionable. Merge for 2+ sequential, unmerge for one merged. -->
+						{#if selectedSegments.size > 0 && (canMerge || canUnmerge || selectedList.length === 1)}
+							{@const isUnmerge = canUnmerge}
+							{@const busy = isUnmerge ? unmerging : merging}
+							{@const enabled = isUnmerge ? !unmerging : canMerge && !merging}
+							<div class="absolute left-2 z-10" style="top: {toolbarTop}px">
+								<Tooltip.Root>
+									<Tooltip.Trigger>
+										{#snippet child({ props })}
+											<Button
+												{...props}
+												variant="default"
+												size="icon-sm"
+												disabled={!enabled}
+												onclick={isUnmerge ? unmergeSelected : mergeSelected}
+												aria-label={isUnmerge ? 'Unmerge segment' : 'Merge segments'}
+											>
+												{#if isUnmerge}
+													<SplitIcon />
+												{:else}
+													<MergeIcon />
+												{/if}
+											</Button>
+										{/snippet}
+									</Tooltip.Trigger>
+									<Tooltip.Content side="right">
+										{isUnmerge
+											? busy
+												? 'Unmerging…'
+												: 'Split this merged segment back into sentences'
+											: canMerge
+												? busy
+													? 'Merging…'
+													: 'Merge selected segments'
+												: 'Select 2+ sequential segments in one turn'}
+									</Tooltip.Content>
+								</Tooltip.Root>
+								{#if segmentActionError}
+									<p class="mt-1.5 max-w-52 text-xs text-rose-600">{segmentActionError}</p>
+								{/if}
+							</div>
+						{/if}
 					{#each result.turns as turn (turn.turn_index)}
 						{#if turn.speaker === 'interviewer'}
 							<!-- Interviewer turn — left-aligned speech bubble with avatar on the left. -->
@@ -915,124 +891,178 @@
 										{@const tags = cardTags(ann)}
 										{@const visibleTags = tags.slice(0, TAG_CAP)}
 										{@const hiddenCount = tags.length - visibleTags.length}
-										<div
-											role="button"
-											tabindex="0"
-											data-segment-id={seg.segment_id}
-											onclick={() => (openSegment = seg)}
-											onkeydown={(e) => {
-												if (e.key === 'Enter' || e.key === ' ') {
-													e.preventDefault();
-													openSegment = seg;
-												}
-											}}
-											class="relative max-w-[85%] cursor-pointer rounded-2xl px-4 py-3 transition-colors
-												{segIdx === 0 ? 'rounded-tr-none' : ''}
-												{ann
-												? 'bg-accent-mint/10 hover:bg-accent-mint/15'
-												: 'bg-slate-100 hover:bg-accent-mint/5'}
-												{selectedSegments.has(seg.segment_id)
-												? 'ring-2 ring-accent-mint ring-inset'
-												: ''}"
-										>
-											<!-- Select + star — top-left, opposite the avatar so the bubble's
-												 avatar-facing corner stays clean. -->
-											<div class="absolute left-3 top-3 flex items-center gap-2">
+										{@const tagAction = ann
+											? 'untag'
+											: recentlyUntagged[seg.segment_id]
+												? 'retag'
+												: 'add'}
+										{@const tagLabel = tagAction === 'untag'
+											? 'Untag this segment'
+											: tagAction === 'retag'
+												? 'Re-tag this segment (restore previous tags)'
+												: 'Add tags to this segment'}
+										<!-- Segment row — controls in a left column outside the bubble
+											 (checkbox at top, untag/retag + star grouped at bottom). -->
+										<div class="flex w-full max-w-[85%] items-stretch gap-6">
+											<!-- Controls column — outside the bubble on its left. -->
+											<div class="flex shrink-0 flex-col items-center justify-between py-1.5">
 												<input
 													type="checkbox"
 													checked={selectedSegments.has(seg.segment_id)}
-													onclick={(e) => e.stopPropagation()}
 													onchange={() => toggleSelect(seg.segment_id)}
-													title="Select for merge / untag"
-													class="size-3.5 cursor-pointer accent-accent-mint"
+													title="Select for merge"
+													class="size-4 cursor-pointer accent-accent-mint"
 												/>
-												<button
-													type="button"
-													onclick={(e) => {
-														e.stopPropagation();
-														toggleStar(seg.segment_id);
-													}}
-													disabled={togglingSegment === seg.segment_id}
-													aria-pressed={starredSegments.has(seg.segment_id)}
-													title={starredSegments.has(seg.segment_id)
-														? 'Starred highlight — click to unstar'
-														: 'Star as an important highlight'}
-													class="rounded p-0.5 transition-colors hover:bg-accent-mint/15 disabled:opacity-40
-														{starredSegments.has(seg.segment_id)
-														? 'text-amber-400'
-														: 'text-slate-300 hover:text-amber-400'}"
-												>
-													<StarIcon
-														size={16}
-														fill={starredSegments.has(seg.segment_id) ? 'currentColor' : 'none'}
-													/>
-												</button>
+												<div class="flex items-center gap-0.5">
+													<Tooltip.Root>
+														<Tooltip.Trigger>
+															{#snippet child({ props })}
+																<button
+																	{...props}
+																	type="button"
+																	onclick={() => {
+																		if (tagAction === 'untag') untagSegment(seg.segment_id);
+																		else if (tagAction === 'retag') retagSegment(seg.segment_id);
+																		else openSegment = seg;
+																	}}
+																	disabled={untagging}
+																	aria-label={tagLabel}
+																	class="rounded p-1 text-slate-300 transition-colors hover:bg-accent-mint/15 hover:text-slate-700 disabled:opacity-40"
+																>
+																	{#if tagAction === 'untag'}
+																		<EraserIcon size={14} />
+																	{:else}
+																		<TagIcon size={14} />
+																	{/if}
+																</button>
+															{/snippet}
+														</Tooltip.Trigger>
+														<Tooltip.Content side="left">
+															{tagLabel}
+														</Tooltip.Content>
+													</Tooltip.Root>
+													<Tooltip.Root>
+														<Tooltip.Trigger>
+															{#snippet child({ props })}
+																<button
+																	{...props}
+																	type="button"
+																	onclick={() => toggleStar(seg.segment_id)}
+																	disabled={togglingSegment === seg.segment_id}
+																	aria-pressed={starredSegments.has(seg.segment_id)}
+																	class="rounded p-1 transition-colors hover:bg-accent-mint/15 disabled:opacity-40
+																		{starredSegments.has(seg.segment_id)
+																		? 'text-amber-400'
+																		: 'text-slate-300 hover:text-amber-400'}"
+																>
+																	<StarIcon
+																		size={14}
+																		fill={starredSegments.has(seg.segment_id)
+																			? 'currentColor'
+																			: 'none'}
+																	/>
+																</button>
+															{/snippet}
+														</Tooltip.Trigger>
+														<Tooltip.Content side="left">
+															{starredSegments.has(seg.segment_id)
+																? 'Starred highlight — click to unstar'
+																: 'Star as an important highlight'}
+														</Tooltip.Content>
+													</Tooltip.Root>
+												</div>
 											</div>
 
-											<p class="pl-12 text-sm leading-relaxed text-slate-800">
-												<KeywordText text={seg.text} onpick={() => (openSegment = seg)} />
-											</p>
-
-											<!-- Tag row — current tags, an overflow badge, and the edit-tags link. -->
-											<div class="mt-2 flex flex-wrap items-center justify-end gap-1.5">
-												{#each visibleTags as tag (tag.kind + tag.id)}
-													{@render tagChip(tag.kind, titleCase(tag.id))}
-												{/each}
-												{#if hiddenCount > 0}
-													<Popover.Root>
-														<Popover.Trigger
-															onclick={(e) => e.stopPropagation()}
-															title="{hiddenCount} more tag{hiddenCount === 1 ? '' : 's'}"
-															class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-slate-100 px-1 text-[10px] font-semibold text-slate-500 transition-colors hover:bg-slate-200"
-														>
-															+{hiddenCount}
-														</Popover.Trigger>
-														<Popover.Content align="start" class="w-64">
-															<p class="mb-2 text-xs font-semibold text-slate-700">All tags</p>
-															<div class="flex flex-col gap-2">
-																{#if ann?.themes.length}
-																	<div>
-																		<p
-																			class="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400"
-																		>
-																			Themes
-																		</p>
-																		<div class="flex flex-wrap gap-1">
-																			{#each ann.themes as th (th)}
-																				{@render tagChip('theme', titleCase(th))}
-																			{/each}
-																		</div>
-																	</div>
-																{/if}
-																{#if ann?.emotions.length}
-																	<div>
-																		<p
-																			class="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400"
-																		>
-																			Emotions
-																		</p>
-																		<div class="flex flex-wrap gap-1">
-																			{#each ann.emotions as em (em)}
-																				{@render tagChip('emotion', titleCase(em))}
-																			{/each}
-																		</div>
-																	</div>
-																{/if}
-															</div>
-														</Popover.Content>
-													</Popover.Root>
-												{/if}
-												<Button
-													variant="link"
-													size="xs"
-													onclick={(e) => {
-														e.stopPropagation();
+											<!-- Bubble — the quote itself and its tag row. -->
+											<div
+												role="button"
+												tabindex="0"
+												data-segment-id={seg.segment_id}
+												onclick={() => (openSegment = seg)}
+												onkeydown={(e) => {
+													if (e.key === 'Enter' || e.key === ' ') {
+														e.preventDefault();
 														openSegment = seg;
-													}}
-												>
-													{ann ? 'click to edit tags' : 'click to add tags'}
-													<ArrowRightIcon />
-												</Button>
+													}
+												}}
+												class="relative flex-1 cursor-pointer rounded-2xl px-4 py-3 transition-colors
+													{segIdx === 0 ? 'rounded-tr-none' : ''}
+													{ann
+													? 'bg-accent-mint/10 hover:bg-accent-mint/15'
+													: 'bg-slate-100 hover:bg-accent-mint/5'}
+													{selectedSegments.has(seg.segment_id)
+													? 'ring-2 ring-accent-mint ring-inset'
+													: ''}"
+											>
+												<p class="text-sm leading-relaxed text-slate-800">
+													<KeywordText text={seg.text} onpick={() => (openSegment = seg)} />
+												</p>
+
+												<!-- Tag row — only shown when the segment carries an annotation.
+													 An untagged segment has nothing to display, so the row and the
+													 "click to edit tags" link both collapse. -->
+												{#if ann}
+													<div class="mt-2 flex flex-wrap items-center justify-end gap-1.5">
+														{#each visibleTags as tag (tag.kind + tag.id)}
+															{@render tagChip(tag.kind, titleCase(tag.id))}
+														{/each}
+														{#if hiddenCount > 0}
+															<Popover.Root>
+																<Popover.Trigger
+																	onclick={(e) => e.stopPropagation()}
+																	title="{hiddenCount} more tag{hiddenCount === 1 ? '' : 's'}"
+																	class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-slate-100 px-1 text-[10px] font-semibold text-slate-500 transition-colors hover:bg-slate-200"
+																>
+																	+{hiddenCount}
+																</Popover.Trigger>
+																<Popover.Content align="start" class="w-64">
+																	<p class="mb-2 text-xs font-semibold text-slate-700">All tags</p>
+																	<div class="flex flex-col gap-2">
+																		{#if ann.themes.length}
+																			<div>
+																				<p
+																					class="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400"
+																				>
+																					Themes
+																				</p>
+																				<div class="flex flex-wrap gap-1">
+																					{#each ann.themes as th (th)}
+																						{@render tagChip('theme', titleCase(th))}
+																					{/each}
+																				</div>
+																			</div>
+																		{/if}
+																		{#if ann.emotions.length}
+																			<div>
+																				<p
+																					class="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400"
+																				>
+																					Emotions
+																				</p>
+																				<div class="flex flex-wrap gap-1">
+																					{#each ann.emotions as em (em)}
+																						{@render tagChip('emotion', titleCase(em))}
+																					{/each}
+																				</div>
+																			</div>
+																		{/if}
+																	</div>
+																</Popover.Content>
+															</Popover.Root>
+														{/if}
+														<Button
+															variant="link"
+															size="xs"
+															onclick={(e) => {
+																e.stopPropagation();
+																openSegment = seg;
+															}}
+														>
+															click to edit tags
+															<ArrowRightIcon />
+														</Button>
+													</div>
+												{/if}
 											</div>
 										</div>
 									{/each}
@@ -1040,6 +1070,7 @@
 							</div>
 						{/if}
 					{/each}
+					</Tooltip.Provider>
 					</div>
 				</div>
 					</div>

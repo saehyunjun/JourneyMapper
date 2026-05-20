@@ -50,10 +50,10 @@
 	const quoteScore = (f: ThemeFragment) =>
 		-Math.abs(f.text.length - 150) - (f.text.length < 50 ? 1000 : 0);
 
-	// The codebook's "Clinical Trial Motivators & Barriers" group, as pickable
+	// The codebook's clinical-trial groups (motivators + barriers), as pickable
 	// factors — sorted by how many interviewees raised each.
 	const factors: Factor[] = themeTags
-		.filter((t) => t.group === 'trial_logistics')
+		.filter((t) => t.group === 'trial_motivators' || t.group === 'trial_barriers')
 		.map((t) => {
 			const frags = segmentsForTheme(t.id);
 			const byParticipant = new Map<string, ThemeFragment>();
