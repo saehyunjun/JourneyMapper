@@ -34,7 +34,7 @@ import type { ParticipantProfile } from '$lib/types/participant-profile';
 // The parse action awaits the autotag chain in prod (two Claude calls +
 // validation), which usually takes 1–4 minutes. 300s is the Hobby ceiling;
 // Pro + Fluid Compute can take this up to 800.
-export const config = { maxDuration: 300 };
+export const config = { maxDuration: 299 };
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const STRUCTURED_PATH = `${DATA_DIR}/interviews_structured.json`;
