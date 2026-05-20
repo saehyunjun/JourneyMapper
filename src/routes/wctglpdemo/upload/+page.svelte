@@ -869,164 +869,174 @@
 					>
 					{#each result.turns as turn (turn.turn_index)}
 						{#if turn.speaker === 'interviewer'}
-							<div class="flex flex-col gap-1.5">
-								<div class="flex flex-row align- flex-wrap items-center justify-between gap-2">
-									<span
-										class="flex items-center gap-2 text-xs font-semibold uppercase text-muted-foreground"
-									>
-										<img
-											src={wctLogoUrl}
-											alt="WCT interviewer"
-											class="size-8 shrink-0 rounded-full border border-slate-200 bg-white object-contain"
-										/>
-										Interviewer
-									</span>
-									<select
-										bind:value={questionAssignments[turn.turn_index]}
-										class="max-w-md rounded border px-2 py-1 text-xs text-slate-700
-											{questionAssignments[turn.turn_index]
-											? 'border-accent-mint bg-accent-mint/5'
-											: 'border-slate-300'}"
-									>
-										<option value="">— assign interview question —</option>
-										{#each questionBank as q (q.question_id)}
-											<option value={q.question_id}>{q.order}. {q.canonical_question}</option>
-										{/each}
-									</select>
+							<!-- Interviewer turn — left-aligned speech bubble with avatar on the left. -->
+							<div class="flex items-start gap-3">
+								<img
+									src={wctLogoUrl}
+									alt="WCT interviewer"
+									class="mt-5 size-9 shrink-0 rounded-full border border-slate-200 bg-white object-contain"
+								/>
+								<div class="flex min-w-0 flex-1 flex-col gap-1.5">
+									<div class="flex flex-wrap items-center justify-between gap-2">
+										<span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+											Interviewer
+										</span>
+										<select
+											bind:value={questionAssignments[turn.turn_index]}
+											class="max-w-md rounded border px-2 py-1 text-xs text-slate-700
+												{questionAssignments[turn.turn_index]
+												? 'border-accent-mint bg-accent-mint/5'
+												: 'border-slate-300'}"
+										>
+											<option value="">— assign interview question —</option>
+											{#each questionBank as q (q.question_id)}
+												<option value={q.question_id}>{q.order}. {q.canonical_question}</option>
+											{/each}
+										</select>
+									</div>
+									<div class="max-w-[85%] self-start rounded-2xl rounded-tl-none bg-slate-100 px-4 py-3">
+										<p class="text-sm leading-relaxed text-slate-600">{turn.text}</p>
+									</div>
 								</div>
-								<p class="text-sm leading-relaxed text-slate-500">{turn.text}</p>
 							</div>
 						{:else}
-							<div class="flex flex-col gap-1.5">
-								<span
-									class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-accent-mint"
-								>
-									<ParticipantAvatar interviewId={result.interviewId} size="sm" />
-									{result.interviewId}
-						
-								</span>
-								{#each segmentsByTurn.get(turn.turn_index) ?? [] as seg (seg.segment_id)}
-									{@const ann = annotations[seg.segment_id]}
-									{@const tags = cardTags(ann)}
-									{@const visibleTags = tags.slice(0, TAG_CAP)}
-									{@const hiddenCount = tags.length - visibleTags.length}
-									<div
-										role="button"
-										tabindex="0"
-										data-segment-id={seg.segment_id}
-										onclick={() => (openSegment = seg)}
-										onkeydown={(e) => {
-											if (e.key === 'Enter' || e.key === ' ') {
-												e.preventDefault();
-												openSegment = seg;
-											}
-										}}
-										class="relative cursor-pointer border-l-2 border-accent-mint px-8 py-3 transition-colors
-											{ann ? 'bg-accent-mint/5 hover:bg-accent-mint/10' : 'hover:bg-accent-mint/5'}
-											{selectedSegments.has(seg.segment_id)
-											? 'ring-2 ring-accent-mint ring-inset'
-											: ''}"
+							<!-- Participant turn — right-aligned bubbles, avatar on the right.
+								 One bubble per segment in the turn. -->
+							<div class="flex flex-row-reverse items-start gap-3">
+								<ParticipantAvatar interviewId={result.interviewId} size="md" class="mt-5" />
+								<div class="flex min-w-0 flex-1 flex-col items-end gap-1.5">
+									<span
+										class="text-xs font-semibold uppercase tracking-wide text-accent-mint"
 									>
-										<!-- Select + star — grouped together on the same side. -->
-										<div class="absolute right-3 top-3 flex items-center gap-2">
-											<input
-												type="checkbox"
-												checked={selectedSegments.has(seg.segment_id)}
-												onclick={(e) => e.stopPropagation()}
-												onchange={() => toggleSelect(seg.segment_id)}
-												title="Select for merge / untag"
-												class="size-3.5 cursor-pointer accent-accent-mint"
-											/>
-											<button
-												type="button"
-												onclick={(e) => {
-													e.stopPropagation();
-													toggleStar(seg.segment_id);
-												}}
-												disabled={togglingSegment === seg.segment_id}
-												aria-pressed={starredSegments.has(seg.segment_id)}
-												title={starredSegments.has(seg.segment_id)
-													? 'Starred highlight — click to unstar'
-													: 'Star as an important highlight'}
-												class="rounded p-0.5 transition-colors hover:bg-accent-mint/15 disabled:opacity-40
-													{starredSegments.has(seg.segment_id)
-													? 'text-amber-400'
-													: 'text-slate-300 hover:text-amber-400'}"
-											>
-												<StarIcon
-													size={16}
-													fill={starredSegments.has(seg.segment_id) ? 'currentColor' : 'none'}
-												/>
-											</button>
-										</div>
-
-										<p class="pr-12 text-sm leading-relaxed text-slate-800">
-											<KeywordText text={seg.text} onpick={() => (openSegment = seg)} />
-										</p>
-
-										<!-- Tag row — current tags, an overflow badge, and the edit-tags link. -->
-										<div class="mt-2 flex flex-wrap items-center gap-1.5">
-											{#each visibleTags as tag (tag.kind + tag.id)}
-												{@render tagChip(tag.kind, titleCase(tag.id))}
-											{/each}
-											{#if hiddenCount > 0}
-												<Popover.Root>
-													<Popover.Trigger
-														onclick={(e) => e.stopPropagation()}
-														title="{hiddenCount} more tag{hiddenCount === 1 ? '' : 's'}"
-														class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-slate-100 px-1 text-[10px] font-semibold text-slate-500 transition-colors hover:bg-slate-200"
-													>
-														+{hiddenCount}
-													</Popover.Trigger>
-													<Popover.Content align="start" class="w-64">
-														<p class="mb-2 text-xs font-semibold text-slate-700">All tags</p>
-														<div class="flex flex-col gap-2">
-															{#if ann?.themes.length}
-																<div>
-																	<p
-																		class="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400"
-																	>
-																		Themes
-																	</p>
-																	<div class="flex flex-wrap gap-1">
-																		{#each ann.themes as th (th)}
-																			{@render tagChip('theme', titleCase(th))}
-																		{/each}
-																	</div>
-																</div>
-															{/if}
-															{#if ann?.emotions.length}
-																<div>
-																	<p
-																		class="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400"
-																	>
-																		Emotions
-																	</p>
-																	<div class="flex flex-wrap gap-1">
-																		{#each ann.emotions as em (em)}
-																			{@render tagChip('emotion', titleCase(em))}
-																		{/each}
-																	</div>
-																</div>
-															{/if}
-														</div>
-													</Popover.Content>
-												</Popover.Root>
-											{/if}
-											<Button
-												variant="link"
-												size="xs"
-												onclick={(e) => {
-													e.stopPropagation();
+										{result.interviewId}
+									</span>
+									{#each segmentsByTurn.get(turn.turn_index) ?? [] as seg, segIdx (seg.segment_id)}
+										{@const ann = annotations[seg.segment_id]}
+										{@const tags = cardTags(ann)}
+										{@const visibleTags = tags.slice(0, TAG_CAP)}
+										{@const hiddenCount = tags.length - visibleTags.length}
+										<div
+											role="button"
+											tabindex="0"
+											data-segment-id={seg.segment_id}
+											onclick={() => (openSegment = seg)}
+											onkeydown={(e) => {
+												if (e.key === 'Enter' || e.key === ' ') {
+													e.preventDefault();
 													openSegment = seg;
-												}}
-											>
-												{ann ? 'click to edit tags' : 'click to add tags'}
-												<ArrowRightIcon />
-											</Button>
+												}
+											}}
+											class="relative max-w-[85%] cursor-pointer rounded-2xl px-4 py-3 transition-colors
+												{segIdx === 0 ? 'rounded-tr-none' : ''}
+												{ann
+												? 'bg-accent-mint/10 hover:bg-accent-mint/15'
+												: 'bg-slate-100 hover:bg-accent-mint/5'}
+												{selectedSegments.has(seg.segment_id)
+												? 'ring-2 ring-accent-mint ring-inset'
+												: ''}"
+										>
+											<!-- Select + star — top-left, opposite the avatar so the bubble's
+												 avatar-facing corner stays clean. -->
+											<div class="absolute left-3 top-3 flex items-center gap-2">
+												<input
+													type="checkbox"
+													checked={selectedSegments.has(seg.segment_id)}
+													onclick={(e) => e.stopPropagation()}
+													onchange={() => toggleSelect(seg.segment_id)}
+													title="Select for merge / untag"
+													class="size-3.5 cursor-pointer accent-accent-mint"
+												/>
+												<button
+													type="button"
+													onclick={(e) => {
+														e.stopPropagation();
+														toggleStar(seg.segment_id);
+													}}
+													disabled={togglingSegment === seg.segment_id}
+													aria-pressed={starredSegments.has(seg.segment_id)}
+													title={starredSegments.has(seg.segment_id)
+														? 'Starred highlight — click to unstar'
+														: 'Star as an important highlight'}
+													class="rounded p-0.5 transition-colors hover:bg-accent-mint/15 disabled:opacity-40
+														{starredSegments.has(seg.segment_id)
+														? 'text-amber-400'
+														: 'text-slate-300 hover:text-amber-400'}"
+												>
+													<StarIcon
+														size={16}
+														fill={starredSegments.has(seg.segment_id) ? 'currentColor' : 'none'}
+													/>
+												</button>
+											</div>
+
+											<p class="pl-12 text-sm leading-relaxed text-slate-800">
+												<KeywordText text={seg.text} onpick={() => (openSegment = seg)} />
+											</p>
+
+											<!-- Tag row — current tags, an overflow badge, and the edit-tags link. -->
+											<div class="mt-2 flex flex-wrap items-center justify-end gap-1.5">
+												{#each visibleTags as tag (tag.kind + tag.id)}
+													{@render tagChip(tag.kind, titleCase(tag.id))}
+												{/each}
+												{#if hiddenCount > 0}
+													<Popover.Root>
+														<Popover.Trigger
+															onclick={(e) => e.stopPropagation()}
+															title="{hiddenCount} more tag{hiddenCount === 1 ? '' : 's'}"
+															class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-slate-100 px-1 text-[10px] font-semibold text-slate-500 transition-colors hover:bg-slate-200"
+														>
+															+{hiddenCount}
+														</Popover.Trigger>
+														<Popover.Content align="start" class="w-64">
+															<p class="mb-2 text-xs font-semibold text-slate-700">All tags</p>
+															<div class="flex flex-col gap-2">
+																{#if ann?.themes.length}
+																	<div>
+																		<p
+																			class="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400"
+																		>
+																			Themes
+																		</p>
+																		<div class="flex flex-wrap gap-1">
+																			{#each ann.themes as th (th)}
+																				{@render tagChip('theme', titleCase(th))}
+																			{/each}
+																		</div>
+																	</div>
+																{/if}
+																{#if ann?.emotions.length}
+																	<div>
+																		<p
+																			class="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400"
+																		>
+																			Emotions
+																		</p>
+																		<div class="flex flex-wrap gap-1">
+																			{#each ann.emotions as em (em)}
+																				{@render tagChip('emotion', titleCase(em))}
+																			{/each}
+																		</div>
+																	</div>
+																{/if}
+															</div>
+														</Popover.Content>
+													</Popover.Root>
+												{/if}
+												<Button
+													variant="link"
+													size="xs"
+													onclick={(e) => {
+														e.stopPropagation();
+														openSegment = seg;
+													}}
+												>
+													{ann ? 'click to edit tags' : 'click to add tags'}
+													<ArrowRightIcon />
+												</Button>
+											</div>
 										</div>
-									</div>
-								{/each}
+									{/each}
+								</div>
 							</div>
 						{/if}
 					{/each}
@@ -1137,5 +1147,11 @@
 			href: `/wctglpdemo/fingerprint?interview=${a.interview_id}`,
 			linkLabel: "View this participant's fingerprint →"
 		});
+	}}
+	onedited={() => {
+		// Segment text was rewritten on disk — refresh so the transcript list
+		// reflects the new wording. The drawer keeps its own local copy in sync.
+		lastInterview = '';
+		invalidateAll();
 	}}
 />

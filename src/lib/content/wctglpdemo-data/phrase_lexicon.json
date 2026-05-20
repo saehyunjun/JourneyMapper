@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "description": "Global key-phrase lexicon. A key_phrase is a canonical label (e.g. 'Recurrent past weight gain') tied to many surface variants — actual highlighted snippets from segments — each carrying the segment_id and interview_id it was tagged from. Unlike keyword_lexicon.json, variants are semantic, not lexical: 'gained weight multiple times' and 'always gained it back eventually' can sit under the same canonical phrase even though they share no surface form. Added interactively from the segment tag drawer; never matched by a deterministic pipeline.",
+    "changelog": [
+      "1.0 — initial empty lexicon; populated interactively from the drawer."
+    ]
+  },
+  "key_phrases": [
+    {
+      "id": "lost_and_gained_weight_many_times",
+      "label": "Lost And Gained Weight Many Times",
+      "variants": [
+        {
+          "text": "lost and gained weight many times",
+          "segment_id": "participant_09_t03_s00",
+          "interview_id": "participant_09",
+          "created_at": "2026-05-20T01:55:10.768Z"
+        }
+      ]
+    }
+  ]
+}

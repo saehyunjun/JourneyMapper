@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-19T21:21:36.438Z",
+    "generated_at": "2026-05-20T01:50:28.528Z",
     "generator": "scripts/build-segments.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -15,7 +15,7 @@
       "idea_unit_grouping": "deferred",
       "short_segment_handling": "flagged (\"very_short\"), not merged"
     },
-    "segment_count": 619,
+    "segment_count": 617,
     "notes": [
       "One segment per sentence of participant speech; offsets round-trip against the source file.",
       "question_id is inherited from the most recent interviewer turn in question_map.json.",
@@ -3058,24 +3058,13 @@
       "segment_index": 0,
       "question_id": "trial_motivation",
       "speaker": "participant",
-      "text": "I believe that I'm a person who believes in science and I do believe that people have to contribute.",
+      "text": "I believe that I'm a person who believes in science and I do believe that people have to contribute. I'm not a scientist, but if there's a way to have information and data that helps move things forward, I'm happy to do that.",
       "char_start": 3504,
-      "char_end": 3604,
-      "word_count": 19,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_08_t15_s01",
-      "interview_id": "participant_08",
-      "turn_index": 15,
-      "segment_index": 1,
-      "question_id": "trial_motivation",
-      "speaker": "participant",
-      "text": "I'm not a scientist, but if there's a way to have information and data that helps move things forward, I'm happy to do that.",
-      "char_start": 3605,
       "char_end": 3729,
-      "word_count": 24,
-      "flags": []
+      "word_count": 43,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_08_t17_s00",
@@ -5400,30 +5389,19 @@
       "segment_index": 0,
       "question_id": "oral_glp_awareness",
       "speaker": "participant",
-      "text": "Just my doctor said it looked promising, and she said it would be because I have been somebody who's lost and gained weight multiple times, that this would be a good positive thing for me now that the weight is off, because I wouldn't have to continue to yo-yo diet.",
+      "text": "Just my doctor said it looked promising, and she said it would be because I have been somebody who's lost and gained weight multiple times, that this would be a good positive thing for me now that the weight is off, because I wouldn't have to continue to yo-yo diet. And I like the idea of taking a pill more than I do taking injection.",
       "char_start": 10626,
-      "char_end": 10892,
-      "word_count": 50,
-      "flags": []
+      "char_end": 10962,
+      "word_count": 65,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_09_t41_s01",
       "interview_id": "participant_09",
       "turn_index": 41,
       "segment_index": 1,
-      "question_id": "oral_glp_awareness",
-      "speaker": "participant",
-      "text": "And I like the idea of taking a pill more than I do taking injection.",
-      "char_start": 10893,
-      "char_end": 10962,
-      "word_count": 15,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_09_t41_s02",
-      "interview_id": "participant_09",
-      "turn_index": 41,
-      "segment_index": 2,
       "question_id": "oral_glp_awareness",
       "speaker": "participant",
       "text": "Yeah.",

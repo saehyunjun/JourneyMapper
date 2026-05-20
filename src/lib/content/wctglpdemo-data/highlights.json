@@ -3,7 +3,7 @@
     "schema_version": "1.0",
     "study_id": "wct_glp1",
     "description": "Analyst-starred highlights. starred_segment_ids reference segments.json; starred_quote_ids reference quote_bank.json.",
-    "updated_at": "2026-05-19T21:00:20.155Z"
+    "updated_at": "2026-05-20T01:50:29.629Z"
   },
   "starred_segment_ids": [
     "participant_06_t05_s00",
@@ -41,6 +41,8 @@
     "participant_08_t07_s01",
     "participant_08_t07_s02",
     "participant_08_t07_s03",
+    "participant_08_t13_s00",
+    "participant_08_t15_s00",
     "participant_08_t19_s01",
     "participant_08_t23_s00",
     "participant_08_t69_s02",

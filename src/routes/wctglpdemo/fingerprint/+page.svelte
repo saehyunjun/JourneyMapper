@@ -186,15 +186,17 @@
 		{#if themedParticipantIds.length}
 			<!-- Participant browser -->
 			<div class="flex flex-col gap-3 border-b border-(--ink)/15 pb-5">
-				<span class="figcaption text-accent-mint">Narrative Explorer</span>
+				<span class="figcaption text-accent-mint">
+					Narrative Explorer
+				</span>
 				<div class="flex flex-wrap gap-2">
 					{#each themedParticipantIds as id (id)}
 						<Button
 							variant="secondary"
-							class="flex items-center gap-2 rounded-full border py-1 pr-3.5 pl-1 text-sm transition-colors duration-150
+							class="flex items-center gap-2 rounded-full border py-1 pr-3.5 pl-1 text-sm transition-colors duration-350
 								{selectedParticipant === id
 								? 'border-(--orange) bg-(--orange) text-(--paper)'
-								: 'border-(--ink)/20 bg-(--paper) text-foreground hover:bg-(--ink)/5'}"
+								: 'border-(-muted) bg-(-muted) text-foreground hover:bg-(--ink)/5'}"
 							aria-pressed={selectedParticipant === id}
 							onclick={() => select(id)}
 						>

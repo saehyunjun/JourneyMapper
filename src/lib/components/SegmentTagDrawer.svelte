@@ -15,6 +15,7 @@
 	import { cubicOut } from 'svelte/easing';
 	import codebook from '$lib/content/wctglpdemo-data/codebook.json';
 	import lexiconRaw from '$lib/content/wctglpdemo-data/keyword_lexicon.json';
+	import phraseLexRaw from '$lib/content/wctglpdemo-data/phrase_lexicon.json';
 	import { EMOTION_PICKER, PLUTCHIK_DYADS } from '$lib/journeymapper2/plutchikEmotionsConfig.js';
 	import * as ContextMenu from '$lib/components/ui/context-menu/index.js';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
@@ -28,12 +29,16 @@
 		segment = null,
 		annotation = null,
 		onclose,
-		onsaved
+		onsaved,
+		onedited
 	}: {
 		segment: TaggableSegment | null;
 		annotation: Annotation | null;
 		onclose: () => void;
 		onsaved: (a: Annotation) => void;
+		/** Called after a successful segment-text edit so the parent can refresh
+		 *  its segment list (segments.json was rewritten on the server). */
+		onedited?: () => void;
 	} = $props();
 
 	type Theme = {
@@ -47,6 +52,13 @@
 	type TagGroupView = TagGroup & { themes: Theme[] };
 	type Keyword = { id: string; label: string; variants: string[] };
 	type Category = { id: string; label: string; description: string; keywords: Keyword[] };
+	type PhraseVariant = {
+		text: string;
+		segment_id: string;
+		interview_id: string;
+		created_at: string;
+	};
+	type KeyPhrase = { id: string; label: string; variants: PhraseVariant[] };
 	type EmotionLevel = { id: string; intensity: string };
 	type EmotionDyad = { id: string; with: string };
 	type EmotionPrimary = {
@@ -141,6 +153,8 @@
 	// keyword / theme" menu replaces them with the server's updated copy.
 	let themeTags = $state<Theme[]>(codebook.theme_tags as Theme[]);
 	let lexicon = $state<{ categories: Category[] }>(lexiconRaw as { categories: Category[] });
+	// Key phrases — canonical labels with semantic variants drawn from segments.
+	let keyPhrases = $state<KeyPhrase[]>((phraseLexRaw.key_phrases ?? []) as KeyPhrase[]);
 	const themeById = $derived(new Map(themeTags.map((t) => [t.id, t])));
 
 	// Themes bucketed into the codebook's tag groups. Themes created from the
@@ -199,6 +213,16 @@
 	let flashMsg = $state('');
 	let flashTimer: ReturnType<typeof setTimeout> | undefined;
 
+	// Inline edit-selection state — when the reviewer chooses "Edit selection"
+	// from the right-click menu, the highlighted phrase becomes editable below
+	// the quote. `currentText` mirrors segment.text so the drawer reflects the
+	// edit immediately, without waiting for the parent to re-seed.
+	let currentText = $state('');
+	let editingSelection = $state(false);
+	let editFind = $state('');
+	let editReplace = $state('');
+	let editBusy = $state(false);
+
 	let seededFor = '';
 	$effect(() => {
 		const id = segment?.segment_id ?? '';
@@ -212,6 +236,10 @@
 			errorMsg = '';
 			flashMsg = '';
 			selectionText = '';
+			currentText = segment?.text ?? '';
+			editingSelection = false;
+			editFind = '';
+			editReplace = '';
 			clearTimeout(flashTimer);
 			// Open the groups and the emotion family that already carry tags, so
 			// an AI proposal is visible without hunting through collapsed panels.
@@ -300,6 +328,103 @@
 			// Surface a success alert overlaid on the drawer; the drawer itself
 			// stays open so the reviewer can keep tagging the same segment.
 			flashMsg = data.message ?? 'List updated.';
+			clearTimeout(flashTimer);
+			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
+		} catch {
+			errorMsg = 'Could not reach the server.';
+		} finally {
+			lexBusy = false;
+		}
+	}
+
+	// Open the inline editor with the reviewer's current selection as the
+	// starting point — they tweak it and click Apply to rewrite that phrase.
+	function startEditSelection() {
+		if (!selectionText) return;
+		editFind = selectionText;
+		editReplace = selectionText;
+		editingSelection = true;
+		errorMsg = '';
+	}
+
+	function cancelEditSelection() {
+		editingSelection = false;
+		editFind = '';
+		editReplace = '';
+	}
+
+	// Rewrite the highlighted phrase in segments.json and reflect it locally so
+	// the quote, word count, and any keyword/theme highlights update on screen.
+	async function applyEditSelection() {
+		if (!segment || editBusy || !editFind) return;
+		const replacement = editReplace.replace(/\s+/g, ' ').trim();
+		if (!replacement || replacement === editFind) {
+			cancelEditSelection();
+			return;
+		}
+		editBusy = true;
+		errorMsg = '';
+		flashMsg = '';
+		try {
+			const res = await fetch('/wctglpdemo/segments', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action: 'edit_text',
+					interview_id: segment.interview_id,
+					segment_id: segment.segment_id,
+					find: editFind,
+					replace: replacement
+				})
+			});
+			const data = await res.json().catch(() => null);
+			if (!res.ok || !data?.ok) {
+				errorMsg = data?.error ?? 'Could not edit segment text.';
+				return;
+			}
+			const updated = (data.segments as { segment_id: string; text: string }[]).find(
+				(s) => s.segment_id === segment.segment_id
+			);
+			if (updated) currentText = updated.text;
+			cancelEditSelection();
+			flashMsg = 'Segment text updated.';
+			clearTimeout(flashTimer);
+			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
+			onedited?.();
+		} catch {
+			errorMsg = 'Could not reach the server.';
+		} finally {
+			editBusy = false;
+		}
+	}
+
+	// File the highlighted snippet under a key phrase. Variants carry the
+	// segment_id and interview_id, so the canonical phrase can back-link to
+	// every utterance it stands for.
+	async function applyPhrase(action: string, payload: Record<string, string>) {
+		if (lexBusy || !selectionText || !segment) return;
+		lexBusy = true;
+		flashMsg = '';
+		errorMsg = '';
+		try {
+			const res = await fetch('/wctglpdemo/phrases', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action,
+					text: selectionText,
+					segment_id: segment.segment_id,
+					interview_id: segment.interview_id,
+					...payload
+				})
+			});
+			const data = await res.json().catch(() => null);
+			if (!res.ok || !data?.ok) {
+				errorMsg = data?.error ?? 'Could not update the key-phrase lexicon.';
+				return;
+			}
+			keyPhrases = data.key_phrases as KeyPhrase[];
+			flashMsg = data.message ?? 'Key phrase updated.';
 			clearTimeout(flashTimer);
 			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
 		} catch {
@@ -425,31 +550,40 @@
 				<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Edit segment tags</p>
 				<p class="truncate font-mono text-xs text-slate-400">{segment.segment_id}</p>
 			</div>
-			<Button
-				variant="outline"
-				size='xs'
-				onclick={onclose}
-				aria-label="Close"
-				class="shrink-0 rounded p-1 text-lg leading-none text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-			>
-				<XIcon
-				size=xs />
-			</Button>
+			<div class="flex flex-col items-end gap-2">
+				{#if errorMsg}<span class="text-xs text-rose-600">{errorMsg}</span>{/if}
+					<Button
+						variant="outline"
+						size='xs'
+						onclick={onclose}
+						aria-label="Close">
+						<XIcon
+						size=lg />
+					</Button>
+				<Button
+					variant="secondary"
+					onclick={save}
+					disabled={saving}
+				>
+					{saving ? 'Saving…' : 'Save tags'}
+				</Button>
+			</div>
 		</div>
+		
 
-		<!-- Two-column body — stacks on narrow screens, splits at md and up -->
+		<!-- Body — full-width quote on top, two tag columns underneath -->
 		<Tooltip.Provider delayDuration={120}>
-		<div class="flex flex-1 flex-col overflow-y-auto md:flex-row md:overflow-hidden">
-			<!-- LEFT — the segment, its sentiment, the emotions, and the note -->
-			<div
-				class="flex shrink-0 flex-col gap-5 border-b border-slate-200 p-5
-					md:w-96 md:overflow-y-auto md:border-r md:border-b-0"
-			>
-				<!-- Segment text -->
-				<div>
-					<ContextMenu.Root>
-						<ContextMenu.Trigger>
-							{#snippet child({ props })}
+		<div class="flex flex-1 flex-col overflow-hidden">
+			<!-- TOP — the segment quote, full width -->
+			<div class="shrink-0 border-b border-slate-200 p-5">
+				<ContextMenu.Root>
+					<ContextMenu.Trigger>
+						{#snippet child({ props })}
+						<!-- Distinguish "maintain the codebook" (right-click) from
+						"tag this segment" (the chips below and to the right). -->
+						<p class="mb-2 text-sm leading-snug text-muted-foreground">
+						Highlight a phrase and right-click to edit it, or add it to the keyword lexicon or a theme.
+						</p>
 								<p
 									{...props}
 									oncontextmenu={(e: MouseEvent) => {
@@ -457,9 +591,9 @@
 										captureSelection();
 										(props.oncontextmenu as ((e: MouseEvent) => void) | undefined)?.(e);
 									}}
-									class="cursor-text border-l-2 border-accent-mint bg-accent-mint/5 p-2 text-lg text-primary select-text"
+									class="cursor-text border-l-2 border-accent-mint px-4 text-2xl text-primary select-text"
 								>
-									<KeywordText text={segment.text} />
+									<KeywordText text={currentText} />
 								</p>
 							{/snippet}
 						</ContextMenu.Trigger>
@@ -471,8 +605,13 @@
 								</ContextMenu.Label>
 							{:else}
 								<ContextMenu.Label>
-									Add <span class="font-medium text-slate-700">“{truncate(selectionText)}”</span> to…
+									<span class="font-medium text-slate-700">“{truncate(selectionText)}”</span>
 								</ContextMenu.Label>
+								<ContextMenu.Separator />
+								<!-- Rewrite the highlighted phrase directly in the segment text. -->
+								<ContextMenu.Item onSelect={startEditSelection}>
+									Edit selection…
+								</ContextMenu.Item>
 								<ContextMenu.Separator />
 								<!-- Keywords — each category is its own submenu of keywords -->
 								<ContextMenu.Group>
@@ -498,6 +637,29 @@
 											</ContextMenu.SubContent>
 										</ContextMenu.Sub>
 									{/each}
+								</ContextMenu.Group>
+								<ContextMenu.Separator />
+								<!-- Key phrases — canonical labels that unify disparate
+									 phrasings under one concept. -->
+								<ContextMenu.Group>
+									<ContextMenu.GroupHeading>As a key phrase</ContextMenu.GroupHeading>
+									{#each keyPhrases as kp (kp.id)}
+										<ContextMenu.Item
+											onSelect={() =>
+												applyPhrase('add_phrase_variant', { key_phrase_id: kp.id })}
+										>
+											{kp.label}
+											<span class="ml-auto text-[10px] text-slate-400"
+												>{kp.variants.length}</span
+											>
+										</ContextMenu.Item>
+									{/each}
+									{#if keyPhrases.length}
+										<ContextMenu.Separator />
+									{/if}
+									<ContextMenu.Item onSelect={() => applyPhrase('create_key_phrase', {})}>
+										New key phrase from “{truncate(selectionText, 22)}”
+									</ContextMenu.Item>
 								</ContextMenu.Group>
 								<ContextMenu.Separator />
 								<!-- Add as theme — one submenu per tag group, mirroring the
@@ -529,16 +691,55 @@
 							{/if}
 						</ContextMenu.Content>
 					</ContextMenu.Root>
-					<!-- Distinguish "maintain the codebook" (right-click) from
-						 "tag this segment" (the chips below and to the right). -->
-					<p class="mt-2 text-[11px] leading-snug text-slate-400">
-						Highlight a phrase and right-click to add it to the keyword lexicon or a theme — that
-						updates the shared codebook, not this segment.
-					</p>
-				</div>
 
-				<!-- Sentiment — a diverging colour scale; hover a swatch for its label -->
-				<section>
+				<!-- Inline editor — replaces the highlighted phrase in segments.json
+					 when the reviewer chose "Edit selection" from the menu. -->
+				{#if editingSelection}
+					<div
+						class="mt-3 rounded-md border border-accent-mint/40 bg-accent-mint/5 p-3"
+						transition:slide={{ duration: 180 }}
+					>
+						<p class="mb-2 text-xs text-slate-500">
+							Replacing
+							<span class="font-medium text-slate-700">“{truncate(editFind)}”</span>
+							with:
+						</p>
+						<textarea
+							bind:value={editReplace}
+							rows="2"
+							class="mb-2 w-full resize-y rounded border border-slate-200 bg-white px-2.5 py-1.5 text-sm text-slate-700"
+						></textarea>
+						<div class="flex justify-end gap-2">
+							<Button
+								variant="ghost"
+								size="xs"
+								onclick={cancelEditSelection}
+								disabled={editBusy}
+							>
+								Cancel
+							</Button>
+							<Button
+								variant="secondary"
+								size="xs"
+								onclick={applyEditSelection}
+								disabled={editBusy || !editReplace.trim() || editReplace.trim() === editFind}
+							>
+								{editBusy ? 'Saving…' : 'Apply edit'}
+							</Button>
+						</div>
+					</div>
+				{/if}
+			</div>
+
+			<!-- BELOW — two tag columns -->
+			<div class="flex flex-1 flex-col overflow-y-auto md:flex-row md:overflow-hidden">
+				<!-- LEFT — sentiment, emotions, reviewer note -->
+				<div
+					class="flex shrink-0 flex-col gap-5 border-b border-slate-200 p-5
+						md:w-96 md:overflow-y-auto md:border-r md:border-b-0"
+				>
+					<!-- Sentiment — a diverging colour scale; hover a swatch for its label -->
+					<section>
 					{@render sectionHead('Sentiment', 'How positive or negative the segment reads overall.')}
 					<div class="flex gap-1.5">
 						{#each sentiments as s (s.v)}
@@ -784,6 +985,7 @@
 				</section>
 			</div>
 		</div>
+		</div>
 		</Tooltip.Provider>
 
 		<!-- Technical notes — kept off the review card so it stays streamlined. -->
@@ -817,24 +1019,8 @@
 		</div>
 
 		<!-- Footer -->
-		<div class="flex items-center justify-between gap-3 border-t border-slate-200 px-5 py-4">
-			<span class="text-xs text-slate-500">{tagCount} tag{tagCount === 1 ? '' : 's'} applied</span>
-			<div class="flex items-center gap-2">
-				{#if errorMsg}<span class="text-xs text-rose-600">{errorMsg}</span>{/if}
-				<Button
-					variant="ghost"
-					onclick={onclose}
-				>
-					Cancel
-				</Button>
-				<Button
-					variant="secondary"
-					onclick={save}
-					disabled={saving}
-				>
-					{saving ? 'Saving…' : 'Save tags'}
-				</Button>
-			</div>
+		<div class="flex items-center justify-between gap-3 border-t border-slate-200 px-5">
+			<span class="text-xs text-muted-foreground">{tagCount} tag{tagCount === 1 ? '' : 's'} applied</span>
 		</div>
 	</aside>
 {/if}

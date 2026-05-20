@@ -12,7 +12,7 @@
  */
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { mergeSegments, unmergeSegment } from '$lib/server/segments';
+import { mergeSegments, unmergeSegment, editSegmentText } from '$lib/server/segments';
 
 export const POST: RequestHandler = async ({ request }) => {
 	let body: Record<string, unknown>;
@@ -24,6 +24,27 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	const interviewId = typeof body.interview_id === 'string' ? body.interview_id : '';
 	const action = typeof body.action === 'string' ? body.action : 'merge';
+
+	if (action === 'edit_text') {
+		const segmentId = typeof body.segment_id === 'string' ? body.segment_id : '';
+		const find = typeof body.find === 'string' ? body.find : '';
+		const replace = typeof body.replace === 'string' ? body.replace : '';
+		if (!interviewId || !segmentId || !find) {
+			return json(
+				{ ok: false, error: 'interview_id, segment_id, and find are required.' },
+				{ status: 400 }
+			);
+		}
+		try {
+			const segments = editSegmentText(interviewId, segmentId, find, replace);
+			return json({ ok: true, segments });
+		} catch (e) {
+			return json(
+				{ ok: false, error: e instanceof Error ? e.message : 'Could not edit segment text.' },
+				{ status: 400 }
+			);
+		}
+	}
 
 	if (action === 'unmerge') {
 		const segmentId = typeof body.segment_id === 'string' ? body.segment_id : '';

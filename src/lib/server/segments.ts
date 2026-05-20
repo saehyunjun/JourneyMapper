@@ -204,6 +204,56 @@ export function mergeSegments(interviewId: string, segmentIds: string[]): Segmen
  * Char offsets are derived from the merged text, so they are approximate
  * relative to the raw transcript if the merge collapsed irregular whitespace.
  */
+/**
+ * Replace one phrase in a segment's text — used by the drawer's "Edit selection"
+ * context-menu action. The reviewer highlights a phrase and provides a
+ * replacement; we swap the first occurrence in segment.text, recompute
+ * word_count, and re-evaluate the very_short flag (preserving merged etc.).
+ * Char offsets stay anchored to the original transcript span and so become
+ * approximate after an edit — matching the unmerge convention.
+ */
+export function editSegmentText(
+	interviewId: string,
+	segmentId: string,
+	find: string,
+	replace: string
+): Segment[] {
+	if (!find) throw new Error('No text to replace.');
+
+	const segData = read(SEGMENTS_PATH);
+	const all = segData.segments as Segment[];
+	const target = all.find(
+		(s) => s.segment_id === segmentId && s.interview_id === interviewId
+	);
+	if (!target) throw new Error('Segment not found.');
+
+	const idx = target.text.indexOf(find);
+	if (idx === -1) {
+		throw new Error(
+			'The highlighted phrase no longer matches the segment text — re-select and try again.'
+		);
+	}
+
+	const edited = (
+		target.text.slice(0, idx) + replace + target.text.slice(idx + find.length)
+	)
+		.replace(/\s+/g, ' ')
+		.trim();
+	if (!edited) throw new Error('Segment text cannot be empty.');
+
+	target.text = edited;
+	target.word_count = wordCountOf(edited);
+	target.flags = target.flags.filter((f) => f !== 'very_short');
+	if (target.word_count < 3) target.flags = [...target.flags, 'very_short'];
+
+	segData.meta.generated_at = new Date().toISOString();
+	writeFileSync(resolve(SEGMENTS_PATH), JSON.stringify(segData, null, 2) + '\n', 'utf8');
+
+	return (segData.segments as Segment[])
+		.filter((s) => s.interview_id === interviewId)
+		.sort((a, b) => a.segment_id.localeCompare(b.segment_id));
+}
+
 export function unmergeSegment(interviewId: string, segmentId: string): Segment[] {
 	const segData = read(SEGMENTS_PATH);
 	const all = segData.segments as Segment[];

@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.2",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-19T21:22:06.607Z",
+    "generated_at": "2026-05-20T01:51:32.204Z",
     "generator": "scripts/build-segment-tags.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/segments.json",
@@ -4548,31 +4548,13 @@
       ],
       "subthemes": [],
       "emotions": [
-        "trust"
-      ],
-      "sentiment": 1,
-      "confidence": 0.9,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_08_t15_s01",
-      "interview_id": "participant_08",
-      "question_id": "trial_motivation",
-      "topics": [],
-      "themes": [
-        "altruistic_reasoning",
-        "research_altruism"
-      ],
-      "subthemes": [],
-      "emotions": [
+        "trust",
         "acceptance"
       ],
       "sentiment": 1,
-      "confidence": 0.9,
-      "source": "ai_proposed",
-      "review_status": "pending",
+      "confidence": 1,
+      "source": "human",
+      "review_status": "confirmed",
       "reviewer_notes": ""
     },
     {
@@ -6485,10 +6467,12 @@
         "access_logic",
         "cost_access",
         "insurance_barrier",
-        "self_advocacy"
+        "self_advocacy",
+        "information_seeking"
       ],
       "subthemes": [
-        "out_of_pocket_cost"
+        "out_of_pocket_cost",
+        "price_trends"
       ],
       "emotions": [
         "annoyance",
@@ -7101,52 +7085,6 @@
       "reviewer_notes": ""
     },
     {
-      "segment_id": "participant_09_t21_s04",
-      "interview_id": "participant_09",
-      "question_id": "trial_barriers",
-      "topics": [
-        "telehealth_for_trial_visits",
-        "dosing_frequency"
-      ],
-      "themes": [
-        "conditional_decision",
-        "convenience_tradeoff",
-        "injection_experience",
-        "visit_logistics"
-      ],
-      "subthemes": [
-        "telehealth",
-        "injection_frequency"
-      ],
-      "emotions": [
-        "interest"
-      ],
-      "sentiment": 1,
-      "confidence": 0.9,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_09_t21_s05",
-      "interview_id": "participant_09",
-      "question_id": "trial_barriers",
-      "topics": [
-        "trial_distance_to_site"
-      ],
-      "themes": [
-        "clinical_trial_friction",
-        "travel_burden"
-      ],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": -1,
-      "confidence": 0.85,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": ""
-    },
-    {
       "segment_id": "participant_09_t23_s00",
       "interview_id": "participant_09",
       "question_id": "trial_motivation",
@@ -7291,34 +7229,6 @@
       "source": "ai_proposed",
       "review_status": "pending",
       "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_09_t29_s00",
-      "interview_id": "participant_09",
-      "question_id": "educational_support",
-      "topics": [],
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.4,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "very short"
-    },
-    {
-      "segment_id": "participant_09_t29_s01",
-      "interview_id": "participant_09",
-      "question_id": "educational_support",
-      "topics": [],
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.4,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "very short"
     },
     {
       "segment_id": "participant_09_t29_s02",
@@ -7880,57 +7790,7 @@
       "reviewer_notes": ""
     },
     {
-      "segment_id": "participant_09_t41_s00",
-      "interview_id": "participant_09",
-      "question_id": "oral_glp_awareness",
-      "topics": [
-        "maintenance_dose",
-        "yo_yo_dieting"
-      ],
-      "themes": [
-        "fear_of_weight_regain",
-        "maintenance_strategy",
-        "oral_medication_interest",
-        "weight_loss_history"
-      ],
-      "subthemes": [
-        "lifelong_struggle"
-      ],
-      "emotions": [
-        "hope"
-      ],
-      "sentiment": 1,
-      "confidence": 0.9,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": ""
-    },
-    {
       "segment_id": "participant_09_t41_s01",
-      "interview_id": "participant_09",
-      "question_id": "oral_glp_awareness",
-      "topics": [
-        "oral_vs_injection"
-      ],
-      "themes": [
-        "convenience_tradeoff",
-        "injection_experience",
-        "oral_medication_interest"
-      ],
-      "subthemes": [
-        "injection_aversion"
-      ],
-      "emotions": [
-        "interest"
-      ],
-      "sentiment": 1,
-      "confidence": 0.9,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_09_t41_s02",
       "interview_id": "participant_09",
       "question_id": "oral_glp_awareness",
       "topics": [],
