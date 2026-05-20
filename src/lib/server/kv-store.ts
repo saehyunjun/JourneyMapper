@@ -41,9 +41,22 @@ export async function loadDoc<T>(key: string, localPath: string, seed: T): Promi
 		}
 	}
 	const r = kv();
-	if (!r) return seed;
-	const value = await r.get<T>(key);
-	return value ?? seed;
+	if (!r) {
+		console.warn(
+			`[kv-store] No KV credentials configured (KV_REST_API_URL / KV_REST_API_TOKEN missing). ` +
+				`Falling back to bundled seed for key "${key}".`
+		);
+		return seed;
+	}
+	try {
+		const value = await r.get<T>(key);
+		return value ?? seed;
+	} catch (e) {
+		// Surface the failure in logs but still serve the page from the seed —
+		// better degraded reads than a 500 on every request.
+		console.error(`[kv-store] KV read failed for "${key}":`, e);
+		return seed;
+	}
 }
 
 /** Persist one document. In dev writes to disk; in prod writes to KV. */
