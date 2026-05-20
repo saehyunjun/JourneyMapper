@@ -9,8 +9,8 @@
  *    matches the historical workflow and keeps the CLI scripts as the source
  *    of truth.
  *  - Prod: call the inlined TypeScript pipeline directly (no child processes
- *    — Vercel serverless can't spawn). Job state lives in Upstash Redis so
- *    poll requests on other function instances can read progress.
+ *    — Vercel serverless can't spawn). Job state lives in Redis so poll
+ *    requests on other function instances can read progress.
  *
  * Requires ANTHROPIC_API_KEY. The .env autoload (`process.loadEnvFile`) the
  * scripts use is dev-only; in prod the variable comes from the Vercel project
@@ -18,7 +18,7 @@
  */
 import { spawn } from 'node:child_process';
 import { dev } from '$app/environment';
-import { Redis } from '@upstash/redis';
+import { createClient, type RedisClientType } from 'redis';
 import { env } from '$env/dynamic/private';
 import {
 	proposeQuestions,
@@ -41,27 +41,53 @@ export type AutotagJob = {
 // --- Job-state persistence ------------------------------------------------
 
 // Dev uses an in-process map (matches the historical fire-and-forget pattern).
-// Prod uses Upstash directly — different serverless function instances handle
+// Prod uses Redis directly — different serverless function instances handle
 // "start" and "poll" requests, so the state must be shared.
 const devJobs = new Map<string, AutotagJob>();
 
-let redis: Redis | null = null;
-function kv(): Redis | null {
-	if (redis) return redis;
-	const url = env.KV_REST_API_URL ?? env.UPSTASH_REDIS_REST_URL;
-	const token = env.KV_REST_API_TOKEN ?? env.UPSTASH_REDIS_REST_TOKEN;
-	if (!url || !token) return null;
-	redis = new Redis({ url, token });
-	return redis;
+let client: RedisClientType | null = null;
+let connecting: Promise<RedisClientType> | null = null;
+
+async function kv(): Promise<RedisClientType | null> {
+	const url = env.REDIS_URL;
+	if (!url) return null;
+	if (client?.isOpen) return client;
+	if (connecting) return connecting;
+
+	const c = createClient({ url }) as RedisClientType;
+	c.on('error', (err) => console.error('[redis:autotag] client error:', err));
+	connecting = c
+		.connect()
+		.then(() => {
+			client = c;
+			return c;
+		})
+		.catch((err) => {
+			connecting = null;
+			console.error('[redis:autotag] connect failed:', err);
+			throw err;
+		});
+	return connecting;
 }
 
 const jobKey = (interviewId: string) => `wctglpdemo:autotag:job:${interviewId}`;
 
 async function loadJob(interviewId: string): Promise<AutotagJob | null> {
 	if (dev) return devJobs.get(interviewId) ?? null;
-	const r = kv();
+	let r: RedisClientType | null;
+	try {
+		r = await kv();
+	} catch {
+		return null;
+	}
 	if (!r) return null;
-	return (await r.get<AutotagJob>(jobKey(interviewId))) ?? null;
+	try {
+		const raw = await r.get(jobKey(interviewId));
+		return raw ? (JSON.parse(raw) as AutotagJob) : null;
+	} catch (e) {
+		console.error('[autotag] job read failed:', e);
+		return null;
+	}
 }
 
 async function saveJob(job: AutotagJob): Promise<void> {
@@ -69,10 +95,19 @@ async function saveJob(job: AutotagJob): Promise<void> {
 		devJobs.set(job.interviewId, job);
 		return;
 	}
-	const r = kv();
-	if (!r) return; // Without KV credentials we can't persist; reads will return null.
-	// Keep finished jobs for a day so a late page-load still sees the result.
-	await r.set(jobKey(job.interviewId), job, { ex: 60 * 60 * 24 });
+	let r: RedisClientType | null;
+	try {
+		r = await kv();
+	} catch {
+		return;
+	}
+	if (!r) return; // Without Redis we can't persist; reads will return null.
+	try {
+		// Keep finished jobs for a day so a late page-load still sees the result.
+		await r.set(jobKey(job.interviewId), JSON.stringify(job), { EX: 60 * 60 * 24 });
+	} catch (e) {
+		console.error('[autotag] job write failed:', e);
+	}
 }
 
 // --- Pipeline execution ---------------------------------------------------

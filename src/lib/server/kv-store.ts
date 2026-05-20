@@ -1,32 +1,49 @@
 /**
  * Persistence shim — dev reads/writes the local source file, prod reads/writes
- * an Upstash Redis instance (via Vercel's Marketplace Redis integration).
+ * Redis (via the Vercel Marketplace Redis integration, which sets REDIS_URL).
  *
  * The bundled JSON imported at module load time is the seed used when:
  *  - dev: the local file is missing or unparseable
- *  - prod: the KV key has not been written yet
+ *  - prod: the Redis key has not been written yet, or the store is unreachable
  *
- * Each writable JSON doc maps to a single KV key (whole-document upsert). This
- * is fine for the demo's edit cadence; if concurrent edits become a concern we
- * can layer optimistic concurrency on top later.
+ * Each writable JSON doc maps to a single Redis key (whole-document upsert,
+ * JSON-encoded). Fine for the demo's edit cadence; layer optimistic
+ * concurrency on top later if concurrent edits become a concern.
+ *
+ * The Redis client is created lazily at module scope and reused across
+ * invocations within the same warm function instance.
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { dev } from '$app/environment';
-import { Redis } from '@upstash/redis';
+import { createClient, type RedisClientType } from 'redis';
 import { env } from '$env/dynamic/private';
 
-// In Vercel's Marketplace Redis integration the env vars are still named
-// KV_REST_API_*; if the project uses the older Upstash naming we accept that
-// too. Both fall through to a no-credentials client that falls back to seeds.
-let client: Redis | null = null;
-function kv(): Redis | null {
-	if (client) return client;
-	const url = env.KV_REST_API_URL ?? env.UPSTASH_REDIS_REST_URL;
-	const token = env.KV_REST_API_TOKEN ?? env.UPSTASH_REDIS_REST_TOKEN;
-	if (!url || !token) return null;
-	client = new Redis({ url, token });
-	return client;
+let client: RedisClientType | null = null;
+let connecting: Promise<RedisClientType> | null = null;
+
+async function redis(): Promise<RedisClientType | null> {
+	const url = env.REDIS_URL;
+	if (!url) return null;
+	if (client?.isOpen) return client;
+	if (connecting) return connecting;
+
+	const c = createClient({ url }) as RedisClientType;
+	c.on('error', (err) => {
+		console.error('[redis] client error:', err);
+	});
+	connecting = c
+		.connect()
+		.then(() => {
+			client = c;
+			return c;
+		})
+		.catch((err) => {
+			connecting = null;
+			console.error('[redis] connect failed:', err);
+			throw err;
+		});
+	return connecting;
 }
 
 /** Read one document. Falls back to the seed if the store is empty/unavailable. */
@@ -40,36 +57,39 @@ export async function loadDoc<T>(key: string, localPath: string, seed: T): Promi
 			return seed;
 		}
 	}
-	const r = kv();
+	let r: RedisClientType | null;
+	try {
+		r = await redis();
+	} catch {
+		return seed;
+	}
 	if (!r) {
 		console.warn(
-			`[kv-store] No KV credentials configured (KV_REST_API_URL / KV_REST_API_TOKEN missing). ` +
-				`Falling back to bundled seed for key "${key}".`
+			`[kv-store] REDIS_URL not set. Falling back to bundled seed for key "${key}".`
 		);
 		return seed;
 	}
 	try {
-		const value = await r.get<T>(key);
-		return value ?? seed;
+		const raw = await r.get(key);
+		if (raw == null) return seed;
+		return JSON.parse(raw) as T;
 	} catch (e) {
 		// Surface the failure in logs but still serve the page from the seed —
 		// better degraded reads than a 500 on every request.
-		console.error(`[kv-store] KV read failed for "${key}":`, e);
+		console.error(`[kv-store] Redis read failed for "${key}":`, e);
 		return seed;
 	}
 }
 
-/** Persist one document. In dev writes to disk; in prod writes to KV. */
+/** Persist one document. In dev writes to disk; in prod writes to Redis. */
 export async function saveDoc<T>(key: string, localPath: string, doc: T): Promise<void> {
 	if (dev) {
 		writeFileSync(resolve(localPath), JSON.stringify(doc, null, 2) + '\n', 'utf8');
 		return;
 	}
-	const r = kv();
+	const r = await redis();
 	if (!r) {
-		throw new Error(
-			'KV credentials are not configured — set KV_REST_API_URL and KV_REST_API_TOKEN.'
-		);
+		throw new Error('Redis is not configured — set REDIS_URL.');
 	}
-	await r.set(key, doc);
+	await r.set(key, JSON.stringify(doc));
 }
