@@ -32,9 +32,9 @@ import type { Annotation } from '$lib/types/segment-tags';
 import type { ParticipantProfile } from '$lib/types/participant-profile';
 
 // The parse action awaits the autotag chain in prod (two Claude calls +
-// validation), which can take several minutes. Requires Vercel Pro + Fluid
-// Compute to allow durations beyond the default 300s ceiling.
-export const config = { maxDuration: 800 };
+// validation), which usually takes 1–4 minutes. 300s is the Hobby ceiling;
+// Pro + Fluid Compute can take this up to 800.
+export const config = { maxDuration: 300 };
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const STRUCTURED_PATH = `${DATA_DIR}/interviews_structured.json`;

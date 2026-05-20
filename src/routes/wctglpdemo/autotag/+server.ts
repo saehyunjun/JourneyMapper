@@ -10,8 +10,9 @@ import type { RequestHandler } from './$types';
 import { getJob, startAutotag } from '$lib/server/autotag';
 
 // The POST handler blocks on the autotag chain in prod (two Claude calls +
-// validation). Requires Vercel Pro + Fluid Compute.
-export const config = { maxDuration: 800 };
+// validation). 300s is the Hobby ceiling; Pro + Fluid Compute can take this
+// up to 800.
+export const config = { maxDuration: 300 };
 
 export const GET: RequestHandler = async ({ url }) => {
 	const interviewId = url.searchParams.get('interview') ?? '';
