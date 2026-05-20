@@ -36,7 +36,16 @@
       "Bash(xargs -n1 basename)",
       "Bash(awk '{print $5, $NF}')",
       "Bash(npm uninstall *)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(jq --arg iv participant_11 '[.proposals | to_entries[] | select\\(.key | startswith\\($iv\\)\\)] | {n: length, sample: .[0:3]}' /Users/aaronjun/JourneyMapper/src/lib/content/wctglpdemo-data/segment_tags.proposed.json)",
+      "Read(//Users/aaronjun/JourneyMapper/**)",
+      "Bash(jq '[.proposals | to_entries[] | select\\(.key | startswith\\(\"participant_11\"\\)\\)] | from_entries' /Users/aaronjun/JourneyMapper/src/lib/content/wctglpdemo-data/segment_tags.proposed.json > /tmp/p11_before.json && wc -l /tmp/p11_before.json)",
+      "Bash(node scripts/propose-segment-tags.mjs participant_11 --force)",
+      "Bash(npx tsc *)",
+      "Bash(node scripts/propose-segment-tags.mjs --force)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
     ]
   }
 }

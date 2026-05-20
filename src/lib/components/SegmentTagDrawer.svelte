@@ -16,10 +16,14 @@
 	import codebook from '$lib/content/wctglpdemo-data/codebook.json';
 	import lexiconRaw from '$lib/content/wctglpdemo-data/keyword_lexicon.json';
 	import phraseLexRaw from '$lib/content/wctglpdemo-data/phrase_lexicon.json';
-	import { EMOTION_PICKER, PLUTCHIK_DYADS } from '$lib/journeymapper2/plutchikEmotionsConfig.js';
+	import { EMOTION_PICKER } from '$lib/journeymapper2/plutchikEmotionsConfig.js';
+	import { emotionDots } from '$lib/utils/emotion-colors';
 	import * as ContextMenu from '$lib/components/ui/context-menu/index.js';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import KeywordText from '$lib/components/KeywordText.svelte';
+	import KeywordTagDrawer from '$lib/components/KeywordTagDrawer.svelte';
+	import PhraseLinkDrawer from '$lib/components/PhraseLinkDrawer.svelte';
 	import CircleCheckIcon from '@lucide/svelte/icons/circle-check';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import type { Annotation, TaggableSegment } from '$lib/types/segment-tags';
@@ -82,72 +86,9 @@
 		])
 	);
 
-	// --- Emotion colour helpers -----------------------------------------------
-	// Intensity chips use three shades of the primary's base colour; a dyad
-	// blends its two primaries into a gradient, matching the keyword constellation.
-	type Rgb = { r: number; g: number; b: number };
-	function hexToRgb(hex: string): Rgb {
-		let h = hex.replace('#', '');
-		if (h.length === 3)
-			h = h
-				.split('')
-				.map((c) => c + c)
-				.join('');
-		return {
-			r: parseInt(h.slice(0, 2), 16),
-			g: parseInt(h.slice(2, 4), 16),
-			b: parseInt(h.slice(4, 6), 16)
-		};
-	}
-	const mixRgb = (a: Rgb, b: Rgb, t: number): Rgb => ({
-		r: Math.round(a.r + (b.r - a.r) * t),
-		g: Math.round(a.g + (b.g - a.g) * t),
-		b: Math.round(a.b + (b.b - a.b) * t)
-	});
-	const rgbCss = ({ r, g, b }: Rgb) => `rgb(${r} ${g} ${b})`;
-	const WHITE: Rgb = { r: 255, g: 255, b: 255 };
-	const BLACK: Rgb = { r: 0, g: 0, b: 0 };
-	// Black or white text, whichever reads better on the given fill.
-	const textOn = (rgb: Rgb) =>
-		(0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255 > 0.6 ? '#1e293b' : '#ffffff';
-
-	// low / medium / high shades of one primary emotion's base colour.
-	function emotionShades(hex: string): Record<string, Rgb> {
-		const base = hexToRgb(hex);
-		return { low: mixRgb(base, WHITE, 0.6), medium: base, high: mixRgb(base, BLACK, 0.34) };
-	}
-
-	// Dyad label -> the two primaries it blends, for the blend gradient.
-	const dyadColors = new Map<string, { c1: string; c2: string }>();
-	for (const group of Object.values(PLUTCHIK_DYADS) as {
-		label: string;
-		color_1: string;
-		color_2: string;
-	}[][]) {
-		for (const d of group) dyadColors.set(d.label, { c1: d.color_1, c2: d.color_2 });
-	}
-	const dyadGradient = (id: string) => {
-		const d = dyadColors.get(id);
-		return d ? `linear-gradient(135deg, ${d.c1}, ${d.c2})` : '#475569';
-	};
-
-	// Resolved fill for any emotion id — a shade for an intensity level, a
-	// gradient for a dyad — so the selected-emotion summary pills match the
-	// picker chips that set them.
-	type EmotionStyle = { background: string; color: string; gradient: boolean };
-	const emotionStyle = new Map<string, EmotionStyle>();
-	for (const p of EMOTION_PICKER as EmotionPrimary[]) {
-		const shades = emotionShades(p.color);
-		for (const lvl of p.levels) {
-			const rgb = shades[lvl.intensity];
-			emotionStyle.set(lvl.id, { background: rgbCss(rgb), color: textOn(rgb), gradient: false });
-		}
-	}
-	for (const [label] of dyadColors) {
-		emotionStyle.set(label, { background: dyadGradient(label), color: '#ffffff', gradient: true });
-	}
-	const styleFor = (id: string): EmotionStyle =>
-		emotionStyle.get(id) ?? { background: '#475569', color: '#ffffff', gradient: false };
+	// Emotion indicator colour resolution lives in $lib/utils/emotion-colors —
+	// shared with CodedFragmentCard and the upload-page tag chips so the picker
+	// and the transcript draw from one source of truth.
 
 	// Themes and the keyword lexicon are reactive: the right-click "add to
 	// keyword / theme" menu replaces them with the server's updated copy.
@@ -212,6 +153,91 @@
 	let lexBusy = $state(false);
 	let flashMsg = $state('');
 	let flashTimer: ReturnType<typeof setTimeout> | undefined;
+
+	// "New theme from selection" dialog — lets the reviewer give the theme a
+	// real id, description, and group instead of dropping the raw selection
+	// into the codebook with placeholder fields.
+	let newThemeOpen = $state(false);
+	let newThemeSeed = $state(''); // the highlighted phrase that becomes the first term
+	let newThemeId = $state('');
+	let newThemeDescription = $state('');
+	let newThemeGroup = $state('');
+
+	const slugifyId = (t: string) =>
+		t
+			.toLowerCase()
+			.replace(/[^a-z0-9]+/g, '_')
+			.replace(/^_+|_+$/g, '')
+			.slice(0, 40);
+
+	function openNewThemeDialog() {
+		if (!selectionText) return;
+		newThemeSeed = selectionText;
+		newThemeId = slugifyId(selectionText);
+		newThemeDescription = '';
+		newThemeGroup = '';
+		errorMsg = '';
+		newThemeOpen = true;
+	}
+
+	async function submitNewTheme() {
+		if (lexBusy) return;
+		if (!newThemeId.trim()) {
+			errorMsg = 'Pick an id for the new theme.';
+			return;
+		}
+		if (!newThemeDescription.trim()) {
+			errorMsg = 'Write a short description.';
+			return;
+		}
+		if (!newThemeGroup) {
+			errorMsg = 'Pick a tag group.';
+			return;
+		}
+		// applyLexicon reads `selectionText` as the seed term. Pin it to the
+		// snapshot taken when the dialog opened in case the live selection has
+		// drifted while the form was open.
+		selectionText = newThemeSeed;
+		await applyLexicon('create_theme', {
+			id: newThemeId.trim(),
+			description: newThemeDescription.trim(),
+			group: newThemeGroup
+		});
+		// applyLexicon clears errorMsg on success; close only if no error.
+		if (!errorMsg) newThemeOpen = false;
+	}
+
+	// Tertiary drawer state — opened from the right-click menu. Each drawer
+	// snapshots the live selection at open time so the surface text it operates
+	// on can't drift while the analyst works in the drawer.
+	let keywordDrawerOpen = $state(false);
+	let phraseDrawerOpen = $state(false);
+	let tertiarySelection = $state('');
+
+	function openKeywordDrawer() {
+		if (!selectionText) return;
+		tertiarySelection = selectionText;
+		errorMsg = '';
+		keywordDrawerOpen = true;
+	}
+
+	function openPhraseDrawer() {
+		if (!selectionText) return;
+		tertiarySelection = selectionText;
+		errorMsg = '';
+		phraseDrawerOpen = true;
+	}
+
+	// applyLexicon reads `selectionText` directly. Pin it to the snapshot the
+	// drawer was opened with so a stray browser selection inside the drawer
+	// can't redirect the action to the wrong phrase.
+	async function applyFromKeywordDrawer(
+		action: 'add_keyword_variant' | 'create_keyword',
+		payload: Record<string, string>
+	) {
+		selectionText = tertiarySelection;
+		await applyLexicon(action, payload);
+	}
 
 	// Inline edit-selection state — when the reviewer chooses "Edit selection"
 	// from the right-click menu, the highlighted phrase becomes editable below
@@ -522,6 +548,30 @@
 	<p class="mb-1.5 text-[11px] font-medium tracking-wide text-slate-400 uppercase">{text}</p>
 {/snippet}
 
+<!-- Emotion indicator — one circle for an intensity level, two overlapping
+	 circles for a dyad's two primaries. Kept compact so it sits inside a chip. -->
+{#snippet emotionDot(id: string)}
+	{@const colors = emotionDots(id)}
+	{#if colors.c2}
+		<span class="relative inline-block h-2.5 w-[18px] shrink-0" aria-hidden="true">
+			<span
+				class="absolute left-0 top-0 size-2.5 rounded-full border border-black/10"
+				style="background: {colors.c1}"
+			></span>
+			<span
+				class="absolute left-2 top-0 size-2.5 rounded-full border border-black/10"
+				style="background: {colors.c2}"
+			></span>
+		</span>
+	{:else}
+		<span
+			class="inline-block size-2.5 shrink-0 rounded-full border border-black/10"
+			style="background: {colors.c1}"
+			aria-hidden="true"
+		></span>
+	{/if}
+{/snippet}
+
 {#if segment}
 	<!-- Backdrop -->
 	<div
@@ -626,81 +676,16 @@
 									Edit selection…
 								</ContextMenu.Item>
 								<ContextMenu.Separator />
-								<!-- Keywords — each category is its own submenu of keywords -->
-								<ContextMenu.Group>
-									<ContextMenu.GroupHeading>As a keyword</ContextMenu.GroupHeading>
-									{#each lexicon.categories as cat (cat.id)}
-										<ContextMenu.Sub>
-											<ContextMenu.SubTrigger>{cat.label}</ContextMenu.SubTrigger>
-											<ContextMenu.SubContent side="left" class="max-h-80">
-												{#each cat.keywords as kw (kw.id)}
-													<ContextMenu.Item
-														onSelect={() =>
-															applyLexicon('add_keyword_variant', { keyword_id: kw.id })}
-													>
-														{kw.label}
-													</ContextMenu.Item>
-												{/each}
-												<ContextMenu.Separator />
-												<ContextMenu.Item
-													onSelect={() => applyLexicon('create_keyword', { category_id: cat.id })}
-												>
-													New keyword from “{truncate(selectionText, 20)}”
-												</ContextMenu.Item>
-											</ContextMenu.SubContent>
-										</ContextMenu.Sub>
-									{/each}
-								</ContextMenu.Group>
-								<ContextMenu.Separator />
-								<!-- Key phrases — canonical labels that unify disparate
-									 phrasings under one concept. -->
-								<ContextMenu.Group>
-									<ContextMenu.GroupHeading>As a key phrase</ContextMenu.GroupHeading>
-									{#each keyPhrases as kp (kp.id)}
-										<ContextMenu.Item
-											onSelect={() =>
-												applyPhrase('add_phrase_variant', { key_phrase_id: kp.id })}
-										>
-											{kp.label}
-											<span class="ml-auto text-[10px] text-slate-400"
-												>{kp.variants.length}</span
-											>
-										</ContextMenu.Item>
-									{/each}
-									{#if keyPhrases.length}
-										<ContextMenu.Separator />
-									{/if}
-									<ContextMenu.Item onSelect={() => applyPhrase('create_key_phrase', {})}>
-										New key phrase from “{truncate(selectionText, 22)}”
-									</ContextMenu.Item>
-								</ContextMenu.Group>
-								<ContextMenu.Separator />
-								<!-- Add as theme — one submenu per tag group, mirroring the
-									 grouped tag panel on the right. -->
-								<ContextMenu.Group>
-									<ContextMenu.GroupHeading>As a theme</ContextMenu.GroupHeading>
-									{#each grouped as g (g.id)}
-										{#if g.themes.length}
-											<ContextMenu.Sub>
-												<ContextMenu.SubTrigger>{g.label}</ContextMenu.SubTrigger>
-												<ContextMenu.SubContent side="left" class="max-h-80">
-													{#each g.themes as theme (theme.id)}
-														<ContextMenu.Item
-															onSelect={() =>
-																applyLexicon('add_theme_term', { theme_id: theme.id })}
-														>
-															{titleCase(theme.id)}
-														</ContextMenu.Item>
-													{/each}
-												</ContextMenu.SubContent>
-											</ContextMenu.Sub>
-										{/if}
-									{/each}
-									<ContextMenu.Separator />
-									<ContextMenu.Item onSelect={() => applyLexicon('create_theme', {})}>
-										New theme from “{truncate(selectionText, 22)}”
-									</ContextMenu.Item>
-								</ContextMenu.Group>
+								<!-- Two tertiary drawers handle the heavy lifting: a Keyword
+									 drawer with the full lexicon, and a Phrase-link drawer for
+									 attaching the selection to a phrase wordlist. Themes are
+									 tagged from the right-side panel, not from this menu. -->
+								<ContextMenu.Item onSelect={openKeywordDrawer}>
+									Tag as keyword…
+								</ContextMenu.Item>
+								<ContextMenu.Item onSelect={openPhraseDrawer}>
+									Link to a phrase…
+								</ContextMenu.Item>
 							{/if}
 						</ContextMenu.Content>
 					</ContextMenu.Root>
@@ -789,15 +774,13 @@
 					{#if emotions.length}
 						<div class="mb-2 flex flex-wrap gap-1.5">
 							{#each emotions as e (e)}
-								{@const st = styleFor(e)}
 								<button
 									type="button"
 									title={emotionDesc.get(e) ?? ''}
 									onclick={() => (emotions = emotions.filter((x) => x !== e))}
-									class="flex items-center gap-1 rounded-full border border-transparent px-2 py-0.5 text-xs font-medium"
-									style="background: {st.background}; color: {st.color};
-										{st.gradient ? 'text-shadow: 0 1px 2px rgba(0,0,0,.55);' : ''}"
+									class="flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700"
 								>
+									{@render emotionDot(e)}
 									{titleCase(e)}<span class="opacity-70">✕</span>
 								</button>
 							{/each}
@@ -828,31 +811,23 @@
 					</div>
 					{#each emotionPrimaries as p (p.id)}
 						{#if expandedEmotion === p.id}
-							{@const shades = emotionShades(p.color)}
 							<div class="mt-2 rounded-md bg-slate-50 p-2.5" transition:slide={{ duration: 180 }}>
 								<!-- Intensity — low / medium / high, each a shade of the emotion -->
 								{@render subLabel('Intensity')}
 								<div class="flex flex-wrap gap-1.5">
 									{#each p.levels as lvl (lvl.id)}
 										{@const on = emotions.includes(lvl.id)}
-										{@const rgb = shades[lvl.intensity]}
 										<button
 											type="button"
 											title={emotionDesc.get(lvl.id) ?? ''}
 											onclick={() => (emotions = toggle(emotions, lvl.id))}
 											aria-pressed={on}
-											class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-all
+											class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors
 												{on
-												? 'border-transparent'
+												? 'border-slate-700 bg-slate-100 text-slate-800'
 												: 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'}"
-											style={on
-												? `background: ${rgbCss(rgb)}; color: ${textOn(rgb)};`
-												: ''}
 										>
-											<span
-												class="size-2.5 rounded-full border border-black/10"
-												style="background: {rgbCss(rgb)}"
-											></span>
+											{@render emotionDot(lvl.id)}
 											{titleCase(lvl.id)}
 										</button>
 									{/each}
@@ -873,20 +848,12 @@
 																type="button"
 																onclick={() => (emotions = toggle(emotions, d.id))}
 																aria-pressed={on}
-																class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-all
+																class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors
 																	{on
-																	? 'border-transparent text-white'
+																	? 'border-slate-700 bg-slate-100 text-slate-800'
 																	: 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'}"
-																style={on
-																	? `background: ${dyadGradient(
-																			d.id
-																		)}; text-shadow: 0 1px 2px rgba(0,0,0,.55);`
-																	: ''}
 															>
-																<span
-																	class="size-2.5 rounded-full border border-black/10"
-																	style="background: {dyadGradient(d.id)}"
-																></span>
+																{@render emotionDot(d.id)}
 																{titleCase(d.id)}
 															</button>
 														{/snippet}
@@ -1099,4 +1066,82 @@
 			<span class="text-xs text-muted-foreground">{tagCount} tag{tagCount === 1 ? '' : 's'} applied</span>
 		</div>
 	</aside>
+
+	<!-- New-theme dialog — opened from the right-click "New theme from…" item.
+		 Lets the reviewer give the new theme a real id, description, and group
+		 instead of dumping the raw selection into the codebook. -->
+	<Dialog.Root bind:open={newThemeOpen}>
+		<Dialog.Content class="sm:max-w-md">
+			<Dialog.Header>
+				<Dialog.Title>New theme</Dialog.Title>
+				<Dialog.Description>
+					“{newThemeSeed}” becomes the first term of the new theme.
+				</Dialog.Description>
+			</Dialog.Header>
+			<form
+				class="flex flex-col gap-3"
+				onsubmit={(e) => {
+					e.preventDefault();
+					submitNewTheme();
+				}}
+			>
+				<label class="flex flex-col gap-1 text-xs">
+					<span class="font-medium text-slate-600">Id</span>
+					<input
+						type="text"
+						bind:value={newThemeId}
+						class="rounded border border-slate-200 px-2 py-1 font-mono text-sm focus:border-slate-400 focus:outline-none"
+						placeholder="snake_case_id"
+					/>
+				</label>
+				<label class="flex flex-col gap-1 text-xs">
+					<span class="font-medium text-slate-600">Description</span>
+					<textarea
+						bind:value={newThemeDescription}
+						rows="3"
+						class="rounded border border-slate-200 px-2 py-1 text-sm focus:border-slate-400 focus:outline-none"
+						placeholder="What does this theme cover?"
+					></textarea>
+				</label>
+				<label class="flex flex-col gap-1 text-xs">
+					<span class="font-medium text-slate-600">Group</span>
+					<select
+						bind:value={newThemeGroup}
+						class="rounded border border-slate-200 px-2 py-1 text-sm focus:border-slate-400 focus:outline-none"
+					>
+						<option value="">Pick a group…</option>
+						{#each tagGroups as g (g.id)}
+							<option value={g.id}>{g.label}</option>
+						{/each}
+					</select>
+				</label>
+				{#if errorMsg}
+					<p class="text-xs text-rose-600">{errorMsg}</p>
+				{/if}
+				<div class="flex justify-end gap-2 pt-1">
+					<Button type="button" variant="ghost" size="sm" onclick={() => (newThemeOpen = false)}>
+						Cancel
+					</Button>
+					<Button type="submit" size="sm" disabled={lexBusy}>
+						{lexBusy ? 'Creating…' : 'Create theme'}
+					</Button>
+				</div>
+			</form>
+		</Dialog.Content>
+	</Dialog.Root>
+
+	<!-- Tertiary drawers — keyword tagging and phrase linking. Open from the
+		 right-click menu; stack above the segment drawer (z-60/70). -->
+	<KeywordTagDrawer
+		bind:open={keywordDrawerOpen}
+		selection={tertiarySelection}
+		categories={lexicon.categories}
+		busy={lexBusy}
+		{errorMsg}
+		onapplyVariant={(keywordId) =>
+			applyFromKeywordDrawer('add_keyword_variant', { keyword_id: keywordId })}
+		oncreate={(categoryId) =>
+			applyFromKeywordDrawer('create_keyword', { category_id: categoryId })}
+	/>
+	<PhraseLinkDrawer bind:open={phraseDrawerOpen} selection={tertiarySelection} />
 {/if}

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "schema_version": "1.7",
+    "schema_version": "1.8",
     "study_id": "wct_glp1",
     "description": "Tagging taxonomy for the WCT GLP-1 study. Segment annotations in segment_tags.json draw their theme, subtheme, emotion, and sentiment values from this codebook. Editable and versioned; bump schema_version when tags are added or revised.",
     "changelog": [
@@ -11,7 +11,8 @@
       "1.4 — replaced the emotion vocabulary with the Plutchik model (24 intensity levels + 28 dyads); added `tag_groups` and a `group` field on every theme and semantic tag so the segment tag drawer can nest them.",
       "1.5 — added the `decision_factors` tag group; moved risk_calculation, cost_benefit_reasoning, convenience_tradeoff, and conditional_decision into it as the study's core reasoning moves.",
       "1.6 — folded semantic_tags into theme_tags and removed the semantic dimension; former semantic tags are now themes that keep their group.",
-      "1.7 — split the `trial_logistics` group into `trial_motivators` (what draws people in) and `trial_barriers` (what gets in the way), so the two halves can be analysed separately."
+      "1.7 — split the `trial_logistics` group into `trial_motivators` (what draws people in) and `trial_barriers` (what gets in the way), so the two halves can be analysed separately.",
+      "1.8 — added `discontinuation_reasoning` as the mirror of `treatment_continuation`: the reasons or conditions that would lead a participant to stop or pause GLP-1 medication. Promoted from the recurring open-vocab topic `reasons_to_stop_glp1`."
     ],
     "sentiment_scale": {
       "0": "neutral / mixed",
@@ -168,6 +169,34 @@
       "terms": [
         "would not stop"
       ]
+    },
+    {
+      "id": "discontinuation_reasoning",
+      "description": "Reasons or conditions that would lead a participant to stop or pause GLP-1 medication. The mirror of treatment_continuation.",
+      "group": "treatment_experience",
+      "subthemes": [
+        {
+          "id": "cost_driven_stop",
+          "description": "Would stop because the medication became unaffordable or coverage was lost."
+        },
+        {
+          "id": "side_effect_stop",
+          "description": "Would stop because of side effects, complications, or tolerability."
+        },
+        {
+          "id": "goal_achieved_stop",
+          "description": "Would consider stopping after reaching a weight or health goal."
+        },
+        {
+          "id": "involuntary_stop",
+          "description": "Would stop only if forced to — supply shortage, formulary change, prescriber withdrawal, or other circumstances outside the participant's control."
+        },
+        {
+          "id": "medical_advice_stop",
+          "description": "Would stop on the recommendation of a clinician or because of a new medical condition."
+        }
+      ],
+      "terms": []
     },
     {
       "id": "drug_switching",
@@ -483,6 +512,13 @@
       "description": "Reasoning about diet, exercise, or behavior change alongside medication.",
       "group": "education_support",
       "terms": []
+    },
+    {
+      "id": "glad",
+      "description": "Added from the segment tag drawer; edit this description in codebook.json.",
+      "terms": [
+        "glad"
+      ]
     }
   ],
   "emotion_tags": [

@@ -31,8 +31,18 @@ export type Category = { id: string; label: string; description: string; keyword
 export type Theme = {
 	id: string;
 	description: string;
+	group?: string;
 	subthemes?: { id: string; description: string }[];
 	terms?: string[];
+};
+
+export type NewThemeInput = {
+	/** Slug for the new theme. If absent or already taken, a unique suffix is appended. */
+	id?: string;
+	/** Required when creating a theme from the drawer — a real description, not a placeholder. */
+	description?: string;
+	/** Optional tag_groups id. Validated against the codebook's tag_groups list. */
+	group?: string;
 };
 
 /** The lists the drawer renders — returned after every edit so it can refresh. */
@@ -129,16 +139,49 @@ export async function addThemeTerm(themeId: string, rawText: string): Promise<Le
 	return snapshot();
 }
 
-/** Create a new theme, seeded from the highlighted phrase as its first term. */
-export async function createTheme(rawText: string): Promise<LexiconState> {
+/**
+ * Create a new theme, seeded from the highlighted phrase as its first term.
+ * The reviewer supplies the id, description, and group via the drawer's "New
+ * theme" dialog — none are auto-generated except as a fallback when the input
+ * is omitted (the legacy direct-add path).
+ */
+export async function createTheme(
+	rawText: string,
+	opts: NewThemeInput = {}
+): Promise<LexiconState> {
 	const text = cleanText(rawText);
 	const codebook = await readCodebook();
 	const taken = new Set<string>(codebook.theme_tags.map((t) => t.id));
-	codebook.theme_tags.push({
-		id: uniqueId(slugify(text), taken),
-		description: 'Added from the segment tag drawer; edit this description in codebook.json.',
+
+	// Validate the optional group against the codebook's known tag_groups.
+	const tagGroups = (codebook.tag_groups as { id: string }[] | undefined) ?? [];
+	const knownGroups = new Set(tagGroups.map((g) => g.id));
+	const group =
+		typeof opts.group === 'string' && opts.group.trim() ? opts.group.trim() : '';
+	if (group && !knownGroups.has(group)) {
+		throw new Error(`Unknown tag group "${group}".`);
+	}
+
+	const requestedId = (opts.id ?? '').trim();
+	const baseId = requestedId ? slugify(requestedId) : slugify(text);
+	if (!baseId) throw new Error('Theme id is empty after slugifying.');
+	if (requestedId && taken.has(baseId)) {
+		throw new Error(`A theme with id "${baseId}" already exists.`);
+	}
+	const id = uniqueId(baseId, taken);
+
+	const description = (opts.description ?? '').trim();
+
+	const theme: Theme = {
+		id,
+		description:
+			description ||
+			'Added from the segment tag drawer; edit this description in codebook.json.',
 		terms: [text.toLowerCase()]
-	});
+	};
+	if (group) theme.group = group;
+
+	codebook.theme_tags.push(theme);
 	await saveDoc(CODEBOOK_KEY, CODEBOOK_PATH, codebook);
 	return snapshot();
 }

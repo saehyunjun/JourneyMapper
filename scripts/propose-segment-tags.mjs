@@ -178,11 +178,14 @@ const client = new Anthropic();
 
 async function proposeForInterview(interviewId) {
 	const segs = segmentsByInterview.get(interviewId);
+	// question_id is intentionally NOT sent: the model must tag what the
+	// participant's words are about, not what was asked. Including the
+	// eliciting question biases sentiment on negation-shaped prompts
+	// (e.g. "why would you stop") toward question-anchored codes.
 	const payload = segs.map((s) => ({
 		segment_id: s.segment_id,
 		turn_index: s.turn_index,
 		segment_index: s.segment_index,
-		question_id: s.question_id,
 		flags: s.flags,
 		text: s.text
 	}));

@@ -51,7 +51,11 @@ export const POST: RequestHandler = async ({ request }) => {
 				message = `Added “${trimmed}” to a theme.`;
 				break;
 			case 'create_theme':
-				state = await createTheme(text);
+				state = await createTheme(text, {
+					id: str(body.id),
+					description: str(body.description),
+					group: str(body.group)
+				});
 				message = `Created a new theme from “${trimmed}”.`;
 				break;
 			default:

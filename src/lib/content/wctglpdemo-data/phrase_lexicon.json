@@ -23,6 +23,12 @@
           "segment_id": "participant_09_t39_s01",
           "interview_id": "participant_09",
           "created_at": "2026-05-20T02:06:33.976Z"
+        },
+        {
+          "text": "lost and gained",
+          "segment_id": "participant_09_t03_s00",
+          "interview_id": "participant_09",
+          "created_at": "2026-05-20T18:58:22.901Z"
         }
       ]
     },
@@ -35,6 +41,30 @@
           "segment_id": "participant_08_t45_s00",
           "interview_id": "participant_08",
           "created_at": "2026-05-20T03:48:14.140Z"
+        }
+      ]
+    },
+    {
+      "id": "lost_and_gained_weight",
+      "label": "Lost And Gained Weight",
+      "variants": [
+        {
+          "text": "lost and gained weight",
+          "segment_id": "participant_09_t03_s00",
+          "interview_id": "participant_09",
+          "created_at": "2026-05-20T18:58:11.900Z"
+        }
+      ]
+    },
+    {
+      "id": "disparate",
+      "label": "Disparate",
+      "variants": [
+        {
+          "text": "disparate",
+          "segment_id": "participant_09_t09_s00",
+          "interview_id": "participant_09",
+          "created_at": "2026-05-20T19:01:07.962Z"
         }
       ]
     }

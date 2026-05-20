@@ -40,7 +40,7 @@
 	aria-label="Primary"
 >
 	<Tooltip.Provider delayDuration={150}>
-		<ul class="flex items-center gap-1 rounded-full bg-slate-900 p-1.5 shadow-xl ring-1 ring-white/10">
+		<ul class="flex items-center gap-1 rounded-full bg-accent-mint-foreground p-1.5 shadow-xl ring-1 ring-white/10 opacity-45 hover:opacity-100 ease-in-out transition-all duration-300">
 			{#each items as item (item.url)}
 				{@const Icon = item.icon}
 				{@const active = isActive(item.url)}
@@ -49,7 +49,7 @@
 						<a
 							href={item.url}
 							aria-current="page"
-							class="flex items-center gap-2 rounded-full bg-accent-mint px-3 py-2 text-sm font-medium text-white transition-colors duration-150"
+							class="flex items-center gap-2 rounded-full bg-accent-mint-background px-3 py-2 text-sm font-medium text-white transition-colors duration-150"
 						>
 							<Icon class="size-4 shrink-0" />
 							<span>{item.title}</span>
@@ -62,7 +62,7 @@
 										{...props}
 										href={item.url}
 										aria-label={item.title}
-										class="flex items-center rounded-full px-3 py-2 text-slate-300 transition-all ease-in-out duration-350 hover:bg-white/10 hover:text-white"
+										class="flex items-center rounded-full px-3 py-2 text-accent-mint/30 transition-all ease-in-out duration-350 hover:bg-white/10 hover:text-accent-mint"
 									>
 										<Icon class="size-4 shrink-0" />
 									</a>

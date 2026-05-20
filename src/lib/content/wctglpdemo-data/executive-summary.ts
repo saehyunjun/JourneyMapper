@@ -23,7 +23,6 @@ import {
 	annotations,
 	quotes,
 	questions,
-	questionLabel,
 	titleCase,
 	fragmentsMatching,
 	segmentsForTheme,
@@ -264,9 +263,15 @@ const SHORT_LABEL: Record<string, string> = {
 	cost_access: 'cost and access',
 	insurance_barrier: 'insurance barriers',
 	treatment_continuation: 'staying on treatment',
+	discontinuation_reasoning: 'reasons to consider stopping',
 	trial_participation_motivation: 'the motivation to join a trial',
 	monitoring_burden: 'the monitoring burden',
-	travel_burden: 'travel to the site'
+	travel_burden: 'travel to the site',
+	health_transformation: 'the broader health transformation',
+	non_weight_benefits: 'the non-weight benefits',
+	research_altruism: 'contributing to research',
+	clinical_trial_friction: 'friction with the clinical trial',
+	time_burden: 'the time burden of a trial'
 };
 
 function shortLabel(id: string): string {
@@ -289,15 +294,26 @@ const numWord = (n: number): string => NUM_WORDS[n] ?? String(n);
 /** A moment finding needs at least this many coded segments to qualify. */
 const MIN_MOMENT_N = 10;
 
-/** Brightest / hardest interview questions, by mean sentiment. */
-const rankedQuestions = questionSentiment.filter((q) => q.n >= MIN_MOMENT_N);
-const brightestQuestion = rankedQuestions[0];
-const hardestQuestion = rankedQuestions[rankedQuestions.length - 1];
+// Brightest / hardest are anchored to themes, not questions: a question's
+// sentiment is biased by the framing of the question ("would you stop" pulls
+// positive sentiment about staying), while a theme's sentiment is a read on
+// the topic itself. questionSentiment is kept above as a demoted internal stat.
+const rankedThemes = [...THEMES]
+	.filter((t) => t.n >= MIN_MOMENT_N)
+	.sort((a, b) => b.mean - a.mean);
+const brightestTheme = rankedThemes[0];
+const hardestTheme =
+	rankedThemes.length > 1 ? rankedThemes[rankedThemes.length - 1] : undefined;
 
-/** Most-discussed theme, and the most divisive theme distinct from it. */
-const mostDiscussed = [...THEMES].sort((a, b) => b.n - a.n)[0];
+/** Most-discussed theme, distinct from brightest/hardest. */
+const reservedThemes = new Set(
+	[brightestTheme?.theme, hardestTheme?.theme].filter(Boolean) as string[]
+);
+const mostDiscussed = [...THEMES]
+	.filter((t) => !reservedThemes.has(t.theme))
+	.sort((a, b) => b.n - a.n)[0];
 const mostDivisive = [...THEMES]
-	.filter((t) => t.theme !== mostDiscussed?.theme)
+	.filter((t) => t.theme !== mostDiscussed?.theme && !reservedThemes.has(t.theme))
 	.sort(
 		(a, b) =>
 			Math.min(b.positive, b.negative) - Math.min(a.positive, a.negative) || b.n - a.n
@@ -389,45 +405,45 @@ export function buildFindings(starredQuoteIds: string[] = []): Finding[] {
 	const starred = new Set(starredQuoteIds);
 	const findings: Finding[] = [];
 
-	if (brightestQuestion) {
-		const q = brightestQuestion;
+	if (brightestTheme) {
+		const t = brightestTheme;
 		findings.push({
 			id: 'brightest',
 			tone: 'positive',
 			eyebrow: 'Brightest moment',
-			stat: { value: formatMean(q.mean), caption: `avg sentiment · ${q.n} segments` },
-			headline: `${cap(shortLabel(q.question_id))} drew the study's warmest responses.`,
-			detail: `Asked “${questionLabel(q.question_id)}”, ${q.positive} of ${q.n} coded segments came back positive — the highest of any question in the guide.`,
-			distribution: { positive: q.positive, neutral: q.n - q.positive - q.negative, negative: q.negative },
+			stat: { value: formatMean(t.mean), caption: `avg sentiment · ${t.n} segments` },
+			headline: `${cap(shortLabel(t.theme))} drew the study's warmest responses.`,
+			detail: `Across ${t.n} coded segments tagged ${shortLabel(t.theme)}, ${t.positive} came back positive — the warmest reading of any theme in the codebook.`,
+			distribution: { positive: t.positive, neutral: t.n - t.positive - t.negative, negative: t.negative },
+			breakdownLabel: breakdownLabelFor(t.theme),
+			breakdown: subthemeBreakdown(t.theme),
 			quote: pickQuote(
-				quotes.filter((x) => x.question_id === q.question_id),
+				quotes.filter((x) => x.themes.includes(t.theme)),
 				starred,
 				'positive'
 			),
-			fragments: fragmentsMatching(
-				(a) => a.question_id === q.question_id && a.themes.length > 0
-			).sort(bySegmentId)
+			fragments: segmentsForTheme(t.theme).sort(bySegmentId)
 		});
 	}
 
-	if (hardestQuestion) {
-		const q = hardestQuestion;
+	if (hardestTheme) {
+		const t = hardestTheme;
 		findings.push({
 			id: 'hardest',
 			tone: 'negative',
 			eyebrow: 'Hardest moment',
-			stat: { value: formatMean(q.mean), caption: `avg sentiment · ${q.n} segments` },
-			headline: `${cap(shortLabel(q.question_id))} surfaced the most frustration.`,
-			detail: `Asked “${questionLabel(q.question_id)}”, ${q.negative} of ${q.n} coded segments came back negative — the lowest reading in the guide.`,
-			distribution: { positive: q.positive, neutral: q.n - q.positive - q.negative, negative: q.negative },
+			stat: { value: formatMean(t.mean), caption: `avg sentiment · ${t.n} segments` },
+			headline: `${cap(shortLabel(t.theme))} surfaced the most frustration.`,
+			detail: `Across ${t.n} coded segments tagged ${shortLabel(t.theme)}, ${t.negative} came back negative — the coolest reading of any theme in the codebook.`,
+			distribution: { positive: t.positive, neutral: t.n - t.positive - t.negative, negative: t.negative },
+			breakdownLabel: breakdownLabelFor(t.theme),
+			breakdown: subthemeBreakdown(t.theme),
 			quote: pickQuote(
-				quotes.filter((x) => x.question_id === q.question_id),
+				quotes.filter((x) => x.themes.includes(t.theme)),
 				starred,
 				'negative'
 			),
-			fragments: fragmentsMatching(
-				(a) => a.question_id === q.question_id && a.themes.length > 0
-			).sort(bySegmentId)
+			fragments: segmentsForTheme(t.theme).sort(bySegmentId)
 		});
 	}
 
@@ -519,15 +535,15 @@ export function buildFindings(starredQuoteIds: string[] = []): Finding[] {
 
 /**
  * The opening paragraph — a programmatic read of the corpus. Static: it leans
- * only on the question ranking, not on analyst stars.
+ * only on the theme ranking, not on analyst stars.
  */
 export const summaryText: string = [
 	`${cap(numWord(summaryStats.interviews))} GLP-1 patients sat for in-depth interviews,`,
 	`producing ${summaryStats.segments} coded segments across ${summaryStats.themes} themes.`,
 	`Sentiment ran ${sentimentLean.lean}: ${sentimentLean.posPct}% of coded moments registered`,
 	`positive against ${sentimentLean.negPct}% negative.`,
-	brightestQuestion && hardestQuestion
-		? `Patients spoke most warmly about ${shortLabel(brightestQuestion.question_id)}, and most guardedly about ${shortLabel(hardestQuestion.question_id)}.`
+	brightestTheme && hardestTheme
+		? `Patients spoke most warmly about ${shortLabel(brightestTheme.theme)}, and most guardedly about ${shortLabel(hardestTheme.theme)}.`
 		: ''
 ]
 	.filter(Boolean)

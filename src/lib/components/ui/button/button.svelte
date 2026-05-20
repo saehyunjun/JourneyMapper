@@ -10,6 +10,7 @@
 				default: "bg-accent-mint rounded-4xl  text-primary-foreground hover:bg-accent-mint-foreground hover:cursor-pointer hover:text-accent-mint-background hover:border-accent-mint",
 				outline: "border border-mauve bg-muted rounded-full hover:bg-accent-mint-foreground hover:text-primary dark:hover:bg-input/30 aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-transparent hover:cursor-pointer",
 				secondary: "bg-accent-mint-foreground rounded-full text-accent-mint-background hover:bg-accent-mint hover:text-accent-mint-background aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+				action: "bg-accent-mint-background rounded-full text-accent-mint-foreground shadow-md hover:bg-accent-mint hover:shadow-none duration-400",
 				ghost: "bg-mauve hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground",
 				destructive: "bg-destructive/10 hover:bg-destructive/20 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/20 text-destructive focus-visible:border-destructive/40 dark:hover:bg-destructive/30",
 				link: "text-primary w-fit border-b capitalize hover:border-b-2 hover:cursor-pointer",

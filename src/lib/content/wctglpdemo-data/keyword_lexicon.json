@@ -1007,6 +1007,13 @@
             "supportive",
             "support"
           ]
+        },
+        {
+          "id": "convenience",
+          "label": "Convenience",
+          "variants": [
+            "convenience"
+          ]
         }
       ]
     }

@@ -10,9 +10,11 @@
 <script lang="ts">
 	import { fly, fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import { Button } from '$lib/components/ui/button/index.ts';
 	import StatBar from '$lib/components/StatBar.svelte';
 	import { groupDrawer } from '$lib/stores/group-drawer.svelte.js';
 	import { groupStats } from '$lib/content/wctglpdemo-data/lexicon-stats';
+	import { XIcon } from '@lucide/svelte';
 
 	const stats = $derived(
 		groupDrawer.current ? groupStats(groupDrawer.current.kind, groupDrawer.current.id) : null
@@ -32,14 +34,14 @@
 {#if stats}
 	<!-- Backdrop — light, so a primary drawer underneath stays legible. -->
 	<div
-		class="fixed inset-0 z-55 bg-slate-900/20"
+		class="fixed inset-0 z-99 bg-slate-900/30"
 		transition:fade={{ duration: 180 }}
 		onclick={() => groupDrawer.close()}
 		aria-hidden="true"
 	></div>
 
 	<aside
-		class="fixed inset-y-0 right-0 z-60 flex w-full max-w-102 flex-col bg-white shadow-2xl md:max-w-122 xl:max-w-142"
+		class="fixed inset-y-0 right-0 z-109 flex w-full max-w-102 flex-col bg-white shadow-2xl md:max-w-122 xl:max-w-142"
 		transition:fly={{ x: 120, duration: 300, easing: cubicOut }}
 		aria-label="Keyword and theme stats"
 	>
@@ -56,14 +58,14 @@
 					<p class="mt-0.5 text-xs text-slate-500">{stats.context}</p>
 				{/if}
 			</div>
-			<button
-				type="button"
+			<Button
+				variant="ghost"
+				size="sm"
 				onclick={() => groupDrawer.close()}
 				aria-label="Close"
-				class="shrink-0 rounded p-1 text-lg leading-none text-slate-400 hover:bg-slate-100 hover:text-slate-700"
 			>
-				✕
-			</button>
+				<XIcon size="sm"/>
+		</Button>
 		</div>
 
 		<!-- Body -->
@@ -79,16 +81,14 @@
 			</div>
 
 			{#if stats.segmentCount === 0}
-				<p class="text-sm text-slate-500">
+				<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">
 					No tagged segments reference this {stats.kind} yet.
 				</p>
 			{:else}
 				<!-- Sentiment -->
 				<section class="flex flex-col gap-1.5">
-					<p class="text-xs font-medium text-slate-500">
-						Sentiment expressed{stats.avgSentiment != null
-							? ` · average ${stats.avgSentiment.toFixed(1)}`
-							: ''}
+					<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">
+						Sentiment expressed
 					</p>
 					{#each stats.sentiment as s (s.value)}
 						<StatBar
@@ -104,7 +104,7 @@
 				<!-- Emotions -->
 				{#if stats.emotions.length}
 					<section class="flex flex-col gap-1.5">
-						<p class="text-xs font-medium text-slate-500">Emotions expressed</p>
+						<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">Emotions expressed</p>
 						{#each stats.emotions as e (e.id)}
 							<StatBar
 								label={e.label}
@@ -120,7 +120,7 @@
 				<!-- Common words -->
 				{#if stats.commonWords.length}
 					<section class="flex flex-col gap-1.5">
-						<p class="text-xs font-medium text-slate-500">Common words used</p>
+						<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">Common words used</p>
 						{#each stats.commonWords as w (w.word)}
 							<StatBar
 								label={w.word}
@@ -136,7 +136,7 @@
 				<!-- Co-occurring themes -->
 				{#if stats.relatedThemes.length}
 					<section class="flex flex-col gap-1.5">
-						<p class="text-xs font-medium text-slate-500">
+						<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">
 							{stats.kind === 'keyword' ? 'Themes it appears in' : 'Co-tagged themes'}
 						</p>
 						{#each stats.relatedThemes.slice(0, 8) as t (t.id)}
@@ -153,7 +153,7 @@
 
 				<!-- Per participant -->
 				<section class="flex flex-col gap-1.5">
-					<p class="text-xs font-medium text-slate-500">By participant</p>
+					<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">By participant</p>
 					{#each stats.perParticipant as p (p.interviewId)}
 						<StatBar
 							label={p.label}

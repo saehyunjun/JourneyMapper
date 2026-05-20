@@ -404,7 +404,7 @@
 			{/each}
 		</div>
 
-		<p class="caption text-xs leading-snug text-muted-foreground">
+		<p class="caption">
 			Each wedge is one theme, clustered into its codebook group; radial length = {unitLabel},
 			stacked into sentiment bands. Hover a wedge or a group label to isolate it{onselect
 				? '; click a theme to open the quotes behind it'

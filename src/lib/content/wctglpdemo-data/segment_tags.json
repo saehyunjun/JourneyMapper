@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.2",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T14:58:11.605Z",
+    "generated_at": "2026-05-20T19:09:50.758Z",
     "generator": "scripts/build-segment-tags.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/segments.json",
@@ -9253,13 +9253,12 @@
         "prior_weight_loss_medication"
       ],
       "emotions": [
-        "sadness",
-        "disgust"
+        "remorse"
       ],
       "sentiment": -1,
-      "confidence": 0.85,
-      "source": "ai_proposed",
-      "review_status": "pending",
+      "confidence": 1,
+      "source": "human",
+      "review_status": "confirmed",
       "reviewer_notes": ""
     },
     {
@@ -9627,20 +9626,6 @@
       "source": "human",
       "review_status": "pending",
       "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_10_t61_s00",
-      "interview_id": "participant_10",
-      "question_id": "oral_vs_injectable",
-      "topics": [],
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.4,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "social exchange"
     },
     {
       "segment_id": "participant_10_t63_s00",
@@ -11771,14 +11756,19 @@
       "topics": [],
       "themes": [
         "clinical_trial_friction",
-        "trial_participation_motivation"
+        "trial_participation_motivation",
+        "visit_logistics",
+        "time_burden",
+        "travel_burden"
       ],
       "subthemes": [],
-      "emotions": [],
+      "emotions": [
+        "anxiety"
+      ],
       "sentiment": -1,
-      "confidence": 0.6,
-      "source": "ai_proposed",
-      "review_status": "pending",
+      "confidence": 1,
+      "source": "human",
+      "review_status": "confirmed",
       "reviewer_notes": "comment on dropout risk"
     },
     {

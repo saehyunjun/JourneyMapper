@@ -368,7 +368,7 @@
 <!-- Theme drawer — the selected participant's segments for one theme -->
 <RightDrawer bind:open={themeDrawerOpen}>
 	<div class="flex h-full flex-col">
-		<div class="flex flex-col gap-1 border-b border-slate-200 p-6">
+		<div class="flex flex-col gap-1 border-b border-muted p-6">
 			<span class="figcaption text-accent-mint">
 				Theme · {profileName(profiles[selectedParticipant], participantLabel(selectedParticipant))}
 			</span>

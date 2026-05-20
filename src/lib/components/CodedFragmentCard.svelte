@@ -22,6 +22,7 @@
 		type ThemeFragment
 	} from '$lib/content/wctglpdemo-data/analysis';
 	import { profileName, type ParticipantProfile } from '$lib/types/participant-profile';
+	import { emotionDots } from '$lib/utils/emotion-colors';
 
 	let {
 		fragment,
@@ -95,7 +96,28 @@
 			{SENTIMENT_LABELS[fragment.sentiment]}
 		</span>
 		{#each fragment.emotions as e (e)}
-			<span class="rounded-full bg-slate-100 px-1.5 py-0.5 text-slate-600">{titleCase(e)}</span>
+			{@const c = emotionDots(e)}
+			<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-1.5 py-0.5 text-slate-600">
+				{#if c.c2}
+					<span class="relative inline-block h-2 w-3.5" aria-hidden="true">
+						<span
+							class="absolute left-0 top-0 size-2 rounded-full border border-black/10"
+							style="background: {c.c1}"
+						></span>
+						<span
+							class="absolute left-1.5 top-0 size-2 rounded-full border border-black/10"
+							style="background: {c.c2}"
+						></span>
+					</span>
+				{:else}
+					<span
+						class="inline-block size-2 rounded-full border border-black/10"
+						style="background: {c.c1}"
+						aria-hidden="true"
+					></span>
+				{/if}
+				{titleCase(e)}
+			</span>
 		{/each}
 		{#if fragment.in_pull_quote}
 			<span class="font-mono text-accent-mint">↑ in {fragment.quote_id}</span>

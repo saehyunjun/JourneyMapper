@@ -23,6 +23,7 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Checkbox } from '$lib/components/ui/checkbox/index.js';
 	import KeywordText from '$lib/components/KeywordText.svelte';
+	import { emotionDots } from '$lib/utils/emotion-colors';
 	import { toasts } from '$lib/stores/toasts.svelte.js';
 	import type { AutotagJob } from '$lib/server/autotag';
 	import {
@@ -485,25 +486,49 @@
 
 <svelte:window onresize={alignToolbar} />
 
-{#snippet tagChip(kind: CardTag['kind'], label: string)}
-	<span
-		class="rounded-full px-2 py-0.5 text-[10px] font-medium
-			{kind === 'theme'
-			? 'bg-accent-mint/15 text-accent-mint'
-				: 'bg-slate-200 text-slate-600'}"
-	>
-		{label}
-	</span>
+{#snippet tagChip(kind: CardTag['kind'], id: string)}
+	{#if kind === 'emotion'}
+		{@const c = emotionDots(id)}
+		<span
+			class="inline-flex items-center gap-1 rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-medium text-slate-600"
+		>
+			{#if c.c2}
+				<span class="relative inline-block h-2 w-3.5" aria-hidden="true">
+					<span
+						class="absolute left-0 top-0 size-2 rounded-full border border-black/10"
+						style="background: {c.c1}"
+					></span>
+					<span
+						class="absolute left-1.5 top-0 size-2 rounded-full border border-black/10"
+						style="background: {c.c2}"
+					></span>
+				</span>
+			{:else}
+				<span
+					class="inline-block size-2 rounded-full border border-black/10"
+					style="background: {c.c1}"
+					aria-hidden="true"
+				></span>
+			{/if}
+			{titleCase(id)}
+		</span>
+	{:else}
+		<span
+			class="rounded-full bg-accent-mint/15 px-2 py-0.5 text-[10px] font-medium text-accent-mint"
+		>
+			{titleCase(id)}
+		</span>
+	{/if}
 {/snippet}
 
 <div class="flex flex-1 flex-col bg-slate-50">
 	<!-- Hero -->
 	<div
-		class="flex h-60 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
+		class="flex h-60 w-full flex-col justify-center bg-green-200 bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
 	>
 		<div class="mx-auto flex w-full max-w-3xl flex-col gap-3 px-8">
-			<span class="figcaption text-white">WCT GLP-1 Interviews · Pipeline</span>
-			<h1 class="font-heading text-4xl font-light uppercase text-primary-foreground md:text-5xl">
+			<span class="figcaption text-primary">WCT GLP-1 Interviews · Pipeline</span>
+			<h1 class="font-heading text-4xl font-light uppercase text-primary md:text-5xl">
 				Review interviews
 			</h1>
 		</div>
@@ -519,7 +544,7 @@
 			<select
 				value={data.review?.interviewId ?? ''}
 				onchange={(e) => goto(`?interview=${e.currentTarget.value}`, { keepFocus: true })}
-				class="rounded border border-slate-300 px-2 py-1 text-sm text-slate-700"
+				class="rounded border border-muted px-2 py-1 text-sm text-slate-700"
 			>
 				<option value="">— pick an interview —</option>
 				{#each data.interviewIds as id (id)}
@@ -544,7 +569,7 @@
 				<div
 					class="flex items-center gap-3 rounded-lg border border-accent-mint/50 bg-accent-mint/5 p-4 text-sm text-slate-700"
 				>
-					<LoaderIcon class="size-5 shrink-0 animate-spin text-accent-mint" />
+					<LoaderIcon class="size-5 shrink-0 animate-spin text-accent-mint-background" />
 					<div>
 						<p class="font-medium text-slate-800">Autotagging {autotagJob.interviewId}…</p>
 						<p class="text-xs text-slate-500">
@@ -614,12 +639,12 @@
 					<!-- Persona details — editable participant profile for the interview
 						 in review, mirroring the fields of the participant drawer. -->
 					<aside
-						class="flex w-full shrink-0 flex-col gap-4 self-start rounded-lg border border-slate-200 bg-white p-5 lg:sticky lg:top-6 lg:w-72"
+						class="flex w-full shrink-0 flex-col gap-4 self-start rounded-lg border border-muted bg-white p-5 lg:sticky lg:top-6 lg:w-72"
 					>
 						<div class="flex flex-col gap-0.5">
-							<span class="figcaption text-accent-mint">Participant details</span>
-							<p class="text-xs text-slate-500">
-								Persona details for this interviewee — saved to their profile.
+							<span class="font-heading text-sm font-medium text-accent-mint-background capitalize">Participant details</span>
+							<p class="text-xs text-muted-foreground">
+								Persona details provide more depth to each transcript and quote. Add and edit them for this interviewee.
 							</p>
 						</div>
 
@@ -713,7 +738,7 @@
 
 						<div class="flex flex-col gap-1.5">
 							<span class="text-xs font-medium text-slate-500">Participant type</span>
-							<div class="flex overflow-hidden rounded-md border border-slate-200">
+							<div class="flex overflow-hidden rounded-md border border-muted">
 								{#each ['individual', 'composite'] as const as type (type)}
 									<button
 										type="button"
@@ -759,7 +784,7 @@
 						<form
 							method="POST"
 							action="?/saveQuestions"
-							class="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-4"
+							class="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-muted bg-white p-4"
 							use:enhance={() => {
 								savingQuestions = true;
 								return async ({ update }) => {
@@ -796,7 +821,7 @@
 						 Tooltip.Provider wraps everything so the merge/unmerge button and
 						 every per-bubble icon button share one delayed hover behaviour. -->
 					<div
-						class="relative flex min-w-0 flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5 md:flex-1"
+						class="relative flex min-w-0 flex-col gap-4 rounded-lg border border-muted bg-white p-5 md:flex-1"
 						bind:this={transcriptWrap}
 					>
 						<Tooltip.Provider delayDuration={150}>
@@ -806,13 +831,13 @@
 							{@const isUnmerge = canUnmerge}
 							{@const busy = isUnmerge ? unmerging : merging}
 							{@const enabled = isUnmerge ? !unmerging : canMerge && !merging}
-							<div class="absolute left-2 z-10" style="top: {toolbarTop}px">
+							<div class="absolute left-10 z-10" style="top: {toolbarTop}px">
 								<Tooltip.Root>
 									<Tooltip.Trigger>
 										{#snippet child({ props })}
 											<Button
 												{...props}
-												variant="default"
+												variant="action"
 												size="icon-sm"
 												disabled={!enabled}
 												onclick={isUnmerge ? unmergeSelected : mergeSelected}
@@ -839,7 +864,7 @@
 									</Tooltip.Content>
 								</Tooltip.Root>
 								{#if segmentActionError}
-									<p class="mt-1.5 max-w-52 text-xs text-rose-600">{segmentActionError}</p>
+									<p class="mt-1.5 max-w-sm text-xs text-rose-600">{segmentActionError}</p>
 								{/if}
 							</div>
 						{/if}
@@ -850,7 +875,7 @@
 								<img
 									src={wctLogoUrl}
 									alt="WCT interviewer"
-									class="mt-5 size-9 shrink-0 rounded-full border border-slate-200 bg-white object-contain"
+									class="mt-5 size-9 shrink-0 rounded-full border border-muted bg-white object-contain"
 								/>
 								<div class="flex min-w-0 flex-1 flex-col gap-1.5">
 									<div class="flex flex-wrap items-center justify-between gap-2">
@@ -913,13 +938,14 @@
 													title="Select for merge"
 													class="size-4 cursor-pointer accent-accent-mint"
 												/>
-												<div class="flex items-center gap-0.5">
+												<div class="flex flex-col items-center gap-0.5">
 													<Tooltip.Root>
 														<Tooltip.Trigger>
 															{#snippet child({ props })}
-																<button
+																<Button
 																	{...props}
-																	type="button"
+																	variant="ghost"
+																	size="xs"
 																	onclick={() => {
 																		if (tagAction === 'untag') untagSegment(seg.segment_id);
 																		else if (tagAction === 'retag') retagSegment(seg.segment_id);
@@ -927,14 +953,13 @@
 																	}}
 																	disabled={untagging}
 																	aria-label={tagLabel}
-																	class="rounded p-1 text-slate-300 transition-colors hover:bg-accent-mint/15 hover:text-slate-700 disabled:opacity-40"
 																>
 																	{#if tagAction === 'untag'}
 																		<EraserIcon size={14} />
 																	{:else}
 																		<TagIcon size={14} />
 																	{/if}
-																</button>
+																</Button>
 															{/snippet}
 														</Tooltip.Trigger>
 														<Tooltip.Content side="left">
@@ -944,13 +969,14 @@
 													<Tooltip.Root>
 														<Tooltip.Trigger>
 															{#snippet child({ props })}
-																<button
+																<Button
 																	{...props}
-																	type="button"
+																	variant="ghost"
+																	size="xs"
 																	onclick={() => toggleStar(seg.segment_id)}
 																	disabled={togglingSegment === seg.segment_id}
 																	aria-pressed={starredSegments.has(seg.segment_id)}
-																	class="rounded p-1 transition-colors hover:bg-accent-mint/15 disabled:opacity-40
+																	class="
 																		{starredSegments.has(seg.segment_id)
 																		? 'text-amber-400'
 																		: 'text-slate-300 hover:text-amber-400'}"
@@ -961,7 +987,7 @@
 																			? 'currentColor'
 																			: 'none'}
 																	/>
-																</button>
+																</Button>
 															{/snippet}
 														</Tooltip.Trigger>
 														<Tooltip.Content side="left">
@@ -1004,7 +1030,7 @@
 												{#if ann}
 													<div class="mt-2 flex flex-wrap items-center justify-end gap-1.5">
 														{#each visibleTags as tag (tag.kind + tag.id)}
-															{@render tagChip(tag.kind, titleCase(tag.id))}
+															{@render tagChip(tag.kind, tag.id)}
 														{/each}
 														{#if hiddenCount > 0}
 															<Popover.Root>
@@ -1027,7 +1053,7 @@
 																				</p>
 																				<div class="flex flex-wrap gap-1">
 																					{#each ann.themes as th (th)}
-																						{@render tagChip('theme', titleCase(th))}
+																						{@render tagChip('theme', th)}
 																					{/each}
 																				</div>
 																			</div>
@@ -1041,7 +1067,7 @@
 																				</p>
 																				<div class="flex flex-wrap gap-1">
 																					{#each ann.emotions as em (em)}
-																						{@render tagChip('emotion', titleCase(em))}
+																						{@render tagChip('emotion', em)}
 																					{/each}
 																				</div>
 																			</div>

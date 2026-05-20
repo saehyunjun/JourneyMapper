@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T14:57:38.580Z",
+    "generated_at": "2026-05-20T18:36:37.055Z",
     "generator": "scripts/build-segments.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -5896,10 +5896,10 @@
       "segment_index": 0,
       "question_id": "trial_motivation",
       "speaker": "participant",
-      "text": "Yeah, because it would help me track my steps.",
+      "text": "Yeah, because [the Fitbit] would help me track my steps.",
       "char_start": 7676,
       "char_end": 7722,
-      "word_count": 9,
+      "word_count": 10,
       "flags": []
     },
     {
