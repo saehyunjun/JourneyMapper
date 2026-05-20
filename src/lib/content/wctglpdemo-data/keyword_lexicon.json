@@ -6,7 +6,8 @@
     "description": "Keyword cluster catalog, schema 3.0. Each cluster declares parent_theme + parent_subtheme as FKs into codebook.next.json. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows continue to live in keyword_tags.json, keyed by (cluster_id, segment_id, char_start, char_end).",
     "changelog": [
       "3.0-draft — replaced the `categories[].keywords[]` shape with a flat `clusters[]` keyed by parent_theme + parent_subtheme. The 102 clusters from keyword_lexicon.json @ 2.0 will be re-classified via the codebook-migration map in codebook_migration_map.json; some will split into parallel clusters with different parents (e.g. cost as a treatment vs. trial barrier).",
-      "3.0-draft (porting pass) — ported 103 clusters from keyword_lexicon.json @ 2.0 via scripts/migrate-keyword-lexicon.mjs. Each cluster carries parent_theme + parent_subtheme assigned by category default + per-cluster overrides. Descriptions are empty for now; analyst should backfill as part of Phase 0 review."
+      "3.0-draft (porting pass) — ported 103 clusters from keyword_lexicon.json @ 2.0 via scripts/migrate-keyword-lexicon.mjs. Each cluster carries parent_theme + parent_subtheme assigned by category default + per-cluster overrides. Descriptions are empty for now; analyst should backfill as part of Phase 0 review.",
+      "3.0 — variant expansion pass. Bug-fixed semaglutide cluster (removed stray 'positive' and incorrect 'eli lilly' variants; 'eli lilly' now correctly lives on tirzepatide). Added manufacturer semantic links: semaglutide ↔ novo nordisk/novo/rybelsus; tirzepatide ↔ eli lilly/lilly. Expanded high-traffic clusters (glp_1, injection, oral_medication, dosing_schedule, diabetes, glucose_monitoring, fasting_blood, travel_burden, visit_frequency, trial_site, clinical_trial, placebo, randomized, financial_compensation, side_effects, needle_phobia, weight_maintenance, weight_loss, weight_regain, hunger, food_noise, quality_of_life, obesity, shortages, coverage, insurance, prior_authorization, healthcare_benefits, scary, meal_replacement, gastric_effects, complication, stall, safety, risk, convenience, support, compounded_medication). Added 13 new clusters: a1c, bmi, sleep_apnea, pcos, thyroid, fda_approval, long_term_use, research_self, diet_exercise, previous_weight_loss, transparency, cost_prohibitive. Backfilled descriptions on every touched cluster. Backup of prior live: keyword_lexicon.v2-backup.json."
     ],
     "cluster_shape": {
       "id": "Slug, lowercase + underscores. Globally unique. Example: 'treatment_cost_concerns'.",
@@ -46,7 +47,7 @@
     {
       "id": "clinical_trial",
       "label": "Clinical trial",
-      "description": "",
+      "description": "Generic references to clinical trials — participation, enrollment, phases.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
@@ -55,33 +56,72 @@
         "trial",
         "trials",
         "study",
-        "studies"
+        "studies",
+        "research study",
+        "research studies",
+        "trial participation",
+        "enroll",
+        "enrolled",
+        "enrolling",
+        "enrollment",
+        "enrol",
+        "enrolment",
+        "participate",
+        "participating",
+        "participation",
+        "phase 2",
+        "phase 3",
+        "phase ii",
+        "phase iii",
+        "phase two",
+        "phase three"
       ]
     },
     {
       "id": "placebo",
       "label": "Placebo",
-      "description": "",
+      "description": "Inactive comparator used in controlled trials — sugar pill, control arm, double-blind designs.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
         "placebo-controlled",
         "placebo controlled",
         "placebo effect",
-        "placebo"
+        "placebo",
+        "sugar pill",
+        "sugar pills",
+        "control group",
+        "control arm",
+        "placebo arm",
+        "treatment arm",
+        "active arm",
+        "double blind",
+        "double-blind",
+        "single blind",
+        "single-blind",
+        "blinded",
+        "open label",
+        "open-label"
       ]
     },
     {
       "id": "randomized",
       "label": "Randomized",
-      "description": "",
+      "description": "Random assignment to study arms — odds of getting drug vs. placebo.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
         "randomized",
         "randomised",
         "randomization",
-        "randomisation"
+        "randomisation",
+        "random",
+        "randomly",
+        "by chance",
+        "50/50",
+        "fifty fifty",
+        "fifty-fifty",
+        "coin flip"
       ]
     },
     {
@@ -102,28 +142,58 @@
     {
       "id": "dosing_schedule",
       "label": "Dosing schedule",
-      "description": "",
+      "description": "How often the dose is taken — weekly, monthly, every two weeks, etc.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
         "monthly injection",
+        "monthly injections",
         "weekly injection",
+        "weekly injections",
         "once a month",
         "once weekly",
         "once a week",
         "monthly",
-        "weekly"
+        "weekly",
+        "bi-weekly",
+        "biweekly",
+        "every two weeks",
+        "every other week",
+        "every week",
+        "every month",
+        "every other month",
+        "once every other month",
+        "every few weeks",
+        "twice a week",
+        "twice weekly",
+        "daily",
+        "once a day",
+        "every day",
+        "dosing",
+        "dose",
+        "doses",
+        "dosage",
+        "maintenance dose"
       ]
     },
     {
       "id": "fasting_blood",
       "label": "Fasting blood",
-      "description": "",
+      "description": "Fasted blood draws — typically requiring 8–12 hours without food before the visit.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
         "fasting blood",
-        "fasting"
+        "fasting blood test",
+        "fasting blood draw",
+        "fast",
+        "fasting",
+        "fasted",
+        "12 hour fast",
+        "12-hour fast",
+        "overnight fast",
+        "no food",
+        "no eating"
       ]
     },
     {
@@ -142,57 +212,98 @@
     {
       "id": "glucose_monitoring",
       "label": "Continuous glucose monitoring",
-      "description": "",
+      "description": "CGMs, finger pricks, and other blood-glucose tracking methods.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
         "continuous glucose monitoring",
         "glucose monitoring",
         "glucose monitor",
-        "cgm"
+        "cgm",
+        "finger prick",
+        "finger pricks",
+        "finger prick test",
+        "finger stick",
+        "blood glucose",
+        "glucose levels",
+        "glucose level"
       ]
     },
     {
       "id": "travel_burden",
       "label": "Travel burden",
-      "description": "",
+      "description": "Time, distance, and effort to physically reach a trial site — driving, flying, commuting.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
         "round trip",
+        "round-trip",
         "transportation",
         "driving",
         "drive",
         "drove",
         "mileage",
-        "travel"
+        "miles",
+        "travel",
+        "traveling",
+        "travelling",
+        "flight",
+        "flights",
+        "flying",
+        "fly",
+        "commute",
+        "commuting",
+        "long drive",
+        "long way",
+        "far away",
+        "distance"
       ]
     },
     {
       "id": "trial_site",
       "label": "Trial site / clinic",
-      "description": "",
+      "description": "The physical location where trial visits happen — site, clinic, study center, hospital.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
         "research hospital",
+        "research center",
+        "research centre",
+        "study center",
+        "study centre",
+        "study site",
+        "study sites",
+        "study clinic",
         "trial site",
+        "trial sites",
         "sites",
         "site",
         "clinics",
-        "clinic"
+        "clinic",
+        "hospital",
+        "hospitals"
       ]
     },
     {
       "id": "visit_frequency",
       "label": "Visit frequency",
-      "description": "",
+      "description": "How often trial visits occur — weekly, monthly, every few weeks.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
         "visit frequency",
         "visits",
-        "visit"
+        "visit",
+        "appointment",
+        "appointments",
+        "every few weeks",
+        "frequently",
+        "frequent",
+        "scheduled visit",
+        "study visits",
+        "study visit",
+        "clinic visit",
+        "clinic visits"
       ]
     },
     {
@@ -221,11 +332,18 @@
     {
       "id": "convenience",
       "label": "Convenience",
-      "description": "",
+      "description": "Ease and simplicity as a trial motivator — convenient logistics, fewer obstacles.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
-        "convenience"
+        "convenience",
+        "convenient",
+        "easy",
+        "easier",
+        "simple",
+        "simpler",
+        "low-effort",
+        "low effort"
       ]
     },
     {
@@ -260,13 +378,22 @@
     {
       "id": "financial_compensation",
       "label": "Financial compensation",
-      "description": "",
+      "description": "Money paid to trial participants — stipend, reimbursement, payment for time.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
         "financial compensation",
         "compensation",
-        "compensated"
+        "compensated",
+        "stipend",
+        "payment",
+        "paid",
+        "pay",
+        "reimbursement",
+        "reimburse",
+        "reimbursed",
+        "money",
+        "honorarium"
       ]
     },
     {
@@ -331,7 +458,7 @@
     {
       "id": "meal_replacement",
       "label": "Meal replacement",
-      "description": "",
+      "description": "Shakes, protein drinks, and meal boxes offered as trial perks or for nutrition support.",
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -339,7 +466,16 @@
         "meal replacements",
         "meal replacement",
         "fairlife",
-        "shakes"
+        "fairlife shakes",
+        "shakes",
+        "shake",
+        "protein shake",
+        "protein shakes",
+        "meal box",
+        "meal boxes",
+        "supplementary food",
+        "approved meal",
+        "meal voucher"
       ]
     },
     {
@@ -428,12 +564,22 @@
     {
       "id": "support",
       "label": "Support",
-      "description": "",
+      "description": "Support sources — family, community, peer groups, providers.",
       "parent_theme": "condition_specific",
       "parent_subtheme": "advocacy_peer_groups",
       "variants": [
         "supportive",
-        "support"
+        "support",
+        "supported",
+        "supporting",
+        "encouragement",
+        "encourage",
+        "encouraging",
+        "community",
+        "group",
+        "peer support",
+        "support group",
+        "support groups"
       ]
     },
     {
@@ -469,16 +615,27 @@
     {
       "id": "diabetes",
       "label": "Diabetes",
-      "description": "",
+      "description": "Type 1 or type 2 diabetes — diagnosis, management, family history.",
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
         "type 2 diabetes",
         "type two diabetes",
+        "type 2 diabetic",
+        "type two diabetic",
         "type 2",
         "type two",
+        "t2d",
+        "type 1 diabetes",
+        "type one diabetes",
+        "type 1 diabetic",
+        "type one diabetic",
+        "type 1",
+        "type one",
+        "t1d",
         "diabetes",
-        "diabetic"
+        "diabetic",
+        "diabetics"
       ]
     },
     {
@@ -576,11 +733,16 @@
     {
       "id": "food_noise",
       "label": "Food noise",
-      "description": "",
+      "description": "Intrusive, persistent thoughts about food that GLP-1s often quiet.",
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
-        "food noise"
+        "food noise",
+        "thinking about food",
+        "constant thinking about food",
+        "obsessive food thoughts",
+        "intrusive food thoughts",
+        "food chatter"
       ]
     },
     {
@@ -749,13 +911,18 @@
     },
     {
       "id": "obesity",
-      "label": "Obesity",
-      "description": "",
+      "label": "Obesity / overweight",
+      "description": "Identification with the condition — obesity-as-disease framing, overweight, BMI category.",
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
         "obesity",
-        "obese"
+        "obese",
+        "overweight",
+        "weight issue",
+        "weight issues",
+        "weight problem",
+        "weight problems"
       ]
     },
     {
@@ -812,7 +979,7 @@
     {
       "id": "coverage",
       "label": "Coverage",
-      "description": "",
+      "description": "Whether the drug is covered by insurance — formulary status, network, plan rules.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -820,7 +987,14 @@
         "cover",
         "covers",
         "covered",
-        "covering"
+        "covering",
+        "in network",
+        "in-network",
+        "out of network",
+        "out-of-network",
+        "formulary",
+        "non-formulary",
+        "tier"
       ]
     },
     {
@@ -849,27 +1023,40 @@
     {
       "id": "healthcare_benefits",
       "label": "Healthcare / employer benefits",
-      "description": "",
+      "description": "How employer-provided healthcare and benefits shape access to GLP-1s.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
         "healthcare",
         "health care",
         "health insurance",
-        "health benefits"
+        "health benefits",
+        "employer",
+        "employer benefits",
+        "employer-provided",
+        "company benefits",
+        "job benefits",
+        "workplace benefits",
+        "workplace"
       ]
     },
     {
       "id": "insurance",
       "label": "Insurance",
-      "description": "",
+      "description": "Insurance plan, carrier, and policy as gatekeepers to access.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
         "insurance",
         "insurer",
         "insurers",
-        "insured"
+        "insured",
+        "policy",
+        "policies",
+        "plan",
+        "plans",
+        "carrier",
+        "carriers"
       ]
     },
     {
@@ -886,12 +1073,18 @@
     {
       "id": "needle_phobia",
       "label": "Needle phobia",
-      "description": "",
+      "description": "Fear of needles or injections as a barrier to treatment uptake.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
         "needle phobic",
-        "needle phobia"
+        "needle phobia",
+        "afraid of needles",
+        "fear of needles",
+        "scared of needles",
+        "scared of shots",
+        "hate needles",
+        "trypanophobia"
       ]
     },
     {
@@ -920,14 +1113,22 @@
     {
       "id": "prior_authorization",
       "label": "Prior authorization",
-      "description": "",
+      "description": "Insurer pre-approval requirement gating prescription fills — PAs, pre-auth, step therapy.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
         "prior authorization",
         "prior auth",
+        "pa",
         "authorization",
-        "authorisation"
+        "authorisation",
+        "pre-authorization",
+        "pre authorization",
+        "pre-auth",
+        "preauth",
+        "pre approval",
+        "preapproval",
+        "step therapy"
       ]
     },
     {
@@ -943,12 +1144,22 @@
     {
       "id": "shortages",
       "label": "Shortages",
-      "description": "",
+      "description": "Supply disruptions making the drug unavailable — shortages, stockouts, manufacturing gaps.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
         "shortage",
-        "shortages"
+        "shortages",
+        "supply",
+        "supply chain",
+        "stockout",
+        "stock out",
+        "out of stock",
+        "couldn't find",
+        "couldn't get",
+        "unavailable",
+        "scarcity",
+        "manufacturing delay"
       ]
     },
     {
@@ -990,32 +1201,43 @@
     {
       "id": "risk",
       "label": "Risk",
-      "description": "",
+      "description": "Risk language as a decision factor — explicit risk weighing, risk-benefit framing.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
         "risking",
         "risks",
         "risk",
-        "risky"
+        "risky",
+        "at risk",
+        "high risk",
+        "low risk",
+        "risk-benefit",
+        "risk benefit",
+        "risk vs benefit"
       ]
     },
     {
       "id": "scary",
       "label": "Scary / scared",
-      "description": "",
+      "description": "Fear language as a decision factor — scared, frightened, anxious about an outcome.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
         "scary",
         "scared",
-        "scare"
+        "scare",
+        "scares me",
+        "frightening",
+        "frightened",
+        "fearful",
+        "terrifying"
       ]
     },
     {
       "id": "weight_regain",
       "label": "Weight regain",
-      "description": "",
+      "description": "Putting weight back on after stopping or reducing treatment — yo-yo, rebound.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -1024,7 +1246,15 @@
         "gaining weight",
         "gain weight",
         "regain",
-        "yo-yo"
+        "regained",
+        "yo-yo",
+        "yo yo",
+        "put back on",
+        "put it back on",
+        "put the weight back on",
+        "weight rebound",
+        "rebound weight",
+        "bounced back"
       ]
     },
     {
@@ -1040,30 +1270,43 @@
     {
       "id": "compounded_medication",
       "label": "Compounded medication",
-      "description": "",
+      "description": "Compounding-pharmacy versions of GLP-1s used during shortages or as cheaper alternatives.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
         "compounded medication",
+        "compounded medications",
         "compound medication",
         "compounded",
         "compounding",
-        "compound"
+        "compound",
+        "compounded semaglutide",
+        "compounded tirzepatide",
+        "compounding pharmacy"
       ]
     },
     {
       "id": "glp_1",
       "label": "GLP-1",
-      "description": "",
+      "description": "Glucagon-like peptide-1 receptor agonist drug class.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
         "glp-1",
         "glp-1s",
         "glp1",
+        "glp1s",
         "glp 1",
+        "glp 1s",
         "glps",
-        "glp"
+        "glp",
+        "glp-1 medication",
+        "glp-1 medications",
+        "glp-1 drug",
+        "glp-1 drugs",
+        "glp-1 agonist",
+        "glp-1 receptor agonist",
+        "incretin"
       ]
     },
     {
@@ -1080,18 +1323,35 @@
     {
       "id": "injection",
       "label": "Injection / shot",
-      "description": "",
+      "description": "Subcutaneous injection delivery — pens, syringes, weekly/monthly shots.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
         "injectable",
+        "injectables",
+        "injectable medication",
+        "injectable product",
         "injection",
         "injections",
         "injecting",
         "inject",
+        "self-inject",
+        "self inject",
+        "self-injection",
+        "self injection",
         "shot",
         "shots",
-        "needle"
+        "one shot a week",
+        "shot a week",
+        "shot per week",
+        "needle",
+        "needles",
+        "syringe",
+        "syringes",
+        "pen",
+        "subcutaneous",
+        "subq",
+        "sub-q"
       ]
     },
     {
@@ -1120,27 +1380,36 @@
     {
       "id": "oral_medication",
       "label": "Oral medication / pill",
-      "description": "",
+      "description": "Pill, tablet, or capsule delivery — taken by mouth.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
         "oral glp-1",
         "oral glp-1s",
         "oral medication",
+        "oral medications",
         "orally",
         "oral",
         "pill",
-        "pills"
+        "pills",
+        "tablet",
+        "tablets",
+        "capsule",
+        "capsules",
+        "by mouth",
+        "swallow",
+        "swallowed"
       ]
     },
     {
       "id": "orforglipron",
       "label": "Orforglipron",
-      "description": "",
+      "description": "Eli Lilly's experimental oral, non-peptide GLP-1 receptor agonist (in development).",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
-        "orforglipron"
+        "orforglipron",
+        "orfo"
       ]
     },
     {
@@ -1165,58 +1434,71 @@
     },
     {
       "id": "semaglutide",
-      "label": "Semaglutide (Wegovy / Ozempic)",
-      "description": "",
+      "label": "Semaglutide (Wegovy / Ozempic / Rybelsus)",
+      "description": "Novo Nordisk's GLP-1 receptor agonist molecule — sold as Wegovy (weight loss), Ozempic (T2D), and Rybelsus (oral).",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
         "semaglutide",
         "wegovy",
         "ozempic",
-        "positive",
-        "eli lilly"
+        "rybelsus",
+        "novo nordisk",
+        "novo"
       ]
     },
     {
       "id": "tirzepatide",
       "label": "Tirzepatide (Mounjaro / Zepbound)",
-      "description": "",
+      "description": "Eli Lilly's dual GIP/GLP-1 receptor agonist — sold as Mounjaro (T2D) and Zepbound (weight loss).",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
         "tirzepatide",
         "mounjaro",
-        "zepbound"
+        "zepbound",
+        "eli lilly",
+        "lilly"
       ]
     },
     {
       "id": "safety",
       "label": "Safety",
-      "description": "",
+      "description": "Drug safety language — safe/unsafe, long-term safety, risk profile.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_knowledge_gaps",
       "variants": [
         "safety",
         "safe",
-        "safer"
+        "safer",
+        "safely",
+        "unsafe",
+        "risk profile",
+        "long-term safety",
+        "long term safety"
       ]
     },
     {
       "id": "complication",
       "label": "Health complication",
-      "description": "",
+      "description": "Serious medical complications attributed to or risked by treatment.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
         "health complication",
+        "health complications",
         "complications",
-        "complication"
+        "complication",
+        "complicated",
+        "complicating",
+        "medical complication",
+        "medical complications"
       ]
     },
     {
       "id": "gastric_effects",
       "label": "Gastric effects",
-      "description": "",
+      "description": "GI side effects on GLP-1s — nausea, vomiting, constipation, slowed gastric emptying.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -1224,82 +1506,149 @@
         "gastric issues",
         "gastric",
         "gastrointestinal",
-        "nausea"
+        "gi",
+        "gi issues",
+        "gi symptoms",
+        "nausea",
+        "nauseous",
+        "vomiting",
+        "vomit",
+        "throwing up",
+        "constipation",
+        "constipated",
+        "diarrhea",
+        "diarrhoea",
+        "stomach issues",
+        "upset stomach",
+        "stomach upset"
       ]
     },
     {
       "id": "side_effects",
       "label": "Side effects",
-      "description": "",
+      "description": "Unintended drug effects — both reported in trials (adverse events) and lived experience.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
         "side effects",
-        "side effect"
+        "side effect",
+        "adverse effect",
+        "adverse effects",
+        "adverse event",
+        "adverse events",
+        "adverse reaction",
+        "adverse reactions",
+        "reaction",
+        "reactions",
+        "negative reaction",
+        "bad reaction"
       ]
     },
     {
       "id": "stall",
       "label": "Stall / plateau",
-      "description": "",
+      "description": "Weight-loss stalls and plateaus on treatment — the scale stops moving.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
         "stall",
         "stalls",
         "stalled",
+        "stalling",
         "plateau",
-        "plateaus"
+        "plateaus",
+        "plateauing",
+        "stuck",
+        "not losing",
+        "weight loss stall"
       ]
     },
     {
       "id": "hunger",
-      "label": "Hunger",
-      "description": "",
+      "label": "Hunger / appetite / satiety",
+      "description": "Appetite signals — hunger, cravings, fullness, satiety changes on GLP-1s.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
         "hungry",
         "ravenous",
         "hunger",
-        "appetite"
+        "appetite",
+        "appetites",
+        "craving",
+        "cravings",
+        "crave",
+        "satiety",
+        "satiated",
+        "full",
+        "fullness",
+        "satisfied",
+        "feel full"
       ]
     },
     {
       "id": "quality_of_life",
       "label": "Quality of life",
-      "description": "",
+      "description": "Felt life improvement from treatment — energy, confidence, dramatic change.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
-        "quality of life"
+        "quality of life",
+        "life changing",
+        "life-changing",
+        "changed my life",
+        "transformed my life",
+        "dramatic difference",
+        "huge difference"
       ]
     },
     {
       "id": "weight_loss",
       "label": "Weight loss",
-      "description": "",
+      "description": "Active weight loss — pounds lost, percent body weight, the loss phase.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
         "weight loss",
+        "weight reduction",
         "lose weight",
         "losing weight",
-        "lost weight"
+        "lost weight",
+        "shed pounds",
+        "shed weight",
+        "shedding weight",
+        "dropped weight",
+        "dropped pounds",
+        "drop weight",
+        "slimmed down",
+        "slimming down",
+        "pounds off",
+        "lbs off",
+        "body weight",
+        "percent body weight"
       ]
     },
     {
       "id": "weight_maintenance",
       "label": "Weight maintenance",
-      "description": "",
+      "description": "Holding weight stable after loss — the maintenance phase of treatment.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
         "weight maintenance",
         "weight management",
         "maintenance",
+        "maintenance phase",
+        "maintenance dose",
         "maintain",
-        "maintaining"
+        "maintaining",
+        "maintained",
+        "stable weight",
+        "weight stable",
+        "holding weight",
+        "keep the weight off",
+        "kept the weight off",
+        "keeping it off"
       ]
     },
     {
@@ -1314,12 +1663,203 @@
     },
     {
       "id": "side_effects_2",
-      "label": "Side effects",
-      "description": "",
+      "label": "Side effects (as barrier)",
+      "description": "Side effects framed as a reason not to start or to stop treatment.",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
-        "medical side effect"
+        "medical side effect",
+        "medical side effects",
+        "major side effects",
+        "major side effect"
+      ]
+    },
+    {
+      "id": "a1c",
+      "label": "A1C / HbA1c",
+      "description": "Hemoglobin A1c — three-month average blood sugar; common diabetes/pre-diabetes lab marker.",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "a1c",
+        "hba1c",
+        "hemoglobin a1c",
+        "haemoglobin a1c",
+        "a1c level",
+        "a1c levels"
+      ]
+    },
+    {
+      "id": "bmi",
+      "label": "BMI",
+      "description": "Body mass index references — used as a clinical eligibility / progress marker.",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "bmi",
+        "body mass index"
+      ]
+    },
+    {
+      "id": "sleep_apnea",
+      "label": "Sleep apnea",
+      "description": "Sleep apnea as a comorbidity often linked to obesity; CPAP usage.",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "sleep apnea",
+        "sleep apnoea",
+        "obstructive sleep apnea",
+        "osa",
+        "cpap"
+      ]
+    },
+    {
+      "id": "pcos",
+      "label": "PCOS",
+      "description": "Polycystic ovary syndrome — a common GLP-1 adjacent comorbidity.",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "pcos",
+        "polycystic ovary syndrome",
+        "polycystic ovarian syndrome",
+        "polycystic ovarian"
+      ]
+    },
+    {
+      "id": "thyroid",
+      "label": "Thyroid",
+      "description": "Thyroid conditions and history — relevant to GLP-1 boxed warnings.",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "thyroid",
+        "hypothyroid",
+        "hyperthyroid",
+        "thyroid cancer",
+        "medullary thyroid"
+      ]
+    },
+    {
+      "id": "fda_approval",
+      "label": "FDA approval",
+      "description": "Regulatory approval status — FDA approved, approval pathways, regulator references.",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_knowledge_gaps",
+      "variants": [
+        "fda",
+        "fda approved",
+        "fda approval",
+        "approved",
+        "approval",
+        "regulator",
+        "regulators",
+        "regulatory",
+        "not yet approved",
+        "newly approved"
+      ]
+    },
+    {
+      "id": "long_term_use",
+      "label": "Long-term use",
+      "description": "Indefinite or lifelong drug use — \"rest of my life,\" chronic-treatment framing.",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "rest of my life",
+        "for life",
+        "lifelong",
+        "long term",
+        "long-term",
+        "indefinitely",
+        "forever",
+        "chronic treatment",
+        "chronic medication"
+      ]
+    },
+    {
+      "id": "research_self",
+      "label": "Self-research",
+      "description": "Independently researching drugs, forums, COIs, certificates — DIY due diligence.",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "do my research",
+        "do my own research",
+        "doing research",
+        "did research",
+        "forums",
+        "forum",
+        "reddit",
+        "facebook group",
+        "online community",
+        "certificate of analysis",
+        "coa",
+        "coi"
+      ]
+    },
+    {
+      "id": "diet_exercise",
+      "label": "Diet and exercise (paired)",
+      "description": "The paired \"diet and exercise\" framing — the traditional, often-tried-and-failed alternative to GLP-1s.",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "diet and exercise",
+        "diet & exercise",
+        "diet exercise",
+        "exercise and diet",
+        "eat less and move more",
+        "calories in calories out",
+        "cico"
+      ]
+    },
+    {
+      "id": "previous_weight_loss",
+      "label": "Previous weight loss attempts",
+      "description": "Prior weight-loss attempts that failed, succeeded briefly, or set up the current attempt.",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "tried everything",
+        "tried it all",
+        "previous attempts",
+        "in the past",
+        "back in",
+        "years ago",
+        "since i was"
+      ]
+    },
+    {
+      "id": "transparency",
+      "label": "Provider transparency",
+      "description": "Wanting clear, upfront communication from the study team / providers.",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "transparency",
+        "transparent",
+        "upfront",
+        "up front",
+        "open communication",
+        "clear communication"
+      ]
+    },
+    {
+      "id": "cost_prohibitive",
+      "label": "Cost prohibitive",
+      "description": "Cost framed as absolutely blocking access — not just expensive, but impossible.",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "cost prohibitive",
+        "cost-prohibitive",
+        "prohibitively expensive",
+        "can't afford",
+        "cannot afford",
+        "out of reach",
+        "priced out"
       ]
     }
   ]

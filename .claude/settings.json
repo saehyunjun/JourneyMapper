@@ -53,7 +53,8 @@
       "Bash(mv codebook.next.json codebook.json)",
       "Bash(node -e \"const d = require\\('/Users/aaronjun/JourneyMapper/src/lib/content/wctglpdemo-data/codebook.json'\\); console.log\\('schema_version:', d.meta.schema_version, 'status:', d.meta.status\\);\")",
       "Bash(node scripts/build-keyword-usage.mjs)",
-      "Bash(grep -n 'async function save\\\\|themes,$\\\\|subthemes,$\\\\|/wctglpdemo/segment-tags' /Users/aaronjun/JourneyMapper/src/lib/components/SegmentTagDrawer.svelte)"
+      "Bash(grep -n 'async function save\\\\|themes,$\\\\|subthemes,$\\\\|/wctglpdemo/segment-tags' /Users/aaronjun/JourneyMapper/src/lib/components/SegmentTagDrawer.svelte)",
+      "Bash(node scripts/propose-segment-tags.mjs participant_06 --force)"
     ],
     "additionalDirectories": [
       "/tmp"

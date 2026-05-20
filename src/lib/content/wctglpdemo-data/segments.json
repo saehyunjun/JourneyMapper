@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T20:29:15.032Z",
+    "generated_at": "2026-05-20T23:35:02.306Z",
     "generator": "scripts/build-segments.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -1147,10 +1147,10 @@
       "segment_index": 2,
       "question_id": null,
       "speaker": "participant",
-      "text": "I've done some research on some of the things that are being talked about and they all sound very exciting.",
+      "text": "I've done some research on some of the [research drugs] that are being talked about and they all sound very exciting.",
       "char_start": 14884,
       "char_end": 14991,
-      "word_count": 20,
+      "word_count": 21,
       "flags": []
     },
     {

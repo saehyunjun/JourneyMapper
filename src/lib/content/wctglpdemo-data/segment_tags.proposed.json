@@ -2,34 +2,23 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T20:36:15.829Z",
-    "generator": "scripts/migrate-segment-tags.mjs",
+    "generated_at": "2026-05-20T23:37:06.486Z",
+    "generator": "scripts/propose-segment-tags.mjs",
     "model": "claude-opus-4-7",
     "codebook_schema_version": "2.0",
     "proposed_interviews": [
       "participant_06",
       "participant_07",
-      "participant_08",
       "participant_09",
       "participant_10",
       "participant_11",
       "participant_12"
     ],
     "notes": [
-      "AI-proposed theme/subtheme/emotion/sentiment/semantic tags, one entry per segment_id.",
+      "AI-proposed theme/subtheme/emotion/sentiment tags, one entry per segment_id.",
       "Tag ids are constrained to codebook.json at generation time (JSON-schema enum) and re-validated by build-segment-tags.mjs.",
       "Every entry is unreviewed — build-segment-tags.mjs writes them as review_status \"pending\".",
       "Re-propose an interview with: node scripts/propose-segment-tags.mjs <interview_id> --force"
-    ],
-    "sources": [
-      "src/lib/content/wctglpdemo-data/segment_tags.proposed.json",
-      "src/lib/content/wctglpdemo-data/codebook.next.json",
-      "src/lib/content/wctglpdemo-data/codebook_migration_map.json"
-    ],
-    "migration_status": "promoted",
-    "migration_notes": [
-      "Re-keyed from codebook.json @ 1.4 to codebook.next.json @ 2.0-draft.",
-      "488 of 626 proposals changed shape."
     ]
   },
   "proposals": {
@@ -46,24 +35,20 @@
         "treatment"
       ],
       "subthemes": [
-        "treatment_barriers",
         "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "treatment_barriers"
       ],
-      "emotions": [
-        "apprehension"
-      ],
+      "emotions": [],
       "sentiment": -1,
       "confidence": 0.9,
-      "note": ""
+      "note": "conditions for stopping; cost and family impact"
     },
     "participant_06_t03_s01": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "treatment_barriers"
       ],
       "emotions": [
         "annoyance"
@@ -77,41 +62,38 @@
         "treatment"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "treatment_decision_factors"
       ],
       "emotions": [
         "apprehension"
       ],
       "sentiment": -1,
-      "confidence": 0.9,
-      "note": ""
+      "confidence": 0.85,
+      "note": "would stop on major side effect"
     },
     "participant_06_t03_s03": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_barriers",
         "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "treatment_barriers"
       ],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.85,
-      "note": "summary recap"
+      "note": "summary of stop conditions"
     },
     "participant_06_t05_s00": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_barriers",
         "treatment_decision_factors"
       ],
       "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.75,
+      "sentiment": 1,
+      "confidence": 0.7,
       "note": ""
     },
     "participant_06_t05_s01": {
@@ -119,36 +101,24 @@
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.5,
-      "note": "meta/process question"
+      "confidence": 0.6,
+      "note": "meta/admin"
     },
     "participant_06_t07_s00": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "treatment_health_history",
+        "treatment_decision_factors",
+        "treatment_barriers"
       ],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.85,
-      "note": ""
+      "note": "considering switching for cost"
     },
     "participant_06_t07_s01": {
-      "themes": [
-        "treatment"
-      ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.85,
-      "note": ""
-    },
-    "participant_06_t07_s02": {
       "themes": [
         "treatment"
       ],
@@ -156,10 +126,24 @@
         "treatment_decision_factors"
       ],
       "emotions": [
+        "interest"
+      ],
+      "sentiment": 0,
+      "confidence": 0.8,
+      "note": "open to orforglipron if cheaper"
+    },
+    "participant_06_t07_s02": {
+      "themes": [
+        "treatment"
+      ],
+      "subthemes": [
+        "treatment_positive_experiences"
+      ],
+      "emotions": [
         "trust"
       ],
       "sentiment": 1,
-      "confidence": 0.7,
+      "confidence": 0.8,
       "note": ""
     },
     "participant_06_t09_s00": {
@@ -175,46 +159,34 @@
         "treatment"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "treatment_barriers"
       ],
       "emotions": [
         "annoyance"
       ],
       "sentiment": -1,
-      "confidence": 0.85,
-      "note": ""
+      "confidence": 0.8,
+      "note": "insurance/job coverage; obesity stigma; strong opinions"
     },
     "participant_06_t11_s01": {
-      "themes": [],
-      "subthemes": [],
-      "emotions": [
-        "annoyance"
-      ],
-      "sentiment": -1,
-      "confidence": 0.55,
-      "note": "opinionated aside, no clear theme"
-    },
-    "participant_06_t11_s02": {
       "themes": [
         "clinical_trials",
         "treatment"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors",
-        "trial_barriers",
+        "clinical_trial_interest",
         "trial_decision_factors",
-        "trial_motivators"
+        "trial_motivators",
+        "treatment_positive_experiences"
       ],
       "emotions": [
         "hope"
       ],
       "sentiment": 1,
       "confidence": 0.85,
-      "note": ""
+      "note": "would join if guaranteed real drug and insurance dropped"
     },
-    "participant_06_t11_s03": {
+    "participant_06_t11_s02": {
       "themes": [
         "treatment"
       ],
@@ -226,10 +198,10 @@
         "pride"
       ],
       "sentiment": 2,
-      "confidence": 0.9,
-      "note": ""
+      "confidence": 0.95,
+      "note": "dramatic health improvement"
     },
-    "participant_06_t11_s04": {
+    "participant_06_t11_s03": {
       "themes": [
         "treatment"
       ],
@@ -240,35 +212,34 @@
         "joy"
       ],
       "sentiment": 2,
-      "confidence": 0.8,
+      "confidence": 0.95,
       "note": ""
     },
-    "participant_06_t11_s05": {
+    "participant_06_t11_s04": {
       "themes": [
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_decision_factors",
         "trial_motivators"
       ],
       "emotions": [
-        "hope"
+        "hope",
+        "anticipation"
       ],
       "sentiment": 1,
       "confidence": 0.85,
-      "note": ""
+      "note": "altruism for maintenance research"
     },
     "participant_06_t13_s00": {
       "themes": [
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_barriers",
         "trial_decision_factors"
       ],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.7,
+      "confidence": 0.8,
       "note": ""
     },
     "participant_06_t13_s01": {
@@ -277,40 +248,34 @@
         "treatment"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_health_history",
         "trial_barriers",
-        "trial_decision_factors"
+        "treatment_positive_experiences"
       ],
       "emotions": [
         "fear"
       ],
       "sentiment": -1,
       "confidence": 0.9,
-      "note": ""
+      "note": "placebo fear; fear of regaining"
     },
     "participant_06_t13_s02": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_health_history",
-        "treatment_positive_experiences"
+        "treatment_positive_experiences",
+        "treatment_health_history"
       ],
-      "emotions": [
-        "pride"
-      ],
+      "emotions": [],
       "sentiment": 1,
       "confidence": 0.8,
       "note": ""
     },
     "participant_06_t13_s03": {
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "clinical_trials"
       ],
       "subthemes": [
-        "treatment_decision_factors",
         "trial_barriers",
         "trial_decision_factors"
       ],
@@ -318,80 +283,98 @@
         "fear"
       ],
       "sentiment": -1,
-      "confidence": 0.9,
-      "note": ""
+      "confidence": 0.85,
+      "note": "risk of losing progress"
     },
     "participant_06_t15_s00": {
       "themes": [],
       "subthemes": [],
-      "emotions": [
-        "acceptance"
-      ],
+      "emotions": [],
       "sentiment": 1,
       "confidence": 0.5,
-      "note": "short agreement re study length"
+      "note": "short agreement"
     },
     "participant_06_t15_s01": {
       "themes": [
-        "treatment"
+        "treatment",
+        "clinical_trials"
       ],
       "subthemes": [
-        "treatment_decision_factors"
+        "treatment_health_history",
+        "clinical_trial_knowledge_gaps"
       ],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.6,
-      "note": ""
+      "confidence": 0.7,
+      "note": "references original trial duration"
     },
     "participant_06_t15_s02": {
       "themes": [],
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.4,
+      "confidence": 0.5,
       "note": "fragment"
     },
     "participant_06_t15_s03": {
       "themes": [
-        "condition_specific",
         "treatment"
       ],
       "subthemes": [
-        "medical_self_efficacy",
         "treatment_decision_factors"
       ],
       "emotions": [
-        "vigilance"
+        "acceptance"
       ],
       "sentiment": 1,
-      "confidence": 0.9,
-      "note": ""
+      "confidence": 0.85,
+      "note": "lifelong intent"
     },
     "participant_06_t15_s04": {
       "themes": [
-        "condition_specific",
         "treatment"
       ],
       "subthemes": [
-        "medical_self_efficacy",
         "treatment_decision_factors"
       ],
       "emotions": [],
-      "sentiment": 1,
-      "confidence": 0.85,
+      "sentiment": 0,
+      "confidence": 0.8,
       "note": ""
     },
     "participant_06_t15_s05": {
       "themes": [],
       "subthemes": [],
-      "emotions": [
-        "optimism"
-      ],
+      "emotions": [],
       "sentiment": 1,
-      "confidence": 0.4,
-      "note": "aside humor"
+      "confidence": 0.5,
+      "note": "light joke about longevity"
     },
     "participant_06_t15_s06": {
+      "themes": [
+        "clinical_trials"
+      ],
+      "subthemes": [
+        "trial_decision_factors"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "confidence": 0.7,
+      "note": "36 weeks acceptable"
+    },
+    "participant_06_t17_s00": {
+      "themes": [
+        "clinical_trials"
+      ],
+      "subthemes": [
+        "trial_decision_factors"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "confidence": 0.6,
+      "note": ""
+    },
+    "participant_06_t19_s00": {
       "themes": [
         "clinical_trials"
       ],
@@ -399,120 +382,76 @@
         "trial_barriers"
       ],
       "emotions": [
-        "acceptance"
-      ],
-      "sentiment": 1,
-      "confidence": 0.55,
-      "note": "study length acceptable"
-    },
-    "participant_06_t17_s00": {
-      "themes": [
-        "treatment"
-      ],
-      "subthemes": [
-        "treatment_negative_experiences"
-      ],
-      "emotions": [
-        "acceptance"
-      ],
-      "sentiment": 0,
-      "confidence": 0.6,
-      "note": "likely re monthly injection"
-    },
-    "participant_06_t19_s00": {
-      "themes": [
-        "treatment"
-      ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences",
-        "treatment_positive_experiences"
-      ],
-      "emotions": [
         "apprehension"
       ],
       "sentiment": -1,
-      "confidence": 0.55,
-      "note": "ambiguous, context monthly dosing"
+      "confidence": 0.7,
+      "note": ""
     },
     "participant_06_t21_s00": {
-      "themes": [
-        "clinical_trials",
-        "condition_specific"
-      ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy"
-      ],
-      "emotions": [
-        "interest"
-      ],
-      "sentiment": 1,
-      "confidence": 0.8,
-      "note": ""
-    },
-    "participant_06_t21_s01": {
-      "themes": [
-        "clinical_trials",
-        "condition_specific"
-      ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy"
-      ],
-      "emotions": [
-        "interest"
-      ],
-      "sentiment": 1,
-      "confidence": 0.8,
-      "note": ""
-    },
-    "participant_06_t21_s02": {
       "themes": [
         "clinical_trials"
       ],
       "subthemes": [
+        "clinical_trial_interest",
         "clinical_trial_awareness"
       ],
+      "emotions": [
+        "interest"
+      ],
+      "sentiment": 1,
+      "confidence": 0.85,
+      "note": ""
+    },
+    "participant_06_t21_s01": {
+      "themes": [
+        "treatment"
+      ],
+      "subthemes": [
+        "treatment_health_history"
+      ],
+      "emotions": [
+        "interest"
+      ],
+      "sentiment": 1,
+      "confidence": 0.7,
+      "note": "aware of implant in development"
+    },
+    "participant_06_t21_s02": {
+      "themes": [
+        "treatment"
+      ],
+      "subthemes": [],
       "emotions": [
         "anticipation"
       ],
       "sentiment": 1,
-      "confidence": 0.65,
+      "confidence": 0.7,
       "note": ""
     },
     "participant_06_t21_s03": {
       "themes": [
-        "condition_specific",
-        "treatment"
+        "clinical_trials"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "trial_decision_factors",
+        "trial_barriers"
       ],
       "emotions": [
         "apprehension"
       ],
       "sentiment": 0,
-      "confidence": 0.8,
-      "note": ""
+      "confidence": 0.85,
+      "note": "concerns about side effect management"
     },
     "participant_06_t21_s04": {
       "themes": [
-        "condition_specific",
-        "treatment"
+        "clinical_trials"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "trial_decision_factors"
       ],
-      "emotions": [
-        "apprehension"
-      ],
+      "emotions": [],
       "sentiment": 0,
       "confidence": 0.8,
       "note": ""
@@ -522,21 +461,17 @@
         "treatment"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "treatment_health_history",
+        "treatment_barriers"
       ],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.85,
-      "note": ""
+      "confidence": 0.8,
+      "note": "compounded use during shortage"
     },
     "participant_06_t23_s01": {
-      "themes": [
-        "treatment"
-      ],
-      "subthemes": [
-        "treatment_barriers"
-      ],
+      "themes": [],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.5,
@@ -547,31 +482,25 @@
         "treatment"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "treatment_decision_factors",
+        "treatment_barriers"
       ],
-      "emotions": [
-        "acceptance"
-      ],
+      "emotions": [],
       "sentiment": 0,
       "confidence": 0.85,
-      "note": ""
+      "note": "open to compound but prefers brand"
     },
     "participant_06_t23_s03": {
       "themes": [
-        "condition_specific",
-        "treatment"
+        "condition_specific"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_health_history"
+        "medical_self_efficacy"
       ],
-      "emotions": [
-        "vigilance"
-      ],
+      "emotions": [],
       "sentiment": 0,
-      "confidence": 0.75,
-      "note": ""
+      "confidence": 0.7,
+      "note": "researches pharmacies"
     },
     "participant_06_t23_s04": {
       "themes": [
@@ -580,26 +509,20 @@
       ],
       "subthemes": [
         "medical_self_efficacy",
-        "treatment_health_history"
-      ],
-      "emotions": [
-        "acceptance"
-      ],
-      "sentiment": 1,
-      "confidence": 0.8,
-      "note": ""
-    },
-    "participant_06_t25_s00": {
-      "themes": [
-        "clinical_trials"
-      ],
-      "subthemes": [
-        "trial_motivators"
+        "advocacy_peer_groups"
       ],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.75,
-      "note": "Fairlife shakes mention"
+      "note": "forums and self-research"
+    },
+    "participant_06_t25_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "confidence": 0.5,
+      "note": "about vouchers/incentives"
     },
     "participant_06_t25_s01": {
       "themes": [
@@ -610,16 +533,14 @@
       ],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.75,
-      "note": ""
+      "confidence": 0.6,
+      "note": "voucher preferences"
     },
     "participant_06_t27_s00": {
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "clinical_trials"
       ],
       "subthemes": [
-        "treatment_decision_factors",
         "trial_barriers",
         "trial_decision_factors"
       ],
@@ -628,21 +549,20 @@
       ],
       "sentiment": -1,
       "confidence": 0.85,
-      "note": ""
+      "note": "placebo risk"
     },
     "participant_06_t27_s01": {
       "themes": [
-        "treatment"
+        "clinical_trials"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "trial_barriers"
       ],
       "emotions": [
         "apprehension"
       ],
       "sentiment": -1,
-      "confidence": 0.75,
+      "confidence": 0.8,
       "note": ""
     },
     "participant_06_t27_s02": {
@@ -650,104 +570,52 @@
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_decision_factors",
         "trial_motivators"
       ],
-      "emotions": [
-        "acceptance"
-      ],
+      "emotions": [],
       "sentiment": 1,
-      "confidence": 0.85,
-      "note": ""
+      "confidence": 0.8,
+      "note": "financial compensation appreciated"
     },
     "participant_06_t29_s00": {
       "themes": [],
       "subthemes": [],
       "emotions": [],
       "sentiment": 1,
-      "confidence": 0.4,
-      "note": "agreement"
+      "confidence": 0.5,
+      "note": "short affirmation"
     },
     "participant_06_t29_s01": {
       "themes": [
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_barriers",
+        "trial_motivators",
+        "trial_barriers"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "confidence": 0.8,
+      "note": "travel reimbursement"
+    },
+    "participant_06_t29_s02": {
+      "themes": [
+        "clinical_trials"
+      ],
+      "subthemes": [
         "trial_decision_factors",
         "trial_motivators"
       ],
       "emotions": [],
       "sentiment": 1,
-      "confidence": 0.85,
-      "note": ""
-    },
-    "participant_06_t29_s02": {
-      "themes": [
-        "clinical_trials",
-        "condition_specific"
-      ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "trial_barriers"
-      ],
-      "emotions": [
-        "vigilance"
-      ],
-      "sentiment": 0,
-      "confidence": 0.75,
-      "note": ""
+      "confidence": 0.8,
+      "note": "flexible schedule; values provider contact"
     },
     "participant_06_t29_s03": {
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 1,
-      "confidence": 0.4,
-      "note": "agreement"
-    },
-    "participant_06_t31_s00": {
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 1,
-      "confidence": 0.4,
-      "note": "agreement"
-    },
-    "participant_06_t33_s00": {
-      "themes": [],
-      "subthemes": [],
-      "emotions": [
-        "acceptance"
-      ],
-      "sentiment": 1,
-      "confidence": 0.4,
-      "note": "very short"
-    },
-    "participant_06_t35_s00": {
       "themes": [
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_barriers"
-      ],
-      "emotions": [
-        "acceptance"
-      ],
-      "sentiment": 0,
-      "confidence": 0.55,
-      "note": ""
-    },
-    "participant_06_t35_s01": {
-      "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
-      ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_barriers",
         "trial_motivators"
       ],
       "emotions": [],
@@ -755,7 +623,55 @@
       "confidence": 0.7,
       "note": ""
     },
+    "participant_06_t31_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "confidence": 0.5,
+      "note": "agreement"
+    },
+    "participant_06_t33_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "confidence": 0.5,
+      "note": "short affirmation"
+    },
+    "participant_06_t35_s00": {
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 0,
+      "confidence": 0.5,
+      "note": ""
+    },
+    "participant_06_t35_s01": {
+      "themes": [
+        "clinical_trials"
+      ],
+      "subthemes": [
+        "trial_decision_factors"
+      ],
+      "emotions": [],
+      "sentiment": 0,
+      "confidence": 0.8,
+      "note": "wants provider access"
+    },
     "participant_06_t37_s00": {
+      "themes": [
+        "clinical_trials"
+      ],
+      "subthemes": [
+        "trial_motivators"
+      ],
+      "emotions": [],
+      "sentiment": 1,
+      "confidence": 0.7,
+      "note": "incentive preference"
+    },
+    "participant_06_t37_s01": {
       "themes": [
         "clinical_trials"
       ],
@@ -766,21 +682,7 @@
         "interest"
       ],
       "sentiment": 1,
-      "confidence": 0.85,
-      "note": ""
-    },
-    "participant_06_t37_s01": {
-      "themes": [
-        "clinical_trials"
-      ],
-      "subthemes": [
-        "trial_motivators"
-      ],
-      "emotions": [
-        "anticipation"
-      ],
-      "sentiment": 1,
-      "confidence": 0.8,
+      "confidence": 0.7,
       "note": ""
     },
     "participant_06_t37_s02": {
@@ -788,71 +690,63 @@
       "subthemes": [],
       "emotions": [],
       "sentiment": 1,
-      "confidence": 0.4,
-      "note": "aside"
+      "confidence": 0.5,
+      "note": "personal aside"
     },
     "participant_06_t39_s00": {
       "themes": [],
       "subthemes": [],
-      "emotions": [
-        "acceptance"
-      ],
-      "sentiment": 1,
-      "confidence": 0.4,
-      "note": "very short"
+      "emotions": [],
+      "sentiment": 0,
+      "confidence": 0.5,
+      "note": "short"
     },
     "participant_06_t39_s01": {
       "themes": [
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_barriers"
+        "trial_decision_factors"
       ],
-      "emotions": [
-        "acceptance"
-      ],
-      "sentiment": 1,
-      "confidence": 0.85,
-      "note": ""
+      "emotions": [],
+      "sentiment": 0,
+      "confidence": 0.7,
+      "note": "fasting acceptable"
     },
     "participant_06_t41_s00": {
       "themes": [
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_barriers"
+        "trial_decision_factors"
       ],
-      "emotions": [
-        "acceptance"
-      ],
-      "sentiment": 1,
-      "confidence": 0.8,
+      "emotions": [],
+      "sentiment": 0,
+      "confidence": 0.7,
       "note": ""
     },
     "participant_06_t41_s01": {
       "themes": [
-        "clinical_trials"
+        "condition_specific"
       ],
       "subthemes": [
-        "trial_barriers"
+        "comorbidities"
       ],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.75,
-      "note": ""
+      "confidence": 0.6,
+      "note": "mom is type 1 diabetic - family context"
     },
     "participant_06_t43_s00": {
       "themes": [
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_barriers"
+        "trial_decision_factors"
       ],
-      "emotions": [
-        "acceptance"
-      ],
-      "sentiment": 1,
-      "confidence": 0.7,
+      "emotions": [],
+      "sentiment": 0,
+      "confidence": 0.6,
       "note": ""
     },
     "participant_06_t43_s01": {
@@ -860,12 +754,10 @@
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_barriers"
+        "trial_decision_factors"
       ],
-      "emotions": [
-        "acceptance"
-      ],
-      "sentiment": 1,
+      "emotions": [],
+      "sentiment": 0,
       "confidence": 0.6,
       "note": ""
     },
@@ -874,33 +766,32 @@
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.4,
-      "note": "clarification question"
+      "confidence": 0.5,
+      "note": "clarifying question"
     },
     "participant_06_t45_s01": {
       "themes": [
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_barriers"
+        "trial_barriers",
+        "trial_decision_factors"
       ],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.75,
-      "note": ""
+      "note": "scheduling conflicts"
     },
     "participant_06_t45_s02": {
       "themes": [
         "clinical_trials"
       ],
       "subthemes": [
-        "trial_barriers"
+        "trial_decision_factors"
       ],
-      "emotions": [
-        "acceptance"
-      ],
+      "emotions": [],
       "sentiment": 1,
-      "confidence": 0.7,
+      "confidence": 0.6,
       "note": ""
     },
     "participant_06_t45_s03": {
@@ -908,31 +799,34 @@
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.4,
+      "confidence": 0.5,
       "note": "bare affirmation"
     },
     "participant_06_t47_s00": {
-      "themes": [],
-      "subthemes": [],
+      "themes": [
+        "clinical_trials"
+      ],
+      "subthemes": [
+        "trial_barriers"
+      ],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.4,
-      "note": "recap"
+      "confidence": 0.7,
+      "note": ""
     },
     "participant_06_t47_s01": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "treatment_barriers"
       ],
       "emotions": [
         "apprehension"
       ],
       "sentiment": -1,
-      "confidence": 0.8,
-      "note": ""
+      "confidence": 0.75,
+      "note": "insurance concerns"
     },
     "participant_06_t47_s02": {
       "themes": [
@@ -940,28 +834,25 @@
       ],
       "subthemes": [
         "treatment_barriers",
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "treatment_knowledge_gaps"
       ],
       "emotions": [
         "apprehension"
       ],
       "sentiment": -1,
-      "confidence": 0.8,
+      "confidence": 0.75,
       "note": ""
     },
     "participant_06_t47_s03": {
       "themes": [
-        "condition_specific",
         "treatment"
       ],
       "subthemes": [
-        "medical_self_efficacy",
         "treatment_barriers"
       ],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.65,
+      "confidence": 0.6,
       "note": ""
     },
     "participant_06_t47_s04": {
@@ -969,26 +860,26 @@
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.4,
-      "note": "closing fragment"
+      "confidence": 0.5,
+      "note": "closing"
     },
     "participant_06_t49_s00": {
       "themes": [
-        "treatment"
+        "treatment",
+        "condition_specific"
       ],
       "subthemes": [
         "treatment_health_history"
       ],
-      "emotions": [
-        "pensiveness"
-      ],
+      "emotions": [],
       "sentiment": 0,
       "confidence": 0.85,
-      "note": ""
+      "note": "history of diet/exercise attempts"
     },
     "participant_06_t49_s01": {
       "themes": [
-        "treatment"
+        "treatment",
+        "condition_specific"
       ],
       "subthemes": [
         "treatment_health_history"
@@ -997,22 +888,19 @@
         "pensiveness"
       ],
       "sentiment": -1,
-      "confidence": 0.8,
-      "note": ""
+      "confidence": 0.75,
+      "note": "weight history"
     },
     "participant_06_t49_s02": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_health_history",
         "treatment_positive_experiences"
       ],
-      "emotions": [
-        "pride"
-      ],
+      "emotions": [],
       "sentiment": 1,
-      "confidence": 0.7,
+      "confidence": 0.75,
       "note": ""
     },
     "participant_06_t49_s03": {
@@ -1020,14 +908,13 @@
         "treatment"
       ],
       "subthemes": [
-        "treatment_health_history",
         "treatment_positive_experiences"
       ],
       "emotions": [
-        "amazement"
+        "joy"
       ],
       "sentiment": 2,
-      "confidence": 0.75,
+      "confidence": 0.85,
       "note": ""
     },
     "participant_06_t49_s04": {
@@ -1035,36 +922,34 @@
         "treatment"
       ],
       "subthemes": [
-        "treatment_health_history",
         "treatment_positive_experiences"
       ],
       "emotions": [
         "amazement"
       ],
       "sentiment": 2,
-      "confidence": 0.8,
-      "note": ""
+      "confidence": 0.85,
+      "note": "GLP-1 outcomes vs diet/exercise"
     },
     "participant_06_t51_s00": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_decision_factors"
+        "treatment_barriers",
+        "treatment_knowledge_gaps"
       ],
-      "emotions": [
-        "apprehension"
-      ],
+      "emotions": [],
       "sentiment": -1,
-      "confidence": 0.75,
-      "note": ""
+      "confidence": 0.8,
+      "note": "oral GLP-1 adherence concerns"
     },
     "participant_06_t51_s01": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_decision_factors"
+        "treatment_barriers"
       ],
       "emotions": [
         "annoyance"
@@ -1078,13 +963,13 @@
         "treatment"
       ],
       "subthemes": [
-        "treatment_decision_factors"
+        "treatment_barriers"
       ],
       "emotions": [
         "apprehension"
       ],
       "sentiment": -1,
-      "confidence": 0.7,
+      "confidence": 0.75,
       "note": ""
     },
     "participant_06_t51_s03": {
@@ -1092,42 +977,37 @@
         "treatment"
       ],
       "subthemes": [
-        "treatment_decision_factors"
+        "treatment_barriers"
       ],
-      "emotions": [
-        "annoyance"
-      ],
+      "emotions": [],
       "sentiment": -1,
-      "confidence": 0.75,
+      "confidence": 0.8,
       "note": ""
     },
     "participant_06_t51_s04": {
       "themes": [
-        "condition_specific",
         "treatment"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
         "treatment_knowledge_gaps"
       ],
       "emotions": [
         "confusion"
       ],
-      "sentiment": 0,
+      "sentiment": -1,
       "confidence": 0.7,
-      "note": ""
+      "note": "questions about oral dosing"
     },
     "participant_06_t51_s05": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_decision_factors"
+        "treatment_barriers"
       ],
       "emotions": [],
-      "sentiment": -1,
-      "confidence": 0.55,
+      "sentiment": 0,
+      "confidence": 0.6,
       "note": ""
     },
     "participant_06_t51_s06": {
@@ -1138,12 +1018,10 @@
         "treatment_decision_factors",
         "treatment_positive_experiences"
       ],
-      "emotions": [
-        "acceptance"
-      ],
+      "emotions": [],
       "sentiment": 1,
-      "confidence": 0.85,
-      "note": ""
+      "confidence": 0.8,
+      "note": "injection preference"
     },
     "participant_06_t51_s07": {
       "themes": [
@@ -1164,30 +1042,29 @@
       "subthemes": [],
       "emotions": [],
       "sentiment": 0,
-      "confidence": 0.4,
-      "note": "clarification question"
+      "confidence": 0.5,
+      "note": "clarifying question"
     },
     "participant_06_t53_s01": {
       "themes": [
         "treatment"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
+        "treatment_decision_factors"
       ],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.8,
-      "note": ""
+      "note": "prefers new injectable"
     },
     "participant_06_t53_s02": {
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "treatment",
+        "clinical_trials"
       ],
       "subthemes": [
         "clinical_trial_awareness",
-        "medical_self_efficacy"
+        "treatment_health_history"
       ],
       "emotions": [
         "interest",
@@ -1195,44 +1072,37 @@
       ],
       "sentiment": 1,
       "confidence": 0.8,
-      "note": ""
+      "note": "has researched pipeline drugs"
     },
     "participant_06_t53_s03": {
       "themes": [
-        "clinical_trials",
-        "condition_specific",
         "treatment"
       ],
       "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy",
-        "treatment_positive_experiences",
-        "trial_decision_factors"
+        "treatment_decision_factors"
       ],
       "emotions": [
-        "anticipation"
+        "hope"
       ],
       "sentiment": 1,
-      "confidence": 0.85,
-      "note": ""
+      "confidence": 0.8,
+      "note": "longer-interval injectables"
     },
     "participant_06_t55_s00": {
       "themes": [],
       "subthemes": [],
       "emotions": [],
-      "sentiment": 1,
-      "confidence": 0.4,
-      "note": "closing"
+      "sentiment": 0,
+      "confidence": 0.5,
+      "note": "closing courtesy"
     },
     "participant_06_t55_s01": {
       "themes": [],
       "subthemes": [],
-      "emotions": [
-        "admiration"
-      ],
+      "emotions": [],
       "sentiment": 1,
-      "confidence": 0.4,
-      "note": "closing"
+      "confidence": 0.5,
+      "note": "closing courtesy"
     },
     "participant_07_t01_s00": {
       "themes": [],
@@ -2868,23 +2738,6 @@
       "confidence": 0.7,
       "note": ""
     },
-    "participant_08_t07_s06": {
-      "themes": [
-        "condition_specific",
-        "treatment"
-      ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
-      ],
-      "emotions": [
-        "apprehension"
-      ],
-      "sentiment": -1,
-      "confidence": 0.75,
-      "note": "fears benefits would regress if off med"
-    },
     "participant_08_t09_s00": {
       "themes": [
         "treatment"
@@ -3040,21 +2893,6 @@
       ],
       "emotions": [
         "trust"
-      ],
-      "sentiment": 1,
-      "confidence": 0.9,
-      "note": ""
-    },
-    "participant_08_t15_s01": {
-      "themes": [
-        "clinical_trials"
-      ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
-      "emotions": [
-        "acceptance"
       ],
       "sentiment": 1,
       "confidence": 0.9,
@@ -3703,14 +3541,6 @@
       "sentiment": 0,
       "confidence": 0.4,
       "note": ""
-    },
-    "participant_08_t45_s02": {
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 1,
-      "confidence": 0.4,
-      "note": "no problem with prior topic"
     },
     "participant_08_t47_s00": {
       "themes": [],
@@ -5316,14 +5146,6 @@
       "confidence": 0.9,
       "note": ""
     },
-    "participant_09_t41_s02": {
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.4,
-      "note": "very short"
-    },
     "participant_09_t43_s00": {
       "themes": [],
       "subthemes": [],
@@ -5533,20 +5355,6 @@
       "sentiment": 1,
       "confidence": 0.5,
       "note": "very short affirmation"
-    },
-    "participant_10_t13_s01": {
-      "themes": [
-        "clinical_trials"
-      ],
-      "subthemes": [
-        "trial_motivators"
-      ],
-      "emotions": [
-        "interest"
-      ],
-      "sentiment": 1,
-      "confidence": 0.7,
-      "note": ""
     },
     "participant_10_t15_s00": {
       "themes": [
@@ -5785,16 +5593,6 @@
       "sentiment": 2,
       "confidence": 0.65,
       "note": "likely about a specific incentive"
-    },
-    "participant_10_t31_s01": {
-      "themes": [],
-      "subthemes": [],
-      "emotions": [
-        "joy"
-      ],
-      "sentiment": 1,
-      "confidence": 0.5,
-      "note": "affirmation"
     },
     "participant_10_t33_s00": {
       "themes": [
@@ -6591,14 +6389,6 @@
       "sentiment": 2,
       "confidence": 0.9,
       "note": ""
-    },
-    "participant_10_t59_s03": {
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.4,
-      "note": "filler"
     },
     "participant_10_t61_s00": {
       "themes": [],
@@ -7537,20 +7327,6 @@
       "confidence": 0.8,
       "note": "inflammation/joint pain"
     },
-    "participant_12_t07_s05": {
-      "themes": [
-        "treatment"
-      ],
-      "subthemes": [
-        "treatment_positive_experiences"
-      ],
-      "emotions": [
-        "joy"
-      ],
-      "sentiment": 2,
-      "confidence": 0.75,
-      "note": "emotional/social shift"
-    },
     "participant_12_t09_s00": {
       "themes": [
         "treatment"
@@ -7901,21 +7677,6 @@
       ],
       "emotions": [],
       "sentiment": 1,
-      "confidence": 0.85,
-      "note": ""
-    },
-    "participant_12_t27_s02": {
-      "themes": [
-        "condition_specific",
-        "treatment"
-      ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps"
-      ],
-      "emotions": [],
-      "sentiment": 0,
       "confidence": 0.85,
       "note": ""
     },

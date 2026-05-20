@@ -45,7 +45,7 @@
       "review_status": "confirmed",
       "created_at": "2026-05-20T00:00:00.000Z"
     },
-    "generated_at": "2026-05-20T21:16:29.054Z"
+    "generated_at": "2026-05-20T21:34:09.015Z"
   },
   "tags": [
     {
@@ -83,6 +83,18 @@
       "confidence": null,
       "review_status": "confirmed",
       "created_at": "2026-05-20T21:04:32.889Z"
+    },
+    {
+      "keyword_id": "weight_loss",
+      "segment_id": "participant_06_t49_s04",
+      "interview_id": "participant_06",
+      "char_start": 13523,
+      "char_end": 13538,
+      "surface": "huge difference",
+      "source": "human",
+      "confidence": null,
+      "review_status": "confirmed",
+      "created_at": "2026-05-20T21:34:09.015Z"
     }
   ]
 }
