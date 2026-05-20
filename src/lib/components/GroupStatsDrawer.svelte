@@ -1,75 +1,40 @@
 <!--
-	GroupStatsDrawer — the secondary, study-wide stats drawer for one keyword or
-	theme group.
+	GroupStatsDrawer — the study-wide stats drawer for one keyword or theme.
 
-	Opened by clicking a highlighted keyword/theme in any quote (KeywordText.svelte
-	→ the groupDrawer store). It is ~15% narrower than the standard detail drawer
-	and stacks on top of it (z-60), so a primary drawer underneath peeks out on
-	the left. Mounted once in the wctglpdemo layout; reads the groupDrawer store.
+	Opened by clicking a highlighted keyword/theme in any quote
+	(KeywordText.svelte → the groupDrawer store). Stacks at the top level
+	(z-99/109) so it can layer above both a primary drawer and a secondary
+	drawer underneath. Mounted once in the wctglpdemo layout; reads the
+	groupDrawer store. Chrome is owned by TertiaryDrawer.
 -->
 <script lang="ts">
-	import { fly, fade } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
-	import { Button } from '$lib/components/ui/button/index.ts';
 	import StatBar from '$lib/components/StatBar.svelte';
+	import TertiaryDrawer from '$lib/components/TertiaryDrawer.svelte';
 	import { groupDrawer } from '$lib/stores/group-drawer.svelte.js';
 	import { groupStats } from '$lib/content/wctglpdemo-data/lexicon-stats';
-	import { XIcon } from '@lucide/svelte';
 
 	const stats = $derived(
 		groupDrawer.current ? groupStats(groupDrawer.current.kind, groupDrawer.current.id) : null
 	);
+	const open = $derived(stats !== null);
 
 	const max = (ns: number[]) => Math.max(1, ...ns);
 	const sentimentTint = (v: number) =>
 		v > 0 ? 'bg-emerald-400' : v < 0 ? 'bg-rose-400' : 'bg-slate-300';
-
-	function onKeydown(e: KeyboardEvent) {
-		if (e.key === 'Escape') groupDrawer.close();
-	}
 </script>
 
-<svelte:window onkeydown={onKeydown} />
-
-{#if stats}
-	<!-- Backdrop — light, so a primary drawer underneath stays legible. -->
-	<div
-		class="fixed inset-0 z-99 bg-slate-900/30"
-		transition:fade={{ duration: 180 }}
-		onclick={() => groupDrawer.close()}
-		aria-hidden="true"
-	></div>
-
-	<aside
-		class="fixed inset-y-0 right-0 z-109 flex w-full max-w-102 flex-col bg-white shadow-2xl md:max-w-122 xl:max-w-142"
-		transition:fly={{ x: 120, duration: 300, easing: cubicOut }}
-		aria-label="Keyword and theme stats"
-	>
-		<!-- Header -->
-		<div class="flex items-start justify-between gap-3 border-b border-slate-200 p-4">
-			<div class="min-w-0">
-				<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
-					{stats.kind === 'keyword' ? 'Keyword' : 'Theme'} · study-wide
-				</p>
-				<h2 class="font-heading text-2xl font-light uppercase leading-tight text-primary">
-					{stats.label}
-				</h2>
-				{#if stats.context}
-					<p class="mt-0.5 text-xs text-slate-500">{stats.context}</p>
-				{/if}
-			</div>
-			<Button
-				variant="ghost"
-				size="sm"
-				onclick={() => groupDrawer.close()}
-				aria-label="Close"
-			>
-				<XIcon size="sm"/>
-		</Button>
-		</div>
-
-		<!-- Body -->
-		<div class="flex flex-1 flex-col gap-6 overflow-y-auto p-4">
+<TertiaryDrawer
+	{open}
+	onclose={() => groupDrawer.close()}
+	ariaLabel="Keyword and theme stats"
+	level="top"
+	width="wide"
+	eyebrow={stats ? `${stats.kind === 'keyword' ? 'Keyword' : 'Theme'} · study-wide` : undefined}
+	title={stats?.label}
+	subtitle={stats?.context}
+>
+	{#if stats}
+		<div class="flex flex-1 flex-col gap-6 p-4">
 			<!-- Headline counts -->
 			<div class="grid grid-cols-3 gap-2">
 				{#each [{ n: stats.invocations, u: stats.invocationUnit }, { n: stats.segmentCount, u: 'segments' }, { n: stats.participantCount, u: 'participants' }] as cell (cell.u)}
@@ -81,13 +46,16 @@
 			</div>
 
 			{#if stats.segmentCount === 0}
-				<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">
+				<p
+					class="mb-2 border-b border-muted-foreground font-heading text-xs font-bold uppercase text-muted-foreground"
+				>
 					No tagged segments reference this {stats.kind} yet.
 				</p>
 			{:else}
-				<!-- Sentiment -->
 				<section class="flex flex-col gap-1.5">
-					<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">
+					<p
+						class="mb-2 border-b border-muted-foreground font-heading text-xs font-bold uppercase text-muted-foreground"
+					>
 						Sentiment expressed
 					</p>
 					{#each stats.sentiment as s (s.value)}
@@ -101,10 +69,13 @@
 					{/each}
 				</section>
 
-				<!-- Emotions -->
 				{#if stats.emotions.length}
 					<section class="flex flex-col gap-1.5">
-						<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">Emotions expressed</p>
+						<p
+							class="mb-2 border-b border-muted-foreground font-heading text-xs font-bold uppercase text-muted-foreground"
+						>
+							Emotions expressed
+						</p>
 						{#each stats.emotions as e (e.id)}
 							<StatBar
 								label={e.label}
@@ -117,10 +88,13 @@
 					</section>
 				{/if}
 
-				<!-- Common words -->
 				{#if stats.commonWords.length}
 					<section class="flex flex-col gap-1.5">
-						<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">Common words used</p>
+						<p
+							class="mb-2 border-b border-muted-foreground font-heading text-xs font-bold uppercase text-muted-foreground"
+						>
+							Common words used
+						</p>
 						{#each stats.commonWords as w (w.word)}
 							<StatBar
 								label={w.word}
@@ -133,10 +107,11 @@
 					</section>
 				{/if}
 
-				<!-- Co-occurring themes -->
 				{#if stats.relatedThemes.length}
 					<section class="flex flex-col gap-1.5">
-						<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">
+						<p
+							class="mb-2 border-b border-muted-foreground font-heading text-xs font-bold uppercase text-muted-foreground"
+						>
 							{stats.kind === 'keyword' ? 'Themes it appears in' : 'Co-tagged themes'}
 						</p>
 						{#each stats.relatedThemes.slice(0, 8) as t (t.id)}
@@ -151,9 +126,12 @@
 					</section>
 				{/if}
 
-				<!-- Per participant -->
 				<section class="flex flex-col gap-1.5">
-					<p class="font-heading uppercase text-xs font-bold text-muted-foreground border-b border-muted-foreground mb-2">By participant</p>
+					<p
+						class="mb-2 border-b border-muted-foreground font-heading text-xs font-bold uppercase text-muted-foreground"
+					>
+						By participant
+					</p>
 					{#each stats.perParticipant as p (p.interviewId)}
 						<StatBar
 							label={p.label}
@@ -166,5 +144,5 @@
 				</section>
 			{/if}
 		</div>
-	</aside>
-{/if}
+	{/if}
+</TertiaryDrawer>

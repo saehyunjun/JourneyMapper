@@ -1,18 +1,11 @@
 {
   "meta": {
-    "schema_version": "1.8",
-    "study_id": "wct_glp1",
-    "description": "Tagging taxonomy for the WCT GLP-1 study. Segment annotations in segment_tags.json draw their theme, subtheme, emotion, and sentiment values from this codebook. Editable and versioned; bump schema_version when tags are added or revised.",
+    "schema_version": "2.0",
+    "supersedes": "codebook.json @ 1.8",
+    "status": "live",
+    "description": "Study-agnostic tagging taxonomy. Three top-level themes (h3) — Treatment, Clinical Trials, Condition-Specific — each with subthemes (h4) following a shared spine (Awareness, Knowledge Gaps, Barriers, Motivators, Positive/Negative Experiences, Decision Factors) where it fits. Keyword clusters live under subthemes; each cluster declares parent_theme + parent_subtheme explicitly so a flat read keeps the FK without traversal. The current GLP-1-specific themes in codebook.json @ 1.8 will migrate into this structure at the subtheme/cluster level.",
     "changelog": [
-      "1.0 — initial themes, emotions, sentiment scale, semantic tags.",
-      "1.1 — added subthemes to 10 themes with internal nuance.",
-      "1.2 — added subthemes to drug_switching, side_effect_concern, injection_experience, education_need, and weight_loss_history after reviewing participant_10.",
-      "1.3 — added a `terms` list to every theme: literal surface phrases tagged from the segment tag drawer, parallel to keyword variants.",
-      "1.4 — replaced the emotion vocabulary with the Plutchik model (24 intensity levels + 28 dyads); added `tag_groups` and a `group` field on every theme and semantic tag so the segment tag drawer can nest them.",
-      "1.5 — added the `decision_factors` tag group; moved risk_calculation, cost_benefit_reasoning, convenience_tradeoff, and conditional_decision into it as the study's core reasoning moves.",
-      "1.6 — folded semantic_tags into theme_tags and removed the semantic dimension; former semantic tags are now themes that keep their group.",
-      "1.7 — split the `trial_logistics` group into `trial_motivators` (what draws people in) and `trial_barriers` (what gets in the way), so the two halves can be analysed separately.",
-      "1.8 — added `discontinuation_reasoning` as the mirror of `treatment_continuation`: the reasons or conditions that would lead a participant to stop or pause GLP-1 medication. Promoted from the recurring open-vocab topic `reasons_to_stop_glp1`."
+      "2.0-draft — initial draft of the new 3-theme structure. Tag-groups concept retired (h3 themes replace them). Theme `terms` list dropped (subsumed by per-subtheme clusters with surface variants). Emotion taxonomy and sentiment scale carried forward unchanged."
     ],
     "sentiment_scale": {
       "0": "neutral / mixed",
@@ -23,501 +16,158 @@
     },
     "notes": [
       "A segment may carry a theme with no subtheme (general use) or with one or more subthemes.",
-      "A subtheme may only be applied if its parent theme is also applied to the segment.",
-      "Flat themes (no subthemes) have no `subthemes` key.",
-      "Each theme carries a `terms` list of surface phrases reviewers highlighted as belonging to it; empty until phrases are added from the segment tag drawer.",
-      "Themes share one set of `tag_groups`; each carries a `group` id used to organize them in the segment tag drawer.",
-      "Emotions follow the Plutchik model: 24 intensity levels (low / medium / high for each of the 8 primary emotions) and 28 dyads (named blends of two primaries)."
+      "A subtheme may only be applied if its parent theme is also applied.",
+      "Cluster tags are recorded per-instance in keyword_tags.json with absolute char spans. A cluster's parent_theme/parent_subtheme is a default home for UI nesting — it does NOT auto-tag the segment with those parents when a span is tagged to the cluster. This preserves cross-bucket co-occurrence as a discovery signal.",
+      "Same-concept clusters that genuinely belong under different subthemes are duplicated by design (e.g. treatment_cost_concerns vs trial_cost_concerns) — the names self-describe and reporting stays clean.",
+      "Emotions follow the Plutchik model from codebook.json @ 1.8; carried forward unchanged."
     ]
   },
-  "tag_groups": [
+  "themes": [
     {
-      "id": "affordability",
-      "label": "Cost & Access",
-      "description": "Affordability, insurance, supply, and getting hold of medication."
-    },
-    {
-      "id": "safety_risk",
-      "label": "Safety & Risk",
-      "description": "Side effects, complications, and weighing the risks of treatment."
-    },
-    {
-      "id": "treatment_experience",
-      "label": "Treatment Experience",
-      "description": "Living with the medication: staying on it, switching, route, and benefits."
-    },
-    {
-      "id": "trial_motivators",
-      "label": "Clinical Trial Motivators",
-      "description": "What draws participants to a clinical trial: attractors, incentives, awareness, and reasons to join."
-    },
-    {
-      "id": "trial_barriers",
-      "label": "Clinical Trial Barriers",
-      "description": "What gets in the way of participation: travel, time, visit logistics, monitoring procedures, and other practical friction."
-    },
-    {
-      "id": "education_support",
-      "label": "Education & Self-Management",
-      "description": "Learning needs and managing one's own care and behavior."
-    },
-    {
-      "id": "weight_journey",
-      "label": "Weight Journey",
-      "description": "Past weight-loss history and the long arc of the participant's journey."
-    },
-    {
-      "id": "decision_factors",
-      "label": "Decision factors",
-      "description": "Reasoning moves — how a participant weighs a choice: risk, cost vs. benefit, tradeoffs, and conditional logic."
-    }
-  ],
-  "theme_tags": [
-    {
-      "id": "cost_access",
-      "description": "Affordability and out-of-pocket cost of medication or participation.",
-      "group": "affordability",
+      "id": "treatment",
+      "label": "Treatment",
+      "description": "The participant's experience of their treatment regimen — what they take, how they live with it, what shapes their continued use.",
       "subthemes": [
         {
-          "id": "out_of_pocket_cost",
-          "description": "Paying for medication or care out of pocket."
+          "id": "treatment_health_history",
+          "label": "Treatment / Health History",
+          "description": "Prior treatments tried, how long they were on them, why they started or stopped, and the longer arc of their health story leading to the current regimen.",
+          "clusters": []
         },
         {
-          "id": "price_trends",
-          "description": "Changes in medication price or affordability over time."
+          "id": "diagnostic_odyssey",
+          "label": "Diagnostic Odyssey",
+          "description": "The path to a diagnosis: how long it took, missed or wrong diagnoses, providers seen, tests run, and the experience of being undiagnosed or misdiagnosed.",
+          "clusters": []
+        },
+        {
+          "id": "treatment_positive_experiences",
+          "label": "Treatment Positive Experiences",
+          "description": "Benefits, improvements, satisfaction, and moments of treatment working as hoped — including unexpected positives.",
+          "clusters": []
+        },
+        {
+          "id": "treatment_negative_experiences",
+          "label": "Treatment Negative Experiences",
+          "description": "Side effects, frustrations, disappointments, regimen burden, and ways the treatment fell short or made things worse.",
+          "clusters": []
+        },
+        {
+          "id": "treatment_knowledge_gaps",
+          "label": "Treatment Knowledge Gaps",
+          "description": "What the participant doesn't know, is unsure about, or has misunderstood about their treatment — mechanism, dosing, interactions, expected results, long-term effects.",
+          "clusters": []
+        },
+        {
+          "id": "treatment_barriers",
+          "label": "Treatment Barriers",
+          "description": "Practical, financial, logistical, or systemic obstacles to starting, continuing, or fully adhering to treatment (cost, access, supply, insurance, time, side-effect tolerance, etc.).",
+          "clusters": []
+        },
+        {
+          "id": "treatment_decision_factors",
+          "label": "Treatment Decision Factors",
+          "description": "Reasoning moves the participant uses to decide about treatment: risk/benefit weighing, cost/benefit tradeoffs, conditional logic (\"I'd stop if…\"), comparisons to alternatives, and what tips the scale.",
+          "clusters": []
         }
-      ],
-      "terms": [
-        "no out of pocket"
       ]
     },
     {
-      "id": "insurance_barrier",
-      "description": "Insurance coverage, prior authorization, or pharmacy benefit manager obstacles.",
-      "group": "affordability",
-      "terms": []
-    },
-    {
-      "id": "medication_access",
-      "description": "Availability of the drug: shortages, lawsuits, supply, getting hold of it.",
-      "group": "affordability",
-      "terms": [
-        "continual",
-        "basically do whatever"
+      "id": "clinical_trials",
+      "label": "Clinical Trials",
+      "description": "The participant's relationship to clinical-trial participation — how they hear about trials, what attracts or repels them, and what would shape their decision to enroll.",
+      "subthemes": [
+        {
+          "id": "clinical_trial_awareness",
+          "label": "Clinical Trial Awareness",
+          "description": "How the participant first encountered the idea of clinical trials, where they hear about specific trials, and their baseline familiarity with what trials are and how they work.",
+          "clusters": []
+        },
+        {
+          "id": "clinical_trial_interest",
+          "label": "Clinical Trial Interest",
+          "description": "Their general appetite for trial participation — curiosity, openness, hesitation, or active engagement — independent of any specific trial.",
+          "clusters": []
+        },
+        {
+          "id": "clinical_trial_knowledge_gaps",
+          "label": "Clinical Trial Knowledge Gaps",
+          "description": "What the participant doesn't know or has misunderstood about how trials work — design, randomization, placebo, safety review, compensation, how they'd find one, what's expected of them.",
+          "clusters": []
+        },
+        {
+          "id": "trial_motivators",
+          "label": "Trial Motivators",
+          "description": "What would draw the participant in: access to a new treatment, altruism, financial compensation, expert care, hope when other options have failed.",
+          "clusters": []
+        },
+        {
+          "id": "trial_barriers",
+          "label": "Trial Barriers",
+          "description": "What gets in the way: travel, time, visit burden, procedures (blood draws, monitoring), placebo risk, fear of unknowns, unfamiliarity with the process.",
+          "clusters": []
+        },
+        {
+          "id": "trial_positive_experiences",
+          "label": "Trial Positive Experiences",
+          "description": "Prior trial experiences that went well — described directly or attributed to friends/family — and what made them so.",
+          "clusters": []
+        },
+        {
+          "id": "trial_negative_experiences",
+          "label": "Trial Negative Experiences",
+          "description": "Prior trial experiences that went poorly, were disappointing, or left a lasting reluctance — direct or attributed.",
+          "clusters": []
+        },
+        {
+          "id": "trial_decision_factors",
+          "label": "Trial Decision Factors",
+          "description": "Reasoning moves used in deciding whether to enroll: cost/benefit tradeoffs, conditional logic (\"only if I get the real drug\"), comparisons to standard treatment, who they'd consult.",
+          "clusters": []
+        }
       ]
     },
     {
-      "id": "side_effect_concern",
-      "description": "Worry about adverse effects or health complications from the medication.",
-      "group": "safety_risk",
+      "id": "condition_specific",
+      "label": "Condition-Specific",
+      "description": "The lived experience of having the condition itself — separate from treatment and trial participation.",
       "subthemes": [
         {
-          "id": "gastric_effects",
-          "description": "Gastrointestinal or gastric-emptying side effects."
+          "id": "condition_knowledge_gaps",
+          "label": "Condition Knowledge Gaps",
+          "description": "What the participant doesn't understand about their condition: cause, progression, prognosis, risk factors, what to watch for, how it relates to other conditions they have.",
+          "clusters": []
         },
         {
-          "id": "serious_complication",
-          "description": "A major health complication that would force stopping treatment."
+          "id": "symptoms",
+          "label": "Symptoms",
+          "description": "How the condition shows up day-to-day in their body and life — what they feel, when, how severe, how it changes.",
+          "clusters": []
         },
         {
-          "id": "unknown_safety",
-          "description": "Concern about unknown side effects or being among the first to try a treatment."
+          "id": "comorbidities",
+          "label": "Comorbidities",
+          "description": "Other conditions the participant lives with that interact with the primary condition — clinically, logistically, or in how they think about their care.",
+          "clusters": []
+        },
+        {
+          "id": "social_stigma",
+          "label": "Social Life / Stigmas",
+          "description": "How the condition affects relationships, public-facing life, identity, and how others react — including stigma, judgment, shame, and disclosure decisions.",
+          "clusters": []
+        },
+        {
+          "id": "advocacy_peer_groups",
+          "label": "Advocacy / Peer Groups",
+          "description": "Engagement with patient communities, advocacy organizations, peer support, and others living with the same condition — including online groups and in-person networks.",
+          "clusters": []
+        },
+        {
+          "id": "medical_self_efficacy",
+          "label": "Medical Self-Efficacy",
+          "description": "The participant's confidence and skill in managing their own care: tracking, navigating the healthcare system, advocating for themselves, knowing when to escalate.",
+          "clusters": []
         }
-      ],
-      "terms": []
-    },
-    {
-      "id": "non_weight_benefits",
-      "description": "Health improvements beyond weight loss.",
-      "group": "treatment_experience",
-      "subthemes": [
-        {
-          "id": "cardiometabolic",
-          "description": "Blood pressure, cholesterol, or other cardiometabolic improvement."
-        },
-        {
-          "id": "digestive",
-          "description": "Reduced heartburn, reflux, or other digestive improvement."
-        },
-        {
-          "id": "food_noise",
-          "description": "Reduction in food noise or intrusive appetite-related thoughts."
-        },
-        {
-          "id": "sleep_mood",
-          "description": "Improvement in sleep, stress, mood, or energy."
-        }
-      ],
-      "terms": [
-        "dentist",
-        "sleep",
-        "sleep apnea",
-        "grinding your teeth",
-        "inflammation"
-      ]
-    },
-    {
-      "id": "fear_of_weight_regain",
-      "description": "Concern about regaining weight if treatment stops or a placebo is received.",
-      "group": "safety_risk",
-      "terms": []
-    },
-    {
-      "id": "treatment_continuation",
-      "description": "Intent to stay on medication, lifelong use, or maintenance commitment.",
-      "group": "treatment_experience",
-      "terms": [
-        "would not stop"
-      ]
-    },
-    {
-      "id": "discontinuation_reasoning",
-      "description": "Reasons or conditions that would lead a participant to stop or pause GLP-1 medication. The mirror of treatment_continuation.",
-      "group": "treatment_experience",
-      "subthemes": [
-        {
-          "id": "cost_driven_stop",
-          "description": "Would stop because the medication became unaffordable or coverage was lost."
-        },
-        {
-          "id": "side_effect_stop",
-          "description": "Would stop because of side effects, complications, or tolerability."
-        },
-        {
-          "id": "goal_achieved_stop",
-          "description": "Would consider stopping after reaching a weight or health goal."
-        },
-        {
-          "id": "involuntary_stop",
-          "description": "Would stop only if forced to — supply shortage, formulary change, prescriber withdrawal, or other circumstances outside the participant's control."
-        },
-        {
-          "id": "medical_advice_stop",
-          "description": "Would stop on the recommendation of a clinician or because of a new medical condition."
-        }
-      ],
-      "terms": []
-    },
-    {
-      "id": "drug_switching",
-      "description": "Willingness to switch to or try a different medication.",
-      "group": "treatment_experience",
-      "subthemes": [
-        {
-          "id": "stall_management",
-          "description": "Switching or adding medication to break a weight-loss stall or plateau."
-        }
-      ],
-      "terms": []
-    },
-    {
-      "id": "placebo_concern",
-      "description": "Feelings about placebo arms, randomization, or controlled-study design.",
-      "group": "safety_risk",
-      "terms": []
-    },
-    {
-      "id": "injection_experience",
-      "description": "Attitudes toward injections: frequency, dislike, route of administration.",
-      "group": "treatment_experience",
-      "subthemes": [
-        {
-          "id": "injection_frequency",
-          "description": "Injection cadence — weekly versus monthly dosing."
-        },
-        {
-          "id": "injection_aversion",
-          "description": "Dislike of or discomfort with the act of injecting."
-        },
-        {
-          "id": "dosing_durability",
-          "description": "Concern about how long a dose lasts between injections."
-        }
-      ],
-      "terms": [
-        "manageable"
-      ]
-    },
-    {
-      "id": "oral_medication_interest",
-      "description": "Interest in or preference for oral / pill-form GLP-1 medications.",
-      "group": "treatment_experience",
-      "terms": []
-    },
-    {
-      "id": "compounded_medication",
-      "description": "Use of or views on compounded medication versus brand-name product.",
-      "group": "affordability",
-      "terms": []
-    },
-    {
-      "id": "trial_participation_motivation",
-      "description": "Factors that attract the participant to joining a clinical trial.",
-      "group": "trial_motivators",
-      "subthemes": [
-        {
-          "id": "access_motivation",
-          "description": "Joining a trial primarily to gain access to medication."
-        },
-        {
-          "id": "convenience_motivation",
-          "description": "Attraction driven by convenient or local trial logistics."
-        }
-      ],
-      "terms": [
-        "better"
-      ]
-    },
-    {
-      "id": "research_altruism",
-      "description": "Contributing to science, helping others, or supporting research as a motivation.",
-      "group": "trial_motivators",
-      "terms": []
-    },
-    {
-      "id": "travel_burden",
-      "description": "Distance and travel required to reach trial or clinic sites.",
-      "group": "trial_barriers",
-      "subthemes": [
-        {
-          "id": "distance_to_site",
-          "description": "Distance and driving time required to reach a site."
-        },
-        {
-          "id": "transportation_access",
-          "description": "Having, or lacking, a means of transport."
-        }
-      ],
-      "terms": []
-    },
-    {
-      "id": "time_burden",
-      "description": "Time cost of participation: hours per week, round trips, scheduling load.",
-      "group": "trial_barriers",
-      "terms": []
-    },
-    {
-      "id": "visit_logistics",
-      "description": "Visit frequency, home visits, telehealth, and scheduling arrangements.",
-      "group": "trial_barriers",
-      "subthemes": [
-        {
-          "id": "telehealth",
-          "description": "Remote or telehealth visits in place of in-person ones."
-        },
-        {
-          "id": "home_visits",
-          "description": "A nurse or staff member visiting the participant's home."
-        },
-        {
-          "id": "visit_frequency",
-          "description": "How often site visits are required."
-        },
-        {
-          "id": "scheduling",
-          "description": "Appointment scheduling and flexibility."
-        },
-        {
-          "id": "local_site",
-          "description": "Preference for a nearby or locally managed site."
-        }
-      ],
-      "terms": []
-    },
-    {
-      "id": "monitoring_burden",
-      "description": "Trial procedures such as fasting blood draws or continuous glucose monitoring.",
-      "group": "trial_barriers",
-      "subthemes": [
-        {
-          "id": "fasting_blood",
-          "description": "Fasting blood draws."
-        },
-        {
-          "id": "glucose_monitoring",
-          "description": "Continuous glucose monitoring."
-        }
-      ],
-      "terms": []
-    },
-    {
-      "id": "incentives_support",
-      "description": "Vouchers, financial compensation, travel concierge, devices, or other support offered.",
-      "group": "trial_motivators",
-      "subthemes": [
-        {
-          "id": "financial_compensation",
-          "description": "Direct payment for participation."
-        },
-        {
-          "id": "vouchers",
-          "description": "Vouchers for medication, books, or weight-loss products."
-        },
-        {
-          "id": "travel_concierge",
-          "description": "Arranged travel or transport to sites."
-        },
-        {
-          "id": "device_provision",
-          "description": "Provision of a device such as a Fitbit or tracker."
-        },
-        {
-          "id": "meal_support",
-          "description": "Meal replacement drinks or meal vouchers."
-        },
-        {
-          "id": "post_trial_access",
-          "description": "Continued access to medication after the trial."
-        }
-      ],
-      "terms": []
-    },
-    {
-      "id": "education_need",
-      "description": "Desire for nutrition, lifestyle, or medication education and its formats.",
-      "group": "education_support",
-      "subthemes": [
-        {
-          "id": "nutrition_education",
-          "description": "Nutritional counseling, meal planning, recipes."
-        },
-        {
-          "id": "learning_formats",
-          "description": "Format of education — videos, webinars, modules, classes, handouts."
-        },
-        {
-          "id": "medication_education",
-          "description": "Education about the medication itself and how to take it."
-        },
-        {
-          "id": "self_tracking",
-          "description": "Journaling or self-tracking of mood, food, or progress."
-        }
-      ],
-      "terms": [
-        "tools",
-        "after stopping medication"
-      ]
-    },
-    {
-      "id": "weight_loss_history",
-      "description": "Past weight-loss attempts, diets, and the participant's weight journey.",
-      "group": "weight_journey",
-      "subthemes": [
-        {
-          "id": "prior_diets",
-          "description": "Past dieting approaches such as Atkins, paleo, vegan, or commercial programs."
-        },
-        {
-          "id": "prior_weight_loss_medication",
-          "description": "Earlier weight-loss medications tried before GLP-1s (e.g. phentermine)."
-        },
-        {
-          "id": "weight_loss_surgery",
-          "description": "Bariatric or weight-loss surgery, considered or undergone."
-        },
-        {
-          "id": "exercise_history",
-          "description": "Past experience with or difficulty sustaining exercise."
-        },
-        {
-          "id": "lifelong_struggle",
-          "description": "A long-running or lifelong struggle with weight, including weight cycling."
-        }
-      ],
-      "terms": [
-        "history"
-      ]
-    },
-    {
-      "id": "trial_awareness",
-      "description": "Awareness of clinical trials or new drugs in development.",
-      "group": "trial_motivators",
-      "terms": []
-    },
-    {
-      "id": "access_logic",
-      "description": "Reasoning about how to obtain or retain access to medication.",
-      "group": "affordability",
-      "terms": []
-    },
-    {
-      "id": "risk_calculation",
-      "description": "Weighing risks, side effects, or trial-design probabilities.",
-      "group": "decision_factors",
-      "terms": []
-    },
-    {
-      "id": "treatment_dependency",
-      "description": "Framing the medication as needed or relied upon long-term.",
-      "group": "treatment_experience",
-      "terms": []
-    },
-    {
-      "id": "maintenance_strategy",
-      "description": "Reasoning about sustaining weight loss after the active treatment phase.",
-      "group": "treatment_experience",
-      "terms": []
-    },
-    {
-      "id": "convenience_tradeoff",
-      "description": "Trading effort or burden against convenience or accessibility.",
-      "group": "decision_factors",
-      "terms": []
-    },
-    {
-      "id": "clinical_trial_friction",
-      "description": "Practical obstacles that make trial participation harder.",
-      "group": "trial_barriers",
-      "terms": []
-    },
-    {
-      "id": "self_advocacy",
-      "description": "The participant or their clinician actively pushing to get care.",
-      "group": "education_support",
-      "terms": []
-    },
-    {
-      "id": "information_seeking",
-      "description": "Actively seeking knowledge, education, or trial information.",
-      "group": "education_support",
-      "terms": []
-    },
-    {
-      "id": "health_transformation",
-      "description": "Narrative of meaningful health improvement or change.",
-      "group": "treatment_experience",
-      "terms": []
-    },
-    {
-      "id": "cost_benefit_reasoning",
-      "description": "Explicitly weighing cost against benefit.",
-      "group": "decision_factors",
-      "terms": []
-    },
-    {
-      "id": "altruistic_reasoning",
-      "description": "Justifying a choice by benefit to others or to science.",
-      "group": "trial_motivators",
-      "terms": []
-    },
-    {
-      "id": "conditional_decision",
-      "description": "A decision framed as contingent on specific conditions ('it depends').",
-      "group": "decision_factors",
-      "terms": []
-    },
-    {
-      "id": "lifestyle_change",
-      "description": "Reasoning about diet, exercise, or behavior change alongside medication.",
-      "group": "education_support",
-      "terms": []
-    },
-    {
-      "id": "glad",
-      "description": "Added from the segment tag drawer; edit this description in codebook.json.",
-      "terms": [
-        "glad"
       ]
     }
   ],

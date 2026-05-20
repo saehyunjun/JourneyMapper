@@ -92,7 +92,7 @@ type QuestionMapFile = {
 type CodebookTheme = { id: string; subthemes?: { id: string }[] };
 type CodebookFile = {
 	meta: { schema_version: string; sentiment_scale?: unknown; [k: string]: unknown };
-	theme_tags: CodebookTheme[];
+	themes: CodebookTheme[];
 	emotion_tags: { id: string }[];
 };
 
@@ -344,7 +344,7 @@ ${JSON.stringify(codebook.meta.sentiment_scale, null, 2)}
 CODEBOOK — the only valid tag ids:
 
 THEMES (with their subthemes):
-${JSON.stringify(codebook.theme_tags, null, 2)}
+${JSON.stringify(codebook.themes, null, 2)}
 
 EMOTIONS:
 ${JSON.stringify(codebook.emotion_tags, null, 2)}`;
@@ -372,8 +372,8 @@ export async function proposeSegmentTags(interviewId: string): Promise<void> {
 		if (currentSegmentIds.has(id)) proposals[id] = p;
 	}
 
-	const themeIds = codebook.theme_tags.map((t) => t.id);
-	const subthemeIds = codebook.theme_tags.flatMap((t) => (t.subthemes ?? []).map((s) => s.id));
+	const themeIds = codebook.themes.map((t) => t.id);
+	const subthemeIds = codebook.themes.flatMap((t) => (t.subthemes ?? []).map((s) => s.id));
 	const emotionIds = codebook.emotion_tags.map((e) => e.id);
 
 	const annotationSchema = {
@@ -521,10 +521,10 @@ export async function buildSegmentTags(): Promise<void> {
 	const topicsStatus =
 		Object.keys(topicAssignments).length > 0 && validTopics.size > 0 ? 'present' : 'not_run';
 
-	const validThemes = new Set(codebook.theme_tags.map((t) => t.id));
+	const validThemes = new Set(codebook.themes.map((t) => t.id));
 	const validEmotions = new Set(codebook.emotion_tags.map((t) => t.id));
 	const subthemeParent = new Map<string, string>();
-	for (const theme of codebook.theme_tags) {
+	for (const theme of codebook.themes) {
 		for (const sub of theme.subthemes ?? []) subthemeParent.set(sub.id, theme.id);
 	}
 

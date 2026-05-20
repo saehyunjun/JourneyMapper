@@ -3,6 +3,12 @@
  *
  * Typed loader + join helpers over the interview-analysis pipeline outputs.
  * Backs the review interface at /wctglpdemo/analysis.
+ *
+ * Codebook 2.0: three top-level themes (treatment, clinical_trials,
+ * condition_specific), each with subthemes. Annotations carry both axes:
+ * a.themes (broad, max 3) and a.subthemes (specific, the actual tag detail).
+ * The frequency/breakdown helpers iterate themes as the outer axis and
+ * subthemes as the inner axis — same shape as before, finer-grained inside.
  */
 import interviewsRaw from './interviews_structured.json';
 import wordUsageRaw from './word_usage.json';
@@ -58,7 +64,6 @@ export type Segment = {
 	interview_id: string;
 	turn_index: number;
 	segment_index: number;
-	/** null for freshly-uploaded segments not yet through question normalization. */
 	question_id: string | null;
 	speaker: string;
 	text: string;
@@ -75,41 +80,54 @@ export type Question = {
 	canonical_question: string;
 };
 
-export type ThemeTag = {
+export type Subtheme = {
 	id: string;
-	/** Broader tag-group this theme belongs to — see `tagGroups`. */
-	group?: string;
-	description: string;
-	subthemes?: { id: string; description: string }[];
+	label?: string;
+	description?: string;
 };
 
-export type TagGroup = { id: string; label: string; description: string };
+export type ThemeTag = {
+	id: string;
+	label?: string;
+	description: string;
+	subthemes?: Subtheme[];
+};
 
 type Interview = { interview_id: string; turn_count: number };
 
 export const quotes = (quoteBankRaw as { quotes: Quote[] }).quotes;
 
 const segmentTags = segmentTagsRaw as {
-	meta: { tagged_interviews: string[]; pending_interviews: string[] };
+	meta: { tagged_interviews?: string[]; pending_interviews?: string[] };
 	annotations: Annotation[];
 };
 export const annotations = segmentTags.annotations;
 
-/**
- * Interviews that have been parsed + segmented but not yet run through the
- * tagging / quote-bank stages — so they carry no themes, emotions, or quotes.
- * Surfaced in the UI so a freshly-uploaded interview reads as "pending" rather
- * than silently missing.
- */
 export const pendingInterviews: string[] = segmentTags.meta.pending_interviews ?? [];
 export const questions = (questionsRaw as { questions: Question[] }).questions;
-export const themeTags = (codebookRaw as { theme_tags: ThemeTag[] }).theme_tags;
-/** Broader theme groups from the codebook; each theme references one by `group`. */
-export const tagGroups = (codebookRaw as { tag_groups: TagGroup[] }).tag_groups;
-/** theme id -> its tag-group id */
-export const themeGroupOf = new Map<string, string | undefined>(
-	themeTags.map((t) => [t.id, t.group])
+
+/** The three top-level themes from codebook 2.0, each carrying its subthemes. */
+export const themeTags = (codebookRaw as { themes: ThemeTag[] }).themes;
+
+/** Flat list of every subtheme, with its parent theme id attached as `group`. */
+export const subthemeTags: (Subtheme & { group: string })[] = themeTags.flatMap((t) =>
+	(t.subthemes ?? []).map((s) => ({ ...s, group: t.id }))
 );
+
+export type TagGroup = { id: string; label: string; description: string };
+
+/**
+ * Codebook 2.0 transitional shim: the old `tag_groups` axis is retired —
+ * h3 themes ARE the groups in 2.0. We export them in the old TagGroup shape
+ * (`{id, label, description}`) so existing consumer components that expect
+ * groups don't crash. UI density degrades from 8 groups to 3.
+ */
+export const tagGroups: TagGroup[] = themeTags.map((t) => ({
+	id: t.id,
+	label: t.label ?? titleCase(t.id),
+	description: t.description ?? ''
+}));
+
 export const interviews = (interviewsRaw as { interviews: Interview[] }).interviews;
 export const segments = (segmentsRaw as { segments: Segment[] }).segments;
 export const wordUsage = wordUsageRaw as {
@@ -117,33 +135,28 @@ export const wordUsage = wordUsageRaw as {
 	by_participant: Record<string, { total_words: number; unique_words: number; word_usage: WordCount[] }>;
 };
 
-type KeywordUsage = {
-	categories: {
-		id: string;
-		label: string;
-		keywords: {
-			id: string;
-			label: string;
-			count: number;
-			matches: { segment_id: string; text?: string }[];
-		}[];
-	}[];
+type KeywordUsageMatch = { segment_id: string; text?: string };
+type KeywordUsageCluster = {
+	id: string;
+	label: string;
+	count: number;
+	matches: KeywordUsageMatch[];
 };
+type KeywordUsage = { clusters: KeywordUsageCluster[] };
 
 /** A keyword a segment matched, plus the literal surface form spoken in it. */
 export type SegmentKeyword = { id: string; label: string; surface: string };
 
 /**
  * segment_id -> the single strongest keyword it matched in keyword_usage.json,
- * where "strongest" is the keyword with the highest corpus-wide mention count.
+ * where "strongest" is the cluster with the highest corpus-wide mention count.
  * `surface` is the verbatim form spoken in that segment. Segments matching no
- * lexicon keyword are simply absent from the map.
+ * lexicon cluster are simply absent from the map.
  */
 export const keywordBySegment: Map<string, SegmentKeyword> = (() => {
 	const map = new Map<string, SegmentKeyword>();
-	const ranked = (keywordUsageRaw as KeywordUsage).categories
-		.flatMap((c) => c.keywords)
-		.sort((a, b) => b.count - a.count);
+	const usage = keywordUsageRaw as unknown as KeywordUsage;
+	const ranked = (usage.clusters ?? []).slice().sort((a, b) => b.count - a.count);
 	for (const kw of ranked)
 		for (const m of kw.matches)
 			if (!map.has(m.segment_id))
@@ -163,7 +176,6 @@ export function titleCase(id: string): string {
 	return id.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-/** "participant_09" -> "Participant 09" */
 export const participantLabel = titleCase;
 
 /** subtheme id -> parent theme id */
@@ -171,6 +183,16 @@ export const subthemeParent = new Map<string, string>();
 for (const t of themeTags) {
 	for (const s of t.subthemes ?? []) subthemeParent.set(s.id, t.id);
 }
+
+/**
+ * Codebook 2.0 transitional shim. The old `themeGroupOf` mapped a (specific)
+ * theme id to its broader tag-group id. With tag_groups retired and themes
+ * collapsed to 3 broad buckets, this map is now empty — each theme IS its own
+ * "group." Kept for export-shape compatibility.
+ */
+export const themeGroupOf = new Map<string, string | undefined>(
+	themeTags.map((t) => [t.id, undefined])
+);
 
 export const studyStats = {
 	interviews: interviews.length,
@@ -188,8 +210,8 @@ function tally(rows: string[][]): { id: string; count: number }[] {
 }
 
 /**
- * Theme counts across the segment annotations matching an optional predicate,
- * each with its subtheme breakdown. With no predicate, counts every annotation.
+ * Theme counts across the annotations matching an optional predicate, each
+ * with its subtheme breakdown. With no predicate, counts every annotation.
  */
 export function themeFrequency(
 	predicate: (a: Annotation) => boolean = () => true
@@ -207,12 +229,10 @@ export function themeFrequency(
 	}));
 }
 
-/** Emotion counts across the segment annotations matching an optional predicate. */
 export const emotionFrequency = (
 	predicate: (a: Annotation) => boolean = () => true
 ): { id: string; count: number }[] => tally(annotations.filter(predicate).map((a) => a.emotions));
 
-/** Theme counts across the segment annotations matching an optional predicate. */
 export function themeCounts(
 	predicate: (a: Annotation) => boolean = () => true
 ): { id: string; count: number }[] {
@@ -224,11 +244,6 @@ export type ThemeBlock = { sentiment: number; interview_id: string };
 export type BreakdownRow = { id: string; count: number; blocks: ThemeBlock[] };
 export type ThemeBreakdownRow = BreakdownRow & { subthemes: BreakdownRow[] };
 
-/**
- * Per-theme breakdown: one block per contributing segment annotation, carrying
- * the data needed to colour it (sentiment, interviewee). Each theme also lists
- * its subthemes with the same per-block detail. Sorted by count desc.
- */
 export function themeBreakdown(
 	predicate: (a: Annotation) => boolean = () => true
 ): ThemeBreakdownRow[] {
@@ -260,10 +275,6 @@ export function themeBreakdown(
 		.sort((a, b) => b.count - a.count);
 }
 
-/**
- * Per-emotion breakdown: one block per contributing segment annotation, so each
- * emotion's segments can be split by sentiment. Sorted by count desc.
- */
 export function emotionBreakdown(
 	predicate: (a: Annotation) => boolean = () => true
 ): BreakdownRow[] {
@@ -280,32 +291,22 @@ export function emotionBreakdown(
 		.sort((a, b) => b.count - a.count);
 }
 
-// segment_id -> the pull quote that contains it (if any).
 const quoteBySegment = new Map<string, string>();
 for (const q of quotes) for (const sid of q.segment_ids) quoteBySegment.set(sid, q.quote_id);
 
-// segment_id lookups, shared by the join helpers below.
 const segmentById = new Map(segments.map((s) => [s.segment_id, s]));
 const annotationBySegment = new Map(annotations.map((a) => [a.segment_id, a]));
 
 export type KeyQuote = {
-	/** Unique key — a quote_id for quote-bank quotes, a segment_id for segments. */
 	id: string;
 	interview_id: string;
 	question_id: string;
 	text: string;
 	sentiment: number;
 	themes: string[];
-	/** Quote-bank overall score, or null for a plain starred segment. */
 	score: number | null;
 };
 
-/**
- * The analyst's "key quotes": every starred quote-bank quote plus every starred
- * segment that isn't already covered by one. Segments are starred on the review
- * page and the fingerprint theme drawer; quotes are starred on the analysis
- * page — this folds both into one ranked card list for KeyQuotesSection.
- */
 export function keyQuotes(
 	starredQuoteIds: string[],
 	starredSegmentIds: string[] = []
@@ -343,7 +344,6 @@ export function keyQuotes(
 		});
 	}
 
-	// Scored quotes first, best score down; starred segments after.
 	return cards.sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
 }
 
@@ -361,7 +361,6 @@ export type ThemeFragment = {
 	quote_id: string | null;
 };
 
-/** Join one coded annotation to its segment text and pull-quote provenance. */
 function fragmentForAnnotation(a: Annotation): ThemeFragment {
 	const seg = segmentById.get(a.segment_id);
 	return {
@@ -379,19 +378,10 @@ function fragmentForAnnotation(a: Annotation): ThemeFragment {
 	};
 }
 
-/**
- * Every coded fragment whose annotation matches `predicate`, joined to its
- * segment text. The general join behind `segmentsForTheme` and the
- * participant drawer's theme / emotion / word row drill-downs.
- */
 export function fragmentsMatching(predicate: (a: Annotation) => boolean): ThemeFragment[] {
 	return annotations.filter(predicate).map(fragmentForAnnotation);
 }
 
-/**
- * Every segment fragment tagged with `themeId` (optionally filtered), joined to
- * its text and flagged with whether it is already part of a pull quote.
- */
 export function segmentsForTheme(
 	themeId: string,
 	predicate: (a: Annotation) => boolean = () => true
@@ -401,20 +391,14 @@ export function segmentsForTheme(
 
 const questionOrder = new Map(questions.map((q) => [q.question_id, q.order]));
 
-/** Question ids with themed annotations — admin questions excluded, in interview-guide order. */
 export const themedQuestionIds: string[] = [...new Set(annotations.map((a) => a.question_id))]
 	.filter((id) => questionById.get(id)?.type !== 'admin')
 	.sort((a, b) => (questionOrder.get(a) ?? 99) - (questionOrder.get(b) ?? 99));
 
-/** Interview ids with themed annotations. */
 export const themedParticipantIds: string[] = [
 	...new Set(annotations.map((a) => a.interview_id))
 ].sort();
 
-/**
- * Counts of each sentiment value (-2..2) across the segment annotations
- * matching an optional predicate. With no predicate, counts every annotation.
- */
 export function sentimentDistribution(
 	predicate: (a: Annotation) => boolean = () => true
 ): { value: number; count: number }[] {

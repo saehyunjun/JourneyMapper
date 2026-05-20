@@ -18,6 +18,7 @@
 	import phraseLexRaw from '$lib/content/wctglpdemo-data/phrase_lexicon.json';
 	import { EMOTION_PICKER } from '$lib/journeymapper2/plutchikEmotionsConfig.js';
 	import { emotionDots } from '$lib/utils/emotion-colors';
+	import { questionLabel } from '$lib/content/wctglpdemo-data/analysis';
 	import * as ContextMenu from '$lib/components/ui/context-menu/index.js';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
@@ -25,6 +26,8 @@
 	import KeywordTagDrawer from '$lib/components/KeywordTagDrawer.svelte';
 	import PhraseLinkDrawer from '$lib/components/PhraseLinkDrawer.svelte';
 	import CircleCheckIcon from '@lucide/svelte/icons/circle-check';
+	import StarIcon from '@lucide/svelte/icons/star';
+	import Undo2Icon from '@lucide/svelte/icons/undo-2';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import type { Annotation, TaggableSegment } from '$lib/types/segment-tags';
 	import { XIcon } from '@lucide/svelte';
@@ -32,29 +35,54 @@
 	let {
 		segment = null,
 		annotation = null,
+		starred = false,
+		togglingStar = false,
 		onclose,
 		onsaved,
-		onedited
+		onedited,
+		onToggleStar
 	}: {
 		segment: TaggableSegment | null;
 		annotation: Annotation | null;
+		/** Whether this segment is currently in the analyst's starred-highlight set. */
+		starred?: boolean;
+		/** True while the parent is mid-flight on a star toggle. */
+		togglingStar?: boolean;
 		onclose: () => void;
 		onsaved: (a: Annotation) => void;
 		/** Called after a successful segment-text edit so the parent can refresh
 		 *  its segment list (segments.json was rewritten on the server). */
 		onedited?: () => void;
+		/** Supplying this enables the star control inside the drawer header. */
+		onToggleStar?: (segmentId: string) => void;
 	} = $props();
 
+	// Codebook 2.0: the "themes" the user picks from in the drawer are actually
+	// the codebook's subthemes (h4) — flattened with `group` = parent theme id.
+	// The drawer's outer disclosure buckets are the 3 top-level codebook themes,
+	// exposed as TagGroup. On save, parent theme ids are derived from the
+	// selected subthemes and sent as `themes` in the payload.
 	type Theme = {
 		id: string;
 		description: string;
 		group?: string;
+		label?: string;
 		subthemes?: { id: string; description: string }[];
-		terms?: string[];
 	};
 	type TagGroup = { id: string; label: string; description: string };
 	type TagGroupView = TagGroup & { themes: Theme[] };
-	type Keyword = { id: string; label: string; variants: string[] };
+	type Cluster = {
+		id: string;
+		label: string;
+		description?: string;
+		parent_theme: string;
+		parent_subtheme: string;
+		variants: string[];
+	};
+	// Old Keyword/Category names kept as the drawer's local shape for the
+	// KeywordTagDrawer prop — the existing render groups clusters by what it
+	// calls a "category", which is now the parent_subtheme id.
+	type Keyword = Cluster;
 	type Category = { id: string; label: string; description: string; keywords: Keyword[] };
 	type PhraseVariant = {
 		text: string;
@@ -75,7 +103,21 @@
 		dyads: EmotionDyad[];
 	};
 
-	const tagGroups = codebook.tag_groups as TagGroup[];
+	// The 3 top-level codebook themes serve as the drawer's outer disclosure
+	// buckets (what the code calls "tag groups").
+	type CodebookTheme = {
+		id: string;
+		label?: string;
+		description?: string;
+		subthemes?: { id: string; label?: string; description?: string }[];
+	};
+	const codebookThemes = codebook.themes as CodebookTheme[];
+	const tagGroups: TagGroup[] = codebookThemes.map((t) => ({
+		id: t.id,
+		label: t.label ?? t.id,
+		description: t.description ?? ''
+	}));
+
 	// The Plutchik picker (8 primaries, each with 3 intensity levels + dyads).
 	const emotionPrimaries = EMOTION_PICKER as EmotionPrimary[];
 	// Descriptions for chip tooltips, keyed by emotion id.
@@ -86,14 +128,49 @@
 		])
 	);
 
-	// Emotion indicator colour resolution lives in $lib/utils/emotion-colors —
-	// shared with CodedFragmentCard and the upload-page tag chips so the picker
-	// and the transcript draw from one source of truth.
-
-	// Themes and the keyword lexicon are reactive: the right-click "add to
-	// keyword / theme" menu replaces them with the server's updated copy.
-	let themeTags = $state<Theme[]>(codebook.theme_tags as Theme[]);
-	let lexicon = $state<{ categories: Category[] }>(lexiconRaw as { categories: Category[] });
+	// "themeTags" is the flat subtheme list, with `group` = parent theme id.
+	// Reactive because the drawer used to allow analysts to add new themes via
+	// the right-click menu; that path is retired in codebook 2.0 (the codebook
+	// is fixed), so this state effectively never mutates anymore.
+	let themeTags = $state<Theme[]>(
+		codebookThemes.flatMap((t) =>
+			(t.subthemes ?? []).map((s) => ({
+				id: s.id,
+				description: s.description ?? '',
+				label: s.label,
+				group: t.id
+			}))
+		)
+	);
+	// Lexicon: flat clusters[], rendered in KeywordTagDrawer grouped by
+	// parent_subtheme (kept under the legacy `categories` shape for that prop).
+	// Every codebook subtheme becomes a category — even empty ones — so the
+	// analyst can define the first keyword under a subtheme that doesn't yet
+	// have any. Categories are ordered to match the codebook (theme order,
+	// then subtheme order within each theme).
+	const clustersToCategories = (clusters: Cluster[]): Category[] => {
+		const byParent = new Map<string, Keyword[]>();
+		for (const c of clusters) {
+			const list = byParent.get(c.parent_subtheme) ?? [];
+			list.push(c);
+			byParent.set(c.parent_subtheme, list);
+		}
+		const out: Category[] = [];
+		for (const t of codebookThemes) {
+			for (const s of t.subthemes ?? []) {
+				out.push({
+					id: s.id,
+					label: s.label ?? s.id,
+					description: s.description ?? '',
+					keywords: byParent.get(s.id) ?? []
+				});
+			}
+		}
+		return out;
+	};
+	let lexicon = $state<{ categories: Category[] }>({
+		categories: clustersToCategories((lexiconRaw as { clusters: Cluster[] }).clusters)
+	});
 	// Key phrases — canonical labels with semantic variants drawn from segments.
 	let keyPhrases = $state<KeyPhrase[]>((phraseLexRaw.key_phrases ?? []) as KeyPhrase[]);
 	const themeById = $derived(new Map(themeTags.map((t) => [t.id, t])));
@@ -144,12 +221,109 @@
 	let saving = $state(false);
 	let errorMsg = $state('');
 
+	// Dirty tracking + undo history.
+	// `baseline` is the snapshot taken right after seeding (or after a save) and
+	// drives the "discard changes?" prompt on close. `history` is a stack of
+	// snapshots taken before every user-initiated mutation, so Ctrl/Cmd+Z and
+	// the Undo button can step backwards through tag edits.
+	type Snapshot = {
+		themes: string[];
+		subthemes: string[];
+		emotions: string[];
+		sentiment: number;
+		note: string;
+	};
+	let baseline = $state<Snapshot | null>(null);
+	let history = $state<Snapshot[]>([]);
+
+	const snapshot = (): Snapshot => ({
+		themes: [...themes],
+		subthemes: [...subthemes],
+		emotions: [...emotions],
+		sentiment,
+		note
+	});
+
+	const sameSnapshot = (a: Snapshot, b: Snapshot): boolean => {
+		if (a.sentiment !== b.sentiment || a.note !== b.note) return false;
+		const sameSet = (x: string[], y: string[]) =>
+			x.length === y.length && x.every((v, i) => v === y[i]);
+		return sameSet(a.themes, b.themes) && sameSet(a.subthemes, b.subthemes) && sameSet(a.emotions, b.emotions);
+	};
+
+	const isDirty = $derived(baseline !== null && !sameSnapshot(snapshot(), baseline));
+	const canUndo = $derived(history.length > 0);
+
+	/** Push the current state onto the undo stack just before mutating it. */
+	function pushHistory() {
+		history = [...history, snapshot()];
+	}
+
+	function undo() {
+		if (!history.length) return;
+		const prev = history[history.length - 1];
+		history = history.slice(0, -1);
+		themes = [...prev.themes];
+		subthemes = [...prev.subthemes];
+		emotions = [...prev.emotions];
+		sentiment = prev.sentiment;
+		note = prev.note;
+		errorMsg = '';
+	}
+
+	// Tracked mutation helpers — every user action goes through one of these so
+	// pushHistory lives in exactly one place per change. `toggle` (further
+	// below) and `toggleTheme` are unchanged; the apply* wrappers call them.
+	function applyToggleSubtheme(id: string) {
+		pushHistory();
+		subthemes = subthemes.includes(id) ? subthemes.filter((x) => x !== id) : [...subthemes, id];
+	}
+	function applyToggleEmotion(id: string) {
+		pushHistory();
+		emotions = emotions.includes(id) ? emotions.filter((x) => x !== id) : [...emotions, id];
+	}
+	function applyRemoveEmotion(id: string) {
+		pushHistory();
+		emotions = emotions.filter((x) => x !== id);
+	}
+	function applySetSentiment(v: number) {
+		if (v === sentiment) return;
+		pushHistory();
+		sentiment = v;
+	}
+	// Reviewer-note history is recorded per focus-session, not per keystroke:
+	// remember the value at focus-in, and if it changed by focus-out, push the
+	// pre-focus snapshot. Browser undo still works inside the textarea itself.
+	let noteAtFocus = '';
+	function rememberNoteFocus() {
+		noteAtFocus = note;
+	}
+	function commitNoteBlur() {
+		if (noteAtFocus === note) return;
+		const before = noteAtFocus;
+		const after = note;
+		note = before;
+		pushHistory();
+		note = after;
+	}
+
 	// Disclosure state: which tag groups are open, and which emotion family.
 	let expandedGroups = $state<string[]>([]);
 	let expandedEmotion = $state('');
 
 	// Right-click "add to keyword / theme" menu state.
 	let selectionText = $state('');
+	// Whichever bolded keyword span the analyst right-clicked, captured at the
+	// same time as the text selection. `surface` is the displayed token (e.g.
+	// "length") used to look up which stored variant to remove/move. Null when
+	// the right-click landed on plain (non-bolded) text.
+	let rightClickKeyword = $state<{ id: string; label: string; surface: string } | null>(null);
+	// Live selection offsets within the segment text, in segments.json char
+	// coordinates (interview-relative — segment.char_start + offset-in-rendered).
+	// -1 means no usable selection.
+	let selectionStart = $state(-1);
+	let selectionEnd = $state(-1);
+	let segmentTextEl = $state<HTMLElement | null>(null);
 	let lexBusy = $state(false);
 	let flashMsg = $state('');
 	let flashTimer: ReturnType<typeof setTimeout> | undefined;
@@ -213,10 +387,38 @@
 	let keywordDrawerOpen = $state(false);
 	let phraseDrawerOpen = $state(false);
 	let tertiarySelection = $state('');
+	// Pinned span offsets when the keyword drawer opens — the click on a
+	// cluster will tag this exact span, regardless of later browser selection
+	// drift while the analyst works in the drawer.
+	let tertiaryStart = $state(-1);
+	let tertiaryEnd = $state(-1);
+	// Set when the keyword drawer was opened via "Move to another keyword…" on
+	// a bolded keyword. Switches the drawer's submit handlers from tag-mode to
+	// move-mode: clicking a cluster moves the variant rather than creating a
+	// new per-instance tag. Null in normal tag-mode.
+	let moveSourceKeyword = $state<{ id: string; label: string } | null>(null);
 
 	function openKeywordDrawer() {
-		if (!selectionText) return;
+		if (!selectionText || selectionStart < 0 || selectionEnd <= selectionStart) {
+			errorMsg = 'Re-select the phrase in the quote, then try again.';
+			return;
+		}
 		tertiarySelection = selectionText;
+		tertiaryStart = selectionStart;
+		tertiaryEnd = selectionEnd;
+		moveSourceKeyword = null;
+		errorMsg = '';
+		keywordDrawerOpen = true;
+	}
+
+	/** Open the keyword drawer in "move" mode — clicking a cluster will move
+	 *  the right-clicked variant rather than create a new tag. */
+	function openMoveDrawer() {
+		if (!rightClickKeyword) return;
+		tertiarySelection = rightClickKeyword.surface;
+		tertiaryStart = -1;
+		tertiaryEnd = -1;
+		moveSourceKeyword = { id: rightClickKeyword.id, label: rightClickKeyword.label };
 		errorMsg = '';
 		keywordDrawerOpen = true;
 	}
@@ -226,17 +428,6 @@
 		tertiarySelection = selectionText;
 		errorMsg = '';
 		phraseDrawerOpen = true;
-	}
-
-	// applyLexicon reads `selectionText` directly. Pin it to the snapshot the
-	// drawer was opened with so a stray browser selection inside the drawer
-	// can't redirect the action to the wrong phrase.
-	async function applyFromKeywordDrawer(
-		action: 'add_keyword_variant' | 'create_keyword',
-		payload: Record<string, string>
-	) {
-		selectionText = tertiarySelection;
-		await applyLexicon(action, payload);
 	}
 
 	// Inline edit-selection state — when the reviewer chooses "Edit selection"
@@ -267,14 +458,21 @@
 		const id = segment?.segment_id ?? '';
 		if (id && id !== seededFor) {
 			seededFor = id;
-			themes = annotation ? [...annotation.themes] : [];
-			subthemes = annotation ? [...annotation.subthemes] : [];
+			// codebook 2.0: the drawer's chips ARE subthemes. state.themes holds
+			// the selected subtheme ids; state.subthemes is unused (kept for type
+			// compat with the Snapshot/dirty-tracking machinery).
+			themes = annotation ? [...annotation.subthemes] : [];
+			subthemes = [];
 			emotions = annotation ? [...annotation.emotions] : [];
 			sentiment = annotation ? annotation.sentiment : 0;
 			note = annotation ? annotation.reviewer_notes : '';
 			errorMsg = '';
 			flashMsg = '';
 			selectionText = '';
+			selectionStart = -1;
+			selectionEnd = -1;
+			tertiaryStart = -1;
+			tertiaryEnd = -1;
 			currentText = segment?.text ?? '';
 			editingSelection = false;
 			editFind = '';
@@ -297,12 +495,19 @@
 						p.levels.some((l) => emotions.includes(l.id)) ||
 						p.dyads.some((d) => emotions.includes(d.id))
 				)?.id ?? '';
+			// Snapshot the seeded state for dirty detection; reset the undo stack
+			// (history from a previously-open segment doesn't apply to this one).
+			baseline = snapshot();
+			history = [];
 		} else if (!id) {
 			seededFor = '';
+			baseline = null;
+			history = [];
 		}
 	});
 
 	function toggleTheme(themeId: string) {
+		pushHistory();
 		if (themes.includes(themeId)) {
 			themes = themes.filter((x) => x !== themeId);
 			// Drop subthemes orphaned by removing their parent theme.
@@ -339,9 +544,289 @@
 
 	// Snapshot the current text selection — read on right-click, before the
 	// context menu opens, so we know which phrase the reviewer highlighted.
-	function captureSelection() {
-		const sel = typeof window !== 'undefined' ? window.getSelection() : null;
-		selectionText = sel ? sel.toString().replace(/\s+/g, ' ').trim() : '';
+	// Also computes the span's absolute char offsets (segments.json
+	// coordinates) by ranging from the segment text container's start to the
+	// selection bounds. Whitespace at the boundaries is trimmed from BOTH the
+	// text and the offsets, so server-side surface validation lines up.
+	function captureSelection(event?: MouseEvent) {
+		// Detect whether the right-click landed on a bolded keyword span. Done
+		// up front so the context menu can show "Unlink/Move" items even when
+		// there's no text selection.
+		const target = (event?.target as HTMLElement | undefined) ?? null;
+		const kwEl = target?.closest('[data-keyword-id]') as HTMLElement | null;
+		if (kwEl?.dataset.keywordId) {
+			rightClickKeyword = {
+				id: kwEl.dataset.keywordId,
+				label: kwEl.dataset.keywordLabel ?? '',
+				surface: kwEl.dataset.keywordSurface ?? kwEl.textContent?.trim() ?? ''
+			};
+		} else {
+			rightClickKeyword = null;
+		}
+		if (typeof window === 'undefined') {
+			selectionText = '';
+			selectionStart = -1;
+			selectionEnd = -1;
+			return;
+		}
+		const sel = window.getSelection();
+		if (!sel || sel.rangeCount === 0) {
+			selectionText = '';
+			selectionStart = -1;
+			selectionEnd = -1;
+			return;
+		}
+		const range = sel.getRangeAt(0);
+		const collapsed = range.collapsed;
+		const container = segmentTextEl;
+		// Always seed the trimmed text so callers that don't need offsets
+		// (e.g. theme/phrase actions) keep working unchanged.
+		selectionText = sel.toString().replace(/\s+/g, ' ').trim();
+		if (
+			collapsed ||
+			!container ||
+			!segment ||
+			segment.char_start == null ||
+			!container.contains(range.commonAncestorContainer)
+		) {
+			selectionStart = -1;
+			selectionEnd = -1;
+			return;
+		}
+		const startRange = document.createRange();
+		startRange.selectNodeContents(container);
+		startRange.setEnd(range.startContainer, range.startOffset);
+		const endRange = document.createRange();
+		endRange.selectNodeContents(container);
+		endRange.setEnd(range.endContainer, range.endOffset);
+		let start = startRange.toString().length;
+		let end = endRange.toString().length;
+		const full = container.textContent ?? '';
+		while (start < end && /\s/.test(full[start])) start++;
+		while (end > start && /\s/.test(full[end - 1])) end--;
+		if (end <= start) {
+			selectionStart = -1;
+			selectionEnd = -1;
+			return;
+		}
+		// Convert to absolute (interview-relative) offsets so the server can
+		// validate against segments.json directly.
+		selectionStart = segment.char_start + start;
+		selectionEnd = segment.char_start + end;
+	}
+
+	// Inner: tag the pinned span to a cluster. Returns true on success. The
+	// server validates the span is inside the named segment and that the
+	// derived surface matches our snapshot — a mismatch means the user must
+	// re-select. Does not own lexBusy so it can be chained with create.
+	async function tagPinnedSpan(keywordId: string): Promise<boolean> {
+		if (!segment || tertiaryStart < 0 || tertiaryEnd <= tertiaryStart) return false;
+		try {
+			const res = await fetch('/wctglpdemo/keyword-tags', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action: 'tag',
+					keyword_id: keywordId,
+					segment_id: segment.segment_id,
+					char_start: tertiaryStart,
+					char_end: tertiaryEnd,
+					expected_surface: tertiarySelection
+				})
+			});
+			const data = await res.json().catch(() => null);
+			if (!res.ok || !data?.ok) {
+				errorMsg = data?.error ?? 'Could not save keyword tag.';
+				return false;
+			}
+			flashMsg = data.message ?? 'Tagged to keyword cluster.';
+			clearTimeout(flashTimer);
+			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
+			return true;
+		} catch {
+			errorMsg = 'Could not reach the server.';
+			return false;
+		}
+	}
+
+	async function applyKeywordTag(keywordId: string) {
+		if (lexBusy) return;
+		// In "move" mode, route the click to the variant-move endpoint instead
+		// of creating a new per-instance tag row.
+		if (moveSourceKeyword) {
+			await applyMoveVariant(keywordId);
+			return;
+		}
+		lexBusy = true;
+		flashMsg = '';
+		errorMsg = '';
+		try {
+			if (await tagPinnedSpan(keywordId)) keywordDrawerOpen = false;
+		} finally {
+			lexBusy = false;
+		}
+	}
+
+	/** Variant-level operation: remove the right-clicked surface from the
+	 *  cluster whose bolding it was matching. The per-instance tag rows in
+	 *  keyword_tags.json are left alone — they're a separate ground truth and
+	 *  may legitimately survive a variant rewording. */
+	async function applyUnlinkVariant() {
+		if (!rightClickKeyword || lexBusy) return;
+		const { id, surface, label } = rightClickKeyword;
+		lexBusy = true;
+		flashMsg = '';
+		errorMsg = '';
+		try {
+			const res = await fetch('/wctglpdemo/lexicon', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action: 'remove_keyword_variant',
+					keyword_id: id,
+					text: surface
+				})
+			});
+			const data = await res.json().catch(() => null);
+			if (!res.ok || !data?.ok) {
+				errorMsg = data?.error ?? 'Could not unlink the keyword.';
+				return;
+			}
+			lexicon = { categories: clustersToCategories(data.clusters as Cluster[]) };
+			flashMsg = data.message ?? `Unlinked “${surface}” from “${label}”.`;
+			clearTimeout(flashTimer);
+			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
+			rightClickKeyword = null;
+		} catch {
+			errorMsg = 'Could not reach the server.';
+		} finally {
+			lexBusy = false;
+		}
+	}
+
+	/** Variant-level operation: move the variant from the source cluster
+	 *  (`moveSourceKeyword`) to the cluster the analyst just clicked. */
+	async function applyMoveVariant(toKeywordId: string) {
+		if (!moveSourceKeyword || lexBusy) return;
+		const fromId = moveSourceKeyword.id;
+		if (fromId === toKeywordId) {
+			// Clicking the source cluster is a no-op; just close the drawer.
+			keywordDrawerOpen = false;
+			return;
+		}
+		const surface = tertiarySelection;
+		lexBusy = true;
+		flashMsg = '';
+		errorMsg = '';
+		try {
+			const res = await fetch('/wctglpdemo/lexicon', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action: 'move_keyword_variant',
+					from_keyword_id: fromId,
+					to_keyword_id: toKeywordId,
+					text: surface
+				})
+			});
+			const data = await res.json().catch(() => null);
+			if (!res.ok || !data?.ok) {
+				errorMsg = data?.error ?? 'Could not move the keyword.';
+				return;
+			}
+			lexicon = { categories: clustersToCategories(data.clusters as Cluster[]) };
+			flashMsg = data.message ?? 'Moved to a different keyword.';
+			clearTimeout(flashTimer);
+			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
+			keywordDrawerOpen = false;
+		} catch {
+			errorMsg = 'Could not reach the server.';
+		} finally {
+			lexBusy = false;
+		}
+	}
+
+	// "+ New keyword here" — define a new cluster under (parent_theme,
+	// parent_subtheme) via the lexicon endpoint, then immediately tag the
+	// pinned span to it. KeywordTagDrawer passes the subtheme (its grouping
+	// bucket) as `categoryId` plus the analyst-supplied `label` and optional
+	// `description`; we look up the parent theme here.
+	async function applyCreateAndTag(input: {
+		categoryId: string;
+		label: string;
+		description: string;
+	}) {
+		if (lexBusy) return;
+		const { categoryId, label, description } = input;
+		const parentSubtheme = categoryId;
+		const parentTheme = codebookThemes.find((t) =>
+			(t.subthemes ?? []).some((s) => s.id === parentSubtheme)
+		)?.id;
+		if (!parentTheme) {
+			errorMsg = `Unknown subtheme "${parentSubtheme}" — keyword cannot be created.`;
+			return;
+		}
+		lexBusy = true;
+		flashMsg = '';
+		errorMsg = '';
+		try {
+			const res = await fetch('/wctglpdemo/lexicon', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action: 'create_cluster',
+					text: tertiarySelection,
+					parent_theme: parentTheme,
+					parent_subtheme: parentSubtheme,
+					label,
+					description
+				})
+			});
+			const data = await res.json().catch(() => null);
+			if (!res.ok || !data?.ok) {
+				errorMsg = data?.error ?? 'Could not create the keyword.';
+				return;
+			}
+			lexicon = { categories: clustersToCategories(data.clusters as Cluster[]) };
+			const createdId: string | undefined = data.created_id;
+			if (!createdId) {
+				errorMsg = 'Keyword created but its id was not returned.';
+				return;
+			}
+			// In "move" mode the create itself adds the variant to the new
+			// cluster; we just have to strip it from the source cluster — no
+			// per-instance tag is involved.
+			if (moveSourceKeyword) {
+				const fromId = moveSourceKeyword.id;
+				const removeRes = await fetch('/wctglpdemo/lexicon', {
+					method: 'POST',
+					headers: { 'content-type': 'application/json' },
+					body: JSON.stringify({
+						action: 'remove_keyword_variant',
+						keyword_id: fromId,
+						text: tertiarySelection
+					})
+				});
+				const removeData = await removeRes.json().catch(() => null);
+				if (!removeRes.ok || !removeData?.ok) {
+					errorMsg =
+						removeData?.error ??
+						'Created the new keyword, but could not unlink from the previous one.';
+					return;
+				}
+				lexicon = { categories: clustersToCategories(removeData.clusters as Cluster[]) };
+				flashMsg = `Moved “${tertiarySelection}” to “${label}”.`;
+				clearTimeout(flashTimer);
+				flashTimer = setTimeout(() => (flashMsg = ''), 4000);
+				keywordDrawerOpen = false;
+				return;
+			}
+			if (await tagPinnedSpan(createdId)) keywordDrawerOpen = false;
+		} catch {
+			errorMsg = 'Could not reach the server.';
+		} finally {
+			lexBusy = false;
+		}
 	}
 
 	// File the highlighted phrase into a keyword or theme. The server persists
@@ -475,8 +960,44 @@
 
 	const tagCount = $derived(themes.length + subthemes.length + emotions.length);
 
+	// Close-with-changes confirmation. Any close path (Escape, ✕ button,
+	// backdrop) routes through tryClose so an analyst can't lose tag work by
+	// accident. The dialog stays out of the way when the drawer is pristine.
+	let confirmDiscardOpen = $state(false);
+
+	function tryClose() {
+		if (isDirty) {
+			confirmDiscardOpen = true;
+		} else {
+			onclose();
+		}
+	}
+
+	function confirmDiscard() {
+		confirmDiscardOpen = false;
+		onclose();
+	}
+
 	function onKeydown(e: KeyboardEvent) {
-		if (e.key === 'Escape') onclose();
+		if (e.key === 'Escape') {
+			if (confirmDiscardOpen) {
+				confirmDiscardOpen = false;
+				return;
+			}
+			tryClose();
+			return;
+		}
+		// Ctrl/Cmd+Z — drawer-level undo. Don't intercept when the focus is in
+		// an input/textarea: the browser's native undo handles intra-field edits.
+		if ((e.metaKey || e.ctrlKey) && !e.shiftKey && e.key.toLowerCase() === 'z') {
+			const t = e.target as HTMLElement | null;
+			const inField =
+				t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+			if (!inField && canUndo) {
+				e.preventDefault();
+				undo();
+			}
+		}
 	}
 
 	async function save() {
@@ -484,6 +1005,17 @@
 		saving = true;
 		errorMsg = '';
 		try {
+			// Map drawer state to the codebook 2.0 wire format: state.themes
+			// holds clicked-subtheme ids; their parent themes are derived for
+			// the broad-themes payload field.
+			const subthemeToParent = new Map<string, string>();
+			for (const t of codebookThemes) {
+				for (const s of t.subthemes ?? []) subthemeToParent.set(s.id, t.id);
+			}
+			const payloadSubthemes = themes;
+			const payloadThemes = [
+				...new Set(themes.map((s) => subthemeToParent.get(s)).filter((x): x is string => !!x))
+			];
 			const res = await fetch('/wctglpdemo/segment-tags', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
@@ -491,8 +1023,8 @@
 					segment_id: segment.segment_id,
 					interview_id: segment.interview_id,
 					question_id: segment.question_id,
-					themes,
-					subthemes,
+					themes: payloadThemes,
+					subthemes: payloadSubthemes,
 					emotions,
 					sentiment,
 					reviewer_notes: note
@@ -503,6 +1035,9 @@
 				errorMsg = data?.error ?? 'Could not save tags.';
 				return;
 			}
+			// Refresh baseline so the drawer is no longer dirty, then close.
+			baseline = snapshot();
+			history = [];
 			onsaved(data.annotation as Annotation);
 			onclose();
 		} catch {
@@ -580,7 +1115,7 @@
 		onclick={(e) => {
 			// Only a direct click on the backdrop closes the drawer — never a
 			// click that bubbled out of the context menu portaled inside it.
-			if (e.target === e.currentTarget) onclose();
+			if (e.target === e.currentTarget) tryClose();
 		}}
 		aria-hidden="true"
 	></div>
@@ -607,51 +1142,73 @@
 			</div>
 		{/if}
 
-		<!-- Header -->
+		<!-- Header — eyebrow/id on the left, action row on the right. Helper
+			 text sits below the eyebrow so the right-click affordance is
+			 introduced before the analyst gets to the quote. -->
 		<div class="flex items-start justify-between gap-3 border-b border-slate-200 px-5 py-4">
 			<div class="min-w-0">
 				<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Edit segment tags</p>
 				<p class="truncate font-mono text-xs text-slate-400">{segment.segment_id}</p>
+				<p class="mt-2 text-xs leading-snug text-muted-foreground">
+					Highlight a phrase and right-click to tag it as a keyword or link it to a phrase.
+				</p>
 			</div>
-			<div class="flex flex-col items-end gap-2">
+			<div class="flex shrink-0 items-center gap-2">
 				{#if errorMsg}<span class="text-xs text-rose-600">{errorMsg}</span>{/if}
+				{#if onToggleStar}
 					<Button
-						variant="outline"
-						size='xs'
-						onclick={onclose}
-						aria-label="Close">
-						<XIcon
-						size=lg />
+						variant="ghost"
+						size="icon-sm"
+						onclick={() => segment && onToggleStar?.(segment.segment_id)}
+						disabled={togglingStar}
+						aria-pressed={starred}
+						title={starred ? 'Starred — click to unstar' : 'Star this segment'}
+						class={starred ? 'text-amber-400' : 'text-slate-400 hover:text-amber-400'}
+					>
+						<StarIcon size={18} fill={starred ? 'currentColor' : 'none'} />
 					</Button>
+				{/if}
 				<Button
-					variant="secondary"
-					onclick={save}
-					disabled={saving}
+					variant="action"
+					size="sm"
+					onclick={undo}
+					disabled={!canUndo}
+					title="Undo last change (⌘Z)"
 				>
+					<Undo2Icon />
+					Undo
+				</Button>
+				<Button variant="secondary" onclick={save} disabled={saving}>
 					{saving ? 'Saving…' : 'Save tags'}
+				</Button>
+				<Button variant="outline" size="icon-sm" onclick={tryClose} aria-label="Close">
+					<XIcon />
 				</Button>
 			</div>
 		</div>
-		
+
 
 		<!-- Body — full-width quote on top, two tag columns underneath -->
 		<Tooltip.Provider delayDuration={120}>
 		<div class="flex flex-1 flex-col overflow-hidden">
-			<!-- TOP — the segment quote, full width -->
+			<!-- TOP — question + segment quote, full width -->
 			<div class="shrink-0 border-b border-slate-200 p-5">
+				{#if segment.question_id}
+					<p class="mb-2 text-xs leading-snug text-slate-500">
+						<span class="font-semibold uppercase tracking-wide text-slate-400">Asked:</span>
+						{questionLabel(segment.question_id)}
+					</p>
+				{/if}
 				<ContextMenu.Root>
 					<ContextMenu.Trigger>
 						{#snippet child({ props })}
-						<!-- Distinguish "maintain the codebook" (right-click) from
-						"tag this segment" (the chips below and to the right). -->
-						<p class="mb-2 text-sm leading-snug text-muted-foreground">
-						Highlight a phrase and right-click to edit it, or add it to the keyword lexicon or a theme.
-						</p>
 								<p
 									{...props}
+									bind:this={segmentTextEl}
 									oncontextmenu={(e: MouseEvent) => {
-										// Snapshot the selection, then hand off to bits-ui to open the menu.
-										captureSelection();
+										// Snapshot the selection AND the right-clicked keyword span,
+										// then hand off to bits-ui to open the menu.
+										captureSelection(e);
 										(props.oncontextmenu as ((e: MouseEvent) => void) | undefined)?.(e);
 									}}
 									class="cursor-text border-l-2 border-accent-mint px-4 text-2xl text-primary select-text"
@@ -661,12 +1218,27 @@
 							{/snippet}
 						</ContextMenu.Trigger>
 						<ContextMenu.Content class="w-72">
-							{#if !selectionText}
+							{#if rightClickKeyword}
 								<ContextMenu.Label>
-									Select a word or phrase in the text, then right-click to add it to a keyword or
-									theme.
+									Linked:
+									<span class="font-medium text-slate-700"
+										>“{truncate(rightClickKeyword.surface)}”</span
+									>
+									→
+									<span class="font-medium text-slate-700">{rightClickKeyword.label}</span>
 								</ContextMenu.Label>
-							{:else}
+								<ContextMenu.Separator />
+								<ContextMenu.Item onSelect={() => applyUnlinkVariant()}>
+									Unlink from “{truncate(rightClickKeyword.label, 24)}”
+								</ContextMenu.Item>
+								<ContextMenu.Item onSelect={() => openMoveDrawer()}>
+									Move to another keyword…
+								</ContextMenu.Item>
+								{#if selectionText}
+									<ContextMenu.Separator />
+								{/if}
+							{/if}
+							{#if selectionText}
 								<ContextMenu.Label>
 									<span class="font-medium text-slate-700">“{truncate(selectionText)}”</span>
 								</ContextMenu.Label>
@@ -686,6 +1258,13 @@
 								<ContextMenu.Item onSelect={openPhraseDrawer}>
 									Link to a phrase…
 								</ContextMenu.Item>
+							{/if}
+							{#if !selectionText && !rightClickKeyword}
+								<ContextMenu.Label>
+									Select a word or phrase in the text, then right-click to add it to a keyword or
+									theme. Right-click a <span class="font-semibold">bold</span> word to manage its
+									keyword link.
+								</ContextMenu.Label>
 							{/if}
 						</ContextMenu.Content>
 					</ContextMenu.Root>
@@ -747,7 +1326,7 @@
 										<button
 											{...props}
 											type="button"
-											onclick={() => (sentiment = s.v)}
+											onclick={() => applySetSentiment(s.v)}
 											aria-pressed={sentiment === s.v}
 											aria-label={sentimentLabel(s.v)}
 											class="h-7 hover:cursor-pointer flex-1 border transition-all
@@ -777,7 +1356,7 @@
 								<button
 									type="button"
 									title={emotionDesc.get(e) ?? ''}
-									onclick={() => (emotions = emotions.filter((x) => x !== e))}
+									onclick={() => applyRemoveEmotion(e)}
 									class="flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700"
 								>
 									{@render emotionDot(e)}
@@ -820,7 +1399,7 @@
 										<button
 											type="button"
 											title={emotionDesc.get(lvl.id) ?? ''}
-											onclick={() => (emotions = toggle(emotions, lvl.id))}
+											onclick={() => applyToggleEmotion(lvl.id)}
 											aria-pressed={on}
 											class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors
 												{on
@@ -846,7 +1425,7 @@
 															<button
 																{...props}
 																type="button"
-																onclick={() => (emotions = toggle(emotions, d.id))}
+																onclick={() => applyToggleEmotion(d.id)}
 																aria-pressed={on}
 																class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors
 																	{on
@@ -880,7 +1459,10 @@
 				<section>
 					{@render sectionHead('Reviewer note', 'Optional context for the next reviewer.')}
 					<textarea
-						bind:value={note}
+						value={note}
+						oninput={(e) => (note = e.currentTarget.value)}
+						onfocus={rememberNoteFocus}
+						onblur={commitNoteBlur}
 						rows="3"
 						placeholder="Optional note"
 						class="w-full resize-y rounded border border-slate-200 px-2.5 py-1.5 text-xs text-slate-700"
@@ -1012,7 +1594,7 @@
 																subthemes.includes(sub.id),
 																titleCase(sub.id),
 																sub.description,
-																() => (subthemes = toggle(subthemes, sub.id)),
+																() => applyToggleSubtheme(sub.id),
 																'border-accent-mint bg-accent-mint/15 text-accent-mint'
 															)}
 														{/each}
@@ -1136,12 +1718,33 @@
 		bind:open={keywordDrawerOpen}
 		selection={tertiarySelection}
 		categories={lexicon.categories}
+		currentKeyword={moveSourceKeyword}
 		busy={lexBusy}
 		{errorMsg}
-		onapplyVariant={(keywordId) =>
-			applyFromKeywordDrawer('add_keyword_variant', { keyword_id: keywordId })}
-		oncreate={(categoryId) =>
-			applyFromKeywordDrawer('create_keyword', { category_id: categoryId })}
+		ontag={(keywordId) => applyKeywordTag(keywordId)}
+		oncreate={(input) => applyCreateAndTag(input)}
+		onclose={() => (moveSourceKeyword = null)}
 	/>
 	<PhraseLinkDrawer bind:open={phraseDrawerOpen} selection={tertiarySelection} />
+
+	<!-- Confirm discarding unsaved tag edits. Opened by any close path (✕,
+		 backdrop, Escape) when the drawer is dirty; bypassed when pristine. -->
+	<Dialog.Root bind:open={confirmDiscardOpen}>
+		<Dialog.Content class="sm:max-w-sm">
+			<Dialog.Header>
+				<Dialog.Title>Discard tag edits?</Dialog.Title>
+				<Dialog.Description>
+					You have unsaved changes to this segment's tags. Close anyway?
+				</Dialog.Description>
+			</Dialog.Header>
+			<div class="flex justify-end gap-2 pt-2">
+				<Button variant="ghost" size="sm" onclick={() => (confirmDiscardOpen = false)}>
+					Keep editing
+				</Button>
+				<Button variant="destructive" size="sm" onclick={confirmDiscard}>
+					Discard changes
+				</Button>
+			</div>
+		</Dialog.Content>
+	</Dialog.Root>
 {/if}

@@ -1,0 +1,697 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "purpose": "Maps the 37 themes + 39 subthemes in codebook.json @ 1.8 to the (theme, subtheme) pairs in codebook.next.json @ 2.0-draft. Used by a future migration script to re-key segment_tags.json's 590 annotations into the new structure.",
+    "status": "draft — review every row before running the migration",
+    "notes": [
+      "Each row maps ONE old id (theme or subtheme) to ONE new (theme, subtheme) pair. Most subthemes collapse to the same destination as their old parent — the granular nuance they carried will be recaptured as keyword clusters in keyword_lexicon.next.json under the new subtheme.",
+      "`confidence: certain` means the mapping is unambiguous in context; `confidence: review` means the old tag is genuinely cross-cutting (e.g. risk_calculation applies to both Treatment and Trial decision-making) and a context-sensitive remap is recommended — the migration script should look at co-occurring old tags on the segment to disambiguate, falling back to the listed default.",
+      "Old top-level themes without subthemes map directly. Old top-level themes WITH subthemes get a row for the parent AND a row for each subtheme — both rows usually point at the same new destination.",
+      "Rows with `kind: drop` indicate old tags that should NOT be carried forward (the new model handles them elsewhere or they were noise)."
+    ],
+    "ambiguity_strategy": {
+      "decision_factor_themes": "Old themes in the `decision_factors` tag_group (risk_calculation, convenience_tradeoff, cost_benefit_reasoning, conditional_decision) are reasoning patterns that apply to BOTH treatment and trial decisions. Default destination is `treatment_decision_factors`; the migration script should remap to `trial_decision_factors` when the same segment also carries an old `trial_*` theme.",
+      "injection_experience": "Maps to `treatment_negative_experiences` by default (injection friction is the dominant frame in the corpus). Some segments are positive (dosing_durability) — the migration script can re-target to `treatment_positive_experiences` when sentiment >= 1.",
+      "visit_logistics_subthemes": "telehealth and home_visits are often framed as MOTIVATORS (\"if there was telehealth I'd join\") rather than barriers. The old codebook bucketed them under trial_barriers; the migration script can re-target to `trial_motivators` when sentiment >= 1."
+    }
+  },
+  "rows": [
+    {
+      "old_id": "cost_access",
+      "kind": "theme",
+      "old_group": "affordability",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_barriers",
+      "confidence": "certain",
+      "notes": "Affordability of medication. Trial-specific cost concerns are rare in this corpus and would re-target to trial_barriers."
+    },
+    {
+      "old_id": "out_of_pocket_cost",
+      "kind": "subtheme",
+      "old_parent": "cost_access",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_barriers",
+      "confidence": "certain",
+      "notes": "Becomes a candidate cluster under treatment_barriers in keyword_lexicon.next.json."
+    },
+    {
+      "old_id": "price_trends",
+      "kind": "subtheme",
+      "old_parent": "cost_access",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "insurance_barrier",
+      "kind": "theme",
+      "old_group": "affordability",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "medication_access",
+      "kind": "theme",
+      "old_group": "affordability",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "compounded_medication",
+      "kind": "theme",
+      "old_group": "affordability",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_health_history",
+      "confidence": "review",
+      "notes": "Compounded medication can be a workaround for barriers (→ treatment_barriers) or a prior treatment in someone's history. Default to history; remap to barriers when co-tagged with cost themes."
+    },
+    {
+      "old_id": "access_logic",
+      "kind": "theme",
+      "old_group": "affordability",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain",
+      "notes": "Reasoning about HOW to access medication = a decision-factor pattern."
+    },
+    {
+      "old_id": "side_effect_concern",
+      "kind": "theme",
+      "old_group": "safety_risk",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_negative_experiences",
+      "confidence": "review",
+      "notes": "When the participant has experienced side effects → treatment_negative_experiences. When it's a hypothetical concern shaping a decision → treatment_decision_factors. Default to negative_experiences; remap when annotation lacks an experiential frame."
+    },
+    {
+      "old_id": "gastric_effects",
+      "kind": "subtheme",
+      "old_parent": "side_effect_concern",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_negative_experiences",
+      "confidence": "certain",
+      "notes": "Strong candidate cluster under treatment_negative_experiences."
+    },
+    {
+      "old_id": "serious_complication",
+      "kind": "subtheme",
+      "old_parent": "side_effect_concern",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_negative_experiences",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "unknown_safety",
+      "kind": "subtheme",
+      "old_parent": "side_effect_concern",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_knowledge_gaps",
+      "confidence": "certain",
+      "notes": "Uncertainty about long-term / unknown safety = a knowledge gap."
+    },
+    {
+      "old_id": "fear_of_weight_regain",
+      "kind": "theme",
+      "old_group": "safety_risk",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain",
+      "notes": "Fear shapes the decision to continue / discontinue."
+    },
+    {
+      "old_id": "placebo_concern",
+      "kind": "theme",
+      "old_group": "safety_risk",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain",
+      "notes": "Placebo is a trial-specific concern."
+    },
+    {
+      "old_id": "non_weight_benefits",
+      "kind": "theme",
+      "old_group": "treatment_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_positive_experiences",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "cardiometabolic",
+      "kind": "subtheme",
+      "old_parent": "non_weight_benefits",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_positive_experiences",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "digestive",
+      "kind": "subtheme",
+      "old_parent": "non_weight_benefits",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_positive_experiences",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "food_noise",
+      "kind": "subtheme",
+      "old_parent": "non_weight_benefits",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_positive_experiences",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "sleep_mood",
+      "kind": "subtheme",
+      "old_parent": "non_weight_benefits",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_positive_experiences",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "treatment_continuation",
+      "kind": "theme",
+      "old_group": "treatment_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain",
+      "notes": "Reasons / conditions for continuing = decision factor."
+    },
+    {
+      "old_id": "discontinuation_reasoning",
+      "kind": "theme",
+      "old_group": "treatment_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "cost_driven_stop",
+      "kind": "subtheme",
+      "old_parent": "discontinuation_reasoning",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "side_effect_stop",
+      "kind": "subtheme",
+      "old_parent": "discontinuation_reasoning",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "goal_achieved_stop",
+      "kind": "subtheme",
+      "old_parent": "discontinuation_reasoning",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "involuntary_stop",
+      "kind": "subtheme",
+      "old_parent": "discontinuation_reasoning",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_barriers",
+      "confidence": "review",
+      "notes": "Involuntary stop = an external barrier forced the discontinuation (shortage, insurance, prescriber pulled). Belongs under barriers, not decision factors, even though the parent theme maps to decision_factors."
+    },
+    {
+      "old_id": "medical_advice_stop",
+      "kind": "subtheme",
+      "old_parent": "discontinuation_reasoning",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "drug_switching",
+      "kind": "theme",
+      "old_group": "treatment_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "stall_management",
+      "kind": "subtheme",
+      "old_parent": "drug_switching",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "injection_experience",
+      "kind": "theme",
+      "old_group": "treatment_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_negative_experiences",
+      "confidence": "review",
+      "notes": "Default negative (injection friction dominates). Remap to treatment_positive_experiences when annotation sentiment >= 1."
+    },
+    {
+      "old_id": "injection_frequency",
+      "kind": "subtheme",
+      "old_parent": "injection_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_negative_experiences",
+      "confidence": "review",
+      "notes": "Same sentiment-based remap as the parent."
+    },
+    {
+      "old_id": "injection_aversion",
+      "kind": "subtheme",
+      "old_parent": "injection_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_negative_experiences",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "dosing_durability",
+      "kind": "subtheme",
+      "old_parent": "injection_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_positive_experiences",
+      "confidence": "certain",
+      "notes": "Less-frequent dosing is consistently framed as a positive."
+    },
+    {
+      "old_id": "oral_medication_interest",
+      "kind": "theme",
+      "old_group": "treatment_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain",
+      "notes": "Preference for oral form = a decision-factor preference."
+    },
+    {
+      "old_id": "treatment_dependency",
+      "kind": "theme",
+      "old_group": "treatment_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "certain",
+      "notes": "Concern about dependence shapes the decision to continue."
+    },
+    {
+      "old_id": "maintenance_strategy",
+      "kind": "theme",
+      "old_group": "treatment_experience",
+      "new_theme": "condition_specific",
+      "new_subtheme": "medical_self_efficacy",
+      "confidence": "review",
+      "notes": "Maintenance behaviors fit medical_self_efficacy (managing one's own care). Could also fit treatment_positive_experiences if the participant is celebrating their maintenance success."
+    },
+    {
+      "old_id": "health_transformation",
+      "kind": "theme",
+      "old_group": "treatment_experience",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_positive_experiences",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "trial_participation_motivation",
+      "kind": "theme",
+      "old_group": "trial_motivators",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "access_motivation",
+      "kind": "subtheme",
+      "old_parent": "trial_participation_motivation",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "convenience_motivation",
+      "kind": "subtheme",
+      "old_parent": "trial_participation_motivation",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "research_altruism",
+      "kind": "theme",
+      "old_group": "trial_motivators",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "incentives_support",
+      "kind": "theme",
+      "old_group": "trial_motivators",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "financial_compensation",
+      "kind": "subtheme",
+      "old_parent": "incentives_support",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "vouchers",
+      "kind": "subtheme",
+      "old_parent": "incentives_support",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "travel_concierge",
+      "kind": "subtheme",
+      "old_parent": "incentives_support",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "device_provision",
+      "kind": "subtheme",
+      "old_parent": "incentives_support",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "meal_support",
+      "kind": "subtheme",
+      "old_parent": "incentives_support",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "post_trial_access",
+      "kind": "subtheme",
+      "old_parent": "incentives_support",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_motivators",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "trial_awareness",
+      "kind": "theme",
+      "old_group": "trial_motivators",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "clinical_trial_awareness",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "altruistic_reasoning",
+      "kind": "theme",
+      "old_group": "trial_motivators",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_decision_factors",
+      "confidence": "review",
+      "notes": "Could also be trial_motivators — overlapping with research_altruism. Default decision_factors since 'reasoning' is in the name; remap if the segment is more about pull/motivation than logic."
+    },
+    {
+      "old_id": "travel_burden",
+      "kind": "theme",
+      "old_group": "trial_barriers",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "distance_to_site",
+      "kind": "subtheme",
+      "old_parent": "travel_burden",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "transportation_access",
+      "kind": "subtheme",
+      "old_parent": "travel_burden",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "time_burden",
+      "kind": "theme",
+      "old_group": "trial_barriers",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "visit_logistics",
+      "kind": "theme",
+      "old_group": "trial_barriers",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "telehealth",
+      "kind": "subtheme",
+      "old_parent": "visit_logistics",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "review",
+      "notes": "Often framed as a motivator ('if there was telehealth I'd join') rather than a barrier. Remap to trial_motivators when sentiment >= 1."
+    },
+    {
+      "old_id": "home_visits",
+      "kind": "subtheme",
+      "old_parent": "visit_logistics",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "review",
+      "notes": "Same sentiment-based remap as telehealth."
+    },
+    {
+      "old_id": "visit_frequency",
+      "kind": "subtheme",
+      "old_parent": "visit_logistics",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "scheduling",
+      "kind": "subtheme",
+      "old_parent": "visit_logistics",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "local_site",
+      "kind": "subtheme",
+      "old_parent": "visit_logistics",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "review",
+      "notes": "Often framed as a motivator ('if it were nearby'). Sentiment-based remap as above."
+    },
+    {
+      "old_id": "monitoring_burden",
+      "kind": "theme",
+      "old_group": "trial_barriers",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "fasting_blood",
+      "kind": "subtheme",
+      "old_parent": "monitoring_burden",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "glucose_monitoring",
+      "kind": "subtheme",
+      "old_parent": "monitoring_burden",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "clinical_trial_friction",
+      "kind": "theme",
+      "old_group": "trial_barriers",
+      "new_theme": "clinical_trials",
+      "new_subtheme": "trial_barriers",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "education_need",
+      "kind": "theme",
+      "old_group": "education_support",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_knowledge_gaps",
+      "confidence": "review",
+      "notes": "Default treatment_knowledge_gaps. Some segments are about condition (not treatment) education → remap to condition_knowledge_gaps based on co-occurring tags."
+    },
+    {
+      "old_id": "nutrition_education",
+      "kind": "subtheme",
+      "old_parent": "education_need",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_knowledge_gaps",
+      "confidence": "review",
+      "notes": "Could also fit condition_specific / medical_self_efficacy if framed as self-management. Default knowledge_gaps."
+    },
+    {
+      "old_id": "learning_formats",
+      "kind": "subtheme",
+      "old_parent": "education_need",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_knowledge_gaps",
+      "confidence": "certain",
+      "notes": "Format preferences for closing knowledge gaps."
+    },
+    {
+      "old_id": "medication_education",
+      "kind": "subtheme",
+      "old_parent": "education_need",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_knowledge_gaps",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "self_tracking",
+      "kind": "subtheme",
+      "old_parent": "education_need",
+      "new_theme": "condition_specific",
+      "new_subtheme": "medical_self_efficacy",
+      "confidence": "certain",
+      "notes": "Self-tracking = a self-management behavior, not a knowledge gap."
+    },
+    {
+      "old_id": "self_advocacy",
+      "kind": "theme",
+      "old_group": "education_support",
+      "new_theme": "condition_specific",
+      "new_subtheme": "medical_self_efficacy",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "information_seeking",
+      "kind": "theme",
+      "old_group": "education_support",
+      "new_theme": "condition_specific",
+      "new_subtheme": "medical_self_efficacy",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "lifestyle_change",
+      "kind": "theme",
+      "old_group": "education_support",
+      "new_theme": "condition_specific",
+      "new_subtheme": "medical_self_efficacy",
+      "confidence": "review",
+      "notes": "Could also fit treatment_positive_experiences when framed as a treatment outcome. Default self_efficacy (self-managed behavior change)."
+    },
+    {
+      "old_id": "weight_loss_history",
+      "kind": "theme",
+      "old_group": "weight_journey",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_health_history",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "prior_diets",
+      "kind": "subtheme",
+      "old_parent": "weight_loss_history",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_health_history",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "prior_weight_loss_medication",
+      "kind": "subtheme",
+      "old_parent": "weight_loss_history",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_health_history",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "weight_loss_surgery",
+      "kind": "subtheme",
+      "old_parent": "weight_loss_history",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_health_history",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "exercise_history",
+      "kind": "subtheme",
+      "old_parent": "weight_loss_history",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_health_history",
+      "confidence": "certain"
+    },
+    {
+      "old_id": "lifelong_struggle",
+      "kind": "subtheme",
+      "old_parent": "weight_loss_history",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_health_history",
+      "confidence": "review",
+      "notes": "Could also fit social_stigma or condition_knowledge_gaps depending on how it's framed."
+    },
+    {
+      "old_id": "risk_calculation",
+      "kind": "theme",
+      "old_group": "decision_factors",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "review",
+      "notes": "Cross-cutting: remap to trial_decision_factors when the segment also carries an old trial_* theme. Default treatment."
+    },
+    {
+      "old_id": "convenience_tradeoff",
+      "kind": "theme",
+      "old_group": "decision_factors",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "review",
+      "notes": "Same remap rule as risk_calculation."
+    },
+    {
+      "old_id": "cost_benefit_reasoning",
+      "kind": "theme",
+      "old_group": "decision_factors",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "review",
+      "notes": "Same remap rule as risk_calculation."
+    },
+    {
+      "old_id": "conditional_decision",
+      "kind": "theme",
+      "old_group": "decision_factors",
+      "new_theme": "treatment",
+      "new_subtheme": "treatment_decision_factors",
+      "confidence": "review",
+      "notes": "Same remap rule as risk_calculation."
+    },
+    {
+      "old_id": "glad",
+      "kind": "drop",
+      "old_group": "(none)",
+      "notes": "Sentiment expression — subsumed by emotion_tags + sentiment_scale. Do not carry forward."
+    }
+  ]
+}

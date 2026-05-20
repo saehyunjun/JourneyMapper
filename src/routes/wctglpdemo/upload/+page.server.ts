@@ -268,7 +268,10 @@ export const load: PageServerLoad = async ({ url }) => {
 		.map((iv) => iv.interview_id)
 		.sort();
 
-	const wanted = url.searchParams.get('interview');
+	// Default to the first interview in the list when no ?interview= is given,
+	// so the review view is populated the moment the page opens. The selector
+	// dropdown can still navigate away from it.
+	const wanted = url.searchParams.get('interview') ?? interviewIds[0] ?? '';
 	let review:
 		| {
 				interviewId: string;

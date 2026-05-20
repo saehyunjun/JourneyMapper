@@ -51,6 +51,9 @@
 			role="button"
 			tabindex="0"
 			title={runTitle(run)}
+			data-keyword-id={run.keyword?.keywordId ?? null}
+			data-keyword-label={run.keyword?.keywordLabel ?? null}
+			data-keyword-surface={run.keyword?.text ?? null}
 			class="cursor-pointer rounded-sm text-inherit hover:bg-accent-mint/15{run.keyword
 				? ' font-semibold'
 				: ''}{run.theme ? ' underline decoration-dotted decoration-1 underline-offset-2' : ''}"

@@ -19,11 +19,11 @@
 		{ title: 'Transcript Review', url: '/wctglpdemo/upload', icon: NotebookPen },
 		{ title: 'Fingerprint', url: '/wctglpdemo/fingerprint', icon: FingerprintPattern },
 		{ title: 'Interview Words', url: '/wctglpdemo/interview-words', icon: MessageSquareText },
-		{ title: 'Journey', url: '/wctglpdemo/journey', icon: Route },
+		// { title: 'Journey', url: '/wctglpdemo/journey', icon: Route },
 		{ title: 'Constellation', url: '/wctglpdemo/constellation', icon: Sparkles },
 		{ title: 'Ambient Booth', url: '/wctglpdemo/segment-cloud', icon: Atom },
-		{ title: 'Booth Quiz', url: '/wctglpdemo/quiz', icon: Trophy },
-		{ title: 'Trial Designer', url: '/wctglpdemo/trial-designer', icon: FlaskConical }
+		{ title: 'Booth Quiz', url: '/wctglpdemo/quiz', icon: Trophy }
+		// { title: 'Trial Designer', url: '/wctglpdemo/trial-designer', icon: FlaskConical }
 	];
 
 	const path = $derived(page.url.pathname);

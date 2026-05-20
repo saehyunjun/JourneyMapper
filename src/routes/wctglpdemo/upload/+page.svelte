@@ -534,25 +534,8 @@
 		</div>
 	</div>
 	<div
-		class="flex flex-row justify-between gap-2 border-b border-primary-foreground bg-white p-4"
+		class="flex flex-row justify-end gap-2 border-b border-primary-foreground bg-white p-4"
 	>
-	<div class="flex flex-row">
-		<label class="flex flex-wrap items-center gap-3">
-			<span class="text-sm font-medium text-slate-700">
-				Select a previously-processed interview to review the transcript.
-			</span>
-			<select
-				value={data.review?.interviewId ?? ''}
-				onchange={(e) => goto(`?interview=${e.currentTarget.value}`, { keepFocus: true })}
-				class="rounded border border-muted px-2 py-1 text-sm text-slate-700"
-			>
-				<option value="">— pick an interview —</option>
-				{#each data.interviewIds as id (id)}
-					<option value={id}>{id}</option>
-				{/each}
-			</select>
-		</label>
-	</div>
 		<Button onclick={() => { uploadError = ''; uploadOpen = true; }}>
 			<UploadIcon />
 			Upload transcript
@@ -647,6 +630,23 @@
 								Persona details provide more depth to each transcript and quote. Add and edit them for this interviewee.
 							</p>
 						</div>
+
+						<!-- Interview selector — switches which participant's details and
+							 transcript are in view. Lives in the same container as the
+							 details it drives. -->
+						<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
+							Interview
+							<select
+								value={data.review?.interviewId ?? ''}
+								onchange={(e) => goto(`?interview=${e.currentTarget.value}`, { keepFocus: true })}
+								class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800"
+							>
+								<option value="">— pick an interview —</option>
+								{#each data.interviewIds as id (id)}
+									<option value={id}>{id}</option>
+								{/each}
+							</select>
+						</label>
 
 						<!-- Avatar -->
 						<div class="flex items-center gap-3">
@@ -1196,6 +1196,9 @@
 <SegmentTagDrawer
 	segment={openSegment}
 	annotation={openSegment ? (annotations[openSegment.segment_id] ?? null) : null}
+	starred={openSegment ? starredSegments.has(openSegment.segment_id) : false}
+	togglingStar={openSegment ? togglingSegment === openSegment.segment_id : false}
+	onToggleStar={toggleStar}
 	onclose={() => (openSegment = null)}
 	onsaved={(a) => {
 		annotations = { ...annotations, [a.segment_id]: a };

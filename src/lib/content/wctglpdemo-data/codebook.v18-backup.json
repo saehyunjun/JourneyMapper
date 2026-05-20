@@ -1,0 +1,734 @@
+{
+  "meta": {
+    "schema_version": "1.8",
+    "study_id": "wct_glp1",
+    "description": "Tagging taxonomy for the WCT GLP-1 study. Segment annotations in segment_tags.json draw their theme, subtheme, emotion, and sentiment values from this codebook. Editable and versioned; bump schema_version when tags are added or revised.",
+    "changelog": [
+      "1.0 — initial themes, emotions, sentiment scale, semantic tags.",
+      "1.1 — added subthemes to 10 themes with internal nuance.",
+      "1.2 — added subthemes to drug_switching, side_effect_concern, injection_experience, education_need, and weight_loss_history after reviewing participant_10.",
+      "1.3 — added a `terms` list to every theme: literal surface phrases tagged from the segment tag drawer, parallel to keyword variants.",
+      "1.4 — replaced the emotion vocabulary with the Plutchik model (24 intensity levels + 28 dyads); added `tag_groups` and a `group` field on every theme and semantic tag so the segment tag drawer can nest them.",
+      "1.5 — added the `decision_factors` tag group; moved risk_calculation, cost_benefit_reasoning, convenience_tradeoff, and conditional_decision into it as the study's core reasoning moves.",
+      "1.6 — folded semantic_tags into theme_tags and removed the semantic dimension; former semantic tags are now themes that keep their group.",
+      "1.7 — split the `trial_logistics` group into `trial_motivators` (what draws people in) and `trial_barriers` (what gets in the way), so the two halves can be analysed separately.",
+      "1.8 — added `discontinuation_reasoning` as the mirror of `treatment_continuation`: the reasons or conditions that would lead a participant to stop or pause GLP-1 medication. Promoted from the recurring open-vocab topic `reasons_to_stop_glp1`."
+    ],
+    "sentiment_scale": {
+      "0": "neutral / mixed",
+      "1": "positive",
+      "2": "strongly positive",
+      "-2": "strongly negative",
+      "-1": "negative"
+    },
+    "notes": [
+      "A segment may carry a theme with no subtheme (general use) or with one or more subthemes.",
+      "A subtheme may only be applied if its parent theme is also applied to the segment.",
+      "Flat themes (no subthemes) have no `subthemes` key.",
+      "Each theme carries a `terms` list of surface phrases reviewers highlighted as belonging to it; empty until phrases are added from the segment tag drawer.",
+      "Themes share one set of `tag_groups`; each carries a `group` id used to organize them in the segment tag drawer.",
+      "Emotions follow the Plutchik model: 24 intensity levels (low / medium / high for each of the 8 primary emotions) and 28 dyads (named blends of two primaries)."
+    ]
+  },
+  "tag_groups": [
+    {
+      "id": "affordability",
+      "label": "Cost & Access",
+      "description": "Affordability, insurance, supply, and getting hold of medication."
+    },
+    {
+      "id": "safety_risk",
+      "label": "Safety & Risk",
+      "description": "Side effects, complications, and weighing the risks of treatment."
+    },
+    {
+      "id": "treatment_experience",
+      "label": "Treatment Experience",
+      "description": "Living with the medication: staying on it, switching, route, and benefits."
+    },
+    {
+      "id": "trial_motivators",
+      "label": "Clinical Trial Motivators",
+      "description": "What draws participants to a clinical trial: attractors, incentives, awareness, and reasons to join."
+    },
+    {
+      "id": "trial_barriers",
+      "label": "Clinical Trial Barriers",
+      "description": "What gets in the way of participation: travel, time, visit logistics, monitoring procedures, and other practical friction."
+    },
+    {
+      "id": "education_support",
+      "label": "Education & Self-Management",
+      "description": "Learning needs and managing one's own care and behavior."
+    },
+    {
+      "id": "weight_journey",
+      "label": "Weight Journey",
+      "description": "Past weight-loss history and the long arc of the participant's journey."
+    },
+    {
+      "id": "decision_factors",
+      "label": "Decision factors",
+      "description": "Reasoning moves — how a participant weighs a choice: risk, cost vs. benefit, tradeoffs, and conditional logic."
+    }
+  ],
+  "theme_tags": [
+    {
+      "id": "cost_access",
+      "description": "Affordability and out-of-pocket cost of medication or participation.",
+      "group": "affordability",
+      "subthemes": [
+        {
+          "id": "out_of_pocket_cost",
+          "description": "Paying for medication or care out of pocket."
+        },
+        {
+          "id": "price_trends",
+          "description": "Changes in medication price or affordability over time."
+        }
+      ],
+      "terms": [
+        "no out of pocket"
+      ]
+    },
+    {
+      "id": "insurance_barrier",
+      "description": "Insurance coverage, prior authorization, or pharmacy benefit manager obstacles.",
+      "group": "affordability",
+      "terms": []
+    },
+    {
+      "id": "medication_access",
+      "description": "Availability of the drug: shortages, lawsuits, supply, getting hold of it.",
+      "group": "affordability",
+      "terms": [
+        "continual",
+        "basically do whatever"
+      ]
+    },
+    {
+      "id": "side_effect_concern",
+      "description": "Worry about adverse effects or health complications from the medication.",
+      "group": "safety_risk",
+      "subthemes": [
+        {
+          "id": "gastric_effects",
+          "description": "Gastrointestinal or gastric-emptying side effects."
+        },
+        {
+          "id": "serious_complication",
+          "description": "A major health complication that would force stopping treatment."
+        },
+        {
+          "id": "unknown_safety",
+          "description": "Concern about unknown side effects or being among the first to try a treatment."
+        }
+      ],
+      "terms": []
+    },
+    {
+      "id": "non_weight_benefits",
+      "description": "Health improvements beyond weight loss.",
+      "group": "treatment_experience",
+      "subthemes": [
+        {
+          "id": "cardiometabolic",
+          "description": "Blood pressure, cholesterol, or other cardiometabolic improvement."
+        },
+        {
+          "id": "digestive",
+          "description": "Reduced heartburn, reflux, or other digestive improvement."
+        },
+        {
+          "id": "food_noise",
+          "description": "Reduction in food noise or intrusive appetite-related thoughts."
+        },
+        {
+          "id": "sleep_mood",
+          "description": "Improvement in sleep, stress, mood, or energy."
+        }
+      ],
+      "terms": [
+        "dentist",
+        "sleep",
+        "sleep apnea",
+        "grinding your teeth",
+        "inflammation"
+      ]
+    },
+    {
+      "id": "fear_of_weight_regain",
+      "description": "Concern about regaining weight if treatment stops or a placebo is received.",
+      "group": "safety_risk",
+      "terms": []
+    },
+    {
+      "id": "treatment_continuation",
+      "description": "Intent to stay on medication, lifelong use, or maintenance commitment.",
+      "group": "treatment_experience",
+      "terms": [
+        "would not stop"
+      ]
+    },
+    {
+      "id": "discontinuation_reasoning",
+      "description": "Reasons or conditions that would lead a participant to stop or pause GLP-1 medication. The mirror of treatment_continuation.",
+      "group": "treatment_experience",
+      "subthemes": [
+        {
+          "id": "cost_driven_stop",
+          "description": "Would stop because the medication became unaffordable or coverage was lost."
+        },
+        {
+          "id": "side_effect_stop",
+          "description": "Would stop because of side effects, complications, or tolerability."
+        },
+        {
+          "id": "goal_achieved_stop",
+          "description": "Would consider stopping after reaching a weight or health goal."
+        },
+        {
+          "id": "involuntary_stop",
+          "description": "Would stop only if forced to — supply shortage, formulary change, prescriber withdrawal, or other circumstances outside the participant's control."
+        },
+        {
+          "id": "medical_advice_stop",
+          "description": "Would stop on the recommendation of a clinician or because of a new medical condition."
+        }
+      ],
+      "terms": []
+    },
+    {
+      "id": "drug_switching",
+      "description": "Willingness to switch to or try a different medication.",
+      "group": "treatment_experience",
+      "subthemes": [
+        {
+          "id": "stall_management",
+          "description": "Switching or adding medication to break a weight-loss stall or plateau."
+        }
+      ],
+      "terms": []
+    },
+    {
+      "id": "placebo_concern",
+      "description": "Feelings about placebo arms, randomization, or controlled-study design.",
+      "group": "safety_risk",
+      "terms": []
+    },
+    {
+      "id": "injection_experience",
+      "description": "Attitudes toward injections: frequency, dislike, route of administration.",
+      "group": "treatment_experience",
+      "subthemes": [
+        {
+          "id": "injection_frequency",
+          "description": "Injection cadence — weekly versus monthly dosing."
+        },
+        {
+          "id": "injection_aversion",
+          "description": "Dislike of or discomfort with the act of injecting."
+        },
+        {
+          "id": "dosing_durability",
+          "description": "Concern about how long a dose lasts between injections."
+        }
+      ],
+      "terms": [
+        "manageable"
+      ]
+    },
+    {
+      "id": "oral_medication_interest",
+      "description": "Interest in or preference for oral / pill-form GLP-1 medications.",
+      "group": "treatment_experience",
+      "terms": []
+    },
+    {
+      "id": "compounded_medication",
+      "description": "Use of or views on compounded medication versus brand-name product.",
+      "group": "affordability",
+      "terms": []
+    },
+    {
+      "id": "trial_participation_motivation",
+      "description": "Factors that attract the participant to joining a clinical trial.",
+      "group": "trial_motivators",
+      "subthemes": [
+        {
+          "id": "access_motivation",
+          "description": "Joining a trial primarily to gain access to medication."
+        },
+        {
+          "id": "convenience_motivation",
+          "description": "Attraction driven by convenient or local trial logistics."
+        }
+      ],
+      "terms": [
+        "better"
+      ]
+    },
+    {
+      "id": "research_altruism",
+      "description": "Contributing to science, helping others, or supporting research as a motivation.",
+      "group": "trial_motivators",
+      "terms": []
+    },
+    {
+      "id": "travel_burden",
+      "description": "Distance and travel required to reach trial or clinic sites.",
+      "group": "trial_barriers",
+      "subthemes": [
+        {
+          "id": "distance_to_site",
+          "description": "Distance and driving time required to reach a site."
+        },
+        {
+          "id": "transportation_access",
+          "description": "Having, or lacking, a means of transport."
+        }
+      ],
+      "terms": []
+    },
+    {
+      "id": "time_burden",
+      "description": "Time cost of participation: hours per week, round trips, scheduling load.",
+      "group": "trial_barriers",
+      "terms": []
+    },
+    {
+      "id": "visit_logistics",
+      "description": "Visit frequency, home visits, telehealth, and scheduling arrangements.",
+      "group": "trial_barriers",
+      "subthemes": [
+        {
+          "id": "telehealth",
+          "description": "Remote or telehealth visits in place of in-person ones."
+        },
+        {
+          "id": "home_visits",
+          "description": "A nurse or staff member visiting the participant's home."
+        },
+        {
+          "id": "visit_frequency",
+          "description": "How often site visits are required."
+        },
+        {
+          "id": "scheduling",
+          "description": "Appointment scheduling and flexibility."
+        },
+        {
+          "id": "local_site",
+          "description": "Preference for a nearby or locally managed site."
+        }
+      ],
+      "terms": []
+    },
+    {
+      "id": "monitoring_burden",
+      "description": "Trial procedures such as fasting blood draws or continuous glucose monitoring.",
+      "group": "trial_barriers",
+      "subthemes": [
+        {
+          "id": "fasting_blood",
+          "description": "Fasting blood draws."
+        },
+        {
+          "id": "glucose_monitoring",
+          "description": "Continuous glucose monitoring."
+        }
+      ],
+      "terms": []
+    },
+    {
+      "id": "incentives_support",
+      "description": "Vouchers, financial compensation, travel concierge, devices, or other support offered.",
+      "group": "trial_motivators",
+      "subthemes": [
+        {
+          "id": "financial_compensation",
+          "description": "Direct payment for participation."
+        },
+        {
+          "id": "vouchers",
+          "description": "Vouchers for medication, books, or weight-loss products."
+        },
+        {
+          "id": "travel_concierge",
+          "description": "Arranged travel or transport to sites."
+        },
+        {
+          "id": "device_provision",
+          "description": "Provision of a device such as a Fitbit or tracker."
+        },
+        {
+          "id": "meal_support",
+          "description": "Meal replacement drinks or meal vouchers."
+        },
+        {
+          "id": "post_trial_access",
+          "description": "Continued access to medication after the trial."
+        }
+      ],
+      "terms": []
+    },
+    {
+      "id": "education_need",
+      "description": "Desire for nutrition, lifestyle, or medication education and its formats.",
+      "group": "education_support",
+      "subthemes": [
+        {
+          "id": "nutrition_education",
+          "description": "Nutritional counseling, meal planning, recipes."
+        },
+        {
+          "id": "learning_formats",
+          "description": "Format of education — videos, webinars, modules, classes, handouts."
+        },
+        {
+          "id": "medication_education",
+          "description": "Education about the medication itself and how to take it."
+        },
+        {
+          "id": "self_tracking",
+          "description": "Journaling or self-tracking of mood, food, or progress."
+        }
+      ],
+      "terms": [
+        "tools",
+        "after stopping medication"
+      ]
+    },
+    {
+      "id": "weight_loss_history",
+      "description": "Past weight-loss attempts, diets, and the participant's weight journey.",
+      "group": "weight_journey",
+      "subthemes": [
+        {
+          "id": "prior_diets",
+          "description": "Past dieting approaches such as Atkins, paleo, vegan, or commercial programs."
+        },
+        {
+          "id": "prior_weight_loss_medication",
+          "description": "Earlier weight-loss medications tried before GLP-1s (e.g. phentermine)."
+        },
+        {
+          "id": "weight_loss_surgery",
+          "description": "Bariatric or weight-loss surgery, considered or undergone."
+        },
+        {
+          "id": "exercise_history",
+          "description": "Past experience with or difficulty sustaining exercise."
+        },
+        {
+          "id": "lifelong_struggle",
+          "description": "A long-running or lifelong struggle with weight, including weight cycling."
+        }
+      ],
+      "terms": [
+        "history"
+      ]
+    },
+    {
+      "id": "trial_awareness",
+      "description": "Awareness of clinical trials or new drugs in development.",
+      "group": "trial_motivators",
+      "terms": []
+    },
+    {
+      "id": "access_logic",
+      "description": "Reasoning about how to obtain or retain access to medication.",
+      "group": "affordability",
+      "terms": []
+    },
+    {
+      "id": "risk_calculation",
+      "description": "Weighing risks, side effects, or trial-design probabilities.",
+      "group": "decision_factors",
+      "terms": []
+    },
+    {
+      "id": "treatment_dependency",
+      "description": "Framing the medication as needed or relied upon long-term.",
+      "group": "treatment_experience",
+      "terms": []
+    },
+    {
+      "id": "maintenance_strategy",
+      "description": "Reasoning about sustaining weight loss after the active treatment phase.",
+      "group": "treatment_experience",
+      "terms": []
+    },
+    {
+      "id": "convenience_tradeoff",
+      "description": "Trading effort or burden against convenience or accessibility.",
+      "group": "decision_factors",
+      "terms": []
+    },
+    {
+      "id": "clinical_trial_friction",
+      "description": "Practical obstacles that make trial participation harder.",
+      "group": "trial_barriers",
+      "terms": []
+    },
+    {
+      "id": "self_advocacy",
+      "description": "The participant or their clinician actively pushing to get care.",
+      "group": "education_support",
+      "terms": []
+    },
+    {
+      "id": "information_seeking",
+      "description": "Actively seeking knowledge, education, or trial information.",
+      "group": "education_support",
+      "terms": []
+    },
+    {
+      "id": "health_transformation",
+      "description": "Narrative of meaningful health improvement or change.",
+      "group": "treatment_experience",
+      "terms": []
+    },
+    {
+      "id": "cost_benefit_reasoning",
+      "description": "Explicitly weighing cost against benefit.",
+      "group": "decision_factors",
+      "terms": []
+    },
+    {
+      "id": "altruistic_reasoning",
+      "description": "Justifying a choice by benefit to others or to science.",
+      "group": "trial_motivators",
+      "terms": []
+    },
+    {
+      "id": "conditional_decision",
+      "description": "A decision framed as contingent on specific conditions ('it depends').",
+      "group": "decision_factors",
+      "terms": []
+    },
+    {
+      "id": "lifestyle_change",
+      "description": "Reasoning about diet, exercise, or behavior change alongside medication.",
+      "group": "education_support",
+      "terms": []
+    },
+    {
+      "id": "glad",
+      "description": "Added from the segment tag drawer; edit this description in codebook.json.",
+      "terms": [
+        "glad"
+      ]
+    }
+  ],
+  "emotion_tags": [
+    {
+      "id": "serenity",
+      "description": "Mild joy — calm contentment or ease."
+    },
+    {
+      "id": "joy",
+      "description": "Joy — happiness or gladness."
+    },
+    {
+      "id": "ecstasy",
+      "description": "Intense joy — elation or overwhelming delight."
+    },
+    {
+      "id": "acceptance",
+      "description": "Mild trust — openness or willingness to go along."
+    },
+    {
+      "id": "trust",
+      "description": "Trust — confidence in a person, plan, or treatment."
+    },
+    {
+      "id": "admiration",
+      "description": "Intense trust — deep respect, reverence, or gratitude."
+    },
+    {
+      "id": "apprehension",
+      "description": "Mild fear — unease or wariness about what may come."
+    },
+    {
+      "id": "fear",
+      "description": "Fear — alarm at a perceived threat."
+    },
+    {
+      "id": "terror",
+      "description": "Intense fear — dread or panic."
+    },
+    {
+      "id": "distraction",
+      "description": "Mild surprise — being momentarily caught off guard."
+    },
+    {
+      "id": "surprise",
+      "description": "Surprise — reaction to something unexpected."
+    },
+    {
+      "id": "amazement",
+      "description": "Intense surprise — astonishment or being stunned."
+    },
+    {
+      "id": "pensiveness",
+      "description": "Mild sadness — wistfulness or low mood."
+    },
+    {
+      "id": "sadness",
+      "description": "Sadness — unhappiness or sorrow."
+    },
+    {
+      "id": "grief",
+      "description": "Intense sadness — deep sorrow or anguish."
+    },
+    {
+      "id": "boredom",
+      "description": "Mild disgust — disinterest or weariness."
+    },
+    {
+      "id": "disgust",
+      "description": "Disgust — aversion or distaste."
+    },
+    {
+      "id": "loathing",
+      "description": "Intense disgust — revulsion or contempt."
+    },
+    {
+      "id": "annoyance",
+      "description": "Mild anger — irritation or frustration."
+    },
+    {
+      "id": "anger",
+      "description": "Anger — displeasure or hostility."
+    },
+    {
+      "id": "rage",
+      "description": "Intense anger — fury or outrage."
+    },
+    {
+      "id": "interest",
+      "description": "Mild anticipation — curiosity or attentiveness toward what's ahead."
+    },
+    {
+      "id": "anticipation",
+      "description": "Anticipation — looking ahead to or expecting something."
+    },
+    {
+      "id": "vigilance",
+      "description": "Intense anticipation — keen focus, readiness, or resolve."
+    },
+    {
+      "id": "love",
+      "description": "Love — joy blended with trust."
+    },
+    {
+      "id": "submission",
+      "description": "Submission — trust blended with fear."
+    },
+    {
+      "id": "alarm",
+      "description": "Alarm — fear blended with surprise."
+    },
+    {
+      "id": "disappointment",
+      "description": "Disappointment — surprise blended with sadness."
+    },
+    {
+      "id": "remorse",
+      "description": "Remorse — sadness blended with disgust."
+    },
+    {
+      "id": "contempt",
+      "description": "Contempt — disgust blended with anger."
+    },
+    {
+      "id": "aggression",
+      "description": "Aggression — anger blended with anticipation."
+    },
+    {
+      "id": "optimism",
+      "description": "Optimism — anticipation blended with joy."
+    },
+    {
+      "id": "guilt",
+      "description": "Guilt — joy blended with fear."
+    },
+    {
+      "id": "curiosity",
+      "description": "Curiosity — trust blended with surprise."
+    },
+    {
+      "id": "despair",
+      "description": "Despair — fear blended with sadness."
+    },
+    {
+      "id": "unbelief",
+      "description": "Unbelief — surprise blended with disgust."
+    },
+    {
+      "id": "envy",
+      "description": "Envy — sadness blended with anger."
+    },
+    {
+      "id": "cynicism",
+      "description": "Cynicism — disgust blended with anticipation."
+    },
+    {
+      "id": "pride",
+      "description": "Pride — anger blended with joy."
+    },
+    {
+      "id": "hope",
+      "description": "Hope — anticipation blended with trust."
+    },
+    {
+      "id": "delight",
+      "description": "Delight — joy blended with surprise."
+    },
+    {
+      "id": "sentimentality",
+      "description": "Sentimentality — trust blended with sadness."
+    },
+    {
+      "id": "shame",
+      "description": "Shame — fear blended with disgust."
+    },
+    {
+      "id": "outrage",
+      "description": "Outrage — surprise blended with anger."
+    },
+    {
+      "id": "pessimism",
+      "description": "Pessimism — sadness blended with anticipation."
+    },
+    {
+      "id": "morbideness",
+      "description": "Morbidness — disgust blended with joy."
+    },
+    {
+      "id": "dominance",
+      "description": "Dominance — anger blended with trust."
+    },
+    {
+      "id": "anxiety",
+      "description": "Anxiety — anticipation blended with fear."
+    },
+    {
+      "id": "bittersweetness",
+      "description": "Bittersweetness — joy blended with sadness."
+    },
+    {
+      "id": "ambivalence",
+      "description": "Ambivalence — trust blended with disgust."
+    },
+    {
+      "id": "frozenness",
+      "description": "Frozenness — fear blended with anger."
+    },
+    {
+      "id": "confusion",
+      "description": "Confusion — surprise blended with anticipation."
+    }
+  ]
+}

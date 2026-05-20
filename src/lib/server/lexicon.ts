@@ -1,10 +1,14 @@
 /**
- * Keyword lexicon & theme term editing — shared read/write helpers.
+ * Keyword cluster lexicon — shared read/write helpers.
  *
- * Backs the segment tag drawer's right-click "add to keyword / theme" menu.
- * Keyword variants are written into keyword_lexicon.json; theme terms into
- * codebook.json (`terms` list, schema 1.3+). Both are surface phrases a
- * reviewer highlighted in a transcript segment.
+ * Backs the segment tag drawer's "Tag as keyword…" flow. The lexicon's
+ * `clusters[]` is a flat list; each cluster declares parent_theme +
+ * parent_subtheme as FKs into the codebook. Variants are SUGGESTION FUEL —
+ * they rank cluster suggestions in the drawer, they do NOT auto-tag any
+ * occurrence (per-instance tags live in keyword_tags.json).
+ *
+ * Themes/subthemes are fixed in codebook 2.0 — there is no user-creatable
+ * theme. The old `addThemeTerm` / `createTheme` flows are gone.
  *
  * Backed by the local source files in dev and the KV store in prod.
  */
@@ -18,39 +22,36 @@ const CODEBOOK_PATH = `${DATA_DIR}/codebook.json`;
 const LEXICON_KEY = 'wctglpdemo:keyword_lexicon';
 const CODEBOOK_KEY = 'wctglpdemo:codebook';
 
-type LexiconFile = { categories: Category[] };
-type CodebookFile = { theme_tags: Theme[]; [k: string]: unknown };
+export type Cluster = {
+	id: string;
+	label: string;
+	description: string;
+	parent_theme: string;
+	parent_subtheme: string;
+	variants: string[];
+};
 
-const readLexicon = () =>
-	loadDoc<LexiconFile>(LEXICON_KEY, LEXICON_PATH, bundledLexicon as LexiconFile);
-const readCodebook = () =>
-	loadDoc<CodebookFile>(CODEBOOK_KEY, CODEBOOK_PATH, bundledCodebook as CodebookFile);
+type LexiconFile = { clusters: Cluster[]; meta?: unknown; [k: string]: unknown };
 
-export type Keyword = { id: string; label: string; variants: string[] };
-export type Category = { id: string; label: string; description: string; keywords: Keyword[] };
+export type Subtheme = { id: string; label?: string; description?: string };
 export type Theme = {
 	id: string;
-	description: string;
-	group?: string;
-	subthemes?: { id: string; description: string }[];
-	terms?: string[];
-};
-
-export type NewThemeInput = {
-	/** Slug for the new theme. If absent or already taken, a unique suffix is appended. */
-	id?: string;
-	/** Required when creating a theme from the drawer — a real description, not a placeholder. */
+	label?: string;
 	description?: string;
-	/** Optional tag_groups id. Validated against the codebook's tag_groups list. */
-	group?: string;
+	subthemes?: Subtheme[];
 };
+type CodebookFile = { themes: Theme[]; [k: string]: unknown };
+
+const readLexicon = () =>
+	loadDoc<LexiconFile>(LEXICON_KEY, LEXICON_PATH, bundledLexicon as unknown as LexiconFile);
+const readCodebook = () =>
+	loadDoc<CodebookFile>(CODEBOOK_KEY, CODEBOOK_PATH, bundledCodebook as unknown as CodebookFile);
 
 /** The lists the drawer renders — returned after every edit so it can refresh. */
-export type LexiconState = { categories: Category[]; themes: Theme[] };
+export type LexiconState = { clusters: Cluster[]; themes: Theme[] };
 
 const MAX_LEN = 80;
 
-/** Trim and collapse whitespace; throw if empty, too long, or all punctuation. */
 function cleanText(raw: unknown): string {
 	const t = String(raw ?? '')
 		.replace(/\s+/g, ' ')
@@ -61,12 +62,9 @@ function cleanText(raw: unknown): string {
 	return t;
 }
 
-/** Lowercased, whitespace-collapsed form stored as a matchable variant/term. */
 const normalize = (t: string) => cleanText(t).toLowerCase();
-
 const titleCase = (t: string) => t.replace(/\b\w/g, (c) => c.toUpperCase());
 
-/** Slug suitable for a keyword/theme id, derived from highlighted text. */
 function slugify(t: string): string {
 	return t
 		.toLowerCase()
@@ -76,112 +74,130 @@ function slugify(t: string): string {
 }
 
 function uniqueId(base: string, taken: Set<string>): string {
-	const root = base || 'item';
+	const root = base || 'cluster';
 	let id = root;
 	let n = 2;
 	while (taken.has(id)) id = `${root}_${n++}`;
 	return id;
 }
 
-async function snapshot(): Promise<LexiconState> {
-	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
-	return { categories: lex.categories, themes: codebook.theme_tags };
+/** Verify that the (theme, subtheme) pair exists in the codebook. */
+function assertPair(codebook: CodebookFile, parentTheme: string, parentSubtheme: string): void {
+	const theme = codebook.themes.find((t) => t.id === parentTheme);
+	if (!theme) throw new Error(`Unknown theme "${parentTheme}".`);
+	const sub = theme.subthemes?.find((s) => s.id === parentSubtheme);
+	if (!sub) throw new Error(`Subtheme "${parentSubtheme}" not under theme "${parentTheme}".`);
 }
 
-/** Add a highlighted phrase as a new variant of an existing keyword. */
+async function snapshot(): Promise<LexiconState> {
+	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
+	return { clusters: lex.clusters, themes: codebook.themes };
+}
+
+/** Add a highlighted phrase as a new variant of an existing cluster. */
 export async function addKeywordVariant(
-	keywordId: string,
+	clusterId: string,
 	rawText: string
 ): Promise<LexiconState> {
 	const variant = normalize(rawText);
 	const lex = await readLexicon();
-	let keyword: Keyword | undefined;
-	for (const cat of lex.categories) {
-		keyword = cat.keywords.find((k) => k.id === keywordId);
-		if (keyword) break;
-	}
-	if (!keyword) throw new Error(`Unknown keyword "${keywordId}".`);
-	if (!keyword.variants.some((v) => v.toLowerCase() === variant)) {
-		keyword.variants.push(variant);
+	const cluster = lex.clusters.find((c) => c.id === clusterId);
+	if (!cluster) throw new Error(`Unknown cluster "${clusterId}".`);
+	if (!cluster.variants.some((v) => v.toLowerCase() === variant)) {
+		cluster.variants.push(variant);
 		await saveDoc(LEXICON_KEY, LEXICON_PATH, lex);
 	}
 	return snapshot();
 }
 
-/** Create a new keyword in a category, seeded from the highlighted phrase. */
-export async function createKeyword(categoryId: string, rawText: string): Promise<LexiconState> {
-	const text = cleanText(rawText);
+/** Build the lookup regex used by keywords.ts: case-insensitive whole-token
+ *  match where space/hyphen runs are flexible (so "out of pocket" matches
+ *  "out-of-pocket"). Used to locate which stored variant matches a surface. */
+function variantMatchesSurface(variant: string, surface: string): boolean {
+	const escaped = variant.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/[\s-]+/g, '[\\s-]+');
+	return new RegExp(`^(?:${escaped})$`, 'i').test(surface);
+}
+
+/** Remove the variant matching `rawText` from the cluster. Throws if no such
+ *  variant exists — surfaced to the analyst so a stale right-click on a span
+ *  that no longer bolds doesn't silently no-op. */
+export async function removeKeywordVariant(
+	clusterId: string,
+	rawText: string
+): Promise<LexiconState> {
+	const surface = cleanText(rawText);
 	const lex = await readLexicon();
-	const category = lex.categories.find((c) => c.id === categoryId);
-	if (!category) throw new Error(`Unknown category "${categoryId}".`);
-	const taken = new Set<string>();
-	for (const c of lex.categories) for (const k of c.keywords) taken.add(k.id);
-	category.keywords.push({
-		id: uniqueId(slugify(text), taken),
-		label: titleCase(text),
-		variants: [text.toLowerCase()]
-	});
+	const cluster = lex.clusters.find((c) => c.id === clusterId);
+	if (!cluster) throw new Error(`Unknown cluster "${clusterId}".`);
+	const idx = cluster.variants.findIndex((v) => variantMatchesSurface(v, surface));
+	if (idx < 0) {
+		throw new Error(`"${surface}" is no longer a variant of "${cluster.label}".`);
+	}
+	cluster.variants.splice(idx, 1);
 	await saveDoc(LEXICON_KEY, LEXICON_PATH, lex);
 	return snapshot();
 }
 
-/** Add a highlighted phrase to an existing theme's `terms` list. */
-export async function addThemeTerm(themeId: string, rawText: string): Promise<LexiconState> {
-	const term = normalize(rawText);
-	const codebook = await readCodebook();
-	const theme = codebook.theme_tags.find((t) => t.id === themeId);
-	if (!theme) throw new Error(`Unknown theme "${themeId}".`);
-	if (!Array.isArray(theme.terms)) theme.terms = [];
-	if (!theme.terms.some((v) => v.toLowerCase() === term)) {
-		theme.terms.push(term);
-		await saveDoc(CODEBOOK_KEY, CODEBOOK_PATH, codebook);
+/** Move the variant matching `rawText` from one cluster to another, atomically.
+ *  If the same surface is already a variant of the target, only the removal is
+ *  applied. Throws if either cluster is unknown or no source variant matches. */
+export async function moveKeywordVariant(
+	fromClusterId: string,
+	toClusterId: string,
+	rawText: string
+): Promise<LexiconState> {
+	const surface = cleanText(rawText);
+	if (fromClusterId === toClusterId) return snapshot();
+	const lex = await readLexicon();
+	const fromCluster = lex.clusters.find((c) => c.id === fromClusterId);
+	const toCluster = lex.clusters.find((c) => c.id === toClusterId);
+	if (!fromCluster) throw new Error(`Unknown source cluster "${fromClusterId}".`);
+	if (!toCluster) throw new Error(`Unknown target cluster "${toClusterId}".`);
+	const idx = fromCluster.variants.findIndex((v) => variantMatchesSurface(v, surface));
+	if (idx < 0) {
+		throw new Error(`"${surface}" is no longer a variant of "${fromCluster.label}".`);
 	}
+	fromCluster.variants.splice(idx, 1);
+	const targetVariant = surface.toLowerCase();
+	if (!toCluster.variants.some((v) => v.toLowerCase() === targetVariant)) {
+		toCluster.variants.push(targetVariant);
+	}
+	await saveDoc(LEXICON_KEY, LEXICON_PATH, lex);
 	return snapshot();
 }
 
 /**
- * Create a new theme, seeded from the highlighted phrase as its first term.
- * The reviewer supplies the id, description, and group via the drawer's "New
- * theme" dialog — none are auto-generated except as a fallback when the input
- * is omitted (the legacy direct-add path).
+ * Create a new cluster under the given (parent_theme, parent_subtheme),
+ * seeded from the highlighted phrase as its first variant. `labelInput` names
+ * the concept (e.g. "Trial duration"); when omitted, the label falls back to
+ * a title-cased copy of the phrase. Returns the updated state plus the new
+ * cluster id so callers can chain a tag-creation against it.
  */
-export async function createTheme(
+export async function createCluster(
+	parentTheme: string,
+	parentSubtheme: string,
 	rawText: string,
-	opts: NewThemeInput = {}
-): Promise<LexiconState> {
+	labelInput?: string,
+	descriptionInput?: string
+): Promise<LexiconState & { createdId: string }> {
 	const text = cleanText(rawText);
-	const codebook = await readCodebook();
-	const taken = new Set<string>(codebook.theme_tags.map((t) => t.id));
-
-	// Validate the optional group against the codebook's known tag_groups.
-	const tagGroups = (codebook.tag_groups as { id: string }[] | undefined) ?? [];
-	const knownGroups = new Set(tagGroups.map((g) => g.id));
-	const group =
-		typeof opts.group === 'string' && opts.group.trim() ? opts.group.trim() : '';
-	if (group && !knownGroups.has(group)) {
-		throw new Error(`Unknown tag group "${group}".`);
-	}
-
-	const requestedId = (opts.id ?? '').trim();
-	const baseId = requestedId ? slugify(requestedId) : slugify(text);
-	if (!baseId) throw new Error('Theme id is empty after slugifying.');
-	if (requestedId && taken.has(baseId)) {
-		throw new Error(`A theme with id "${baseId}" already exists.`);
-	}
-	const id = uniqueId(baseId, taken);
-
-	const description = (opts.description ?? '').trim();
-
-	const theme: Theme = {
+	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
+	assertPair(codebook, parentTheme, parentSubtheme);
+	const labelRaw = (labelInput ?? '').replace(/\s+/g, ' ').trim();
+	const label = labelRaw || titleCase(text);
+	if (label.length > MAX_LEN)
+		throw new Error(`Keyword name is too long (max ${MAX_LEN} characters).`);
+	const description = (descriptionInput ?? '').replace(/\s+/g, ' ').trim();
+	const taken = new Set<string>(lex.clusters.map((c) => c.id));
+	const id = uniqueId(slugify(label), taken);
+	lex.clusters.push({
 		id,
-		description:
-			description ||
-			'Added from the segment tag drawer; edit this description in codebook.json.',
-		terms: [text.toLowerCase()]
-	};
-	if (group) theme.group = group;
-
-	codebook.theme_tags.push(theme);
-	await saveDoc(CODEBOOK_KEY, CODEBOOK_PATH, codebook);
-	return snapshot();
+		label,
+		description,
+		parent_theme: parentTheme,
+		parent_subtheme: parentSubtheme,
+		variants: [text.toLowerCase()]
+	});
+	await saveDoc(LEXICON_KEY, LEXICON_PATH, lex);
+	return { clusters: lex.clusters, themes: codebook.themes, createdId: id };
 }

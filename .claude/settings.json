@@ -42,7 +42,18 @@
       "Bash(jq '[.proposals | to_entries[] | select\\(.key | startswith\\(\"participant_11\"\\)\\)] | from_entries' /Users/aaronjun/JourneyMapper/src/lib/content/wctglpdemo-data/segment_tags.proposed.json > /tmp/p11_before.json && wc -l /tmp/p11_before.json)",
       "Bash(node scripts/propose-segment-tags.mjs participant_11 --force)",
       "Bash(npx tsc *)",
-      "Bash(node scripts/propose-segment-tags.mjs --force)"
+      "Bash(node scripts/propose-segment-tags.mjs --force)",
+      "Bash(node scripts/migrate-segment-tags.mjs)",
+      "Bash(grep -rln 'from '\\\\''$lib/content/wctglpdemo-data/codebook'\\\\''\\\\|from '\\\\''$lib/content/wctglpdemo-data/codebook.json'\\\\''\\\\|from '\\\\''$lib/content/wctglpdemo-data/keyword_lexicon'\\\\''\\\\|from '\\\\''$lib/content/wctglpdemo-data/keyword_lexicon.json'\\\\''\\\\|require.*codebook.json\\\\|require.*keyword_lexicon.json' src/ scripts/)",
+      "Bash(node scripts/migrate-keyword-lexicon.mjs)",
+      "Bash(cp codebook.json codebook.v18-backup.json)",
+      "Bash(cp keyword_lexicon.json keyword_lexicon.v2-backup.json)",
+      "Bash(cp segment_tags.json segment_tags.v18-backup.json)",
+      "Bash(cp segment_tags.proposed.json segment_tags.proposed.v1-backup.json)",
+      "Bash(mv codebook.next.json codebook.json)",
+      "Bash(node -e \"const d = require\\('/Users/aaronjun/JourneyMapper/src/lib/content/wctglpdemo-data/codebook.json'\\); console.log\\('schema_version:', d.meta.schema_version, 'status:', d.meta.status\\);\")",
+      "Bash(node scripts/build-keyword-usage.mjs)",
+      "Bash(grep -n 'async function save\\\\|themes,$\\\\|subthemes,$\\\\|/wctglpdemo/segment-tags' /Users/aaronjun/JourneyMapper/src/lib/components/SegmentTagDrawer.svelte)"
     ],
     "additionalDirectories": [
       "/tmp"

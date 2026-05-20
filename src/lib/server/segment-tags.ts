@@ -38,7 +38,7 @@ type TagsFile = {
 	[k: string]: unknown;
 };
 type CodebookFile = {
-	theme_tags: CodebookTheme[];
+	themes: CodebookTheme[];
 	emotion_tags: { id: string }[];
 	[k: string]: unknown;
 };
@@ -58,7 +58,7 @@ type CodebookTheme = { id: string; subthemes?: { id: string }[] };
  */
 async function codebookLookups() {
 	const codebook = await readCodebook();
-	const themes = codebook.theme_tags;
+	const themes = codebook.themes;
 	const subthemeParent = new Map<string, string>();
 	for (const t of themes) {
 		for (const s of t.subthemes ?? []) subthemeParent.set(s.id, t.id);

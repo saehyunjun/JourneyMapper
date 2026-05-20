@@ -108,8 +108,8 @@ if (targets.length === 0) {
 }
 
 // --- Codebook → enum lists + cached system prompt ---
-const themeIds = codebook.theme_tags.map((t) => t.id);
-const subthemeIds = codebook.theme_tags.flatMap((t) => (t.subthemes ?? []).map((s) => s.id));
+const themeIds = codebook.themes.map((t) => t.id);
+const subthemeIds = codebook.themes.flatMap((t) => (t.subthemes ?? []).map((s) => s.id));
 const emotionIds = codebook.emotion_tags.map((e) => e.id);
 
 const annotationSchema = {
@@ -168,7 +168,7 @@ ${JSON.stringify(codebook.meta.sentiment_scale, null, 2)}
 CODEBOOK — the only valid tag ids:
 
 THEMES (with their subthemes):
-${JSON.stringify(codebook.theme_tags, null, 2)}
+${JSON.stringify(codebook.themes, null, 2)}
 
 EMOTIONS:
 ${JSON.stringify(codebook.emotion_tags, null, 2)}`;

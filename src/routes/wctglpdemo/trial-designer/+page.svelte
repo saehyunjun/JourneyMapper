@@ -9,8 +9,8 @@
 <script lang="ts">
 	import { SvelteSet } from 'svelte/reactivity';
 	import {
-		themeTags,
-		segmentsForTheme,
+		subthemeTags,
+		fragmentsMatching,
 		titleCase,
 		themedParticipantIds,
 		type ThemeFragment
@@ -50,12 +50,15 @@
 	const quoteScore = (f: ThemeFragment) =>
 		-Math.abs(f.text.length - 150) - (f.text.length < 50 ? 1000 : 0);
 
-	// The codebook's clinical-trial groups (motivators + barriers), as pickable
-	// factors — sorted by how many interviewees raised each.
-	const factors: Factor[] = themeTags
-		.filter((t) => t.group === 'trial_motivators' || t.group === 'trial_barriers')
-		.map((t) => {
-			const frags = segmentsForTheme(t.id);
+	// Codebook 2.0's clinical-trial subthemes (motivators + barriers) as
+	// pickable factors. Note: this collapses 10+ old themes down to 2 broad
+	// subthemes. Future iteration could surface keyword clusters under each
+	// subtheme for finer-grained pick options.
+	const TRIAL_FACTOR_IDS = new Set(['trial_motivators', 'trial_barriers']);
+	const factors: Factor[] = subthemeTags
+		.filter((s) => TRIAL_FACTOR_IDS.has(s.id))
+		.map((s) => {
+			const frags = fragmentsMatching((a) => a.subthemes.includes(s.id));
 			const byParticipant = new Map<string, ThemeFragment>();
 			for (const f of frags) {
 				const cur = byParticipant.get(f.interview_id);
@@ -70,9 +73,9 @@
 				}))
 				.sort((a, b) => a.interviewId.localeCompare(b.interviewId));
 			return {
-				id: t.id,
-				label: titleCase(t.id),
-				description: t.description,
+				id: s.id,
+				label: s.label ?? titleCase(s.id),
+				description: s.description ?? '',
 				participantCount: byParticipant.size,
 				segmentCount: frags.length,
 				meanSentiment: frags.length

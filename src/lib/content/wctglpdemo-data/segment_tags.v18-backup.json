@@ -2,14 +2,14 @@
   "meta": {
     "schema_version": "1.2",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T21:23:46.492Z",
-    "generator": "scripts/migrate-segment-tags.mjs",
+    "generated_at": "2026-05-20T20:29:15.038Z",
+    "generator": "scripts/build-segment-tags.mjs",
     "sources": [
-      "src/lib/content/wctglpdemo-data/segment_tags.json",
-      "src/lib/content/wctglpdemo-data/codebook.next.json",
-      "src/lib/content/wctglpdemo-data/codebook_migration_map.json"
+      "src/lib/content/wctglpdemo-data/segments.json",
+      "src/lib/content/wctglpdemo-data/codebook.json",
+      "src/lib/content/wctglpdemo-data/segment_tags.proposed.json"
     ],
-    "codebook_schema_version": "2.0",
+    "codebook_schema_version": "1.6",
     "labels_status": "ai_proposed",
     "labels_model": "claude-opus-4-7",
     "proposals_generated_at": "2026-05-19T03:29:10.011Z",
@@ -25,12 +25,6 @@
       "`topics` is an open, emergent vocabulary from scripts/propose-topics.mjs (topics.json); [] when topic tagging has not run.",
       "Annotations are keyed by segment_id and join back to segments.json (which carries char offsets).",
       "pending_interviews lists interviews not yet tagged, so their segments are not mistaken for untagged-by-analysis."
-    ],
-    "migration_status": "promoted",
-    "migration_notes": [
-      "Re-keyed from codebook.json @ 1.6 to codebook.next.json @ 2.0-draft.",
-      "477 of 596 annotations changed shape.",
-      "Rules fired: decision_factor_to_trial=54, injection_positive=31, visit_logistics_motivator=8, compounded_to_barriers=7."
     ]
   },
   "annotations": [
@@ -58,13 +52,17 @@
         "financial_impact_on_family"
       ],
       "themes": [
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning",
+        "risk_calculation",
+        "side_effect_concern",
+        "treatment_continuation",
+        "drug_switching"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "out_of_pocket_cost",
+        "serious_complication",
+        "unknown_safety"
       ],
       "emotions": [
         "apprehension",
@@ -84,11 +82,11 @@
         "cost_of_glp1"
       ],
       "themes": [
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [
         "annoyance"
@@ -108,11 +106,11 @@
         "side_effects"
       ],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "serious_complication"
       ],
       "emotions": [
         "apprehension"
@@ -133,12 +131,14 @@
         "side_effects"
       ],
       "themes": [
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning",
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "out_of_pocket_cost",
+        "serious_complication"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -156,11 +156,12 @@
         "cost_of_glp1"
       ],
       "themes": [
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning",
+        "drug_switching"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -195,11 +196,14 @@
         "cost_of_glp1"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "cost_access",
+        "cost_benefit_reasoning",
+        "drug_switching",
+        "treatment_continuation"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -218,11 +222,14 @@
         "cost_of_glp1"
       ],
       "themes": [
-        "treatment"
+        "conditional_decision",
+        "cost_access",
+        "cost_benefit_reasoning",
+        "drug_switching",
+        "oral_medication_interest"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -239,18 +246,16 @@
         "switching_glp1_medication"
       ],
       "themes": [
-        "treatment"
+        "treatment_continuation"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust"
       ],
       "sentiment": 1,
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.7,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
@@ -276,10 +281,11 @@
         "weight_loss_outcomes"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "cardiometabolic"
       ],
       "emotions": [
         "joy",
@@ -299,11 +305,10 @@
         "health_improvements"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
-      "subthemes": [
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "joy"
       ],
@@ -322,11 +327,12 @@
         "lifelong_maintenance"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
+        "access_motivation"
       ],
       "emotions": [
         "hope"
@@ -345,12 +351,10 @@
         "trial_duration"
       ],
       "themes": [
-        "clinical_trials"
+        "conditional_decision",
+        "placebo_concern"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.7,
@@ -367,14 +371,13 @@
         "weight_loss_outcomes"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "fear_of_weight_regain",
+        "placebo_concern",
+        "risk_calculation",
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_health_history",
-        "trial_barriers",
-        "trial_decision_factors"
+        "lifelong_struggle"
       ],
       "emotions": [
         "fear"
@@ -393,11 +396,11 @@
         "weight_loss_outcomes"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history",
-        "treatment_positive_experiences"
+        "lifelong_struggle"
       ],
       "emotions": [
         "pride"
@@ -417,14 +420,11 @@
         "placebo_concerns"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "fear_of_weight_regain",
+        "placebo_concern",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "fear"
       ],
@@ -461,11 +461,9 @@
         "trial_duration"
       ],
       "themes": [
-        "treatment"
+        "treatment_continuation"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.6,
@@ -497,13 +495,11 @@
         "lifelong_maintenance"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "maintenance_strategy",
+        "treatment_continuation",
+        "treatment_dependency"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "vigilance"
       ],
@@ -521,13 +517,11 @@
         "lifelong_maintenance"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "maintenance_strategy",
+        "treatment_continuation",
+        "treatment_dependency"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.85,
@@ -562,11 +556,9 @@
         "trial_duration"
       ],
       "themes": [
-        "clinical_trials"
+        "visit_logistics"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -582,10 +574,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_negative_experiences"
+        "injection_frequency"
       ],
       "emotions": [
         "acceptance"
@@ -604,12 +596,12 @@
         "placebo_concerns"
       ],
       "themes": [
-        "treatment"
+        "injection_experience",
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences",
-        "treatment_positive_experiences"
+        "dosing_durability"
       ],
       "emotions": [
         "apprehension"
@@ -629,13 +621,10 @@
         "dosing_frequency"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -653,13 +642,10 @@
         "long_acting_implant"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -677,11 +663,9 @@
         "long_acting_implant"
       ],
       "themes": [
-        "clinical_trials"
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness"
-      ],
+      "subthemes": [],
       "emotions": [
         "anticipation"
       ],
@@ -701,14 +685,13 @@
         "dosing_frequency"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "risk_calculation",
+        "self_advocacy",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "medication_education"
       ],
       "emotions": [
         "apprehension"
@@ -728,14 +711,13 @@
         "side_effect_management_protocol"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "risk_calculation",
+        "self_advocacy",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "medication_education"
       ],
       "emotions": [
         "apprehension"
@@ -755,12 +737,11 @@
         "medication_shortage"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "compounded_medication",
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.85,
@@ -776,11 +757,9 @@
         "medication_shortage"
       ],
       "themes": [
-        "treatment"
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.5,
@@ -798,11 +777,14 @@
         "cost_of_glp1"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "compounded_medication",
+        "cost_access",
+        "cost_benefit_reasoning",
+        "medication_access"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [
         "acceptance"
@@ -821,13 +803,10 @@
         "compounded_medication"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "compounded_medication",
+        "information_seeking"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [
         "vigilance"
       ],
@@ -845,13 +824,10 @@
         "compounded_medication"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "compounded_medication",
+        "information_seeking"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -869,10 +845,11 @@
         "food_vouchers_supplements"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "meal_support",
+        "vouchers"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -889,10 +866,11 @@
         "food_vouchers_supplements"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "meal_support",
+        "vouchers"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -911,14 +889,11 @@
         "financial_compensation"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "fear_of_weight_regain",
+        "placebo_concern",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -937,12 +912,10 @@
         "financial_compensation"
       ],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -960,19 +933,19 @@
         "financial_compensation"
       ],
       "themes": [
-        "clinical_trials"
+        "cost_benefit_reasoning",
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
+        "financial_compensation"
       ],
       "emotions": [
         "acceptance"
       ],
       "sentiment": 1,
-      "confidence": 1,
-      "source": "human",
-      "review_status": "confirmed",
+      "confidence": 0.85,
+      "source": "ai_proposed",
+      "review_status": "pending",
       "reviewer_notes": ""
     },
     {
@@ -999,12 +972,12 @@
         "travel_reimbursement"
       ],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "incentives_support",
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
+        "travel_concierge"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -1022,12 +995,12 @@
         "provider_contact_during_trial"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "self_advocacy",
+        "time_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [
         "vigilance"
@@ -1092,11 +1065,9 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "visit_logistics"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -1114,15 +1085,12 @@
         "provider_contact_during_trial"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "visit_logistics"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_barriers",
-        "trial_motivators"
+        "telehealth"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -1139,10 +1107,10 @@
         "wearable_devices_incentive"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "device_provision"
       ],
       "emotions": [
         "interest"
@@ -1161,10 +1129,10 @@
         "wearable_devices_incentive"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "device_provision"
       ],
       "emotions": [
         "anticipation"
@@ -1217,10 +1185,10 @@
         "fasting_requirement"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "fasting_blood"
       ],
       "emotions": [
         "acceptance"
@@ -1239,10 +1207,10 @@
         "blood_glucose_testing"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [
         "acceptance"
@@ -1262,10 +1230,10 @@
         "blood_glucose_testing"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -1282,10 +1250,10 @@
         "blood_draws"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "fasting_blood"
       ],
       "emotions": [
         "acceptance"
@@ -1304,11 +1272,9 @@
         "blood_draws"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -1342,10 +1308,11 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "time_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -1362,10 +1329,10 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [
         "acceptance"
@@ -1412,12 +1379,10 @@
         "insurance_coverage"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "insurance_barrier"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -1436,13 +1401,12 @@
         "side_effects"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "insurance_barrier",
+        "risk_calculation",
+        "side_effect_concern"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -1460,13 +1424,10 @@
         "insurance_coverage"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "information_seeking",
+        "insurance_barrier"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.65,
@@ -1499,10 +1460,12 @@
         "weight_loss_outcomes"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets",
+        "exercise_history",
+        "lifelong_struggle"
       ],
       "emotions": [
         "pensiveness"
@@ -1521,10 +1484,10 @@
         "weight_loss_outcomes"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "pensiveness"
@@ -1543,12 +1506,10 @@
         "weight_loss_outcomes"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "weight_loss_history"
       ],
-      "subthemes": [
-        "treatment_health_history",
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "pride"
       ],
@@ -1566,12 +1527,10 @@
         "weight_loss_outcomes"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "weight_loss_history"
       ],
-      "subthemes": [
-        "treatment_health_history",
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "amazement"
       ],
@@ -1590,11 +1549,12 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history",
-        "treatment_positive_experiences"
+        "prior_diets",
+        "exercise_history"
       ],
       "emotions": [
         "amazement"
@@ -1614,11 +1574,9 @@
         "medication_adherence"
       ],
       "themes": [
-        "treatment"
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -1637,11 +1595,10 @@
         "medication_adherence"
       ],
       "themes": [
-        "treatment"
+        "convenience_tradeoff",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "annoyance"
       ],
@@ -1660,11 +1617,10 @@
         "medication_adherence"
       ],
       "themes": [
-        "treatment"
+        "oral_medication_interest",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -1683,11 +1639,10 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "treatment"
+        "convenience_tradeoff",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "annoyance"
       ],
@@ -1705,13 +1660,12 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "oral_medication_interest"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps"
+        "medication_education"
       ],
       "emotions": [
         "confusion"
@@ -1730,11 +1684,9 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "treatment"
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.55,
@@ -1751,11 +1703,12 @@
         "dosing_frequency"
       ],
       "themes": [
-        "treatment"
+        "convenience_tradeoff",
+        "injection_experience",
+        "oral_medication_interest"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
+        "injection_frequency"
       ],
       "emotions": [
         "acceptance"
@@ -1774,11 +1727,12 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "conditional_decision",
+        "oral_medication_interest",
+        "treatment_continuation"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -1812,12 +1766,10 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "treatment"
+        "injection_experience",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.8,
@@ -1834,13 +1786,10 @@
         "dosing_frequency"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest",
         "anticipation"
@@ -1860,15 +1809,14 @@
         "lifelong_maintenance"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "convenience_tradeoff",
+        "injection_experience",
+        "maintenance_strategy",
+        "trial_awareness"
       ],
       "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy",
-        "treatment_positive_experiences",
-        "trial_decision_factors"
+        "injection_frequency",
+        "dosing_durability"
       ],
       "emotions": [
         "anticipation"
@@ -1880,19 +1828,47 @@
       "reviewer_notes": ""
     },
     {
+      "segment_id": "participant_06_t55_s00",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "topics": [],
+      "themes": [],
+      "subthemes": [],
+      "emotions": [],
+      "sentiment": 1,
+      "confidence": 0.4,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "closing"
+    },
+    {
+      "segment_id": "participant_06_t55_s01",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "topics": [],
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "admiration"
+      ],
+      "sentiment": 1,
+      "confidence": 0.4,
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "reviewer_notes": "closing"
+    },
+    {
       "segment_id": "participant_07_t05_s00",
       "interview_id": "participant_07",
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "maintenance_strategy",
+        "non_weight_benefits",
+        "treatment_continuation",
+        "treatment_dependency"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "anticipation"
       ],
@@ -1910,11 +1886,10 @@
         "health_improvements"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
-      "subthemes": [
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "joy"
       ],
@@ -1933,10 +1908,11 @@
         "health_improvements"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "sleep_mood"
       ],
       "emotions": [
         "joy"
@@ -1955,11 +1931,10 @@
         "food_noise_reduction"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
-      "subthemes": [
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "surprise"
       ],
@@ -1977,10 +1952,11 @@
         "food_noise_reduction"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "sleep_mood"
       ],
       "emotions": [
         "surprise"
@@ -1999,11 +1975,10 @@
         "food_noise_reduction"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
-      "subthemes": [
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.7,
@@ -2019,13 +1994,12 @@
         "food_noise_reduction"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "fear_of_weight_regain",
+        "maintenance_strategy",
+        "treatment_continuation",
+        "treatment_dependency"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -2041,12 +2015,10 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "serenity"
       ],
@@ -2062,12 +2034,10 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust"
       ],
@@ -2083,12 +2053,11 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern",
+        "treatment_continuation"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.7,
@@ -2102,12 +2071,10 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -2123,12 +2090,10 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -2144,12 +2109,10 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "fear"
       ],
@@ -2167,15 +2130,11 @@
         "lifelong_maintenance"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "drug_switching",
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -2193,11 +2152,9 @@
         "lifelong_maintenance"
       ],
       "themes": [
-        "treatment"
+        "drug_switching"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "anticipation"
       ],
@@ -2215,11 +2172,9 @@
         "lifelong_maintenance"
       ],
       "themes": [
-        "treatment"
+        "drug_switching"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.7,
@@ -2236,11 +2191,9 @@
         "reasons_to_stop_glp1"
       ],
       "themes": [
-        "clinical_trials"
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -2256,12 +2209,10 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust"
       ],
@@ -2280,12 +2231,10 @@
         "lifelong_maintenance"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -2321,12 +2270,10 @@
         "health_improvements"
       ],
       "themes": [
-        "clinical_trials"
+        "placebo_concern",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -2344,12 +2291,10 @@
         "reasons_to_stop_glp1"
       ],
       "themes": [
-        "clinical_trials"
+        "placebo_concern",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -2365,13 +2310,11 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "placebo_concern",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -2387,13 +2330,11 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "placebo_concern",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -2411,11 +2352,10 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "visit_logistics"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "annoyance"
       ],
@@ -2433,14 +2373,12 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "clinical_trial_friction",
+        "convenience_tradeoff",
+        "injection_experience",
+        "visit_logistics"
       ],
-      "subthemes": [
-        "treatment_negative_experiences",
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -2458,11 +2396,11 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.8,
@@ -2478,11 +2416,11 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.75,
@@ -2515,11 +2453,9 @@
         "switching_glp1_medication"
       ],
       "themes": [
-        "clinical_trials"
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -2537,11 +2473,13 @@
         "current_medication_zepbound"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "conditional_decision",
+        "time_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "scheduling"
       ],
       "emotions": [
         "apprehension"
@@ -2560,11 +2498,9 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "treatment"
+        "compounded_medication"
       ],
-      "subthemes": [
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -2582,13 +2518,10 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "compounded_medication",
+        "information_seeking"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.8,
@@ -2604,13 +2537,11 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "treatment"
+        "compounded_medication",
+        "risk_calculation",
+        "side_effect_concern"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_health_history",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -2628,14 +2559,11 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "compounded_medication",
+        "conditional_decision",
+        "information_seeking"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -2653,12 +2581,10 @@
         "placebo_concerns"
       ],
       "themes": [
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.85,
@@ -2674,11 +2600,12 @@
         "placebo_concerns"
       ],
       "themes": [
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning",
+        "insurance_barrier"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [
         "pensiveness"
@@ -2695,14 +2622,13 @@
       "question_id": "placebo_controlled_appeal",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "access_logic",
+        "cost_access",
+        "cost_benefit_reasoning",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors",
-        "trial_decision_factors",
-        "trial_motivators"
+        "access_motivation"
       ],
       "emotions": [
         "acceptance"
@@ -2766,10 +2692,10 @@
         "trial_duration"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "vouchers"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -2786,10 +2712,10 @@
         "trial_duration"
       ],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "injection_frequency"
       ],
       "emotions": [
         "interest"
@@ -2808,12 +2734,12 @@
         "trial_duration"
       ],
       "themes": [
-        "clinical_trials"
+        "conditional_decision",
+        "convenience_tradeoff",
+        "incentives_support",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.7,
@@ -2831,10 +2757,12 @@
         "trial_duration"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -2852,10 +2780,12 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -2870,10 +2800,11 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [
         "annoyance"
@@ -2906,11 +2837,11 @@
         "dosing_frequency"
       ],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "scheduling"
       ],
       "emotions": [
         "acceptance"
@@ -2946,11 +2877,9 @@
         "placebo_concerns"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -2994,10 +2923,12 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "home_visits",
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -3014,10 +2945,11 @@
         "health_improvements"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "home_visits"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -3034,10 +2966,12 @@
         "health_improvements"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [
         "annoyance"
@@ -3070,10 +3004,10 @@
         "compounded_medication"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "device_provision"
       ],
       "emotions": [
         "acceptance"
@@ -3092,14 +3026,12 @@
         "compounded_medication"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "incentives_support"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_motivators"
+        "device_provision",
+        "self_tracking"
       ],
       "emotions": [
         "acceptance"
@@ -3119,13 +3051,10 @@
         "switching_glp1_medication"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.75,
@@ -3141,14 +3070,13 @@
         "switching_glp1_medication"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "incentives_support",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_motivators"
+        "nutrition_education",
+        "vouchers"
       ],
       "emotions": [
         "acceptance"
@@ -3168,12 +3096,11 @@
         "insurance_coverage"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -3190,12 +3117,11 @@
         "compounded_medication"
       ],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "unknown_safety"
       ],
       "emotions": [
         "acceptance"
@@ -3214,12 +3140,11 @@
         "compounded_medication"
       ],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "unknown_safety"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -3234,14 +3159,12 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences",
-        "trial_decision_factors",
-        "trial_motivators"
+        "unknown_safety"
       ],
       "emotions": [
         "acceptance"
@@ -3272,14 +3195,13 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences",
-        "trial_decision_factors",
-        "trial_motivators"
+        "unknown_safety",
+        "access_motivation"
       ],
       "emotions": [
         "apprehension"
@@ -3296,15 +3218,14 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "access_logic",
+        "risk_calculation",
+        "side_effect_concern",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences",
-        "trial_decision_factors",
-        "trial_motivators"
+        "access_motivation",
+        "unknown_safety"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -3444,10 +3365,10 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [
         "acceptance"
@@ -3495,10 +3416,10 @@
         "weight_regain_fear"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [
         "acceptance"
@@ -3517,10 +3438,10 @@
         "financial_compensation"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -3537,14 +3458,12 @@
         "financial_compensation"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "monitoring_burden"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [
         "acceptance"
@@ -3563,10 +3482,11 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "fasting_blood"
       ],
       "emotions": [
         "disgust"
@@ -3583,10 +3503,10 @@
       "question_id": "educational_support",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "visit_frequency"
       ],
       "emotions": [
         "surprise"
@@ -3605,11 +3525,11 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "visit_frequency"
       ],
       "emotions": [
         "acceptance"
@@ -3626,11 +3546,12 @@
       "question_id": "educational_support",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "scheduling",
+        "visit_frequency"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -3663,10 +3584,10 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -3683,10 +3604,10 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -3701,12 +3622,12 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -3723,12 +3644,11 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [
         "acceptance"
@@ -3747,12 +3667,12 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -3767,10 +3687,10 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -3803,14 +3723,12 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "incentives_support"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_motivators"
+        "device_provision",
+        "self_tracking"
       ],
       "emotions": [
         "interest"
@@ -3829,14 +3747,11 @@
         "blood_draws"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "trial_awareness",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -3870,10 +3785,11 @@
         "wearable_devices_incentive"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets",
+        "exercise_history"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -3890,10 +3806,10 @@
         "wearable_devices_incentive"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "pride"
@@ -3912,10 +3828,11 @@
         "wearable_devices_incentive"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets",
+        "exercise_history"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -3932,10 +3849,10 @@
         "wearable_devices_incentive"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "pensiveness"
@@ -4002,11 +3919,10 @@
         "fasting_requirement"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "anticipation"
       ],
@@ -4024,12 +3940,11 @@
         "fasting_requirement"
       ],
       "themes": [
-        "treatment"
+        "injection_experience",
+        "oral_medication_interest",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust"
       ],
@@ -4047,13 +3962,10 @@
         "fasting_requirement"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "drug_switching",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "anticipation"
       ],
@@ -4083,15 +3995,13 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "information_seeking",
+        "risk_calculation",
+        "side_effect_concern",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_negative_experiences",
-        "trial_decision_factors",
-        "trial_motivators"
+        "serious_complication"
       ],
       "emotions": [
         "apprehension"
@@ -4127,12 +4037,11 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "unknown_safety"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -4209,15 +4118,14 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning",
+        "information_seeking",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
+        "out_of_pocket_cost",
+        "access_motivation"
       ],
       "emotions": [
         "interest"
@@ -4234,12 +4142,11 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "cost_access",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_barriers"
+        "out_of_pocket_cost"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -4314,11 +4221,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
-      "subthemes": [
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "serenity"
       ],
@@ -4334,10 +4240,11 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "sleep_mood"
       ],
       "emotions": [
         "joy",
@@ -4355,10 +4262,11 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "sleep_mood"
       ],
       "emotions": [
         "delight"
@@ -4375,11 +4283,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
-      "subthemes": [
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.7,
@@ -4393,14 +4300,13 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "fear_of_weight_regain",
+        "maintenance_strategy",
+        "non_weight_benefits",
+        "treatment_continuation",
+        "treatment_dependency"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -4416,12 +4322,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "serenity"
       ],
@@ -4437,12 +4341,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "serenity"
       ],
@@ -4458,11 +4360,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "treatment_continuation"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.65,
@@ -4476,12 +4377,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -4497,12 +4396,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -4518,12 +4415,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "fear"
       ],
@@ -4539,15 +4434,11 @@
       "question_id": "try_different_medication",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "drug_switching",
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -4563,11 +4454,9 @@
       "question_id": "try_different_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "drug_switching"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "anticipation"
       ],
@@ -4583,11 +4472,9 @@
       "question_id": "try_different_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "drug_switching"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.8,
@@ -4601,11 +4488,9 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -4621,12 +4506,10 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust",
         "acceptance"
@@ -4657,11 +4540,9 @@
       "question_id": "placebo_controlled_appeal",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "placebo_concern"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -4677,12 +4558,11 @@
       "question_id": "placebo_controlled_appeal",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "placebo_concern",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -4698,13 +4578,11 @@
       "question_id": "placebo_controlled_appeal",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "placebo_concern",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -4720,13 +4598,11 @@
       "question_id": "placebo_controlled_appeal",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "placebo_concern",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -4742,11 +4618,10 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "visit_logistics"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "annoyance"
       ],
@@ -4762,14 +4637,12 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "clinical_trial_friction",
+        "convenience_tradeoff",
+        "injection_experience",
+        "visit_logistics"
       ],
-      "subthemes": [
-        "treatment_negative_experiences",
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -4785,10 +4658,12 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -4803,11 +4678,11 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -4837,11 +4712,9 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
-      "subthemes": [
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -4857,11 +4730,12 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "convenience_tradeoff",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "scheduling"
       ],
       "emotions": [
         "apprehension"
@@ -4878,11 +4752,9 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "treatment"
+        "compounded_medication"
       ],
-      "subthemes": [
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -4898,13 +4770,10 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "compounded_medication",
+        "information_seeking"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.7,
@@ -4918,12 +4787,10 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "treatment"
+        "compounded_medication",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -4939,14 +4806,11 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "compounded_medication",
+        "conditional_decision",
+        "information_seeking"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.8,
@@ -4960,11 +4824,11 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -4979,11 +4843,12 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning",
+        "insurance_barrier"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -4998,12 +4863,13 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "compounded_medication",
+        "cost_access",
+        "cost_benefit_reasoning",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.8,
@@ -5059,10 +4925,10 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "vouchers"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -5077,11 +4943,9 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -5097,11 +4961,13 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "cost_benefit_reasoning",
+        "incentives_support",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
+        "financial_compensation"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5116,10 +4982,11 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -5134,10 +5001,12 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -5180,11 +5049,11 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "scheduling"
       ],
       "emotions": [
         "interest"
@@ -5215,11 +5084,9 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -5263,10 +5130,12 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "home_visits",
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -5281,10 +5150,11 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "home_visits"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -5299,10 +5169,12 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -5331,10 +5203,10 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "device_provision"
       ],
       "emotions": [
         "acceptance"
@@ -5351,14 +5223,12 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "incentives_support"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_motivators"
+        "device_provision",
+        "self_tracking"
       ],
       "emotions": [
         "trust"
@@ -5375,12 +5245,11 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5395,14 +5264,13 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "incentives_support",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_motivators"
+        "nutrition_education",
+        "vouchers"
       ],
       "emotions": [
         "interest"
@@ -5419,14 +5287,12 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "incentives_support",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_motivators"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5441,12 +5307,11 @@
       "question_id": "trial_concerns",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "unknown_safety"
       ],
       "emotions": [
         "acceptance"
@@ -5463,12 +5328,11 @@
       "question_id": "trial_concerns",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "unknown_safety"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -5483,12 +5347,11 @@
       "question_id": "trial_concerns",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "unknown_safety"
       ],
       "emotions": [
         "acceptance"
@@ -5519,14 +5382,13 @@
       "question_id": "trial_concerns",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences",
-        "trial_decision_factors",
-        "trial_motivators"
+        "access_motivation",
+        "unknown_safety"
       ],
       "emotions": [
         "pensiveness"
@@ -5543,14 +5405,14 @@
       "question_id": "trial_concerns",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "cost_benefit_reasoning",
+        "risk_calculation",
+        "side_effect_concern",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences",
-        "trial_decision_factors",
-        "trial_motivators"
+        "access_motivation",
+        "unknown_safety"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -5565,11 +5427,9 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 1,
@@ -5639,10 +5499,10 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [
         "acceptance"
@@ -5659,10 +5519,10 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5677,10 +5537,10 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [
         "acceptance"
@@ -5725,10 +5585,10 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5743,10 +5603,10 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5761,14 +5621,13 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "monitoring_burden"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_barriers"
+        "glucose_monitoring",
+        "medication_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5783,10 +5642,11 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "fasting_blood"
       ],
       "emotions": [
         "disgust"
@@ -5803,10 +5663,10 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_negative_experiences"
+        "injection_frequency"
       ],
       "emotions": [
         "surprise"
@@ -5823,12 +5683,11 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "injection_experience",
+        "visit_logistics"
       ],
       "subthemes": [
-        "treatment_positive_experiences",
-        "trial_barriers"
+        "injection_frequency"
       ],
       "emotions": [
         "acceptance"
@@ -5845,11 +5704,11 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5878,10 +5737,10 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -5896,10 +5755,12 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site",
+        "local_site"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -5914,12 +5775,12 @@
       "question_id": "educational_support",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education",
+        "learning_formats"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5934,12 +5795,11 @@
       "question_id": "educational_support",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5954,12 +5814,11 @@
       "question_id": "educational_support",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5974,12 +5833,11 @@
       "question_id": "educational_support",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -5994,10 +5852,10 @@
       "question_id": "educational_support",
       "topics": [],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -6026,14 +5884,12 @@
       "question_id": "educational_support",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "incentives_support"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_motivators"
+        "device_provision",
+        "self_tracking"
       ],
       "emotions": [
         "interest"
@@ -6050,14 +5906,11 @@
       "question_id": "considered_trials_before",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "trial_awareness",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -6073,10 +5926,10 @@
       "question_id": "weight_loss_history",
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "pensiveness"
@@ -6093,10 +5946,11 @@
       "question_id": "weight_loss_history",
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets",
+        "exercise_history"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -6111,10 +5965,10 @@
       "question_id": "weight_loss_history",
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "pride"
@@ -6131,10 +5985,11 @@
       "question_id": "weight_loss_history",
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets",
+        "exercise_history"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -6149,10 +6004,10 @@
       "question_id": "weight_loss_history",
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "pensiveness"
@@ -6211,11 +6066,10 @@
       "question_id": "oral_vs_injectable",
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "anticipation"
       ],
@@ -6231,12 +6085,11 @@
       "question_id": "oral_vs_injectable",
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience",
+        "oral_medication_interest",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust"
       ],
@@ -6252,13 +6105,10 @@
       "question_id": "oral_vs_injectable",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "drug_switching",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "anticipation"
       ],
@@ -6288,14 +6138,13 @@
       "question_id": "closing",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "information_seeking",
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "unknown_safety",
+        "serious_complication"
       ],
       "emotions": [
         "apprehension"
@@ -6312,11 +6161,11 @@
       "question_id": "closing",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "serious_complication"
       ],
       "emotions": [
         "apprehension"
@@ -6333,12 +6182,11 @@
       "question_id": "closing",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "information_seeking",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_negative_experiences"
+        "serious_complication"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -6367,12 +6215,11 @@
       "question_id": "trial_concerns",
       "topics": [],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "unknown_safety"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -6443,12 +6290,11 @@
       "question_id": "trial_concerns",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "cost_access",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_barriers"
+        "out_of_pocket_cost"
       ],
       "emotions": [
         "interest"
@@ -6465,12 +6311,11 @@
       "question_id": "trial_concerns",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "cost_access",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_barriers"
+        "out_of_pocket_cost"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -6516,12 +6361,13 @@
         "reasons_to_stop_glp1"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "treatment_continuation",
+        "treatment_dependency",
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_health_history",
-        "treatment_positive_experiences"
+        "lifelong_struggle"
       ],
       "emotions": [
         "joy",
@@ -6542,11 +6388,13 @@
         "yo_yo_dieting"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "cost_access",
+        "cost_benefit_reasoning",
+        "medication_access"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [
         "apprehension"
@@ -6567,13 +6415,15 @@
         "medication_shortage"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "access_logic",
+        "cost_access",
+        "insurance_barrier",
+        "self_advocacy",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost",
+        "price_trends"
       ],
       "emotions": [
         "annoyance",
@@ -6593,11 +6443,11 @@
         "insurance_coverage"
       ],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "serious_complication"
       ],
       "emotions": [
         "apprehension"
@@ -6616,11 +6466,10 @@
         "insurance_coverage"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
-      "subthemes": [
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "joy"
       ],
@@ -6638,11 +6487,10 @@
         "cost_of_glp1"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
-      "subthemes": [
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "joy"
       ],
@@ -6660,10 +6508,11 @@
         "cost_of_glp1"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "cardiometabolic"
       ],
       "emotions": [
         "joy"
@@ -6682,10 +6531,11 @@
         "reasons_to_stop_glp1"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "cardiometabolic"
       ],
       "emotions": [
         "joy"
@@ -6705,10 +6555,11 @@
         "side_effects"
       ],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "digestive"
       ],
       "emotions": [
         "surprise",
@@ -6728,11 +6579,11 @@
         "health_improvements"
       ],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "serious_complication"
       ],
       "emotions": [
         "apprehension"
@@ -6751,12 +6602,12 @@
         "switching_glp1_medication"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "conditional_decision",
+        "drug_switching",
+        "insurance_barrier"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -6772,13 +6623,11 @@
       "question_id": "try_different_medication",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "drug_switching",
+        "maintenance_strategy",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -6796,14 +6645,12 @@
         "switching_glp1_medication"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "access_logic",
+        "insurance_barrier",
+        "maintenance_strategy",
+        "treatment_continuation"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -6822,11 +6669,9 @@
         "insurance_coverage"
       ],
       "themes": [
-        "treatment"
+        "drug_switching"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -6844,12 +6689,11 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -6881,11 +6725,9 @@
         "placebo_concerns"
       ],
       "themes": [
-        "clinical_trials"
+        "placebo_concern"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -6903,11 +6745,12 @@
         "dosing_frequency"
       ],
       "themes": [
-        "treatment"
+        "convenience_tradeoff",
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "injection_frequency",
+        "injection_aversion"
       ],
       "emotions": [
         "annoyance"
@@ -6926,11 +6769,9 @@
         "compounded_medication"
       ],
       "themes": [
-        "treatment"
+        "compounded_medication"
       ],
-      "subthemes": [
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.8,
@@ -6947,13 +6788,12 @@
         "medication_shortage"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "access_logic",
+        "medication_access",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors",
-        "trial_motivators"
+        "access_motivation"
       ],
       "emotions": [
         "interest"
@@ -6972,12 +6812,10 @@
         "medication_shortage"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust"
       ],
@@ -6995,12 +6833,10 @@
         "supporting_research"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust"
       ],
@@ -7018,12 +6854,10 @@
         "supporting_research"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "pride"
       ],
@@ -7041,12 +6875,10 @@
         "supporting_research"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -7064,11 +6896,12 @@
         "food_vouchers_supplements"
       ],
       "themes": [
-        "clinical_trials"
+        "conditional_decision",
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
+        "vouchers",
+        "meal_support"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -7085,10 +6918,10 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -7105,10 +6938,11 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -7126,10 +6960,12 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden",
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -7146,11 +6982,10 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.85,
@@ -7182,10 +7017,10 @@
         "travel_reimbursement"
       ],
       "themes": [
-        "clinical_trials"
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "transportation_access"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -7202,11 +7037,10 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.85,
@@ -7223,11 +7057,11 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden",
+        "travel_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.85,
@@ -7244,12 +7078,13 @@
         "telehealth_for_trial_visits"
       ],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "trial_participation_motivation",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
+        "local_site",
+        "convenience_motivation"
       ],
       "emotions": [
         "interest"
@@ -7268,12 +7103,13 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "trial_participation_motivation",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
+        "local_site",
+        "convenience_motivation"
       ],
       "emotions": [
         "interest"
@@ -7292,11 +7128,10 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.8,
@@ -7313,12 +7148,10 @@
         "provider_contact_during_trial"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.7,
@@ -7335,10 +7168,10 @@
         "provider_contact_during_trial"
       ],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "medication_education"
       ],
       "emotions": [
         "disappointment"
@@ -7358,12 +7191,11 @@
         "patient_education_materials"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "self_advocacy"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "medication_education"
       ],
       "emotions": [
         "surprise"
@@ -7382,10 +7214,11 @@
         "patient_education_materials"
       ],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "learning_formats",
+        "medication_education"
       ],
       "emotions": [
         "interest"
@@ -7405,12 +7238,11 @@
         "research_and_knowledge"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "learning_formats"
       ],
       "emotions": [
         "interest"
@@ -7429,10 +7261,10 @@
         "patient_education_materials"
       ],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "learning_formats"
       ],
       "emotions": [
         "joy"
@@ -7451,11 +7283,9 @@
         "patient_education_materials"
       ],
       "themes": [
-        "treatment"
+        "education_need"
       ],
-      "subthemes": [
-        "treatment_knowledge_gaps"
-      ],
+      "subthemes": [],
       "emotions": [
         "joy"
       ],
@@ -7473,10 +7303,10 @@
         "patient_education_materials"
       ],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "learning_formats"
       ],
       "emotions": [
         "acceptance"
@@ -7495,10 +7325,10 @@
         "patient_education_materials"
       ],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "medication_education"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -7516,13 +7346,12 @@
         "cost_of_glp1"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "cost_benefit_reasoning",
+        "education_need",
+        "incentives_support"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps",
-        "trial_decision_factors",
-        "trial_motivators"
+        "learning_formats"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -7539,13 +7368,12 @@
         "cost_of_glp1"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning",
+        "incentives_support"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
+        "out_of_pocket_cost"
       ],
       "emotions": [
         "joy"
@@ -7564,10 +7392,10 @@
         "nutritionist_support"
       ],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -7585,12 +7413,12 @@
         "patient_education_materials"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education",
+        "medication_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -7607,13 +7435,10 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -7645,13 +7470,10 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -7669,11 +7491,12 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "trial_awareness"
       ],
       "subthemes": [
-        "clinical_trial_awareness",
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [
         "disappointment"
@@ -7693,11 +7516,12 @@
         "dosing_frequency"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "conditional_decision",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "visit_frequency"
       ],
       "emotions": [
         "apprehension"
@@ -7716,11 +7540,10 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -7738,11 +7561,10 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.85,
@@ -7758,11 +7580,10 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -7781,15 +7602,11 @@
         "maintenance_dose"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "information_seeking",
+        "oral_medication_interest",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -7808,13 +7625,10 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "oral_medication_interest",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.8,
@@ -7830,13 +7644,11 @@
         "maintenance_dose"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "fear_of_weight_regain",
+        "maintenance_strategy",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.7,
@@ -7852,11 +7664,9 @@
         "maintenance_dose"
       ],
       "themes": [
-        "clinical_trials"
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.6,
@@ -7872,13 +7682,12 @@
         "research_and_knowledge"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "oral_medication_interest"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps"
+        "medication_education"
       ],
       "emotions": [
         "interest"
@@ -7953,11 +7762,13 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "conditional_decision",
+        "drug_switching",
+        "side_effect_concern",
+        "treatment_continuation"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "serious_complication"
       ],
       "emotions": [
         "trust"
@@ -7974,11 +7785,9 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "treatment_continuation"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.6,
@@ -7995,11 +7804,12 @@
         "switching_glp1_medication"
       ],
       "themes": [
-        "treatment"
+        "treatment_continuation",
+        "treatment_dependency",
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "vigilance"
@@ -8018,12 +7828,12 @@
         "lifelong_maintenance"
       ],
       "themes": [
-        "treatment"
+        "access_logic",
+        "medication_access",
+        "treatment_continuation",
+        "treatment_dependency"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "vigilance",
         "apprehension"
@@ -8042,11 +7852,9 @@
         "switching_glp1_medication"
       ],
       "themes": [
-        "treatment"
+        "drug_switching"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -8065,15 +7873,11 @@
         "switching_glp1_medication"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "drug_switching",
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -8091,10 +7895,10 @@
         "research_and_knowledge"
       ],
       "themes": [
-        "treatment"
+        "drug_switching"
       ],
       "subthemes": [
-        "treatment_decision_factors"
+        "stall_management"
       ],
       "emotions": [
         "acceptance"
@@ -8113,11 +7917,9 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -8135,14 +7937,11 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "conditional_decision",
+        "drug_switching",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -8162,12 +7961,12 @@
         "compounded_medication"
       ],
       "themes": [
-        "treatment"
+        "compounded_medication",
+        "drug_switching",
+        "health_transformation"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_health_history",
-        "treatment_positive_experiences"
+        "stall_management"
       ],
       "emotions": [
         "joy"
@@ -8186,11 +7985,9 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest",
         "hope"
@@ -8209,11 +8006,9 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "anticipation"
       ],
@@ -8231,11 +8026,9 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -8253,12 +8046,11 @@
         "supporting_research"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust"
       ],
@@ -8276,12 +8068,10 @@
         "placebo_concerns"
       ],
       "themes": [
-        "clinical_trials"
+        "placebo_concern",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "hope",
         "apprehension"
@@ -8301,13 +8091,11 @@
         "supporting_research"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "placebo_concern",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -8326,11 +8114,11 @@
         "long_acting_implant"
       ],
       "themes": [
-        "treatment"
+        "convenience_tradeoff",
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
+        "injection_frequency"
       ],
       "emotions": [
         "acceptance"
@@ -8349,11 +8137,10 @@
         "dosing_frequency"
       ],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_negative_experiences",
-        "treatment_positive_experiences"
+        "dosing_durability"
       ],
       "emotions": [
         "apprehension"
@@ -8372,11 +8159,10 @@
         "dosing_frequency"
       ],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_negative_experiences",
-        "treatment_positive_experiences"
+        "dosing_durability"
       ],
       "emotions": [
         "curiosity"
@@ -8395,10 +8181,10 @@
         "dosing_frequency"
       ],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "dosing_durability"
       ],
       "emotions": [
         "hope"
@@ -8415,11 +8201,13 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "treatment"
+        "compounded_medication",
+        "conditional_decision",
+        "cost_access",
+        "cost_benefit_reasoning"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "price_trends"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -8437,11 +8225,12 @@
         "compounded_medication"
       ],
       "themes": [
-        "treatment"
+        "compounded_medication",
+        "cost_access",
+        "cost_benefit_reasoning"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [
         "acceptance"
@@ -8461,11 +8250,9 @@
         "compounded_medication"
       ],
       "themes": [
-        "treatment"
+        "compounded_medication"
       ],
-      "subthemes": [
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.5,
@@ -8481,10 +8268,10 @@
         "cost_of_glp1"
       ],
       "themes": [
-        "treatment"
+        "drug_switching"
       ],
       "subthemes": [
-        "treatment_decision_factors"
+        "stall_management"
       ],
       "emotions": [
         "anticipation"
@@ -8503,11 +8290,10 @@
         "food_vouchers_supplements"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -8525,11 +8311,9 @@
         "food_vouchers_supplements"
       ],
       "themes": [
-        "clinical_trials"
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.6,
@@ -8545,10 +8329,10 @@
         "financial_compensation"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "financial_compensation"
       ],
       "emotions": [
         "acceptance"
@@ -8613,11 +8397,9 @@
         "travel_reimbursement"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "joy"
       ],
@@ -8635,10 +8417,10 @@
         "wearable_devices_incentive"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "device_provision"
       ],
       "emotions": [
         "acceptance"
@@ -8657,13 +8439,10 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "lifestyle_change"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.6,
@@ -8679,12 +8458,11 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "lifestyle_change",
+        "weight_loss_history"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_health_history"
+        "exercise_history"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -8701,12 +8479,11 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "lifestyle_change",
+        "weight_loss_history"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_health_history"
+        "exercise_history"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -8723,10 +8500,10 @@
         "wearable_devices_incentive"
       ],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "device_provision"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -8743,12 +8520,10 @@
         "journaling_food_mood"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "self_tracking"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -8765,12 +8540,10 @@
         "journaling_food_mood"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "self_tracking"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -8788,12 +8561,10 @@
         "side_effect_management_protocol"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "self_tracking"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -8811,12 +8582,12 @@
         "lifestyle_change_alongside_medication"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "self_tracking",
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -8833,11 +8604,9 @@
         "lifestyle_change_alongside_medication"
       ],
       "themes": [
-        "condition_specific"
+        "lifestyle_change"
       ],
-      "subthemes": [
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.6,
@@ -8853,11 +8622,10 @@
         "lifestyle_change_alongside_medication"
       ],
       "themes": [
-        "condition_specific"
+        "lifestyle_change",
+        "maintenance_strategy"
       ],
-      "subthemes": [
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [
         "vigilance"
       ],
@@ -8875,10 +8643,10 @@
         "fasting_requirement"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "fasting_blood"
       ],
       "emotions": [
         "acceptance"
@@ -8897,10 +8665,10 @@
         "fasting_requirement"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "fasting_blood"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -8917,10 +8685,10 @@
         "family_diabetes_history"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -8938,12 +8706,11 @@
         "insulin_resistance"
       ],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "monitoring_burden"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [
         "interest"
@@ -8963,10 +8730,10 @@
         "blood_glucose_testing"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -8983,10 +8750,10 @@
         "blood_glucose_testing"
       ],
       "themes": [
-        "clinical_trials"
+        "monitoring_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "glucose_monitoring"
       ],
       "emotions": [
         "acceptance"
@@ -9006,12 +8773,13 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "conditional_decision",
+        "incentives_support",
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
+        "transportation_access",
+        "travel_concierge"
       ],
       "emotions": [
         "acceptance"
@@ -9030,11 +8798,11 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "conditional_decision",
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9051,10 +8819,10 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9071,10 +8839,10 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9092,10 +8860,13 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site",
+        "visit_frequency"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -9112,11 +8883,11 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "conditional_decision",
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9134,11 +8905,12 @@
         "study_visit_logistics"
       ],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
+        "visit_frequency"
       ],
       "emotions": [
         "acceptance"
@@ -9157,11 +8929,9 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "travel_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.6,
@@ -9177,10 +8947,10 @@
         "trial_distance_to_site"
       ],
       "themes": [
-        "clinical_trials"
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9197,14 +8967,12 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "information_seeking",
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "unknown_safety"
       ],
       "emotions": [
         "apprehension"
@@ -9223,13 +8991,10 @@
         "side_effects"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "information_seeking",
+        "side_effect_concern"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -9247,10 +9012,10 @@
         "side_effects"
       ],
       "themes": [
-        "treatment"
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_negative_experiences"
+        "gastric_effects"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9267,12 +9032,12 @@
         "side_effects"
       ],
       "themes": [
-        "treatment"
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "serious_complication",
+        "unknown_safety"
       ],
       "emotions": [
         "apprehension"
@@ -9291,11 +9056,9 @@
         "side_effects"
       ],
       "themes": [
-        "treatment"
+        "side_effect_concern"
       ],
-      "subthemes": [
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.65,
@@ -9311,10 +9074,10 @@
         "patient_education_materials"
       ],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "learning_formats"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9332,12 +9095,12 @@
         "nutritionist_support"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "learning_formats",
+        "nutrition_education"
       ],
       "emotions": [
         "annoyance"
@@ -9356,10 +9119,10 @@
         "nutritionist_support"
       ],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [
         "annoyance"
@@ -9378,10 +9141,10 @@
         "nutritionist_support"
       ],
       "themes": [
-        "treatment"
+        "education_need"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [
         "acceptance"
@@ -9400,10 +9163,10 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9420,10 +9183,10 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "sadness"
@@ -9442,10 +9205,10 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9462,10 +9225,10 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9483,10 +9246,10 @@
         "weight_loss_outcomes"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_weight_loss_medication"
       ],
       "emotions": [
         "remorse"
@@ -9505,10 +9268,10 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9525,10 +9288,10 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -9545,11 +9308,9 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
-      "subthemes": [
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.65,
@@ -9565,10 +9326,10 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "exercise_history"
       ],
       "emotions": [
         "pensiveness"
@@ -9588,11 +9349,12 @@
         "diet_and_exercise_history"
       ],
       "themes": [
-        "treatment"
+        "treatment_continuation",
+        "treatment_dependency",
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_health_history"
+        "weight_loss_surgery"
       ],
       "emotions": [
         "hope"
@@ -9611,10 +9373,10 @@
         "genetics_of_obesity"
       ],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "annoyance"
@@ -9649,12 +9411,10 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "trial_awareness",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "disappointment"
       ],
@@ -9673,12 +9433,11 @@
         "willingness_to_join_trial"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "hope"
       ],
@@ -9696,13 +9455,10 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "oral_medication_interest",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "pessimism"
       ],
@@ -9720,11 +9476,10 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "treatment"
+        "conditional_decision",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "hope"
       ],
@@ -9742,11 +9497,9 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "treatment"
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "pessimism"
       ],
@@ -9764,11 +9517,9 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "treatment"
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.7,
@@ -9785,11 +9536,11 @@
         "health_improvements"
       ],
       "themes": [
-        "treatment"
+        "non_weight_benefits",
+        "oral_medication_interest"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
+        "cardiometabolic"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -9820,11 +9571,9 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "treatment"
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.7,
@@ -9840,12 +9589,10 @@
         "oral_vs_injection"
       ],
       "themes": [
-        "treatment"
+        "injection_experience",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.55,
@@ -9862,10 +9609,12 @@
         "food_noise_reduction"
       ],
       "themes": [
-        "treatment"
+        "injection_experience",
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "food_noise"
       ],
       "emotions": [
         "joy",
@@ -9932,12 +9681,10 @@
         "obesity_as_disease"
       ],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "hope",
         "vigilance"
@@ -9996,12 +9743,11 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "cost_access",
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.85,
@@ -10015,12 +9761,11 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "cost_access",
+        "insurance_barrier"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -10036,11 +9781,12 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "cost_access",
+        "cost_benefit_reasoning"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [
         "apprehension"
@@ -10057,12 +9803,13 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "risk_calculation",
+        "side_effect_concern",
+        "treatment_continuation"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences",
-        "treatment_positive_experiences"
+        "serious_complication"
       ],
       "emotions": [
         "trust"
@@ -10093,10 +9840,13 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "cardiometabolic",
+        "sleep_mood",
+        "food_noise"
       ],
       "emotions": [
         "joy"
@@ -10113,10 +9863,11 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "food_noise"
       ],
       "emotions": [
         "serenity",
@@ -10148,12 +9899,12 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "conditional_decision",
+        "cost_access",
+        "drug_switching"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.8,
@@ -10167,15 +9918,13 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "drug_switching",
+        "information_seeking",
+        "injection_experience",
+        "trial_awareness"
       ],
       "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
+        "injection_frequency"
       ],
       "emotions": [
         "interest"
@@ -10206,11 +9955,9 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "condition_specific"
+        "information_seeking"
       ],
-      "subthemes": [
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.6,
@@ -10224,14 +9971,13 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "risk_calculation",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps",
-        "treatment_negative_experiences"
+        "medication_education"
       ],
       "emotions": [
         "apprehension"
@@ -10248,12 +9994,13 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "access_logic",
+        "incentives_support",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "trial_motivators"
+        "access_motivation",
+        "post_trial_access"
       ],
       "emotions": [
         "interest"
@@ -10270,12 +10017,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "altruistic_reasoning",
+        "research_altruism"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -10307,11 +10052,9 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "placebo_concern"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -10327,11 +10070,9 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "fear_of_weight_regain"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "fear"
       ],
@@ -10347,12 +10088,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "placebo_concern",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "ambivalence"
       ],
@@ -10368,12 +10107,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "conditional_decision",
+        "placebo_concern"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.8,
@@ -10387,10 +10124,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "injection_frequency"
       ],
       "emotions": [
         "acceptance"
@@ -10407,10 +10144,11 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -10425,10 +10163,12 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -10443,10 +10183,14 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden",
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "visit_frequency",
+        "scheduling"
       ],
       "emotions": [
         "apprehension"
@@ -10477,12 +10221,14 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "conditional_decision",
+        "convenience_tradeoff",
+        "monitoring_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
+        "telehealth",
+        "local_site"
       ],
       "emotions": [
         "interest"
@@ -10499,11 +10245,9 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "compounded_medication"
       ],
-      "subthemes": [
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -10519,13 +10263,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "compounded_medication",
+        "information_seeking"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -10541,12 +10282,11 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "compounded_medication",
+        "cost_access",
+        "cost_benefit_reasoning"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance"
       ],
@@ -10562,11 +10302,13 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "incentives_support",
+        "trial_participation_motivation"
       ],
       "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
+        "financial_compensation",
+        "convenience_motivation"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -10581,14 +10323,16 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "convenience_tradeoff",
+        "education_need",
+        "incentives_support",
+        "visit_logistics"
       ],
       "subthemes": [
-        "treatment_knowledge_gaps",
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
+        "device_provision",
+        "telehealth",
+        "scheduling",
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -10603,10 +10347,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "transportation_access"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -10621,11 +10365,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.8,
@@ -10639,11 +10382,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "annoyance"
       ],
@@ -10673,12 +10415,11 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [
         "interest"
@@ -10695,12 +10436,12 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "medication_education",
+        "nutrition_education"
       ],
       "emotions": [
         "annoyance"
@@ -10717,13 +10458,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -10753,10 +10491,13 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "travel_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site",
+        "visit_frequency"
       ],
       "emotions": [
         "disappointment"
@@ -10773,11 +10514,9 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
-      "subthemes": [
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.7,
@@ -10791,10 +10530,11 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets",
+        "exercise_history"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -10809,10 +10549,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "disappointment"
@@ -10829,13 +10569,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -10851,11 +10588,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "optimism"
       ],
@@ -10871,10 +10607,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_negative_experiences"
+        "injection_aversion"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -10889,12 +10625,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust"
       ],
@@ -10910,10 +10644,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "dosing_durability"
       ],
       "emotions": [
         "trust"
@@ -10930,12 +10664,11 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "conditional_decision",
+        "injection_experience",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.8,
@@ -10949,11 +10682,11 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "conditional_decision",
+        "drug_switching",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "interest"
       ],
@@ -10969,10 +10702,10 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "sleep_mood"
       ],
       "emotions": [
         "pensiveness"
@@ -10989,10 +10722,12 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "sleep_mood",
+        "food_noise"
       ],
       "emotions": [
         "sentimentality"
@@ -11009,11 +10744,11 @@
       "question_id": null,
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden",
+        "visit_logistics"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.75,
@@ -11057,12 +10792,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "cost_access",
+        "cost_benefit_reasoning"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.9,
@@ -11076,12 +10809,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "insurance_barrier"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -11097,12 +10828,11 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "access_logic",
+        "insurance_barrier",
+        "medication_access"
       ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "anxiety"
       ],
@@ -11118,11 +10848,13 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "conditional_decision",
+        "risk_calculation",
+        "side_effect_concern",
+        "treatment_continuation"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
+        "serious_complication"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -11137,11 +10869,10 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "treatment_continuation",
+        "treatment_dependency"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.9,
@@ -11169,10 +10900,11 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "food_noise"
       ],
       "emotions": [],
       "sentiment": 2,
@@ -11187,10 +10919,11 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "food_noise"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -11205,10 +10938,11 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "cardiometabolic"
       ],
       "emotions": [],
       "sentiment": 2,
@@ -11223,10 +10957,11 @@
       "question_id": "stopping_glp1",
       "topics": [],
       "themes": [
-        "treatment"
+        "health_transformation",
+        "non_weight_benefits"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "sleep_mood"
       ],
       "emotions": [
         "joy"
@@ -11243,11 +10978,9 @@
       "question_id": "try_different_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "drug_switching"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.6,
@@ -11261,11 +10994,9 @@
       "question_id": "try_different_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "drug_switching"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "acceptance",
         "interest"
@@ -11282,13 +11013,15 @@
       "question_id": "try_different_medication",
       "topics": [],
       "themes": [
-        "treatment"
+        "conditional_decision",
+        "cost_access",
+        "cost_benefit_reasoning",
+        "drug_switching",
+        "injection_experience",
+        "side_effect_concern"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors",
-        "treatment_negative_experiences",
-        "treatment_positive_experiences"
+        "injection_frequency"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -11303,11 +11036,9 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.6,
@@ -11321,12 +11052,10 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "risk_calculation",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "trust"
       ],
@@ -11342,16 +11071,12 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "risk_calculation",
+        "trial_participation_motivation"
       ],
-      "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps",
-        "trial_decision_factors",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.7,
@@ -11365,12 +11090,12 @@
       "question_id": "trial_unapproved_medication",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "access_logic",
+        "fear_of_weight_regain",
+        "incentives_support"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "trial_motivators"
+        "post_trial_access"
       ],
       "emotions": [
         "apprehension"
@@ -11387,14 +11112,11 @@
       "question_id": "placebo_controlled_appeal",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "fear_of_weight_regain",
+        "placebo_concern",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "trial_barriers",
-        "trial_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -11424,11 +11146,9 @@
       "question_id": "placebo_controlled_appeal",
       "topics": [],
       "themes": [
-        "treatment"
+        "fear_of_weight_regain"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "shame",
         "sadness"
@@ -11445,10 +11165,10 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "injection_frequency"
       ],
       "emotions": [
         "acceptance"
@@ -11465,10 +11185,10 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_positive_experiences"
+        "injection_frequency"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -11483,10 +11203,12 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers"
+        "scheduling"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -11515,12 +11237,11 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
+        "telehealth"
       ],
       "emotions": [],
       "sentiment": 2,
@@ -11535,12 +11256,11 @@
       "question_id": "monthly_injection_barrier",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "convenience_tradeoff",
+        "visit_logistics"
       ],
       "subthemes": [
-        "trial_barriers",
-        "trial_decision_factors",
-        "trial_motivators"
+        "telehealth"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -11555,12 +11275,11 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "treatment"
+        "compounded_medication",
+        "conditional_decision",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -11576,12 +11295,10 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "treatment"
+        "compounded_medication",
+        "risk_calculation"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_health_history"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -11597,11 +11314,12 @@
       "question_id": "compounded_vs_approved",
       "topics": [],
       "themes": [
-        "treatment"
+        "compounded_medication",
+        "cost_access",
+        "cost_benefit_reasoning"
       ],
       "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
+        "out_of_pocket_cost"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -11616,10 +11334,10 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "incentives_support"
       ],
       "subthemes": [
-        "trial_motivators"
+        "financial_compensation"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -11634,13 +11352,10 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "education_need",
+        "incentives_support"
       ],
-      "subthemes": [
-        "treatment_knowledge_gaps",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 1,
       "confidence": 0.75,
@@ -11654,12 +11369,12 @@
       "question_id": "trial_motivation",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -11674,11 +11389,11 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden",
+        "travel_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": -1,
       "confidence": 0.8,
@@ -11692,11 +11407,11 @@
       "question_id": "trial_barriers",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden",
+        "travel_burden"
       ],
-      "subthemes": [
-        "trial_barriers"
-      ],
+      "subthemes": [],
       "emotions": [
         "annoyance"
       ],
@@ -11712,12 +11427,12 @@
       "question_id": "educational_support",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "information_seeking",
+        "lifestyle_change"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_knowledge_gaps"
+        "nutrition_education"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -11732,13 +11447,12 @@
       "question_id": "educational_support",
       "topics": [],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "education_need",
+        "fear_of_weight_regain",
+        "maintenance_strategy"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors",
-        "treatment_knowledge_gaps"
+        "medication_education"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -11753,13 +11467,10 @@
       "question_id": "considered_trials_before",
       "topics": [],
       "themes": [
-        "clinical_trials",
-        "condition_specific"
+        "information_seeking",
+        "trial_awareness"
       ],
-      "subthemes": [
-        "clinical_trial_awareness",
-        "medical_self_efficacy"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.8,
@@ -11773,10 +11484,12 @@
       "question_id": "considered_trials_before",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "time_burden",
+        "travel_burden"
       ],
       "subthemes": [
-        "trial_barriers"
+        "distance_to_site"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -11791,10 +11504,10 @@
       "question_id": "weight_loss_history",
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [],
       "sentiment": -1,
@@ -11809,10 +11522,11 @@
       "question_id": "weight_loss_history",
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "prior_diets",
+        "exercise_history"
       ],
       "emotions": [],
       "sentiment": 0,
@@ -11827,10 +11541,10 @@
       "question_id": "weight_loss_history",
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "disappointment"
@@ -11847,10 +11561,10 @@
       "question_id": "weight_loss_history",
       "topics": [],
       "themes": [
-        "treatment"
+        "weight_loss_history"
       ],
       "subthemes": [
-        "treatment_health_history"
+        "lifelong_struggle"
       ],
       "emotions": [
         "shame",
@@ -11868,11 +11582,9 @@
       "question_id": "oral_glp_awareness",
       "topics": [],
       "themes": [
-        "treatment"
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.6,
@@ -11886,12 +11598,11 @@
       "question_id": "oral_glp_awareness",
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience",
+        "oral_medication_interest"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences",
-        "treatment_positive_experiences"
+        "injection_aversion"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -11906,11 +11617,11 @@
       "question_id": "oral_glp_awareness",
       "topics": [],
       "themes": [
-        "treatment"
+        "injection_experience",
+        "oral_medication_interest"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
+        "injection_frequency"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -11925,11 +11636,11 @@
       "question_id": "oral_glp_awareness",
       "topics": [],
       "themes": [
-        "treatment"
+        "convenience_tradeoff",
+        "injection_experience"
       ],
       "subthemes": [
-        "treatment_decision_factors",
-        "treatment_positive_experiences"
+        "injection_frequency"
       ],
       "emotions": [],
       "sentiment": 1,
@@ -11944,11 +11655,9 @@
       "question_id": "oral_glp_awareness",
       "topics": [],
       "themes": [
-        "treatment"
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [
         "apprehension"
       ],
@@ -11964,12 +11673,11 @@
       "question_id": "oral_vs_injectable",
       "topics": [],
       "themes": [
-        "treatment"
+        "conditional_decision",
+        "injection_experience",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.8,
@@ -11983,11 +11691,10 @@
       "question_id": "oral_vs_injectable",
       "topics": [],
       "themes": [
-        "treatment"
+        "convenience_tradeoff",
+        "oral_medication_interest"
       ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
+      "subthemes": [],
       "emotions": [],
       "sentiment": 0,
       "confidence": 0.75,
@@ -12033,12 +11740,13 @@
       "question_id": "closing",
       "topics": [],
       "themes": [
-        "clinical_trials"
+        "clinical_trial_friction",
+        "trial_participation_motivation",
+        "visit_logistics",
+        "time_burden",
+        "travel_burden"
       ],
-      "subthemes": [
-        "trial_barriers",
-        "trial_motivators"
-      ],
+      "subthemes": [],
       "emotions": [
         "anxiety"
       ],
@@ -12054,11 +11762,9 @@
       "question_id": "closing",
       "topics": [],
       "themes": [
-        "treatment"
+        "education_need"
       ],
-      "subthemes": [
-        "treatment_knowledge_gaps"
-      ],
+      "subthemes": [],
       "emotions": [
         "hope"
       ],

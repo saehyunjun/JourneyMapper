@@ -75,11 +75,11 @@ if (existsSync(resolve(ROOT, TOPIC_ASSIGNMENTS_FILE))) {
 	topicsStatus = 'present';
 }
 
-const validThemes = new Set(codebook.theme_tags.map((t) => t.id));
+const validThemes = new Set(codebook.themes.map((t) => t.id));
 const validEmotions = new Set(codebook.emotion_tags.map((t) => t.id));
 // subtheme id -> parent theme id
 const subthemeParent = new Map();
-for (const theme of codebook.theme_tags) {
+for (const theme of codebook.themes) {
 	for (const sub of theme.subthemes ?? []) subthemeParent.set(sub.id, theme.id);
 }
 

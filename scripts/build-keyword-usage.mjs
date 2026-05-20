@@ -59,25 +59,19 @@ const lexicon = JSON.parse(readFileSync(resolve(ROOT, LEXICON_FILE), 'utf8'));
 const segmentsData = JSON.parse(readFileSync(resolve(ROOT, SEGMENTS_FILE), 'utf8'));
 
 // --- Validate the lexicon shape ---
-const categoryIds = new Set();
-const keywordIds = new Set();
-if (!Array.isArray(lexicon.categories) || lexicon.categories.length === 0) {
-	errors.push('Lexicon has no categories.');
+const clusterIds = new Set();
+if (!Array.isArray(lexicon.clusters) || lexicon.clusters.length === 0) {
+	errors.push('Lexicon has no clusters.');
 }
-for (const cat of lexicon.categories ?? []) {
-	if (!cat.id) errors.push('A category is missing an id.');
-	if (categoryIds.has(cat.id)) errors.push(`Duplicate category id: ${cat.id}`);
-	categoryIds.add(cat.id);
-	if (!Array.isArray(cat.keywords) || cat.keywords.length === 0) {
-		errors.push(`Category "${cat.id}" has no keywords.`);
+for (const cluster of lexicon.clusters ?? []) {
+	if (!cluster.id) errors.push('A cluster is missing an id.');
+	if (clusterIds.has(cluster.id)) errors.push(`Duplicate cluster id: ${cluster.id}`);
+	clusterIds.add(cluster.id);
+	if (!cluster.parent_theme || !cluster.parent_subtheme) {
+		errors.push(`Cluster "${cluster.id}" is missing parent_theme or parent_subtheme.`);
 	}
-	for (const kw of cat.keywords ?? []) {
-		if (!kw.id) errors.push(`A keyword in "${cat.id}" is missing an id.`);
-		if (keywordIds.has(kw.id)) errors.push(`Duplicate keyword id across lexicon: ${kw.id}`);
-		keywordIds.add(kw.id);
-		if (!Array.isArray(kw.variants) || kw.variants.length === 0) {
-			errors.push(`Keyword "${kw.id}" has no variants.`);
-		}
+	if (!Array.isArray(cluster.variants) || cluster.variants.length === 0) {
+		errors.push(`Cluster "${cluster.id}" has no variants.`);
 	}
 }
 
@@ -88,13 +82,13 @@ const normalize = (s) => s.replace(/[‘’]/g, "'");
 const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /**
- * Build one case-insensitive regex per keyword: an alternation of all its
+ * Build one case-insensitive regex per cluster: an alternation of all its
  * variants, longest first (so a longer phrase wins over a shorter prefix),
  * bounded by non-alphanumeric lookarounds. Space/hyphen runs in a variant are
  * made flexible.
  */
-function keywordRegex(kw) {
-	const alts = [...kw.variants]
+function clusterRegex(cluster) {
+	const alts = [...cluster.variants]
 		.map(normalize)
 		.sort((a, b) => b.length - a.length)
 		.map((v) => escapeRegex(v).replace(/[\s-]+/g, '[\\s-]+'));
@@ -105,90 +99,79 @@ function keywordRegex(kw) {
 const segments = segmentsData.segments;
 const interviewIds = [...new Set(segments.map((s) => s.interview_id))].sort();
 
-// --- Match every keyword against every segment ---
-const categoriesOut = [];
-// by_participant[id] = { total_mentions, by_category: { catId: count } }
+// --- Match every cluster against every segment ---
+const clustersOut = [];
+// by_participant[id] = { total_mentions, by_subtheme: { subthemeId: count } }
 const byParticipant = {};
+const subthemesSeen = new Set();
+for (const cluster of lexicon.clusters) subthemesSeen.add(cluster.parent_subtheme);
 for (const id of interviewIds) {
-	byParticipant[id] = { total_mentions: 0, by_category: {} };
-	for (const cat of lexicon.categories) byParticipant[id].by_category[cat.id] = 0;
+	byParticipant[id] = { total_mentions: 0, by_subtheme: {} };
+	for (const s of subthemesSeen) byParticipant[id].by_subtheme[s] = 0;
 }
 
-for (const cat of lexicon.categories) {
-	const keywordsOut = [];
-	let categoryTotal = 0;
+for (const cluster of lexicon.clusters) {
+	const regex = clusterRegex(cluster);
+	const matches = [];
+	const perParticipant = {};
+	for (const id of interviewIds) perParticipant[id] = 0;
 
-	for (const kw of cat.keywords) {
-		const regex = keywordRegex(kw);
-		const matches = [];
-		const perParticipant = {};
-		for (const id of interviewIds) perParticipant[id] = 0;
+	for (const seg of segments) {
+		const text = normalize(seg.text);
+		for (const m of text.matchAll(regex)) {
+			const local = m.index;
+			const matched = m[0];
+			const absStart = seg.char_start + local;
+			const absEnd = absStart + matched.length;
 
-		for (const seg of segments) {
-			const text = normalize(seg.text);
-			for (const m of text.matchAll(regex)) {
-				const local = m.index;
-				const matched = m[0];
-				const absStart = seg.char_start + local;
-				const absEnd = absStart + matched.length;
-
-				// Integrity: the matched span must sit inside the segment's
-				// declared source range.
-				if (absEnd > seg.char_end) {
-					errors.push(
-						`Keyword "${kw.id}" match in ${seg.segment_id} runs past segment end ` +
-							`(${absEnd} > ${seg.char_end}).`
-					);
-				}
-
-				matches.push({
-					segment_id: seg.segment_id,
-					interview_id: seg.interview_id,
-					question_id: seg.question_id,
-					text: matched,
-					char_start: absStart,
-					char_end: absEnd
-				});
-				perParticipant[seg.interview_id] += 1;
+			// Integrity: matched span must sit inside the segment's text. We
+			// check against seg.text.length, not (seg.char_end - seg.char_start),
+			// because segments edited via the drawer carry approximate char
+			// offsets (their declared range no longer matches the rewritten text).
+			if (local + matched.length > seg.text.length) {
+				errors.push(
+					`Cluster "${cluster.id}" match in ${seg.segment_id} runs past segment text length ` +
+						`(${local + matched.length} > ${seg.text.length}).`
+				);
 			}
+
+			matches.push({
+				segment_id: seg.segment_id,
+				interview_id: seg.interview_id,
+				question_id: seg.question_id,
+				text: matched,
+				char_start: absStart,
+				char_end: absEnd
+			});
+			perParticipant[seg.interview_id] += 1;
 		}
-
-		const count = matches.length;
-
-		// Integrity: per-participant counts must sum to the total.
-		const summed = Object.values(perParticipant).reduce((n, v) => n + v, 0);
-		if (summed !== count) {
-			errors.push(`Keyword "${kw.id}": by_participant sums to ${summed}, expected ${count}.`);
-		}
-
-		categoryTotal += count;
-		for (const id of interviewIds) {
-			byParticipant[id].by_category[cat.id] += perParticipant[id];
-			byParticipant[id].total_mentions += perParticipant[id];
-		}
-
-		keywordsOut.push({
-			id: kw.id,
-			label: kw.label,
-			variants: kw.variants,
-			count,
-			by_participant: perParticipant,
-			matches
-		});
 	}
 
-	keywordsOut.sort((a, b) => b.count - a.count || a.id.localeCompare(b.id));
+	const count = matches.length;
 
-	categoriesOut.push({
-		id: cat.id,
-		label: cat.label,
-		description: cat.description,
-		total_mentions: categoryTotal,
-		keywords_present: keywordsOut.filter((k) => k.count > 0).length,
-		keywords_total: keywordsOut.length,
-		keywords: keywordsOut
+	const summed = Object.values(perParticipant).reduce((n, v) => n + v, 0);
+	if (summed !== count) {
+		errors.push(`Cluster "${cluster.id}": by_participant sums to ${summed}, expected ${count}.`);
+	}
+
+	for (const id of interviewIds) {
+		byParticipant[id].by_subtheme[cluster.parent_subtheme] += perParticipant[id];
+		byParticipant[id].total_mentions += perParticipant[id];
+	}
+
+	clustersOut.push({
+		id: cluster.id,
+		label: cluster.label,
+		parent_theme: cluster.parent_theme,
+		parent_subtheme: cluster.parent_subtheme,
+		variants: cluster.variants,
+		count,
+		by_participant: perParticipant,
+		matches
 	});
 }
+
+clustersOut.sort((a, b) => b.count - a.count || a.id.localeCompare(b.id));
 
 // --- Bail out before writing if anything failed integrity ---
 if (errors.length) {
@@ -197,11 +180,32 @@ if (errors.length) {
 	process.exit(1);
 }
 
-const grandTotal = categoriesOut.reduce((n, c) => n + c.total_mentions, 0);
+const grandTotal = clustersOut.reduce((n, c) => n + c.count, 0);
+
+// Build a transitional `categories` view by grouping clusters under their
+// parent_subtheme — consumers built against the 1.x output shape continue
+// reading without changes. New code should read `clusters` directly.
+const categoriesShim = (() => {
+	const byParent = new Map();
+	for (const c of clustersOut) {
+		const list = byParent.get(c.parent_subtheme) ?? [];
+		list.push(c);
+		byParent.set(c.parent_subtheme, list);
+	}
+	return [...byParent.entries()].map(([id, keywords]) => ({
+		id,
+		label: id,
+		description: '',
+		total_mentions: keywords.reduce((n, k) => n + k.count, 0),
+		keywords_present: keywords.filter((k) => k.count > 0).length,
+		keywords_total: keywords.length,
+		keywords
+	}));
+})();
 
 const output = {
 	meta: {
-		schema_version: '1.0',
+		schema_version: '2.0',
 		study_id: segmentsData.meta.study_id,
 		generated_at: new Date().toISOString(),
 		generator: 'scripts/build-keyword-usage.mjs',
@@ -209,29 +213,28 @@ const output = {
 		lexicon_version: lexicon.meta.schema_version,
 		scope: 'participant segments',
 		notes: [
-			'Deterministic, code-counted keyword frequencies. Same lexicon + segments produces identical output.',
+			'Deterministic, code-counted cluster frequencies. Same lexicon + segments produces identical output.',
 			'Counts participant speech only; interviewer prompts are not in segments.json.',
-			'Coverage of each keyword is exactly the variants listed in keyword_lexicon.json — no stemming.',
-			'Keywords are counted independently; overlapping spans across keywords are not de-duplicated.',
-			'Every match carries absolute source char offsets (segment.char_start + local offset).'
+			'Coverage of each cluster is exactly the variants listed in keyword_lexicon.json — no stemming.',
+			'Clusters are counted independently; overlapping spans across clusters are not de-duplicated.',
+			'Every match carries absolute source char offsets (segment.char_start + local offset).',
+			'Per-participant counts roll up to per-subtheme via the cluster\'s parent_subtheme.'
 		]
 	},
 	totals: {
-		categories: categoriesOut.length,
-		keywords: keywordIds.size,
+		clusters: clustersOut.length,
+		clusters_present: clustersOut.filter((c) => c.count > 0).length,
 		mentions: grandTotal
 	},
-	categories: categoriesOut,
+	clusters: clustersOut,
+	categories: categoriesShim,
 	by_participant: byParticipant
 };
 
 writeFileSync(resolve(ROOT, OUTPUT_FILE), JSON.stringify(output, null, 2) + '\n', 'utf8');
 
 console.log(`Wrote ${OUTPUT_FILE}`);
-console.log(`  ${categoriesOut.length} categories, ${keywordIds.size} keywords, ${grandTotal} mentions`);
-for (const c of categoriesOut) {
-	console.log(`  ${c.id}: ${c.total_mentions} mentions across ${c.keywords_present}/${c.keywords_total} keywords`);
-}
+console.log(`  ${clustersOut.length} clusters (${output.totals.clusters_present} with matches), ${grandTotal} mentions`);
 for (const id of interviewIds) {
 	console.log(`  ${id}: ${byParticipant[id].total_mentions} mentions`);
 }

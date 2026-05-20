@@ -6,45 +6,84 @@
  * (case-insensitive; space/hyphen runs flexible; non-alphanumeric boundaries),
  * so what gets bolded on screen and what build-keyword-usage.mjs counts agree.
  *
- * Two jobs:
- *   - keywordRuns(text)  — split text into runs for rendering, keyword runs
- *                          flagged so they can be shown semibold. Overlapping
- *                          matches are resolved to one non-overlapping set.
- *   - keywordTags(text)  — the distinct keywords and categories present, used
- *                          to deterministically tag a quote.
+ * Codebook 2.0 note: clusters in the new lexicon are flat and declare
+ * parent_theme + parent_subtheme. To keep the API surface stable for many
+ * downstream consumers (KeywordOrbit, ThemeHeatmap, analysis-page), the
+ * exported field names `categoryId` / `categoryLabel` now carry the cluster's
+ * `parent_subtheme` id and the subtheme's display label respectively. The
+ * "category" axis has been retired; what was once a domain category is now
+ * always a codebook subtheme.
  */
 import lexiconRaw from './keyword_lexicon.json';
+import codebookRaw from './codebook.json';
 
-export type Keyword = { id: string; label: string; variants: string[] };
+export type Cluster = {
+	id: string;
+	label: string;
+	description?: string;
+	parent_theme: string;
+	parent_subtheme: string;
+	variants: string[];
+};
+type Lexicon = { meta?: unknown; clusters: Cluster[] };
+
+type CodebookSubtheme = { id: string; label?: string; description?: string };
+type CodebookTheme = { id: string; label?: string; subthemes?: CodebookSubtheme[] };
+type Codebook = { themes: CodebookTheme[] };
+
+const lexicon = lexiconRaw as Lexicon;
+export const clusters = lexicon.clusters;
+
+const codebook = codebookRaw as Codebook;
+const subthemeLabel = new Map<string, string>();
+for (const t of codebook.themes ?? []) {
+	for (const s of t.subthemes ?? []) subthemeLabel.set(s.id, s.label ?? s.id);
+}
+
+/**
+ * Codebook 2.0 transitional shim. The old `categories[].keywords[]` shape is
+ * recreated here by grouping flat clusters under their `parent_subtheme`.
+ * Consumers reading from this re-export get an equivalent tree; the "category"
+ * label is the parent subtheme's display label.
+ */
+export type Keyword = Cluster;
 export type Category = { id: string; label: string; description: string; keywords: Keyword[] };
-type Lexicon = { meta: unknown; categories: Category[] };
+export const categories: Category[] = (() => {
+	const byParent = new Map<string, Keyword[]>();
+	for (const c of clusters) {
+		const list = byParent.get(c.parent_subtheme) ?? [];
+		list.push(c);
+		byParent.set(c.parent_subtheme, list);
+	}
+	return [...byParent.entries()].map(([id, keywords]) => ({
+		id,
+		label: subthemeLabel.get(id) ?? id,
+		description: '',
+		keywords
+	}));
+})();
 
-export const lexicon = lexiconRaw as Lexicon;
-export const categories = lexicon.categories;
-
-/** Normalise curly apostrophes so lexicon variants and source text agree. */
 const normalize = (s: string) => s.replace(/[‘’]/g, "'");
-
-/** Escape regex metacharacters in a literal string. */
 const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /**
- * One case-insensitive regex per keyword: an alternation of all its variants,
+ * One case-insensitive regex per cluster: an alternation of all its variants,
  * longest first, bounded by non-alphanumeric lookarounds, with space/hyphen
  * runs made flexible. Identical construction to build-keyword-usage.mjs.
  */
-function keywordRegex(kw: Keyword): RegExp {
-	const alts = [...kw.variants]
+function clusterRegex(c: Cluster): RegExp {
+	const alts = [...c.variants]
 		.map(normalize)
 		.sort((a, b) => b.length - a.length)
 		.map((v) => escapeRegex(v).replace(/[\s-]+/g, '[\\s-]+'));
 	return new RegExp(`(?<![A-Za-z0-9])(?:${alts.join('|')})(?![A-Za-z0-9])`, 'gi');
 }
 
-// Precompile every keyword once, keeping a back-pointer to its category.
-const compiled = categories.flatMap((category) =>
-	category.keywords.map((keyword) => ({ keyword, category, regex: keywordRegex(keyword) }))
-);
+const compiled = clusters.map((cluster) => ({
+	cluster,
+	regex: clusterRegex(cluster),
+	parentSubthemeLabel: subthemeLabel.get(cluster.parent_subtheme) ?? cluster.parent_subtheme
+}));
 
 export type KeywordSpan = {
 	start: number;
@@ -52,15 +91,15 @@ export type KeywordSpan = {
 	text: string;
 	keywordId: string;
 	keywordLabel: string;
-	categoryId: string;
-	categoryLabel: string;
+	categoryId: string; // = cluster.parent_subtheme (transitional name)
+	categoryLabel: string; // = label of that parent subtheme
 };
 
-/** Every keyword match in `text`, possibly overlapping across keywords. */
+/** Every cluster match in `text`, possibly overlapping across clusters. */
 function rawMatches(text: string): KeywordSpan[] {
 	const norm = normalize(text);
 	const out: KeywordSpan[] = [];
-	for (const { keyword, category, regex } of compiled) {
+	for (const { cluster, regex, parentSubthemeLabel } of compiled) {
 		regex.lastIndex = 0;
 		for (const m of norm.matchAll(regex)) {
 			const start = m.index ?? 0;
@@ -69,10 +108,10 @@ function rawMatches(text: string): KeywordSpan[] {
 				start,
 				end,
 				text: text.slice(start, end),
-				keywordId: keyword.id,
-				keywordLabel: keyword.label,
-				categoryId: category.id,
-				categoryLabel: category.label
+				keywordId: cluster.id,
+				keywordLabel: cluster.label,
+				categoryId: cluster.parent_subtheme,
+				categoryLabel: parentSubthemeLabel
 			});
 		}
 	}
@@ -81,11 +120,6 @@ function rawMatches(text: string): KeywordSpan[] {
 
 export type TextRun = { text: string; span?: KeywordSpan };
 
-/**
- * Split `text` into consecutive runs. Runs carrying a `span` are keyword hits
- * (render them semibold); the rest are plain. Overlapping matches are resolved
- * earliest-then-longest so each character belongs to at most one keyword run.
- */
 export function keywordRuns(text: string): TextRun[] {
 	const spans = rawMatches(text).sort((a, b) => a.start - b.start || b.end - a.end);
 	const picked: KeywordSpan[] = [];
@@ -115,23 +149,26 @@ export type KeywordTags = {
 };
 
 /**
- * The distinct keywords and categories present in `text` — the deterministic
- * keyword tags for a quote. Unlike keywordRuns this keeps every match (so
- * "oral GLP-1" tags both `oral_medication` and `glp_1`); order follows the
- * lexicon. Returns empty arrays when nothing matches.
+ * The distinct clusters and their parent subthemes present in `text` — kept
+ * under the old `keywords` / `categories` names for consumer compatibility.
  */
 export function keywordTags(text: string): KeywordTags {
 	const matches = rawMatches(text);
 	const keywordIds = new Set(matches.map((m) => m.keywordId));
 	const categoryIds = new Set(matches.map((m) => m.categoryId));
 
-	const keywords: KeywordTags['keywords'] = [];
+	const seenCats = new Set<string>();
 	const cats: KeywordTags['categories'] = [];
-	for (const category of categories) {
-		if (categoryIds.has(category.id)) cats.push({ id: category.id, label: category.label });
-		for (const kw of category.keywords) {
-			if (keywordIds.has(kw.id))
-				keywords.push({ id: kw.id, label: kw.label, categoryId: category.id });
+	const keywords: KeywordTags['keywords'] = [];
+	for (const cluster of clusters) {
+		if (keywordIds.has(cluster.id))
+			keywords.push({ id: cluster.id, label: cluster.label, categoryId: cluster.parent_subtheme });
+		if (categoryIds.has(cluster.parent_subtheme) && !seenCats.has(cluster.parent_subtheme)) {
+			seenCats.add(cluster.parent_subtheme);
+			cats.push({
+				id: cluster.parent_subtheme,
+				label: subthemeLabel.get(cluster.parent_subtheme) ?? cluster.parent_subtheme
+			});
 		}
 	}
 	return { categories: cats, keywords };
@@ -153,40 +190,27 @@ export type KeywordBlocks = {
 	blocks: { sentiment: number }[];
 };
 
-/**
- * Total keyword mentions across a set of texts, ranked by count. Every match is
- * counted (overlaps included, same as keywordTags), so this is a deterministic
- * word-usage tally for whatever slice of participant speech is passed in.
- */
 export function keywordCounts(texts: string[]): KeywordCount[] {
 	const tally = new Map<string, number>();
 	for (const t of texts) {
 		for (const m of rawMatches(t)) tally.set(m.keywordId, (tally.get(m.keywordId) ?? 0) + 1);
 	}
 	const out: KeywordCount[] = [];
-	for (const category of categories) {
-		for (const kw of category.keywords) {
-			const count = tally.get(kw.id) ?? 0;
-			if (count > 0) {
-				out.push({
-					keywordId: kw.id,
-					keywordLabel: kw.label,
-					categoryId: category.id,
-					categoryLabel: category.label,
-					count
-				});
-			}
+	for (const cluster of clusters) {
+		const count = tally.get(cluster.id) ?? 0;
+		if (count > 0) {
+			out.push({
+				keywordId: cluster.id,
+				keywordLabel: cluster.label,
+				categoryId: cluster.parent_subtheme,
+				categoryLabel: subthemeLabel.get(cluster.parent_subtheme) ?? cluster.parent_subtheme,
+				count
+			});
 		}
 	}
 	return out.sort((a, b) => b.count - a.count || a.keywordLabel.localeCompare(b.keywordLabel));
 }
 
-/**
- * Per-keyword sentiment blocks across a set of coded fragments — one block per
- * fragment that contains the keyword at least once, carrying that fragment's
- * sentiment. Feeds SentimentBar so keyword usage reads the same as the
- * theme/emotion bars elsewhere in the app.
- */
 export function keywordBlocks(
 	fragments: { text: string; sentiment: number }[]
 ): KeywordBlocks[] {
@@ -204,18 +228,16 @@ export function keywordBlocks(
 		}
 	}
 	const out: KeywordBlocks[] = [];
-	for (const category of categories) {
-		for (const kw of category.keywords) {
-			const blocks = blocksByKw.get(kw.id);
-			if (blocks && blocks.length) {
-				out.push({
-					keywordId: kw.id,
-					keywordLabel: kw.label,
-					categoryId: category.id,
-					categoryLabel: category.label,
-					blocks
-				});
-			}
+	for (const cluster of clusters) {
+		const blocks = blocksByKw.get(cluster.id);
+		if (blocks && blocks.length) {
+			out.push({
+				keywordId: cluster.id,
+				keywordLabel: cluster.label,
+				categoryId: cluster.parent_subtheme,
+				categoryLabel: subthemeLabel.get(cluster.parent_subtheme) ?? cluster.parent_subtheme,
+				blocks
+			});
 		}
 	}
 	return out.sort(

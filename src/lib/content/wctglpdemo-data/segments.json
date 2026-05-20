@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T18:36:37.055Z",
+    "generated_at": "2026-05-20T20:29:15.032Z",
     "generator": "scripts/build-segments.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -15,7 +15,7 @@
       "idea_unit_grouping": "deferred",
       "short_segment_handling": "flagged (\"very_short\"), not merged"
     },
-    "segment_count": 617,
+    "segment_count": 618,
     "notes": [
       "One segment per sentence of participant speech; offsets round-trip against the source file.",
       "question_id is inherited from the most recent interviewer turn in question_map.json.",
@@ -177,10 +177,10 @@
       "segment_index": 0,
       "question_id": null,
       "speaker": "participant",
-      "text": "In 2026 I anticipate that my job, which as we know in the United States, our jobs, healthcare influences what medications we can and can get on if they offer it because obesity is not considered a disease, which is false. But I have very strong opinions on that as I'm sure you're aware. If there was a clinical trial and if there was a high probability that I could get the actual medication or a hundred percent probability that I could get the medication and my company had dropped Zepbound for me, then yeah I would because I've lost 46, almost 47% of my body weight.",
+      "text": "In 2026 I anticipate that my job, which as we know in the United States, our jobs, healthcare influences what medications we can and can get on if they offer it because obesity is not considered a disease, which is false. But I have very strong opinions on that as I'm sure you're aware.",
       "char_start": 2893,
-      "char_end": 3464,
-      "word_count": 107,
+      "char_end": 3180,
+      "word_count": 54,
       "flags": [
         "merged"
       ]
@@ -192,10 +192,10 @@
       "segment_index": 1,
       "question_id": null,
       "speaker": "participant",
-      "text": "I went from pre-diabetic with a lot of physical problems to, I have perfect numbers in all my things now and my life has just dramatically increased.",
-      "char_start": 3465,
-      "char_end": 3614,
-      "word_count": 27,
+      "text": "If there was a clinical trial and if there was a high probability that I could get the actual medication or a hundred percent probability that I could get the medication and my company had dropped Zepbound for me, then yeah I would because I've lost 46, almost 47% of my body weight.",
+      "char_start": 3181,
+      "char_end": 3464,
+      "word_count": 53,
       "flags": []
     },
     {
@@ -205,10 +205,10 @@
       "segment_index": 2,
       "question_id": null,
       "speaker": "participant",
-      "text": "The quality of my life has dramatically increased in the last 18 months.",
-      "char_start": 3615,
-      "char_end": 3687,
-      "word_count": 13,
+      "text": "I went from pre-diabetic with a lot of physical problems to, I have perfect numbers in all my things now and my life has just dramatically increased.",
+      "char_start": 3465,
+      "char_end": 3614,
+      "word_count": 27,
       "flags": []
     },
     {
@@ -216,6 +216,19 @@
       "interview_id": "participant_06",
       "turn_index": 11,
       "segment_index": 3,
+      "question_id": null,
+      "speaker": "participant",
+      "text": "The quality of my life has dramatically increased in the last 18 months.",
+      "char_start": 3615,
+      "char_end": 3687,
+      "word_count": 13,
+      "flags": []
+    },
+    {
+      "segment_id": "participant_06_t11_s04",
+      "interview_id": "participant_06",
+      "turn_index": 11,
+      "segment_index": 4,
       "question_id": null,
       "speaker": "participant",
       "text": "So that would be a huge factor for me in trying a clinical trial and being on the cusp of helping others who are going to be coming into maintenance after they take these medications as well.",

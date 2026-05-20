@@ -1,1020 +1,1325 @@
 {
   "meta": {
-    "schema_version": "1.1",
-    "study_id": "wct_glp1",
-    "description": "Categorized keyword lexicon for the WCT GLP-1 study. Each category groups domain terms participants used; each keyword carries the surface variants (spellings, brand/generic pairs, plurals, phrasings) that should count toward it. build-keyword-usage.mjs matches this lexicon against segments.json and writes deterministic, reproducible counts to keyword_usage.json. Editable and versioned; bump schema_version when categories or keywords change.",
+    "schema_version": "3.0",
+    "supersedes": "keyword_lexicon.json @ 2.0",
+    "status": "live",
+    "description": "Keyword cluster catalog, schema 3.0. Each cluster declares parent_theme + parent_subtheme as FKs into codebook.next.json. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows continue to live in keyword_tags.json, keyed by (cluster_id, segment_id, char_start, char_end).",
     "changelog": [
-      "1.0 — initial lexicon: 7 categories, derived from participant_06, participant_09, participant_10 transcripts.",
-      "1.1 — keywords and variants can be added interactively from the segment tag drawer."
+      "3.0-draft — replaced the `categories[].keywords[]` shape with a flat `clusters[]` keyed by parent_theme + parent_subtheme. The 102 clusters from keyword_lexicon.json @ 2.0 will be re-classified via the codebook-migration map in codebook_migration_map.json; some will split into parallel clusters with different parents (e.g. cost as a treatment vs. trial barrier).",
+      "3.0-draft (porting pass) — ported 103 clusters from keyword_lexicon.json @ 2.0 via scripts/migrate-keyword-lexicon.mjs. Each cluster carries parent_theme + parent_subtheme assigned by category default + per-cluster overrides. Descriptions are empty for now; analyst should backfill as part of Phase 0 review."
     ],
+    "cluster_shape": {
+      "id": "Slug, lowercase + underscores. Globally unique. Example: 'treatment_cost_concerns'.",
+      "label": "Display label. Example: 'Treatment cost concerns'.",
+      "description": "One sentence describing what the cluster covers.",
+      "parent_theme": "FK → codebook.next.json themes[].id. Required.",
+      "parent_subtheme": "FK → codebook.next.json themes[].subthemes[].id. Required. The named subtheme must belong to the named parent_theme.",
+      "variants": "Array of lowercase surface forms (spellings, plurals, brand/generic pairs, multi-word phrasings) used to RANK this cluster's suggestion priority when an analyst highlights a phrase in the drawer. Matching is case-insensitive, with hyphen/space runs treated as equivalent. Not used for auto-tagging."
+    },
     "matching_notes": [
-      "Matching is case-insensitive. Within a variant, runs of spaces/hyphens match any run of whitespace or hyphens (so 'out of pocket' also matches 'out-of-pocket').",
+      "Matching for suggestions is case-insensitive. Within a variant, runs of spaces/hyphens match any run of whitespace or hyphens (so 'out of pocket' also matches 'out-of-pocket').",
       "Variants with no separator (e.g. 'glp1') are listed explicitly because the separator in multi-word variants is required, not optional.",
-      "Brand and generic names for the same molecule are grouped under one keyword (semaglutide groups Wegovy/Ozempic; tirzepatide groups Mounjaro/Zepbound).",
-      "Keywords are matched independently, so a span like 'oral GLP-1' counts toward both the 'oral_medication' and 'glp_1' keywords. Categories and keywords may therefore overlap textually; counts are not de-duplicated across keywords.",
-      "Single-word terms (e.g. 'support', 'site', 'blood pressure') are precise enough for this corpus but can capture incidental uses; multi-word phrases are the most precise entries."
-    ]
+      "Brand and generic names for the same molecule should be grouped under one cluster (e.g. semaglutide groups Wegovy/Ozempic).",
+      "Suggestion ranking may additionally weight clusters by the segment's current theme/subtheme tags — clusters whose parent_subtheme matches a tagged subtheme float to the top.",
+      "If the same surface concept needs to belong under different parent subthemes (e.g. cost as a Treatment Barrier vs. as a Trial Barrier), create two clusters with parallel names and different parent_subtheme values — do NOT add a cluster to multiple parents."
+    ],
+    "example_cluster": {
+      "id": "treatment_cost_concerns",
+      "label": "Treatment cost concerns",
+      "description": "Out-of-pocket cost, insurance friction, and affordability as obstacles to starting or continuing treatment.",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "cost",
+        "costs",
+        "expensive",
+        "afford",
+        "affordable",
+        "out of pocket",
+        "out-of-pocket",
+        "price",
+        "prohibitive"
+      ]
+    }
   },
-  "categories": [
-    {
-      "id": "medications",
-      "label": "Medications & products",
-      "description": "GLP-1 drugs, other weight or metabolic medications, formulations, and delivery formats.",
-      "keywords": [
-        {
-          "id": "glp_1",
-          "label": "GLP-1",
-          "variants": [
-            "glp-1",
-            "glp-1s",
-            "glp1",
-            "glp 1",
-            "glps",
-            "glp"
-          ]
-        },
-        {
-          "id": "semaglutide",
-          "label": "Semaglutide (Wegovy / Ozempic)",
-          "variants": [
-            "semaglutide",
-            "wegovy",
-            "ozempic",
-            "positive",
-            "eli lilly"
-          ]
-        },
-        {
-          "id": "tirzepatide",
-          "label": "Tirzepatide (Mounjaro / Zepbound)",
-          "variants": [
-            "tirzepatide",
-            "mounjaro",
-            "zepbound"
-          ]
-        },
-        {
-          "id": "orforglipron",
-          "label": "Orforglipron",
-          "variants": [
-            "orforglipron"
-          ]
-        },
-        {
-          "id": "retatrutide",
-          "label": "Retatrutide",
-          "variants": [
-            "retatrutide"
-          ]
-        },
-        {
-          "id": "cagrilintide",
-          "label": "Cagrilintide",
-          "variants": [
-            "cagrilintide"
-          ]
-        },
-        {
-          "id": "metformin",
-          "label": "Metformin",
-          "variants": [
-            "metformin"
-          ]
-        },
-        {
-          "id": "phentermine",
-          "label": "Phentermine",
-          "variants": [
-            "phentermine"
-          ]
-        },
-        {
-          "id": "compounded_medication",
-          "label": "Compounded medication",
-          "variants": [
-            "compounded medication",
-            "compound medication",
-            "compounded",
-            "compounding",
-            "compound"
-          ]
-        },
-        {
-          "id": "name_brand",
-          "label": "Name-brand drug",
-          "variants": [
-            "name brand",
-            "brand name",
-            "name-brand",
-            "branded"
-          ]
-        },
-        {
-          "id": "oral_medication",
-          "label": "Oral medication / pill",
-          "variants": [
-            "oral glp-1",
-            "oral glp-1s",
-            "oral medication",
-            "orally",
-            "oral",
-            "pill",
-            "pills"
-          ]
-        },
-        {
-          "id": "injection",
-          "label": "Injection / shot",
-          "variants": [
-            "injectable",
-            "injection",
-            "injections",
-            "injecting",
-            "inject",
-            "shot",
-            "shots",
-            "needle"
-          ]
-        },
-        {
-          "id": "implant",
-          "label": "Implant",
-          "variants": [
-            "implant",
-            "implants"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "insurance_finances",
-      "label": "Insurance & finances",
-      "description": "Insurance coverage, access mechanics, out-of-pocket cost, pricing, and financial support.",
-      "keywords": [
-        {
-          "id": "insurance",
-          "label": "Insurance",
-          "variants": [
-            "insurance",
-            "insurer",
-            "insurers",
-            "insured"
-          ]
-        },
-        {
-          "id": "coverage",
-          "label": "Coverage",
-          "variants": [
-            "coverage",
-            "cover",
-            "covers",
-            "covered",
-            "covering"
-          ]
-        },
-        {
-          "id": "prior_authorization",
-          "label": "Prior authorization",
-          "variants": [
-            "prior authorization",
-            "prior auth",
-            "authorization",
-            "authorisation"
-          ]
-        },
-        {
-          "id": "benefit_manager",
-          "label": "Pharmacy benefit manager",
-          "variants": [
-            "pharmacy benefit manager",
-            "plan benefit manager",
-            "benefit manager",
-            "pbm"
-          ]
-        },
-        {
-          "id": "out_of_pocket",
-          "label": "Out of pocket",
-          "variants": [
-            "out of pocket"
-          ]
-        },
-        {
-          "id": "cost",
-          "label": "Cost",
-          "variants": [
-            "cost prohibitive",
-            "cost",
-            "costs",
-            "costing",
-            "costly"
-          ]
-        },
-        {
-          "id": "prohibitive",
-          "label": "Prohibitive",
-          "variants": [
-            "prohibitive"
-          ]
-        },
-        {
-          "id": "price",
-          "label": "Price",
-          "variants": [
-            "price",
-            "prices",
-            "pricing",
-            "priced"
-          ]
-        },
-        {
-          "id": "expensive",
-          "label": "Expensive",
-          "variants": [
-            "expensive",
-            "inexpensive"
-          ]
-        },
-        {
-          "id": "affordability",
-          "label": "Affordability",
-          "variants": [
-            "affordability",
-            "affordable",
-            "afford"
-          ]
-        },
-        {
-          "id": "cheaper",
-          "label": "Cheaper",
-          "variants": [
-            "cheaper",
-            "cheap",
-            "cheapest"
-          ]
-        },
-        {
-          "id": "discount",
-          "label": "Discount",
-          "variants": [
-            "discount",
-            "discounts",
-            "discounted"
-          ]
-        },
-        {
-          "id": "lawsuits",
-          "label": "Lawsuits",
-          "variants": [
-            "lawsuit",
-            "lawsuits"
-          ]
-        },
-        {
-          "id": "financial_compensation",
-          "label": "Financial compensation",
-          "variants": [
-            "financial compensation",
-            "compensation",
-            "compensated"
-          ]
-        },
-        {
-          "id": "vouchers",
-          "label": "Vouchers",
-          "variants": [
-            "voucher",
-            "vouchers"
-          ]
-        },
-        {
-          "id": "healthcare_benefits",
-          "label": "Healthcare / employer benefits",
-          "variants": [
-            "healthcare",
-            "health care",
-            "health insurance",
-            "health benefits"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "lifestyle",
-      "label": "Lifestyle & behavior change",
-      "description": "Diet, exercise, nutrition, named eating programs, and day-to-day behavior change.",
-      "keywords": [
-        {
-          "id": "diet",
-          "label": "Diet",
-          "variants": [
-            "diet",
-            "diets",
-            "dieting"
-          ]
-        },
-        {
-          "id": "exercise",
-          "label": "Exercise",
-          "variants": [
-            "exercise",
-            "exercises",
-            "exercising"
-          ]
-        },
-        {
-          "id": "walking",
-          "label": "Walking",
-          "variants": [
-            "walking",
-            "walked",
-            "walks",
-            "walk"
-          ]
-        },
-        {
-          "id": "gym",
-          "label": "Gym",
-          "variants": [
-            "gym",
-            "gyms"
-          ]
-        },
-        {
-          "id": "nutrition",
-          "label": "Nutrition",
-          "variants": [
-            "nutrition",
-            "nutritional",
-            "macronutrients",
-            "macros"
-          ]
-        },
-        {
-          "id": "meal_planning",
-          "label": "Meal planning",
-          "variants": [
-            "meal planning",
-            "meal plan",
-            "meal plans"
-          ]
-        },
-        {
-          "id": "recipes",
-          "label": "Recipes",
-          "variants": [
-            "recipe",
-            "recipes"
-          ]
-        },
-        {
-          "id": "low_carb",
-          "label": "Low-carb / carbs",
-          "variants": [
-            "low carb",
-            "low-carb",
-            "carbs",
-            "carb",
-            "carbohydrates"
-          ]
-        },
-        {
-          "id": "atkins",
-          "label": "Atkins diet",
-          "variants": [
-            "atkins"
-          ]
-        },
-        {
-          "id": "paleo",
-          "label": "Paleo diet",
-          "variants": [
-            "paleo"
-          ]
-        },
-        {
-          "id": "vegan",
-          "label": "Vegan diet",
-          "variants": [
-            "vegan",
-            "vegetarian"
-          ]
-        },
-        {
-          "id": "weight_watchers",
-          "label": "Weight Watchers",
-          "variants": [
-            "weight watchers"
-          ]
-        },
-        {
-          "id": "south_beach",
-          "label": "South Beach Diet",
-          "variants": [
-            "south beach diet",
-            "south beach"
-          ]
-        },
-        {
-          "id": "lifestyle_change",
-          "label": "Lifestyle change",
-          "variants": [
-            "lifestyle change",
-            "lifestyle changes",
-            "lifestyle"
-          ]
-        },
-        {
-          "id": "journaling",
-          "label": "Journaling / self-tracking",
-          "variants": [
-            "journaling",
-            "journal",
-            "self-tracking",
-            "tracking",
-            "track"
-          ]
-        },
-        {
-          "id": "food_noise",
-          "label": "Food noise",
-          "variants": [
-            "food noise"
-          ]
-        },
-        {
-          "id": "physical_fitness",
-          "label": "Physical fitness",
-          "variants": [
-            "physical fitness",
-            "physical activity",
-            "fitness"
-          ]
-        },
-        {
-          "id": "steps",
-          "label": "Steps",
-          "variants": [
-            "steps"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "concerns_risks",
-      "label": "Concerns & risks",
-      "description": "Worries about side effects, complications, supply, weight regain, and trial risk.",
-      "keywords": [
-        {
-          "id": "side_effects",
-          "label": "Side effects",
-          "variants": [
-            "side effects",
-            "side effect"
-          ]
-        },
-        {
-          "id": "gastric_effects",
-          "label": "Gastric effects",
-          "variants": [
-            "gastric emptying",
-            "gastric issues",
-            "gastric",
-            "gastrointestinal",
-            "nausea"
-          ]
-        },
-        {
-          "id": "complication",
-          "label": "Health complication",
-          "variants": [
-            "health complication",
-            "medical side effect",
-            "complications",
-            "complication"
-          ]
-        },
-        {
-          "id": "shortages",
-          "label": "Shortages",
-          "variants": [
-            "shortage",
-            "shortages"
-          ]
-        },
-        {
-          "id": "scary",
-          "label": "Scary / scared",
-          "variants": [
-            "scary",
-            "scared",
-            "scare"
-          ]
-        },
-        {
-          "id": "guinea_pig",
-          "label": "Guinea pig",
-          "variants": [
-            "guinea pig"
-          ]
-        },
-        {
-          "id": "weight_regain",
-          "label": "Weight regain",
-          "variants": [
-            "weight regain",
-            "regaining weight",
-            "gaining weight",
-            "gain weight",
-            "regain",
-            "yo-yo"
-          ]
-        },
-        {
-          "id": "stall",
-          "label": "Stall / plateau",
-          "variants": [
-            "stall",
-            "stalls",
-            "stalled",
-            "plateau",
-            "plateaus"
-          ]
-        },
-        {
-          "id": "hunger",
-          "label": "Hunger",
-          "variants": [
-            "hungry",
-            "ravenous",
-            "hunger",
-            "appetite"
-          ]
-        },
-        {
-          "id": "safety",
-          "label": "Safety",
-          "variants": [
-            "safety",
-            "safe",
-            "safer"
-          ]
-        },
-        {
-          "id": "needle_phobia",
-          "label": "Needle phobia",
-          "variants": [
-            "needle phobic",
-            "needle phobia"
-          ]
-        },
-        {
-          "id": "risk",
-          "label": "Risk",
-          "variants": [
-            "risking",
-            "risks",
-            "risk",
-            "risky"
-          ]
-        },
-        {
-          "id": "harm",
-          "label": "Harm",
-          "variants": [
-            "harmful",
-            "harm",
-            "harms"
-          ]
-        },
-        {
-          "id": "concern",
-          "label": "Concern (explicit)",
-          "variants": [
-            "concern",
-            "concerns",
-            "concerned",
-            "worried",
-            "worry"
-          ]
-        }
-      ]
-    },
+  "clusters": [
     {
       "id": "clinical_trial",
-      "label": "Clinical trial & logistics",
-      "description": "Trial design, study procedures, site visits, and the travel and scheduling burden of participation.",
-      "keywords": [
-        {
-          "id": "clinical_trial",
-          "label": "Clinical trial",
-          "variants": [
-            "clinical trial",
-            "clinical trials",
-            "trial",
-            "trials",
-            "study",
-            "studies"
-          ]
-        },
-        {
-          "id": "placebo",
-          "label": "Placebo",
-          "variants": [
-            "placebo-controlled",
-            "placebo controlled",
-            "placebo effect",
-            "placebo"
-          ]
-        },
-        {
-          "id": "randomized",
-          "label": "Randomized",
-          "variants": [
-            "randomized",
-            "randomised",
-            "randomization",
-            "randomisation"
-          ]
-        },
-        {
-          "id": "telehealth",
-          "label": "Telehealth",
-          "variants": [
-            "telehealth",
-            "telemedicine",
-            "realistic"
-          ]
-        },
-        {
-          "id": "home_visits",
-          "label": "Home visits",
-          "variants": [
-            "home visit",
-            "home visits"
-          ]
-        },
-        {
-          "id": "nurse",
-          "label": "Nurse",
-          "variants": [
-            "nurse",
-            "nurses",
-            "nursing"
-          ]
-        },
-        {
-          "id": "fasting_blood",
-          "label": "Fasting blood",
-          "variants": [
-            "fasting blood",
-            "fasting"
-          ]
-        },
-        {
-          "id": "glucose_monitoring",
-          "label": "Continuous glucose monitoring",
-          "variants": [
-            "continuous glucose monitoring",
-            "glucose monitoring",
-            "glucose monitor",
-            "cgm"
-          ]
-        },
-        {
-          "id": "blood_work",
-          "label": "Blood work / draws",
-          "variants": [
-            "blood work",
-            "blood draw",
-            "blood draws",
-            "blood test",
-            "blood tests",
-            "realistic"
-          ]
-        },
-        {
-          "id": "travel_concierge",
-          "label": "Travel concierge",
-          "variants": [
-            "travel concierge",
-            "concierge"
-          ]
-        },
-        {
-          "id": "visit_frequency",
-          "label": "Visit frequency",
-          "variants": [
-            "visit frequency",
-            "visits",
-            "visit"
-          ]
-        },
-        {
-          "id": "trial_site",
-          "label": "Trial site / clinic",
-          "variants": [
-            "research hospital",
-            "trial site",
-            "sites",
-            "site",
-            "clinics",
-            "clinic"
-          ]
-        },
-        {
-          "id": "follow_up",
-          "label": "Follow-up",
-          "variants": [
-            "follow-up",
-            "follow-ups",
-            "followup",
-            "follow up"
-          ]
-        },
-        {
-          "id": "study_doctor",
-          "label": "Study doctor / provider",
-          "variants": [
-            "study doctor",
-            "study doctors",
-            "medical provider",
-            "medical providers",
-            "doctor",
-            "doctors",
-            "physician"
-          ]
-        },
-        {
-          "id": "dosing_schedule",
-          "label": "Dosing schedule",
-          "variants": [
-            "monthly injection",
-            "weekly injection",
-            "once a month",
-            "once weekly",
-            "once a week",
-            "monthly",
-            "weekly"
-          ]
-        },
-        {
-          "id": "travel_burden",
-          "label": "Travel burden",
-          "variants": [
-            "round trip",
-            "transportation",
-            "driving",
-            "drive",
-            "drove",
-            "mileage",
-            "travel"
-          ]
-        },
-        {
-          "id": "better",
-          "label": "Better",
-          "variants": [
-            "better"
-          ]
-        }
+      "label": "Clinical trial",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "clinical trial",
+        "clinical trials",
+        "trial",
+        "trials",
+        "study",
+        "studies"
       ]
     },
     {
-      "id": "health_conditions",
-      "label": "Health conditions & outcomes",
-      "description": "Obesity, weight outcomes, and the metabolic conditions participants connect to GLP-1 use.",
-      "keywords": [
-        {
-          "id": "obesity",
-          "label": "Obesity",
-          "variants": [
-            "obesity",
-            "obese"
-          ]
-        },
-        {
-          "id": "weight_loss",
-          "label": "Weight loss",
-          "variants": [
-            "weight loss",
-            "lose weight",
-            "losing weight",
-            "lost weight"
-          ]
-        },
-        {
-          "id": "weight_maintenance",
-          "label": "Weight maintenance",
-          "variants": [
-            "weight maintenance",
-            "weight management",
-            "maintenance",
-            "maintain",
-            "maintaining"
-          ]
-        },
-        {
-          "id": "blood_pressure",
-          "label": "Blood pressure",
-          "variants": [
-            "blood pressure"
-          ]
-        },
-        {
-          "id": "heartburn",
-          "label": "Heartburn / reflux",
-          "variants": [
-            "heartburn",
-            "acid reflux",
-            "reflux"
-          ]
-        },
-        {
-          "id": "cholesterol",
-          "label": "Cholesterol",
-          "variants": [
-            "cholesterol"
-          ]
-        },
-        {
-          "id": "diabetes",
-          "label": "Diabetes",
-          "variants": [
-            "type 2 diabetes",
-            "type two diabetes",
-            "type 2",
-            "type two",
-            "diabetes",
-            "diabetic"
-          ]
-        },
-        {
-          "id": "pre_diabetic",
-          "label": "Pre-diabetic",
-          "variants": [
-            "pre-diabetic",
-            "prediabetic",
-            "pre diabetic"
-          ]
-        },
-        {
-          "id": "insulin_resistance",
-          "label": "Insulin resistance",
-          "variants": [
-            "insulin resistant",
-            "insulin resistance",
-            "insulin"
-          ]
-        },
-        {
-          "id": "blood_sugar",
-          "label": "Blood sugar",
-          "variants": [
-            "blood sugar"
-          ]
-        },
-        {
-          "id": "genetics",
-          "label": "Genetics",
-          "variants": [
-            "genetics",
-            "genetic",
-            "genes"
-          ]
-        },
-        {
-          "id": "quality_of_life",
-          "label": "Quality of life",
-          "variants": [
-            "quality of life"
-          ]
-        }
+      "id": "placebo",
+      "label": "Placebo",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "placebo-controlled",
+        "placebo controlled",
+        "placebo effect",
+        "placebo"
       ]
     },
     {
-      "id": "education_support",
-      "label": "Education & support",
-      "description": "Educational formats, counseling, devices, and other support offered alongside treatment or a trial.",
-      "keywords": [
-        {
-          "id": "webinars",
-          "label": "Webinars",
-          "variants": [
-            "webinar",
-            "webinars"
-          ]
-        },
-        {
-          "id": "handouts",
-          "label": "Handouts",
-          "variants": [
-            "handout",
-            "handouts"
-          ]
-        },
-        {
-          "id": "learning_modules",
-          "label": "Online learning modules",
-          "variants": [
-            "online learning modules",
-            "learning modules",
-            "learning module",
-            "modules",
-            "module"
-          ]
-        },
-        {
-          "id": "classes",
-          "label": "Classes",
-          "variants": [
-            "zoom classes",
-            "online classes",
-            "classes",
-            "class"
-          ]
-        },
-        {
-          "id": "counseling",
-          "label": "Counseling",
-          "variants": [
-            "nutritional counseling",
-            "patient counseling",
-            "counseling",
-            "counselling"
-          ]
-        },
-        {
-          "id": "education",
-          "label": "Education / teaching",
-          "variants": [
-            "diabetic education",
-            "education",
-            "educational",
-            "educate",
-            "teaching",
-            "teach",
-            "nutrition"
-          ]
-        },
-        {
-          "id": "videos",
-          "label": "Videos",
-          "variants": [
-            "video",
-            "videos"
-          ]
-        },
-        {
-          "id": "in_person_advice",
-          "label": "In-person advice",
-          "variants": [
-            "in-person advice",
-            "in person advice",
-            "in-person",
-            "in person"
-          ]
-        },
-        {
-          "id": "fitbit",
-          "label": "Fitbit",
-          "variants": [
-            "fitbit"
-          ]
-        },
-        {
-          "id": "apple_watch",
-          "label": "Apple Watch",
-          "variants": [
-            "apple watch"
-          ]
-        },
-        {
-          "id": "meal_replacement",
-          "label": "Meal replacement",
-          "variants": [
-            "meal replacement drinks",
-            "meal replacements",
-            "meal replacement",
-            "fairlife",
-            "shakes"
-          ]
-        },
-        {
-          "id": "support",
-          "label": "Support",
-          "variants": [
-            "supportive",
-            "support"
-          ]
-        },
-        {
-          "id": "convenience",
-          "label": "Convenience",
-          "variants": [
-            "convenience"
-          ]
-        }
+      "id": "randomized",
+      "label": "Randomized",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "randomized",
+        "randomised",
+        "randomization",
+        "randomisation"
+      ]
+    },
+    {
+      "id": "blood_work",
+      "label": "Blood work / draws",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "blood work",
+        "blood draw",
+        "blood draws",
+        "blood test",
+        "blood tests",
+        "realistic"
+      ]
+    },
+    {
+      "id": "dosing_schedule",
+      "label": "Dosing schedule",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "monthly injection",
+        "weekly injection",
+        "once a month",
+        "once weekly",
+        "once a week",
+        "monthly",
+        "weekly"
+      ]
+    },
+    {
+      "id": "fasting_blood",
+      "label": "Fasting blood",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "fasting blood",
+        "fasting"
+      ]
+    },
+    {
+      "id": "follow_up",
+      "label": "Follow-up",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "follow-up",
+        "follow-ups",
+        "followup",
+        "follow up"
+      ]
+    },
+    {
+      "id": "glucose_monitoring",
+      "label": "Continuous glucose monitoring",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "continuous glucose monitoring",
+        "glucose monitoring",
+        "glucose monitor",
+        "cgm"
+      ]
+    },
+    {
+      "id": "travel_burden",
+      "label": "Travel burden",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "round trip",
+        "transportation",
+        "driving",
+        "drive",
+        "drove",
+        "mileage",
+        "travel"
+      ]
+    },
+    {
+      "id": "trial_site",
+      "label": "Trial site / clinic",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "research hospital",
+        "trial site",
+        "sites",
+        "site",
+        "clinics",
+        "clinic"
+      ]
+    },
+    {
+      "id": "visit_frequency",
+      "label": "Visit frequency",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "visit frequency",
+        "visits",
+        "visit"
+      ]
+    },
+    {
+      "id": "apple_watch",
+      "label": "Apple Watch",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "apple watch"
+      ]
+    },
+    {
+      "id": "classes",
+      "label": "Classes",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "zoom classes",
+        "online classes",
+        "classes",
+        "class"
+      ]
+    },
+    {
+      "id": "convenience",
+      "label": "Convenience",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "convenience"
+      ]
+    },
+    {
+      "id": "counseling",
+      "label": "Counseling",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "nutritional counseling",
+        "patient counseling",
+        "counseling",
+        "counselling"
+      ]
+    },
+    {
+      "id": "education",
+      "label": "Education / teaching",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "diabetic education",
+        "education",
+        "educational",
+        "educate",
+        "teaching",
+        "teach",
+        "nutrition"
+      ]
+    },
+    {
+      "id": "financial_compensation",
+      "label": "Financial compensation",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "financial compensation",
+        "compensation",
+        "compensated"
+      ]
+    },
+    {
+      "id": "fitbit",
+      "label": "Fitbit",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "fitbit"
+      ]
+    },
+    {
+      "id": "handouts",
+      "label": "Handouts",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "handout",
+        "handouts"
+      ]
+    },
+    {
+      "id": "home_visits",
+      "label": "Home visits",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "home visit",
+        "home visits"
+      ]
+    },
+    {
+      "id": "in_person_advice",
+      "label": "In-person advice",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "in-person advice",
+        "in person advice",
+        "in-person",
+        "in person"
+      ]
+    },
+    {
+      "id": "learning_modules",
+      "label": "Online learning modules",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "online learning modules",
+        "learning modules",
+        "learning module",
+        "modules",
+        "module"
+      ]
+    },
+    {
+      "id": "meal_replacement",
+      "label": "Meal replacement",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "meal replacement drinks",
+        "meal replacements",
+        "meal replacement",
+        "fairlife",
+        "shakes"
+      ]
+    },
+    {
+      "id": "nurse",
+      "label": "Nurse",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "nurse",
+        "nurses",
+        "nursing"
+      ]
+    },
+    {
+      "id": "study_doctor",
+      "label": "Study doctor / provider",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "study doctor",
+        "study doctors",
+        "medical provider",
+        "medical providers",
+        "doctors",
+        "physician"
+      ]
+    },
+    {
+      "id": "telehealth",
+      "label": "Telehealth",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "telehealth",
+        "telemedicine",
+        "realistic"
+      ]
+    },
+    {
+      "id": "travel_concierge",
+      "label": "Travel concierge",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "travel concierge",
+        "concierge"
+      ]
+    },
+    {
+      "id": "videos",
+      "label": "Videos",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "video",
+        "videos"
+      ]
+    },
+    {
+      "id": "vouchers",
+      "label": "Vouchers",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "voucher",
+        "vouchers"
+      ]
+    },
+    {
+      "id": "webinars",
+      "label": "Webinars",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "webinar",
+        "webinars"
+      ]
+    },
+    {
+      "id": "support",
+      "label": "Support",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "supportive",
+        "support"
+      ]
+    },
+    {
+      "id": "blood_pressure",
+      "label": "Blood pressure",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "blood pressure"
+      ]
+    },
+    {
+      "id": "blood_sugar",
+      "label": "Blood sugar",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "blood sugar"
+      ]
+    },
+    {
+      "id": "cholesterol",
+      "label": "Cholesterol",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "cholesterol"
+      ]
+    },
+    {
+      "id": "diabetes",
+      "label": "Diabetes",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "type 2 diabetes",
+        "type two diabetes",
+        "type 2",
+        "type two",
+        "diabetes",
+        "diabetic"
+      ]
+    },
+    {
+      "id": "heartburn",
+      "label": "Heartburn / reflux",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "heartburn",
+        "acid reflux",
+        "reflux"
+      ]
+    },
+    {
+      "id": "insulin_resistance",
+      "label": "Insulin resistance",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "insulin resistant",
+        "insulin resistance",
+        "insulin"
+      ]
+    },
+    {
+      "id": "pre_diabetic",
+      "label": "Pre-diabetic",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "pre-diabetic",
+        "prediabetic",
+        "pre diabetic"
+      ]
+    },
+    {
+      "id": "genetics",
+      "label": "Genetics",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "genetics",
+        "genetic",
+        "genes"
+      ]
+    },
+    {
+      "id": "atkins",
+      "label": "Atkins diet",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "atkins"
+      ]
+    },
+    {
+      "id": "better",
+      "label": "Better",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "better"
+      ]
+    },
+    {
+      "id": "diet",
+      "label": "Diet",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "diet",
+        "diets",
+        "dieting"
+      ]
+    },
+    {
+      "id": "exercise",
+      "label": "Exercise",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "exercise",
+        "exercises",
+        "exercising"
+      ]
+    },
+    {
+      "id": "food_noise",
+      "label": "Food noise",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "food noise"
+      ]
+    },
+    {
+      "id": "gym",
+      "label": "Gym",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "gym",
+        "gyms"
+      ]
+    },
+    {
+      "id": "journaling",
+      "label": "Journaling / self-tracking",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "journaling",
+        "journal",
+        "self-tracking",
+        "tracking",
+        "track"
+      ]
+    },
+    {
+      "id": "lifestyle_change",
+      "label": "Lifestyle change",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "lifestyle change",
+        "lifestyle changes",
+        "lifestyle"
+      ]
+    },
+    {
+      "id": "low_carb",
+      "label": "Low-carb / carbs",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "low carb",
+        "low-carb",
+        "carbs",
+        "carb",
+        "carbohydrates"
+      ]
+    },
+    {
+      "id": "meal_planning",
+      "label": "Meal planning",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "meal planning",
+        "meal plan",
+        "meal plans"
+      ]
+    },
+    {
+      "id": "nutrition",
+      "label": "Nutrition",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "nutrition",
+        "nutritional",
+        "macronutrients",
+        "macros"
+      ]
+    },
+    {
+      "id": "paleo",
+      "label": "Paleo diet",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "paleo"
+      ]
+    },
+    {
+      "id": "physical_fitness",
+      "label": "Physical fitness",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "physical fitness",
+        "physical activity",
+        "fitness"
+      ]
+    },
+    {
+      "id": "recipes",
+      "label": "Recipes",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "recipe",
+        "recipes"
+      ]
+    },
+    {
+      "id": "south_beach",
+      "label": "South Beach Diet",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "south beach diet",
+        "south beach"
+      ]
+    },
+    {
+      "id": "steps",
+      "label": "Steps",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "steps"
+      ]
+    },
+    {
+      "id": "vegan",
+      "label": "Vegan diet",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "vegan",
+        "vegetarian"
+      ]
+    },
+    {
+      "id": "walking",
+      "label": "Walking",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "walking",
+        "walked",
+        "walks",
+        "walk"
+      ]
+    },
+    {
+      "id": "weight_watchers",
+      "label": "Weight Watchers",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "weight watchers"
+      ]
+    },
+    {
+      "id": "obesity",
+      "label": "Obesity",
+      "description": "",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "obesity",
+        "obese"
+      ]
+    },
+    {
+      "id": "affordability",
+      "label": "Affordability",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "affordability",
+        "affordable",
+        "afford"
+      ]
+    },
+    {
+      "id": "benefit_manager",
+      "label": "Pharmacy benefit manager",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "pharmacy benefit manager",
+        "plan benefit manager",
+        "benefit manager",
+        "pbm"
+      ]
+    },
+    {
+      "id": "cheaper",
+      "label": "Cheaper",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "cheaper",
+        "cheap",
+        "cheapest"
+      ]
+    },
+    {
+      "id": "cost",
+      "label": "Cost",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "cost prohibitive",
+        "cost",
+        "costs",
+        "costing",
+        "costly"
+      ]
+    },
+    {
+      "id": "coverage",
+      "label": "Coverage",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "coverage",
+        "cover",
+        "covers",
+        "covered",
+        "covering"
+      ]
+    },
+    {
+      "id": "discount",
+      "label": "Discount",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "discount",
+        "discounts",
+        "discounted"
+      ]
+    },
+    {
+      "id": "expensive",
+      "label": "Expensive",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "expensive",
+        "inexpensive"
+      ]
+    },
+    {
+      "id": "healthcare_benefits",
+      "label": "Healthcare / employer benefits",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "healthcare",
+        "health care",
+        "health insurance",
+        "health benefits"
+      ]
+    },
+    {
+      "id": "insurance",
+      "label": "Insurance",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "insurance",
+        "insurer",
+        "insurers",
+        "insured"
+      ]
+    },
+    {
+      "id": "lawsuits",
+      "label": "Lawsuits",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "lawsuit",
+        "lawsuits"
+      ]
+    },
+    {
+      "id": "needle_phobia",
+      "label": "Needle phobia",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "needle phobic",
+        "needle phobia"
+      ]
+    },
+    {
+      "id": "out_of_pocket",
+      "label": "Out of pocket",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "out of pocket"
+      ]
+    },
+    {
+      "id": "price",
+      "label": "Price",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "price",
+        "prices",
+        "pricing",
+        "priced"
+      ]
+    },
+    {
+      "id": "prior_authorization",
+      "label": "Prior authorization",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "prior authorization",
+        "prior auth",
+        "authorization",
+        "authorisation"
+      ]
+    },
+    {
+      "id": "prohibitive",
+      "label": "Prohibitive",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "prohibitive"
+      ]
+    },
+    {
+      "id": "shortages",
+      "label": "Shortages",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "shortage",
+        "shortages"
+      ]
+    },
+    {
+      "id": "concern",
+      "label": "Concern (explicit)",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "concern",
+        "concerns",
+        "concerned",
+        "worried",
+        "worry"
+      ]
+    },
+    {
+      "id": "guinea_pig",
+      "label": "Guinea pig",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "guinea pig"
+      ]
+    },
+    {
+      "id": "harm",
+      "label": "Harm",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "harmful",
+        "harm",
+        "harms"
+      ]
+    },
+    {
+      "id": "risk",
+      "label": "Risk",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "risking",
+        "risks",
+        "risk",
+        "risky"
+      ]
+    },
+    {
+      "id": "scary",
+      "label": "Scary / scared",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "scary",
+        "scared",
+        "scare"
+      ]
+    },
+    {
+      "id": "weight_regain",
+      "label": "Weight regain",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "weight regain",
+        "regaining weight",
+        "gaining weight",
+        "gain weight",
+        "regain",
+        "yo-yo"
+      ]
+    },
+    {
+      "id": "cagrilintide",
+      "label": "Cagrilintide",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "cagrilintide"
+      ]
+    },
+    {
+      "id": "compounded_medication",
+      "label": "Compounded medication",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "compounded medication",
+        "compound medication",
+        "compounded",
+        "compounding",
+        "compound"
+      ]
+    },
+    {
+      "id": "glp_1",
+      "label": "GLP-1",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "glp-1",
+        "glp-1s",
+        "glp1",
+        "glp 1",
+        "glps",
+        "glp"
+      ]
+    },
+    {
+      "id": "implant",
+      "label": "Implant",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "implant",
+        "implants"
+      ]
+    },
+    {
+      "id": "injection",
+      "label": "Injection / shot",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "injectable",
+        "injection",
+        "injections",
+        "injecting",
+        "inject",
+        "shot",
+        "shots",
+        "needle"
+      ]
+    },
+    {
+      "id": "metformin",
+      "label": "Metformin",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "metformin"
+      ]
+    },
+    {
+      "id": "name_brand",
+      "label": "Name-brand drug",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "name brand",
+        "brand name",
+        "name-brand",
+        "branded"
+      ]
+    },
+    {
+      "id": "oral_medication",
+      "label": "Oral medication / pill",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "oral glp-1",
+        "oral glp-1s",
+        "oral medication",
+        "orally",
+        "oral",
+        "pill",
+        "pills"
+      ]
+    },
+    {
+      "id": "orforglipron",
+      "label": "Orforglipron",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "orforglipron"
+      ]
+    },
+    {
+      "id": "phentermine",
+      "label": "Phentermine",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "phentermine"
+      ]
+    },
+    {
+      "id": "retatrutide",
+      "label": "Retatrutide",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "retatrutide"
+      ]
+    },
+    {
+      "id": "semaglutide",
+      "label": "Semaglutide (Wegovy / Ozempic)",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "semaglutide",
+        "wegovy",
+        "ozempic",
+        "positive",
+        "eli lilly"
+      ]
+    },
+    {
+      "id": "tirzepatide",
+      "label": "Tirzepatide (Mounjaro / Zepbound)",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "tirzepatide",
+        "mounjaro",
+        "zepbound"
+      ]
+    },
+    {
+      "id": "safety",
+      "label": "Safety",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_knowledge_gaps",
+      "variants": [
+        "safety",
+        "safe",
+        "safer"
+      ]
+    },
+    {
+      "id": "complication",
+      "label": "Health complication",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "health complication",
+        "complications",
+        "complication"
+      ]
+    },
+    {
+      "id": "gastric_effects",
+      "label": "Gastric effects",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "gastric emptying",
+        "gastric issues",
+        "gastric",
+        "gastrointestinal",
+        "nausea"
+      ]
+    },
+    {
+      "id": "side_effects",
+      "label": "Side effects",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "side effects",
+        "side effect"
+      ]
+    },
+    {
+      "id": "stall",
+      "label": "Stall / plateau",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "stall",
+        "stalls",
+        "stalled",
+        "plateau",
+        "plateaus"
+      ]
+    },
+    {
+      "id": "hunger",
+      "label": "Hunger",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "hungry",
+        "ravenous",
+        "hunger",
+        "appetite"
+      ]
+    },
+    {
+      "id": "quality_of_life",
+      "label": "Quality of life",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "quality of life"
+      ]
+    },
+    {
+      "id": "weight_loss",
+      "label": "Weight loss",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "weight loss",
+        "lose weight",
+        "losing weight",
+        "lost weight"
+      ]
+    },
+    {
+      "id": "weight_maintenance",
+      "label": "Weight maintenance",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "weight maintenance",
+        "weight management",
+        "maintenance",
+        "maintain",
+        "maintaining"
+      ]
+    },
+    {
+      "id": "length",
+      "label": "Length",
+      "description": "",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "length"
+      ]
+    },
+    {
+      "id": "side_effects_2",
+      "label": "Side effects",
+      "description": "",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "medical side effect"
       ]
     }
   ]

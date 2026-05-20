@@ -29,6 +29,12 @@
           "segment_id": "participant_09_t03_s00",
           "interview_id": "participant_09",
           "created_at": "2026-05-20T18:58:22.901Z"
+        },
+        {
+          "text": "phrasings",
+          "segment_id": "participant_06_t03_s00",
+          "interview_id": "participant_06",
+          "created_at": "2026-05-20T21:21:15.250Z"
         }
       ]
     },
