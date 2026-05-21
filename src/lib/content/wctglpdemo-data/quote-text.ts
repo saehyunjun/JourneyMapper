@@ -11,7 +11,7 @@
  * iteration may re-introduce theme highlighting by drawing from the segment's
  * applied subtheme tags rather than a separate term list.
  */
-import { keywordRuns, type KeywordSpan } from './keywords';
+import { keywordRuns, type KeywordSpan, type InstanceKeywordTag } from './keywords';
 
 export type ThemeSpan = { start: number; end: number; themeId: string; themeLabel: string };
 
@@ -24,13 +24,17 @@ export type QuoteRun = { text: string; keyword?: KeywordSpan; theme?: ThemeSpan 
 /**
  * Split `text` into runs annotated with the keyword and/or theme span each run
  * sits inside. Theme spans are currently always empty (see file header).
+ *
+ * `instanceTags` (optional, text-relative offsets) override variant matches at
+ * their range so different occurrences of the same surface form can resolve to
+ * different clusters.
  */
-export function quoteRuns(text: string): QuoteRun[] {
+export function quoteRuns(text: string, instanceTags: InstanceKeywordTag[] = []): QuoteRun[] {
 	if (!text) return [];
 
 	const kSpans: { start: number; end: number; span: KeywordSpan }[] = [];
 	let offset = 0;
-	for (const run of keywordRuns(text)) {
+	for (const run of keywordRuns(text, instanceTags)) {
 		if (run.span) kSpans.push({ start: offset, end: offset + run.text.length, span: run.span });
 		offset += run.text.length;
 	}

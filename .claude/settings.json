@@ -54,7 +54,17 @@
       "Bash(node -e \"const d = require\\('/Users/aaronjun/JourneyMapper/src/lib/content/wctglpdemo-data/codebook.json'\\); console.log\\('schema_version:', d.meta.schema_version, 'status:', d.meta.status\\);\")",
       "Bash(node scripts/build-keyword-usage.mjs)",
       "Bash(grep -n 'async function save\\\\|themes,$\\\\|subthemes,$\\\\|/wctglpdemo/segment-tags' /Users/aaronjun/JourneyMapper/src/lib/components/SegmentTagDrawer.svelte)",
-      "Bash(node scripts/propose-segment-tags.mjs participant_06 --force)"
+      "Bash(node scripts/propose-segment-tags.mjs participant_06 --force)",
+      "Bash(grep -n '$effect\\\\|$derived' /Users/aaronjun/JourneyMapper/src/lib/components/SegmentTagDrawer.svelte)",
+      "Bash(curl -sf \"http://localhost:5176/wctglpdemo/keyword-tags?segment_id=participant_06_t03_s01\")",
+      "Bash(curl -sf \"http://localhost:5176/wctglpdemo/keyword-tags\")",
+      "Bash(python3 -c 'import json,sys; d=json.load\\(sys.stdin\\); print\\('\\\\''count:'\\\\'', len\\(d['\\\\''tags'\\\\'']\\)\\); *)",
+      "Bash(curl -sf \"http://localhost:5176/wctglpdemo/keyword-tags?segment_id=participant_06_t13_s00\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(chromium-cli --help)",
+      "Bash(curl -sI \"http://localhost:5176/wctglpdemo/upload\")",
+      "Bash(kill 53736)",
+      "Bash(ps -p 53736 -o pid,stat)"
     ],
     "additionalDirectories": [
       "/tmp"

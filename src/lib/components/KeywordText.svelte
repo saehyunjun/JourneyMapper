@@ -12,13 +12,18 @@
 -->
 <script lang="ts">
 	import { quoteRuns, type QuoteRun } from '$lib/content/wctglpdemo-data/quote-text';
+	import type { InstanceKeywordTag } from '$lib/content/wctglpdemo-data/keywords';
 	import { groupDrawer } from '$lib/stores/group-drawer.svelte.js';
 
 	type Pick = { kind: 'keyword' | 'theme'; id: string; label: string };
 
-	let { text, onpick }: { text: string; onpick?: (sel: Pick) => void } = $props();
+	let {
+		text,
+		instanceTags = [],
+		onpick
+	}: { text: string; instanceTags?: InstanceKeywordTag[]; onpick?: (sel: Pick) => void } = $props();
 
-	const runs = $derived(quoteRuns(text ?? ''));
+	const runs = $derived(quoteRuns(text ?? '', instanceTags));
 
 	function runTitle(run: QuoteRun): string {
 		const parts: string[] = [];
@@ -54,6 +59,9 @@
 			data-keyword-id={run.keyword?.keywordId ?? null}
 			data-keyword-label={run.keyword?.keywordLabel ?? null}
 			data-keyword-surface={run.keyword?.text ?? null}
+			data-keyword-instance={run.keyword?.isInstance ? 'true' : null}
+			data-keyword-start={run.keyword?.isInstance ? run.keyword.start : null}
+			data-keyword-end={run.keyword?.isInstance ? run.keyword.end : null}
 			class="cursor-pointer rounded-sm text-inherit hover:bg-accent-mint/15{run.keyword
 				? ' font-semibold'
 				: ''}{run.theme ? ' underline decoration-dotted decoration-1 underline-offset-2' : ''}"

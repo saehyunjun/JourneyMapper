@@ -934,7 +934,8 @@
       "variants": [
         "affordability",
         "affordable",
-        "afford"
+        "afford",
+        "harm"
       ]
     },
     {
@@ -1137,9 +1138,7 @@
       "description": "",
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
-      "variants": [
-        "prohibitive"
-      ]
+      "variants": []
     },
     {
       "id": "shortages",
@@ -1194,7 +1193,6 @@
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
         "harmful",
-        "harm",
         "harms"
       ]
     },

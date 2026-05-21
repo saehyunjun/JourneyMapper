@@ -45,9 +45,33 @@
       "review_status": "confirmed",
       "created_at": "2026-05-20T00:00:00.000Z"
     },
-    "generated_at": "2026-05-20T21:34:09.015Z"
+    "generated_at": "2026-05-21T02:08:36.455Z"
   },
   "tags": [
+    {
+      "keyword_id": "cost",
+      "segment_id": "participant_06_t03_s03",
+      "interview_id": "participant_06",
+      "char_start": 1543,
+      "char_end": 1554,
+      "surface": "prohibitive",
+      "source": "human",
+      "confidence": null,
+      "review_status": "confirmed",
+      "created_at": "2026-05-21T02:08:36.416Z"
+    },
+    {
+      "keyword_id": "side_effects",
+      "segment_id": "participant_06_t03_s03",
+      "interview_id": "participant_06",
+      "char_start": 1596,
+      "char_end": 1607,
+      "surface": "prohibitive",
+      "source": "human",
+      "confidence": null,
+      "review_status": "confirmed",
+      "created_at": "2026-05-21T02:08:36.455Z"
+    },
     {
       "keyword_id": "length",
       "segment_id": "participant_06_t13_s00",

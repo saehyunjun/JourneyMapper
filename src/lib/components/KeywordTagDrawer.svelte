@@ -33,6 +33,8 @@
 		currentKeyword = null,
 		busy = false,
 		errorMsg = '',
+		successMsg = '',
+		formResetSeq = 0,
 		ontag,
 		oncreate,
 		onclose
@@ -46,6 +48,13 @@
 		currentKeyword?: { id: string; label: string } | null;
 		busy?: boolean;
 		errorMsg?: string;
+		/** Success notice rendered in-drawer. The parent's flash banner sits
+		 *  behind the tertiary backdrop, so move-mode confirmations need to
+		 *  surface here. */
+		successMsg?: string;
+		/** Bumped by the parent after a successful create-and-move so the inline
+		 *  "new keyword" form clears without us having to toggle `open`. */
+		formResetSeq?: number;
 		/** Tag mode: link the pinned span to this keyword.
 		 *  Move mode: move the variant to this keyword. */
 		ontag: (keywordId: string) => void;
@@ -88,6 +97,7 @@
 	// form doesn't reappear when the analyst re-opens the drawer on a new span.
 	$effect(() => {
 		open;
+		formResetSeq;
 		newClusterFor = '';
 		newClusterLabel = '';
 		newClusterDescription = '';
@@ -147,6 +157,12 @@
 		{#if errorMsg}
 			<p class="rounded border border-rose-200 bg-rose-50 p-2 text-xs text-rose-700">
 				{errorMsg}
+			</p>
+		{/if}
+
+		{#if successMsg}
+			<p class="rounded border border-emerald-200 bg-emerald-50 p-2 text-xs text-emerald-800">
+				{successMsg}
 			</p>
 		{/if}
 

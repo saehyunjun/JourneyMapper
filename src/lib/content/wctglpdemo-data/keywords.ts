@@ -93,7 +93,19 @@ export type KeywordSpan = {
 	keywordLabel: string;
 	categoryId: string; // = cluster.parent_subtheme (transitional name)
 	categoryLabel: string; // = label of that parent subtheme
+	/** True when the span came from a per-instance keyword_tags row, not the
+	 *  lexicon's variant regex. Used by KeywordText to mark the DOM span so the
+	 *  drawer's right-click handler can target the per-instance row. */
+	isInstance?: boolean;
 };
+
+/** Per-instance keyword tag, in text-relative offsets. Source-of-truth lives in
+ *  keyword_tags.json keyed on (segment_id, char_start, char_end); the caller is
+ *  responsible for filtering to the current segment and subtracting the
+ *  segment's char_start before passing in. */
+export type InstanceKeywordTag = { start: number; end: number; keywordId: string };
+
+const clusterById = new Map(clusters.map((c) => [c.id, c]));
 
 /** Every cluster match in `text`, possibly overlapping across clusters. */
 function rawMatches(text: string): KeywordSpan[] {
@@ -120,8 +132,52 @@ function rawMatches(text: string): KeywordSpan[] {
 
 export type TextRun = { text: string; span?: KeywordSpan };
 
-export function keywordRuns(text: string): TextRun[] {
-	const spans = rawMatches(text).sort((a, b) => a.start - b.start || b.end - a.end);
+function instanceTagToSpan(tag: InstanceKeywordTag, text: string): KeywordSpan | null {
+	const cluster = clusterById.get(tag.keywordId);
+	if (!cluster) return null;
+	if (tag.start < 0 || tag.end > text.length || tag.end <= tag.start) return null;
+	return {
+		start: tag.start,
+		end: tag.end,
+		text: text.slice(tag.start, tag.end),
+		keywordId: cluster.id,
+		keywordLabel: cluster.label,
+		categoryId: cluster.parent_subtheme,
+		categoryLabel: subthemeLabel.get(cluster.parent_subtheme) ?? cluster.parent_subtheme,
+		isInstance: true
+	};
+}
+
+/**
+ * Split `text` into runs with optional per-cluster annotation. Per-instance
+ * tags win at their range; variant matches that overlap an instance tag are
+ * dropped so the same surface form can resolve to different clusters in
+ * different occurrences within the same text.
+ */
+export function keywordRuns(text: string, instanceTags: InstanceKeywordTag[] = []): TextRun[] {
+	// Resolve instance tags first and discard any that overlap each other
+	// (later tag is dropped — the natural-key write path should already prevent
+	// this, but be defensive at the renderer too).
+	const instanceCandidates = instanceTags
+		.map((t) => instanceTagToSpan(t, text))
+		.filter((s): s is KeywordSpan => !!s)
+		.sort((a, b) => a.start - b.start || b.end - a.end);
+	const instanceSpans: KeywordSpan[] = [];
+	let lastInstanceEnd = -1;
+	for (const s of instanceCandidates) {
+		if (s.start >= lastInstanceEnd) {
+			instanceSpans.push(s);
+			lastInstanceEnd = s.end;
+		}
+	}
+
+	const overlapsInstance = (a: number, b: number) =>
+		instanceSpans.some((is) => is.start < b && a < is.end);
+	const variantSpans = rawMatches(text).filter((vs) => !overlapsInstance(vs.start, vs.end));
+
+	const spans = [...instanceSpans, ...variantSpans].sort(
+		(a, b) => a.start - b.start || b.end - a.end
+	);
 	const picked: KeywordSpan[] = [];
 	let lastEnd = -1;
 	for (const s of spans) {

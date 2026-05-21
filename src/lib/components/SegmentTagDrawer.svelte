@@ -30,6 +30,8 @@
 	import Undo2Icon from '@lucide/svelte/icons/undo-2';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import type { Annotation, TaggableSegment } from '$lib/types/segment-tags';
+	import type { KeywordTag } from '$lib/server/keyword-tags';
+	import type { InstanceKeywordTag } from '$lib/content/wctglpdemo-data/keywords';
 	import { XIcon } from '@lucide/svelte';
 
 	let {
@@ -317,7 +319,16 @@
 	// same time as the text selection. `surface` is the displayed token (e.g.
 	// "length") used to look up which stored variant to remove/move. Null when
 	// the right-click landed on plain (non-bolded) text.
-	let rightClickKeyword = $state<{ id: string; label: string; surface: string } | null>(null);
+	// `instance` is set when the right-clicked bolding came from a per-instance
+	// keyword_tags row (not the lexicon's variant regex). `charStart`/`charEnd`
+	// are absolute (interview-relative) coordinates, ready to send straight to
+	// the keyword-tags endpoint.
+	let rightClickKeyword = $state<{
+		id: string;
+		label: string;
+		surface: string;
+		instance: { charStart: number; charEnd: number } | null;
+	} | null>(null);
 	// Live selection offsets within the segment text, in segments.json char
 	// coordinates (interview-relative — segment.char_start + offset-in-rendered).
 	// -1 means no usable selection.
@@ -396,7 +407,66 @@
 	// a bolded keyword. Switches the drawer's submit handlers from tag-mode to
 	// move-mode: clicking a cluster moves the variant rather than creating a
 	// new per-instance tag. Null in normal tag-mode.
-	let moveSourceKeyword = $state<{ id: string; label: string } | null>(null);
+	// `instance` is carried through to applyMoveVariant / applyCreateAndTag so
+	// they can swap the per-instance tag row (untag + tag) instead of moving
+	// the variant globally — keeping siblings of the right-clicked occurrence
+	// where the analyst left them.
+	let moveSourceKeyword = $state<{
+		id: string;
+		label: string;
+		instance?: { charStart: number; charEnd: number } | null;
+	} | null>(null);
+	// Incremented after a successful create-and-move so the keyword drawer's
+	// inline "new keyword" form can reset without us tearing down the drawer.
+	let keywordDrawerFormResetSeq = $state(0);
+
+	// Per-instance keyword tag rows for the segment being viewed. Drives the
+	// bolding overrides in <KeywordText/>, so the same surface form can resolve
+	// to different clusters in different occurrences. Refreshed when the segment
+	// changes and after every tag/untag/move action that touches keyword_tags.
+	let segmentKeywordTags = $state<KeywordTag[]>([]);
+	let keywordTagsLoadedFor = '';
+
+	const instanceTagsForRender = $derived.by((): InstanceKeywordTag[] => {
+		if (!segment || segment.char_start == null) return [];
+		const base = segment.char_start;
+		return segmentKeywordTags.map((t) => ({
+			start: t.char_start - base,
+			end: t.char_end - base,
+			keywordId: t.keyword_id
+		}));
+	});
+
+	async function loadKeywordTagsForSegment(segId: string) {
+		if (!segId) {
+			segmentKeywordTags = [];
+			keywordTagsLoadedFor = '';
+			return;
+		}
+		try {
+			const res = await fetch(
+				`/wctglpdemo/keyword-tags?segment_id=${encodeURIComponent(segId)}`
+			);
+			const data = await res.json().catch(() => null);
+			if (!res.ok || !data?.ok) {
+				segmentKeywordTags = [];
+				return;
+			}
+			// Bail if the segment changed under us mid-fetch.
+			if ((segment?.segment_id ?? '') !== segId) return;
+			segmentKeywordTags = (data.tags as KeywordTag[]) ?? [];
+			keywordTagsLoadedFor = segId;
+		} catch {
+			segmentKeywordTags = [];
+		}
+	}
+
+	/** Sync local state from the full tag list a write endpoint returned, so
+	 *  the bolding updates immediately without a refetch. */
+	function syncKeywordTagsFromResponse(allTags: KeywordTag[] | undefined) {
+		if (!allTags || !segment) return;
+		segmentKeywordTags = allTags.filter((t) => t.segment_id === segment.segment_id);
+	}
 
 	function openKeywordDrawer() {
 		if (!selectionText || selectionStart < 0 || selectionEnd <= selectionStart) {
@@ -416,9 +486,21 @@
 	function openMoveDrawer() {
 		if (!rightClickKeyword) return;
 		tertiarySelection = rightClickKeyword.surface;
-		tertiaryStart = -1;
-		tertiaryEnd = -1;
-		moveSourceKeyword = { id: rightClickKeyword.id, label: rightClickKeyword.label };
+		// For per-instance moves we already know the exact span — pin the same
+		// offsets so tagPinnedSpan can fire on the new cluster without a fresh
+		// browser selection.
+		if (rightClickKeyword.instance) {
+			tertiaryStart = rightClickKeyword.instance.charStart;
+			tertiaryEnd = rightClickKeyword.instance.charEnd;
+		} else {
+			tertiaryStart = -1;
+			tertiaryEnd = -1;
+		}
+		moveSourceKeyword = {
+			id: rightClickKeyword.id,
+			label: rightClickKeyword.label,
+			instance: rightClickKeyword.instance
+		};
 		errorMsg = '';
 		keywordDrawerOpen = true;
 	}
@@ -458,6 +540,7 @@
 		const id = segment?.segment_id ?? '';
 		if (id && id !== seededFor) {
 			seededFor = id;
+			void loadKeywordTagsForSegment(id);
 			// codebook 2.0: the drawer's chips ARE subthemes. state.themes holds
 			// the selected subtheme ids; state.subthemes is unused (kept for type
 			// compat with the Snapshot/dirty-tracking machinery).
@@ -555,10 +638,27 @@
 		const target = (event?.target as HTMLElement | undefined) ?? null;
 		const kwEl = target?.closest('[data-keyword-id]') as HTMLElement | null;
 		if (kwEl?.dataset.keywordId) {
+			let instance: { charStart: number; charEnd: number } | null = null;
+			if (
+				kwEl.dataset.keywordInstance === 'true' &&
+				segment?.char_start != null &&
+				kwEl.dataset.keywordStart != null &&
+				kwEl.dataset.keywordEnd != null
+			) {
+				const textStart = Number(kwEl.dataset.keywordStart);
+				const textEnd = Number(kwEl.dataset.keywordEnd);
+				if (Number.isInteger(textStart) && Number.isInteger(textEnd) && textEnd > textStart) {
+					instance = {
+						charStart: segment.char_start + textStart,
+						charEnd: segment.char_start + textEnd
+					};
+				}
+			}
 			rightClickKeyword = {
 				id: kwEl.dataset.keywordId,
 				label: kwEl.dataset.keywordLabel ?? '',
-				surface: kwEl.dataset.keywordSurface ?? kwEl.textContent?.trim() ?? ''
+				surface: kwEl.dataset.keywordSurface ?? kwEl.textContent?.trim() ?? '',
+				instance
 			};
 		} else {
 			rightClickKeyword = null;
@@ -639,6 +739,7 @@
 				errorMsg = data?.error ?? 'Could not save keyword tag.';
 				return false;
 			}
+			syncKeywordTagsFromResponse(data.tags as KeywordTag[] | undefined);
 			flashMsg = data.message ?? 'Tagged to keyword cluster.';
 			clearTimeout(flashTimer);
 			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
@@ -662,6 +763,55 @@
 		errorMsg = '';
 		try {
 			if (await tagPinnedSpan(keywordId)) keywordDrawerOpen = false;
+		} finally {
+			lexBusy = false;
+		}
+	}
+
+	/** Right-clicked-span unlink. Per-instance tags are deleted as single rows
+	 *  via the keyword-tags endpoint; variant-bolded spans fall through to the
+	 *  global variant remove. Splitting on `instance` keeps occurrence-level
+	 *  unlinks from blowing away the lexicon entry every other occurrence is
+	 *  still relying on. */
+	async function applyUnlinkClicked() {
+		if (!rightClickKeyword) return;
+		if (rightClickKeyword.instance) {
+			await applyUnlinkInstance();
+		} else {
+			await applyUnlinkVariant();
+		}
+	}
+
+	async function applyUnlinkInstance() {
+		if (!rightClickKeyword?.instance || !segment || lexBusy) return;
+		const { id, surface, label, instance } = rightClickKeyword;
+		lexBusy = true;
+		flashMsg = '';
+		errorMsg = '';
+		try {
+			const res = await fetch('/wctglpdemo/keyword-tags', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action: 'untag',
+					keyword_id: id,
+					segment_id: segment.segment_id,
+					char_start: instance.charStart,
+					char_end: instance.charEnd
+				})
+			});
+			const data = await res.json().catch(() => null);
+			if (!res.ok || !data?.ok) {
+				errorMsg = data?.error ?? 'Could not unlink the keyword.';
+				return;
+			}
+			syncKeywordTagsFromResponse(data.tags as KeywordTag[] | undefined);
+			flashMsg = `Unlinked this occurrence of “${surface}” from “${label}”.`;
+			clearTimeout(flashTimer);
+			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
+			rightClickKeyword = null;
+		} catch {
+			errorMsg = 'Could not reach the server.';
 		} finally {
 			lexBusy = false;
 		}
@@ -704,14 +854,95 @@
 		}
 	}
 
-	/** Variant-level operation: move the variant from the source cluster
-	 *  (`moveSourceKeyword`) to the cluster the analyst just clicked. */
+	/** Per-occurrence move: drop the row that pinned this span to the source
+	 *  cluster, then add a row pinning the same span to the destination. The
+	 *  lexicon is not touched, so sibling occurrences of the same surface form
+	 *  keep whatever cluster they had. */
+	async function applyMoveInstance(toKeywordId: string) {
+		if (!moveSourceKeyword?.instance || !segment || lexBusy) return;
+		const fromId = moveSourceKeyword.id;
+		const { charStart, charEnd } = moveSourceKeyword.instance;
+		const surface = tertiarySelection;
+		lexBusy = true;
+		flashMsg = '';
+		errorMsg = '';
+		try {
+			const untagRes = await fetch('/wctglpdemo/keyword-tags', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action: 'untag',
+					keyword_id: fromId,
+					segment_id: segment.segment_id,
+					char_start: charStart,
+					char_end: charEnd
+				})
+			});
+			const untagData = await untagRes.json().catch(() => null);
+			if (!untagRes.ok || !untagData?.ok) {
+				errorMsg = untagData?.error ?? 'Could not move this occurrence.';
+				return;
+			}
+			syncKeywordTagsFromResponse(untagData.tags as KeywordTag[] | undefined);
+
+			const tagRes = await fetch('/wctglpdemo/keyword-tags', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					action: 'tag',
+					keyword_id: toKeywordId,
+					segment_id: segment.segment_id,
+					char_start: charStart,
+					char_end: charEnd,
+					expected_surface: surface
+				})
+			});
+			const tagData = await tagRes.json().catch(() => null);
+			if (!tagRes.ok || !tagData?.ok) {
+				errorMsg = tagData?.error ?? 'Unlinked the old cluster, but could not link the new one.';
+				return;
+			}
+			syncKeywordTagsFromResponse(tagData.tags as KeywordTag[] | undefined);
+
+			flashMsg = `Moved this occurrence of “${surface}” to a different keyword.`;
+			clearTimeout(flashTimer);
+			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
+
+			let newLabel = moveSourceKeyword.label;
+			for (const cat of lexicon.categories) {
+				const kw = cat.keywords.find((k) => k.id === toKeywordId);
+				if (kw) {
+					newLabel = kw.label;
+					break;
+				}
+			}
+			moveSourceKeyword = {
+				id: toKeywordId,
+				label: newLabel,
+				instance: { charStart, charEnd }
+			};
+		} catch {
+			errorMsg = 'Could not reach the server.';
+		} finally {
+			lexBusy = false;
+		}
+	}
+
+	/** Move from the source cluster (`moveSourceKeyword`) to the cluster the
+	 *  analyst just clicked. When the source carries an instance context, the
+	 *  move is per-occurrence (untag + tag) so other occurrences of the same
+	 *  surface stay where the analyst left them. Otherwise it falls through to
+	 *  the global variant move. */
 	async function applyMoveVariant(toKeywordId: string) {
 		if (!moveSourceKeyword || lexBusy) return;
 		const fromId = moveSourceKeyword.id;
 		if (fromId === toKeywordId) {
 			// Clicking the source cluster is a no-op; just close the drawer.
 			keywordDrawerOpen = false;
+			return;
+		}
+		if (moveSourceKeyword.instance) {
+			await applyMoveInstance(toKeywordId);
 			return;
 		}
 		const surface = tertiarySelection;
@@ -738,7 +969,18 @@
 			flashMsg = data.message ?? 'Moved to a different keyword.';
 			clearTimeout(flashTimer);
 			flashTimer = setTimeout(() => (flashMsg = ''), 4000);
-			keywordDrawerOpen = false;
+			// Keep the drawer open so the analyst can keep iterating on this
+			// span; point the move source at the new destination so the
+			// "currently linked" indicator reflects where the variant now lives.
+			let newLabel = moveSourceKeyword.label;
+			for (const cat of lexicon.categories) {
+				const kw = cat.keywords.find((k) => k.id === toKeywordId);
+				if (kw) {
+					newLabel = kw.label;
+					break;
+				}
+			}
+			moveSourceKeyword = { id: toKeywordId, label: newLabel };
 		} catch {
 			errorMsg = 'Could not reach the server.';
 		} finally {
@@ -793,8 +1035,59 @@
 				errorMsg = 'Keyword created but its id was not returned.';
 				return;
 			}
-			// In "move" mode the create itself adds the variant to the new
-			// cluster; we just have to strip it from the source cluster — no
+			// Per-instance move-mode: drop the source row, then tag the same span
+			// on the brand-new cluster. The lexicon is left alone — sibling
+			// occurrences keep whatever cluster they had.
+			if (moveSourceKeyword?.instance && segment) {
+				const fromId = moveSourceKeyword.id;
+				const { charStart, charEnd } = moveSourceKeyword.instance;
+				const untagRes = await fetch('/wctglpdemo/keyword-tags', {
+					method: 'POST',
+					headers: { 'content-type': 'application/json' },
+					body: JSON.stringify({
+						action: 'untag',
+						keyword_id: fromId,
+						segment_id: segment.segment_id,
+						char_start: charStart,
+						char_end: charEnd
+					})
+				});
+				const untagData = await untagRes.json().catch(() => null);
+				if (!untagRes.ok || !untagData?.ok) {
+					errorMsg =
+						untagData?.error ??
+						'Created the new keyword, but could not unlink the previous occurrence.';
+					return;
+				}
+				syncKeywordTagsFromResponse(untagData.tags as KeywordTag[] | undefined);
+
+				const tagRes = await fetch('/wctglpdemo/keyword-tags', {
+					method: 'POST',
+					headers: { 'content-type': 'application/json' },
+					body: JSON.stringify({
+						action: 'tag',
+						keyword_id: createdId,
+						segment_id: segment.segment_id,
+						char_start: charStart,
+						char_end: charEnd,
+						expected_surface: tertiarySelection
+					})
+				});
+				const tagData = await tagRes.json().catch(() => null);
+				if (!tagRes.ok || !tagData?.ok) {
+					errorMsg = tagData?.error ?? 'Created the new keyword, but could not link this occurrence.';
+					return;
+				}
+				syncKeywordTagsFromResponse(tagData.tags as KeywordTag[] | undefined);
+				flashMsg = `Moved this occurrence of “${tertiarySelection}” to “${label}”.`;
+				clearTimeout(flashTimer);
+				flashTimer = setTimeout(() => (flashMsg = ''), 4000);
+				moveSourceKeyword = { id: createdId, label, instance: { charStart, charEnd } };
+				keywordDrawerFormResetSeq++;
+				return;
+			}
+			// Variant-source move-mode: the create itself adds the variant to the
+			// new cluster; we just have to strip it from the source cluster — no
 			// per-instance tag is involved.
 			if (moveSourceKeyword) {
 				const fromId = moveSourceKeyword.id;
@@ -818,7 +1111,11 @@
 				flashMsg = `Moved “${tertiarySelection}” to “${label}”.`;
 				clearTimeout(flashTimer);
 				flashTimer = setTimeout(() => (flashMsg = ''), 4000);
-				keywordDrawerOpen = false;
+				// Keep the drawer open and point the move source at the new
+				// keyword so the analyst can keep iterating. Bump the form-reset
+				// signal so the inline "new keyword" form clears.
+				moveSourceKeyword = { id: createdId, label };
+				keywordDrawerFormResetSeq++;
 				return;
 			}
 			if (await tagPinnedSpan(createdId)) keywordDrawerOpen = false;
@@ -1213,7 +1510,7 @@
 									}}
 									class="cursor-text border-l-2 border-accent-mint px-4 text-2xl text-primary select-text"
 								>
-									<KeywordText text={currentText} />
+									<KeywordText text={currentText} instanceTags={instanceTagsForRender} />
 								</p>
 							{/snippet}
 						</ContextMenu.Trigger>
@@ -1228,8 +1525,12 @@
 									<span class="font-medium text-slate-700">{rightClickKeyword.label}</span>
 								</ContextMenu.Label>
 								<ContextMenu.Separator />
-								<ContextMenu.Item onSelect={() => applyUnlinkVariant()}>
-									Unlink from “{truncate(rightClickKeyword.label, 24)}”
+								<ContextMenu.Item onSelect={() => applyUnlinkClicked()}>
+									{#if rightClickKeyword.instance}
+										Unlink this occurrence from “{truncate(rightClickKeyword.label, 24)}”
+									{:else}
+										Unlink from “{truncate(rightClickKeyword.label, 24)}”
+									{/if}
 								</ContextMenu.Item>
 								<ContextMenu.Item onSelect={() => openMoveDrawer()}>
 									Move to another keyword…
@@ -1721,6 +2022,8 @@
 		currentKeyword={moveSourceKeyword}
 		busy={lexBusy}
 		{errorMsg}
+		successMsg={moveSourceKeyword ? flashMsg : ''}
+		formResetSeq={keywordDrawerFormResetSeq}
 		ontag={(keywordId) => applyKeywordTag(keywordId)}
 		oncreate={(input) => applyCreateAndTag(input)}
 		onclose={() => (moveSourceKeyword = null)}

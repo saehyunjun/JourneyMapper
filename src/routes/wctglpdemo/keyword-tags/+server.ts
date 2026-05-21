@@ -19,12 +19,24 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import {
 	addKeywordTag,
+	listAllKeywordTags,
+	listKeywordTagsForSegment,
 	removeKeywordTag,
 	type KeywordTagsState
 } from '$lib/server/keyword-tags';
 
 const str = (v: unknown) => (typeof v === 'string' ? v : '');
 const int = (v: unknown) => (typeof v === 'number' && Number.isInteger(v) ? v : NaN);
+
+/** Read per-instance tags. With `?segment_id=…` returns only that segment's
+ *  tags (the drawer's hot path); with no query, returns the full list. */
+export const GET: RequestHandler = async ({ url }) => {
+	const segmentId = url.searchParams.get('segment_id') ?? '';
+	const tags = segmentId
+		? await listKeywordTagsForSegment(segmentId)
+		: await listAllKeywordTags();
+	return json({ ok: true, tags });
+};
 
 export const POST: RequestHandler = async ({ request }) => {
 	let body: Record<string, unknown>;
