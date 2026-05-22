@@ -610,7 +610,7 @@
 		bind:clientHeight={H}
 		class="relative w-full overflow-hidden bg-[#0c1320] {fullBleed
 			? 'min-h-0 flex-1'
-			: 'aspect-[16/10] min-h-[460px] rounded-xl border border-(--ink)/15'}"
+			: 'aspect-16/10 min-h-[460px] rounded-xl border border-(--ink)/15'}"
 		class:cursor-crosshair={mode === 'manual'}
 		class:cursor-pointer={onThemeSelect && mode === 'auto'}
 		onpointermove={onPointer}

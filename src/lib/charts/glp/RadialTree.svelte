@@ -14,6 +14,7 @@
 	 */
 	import * as d3 from 'd3';
 	import { themePalette, type TopicTreeNode } from '$lib/content/wctglpdemo-data/topicTree';
+	import { Button } from '$lib/components/ui/button/index.ts';
 
 	type Props = { root: TopicTreeNode; height?: number };
 	let { root, height = 760 }: Props = $props();
@@ -219,27 +220,24 @@
 <div class="relative w-full" bind:this={wrapEl} bind:clientWidth={width}>
 	<!-- Controls -->
 	<div class="absolute right-3 top-3 z-10 flex gap-1.5">
-		<button
-			type="button"
-			class="rounded-md border border-(--ink)/15 bg-(--paper)/90 px-2.5 py-1 text-xs text-foreground shadow-sm transition-colors hover:bg-(--ink)/5"
+		<Button
+			variant="secondary"
 			onclick={() => expandAll()}
 		>
 			Expand all
-		</button>
-		<button
-			type="button"
-			class="rounded-md border border-(--ink)/15 bg-(--paper)/90 px-2.5 py-1 text-xs text-foreground shadow-sm transition-colors hover:bg-(--ink)/5"
+	</Button>
+		<Button
+			variant="secondary"
 			onclick={() => collapseKeywords()}
 		>
 			Collapse words
-		</button>
-		<button
-			type="button"
-			class="rounded-md border border-(--ink)/15 bg-(--paper)/90 px-2.5 py-1 text-xs text-foreground shadow-sm transition-colors hover:bg-(--ink)/5"
+		</Button>
+		<Button
+			variant="secondary"
 			onclick={() => resetView()}
 		>
 			Reset view
-		</button>
+	</Button>
 	</div>
 
 	<svg

@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-18T19:05:19.226Z",
+    "generated_at": "2026-05-21T18:03:26.312Z",
     "generator": "scripts/parse-transcripts.mjs",
     "source_files": [
       "Example Interview.md",
@@ -11,7 +11,8 @@
       "src/lib/content/wctglpdemo-data/uploads/participant_07.txt",
       "src/lib/content/wctglpdemo-data/uploads/participant_08.txt",
       "src/lib/content/wctglpdemo-data/uploads/participant_11.txt",
-      "src/lib/content/wctglpdemo-data/uploads/participant_12.txt"
+      "src/lib/content/wctglpdemo-data/uploads/participant_12.txt",
+      "src/lib/content/wctglpdemo-data/uploads/participant_13.txt"
     ],
     "notes": [
       "Canonical source-of-truth structure. All downstream outputs derive from this.",
@@ -2981,6 +2982,28 @@
           "text": "I think researchers underestimate how much shame people carry around weight. A lot of participants are going to come into these studies already feeling judged by doctors or by society. So if a study feels difficult, inconvenient, or impersonal, people may quietly drop out instead of asking for help. Feeling supported and respected would make a huge difference.",
           "char_start": 6893,
           "char_end": 7255
+        }
+      ]
+    },
+    {
+      "interview_id": "participant_13",
+      "source_file": "src/lib/content/wctglpdemo-data/uploads/participant_13.txt",
+      "source_title": null,
+      "ingested_via": "upload",
+      "ingested_at": "2026-05-21T18:03:26.312Z",
+      "participant_metadata": {
+        "condition": "GLP-1 weight maintenance",
+        "demographics_raw": null,
+        "gender": null
+      },
+      "turn_count": 1,
+      "turns": [
+        {
+          "turn_index": 0,
+          "speaker": "participant",
+          "text": "There's got to be something wrong. What I'm experiencing isn't normal. The passion started as a kid. It was so freeing, just being up in the air. When I landed on my first solo flight, that's when I knew I wanted to be an airline pilot. I was close to getting a pilot's license when I first started experiencing symptoms. My name is Sean Somerville, and I'm 25 years old. I was 19 when I was diagnosed with free-trace sataxia. The first thing I noticed was my balance. Just walking down the hallway at school, it was so hard to walk normally in a straight line. I looked like I was stumbling around all over the place. It evolves slowly over time. It's not something you notice day-to-day, but you're going upstairs and I'll think this was easier a year ago. I was afraid to go to the doctor and get the bad news. I put everything into this career in aviation. I knew I had to maintain that medical certificate. It took a year from when I first saw a neurologist to finally getting the free-trace sataxia diagnosis. First, they thought it was an autoimmune neuropathy. They thought it might be MS. And finally, they reached the diagnosis of free-trace sataxia through genetic testing. I didn't even know what it was, and I went and looked it up on Google. The results were devastating. That was the most difficult moment of my life was receiving the diagnosis. I had put all my time, blood, sweat, and tears into being a professional pilot. And just to see all that in a moment was devastating. My life now, it's pretty great. I realized that I needed to get back up and make something happen. It started with really a mentality shift. I found that I needed to have something to get up and do every day. And for me, it became cycling. When you're on a trachea, as someone with free-trace sataxia, you feel a lot less disabled. You feel enabled. When I'm on the trachea, I don't experience a lot of the symptoms that free-trace sataxia makes me experience in my everyday life and other moments. It's very freeing to be able to get out there and just pedal and not have that f-a in the way of that. Drawing the free-trace sataxia research alliance and meeting the whole community of people with free-trace sataxia was game-changing for me. It's such an isolating disease. I finally felt like I wasn't alone in the fight. I feel I have regained a lot of balance in my life. Eventually, I got looking into other careers in aviation. What else could I do aside from being a pilot? I've also come to learn that you constantly have to adjust and kind of find that balance. Aviation is still a big part of my life, and I work in the aerospace industry. I think it's very possible that we get a cure for f-a. Maybe I get the opportunity to go back to flying, but even if I don't, I have come to realize that I can still have a long and rewarding career in the aviation field and continue to battle against free-trace sataxia every day. It's important to remember that you just got to keep fighting, and sometimes it will seem far away, your goals or passions, but you're never out of the fight.",
+          "char_start": 13,
+          "char_end": 3098
         }
       ]
     }

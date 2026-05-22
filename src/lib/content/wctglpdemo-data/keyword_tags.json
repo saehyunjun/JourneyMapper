@@ -45,7 +45,7 @@
       "review_status": "confirmed",
       "created_at": "2026-05-20T00:00:00.000Z"
     },
-    "generated_at": "2026-05-21T02:08:36.455Z"
+    "generated_at": "2026-05-22T19:25:03.445Z"
   },
   "tags": [
     {
@@ -58,10 +58,10 @@
       "source": "human",
       "confidence": null,
       "review_status": "confirmed",
-      "created_at": "2026-05-21T02:08:36.416Z"
+      "created_at": "2026-05-22T19:24:56.986Z"
     },
     {
-      "keyword_id": "side_effects",
+      "keyword_id": "complication",
       "segment_id": "participant_06_t03_s03",
       "interview_id": "participant_06",
       "char_start": 1596,
@@ -70,7 +70,19 @@
       "source": "human",
       "confidence": null,
       "review_status": "confirmed",
-      "created_at": "2026-05-21T02:08:36.455Z"
+      "created_at": "2026-05-22T19:25:03.445Z"
+    },
+    {
+      "keyword_id": "stigma",
+      "segment_id": "participant_06_t11_s00",
+      "interview_id": "participant_06",
+      "char_start": 3108,
+      "char_end": 3113,
+      "surface": "false",
+      "source": "human",
+      "confidence": null,
+      "review_status": "confirmed",
+      "created_at": "2026-05-21T17:59:24.398Z"
     },
     {
       "keyword_id": "length",
@@ -83,6 +95,18 @@
       "confidence": null,
       "review_status": "confirmed",
       "created_at": "2026-05-20T21:07:43.688Z"
+    },
+    {
+      "keyword_id": "weight_loss",
+      "segment_id": "participant_06_t13_s01",
+      "interview_id": "participant_06",
+      "char_start": 4591,
+      "char_end": 4605,
+      "surface": "regular weight",
+      "source": "human",
+      "confidence": null,
+      "review_status": "confirmed",
+      "created_at": "2026-05-21T18:00:16.188Z"
     },
     {
       "keyword_id": "glp_1",

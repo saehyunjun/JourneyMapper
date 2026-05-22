@@ -1825,8 +1825,7 @@
         "previous attempts",
         "in the past",
         "back in",
-        "years ago",
-        "since i was"
+        "years ago"
       ]
     },
     {
@@ -1858,6 +1857,16 @@
         "cannot afford",
         "out of reach",
         "priced out"
+      ]
+    },
+    {
+      "id": "stigma",
+      "label": "Stigma",
+      "description": "Stigma towards obesity as disease.",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "false"
       ]
     }
   ]

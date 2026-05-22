@@ -148,7 +148,7 @@
 		class="flex h-60 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
 	>
 		<div class="mx-auto flex w-full max-w-4xl flex-col gap-3 px-8">
-			<span class="figcaption text-white">WCT GLP-1 Interviews · Pipeline · Step 5</span>
+			<span class="figcaption text-white">GLP-1 · Pipeline · Step 5</span>
 			<h1 class="font-heading text-4xl font-light uppercase text-primary-foreground md:text-5xl">
 				Tag segments
 			</h1>

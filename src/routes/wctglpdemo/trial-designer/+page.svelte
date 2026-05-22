@@ -106,7 +106,7 @@
 		class="flex h-80 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
 	>
 		<div class="mx-auto flex w-full max-w-7xl flex-col gap-3 px-8">
-			<span class="figcaption text-white">WCT GLP-1 Interviews</span>
+			<span class="figcaption text-white">GLP-1 Interviews</span>
 			<h1 class="font-heading text-5xl font-light capitalize text-primary-foreground md:text-7xl">
 				Design a trial they'd join
 			</h1>

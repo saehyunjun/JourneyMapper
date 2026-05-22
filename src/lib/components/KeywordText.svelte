@@ -62,8 +62,8 @@
 			data-keyword-instance={run.keyword?.isInstance ? 'true' : null}
 			data-keyword-start={run.keyword?.isInstance ? run.keyword.start : null}
 			data-keyword-end={run.keyword?.isInstance ? run.keyword.end : null}
-			class="cursor-pointer rounded-sm text-inherit hover:bg-accent-mint/15{run.keyword
-				? ' font-semibold'
+			class="cursor-pointer rounded-sm hover:bg-accent-mint/30{run.keyword
+				? ' font-semibold underline decoration-dotted decoration-2 underline-offset-2'
 				: ''}{run.theme ? ' underline decoration-dotted decoration-1 underline-offset-2' : ''}"
 			onclick={(e) => pick(e, run)}
 			onkeydown={(e) => {

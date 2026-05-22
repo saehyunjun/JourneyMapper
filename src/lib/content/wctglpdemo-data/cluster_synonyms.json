@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "status": "live",
+    "description": "Display-only synonym groups for keyword clusters. Each group declares one canonical cluster (FK → keyword_lexicon.clusters[].id) and a set of member clusters that should be RENDERED under the canonical's label in segment-tag drawers, charts, and exports. Tagging behavior is unchanged: member clusters keep their own identity in keyword_tags.json, and an analyst can still tag to a member directly. Only the display label / drawer grouping is affected.",
+    "changelog": [
+      "1.0 — initial groups: cost (8 members), insurance_access (5 members), educational_materials (5 members). Created in response to drawer redundancy surfaced when analyst tried to move a 'prohibitive' tag and saw overlapping Cost / Cost prohibitive / Affordability / Expensive clusters."
+    ],
+    "semantics": "display-only alias",
+    "notes": [
+      "Canonical and members are all FK → keyword_lexicon.clusters[].id. Every referenced id must exist in the live lexicon.",
+      "A member must share the canonical's parent_subtheme — synonym groups never cross subthemes (use parallel clusters with different parents for that).",
+      "The canonical must NOT also be listed in its own members[]. The canonical is implicitly part of the group.",
+      "A cluster id may appear in at most one group (no nested or overlapping groups).",
+      "If a synonym group has zero members the group should be deleted, not kept.",
+      "Renaming: the group's `label` overrides the canonical cluster's label at display time. Leave it null to inherit the cluster.label.",
+      "Consumers: SegmentTagDrawer collapses members into the canonical row; chart/report layers that want raw distributions can ignore this file."
+    ],
+    "group_shape": {
+      "id": "Slug, lowercase + underscores. Globally unique within this file. Often matches canonical, but doesn't have to.",
+      "canonical": "FK → keyword_lexicon.clusters[].id. The cluster whose label is shown.",
+      "label": "Display label override. Use null to inherit cluster.label.",
+      "description": "One sentence describing why these clusters are grouped.",
+      "members": "Array of FK → keyword_lexicon.clusters[].id. Each must share canonical's parent_subtheme."
+    }
+  },
+  "groups": [
+    {
+      "id": "cost",
+      "canonical": "cost",
+      "label": "Cost",
+      "description": "Cost / affordability / price / out-of-pocket framings of treatment as a barrier — all surfaces of the same underlying concept.",
+      "members": [
+        "cheaper",
+        "expensive",
+        "price",
+        "affordability",
+        "discount",
+        "out_of_pocket",
+        "cost_prohibitive"
+      ]
+    },
+    {
+      "id": "insurance_access",
+      "canonical": "insurance",
+      "label": "Insurance & access",
+      "description": "Insurance plan, coverage, PBMs, prior auth, employer benefits — the system-level access barriers that gate the prescription.",
+      "members": [
+        "coverage",
+        "prior_authorization",
+        "healthcare_benefits",
+        "benefit_manager"
+      ]
+    },
+    {
+      "id": "educational_materials",
+      "canonical": "education",
+      "label": "Educational materials",
+      "description": "Trial-provided teaching content in various formats — handouts, videos, webinars, online modules, classes — all rolling up to the same motivator.",
+      "members": [
+        "handouts",
+        "videos",
+        "webinars",
+        "learning_modules",
+        "classes"
+      ]
+    }
+  ]
+}

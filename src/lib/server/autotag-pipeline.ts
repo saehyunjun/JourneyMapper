@@ -35,6 +35,33 @@ const TAGS_KEY = 'wctglpdemo:segment_tags';
 
 const MODEL = 'claude-opus-4-7';
 
+/** Format a sample of ids for an error message: "a, b, c …(+12 more)" */
+function sampleIds(ids: (string | number)[], cap = 5): string {
+	if (ids.length === 0) return '∅';
+	const head = ids.slice(0, cap).join(', ');
+	const extra = ids.length - cap;
+	return extra > 0 ? `${head} …(+${extra} more)` : head;
+}
+
+/** Names of the content block types in a Claude response — for diagnostics. */
+function blockSummary(content: { type: string }[]): string {
+	if (!content.length) return 'no blocks';
+	const counts = new Map<string, number>();
+	for (const b of content) counts.set(b.type, (counts.get(b.type) ?? 0) + 1);
+	return [...counts.entries()].map(([t, n]) => (n > 1 ? `${t}×${n}` : t)).join(', ');
+}
+
+/** Parse the model's JSON output with a focused error when it isn't valid JSON. */
+function parseModelJson<T>(text: string, ctx: string): T {
+	try {
+		return JSON.parse(text) as T;
+	} catch (e) {
+		const msg = e instanceof Error ? e.message : 'parse failed';
+		const snippet = text.length > 240 ? `${text.slice(0, 240)}…` : text;
+		throw new Error(`${ctx}: response was not valid JSON (${msg}). First 240 chars: ${snippet}`);
+	}
+}
+
 // --- Shared types ---------------------------------------------------------
 
 type Turn = {
@@ -234,28 +261,41 @@ export async function proposeQuestions(interviewId: string): Promise<void> {
 	});
 	const msg = await stream.finalMessage();
 	if (msg.stop_reason === 'max_tokens') {
-		throw new Error(`${interviewId}: response hit max_tokens — output truncated.`);
+		throw new Error(
+			`${interviewId}: response hit max_tokens (output truncated mid-mapping). Try a shorter transcript or split this interview.`
+		);
 	}
-	if (msg.stop_reason === 'refusal') throw new Error(`${interviewId}: model refused to respond.`);
+	if (msg.stop_reason === 'refusal') {
+		throw new Error(
+			`${interviewId}: model refused the request (stop_reason=refusal). Review the transcript for content that may have tripped the safety filter.`
+		);
+	}
 
 	const textBlock = msg.content.find((b) => b.type === 'text');
 	if (!textBlock || textBlock.type !== 'text') {
-		throw new Error(`${interviewId}: no text block in response.`);
+		throw new Error(
+			`${interviewId}: no text block in model response (stop_reason=${msg.stop_reason ?? 'unknown'}, blocks: ${blockSummary(msg.content)}).`
+		);
 	}
-	const parsed = JSON.parse(textBlock.text) as {
+	const parsed = parseModelJson<{
 		mappings: { turn_index: number; question_id: string; turn_role: string; confidence: number; note?: string }[];
-	};
+	}>(textBlock.text, interviewId);
 	if (!Array.isArray(parsed.mappings)) {
-		throw new Error(`${interviewId}: response had no "mappings" array.`);
+		throw new Error(`${interviewId}: response JSON had no "mappings" array (keys: ${Object.keys(parsed).join(', ') || 'none'}).`);
 	}
 
 	const got = new Map(parsed.mappings.map((m) => [m.turn_index, m]));
 	const expected = new Set(interviewerIndices);
 	const missing = interviewerIndices.filter((idx) => !got.has(idx));
 	const extra = [...got.keys()].filter((idx) => !expected.has(idx));
-	if (missing.length || extra.length || got.size !== parsed.mappings.length) {
+	const duplicates = parsed.mappings.length - got.size;
+	if (missing.length || extra.length || duplicates) {
+		const parts: string[] = [];
+		if (missing.length) parts.push(`${missing.length} missing turn_index [${sampleIds(missing)}]`);
+		if (extra.length) parts.push(`${extra.length} unexpected turn_index [${sampleIds(extra)}]`);
+		if (duplicates) parts.push(`${duplicates} duplicate mapping${duplicates === 1 ? '' : 's'}`);
 		throw new Error(
-			`${interviewId}: coverage mismatch (missing=${missing.length}, extra=${extra.length}).`
+			`${interviewId}: turn coverage mismatch — expected ${interviewerIndices.length} interviewer turns, model returned ${parsed.mappings.length} mappings. ${parts.join('; ')}.`
 		);
 	}
 
@@ -264,7 +304,9 @@ export async function proposeQuestions(interviewId: string): Promise<void> {
 		.map((idx) => {
 			const m = got.get(idx)!;
 			if (!validQuestionIds.has(m.question_id)) {
-				throw new Error(`${interviewId} turn ${idx}: unknown question_id "${m.question_id}".`);
+				throw new Error(
+					`${interviewId} turn ${idx}: model returned unknown question_id "${m.question_id}" (not in the question bank — schema enforcement should have prevented this).`
+				);
 			}
 			return {
 				turn_index: idx,
@@ -443,28 +485,41 @@ export async function proposeSegmentTags(interviewId: string): Promise<void> {
 	});
 	const msg = await stream.finalMessage();
 	if (msg.stop_reason === 'max_tokens') {
-		throw new Error(`${interviewId}: response hit max_tokens — output truncated.`);
+		throw new Error(
+			`${interviewId}: response hit max_tokens (${segs.length} segments to tag — output truncated). Try splitting the interview into shorter chunks.`
+		);
 	}
-	if (msg.stop_reason === 'refusal') throw new Error(`${interviewId}: model refused to respond.`);
+	if (msg.stop_reason === 'refusal') {
+		throw new Error(
+			`${interviewId}: model refused the request (stop_reason=refusal). Review the transcript for content that may have tripped the safety filter.`
+		);
+	}
 
 	const textBlock = msg.content.find((b) => b.type === 'text');
 	if (!textBlock || textBlock.type !== 'text') {
-		throw new Error(`${interviewId}: no text block in response.`);
+		throw new Error(
+			`${interviewId}: no text block in model response (stop_reason=${msg.stop_reason ?? 'unknown'}, blocks: ${blockSummary(msg.content)}).`
+		);
 	}
-	const parsed = JSON.parse(textBlock.text) as {
+	const parsed = parseModelJson<{
 		annotations: (Proposal & { segment_id: string })[];
-	};
+	}>(textBlock.text, interviewId);
 	if (!Array.isArray(parsed.annotations)) {
-		throw new Error(`${interviewId}: response had no "annotations" array.`);
+		throw new Error(`${interviewId}: response JSON had no "annotations" array (keys: ${Object.keys(parsed).join(', ') || 'none'}).`);
 	}
 
 	const got = new Map(parsed.annotations.map((a) => [a.segment_id, a]));
 	const expected = segs.map((s) => s.segment_id);
 	const missing = expected.filter((id) => !got.has(id));
 	const extra = [...got.keys()].filter((id) => !expected.includes(id));
-	if (missing.length || extra.length || got.size !== parsed.annotations.length) {
+	const duplicates = parsed.annotations.length - got.size;
+	if (missing.length || extra.length || duplicates) {
+		const parts: string[] = [];
+		if (missing.length) parts.push(`${missing.length} missing segment_id [${sampleIds(missing)}]`);
+		if (extra.length) parts.push(`${extra.length} unexpected segment_id [${sampleIds(extra)}]`);
+		if (duplicates) parts.push(`${duplicates} duplicate annotation${duplicates === 1 ? '' : 's'}`);
 		throw new Error(
-			`${interviewId}: coverage mismatch (missing=${missing.length}, extra=${extra.length}).`
+			`${interviewId}: segment coverage mismatch — expected ${expected.length} segments, model returned ${parsed.annotations.length} annotations. ${parts.join('; ')}.`
 		);
 	}
 
@@ -552,7 +607,10 @@ export async function buildSegmentTags(): Promise<void> {
 			continue;
 		}
 		if (have !== segs.length) {
-			errors.push(`${interviewId}: partial coverage — ${have}/${segs.length} segments proposed.`);
+			const missingIds = segs.filter((s) => !(s.segment_id in PROPOSALS)).map((s) => s.segment_id);
+			errors.push(
+				`${interviewId}: partial coverage — ${have}/${segs.length} segments have proposals. Missing: ${sampleIds(missingIds)}.`
+			);
 		}
 		taggedInterviews.push(interviewId);
 	}
@@ -622,7 +680,12 @@ export async function buildSegmentTags(): Promise<void> {
 	}
 
 	if (errors.length > 0) {
-		throw new Error(`Validation failed:\n  ${errors.slice(0, 10).join('\n  ')}`);
+		const shown = errors.slice(0, 10);
+		const overflow = errors.length - shown.length;
+		const suffix = overflow > 0 ? `\n  …and ${overflow} more validation error${overflow === 1 ? '' : 's'}.` : '';
+		throw new Error(
+			`Validation failed with ${errors.length} issue${errors.length === 1 ? '' : 's'}:\n  ${shown.join('\n  ')}${suffix}`
+		);
 	}
 
 	annotations.sort((a, b) => a.segment_id.localeCompare(b.segment_id));

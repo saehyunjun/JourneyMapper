@@ -127,7 +127,11 @@ const PROD_STEPS: { label: string; run: (interviewId: string) => Promise<void> }
 	{ label: 'Validating tags', run: async () => buildSegmentTags() }
 ];
 
-/** Spawn one pipeline script; resolves on exit 0, rejects with its stderr. */
+/**
+ * Spawn one pipeline script; resolves on exit 0, rejects with a focused
+ * stderr summary. We keep the last ~10 non-empty stderr lines so multi-line
+ * stack traces survive (the prior 3-line cap mashed real errors together).
+ */
 function runScript(script: string, args: string[]): Promise<void> {
 	return new Promise((res, rej) => {
 		const child = spawn(process.execPath, [script, ...args], {
@@ -138,47 +142,69 @@ function runScript(script: string, args: string[]): Promise<void> {
 		child.stderr?.on('data', (d) => {
 			stderr += String(d);
 		});
-		child.on('error', rej);
+		child.on('error', (err) => {
+			rej(new Error(`failed to spawn ${script}: ${err.message}`));
+		});
 		child.on('close', (code) => {
-			if (code === 0) res();
-			else {
-				const tail = stderr.trim().split('\n').slice(-3).join(' ');
-				rej(new Error(tail || `${script} exited with code ${code}`));
-			}
+			if (code === 0) return res();
+			const lines = stderr
+				.split('\n')
+				.map((s) => s.trimEnd())
+				.filter(Boolean);
+			const tail = lines.slice(-10).join('\n');
+			const prefix = `${script} exited with code ${code}`;
+			rej(new Error(tail ? `${prefix}\n${tail}` : `${prefix} (no stderr output).`));
 		});
 	});
 }
 
+/**
+ * Wrap a step's error so the user sees which stage failed without having to
+ * cross-reference the job's `step`. The original message is preserved; only a
+ * `[label] ` prefix is added.
+ */
+function withStepContext(label: string, err: unknown): string {
+	if (err instanceof Error && err.message) return `[${label}] ${err.message}`;
+	if (typeof err === 'string' && err) return `[${label}] ${err}`;
+	return `[${label}] Autotagging failed.`;
+}
+
 async function runDevChain(job: AutotagJob): Promise<void> {
-	try {
-		for (const step of DEV_STEPS) {
-			job.step = step.label;
-			await saveJob(job);
+	for (const step of DEV_STEPS) {
+		job.step = step.label;
+		await saveJob(job);
+		try {
 			await runScript(step.script, step.perInterview ? [job.interviewId] : []);
+		} catch (e) {
+			job.state = 'error';
+			job.error = withStepContext(step.label, e);
+			job.finishedAt = Date.now();
+			await saveJob(job);
+			return;
 		}
-		job.state = 'done';
-		job.step = 'Done';
-	} catch (e) {
-		job.state = 'error';
-		job.error = e instanceof Error ? e.message : 'Autotagging failed.';
 	}
+	job.state = 'done';
+	job.step = 'Done';
 	job.finishedAt = Date.now();
 	await saveJob(job);
 }
 
 async function runProdChain(job: AutotagJob): Promise<void> {
-	try {
-		for (const step of PROD_STEPS) {
-			job.step = step.label;
-			await saveJob(job);
+	for (const step of PROD_STEPS) {
+		job.step = step.label;
+		await saveJob(job);
+		try {
 			await step.run(job.interviewId);
+		} catch (e) {
+			job.state = 'error';
+			job.error = withStepContext(step.label, e);
+			job.finishedAt = Date.now();
+			await saveJob(job);
+			return;
 		}
-		job.state = 'done';
-		job.step = 'Done';
-	} catch (e) {
-		job.state = 'error';
-		job.error = e instanceof Error ? e.message : 'Autotagging failed.';
 	}
+	job.state = 'done';
+	job.step = 'Done';
 	job.finishedAt = Date.now();
 	await saveJob(job);
 }

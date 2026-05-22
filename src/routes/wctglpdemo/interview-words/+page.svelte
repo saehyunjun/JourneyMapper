@@ -2,18 +2,17 @@
 	import { untrack } from 'svelte';
 	import {
 		quotes,
-		themeTags,
-		themeBreakdown,
+		buildRadialTree,
 		segmentsForTheme,
+		segmentsForSubtheme,
+		segmentsForKeyword,
 		themedQuestionIds,
 		themedParticipantIds,
-		tagGroups,
-		themeGroupOf,
 		questionLabel,
 		titleCase,
 		participantLabel,
 		SENTIMENT_LABELS,
-		type ThemeBlock
+		type RadialNode
 	} from '$lib/content/wctglpdemo-data/analysis';
 	import { Button } from "$lib/components/ui/button/index.js";
 	import RadialThemeChart from '$lib/charts/glp/RadialThemeChart.svelte';
@@ -41,15 +40,6 @@
 		participantDrawerOpen = true;
 	}
 
-	/** themeBreakdown rows -> the {word,count,group,blocks} shape RadialThemeChart expects. */
-	const toRadial = (rows: { id: string; count: number; blocks: ThemeBlock[] }[]) =>
-		rows.map((r) => ({
-			word: titleCase(r.id),
-			count: r.count,
-			blocks: r.blocks,
-			group: themeGroupOf.get(r.id) ?? 'other'
-		}));
-
 	const participantCount = themedParticipantIds.length;
 
 	// One radial chart, many views: an "all interviews" view plus one per themed
@@ -63,41 +53,40 @@
 		Math.max(0, views.findIndex((v) => v.id === selectedView))
 	);
 
-	const overallThemes = toRadial(themeBreakdown());
-
-	// Themes for whichever view is selected — recomputed when the user refines.
-	const currentThemes = $derived(
+	// Three-level radial tree: theme -> subtheme -> keyword. Filtered to the
+	// current question selection, if any.
+	const radialTree = $derived(
 		selectedView === 'all'
-			? overallThemes
-			: toRadial(themeBreakdown((a) => a.question_id === selectedView))
+			? buildRadialTree()
+			: buildRadialTree(
+					(a) => a.question_id === selectedView,
+					(m) => m.question_id === selectedView
+				)
 	);
 
-	// --- Quote drawer ---
+	// --- Quote drawer — works for themes, subthemes, or keywords ---
 	type DrawerContext =
 		| { kind: 'overall' }
 		| { kind: 'question'; id: string }
 		| { kind: 'participant'; id: string };
 
-	const labelToTheme = new Map(themeTags.map((t) => [titleCase(t.id), t.id]));
-
 	let drawerOpen = $state(false);
-	let drawerTheme = $state<string | null>(null);
+	let drawerNode = $state<RadialNode | null>(null);
 	let drawerContext = $state<DrawerContext>({ kind: 'overall' });
 
-	function openDrawer(datum: { word: string }, context: DrawerContext) {
-		const themeId = labelToTheme.get(datum.word);
-		if (!themeId) return;
-		drawerTheme = themeId;
+	function openDrawer(node: RadialNode, context: DrawerContext) {
+		drawerNode = node;
 		drawerContext = context;
 		drawerOpen = true;
 	}
 
 	const drawerQuotes = $derived.by(() => {
-		const theme = drawerTheme;
-		if (!theme) return [];
+		const n = drawerNode;
+		if (!n || n.kind === 'keyword') return [];
+		const matchField = n.kind === 'theme' ? 'themes' : 'subthemes';
 		return quotes
 			.filter((q) => {
-				if (!q.themes.includes(theme)) return false;
+				if (!q[matchField].includes(n.id)) return false;
 				if (drawerContext.kind === 'question') return q.question_id === drawerContext.id;
 				if (drawerContext.kind === 'participant') return q.interview_id === drawerContext.id;
 				return true;
@@ -106,17 +95,36 @@
 	});
 
 	const drawerFragments = $derived.by(() => {
-		const theme = drawerTheme;
-		if (!theme) return [];
+		const n = drawerNode;
+		if (!n) return [];
 		const ctx = drawerContext;
-		return segmentsForTheme(theme, (a) =>
+		const annPred = (a: { question_id: string; interview_id: string }) =>
 			ctx.kind === 'question'
 				? a.question_id === ctx.id
 				: ctx.kind === 'participant'
 					? a.interview_id === ctx.id
+					: true;
+		if (n.kind === 'theme') return segmentsForTheme(n.id, annPred);
+		if (n.kind === 'subtheme') return segmentsForSubtheme(n.id, annPred);
+		return segmentsForKeyword(n.id, (m) =>
+			ctx.kind === 'question'
+				? m.question_id === ctx.id
+				: ctx.kind === 'participant'
+					? m.interview_id === ctx.id
 					: true
 		);
 	});
+
+	const drawerLabel = $derived(drawerNode?.label ?? '');
+	const drawerKindLabel = $derived(
+		drawerNode?.kind === 'keyword'
+			? 'Keyword'
+			: drawerNode?.kind === 'subtheme'
+				? 'Subtheme'
+				: drawerNode?.kind === 'theme'
+					? 'Theme'
+					: ''
+	);
 
 	// Deterministic keyword usage across the coded fragments in the drawer —
 	// one sentiment-coloured block per fragment that mentions each keyword.
@@ -133,13 +141,13 @@
 				: 'All interviews'
 	);
 
-	// Highlight the active theme in the radial chart when its drawer is open and
-	// the drawer's context still matches the view on screen.
+	// Highlight the active node in the chart when its drawer is open and the
+	// drawer's context still matches the view on screen.
 	const chartSelected = $derived(
-		drawerOpen && drawerTheme &&
+		drawerOpen && drawerNode &&
 			((selectedView === 'all' && drawerContext.kind === 'overall') ||
 				(drawerContext.kind === 'question' && drawerContext.id === selectedView))
-			? titleCase(drawerTheme)
+			? drawerNode.id
 			: null
 	);
 
@@ -157,7 +165,7 @@
 	>
 		<div class="mx-auto flex w-full max-w-7xl flex-col gap-3 px-8">
 			<span class="figcaption text-white">
-				WCT GLP-1 Interviews
+				GLP-1 Interviews
 			</span>
 			<h1 class="font-heading text-5xl font-light capitalize text-primary-foreground md:text-7xl">
 				What patients said
@@ -215,17 +223,15 @@
 				{/each}
 			</div>
 
-			{#if currentThemes.length}
+			{#if radialTree.length}
 				<RadialThemeChart
-					data={currentThemes}
-					groups={tagGroups}
+					tree={radialTree}
 					unitLabel="tagged segments"
-					itemNoun="themes"
 					blockLabel="tagged segment"
 					selected={chartSelected}
-					onselect={(d) =>
+					onselect={(node) =>
 						openDrawer(
-							d,
+							node,
 							selectedView === 'all'
 								? { kind: 'overall' }
 								: { kind: 'question', id: selectedView }
@@ -242,13 +248,21 @@
 <RightDrawer bind:open={drawerOpen}>
 	<div class="flex h-full flex-col">
 		<div class="flex flex-col gap-1 border-b border-slate-200 p-6">
-			<span class="figcaption text-accent-mint">Quotes · {drawerContextLabel}</span>
+			<span class="figcaption text-accent-mint">
+				{drawerKindLabel} · {drawerContextLabel}
+			</span>
 			<h2 class="font-heading text-3xl font-light uppercase text-primary">
-				{drawerTheme ? titleCase(drawerTheme) : ''}
+				{drawerLabel}
 			</h2>
 			<p class="text-sm text-muted-foreground">
-				{drawerQuotes.length} pull {drawerQuotes.length === 1 ? 'quote' : 'quotes'} ·
-				{drawerFragments.length} coded {drawerFragments.length === 1 ? 'fragment' : 'fragments'}
+				{#if drawerNode?.kind === 'keyword'}
+					{drawerFragments.length} matched
+					{drawerFragments.length === 1 ? 'fragment' : 'fragments'}
+				{:else}
+					{drawerQuotes.length} pull {drawerQuotes.length === 1 ? 'quote' : 'quotes'} ·
+					{drawerFragments.length} coded
+					{drawerFragments.length === 1 ? 'fragment' : 'fragments'}
+				{/if}
 			</p>
 		</div>
 

@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.2",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-20T21:23:46.492Z",
+    "generated_at": "2026-05-22T19:31:01.682Z",
     "generator": "scripts/migrate-segment-tags.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/segment_tags.json",
@@ -100,92 +100,6 @@
       "reviewer_notes": ""
     },
     {
-      "segment_id": "participant_06_t03_s02",
-      "interview_id": "participant_06",
-      "question_id": null,
-      "topics": [
-        "reasons_to_stop_glp1",
-        "side_effects"
-      ],
-      "themes": [
-        "treatment"
-      ],
-      "subthemes": [
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
-      "emotions": [
-        "apprehension"
-      ],
-      "sentiment": -1,
-      "confidence": 0.9,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t03_s03",
-      "interview_id": "participant_06",
-      "question_id": null,
-      "topics": [
-        "reasons_to_stop_glp1",
-        "financial_impact_on_family",
-        "side_effects"
-      ],
-      "themes": [
-        "treatment"
-      ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors",
-        "treatment_negative_experiences"
-      ],
-      "emotions": [],
-      "sentiment": -1,
-      "confidence": 0.85,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "summary recap"
-    },
-    {
-      "segment_id": "participant_06_t05_s00",
-      "interview_id": "participant_06",
-      "question_id": null,
-      "topics": [
-        "switching_glp1_medication",
-        "cost_of_glp1"
-      ],
-      "themes": [
-        "treatment"
-      ],
-      "subthemes": [
-        "treatment_barriers",
-        "treatment_decision_factors"
-      ],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.75,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t05_s01",
-      "interview_id": "participant_06",
-      "question_id": null,
-      "topics": [
-        "current_medication_zepbound"
-      ],
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.5,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "meta/process question"
-    },
-    {
       "segment_id": "participant_06_t07_s00",
       "interview_id": "participant_06",
       "question_id": null,
@@ -266,6 +180,22 @@
       "source": "ai_proposed",
       "review_status": "pending",
       "reviewer_notes": "bare affirmation"
+    },
+    {
+      "segment_id": "participant_06_t11_s00",
+      "interview_id": "participant_06",
+      "question_id": null,
+      "topics": [],
+      "themes": [],
+      "subthemes": [],
+      "emotions": [
+        "contempt"
+      ],
+      "sentiment": -2,
+      "confidence": 1,
+      "source": "human",
+      "review_status": "confirmed",
+      "reviewer_notes": ""
     },
     {
       "segment_id": "participant_06_t11_s02",
@@ -367,8 +297,8 @@
         "weight_loss_outcomes"
       ],
       "themes": [
-        "clinical_trials",
-        "treatment"
+        "treatment",
+        "clinical_trials"
       ],
       "subthemes": [
         "treatment_decision_factors",
@@ -380,9 +310,9 @@
         "fear"
       ],
       "sentiment": -1,
-      "confidence": 0.9,
-      "source": "ai_proposed",
-      "review_status": "pending",
+      "confidence": 1,
+      "source": "human",
+      "review_status": "confirmed",
       "reviewer_notes": ""
     },
     {

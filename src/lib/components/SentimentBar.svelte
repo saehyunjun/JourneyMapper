@@ -24,31 +24,29 @@
 	let {
 		label,
 		blocks,
-		max,
 		labelClass = 'w-32',
-		shape = 'bar'
+		shape = 'bar',
+		max: _max
 	}: {
 		label: string;
 		/** Contributing segment annotations — one block is drawn per entry. */
 		blocks: Block[];
-		/** Largest count among sibling rows — sets the shared cell width. */
-		max: number;
 		/** Width utility for the label column. */
 		labelClass?: string;
-		/** 'bar' draws proportional cells; 'dots' draws one fixed circle per block. */
+		/** 'bar' draws fixed squares; 'dots' draws one fixed circle per block. */
 		shape?: 'bar' | 'dots';
+		/** Accepted for backwards-compat; no longer used now that blocks are fixed squares. */
+		max?: number;
 	} = $props();
 
 	// Group same-sentiment blocks so the row reads negative → positive.
 	const ordered = $derived([...blocks].sort((a, b) => a.sentiment - b.sentiment));
-	// One of `max` cells per block, with a fixed gap between them.
-	const cellWidth = $derived(`calc((100% - ${Math.max(0, max - 1)} * 10px) / ${Math.max(1, max)})`);
 	const blockColor = (b: Block) => SENTIMENT_COLORS[b.sentiment] ?? '#cbd5e1';
 </script>
 
-<div class="flex items-center gap-3">
+<div class="flex items-center gap-3 align-top">
 	<span 
-	class="{labelClass} shrink-0 truncate text-sm text-primary" title={label}>
+	class="{labelClass} shrink-0 wrap text-xs text-primary" title={label}>
 		{label}
 	</span>
 	
@@ -56,16 +54,16 @@
 		<!-- One fixed circle per contributing segment, sentiment-coloured. -->
 		<div class="flex min-w-8 flex-1 flex-wrap items-center gap-1">
 			{#each ordered as block, i (i)}
-				<div class="h-4 w-4 rounded-full" 
+				<div class="h-2 w-2 rounded-full" 
 				style="background-color: {blockColor(block)}"></div>
 			{/each}
 		</div>
 	{:else}
-		<div class="flex h-4 w-8 ml-5 gap-1 flex-1">
+		<div class="ml-5 flex flex-1 flex-wrap items-center gap-1">
 			{#each ordered as block, i (i)}
 				<div
-					class="h-full w-8"
-					style="width: {cellWidth}; background-color: {blockColor(block)}"
+					class="h-4 w-4 shrink-0"
+					style="background-color: {blockColor(block)}"
 				></div>
 			{/each}
 		</div>

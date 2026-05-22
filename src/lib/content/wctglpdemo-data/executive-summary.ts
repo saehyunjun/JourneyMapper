@@ -2,22 +2,19 @@
  * executive-summary.ts
  *
  * Derives the home-page executive summary from the interview-analysis pipeline
- * outputs: a headline read on overall sentiment, and a handful of cross-cutting
- * "findings" — the brightest and hardest moments of the interview, the most-
- * discussed and most-divisive topics, and how patients talked about GLP-1
- * drugs versus other weight-loss methods. Each finding carries a computed data
- * point, the positive/neutral/negative split behind it, a supporting quote,
- * and the coded segments to show when its card opens a drawer.
+ * outputs: a headline read on overall sentiment, and four cluster-driven
+ * findings — what drove negative reactions to each broad theme, what drew the
+ * warmest reactions to treatment, and which "expected" trial barriers turned
+ * out not to be barriers at all. Each finding carries a small set of keyword
+ * clusters with one sentiment-coloured block per matched segment, an overall
+ * positive/neutral/negative split, an optional anchor quote, and the coded
+ * segments to show when its card opens a drawer.
  *
  * Like journey.ts / keywords.ts this is the UI-side counterpart to the build
- * scripts: everything here is derived at runtime from the JSON artifacts, no
- * new file is written. Quote selection is the one piece that needs live state
- * (the analyst's stars), so `buildFindings` takes the starred ids as an
- * argument — the rest of the module is static.
- *
- * EDITORIAL LAYER — `SHORT_LABEL` is the one authored piece, the headline-
- * friendly phrasing of a question or theme id (the way journey.ts's PLAN names
- * its phases). Every count, mean, and ranking below is derived.
+ * scripts: everything here is derived at runtime from the JSON artifacts. Quote
+ * selection is the one piece that needs live state (the analyst's stars), so
+ * `buildFindings` takes the starred ids as an argument — the rest of the
+ * module is static.
  */
 import {
 	annotations,
@@ -25,9 +22,6 @@ import {
 	questions,
 	titleCase,
 	fragmentsMatching,
-	segmentsForTheme,
-	subthemeParent,
-	themeGroupOf,
 	type Annotation,
 	type Quote,
 	type ThemeFragment
@@ -73,13 +67,91 @@ export const sentimentLean = {
 /** A positive / neutral / negative split — the data behind a finding's donut. */
 export type Distribution = { positive: number; neutral: number; negative: number };
 
-const distributionOf = (rows: { sentiment: number }[]): Distribution => ({
-	positive: rows.filter((r) => r.sentiment > 0).length,
-	neutral: rows.filter((r) => r.sentiment === 0).length,
-	negative: rows.filter((r) => r.sentiment < 0).length
+// --- Keyword-cluster scoping ----------------------------------------------
+
+type KeywordUsageMatch = { segment_id: string; interview_id: string; question_id: string | null };
+type KeywordUsageCluster = {
+	id: string;
+	label: string;
+	parent_theme?: string;
+	parent_subtheme?: string;
+	count: number;
+	matches: KeywordUsageMatch[];
+};
+
+const keywordClusters = (keywordUsageRaw as unknown as { clusters: KeywordUsageCluster[] }).clusters;
+const annBySeg = new Map(annotations.map((a) => [a.segment_id, a]));
+
+/** One annotated segment behind a cluster row — the unit a SentimentBar block draws. */
+type ClusterSegment = { segment_id: string; sentiment: number; interview_id: string };
+
+type ClusterRow = {
+	cluster: KeywordUsageCluster;
+	/** Distinct annotated segments where this cluster surfaced (under the active scope). */
+	segments: ClusterSegment[];
+	positive: number;
+	negative: number;
+	neutral: number;
+};
+
+/**
+ * Per-cluster rows, scoped to annotations matching the predicate. Segments
+ * are deduped within a cluster; sentiment is pulled from the codebook
+ * annotation, not the keyword match itself.
+ */
+function clusterRows(annPred: (a: Annotation) => boolean): ClusterRow[] {
+	const rows: ClusterRow[] = [];
+	for (const cluster of keywordClusters) {
+		const seen = new Set<string>();
+		const segments: ClusterSegment[] = [];
+		for (const m of cluster.matches) {
+			if (seen.has(m.segment_id)) continue;
+			const a = annBySeg.get(m.segment_id);
+			if (!a) continue;
+			if (!annPred(a)) continue;
+			seen.add(m.segment_id);
+			segments.push({
+				segment_id: m.segment_id,
+				sentiment: a.sentiment,
+				interview_id: a.interview_id
+			});
+		}
+		if (!segments.length) continue;
+		rows.push({
+			cluster,
+			segments,
+			positive: segments.filter((s) => s.sentiment > 0).length,
+			negative: segments.filter((s) => s.sentiment < 0).length,
+			neutral: segments.filter((s) => s.sentiment === 0).length
+		});
+	}
+	return rows;
+}
+
+/** Sentiment block stream for a finding's bars — one block per matched segment. */
+export type ClusterBlock = { sentiment: number; interview_id: string };
+
+export type ClusterBar = {
+	id: string;
+	label: string;
+	count: number;
+	positive: number;
+	negative: number;
+	neutral: number;
+	blocks: ClusterBlock[];
+};
+
+const barFromRow = (r: ClusterRow): ClusterBar => ({
+	id: r.cluster.id,
+	label: r.cluster.label,
+	count: r.segments.length,
+	positive: r.positive,
+	negative: r.negative,
+	neutral: r.neutral,
+	blocks: r.segments.map((s) => ({ sentiment: s.sentiment, interview_id: s.interview_id }))
 });
 
-// --- Per-question sentiment ------------------------------------------------
+// --- Per-question sentiment (kept as an internal stat) --------------------
 
 const primaryQuestionIds = new Set(
 	questions.filter((q) => q.type === 'primary').map((q) => q.question_id)
@@ -115,173 +187,7 @@ function questionSentiments(): QuestionSentiment[] {
 /** Primary interview questions, ranked by mean sentiment (warmest first). */
 export const questionSentiment: QuestionSentiment[] = questionSentiments();
 
-// --- Per-theme sentiment ---------------------------------------------------
-
-export type ThemeStat = {
-	theme: string;
-	n: number;
-	positive: number;
-	negative: number;
-	mean: number;
-	interviews: number;
-};
-
-function themeStats(): ThemeStat[] {
-	const by = new Map<string, Annotation[]>();
-	for (const a of themed)
-		for (const t of a.themes) {
-			const list = by.get(t);
-			if (list) list.push(a);
-			else by.set(t, [a]);
-		}
-	return [...by.entries()].map(([theme, rows]) => ({
-		theme,
-		n: rows.length,
-		positive: rows.filter((r) => r.sentiment > 0).length,
-		negative: rows.filter((r) => r.sentiment < 0).length,
-		mean: rows.reduce((s, r) => s + r.sentiment, 0) / rows.length,
-		interviews: new Set(rows.map((r) => r.interview_id)).size
-	}));
-}
-
-const THEMES: ThemeStat[] = themeStats();
-
-/** One sub-kind within a theme — e.g. a kind of support within `education_need`. */
-export type BreakdownItem = {
-	id: string;
-	label: string;
-	count: number;
-	positive: number;
-	negative: number;
-};
-
-/**
- * A theme's subtheme tally — the codebook's own decomposition of the theme into
- * kinds, counted across the themed annotations. Sorted by count, biggest first.
- */
-function subthemeBreakdown(themeId: string): BreakdownItem[] {
-	const by = new Map<string, Annotation[]>();
-	for (const a of themed) {
-		if (!a.themes.includes(themeId)) continue;
-		for (const s of a.subthemes) {
-			if (subthemeParent.get(s) !== themeId) continue;
-			const list = by.get(s);
-			if (list) list.push(a);
-			else by.set(s, [a]);
-		}
-	}
-	return [...by.entries()]
-		.map(([id, rows]) => ({
-			id,
-			label: titleCase(id),
-			count: rows.length,
-			positive: rows.filter((r) => r.sentiment > 0).length,
-			negative: rows.filter((r) => r.sentiment < 0).length
-		}))
-		.sort((a, b) => b.count - a.count);
-}
-
-/** Heading for a theme's breakdown — names it as kinds of support where it fits. */
-function breakdownLabelFor(themeId: string): string {
-	return themeGroupOf.get(themeId) === 'education_support'
-		? 'Kinds of support mentioned'
-		: 'Within this theme';
-}
-
-// --- Medications vs. other weight-loss methods -----------------------------
-
-type KeywordUsage = {
-	categories: {
-		id: string;
-		label: string;
-		keywords: { id: string; label: string; count: number; matches: { segment_id: string }[] }[];
-	}[];
-};
-
-const keywordCategories = (keywordUsageRaw as KeywordUsage).categories;
-const categoryMentions = (id: string): number =>
-	keywordCategories.find((c) => c.id === id)?.keywords.reduce((s, k) => s + k.count, 0) ?? 0;
-
-/** Named GLP-1 products and formulations — the headline of the medications talk. */
-const NAMED_DRUG_KEYWORDS = new Set([
-	'glp_1',
-	'semaglutide',
-	'tirzepatide',
-	'orforglipron',
-	'retatrutide',
-	'cagrilintide',
-	'oral_medication',
-	'compounded_medication',
-	'name_brand'
-]);
-
-const medicationMentions = categoryMentions('medications');
-const lifestyleMentions = categoryMentions('lifestyle');
-const namedDrugMentions =
-	keywordCategories
-		.find((c) => c.id === 'medications')
-		?.keywords.filter((k) => NAMED_DRUG_KEYWORDS.has(k.id))
-		.reduce((s, k) => s + k.count, 0) ?? 0;
-
-/** Every segment that mentions a medications-category keyword. */
-const medicationSegmentIds = new Set<string>(
-	keywordCategories
-		.find((c) => c.id === 'medications')
-		?.keywords.flatMap((k) => k.matches.map((m) => m.segment_id)) ?? []
-);
-
 // --- Editorial labels + text helpers --------------------------------------
-
-/**
- * Headline-friendly phrasing for a question or theme id. Authored so the
- * generated sentences read naturally ("spoke most warmly about …"); anything
- * not listed falls back to a title-cased id.
- */
-const SHORT_LABEL: Record<string, string> = {
-	// questions
-	stopping_glp1: 'stopping a GLP-1',
-	try_different_medication: 'switching medications',
-	trial_unapproved_medication: 'trialing an unapproved drug',
-	trial_motivation: 'what would draw them to a trial',
-	placebo_controlled_appeal: 'placebo-controlled trials',
-	monthly_injection_barrier: 'the monthly injection',
-	compounded_vs_approved: 'compounded vs. approved drugs',
-	trial_barriers: 'the barriers to joining a trial',
-	trial_concerns: 'their lingering trial concerns',
-	educational_support: 'the support they want',
-	weight_loss_history: 'their weight-loss history',
-	considered_trials_before: 'past experience with trials',
-	oral_glp_awareness: 'oral GLP-1 options',
-	oral_vs_injectable: 'oral vs. injectable treatment',
-	// themes
-	education_need: 'the need for education',
-	information_seeking: 'seeking out information',
-	risk_calculation: 'weighing the risks',
-	visit_logistics: 'trial visit logistics',
-	oral_medication_interest: 'interest in oral medication',
-	side_effect_concern: 'side-effect concerns',
-	cost_access: 'cost and access',
-	insurance_barrier: 'insurance barriers',
-	treatment_continuation: 'staying on treatment',
-	discontinuation_reasoning: 'reasons to consider stopping',
-	trial_participation_motivation: 'the motivation to join a trial',
-	monitoring_burden: 'the monitoring burden',
-	travel_burden: 'travel to the site',
-	health_transformation: 'the broader health transformation',
-	non_weight_benefits: 'the non-weight benefits',
-	research_altruism: 'contributing to research',
-	clinical_trial_friction: 'friction with the clinical trial',
-	time_burden: 'the time burden of a trial'
-};
-
-function shortLabel(id: string): string {
-	return SHORT_LABEL[id] ?? titleCase(id).replace(/Glp1/g, 'GLP-1');
-}
-
-const cap = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
-
-/** Signed mean to two places, with a typographic minus. */
-const formatMean = (m: number): string => (m < 0 ? '−' : '+') + Math.abs(m).toFixed(2);
 
 const NUM_WORDS = [
 	'zero', 'one', 'two', 'three', 'four', 'five', 'six',
@@ -289,38 +195,83 @@ const NUM_WORDS = [
 ];
 const numWord = (n: number): string => NUM_WORDS[n] ?? String(n);
 
+const cap = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** Inline form of a cluster label — strips parenthetical disambiguation
+ *  ("Side effects (as barrier)" → "side effects") and lower-cases for
+ *  natural mid-sentence use. Acronyms like GLP-1 are preserved. */
+function inlineClusterLabel(label: string): string {
+	const stripped = label.replace(/\s*\([^)]*\)\s*/g, '').trim();
+	// Preserve all-caps tokens (acronyms) — only lower the first letter of
+	// otherwise-title-cased words.
+	return stripped
+		.split(/(\s+)/)
+		.map((tok) => (/^[A-Z0-9-]+$/.test(tok) ? tok : tok.toLowerCase()))
+		.join('');
+}
+
+function joinNames(names: string[]): string {
+	if (names.length === 0) return '';
+	if (names.length === 1) return names[0];
+	if (names.length === 2) return `${names[0]} and ${names[1]}`;
+	return `${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`;
+}
+
 // --- Findings --------------------------------------------------------------
 
-/** A moment finding needs at least this many coded segments to qualify. */
-const MIN_MOMENT_N = 10;
+/** Floor on cluster segment-count before it can rank in a finding — keeps
+ *  one-off mentions from displacing genuine signal. */
+const MIN_CLUSTER_N = 3;
+/** Top-K clusters shown per finding. */
+const TOP_K = 5;
+/** Headline names the top-N clusters inline. */
+const HEADLINE_K = 3;
 
-// Brightest / hardest are anchored to themes, not questions: a question's
-// sentiment is biased by the framing of the question ("would you stop" pulls
-// positive sentiment about staying), while a theme's sentiment is a read on
-// the topic itself. questionSentiment is kept above as a demoted internal stat.
-const rankedThemes = [...THEMES]
-	.filter((t) => t.n >= MIN_MOMENT_N)
-	.sort((a, b) => b.mean - a.mean);
-const brightestTheme = rankedThemes[0];
-const hardestTheme =
-	rankedThemes.length > 1 ? rankedThemes[rankedThemes.length - 1] : undefined;
+const negativeRank = (a: ClusterRow, b: ClusterRow) =>
+	b.negative - a.negative ||
+	b.negative / b.segments.length - a.negative / a.segments.length ||
+	b.segments.length - a.segments.length;
 
-/** Most-discussed theme, distinct from brightest/hardest. */
-const reservedThemes = new Set(
-	[brightestTheme?.theme, hardestTheme?.theme].filter(Boolean) as string[]
+const positiveRank = (a: ClusterRow, b: ClusterRow) =>
+	b.positive - a.positive ||
+	b.positive / b.segments.length - a.positive / a.segments.length ||
+	b.segments.length - a.segments.length;
+
+// 1. Negative drivers of clinical-trial sentiment.
+const trialScopeRows = clusterRows((a) => a.themes.includes('clinical_trials'));
+const negTrialDrivers = trialScopeRows
+	.filter((r) => r.negative >= 2 && r.segments.length >= MIN_CLUSTER_N)
+	.sort(negativeRank)
+	.slice(0, TOP_K);
+
+// 2. Negative drivers of treatment sentiment.
+const treatmentScopeRows = clusterRows((a) => a.themes.includes('treatment'));
+const negTreatmentDrivers = treatmentScopeRows
+	.filter((r) => r.negative >= 2 && r.segments.length >= MIN_CLUSTER_N)
+	.sort(negativeRank)
+	.slice(0, TOP_K);
+
+// 3. Positive drivers of treatment sentiment.
+const posTreatmentDrivers = treatmentScopeRows
+	.filter((r) => r.positive >= 3 && r.segments.length >= MIN_CLUSTER_N)
+	.sort(positiveRank)
+	.slice(0, TOP_K);
+
+// 4. Trial barriers that turned out NOT to be barriers — codebook-declared
+//    trial-barrier clusters that, when they actually came up, drew at least as
+//    many positive as negative reactions (i.e. didn't skew negative). Ranked
+//    by mention count so the most-discussed non-issues lead.
+const trialBarrierRows = clusterRows(() => true).filter(
+	(r) => r.cluster.parent_subtheme === 'trial_barriers' && r.segments.length >= 2
 );
-const mostDiscussed = [...THEMES]
-	.filter((t) => !reservedThemes.has(t.theme))
-	.sort((a, b) => b.n - a.n)[0];
-const mostDivisive = [...THEMES]
-	.filter((t) => t.theme !== mostDiscussed?.theme && !reservedThemes.has(t.theme))
-	.sort(
-		(a, b) =>
-			Math.min(b.positive, b.negative) - Math.min(a.positive, a.negative) || b.n - a.n
-	)[0];
+const nonBarriers = trialBarrierRows
+	.filter((r) => r.positive >= r.negative)
+	.sort((a, b) => b.segments.length - a.segments.length)
+	.slice(0, TOP_K);
+
+// --- Quote selection ------------------------------------------------------
 
 export type SummaryQuote = {
-	/** quote_id from the quote bank. */
 	id: string;
 	isStarred: boolean;
 	interview_id: string;
@@ -328,14 +279,22 @@ export type SummaryQuote = {
 	text: string;
 	sentiment: number;
 	themes: string[];
-	/** Quote-bank overall score. */
 	score: number;
 };
 
+const segmentIdsForQuote = new Map<string, string>();
+for (const q of quotes) for (const sid of q.segment_ids) segmentIdsForQuote.set(sid, q.quote_id);
+
+/** Pool of quotes whose underlying segments live in any of the given rows. */
+function quotesForRows(rows: ClusterRow[]): Quote[] {
+	const segIds = new Set(rows.flatMap((r) => r.segments.map((s) => s.segment_id)));
+	return quotes.filter((q) => q.segment_ids.some((sid) => segIds.has(sid)));
+}
+
 /**
- * Pick one supporting quote from `candidates`: an analyst-starred quote first
- * (the "starred first, then bank" rule), then the highest-scored. `prefer`
- * narrows to a sentiment direction when the candidate set still has one.
+ * Pick one supporting quote from `candidates`: an analyst-starred quote first,
+ * then the highest-scored. `prefer` narrows to a sentiment direction when the
+ * candidate set still has one in that direction.
  */
 function pickQuote(
 	candidates: Quote[],
@@ -368,26 +327,27 @@ function pickQuote(
 	};
 }
 
+// --- Finding shape --------------------------------------------------------
+
 export type FindingTone = 'positive' | 'negative' | 'divisive' | 'neutral';
 
 export type Finding = {
-	id: 'brightest' | 'hardest' | 'most-discussed' | 'most-divisive' | 'medications';
+	id: 'negative-trial' | 'negative-treatment' | 'positive-treatment' | 'trial-non-barriers';
 	tone: FindingTone;
-	/** Short kicker — "Brightest moment" etc. */
+	/** Short kicker — "What drove negative trial sentiment" etc. */
 	eyebrow: string;
-	/** The big figure on the card. */
+	/** Big figure on the card. */
 	stat: { value: string; caption: string };
-	/** Generated one-line takeaway. */
+	/** Generated one-line takeaway, naming the top clusters inline. */
 	headline: string;
 	/** Generated supporting sentence with the underlying counts. */
 	detail: string;
-	/** Positive / neutral / negative split — the donut on the card. */
+	/** Top keyword clusters behind the finding — one row per cluster, one
+	 *  sentiment-coloured block per matched segment. */
+	clusters: ClusterBar[];
+	/** Overall positive / neutral / negative split — the donut on the card. */
 	distribution: Distribution;
-	/** Heading for `breakdown`, when the finding has one. */
-	breakdownLabel?: string;
-	/** Sub-kinds behind the finding (e.g. the kinds of support) — a mini chart. */
-	breakdown?: BreakdownItem[];
-	/** The supporting quote, or null if the bank covers neither side. */
+	/** Anchor quote from the underlying segments, or null if none fit. */
 	quote: SummaryQuote | null;
 	/** Coded segments behind the finding — shown when its card opens a drawer. */
 	fragments: ThemeFragment[];
@@ -396,8 +356,35 @@ export type Finding = {
 const bySegmentId = (a: ThemeFragment, b: ThemeFragment) =>
 	a.segment_id.localeCompare(b.segment_id);
 
+/** Sum positive / neutral / negative across a set of rows. */
+function aggregate(rows: ClusterRow[]): Distribution {
+	const seen = new Set<string>();
+	let positive = 0;
+	let neutral = 0;
+	let negative = 0;
+	for (const r of rows) {
+		for (const s of r.segments) {
+			if (seen.has(s.segment_id)) continue;
+			seen.add(s.segment_id);
+			if (s.sentiment > 0) positive++;
+			else if (s.sentiment < 0) negative++;
+			else neutral++;
+		}
+	}
+	return { positive, neutral, negative };
+}
+
+function fragmentsForRows(rows: ClusterRow[]): ThemeFragment[] {
+	const ids = new Set(rows.flatMap((r) => r.segments.map((s) => s.segment_id)));
+	return fragmentsMatching((a) => ids.has(a.segment_id)).sort(bySegmentId);
+}
+
+function headlineClusterNames(rows: ClusterRow[]): string {
+	return joinNames(rows.slice(0, HEADLINE_K).map((r) => inlineClusterLabel(r.cluster.label)));
+}
+
 /**
- * The five cross-cutting findings, with a supporting quote chosen against the
+ * The four cluster-driven findings, with a supporting quote chosen against the
  * supplied analyst stars. Static counts aside, only quote selection varies
  * with `starredQuoteIds`.
  */
@@ -405,128 +392,75 @@ export function buildFindings(starredQuoteIds: string[] = []): Finding[] {
 	const starred = new Set(starredQuoteIds);
 	const findings: Finding[] = [];
 
-	if (brightestTheme) {
-		const t = brightestTheme;
+	if (negTrialDrivers.length) {
+		const rows = negTrialDrivers;
+		const dist = aggregate(rows);
+		const names = headlineClusterNames(rows);
 		findings.push({
-			id: 'brightest',
-			tone: 'positive',
-			eyebrow: 'Brightest moment',
-			stat: { value: formatMean(t.mean), caption: `avg sentiment · ${t.n} segments` },
-			headline: `${cap(shortLabel(t.theme))} drew the study's warmest responses.`,
-			detail: `Across ${t.n} coded segments tagged ${shortLabel(t.theme)}, ${t.positive} came back positive — the warmest reading of any theme in the codebook.`,
-			distribution: { positive: t.positive, neutral: t.n - t.positive - t.negative, negative: t.negative },
-			breakdownLabel: breakdownLabelFor(t.theme),
-			breakdown: subthemeBreakdown(t.theme),
-			quote: pickQuote(
-				quotes.filter((x) => x.themes.includes(t.theme)),
-				starred,
-				'positive'
-			),
-			fragments: segmentsForTheme(t.theme).sort(bySegmentId)
-		});
-	}
-
-	if (hardestTheme) {
-		const t = hardestTheme;
-		findings.push({
-			id: 'hardest',
+			id: 'negative-trial',
 			tone: 'negative',
-			eyebrow: 'Hardest moment',
-			stat: { value: formatMean(t.mean), caption: `avg sentiment · ${t.n} segments` },
-			headline: `${cap(shortLabel(t.theme))} surfaced the most frustration.`,
-			detail: `Across ${t.n} coded segments tagged ${shortLabel(t.theme)}, ${t.negative} came back negative — the coolest reading of any theme in the codebook.`,
-			distribution: { positive: t.positive, neutral: t.n - t.positive - t.negative, negative: t.negative },
-			breakdownLabel: breakdownLabelFor(t.theme),
-			breakdown: subthemeBreakdown(t.theme),
-			quote: pickQuote(
-				quotes.filter((x) => x.themes.includes(t.theme)),
-				starred,
-				'negative'
-			),
-			fragments: segmentsForTheme(t.theme).sort(bySegmentId)
+			eyebrow: 'Drivers of negative trial sentiment',
+			stat: { value: String(dist.negative), caption: `negative mentions · ${dist.positive + dist.neutral + dist.negative} segments` },
+			headline: `${cap(names)} drove the negative sentiment about clinical trials.`,
+			detail: `Across the ${rows.length} keyword clusters that surfaced most in negative trial talk, ${dist.negative} of the underlying ${dist.positive + dist.neutral + dist.negative} segments came back negative.`,
+			clusters: rows.map(barFromRow),
+			distribution: dist,
+			quote: pickQuote(quotesForRows(rows), starred, 'negative'),
+			fragments: fragmentsForRows(rows)
 		});
 	}
 
-	{
-		// Medications vs. other weight-loss methods.
-		const medFragments = fragmentsMatching((a) => medicationSegmentIds.has(a.segment_id));
+	if (negTreatmentDrivers.length) {
+		const rows = negTreatmentDrivers;
+		const dist = aggregate(rows);
+		const names = headlineClusterNames(rows);
 		findings.push({
-			id: 'medications',
+			id: 'negative-treatment',
+			tone: 'negative',
+			eyebrow: 'Drivers of negative treatment sentiment',
+			stat: { value: String(dist.negative), caption: `negative mentions · ${dist.positive + dist.neutral + dist.negative} segments` },
+			headline: `${cap(names)} drove the loudest negative reactions to treatment.`,
+			detail: `Across the ${rows.length} keyword clusters that surfaced most in negative treatment talk, ${dist.negative} of the underlying ${dist.positive + dist.neutral + dist.negative} segments came back negative.`,
+			clusters: rows.map(barFromRow),
+			distribution: dist,
+			quote: pickQuote(quotesForRows(rows), starred, 'negative'),
+			fragments: fragmentsForRows(rows)
+		});
+	}
+
+	if (posTreatmentDrivers.length) {
+		const rows = posTreatmentDrivers;
+		const dist = aggregate(rows);
+		const names = headlineClusterNames(rows);
+		findings.push({
+			id: 'positive-treatment',
+			tone: 'positive',
+			eyebrow: 'Drivers of positive treatment sentiment',
+			stat: { value: String(dist.positive), caption: `positive mentions · ${dist.positive + dist.neutral + dist.negative} segments` },
+			headline: `${cap(names)} drew the warmest reactions to treatment.`,
+			detail: `Across the ${rows.length} keyword clusters that surfaced most in positive treatment talk, ${dist.positive} of the underlying ${dist.positive + dist.neutral + dist.negative} segments came back positive.`,
+			clusters: rows.map(barFromRow),
+			distribution: dist,
+			quote: pickQuote(quotesForRows(rows), starred, 'positive'),
+			fragments: fragmentsForRows(rows)
+		});
+	}
+
+	if (nonBarriers.length) {
+		const rows = nonBarriers;
+		const dist = aggregate(rows);
+		const names = headlineClusterNames(rows);
+		findings.push({
+			id: 'trial-non-barriers',
 			tone: 'neutral',
-			eyebrow: 'Drugs vs. methods',
-			stat: {
-				value: String(medicationMentions),
-				caption: `medication mentions · ${medicationSegmentIds.size} segments`
-			},
-			headline: 'Patients reached for GLP-1 drugs over diet and exercise.',
-			detail: `Medications surfaced ${medicationMentions} times across the interviews — more than double the ${lifestyleMentions} mentions of diet, exercise, and other lifestyle methods. Named GLP-1 products alone accounted for ${namedDrugMentions}.`,
-			distribution: distributionOf(medFragments),
-			quote: pickQuote(
-				quotes.filter((x) =>
-					x.themes.some((t) =>
-						[
-							'oral_medication_interest',
-							'drug_switching',
-							'compounded_medication',
-							'medication_access',
-							'treatment_continuation',
-							'treatment_dependency',
-							'non_weight_benefits'
-						].includes(t)
-					)
-				),
-				starred,
-				'any'
-			),
-			fragments: medFragments.slice().sort(bySegmentId)
-		});
-	}
-
-	if (mostDiscussed) {
-		const t = mostDiscussed;
-		findings.push({
-			id: 'most-discussed',
-			tone: 'neutral',
-			eyebrow: 'Most discussed',
-			stat: {
-				value: String(t.n),
-				caption: `mentions · ${t.interviews} of ${summaryStats.interviews} interviews`
-			},
-			headline: `${cap(shortLabel(t.theme))} ran through nearly every interview.`,
-			detail: `It surfaced in ${t.n} coded segments across ${t.interviews} of the ${summaryStats.interviews} interviews — no other thread was returned to as often.`,
-			distribution: { positive: t.positive, neutral: t.n - t.positive - t.negative, negative: t.negative },
-			breakdownLabel: breakdownLabelFor(t.theme),
-			breakdown: subthemeBreakdown(t.theme),
-			quote: pickQuote(
-				quotes.filter((x) => x.themes.includes(t.theme)),
-				starred,
-				'any'
-			),
-			fragments: segmentsForTheme(t.theme).sort(bySegmentId)
-		});
-	}
-
-	if (mostDivisive) {
-		const t = mostDivisive;
-		findings.push({
-			id: 'most-divisive',
-			tone: 'divisive',
-			eyebrow: 'Most divisive',
-			stat: {
-				value: `${t.positive} / ${t.negative}`,
-				caption: 'positive vs. negative mentions'
-			},
-			headline: `${cap(shortLabel(t.theme))} split opinion down the middle.`,
-			detail: `Across ${t.n} coded segments, ${t.positive} leaned positive and ${t.negative} negative — the widest sentiment split of any theme.`,
-			distribution: { positive: t.positive, neutral: t.n - t.positive - t.negative, negative: t.negative },
-			breakdownLabel: breakdownLabelFor(t.theme),
-			breakdown: subthemeBreakdown(t.theme),
-			quote: pickQuote(
-				quotes.filter((x) => x.themes.includes(t.theme)),
-				starred,
-				'any'
-			),
-			fragments: segmentsForTheme(t.theme).sort(bySegmentId)
+			eyebrow: 'Non-issues for trial participation',
+			stat: { value: String(rows.length), caption: `expected barriers that didn't drive negative sentiment` },
+			headline: `${cap(names)} were not viewed as major barriers to trial participation.`,
+			detail: `Of the ${trialBarrierRows.length} trial-barrier topics raised in the interviews, ${rows.length} didn't skew negative when they came up — ${dist.positive} of the ${dist.positive + dist.neutral + dist.negative} mentions were positive against just ${dist.negative} negative.`,
+			clusters: rows.map(barFromRow),
+			distribution: dist,
+			quote: pickQuote(quotesForRows(rows), starred, 'any'),
+			fragments: fragmentsForRows(rows)
 		});
 	}
 
@@ -534,17 +468,26 @@ export function buildFindings(starredQuoteIds: string[] = []): Finding[] {
 }
 
 /**
- * The opening paragraph — a programmatic read of the corpus. Static: it leans
- * only on the theme ranking, not on analyst stars.
+ * The opening paragraph — a programmatic read of the corpus. Static: leans
+ * only on the headline cluster ranking, not on analyst stars.
  */
-export const summaryText: string = [
-	`${cap(numWord(summaryStats.interviews))} GLP-1 patients sat for in-depth interviews,`,
-	`producing ${summaryStats.segments} coded segments across ${summaryStats.themes} themes.`,
-	`Sentiment ran ${sentimentLean.lean}: ${sentimentLean.posPct}% of coded moments registered`,
-	`positive against ${sentimentLean.negPct}% negative.`,
-	brightestTheme && hardestTheme
-		? `Patients spoke most warmly about ${shortLabel(brightestTheme.theme)}, and most guardedly about ${shortLabel(hardestTheme.theme)}.`
-		: ''
-]
-	.filter(Boolean)
-	.join(' ');
+export const summaryText: string = (() => {
+	const bits = [
+		`${cap(numWord(summaryStats.interviews))} GLP-1 patients sat for in-depth interviews,`,
+		`producing ${summaryStats.segments} coded segments across ${summaryStats.themes} themes.`,
+		`Sentiment ran ${sentimentLean.lean}: ${sentimentLean.posPct}% of coded moments registered`,
+		`positive against ${sentimentLean.negPct}% negative.`
+	];
+	const negHead = negTreatmentDrivers.length
+		? headlineClusterNames(negTreatmentDrivers)
+		: '';
+	const posHead = posTreatmentDrivers.length
+		? headlineClusterNames(posTreatmentDrivers)
+		: '';
+	if (negHead && posHead) {
+		bits.push(
+			`Negative reactions clustered around ${negHead}; warmest mentions were of ${posHead}.`
+		);
+	}
+	return bits.join(' ');
+})();

@@ -265,7 +265,7 @@
 					</div>
 					
 					<div class="flex min-w-0 flex-1 flex-col gap-1">
-						<span class="figcaption capitalize text-accent-mint">Participant details</span>
+						<span class="uppercase font-heading text-accent-mint">Participant details</span>
 						<h2 class="font-heading text-3xl font-light uppercase text-primary">
 							{profileName(profile, participantLabel(interviewId))}
 						</h2>
@@ -415,22 +415,11 @@
 				{/if}
 
 				<!-- Themes & emotions — sentiment-split breakdowns, scoped here -->
-				<section class="flex flex-col gap-5 border-t border-slate-100 pt-6">
+				<section class="flex flex-col gap-5">
 					<div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5">
 						<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
 							Themes &amp; emotions
 						</h3>
-						{#if hasBreakdown}
-							<div class="flex items-center gap-1.5 text-[10px] text-slate-400">
-								<span>Negative</span>
-								<span class="flex gap-[2px]">
-									{#each ['#e11d48', '#fb7185', '#cbd5e1', '#34d399', '#059669'] as c (c)}
-										<span class="h-2.5 w-2.5" style="background-color: {c}"></span>
-									{/each}
-								</span>
-								<span>Positive</span>
-							</div>
-						{/if}
 					</div>
 
 					{#if hasBreakdown}

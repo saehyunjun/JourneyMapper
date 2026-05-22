@@ -37,7 +37,7 @@ const data = raw as WordUsageFile;
  */
 export const glpWordData: GlpWordData = {
 	meta: {
-		study: 'WCT GLP-1 Interviews',
+		study: 'GLP-1 Interviews',
 		participants: Object.keys(data.by_participant),
 		notes: data.meta.notes
 	},

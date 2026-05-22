@@ -670,7 +670,7 @@
 				>
 			{/if}
 			<span class="font-mono text-xs uppercase tracking-wider text-white/55">
-				WCT GLP-1 Interviews · Question {qPtr + 1} / {qList.length}
+				GLP-1 Interviews · Question {qPtr + 1} / {qList.length}
 			</span>
 			{#if mode === 'manual'}
 				<button

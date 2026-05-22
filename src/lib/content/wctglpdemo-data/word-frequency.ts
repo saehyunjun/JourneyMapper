@@ -17,7 +17,7 @@
  * The result's `words` array is shaped for <WordCloud> (`text` + `value`), so
  * it drops straight into the component with no remapping.
  */
-import { segments, annotations, segmentsForTheme, wordUsage } from './analysis';
+import { segments, annotations, segmentsForTheme, wordUsage, type Segment } from './analysis';
 
 // --- Stoplist ------------------------------------------------------------
 // Mirrors scripts/build-word-usage.mjs exactly. Standard English function
@@ -88,8 +88,17 @@ export function tokenize(text: string, extraStopwords?: ReadonlySet<string>): st
 
 export type WordMode = 'common' | 'distinctive';
 
-/** A piece of text with the sentiment (-2..2) of the segment it came from. */
-export type ScopedText = { text: string; sentiment?: number };
+/**
+ * A piece of text with the sentiment (-2..2) of the segment it came from, plus
+ * the themes/subthemes that segment was tagged with. Themes/subthemes flow
+ * through to CloudWord as a per-word dominant tag.
+ */
+export type ScopedText = {
+	text: string;
+	sentiment?: number;
+	themes?: readonly string[];
+	subthemes?: readonly string[];
+};
 
 /** One ranked word, ready to feed straight into <WordCloud> as `text`/`value`. */
 export type CloudWord = {
@@ -110,6 +119,14 @@ export type CloudWord = {
 	 * by occurrence. 0 when the input carried no sentiment.
 	 */
 	sentiment: number;
+	/**
+	 * Theme id most often tagged on the segments that contained this word —
+	 * the "parent theme" for tooltip / drilldown. Undefined when no segments
+	 * carrying this word were tagged.
+	 */
+	theme?: string;
+	/** Like `theme`, but for the most-tagged subtheme. */
+	subtheme?: string;
 	/** The metric the cloud sizes on — `count` in common mode, `distinctiveness` in distinctive mode. */
 	value: number;
 };
@@ -160,12 +177,14 @@ export function analyzeWords(
 	const minCount = options.minCount ?? (mode === 'distinctive' ? 2 : 1);
 	const extra = options.extraStopwords ? new Set(options.extraStopwords) : undefined;
 
-	// Count every word in scope, and accumulate sentiment per word.
+	// Count every word in scope, and accumulate sentiment / theme tags per word.
 	const counts = new Map<string, number>();
 	const sentimentSum = new Map<string, number>();
 	const sentimentN = new Map<string, number>();
+	const themeCountsByWord = new Map<string, Map<string, number>>();
+	const subthemeCountsByWord = new Map<string, Map<string, number>>();
 	let totalWords = 0;
-	for (const { text, sentiment } of toScopedTexts(texts)) {
+	for (const { text, sentiment, themes, subthemes } of toScopedTexts(texts)) {
 		const hasSentiment = sentiment != null && Number.isFinite(sentiment);
 		for (const tok of tokenize(text, extra)) {
 			counts.set(tok, (counts.get(tok) ?? 0) + 1);
@@ -174,8 +193,32 @@ export function analyzeWords(
 				sentimentSum.set(tok, (sentimentSum.get(tok) ?? 0) + (sentiment as number));
 				sentimentN.set(tok, (sentimentN.get(tok) ?? 0) + 1);
 			}
+			if (themes?.length) {
+				let tm = themeCountsByWord.get(tok);
+				if (!tm) themeCountsByWord.set(tok, (tm = new Map()));
+				for (const id of themes) tm.set(id, (tm.get(id) ?? 0) + 1);
+			}
+			if (subthemes?.length) {
+				let sm = subthemeCountsByWord.get(tok);
+				if (!sm) subthemeCountsByWord.set(tok, (sm = new Map()));
+				for (const id of subthemes) sm.set(id, (sm.get(id) ?? 0) + 1);
+			}
 		}
 	}
+
+	// Pick the most-frequently-tagged theme/subtheme for a given word.
+	const dominantTag = (m?: Map<string, number>): string | undefined => {
+		if (!m || m.size === 0) return undefined;
+		let topId: string | undefined;
+		let topCount = -1;
+		for (const [id, c] of m) {
+			if (c > topCount) {
+				topCount = c;
+				topId = id;
+			}
+		}
+		return topId;
+	};
 
 	const uniqueWords = counts.size;
 	const hapaxWords = [...counts]
@@ -204,6 +247,8 @@ export function analyzeWords(
 			frequency,
 			distinctiveness,
 			sentiment,
+			theme: dominantTag(themeCountsByWord.get(text)),
+			subtheme: dominantTag(subthemeCountsByWord.get(text)),
 			value: mode === 'distinctive' ? distinctiveness : count
 		};
 	});
@@ -224,8 +269,31 @@ export function analyzeWords(
 
 // --- Scoped convenience wrappers ----------------------------------------
 
-/** segment_id -> sentiment (-2..2) from the per-segment annotations. */
-const sentimentBySegment = new Map(annotations.map((a) => [a.segment_id, a.sentiment]));
+/** segment_id -> annotation, used to attach sentiment + theme tags to each word. */
+const annotationBySegment = new Map(annotations.map((a) => [a.segment_id, a]));
+
+/**
+ * Narrow a word-cloud scope to the segments that match a theme, subtheme and/or
+ * question. Each field is AND-ed; a null/undefined field is ignored. Theme and
+ * subtheme are read from the segment's annotation (untagged segments fall out as
+ * soon as either is set); question is matched against the segment's question_id.
+ */
+export type WordScopeFilter = {
+	theme?: string | null;
+	subtheme?: string | null;
+	question?: string | null;
+};
+
+function matchesFilter(s: Segment, filter?: WordScopeFilter): boolean {
+	if (!filter) return true;
+	if (filter.question && s.question_id !== filter.question) return false;
+	if (filter.theme || filter.subtheme) {
+		const a = annotationBySegment.get(s.segment_id);
+		if (filter.theme && !a?.themes.includes(filter.theme)) return false;
+		if (filter.subtheme && !a?.subthemes.includes(filter.subtheme)) return false;
+	}
+	return true;
+}
 
 /** word -> count across every participant's speech, summed from word_usage.json. */
 function corpusCounts(excludeInterviewId?: string): Map<string, number> {
@@ -247,12 +315,24 @@ function corpusCounts(excludeInterviewId?: string): Map<string, number> {
  */
 export function participantWords(
 	interviewId: string,
-	options: AnalyzeOptions = {}
+	options: AnalyzeOptions & { filter?: WordScopeFilter } = {}
 ): WordFrequencyResult {
+	const { filter, ...analyzeOptions } = options;
 	const texts: ScopedText[] = segments
 		.filter((s) => s.interview_id === interviewId && s.speaker === 'participant')
-		.map((s) => ({ text: s.text, sentiment: sentimentBySegment.get(s.segment_id) }));
-	return analyzeWords(texts, { baseline: corpusCounts(interviewId), ...options });
+		.filter((s) => matchesFilter(s, filter))
+		.map((s) => {
+			const a = annotationBySegment.get(s.segment_id);
+			return {
+				text: s.text,
+				sentiment: a?.sentiment,
+				themes: a?.themes,
+				subthemes: a?.subthemes
+			};
+		});
+	// Baseline stays the whole other-participant corpus so "distinctive" still
+	// means distinctive against everyone, not just against the filtered scope.
+	return analyzeWords(texts, { baseline: corpusCounts(interviewId), ...analyzeOptions });
 }
 
 /**
@@ -263,9 +343,14 @@ export function participantWords(
  * compares the theme against the whole corpus.
  */
 export function themeWords(themeId: string, options: AnalyzeOptions = {}): WordFrequencyResult {
-	const texts: ScopedText[] = segmentsForTheme(themeId).map((f) => ({
-		text: f.text,
-		sentiment: f.sentiment
-	}));
+	const texts: ScopedText[] = segmentsForTheme(themeId).map((f) => {
+		const a = annotationBySegment.get(f.segment_id);
+		return {
+			text: f.text,
+			sentiment: f.sentiment,
+			themes: a?.themes,
+			subthemes: a?.subthemes
+		};
+	});
 	return analyzeWords(texts, { baseline: corpusCounts(), ...options });
 }

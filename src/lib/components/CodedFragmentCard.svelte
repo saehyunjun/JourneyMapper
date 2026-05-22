@@ -14,6 +14,7 @@
 	import KeywordText from '$lib/components/KeywordText.svelte';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
 	import StarIcon from '@lucide/svelte/icons/star';
+	import { Button } from '$lib/components/ui/button/index';
 	import {
 		participantLabel,
 		questionLabel,
@@ -70,25 +71,29 @@
 			<span class="truncate text-sm font-medium text-slate-700">{name}</span>
 		</div>
 		{#if onToggleStar}
-			<button
-				type="button"
+			<Button
+				variant="ghost"
 				onclick={() => onToggleStar?.(fragment.segment_id)}
 				disabled={togglingStar}
 				aria-pressed={starred}
 				title={starred ? 'Starred — click to unstar' : 'Star this segment'}
 				class="shrink-0 rounded p-1 transition-colors hover:bg-amber-50 disabled:opacity-40
-					{starred ? 'text-amber-400' : 'text-slate-300 hover:text-amber-400'}"
+					{starred ? 'text-amber-400' : 'text-slate-400 hover:text-amber-200'}"
 			>
 				<StarIcon size={18} fill={starred ? 'currentColor' : 'none'} />
-			</button>
+			</Button>
 		{/if}
 	</div>
-
-	<p class="mt-2 text-sm leading-relaxed text-slate-700">
-		<KeywordText text={fragment.text} />
-	</p>
-
-	<div class="mt-1 text-xs text-slate-500">{questionLabel(fragment.question_id)}</div>
+	
+		<div class="flex flex-col gap-4 my-4 text-xs text-muted-foreground">
+			<p class="text-xs text-pretty font-bold text-muted-primary">
+				{questionLabel(fragment.question_id)}
+			</p>
+			
+			<p class="text-lg leading-tight text-pretty text-primary">
+				<KeywordText text={fragment.text} />
+			</p>
+		</div>
 
 	<!-- Sentiment, emotions, and pull-quote provenance -->
 	<div class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-400">

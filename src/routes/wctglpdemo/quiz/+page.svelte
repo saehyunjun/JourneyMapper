@@ -564,14 +564,14 @@
 				<!-- ── The Worldwide Clinical Trials read — programmatic so-what ── -->
 				<div class="mt-6 w-full p-4 text-left text-primary">
 					<p class="text-sm font-medium uppercase tracking-widest text-accent-mint-background">
-						The Worldwide read
+						Our Read
 					</p>
 					{#if missedDomains.length}
 						<p class="mt-2 text-sm leading-relaxed">
 							Your softest reads were around
 							<span class="font-medium text-secondary-foreground"
 								>{joinLabels(missedDomains.map((d) => d.label))}</span
-							>. That's where Worldwide Clinical Trials does its sharpest work — pairing {joinLabels([
+							>. That's where our team does its sharpest work: Pairing {joinLabels([
 								...new Set(missedDomains.map((d) => d.wctEdge))
 							])} with the operational muscle to carry it into a live protocol.
 						</p>
@@ -581,13 +581,10 @@
 							You already have a strong instinct for
 							<span class="font-medium text-secondary-foreground"
 								>{joinLabels(nailedDomains.map((d) => d.label))}</span
-							>. Worldwide can build on that — turning a good hunch into design decisions that hold
+							>. We can build on that and turn a good hunch into design decisions that hold
 							up across sites and patients.
 						</p>
 					{/if}
-					<p class="mt-3 text-xs text-slate-400">
-						Worldwide Clinical Trials — a CRO built around how patients actually experience research.
-					</p>
 				</div>
 
 				<Button class="mt-6" size="lg" variant="outline" onclick={start}>

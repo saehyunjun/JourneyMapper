@@ -135,14 +135,42 @@ export const wordUsage = wordUsageRaw as {
 	by_participant: Record<string, { total_words: number; unique_words: number; word_usage: WordCount[] }>;
 };
 
-type KeywordUsageMatch = { segment_id: string; text?: string };
+type KeywordUsageMatch = {
+	segment_id: string;
+	interview_id: string;
+	question_id: string | null;
+	text?: string;
+	char_start?: number;
+	char_end?: number;
+};
 type KeywordUsageCluster = {
 	id: string;
 	label: string;
+	parent_theme?: string;
+	parent_subtheme?: string;
 	count: number;
 	matches: KeywordUsageMatch[];
 };
 type KeywordUsage = { clusters: KeywordUsageCluster[] };
+
+const keywordUsage = keywordUsageRaw as unknown as KeywordUsage;
+
+/** Match context handed to keyword predicates — what every cluster match
+ *  carries that callers can filter on. */
+export type KeywordMatchContext = {
+	segment_id: string;
+	interview_id: string;
+	question_id: string | null;
+};
+
+export type KeywordBreakdownRow = {
+	id: string;
+	label: string;
+	count: number;
+	parent_subtheme: string;
+	parent_theme: string;
+	blocks: ThemeBlock[];
+};
 
 /** A keyword a segment matched, plus the literal surface form spoken in it. */
 export type SegmentKeyword = { id: string; label: string; surface: string };
@@ -155,8 +183,7 @@ export type SegmentKeyword = { id: string; label: string; surface: string };
  */
 export const keywordBySegment: Map<string, SegmentKeyword> = (() => {
 	const map = new Map<string, SegmentKeyword>();
-	const usage = keywordUsageRaw as unknown as KeywordUsage;
-	const ranked = (usage.clusters ?? []).slice().sort((a, b) => b.count - a.count);
+	const ranked = (keywordUsage.clusters ?? []).slice().sort((a, b) => b.count - a.count);
 	for (const kw of ranked)
 		for (const m of kw.matches)
 			if (!map.has(m.segment_id))
@@ -387,6 +414,149 @@ export function segmentsForTheme(
 	predicate: (a: Annotation) => boolean = () => true
 ): ThemeFragment[] {
 	return fragmentsMatching((a) => a.themes.includes(themeId) && predicate(a));
+}
+
+export function segmentsForSubtheme(
+	subthemeId: string,
+	predicate: (a: Annotation) => boolean = () => true
+): ThemeFragment[] {
+	return fragmentsMatching((a) => a.subthemes.includes(subthemeId) && predicate(a));
+}
+
+/** Every coded segment whose text matched the given keyword cluster, joined
+ *  against the codebook annotations so each fragment carries sentiment +
+ *  emotions for visual treatment. `predicate` filters the underlying match
+ *  contexts (e.g. by participant or question). */
+export function segmentsForKeyword(
+	clusterId: string,
+	predicate: (m: KeywordMatchContext) => boolean = () => true
+): ThemeFragment[] {
+	const cluster = keywordUsage.clusters.find((c) => c.id === clusterId);
+	if (!cluster) return [];
+	const seen = new Set<string>();
+	const out: ThemeFragment[] = [];
+	for (const m of cluster.matches) {
+		if (!predicate(m)) continue;
+		if (seen.has(m.segment_id)) continue;
+		seen.add(m.segment_id);
+		const seg = segmentById.get(m.segment_id);
+		if (!seg) continue;
+		const ann = annotationBySegment.get(m.segment_id);
+		out.push({
+			segment_id: m.segment_id,
+			text: seg.text,
+			char_start: seg.char_start,
+			char_end: seg.char_end,
+			interview_id: m.interview_id,
+			question_id: m.question_id ?? ann?.question_id ?? '',
+			sentiment: ann?.sentiment ?? 0,
+			emotions: ann?.emotions ?? [],
+			flags: seg.flags ?? [],
+			in_pull_quote: quoteBySegment.has(m.segment_id),
+			quote_id: quoteBySegment.get(m.segment_id) ?? null
+		});
+	}
+	return out;
+}
+
+/** Per-cluster breakdown from the live keyword lexicon. Each row's `blocks`
+ *  are one per matched segment (deduped), carrying the segment's annotation
+ *  sentiment (or 0 if the segment isn't annotated). `predicate` narrows by
+ *  participant, question, etc. */
+export function keywordBreakdown(
+	predicate: (m: KeywordMatchContext) => boolean = () => true
+): KeywordBreakdownRow[] {
+	const out: KeywordBreakdownRow[] = [];
+	for (const cluster of keywordUsage.clusters) {
+		const seen = new Set<string>();
+		const blocks: ThemeBlock[] = [];
+		for (const m of cluster.matches) {
+			if (!predicate(m)) continue;
+			if (seen.has(m.segment_id)) continue;
+			seen.add(m.segment_id);
+			const ann = annotationBySegment.get(m.segment_id);
+			blocks.push({ sentiment: ann?.sentiment ?? 0, interview_id: m.interview_id });
+		}
+		if (!blocks.length) continue;
+		out.push({
+			id: cluster.id,
+			label: cluster.label,
+			count: blocks.length,
+			parent_subtheme: cluster.parent_subtheme ?? '',
+			parent_theme: cluster.parent_theme ?? '',
+			blocks
+		});
+	}
+	return out.sort((a, b) => b.count - a.count);
+}
+
+/** Pretty label for a subtheme id, or title-cased fallback. */
+export function subthemeLabel(id: string): string {
+	return subthemeTags.find((s) => s.id === id)?.label ?? titleCase(id);
+}
+
+// === Three-level radial tree (theme -> subtheme -> keyword) ==================
+
+export type RadialBlock = { sentiment: number; interview_id: string };
+export type RadialNode = {
+	id: string;
+	label: string;
+	count: number;
+	blocks: RadialBlock[];
+	kind: 'theme' | 'subtheme' | 'keyword';
+	description?: string;
+	children?: RadialNode[];
+};
+
+/** A complete three-level hierarchy filtered by the given predicates, suitable
+ *  for the zoomable RadialThemeChart. `annPred` filters the codebook
+ *  annotations that drive theme + subtheme counts; `matchPred` filters the
+ *  live keyword-lexicon matches that drive each subtheme's keyword children.
+ *  Subthemes/themes with zero counts under the filter are dropped. */
+export function buildRadialTree(
+	annPred: (a: Annotation) => boolean = () => true,
+	matchPred: (m: KeywordMatchContext) => boolean = () => true
+): RadialNode[] {
+	const themes = themeBreakdown(annPred);
+
+	const keywordsBySubtheme = new Map<string, RadialNode[]>();
+	for (const kw of keywordBreakdown(matchPred)) {
+		const list = keywordsBySubtheme.get(kw.parent_subtheme) ?? [];
+		list.push({
+			id: kw.id,
+			label: kw.label,
+			count: kw.count,
+			blocks: kw.blocks,
+			kind: 'keyword'
+		});
+		keywordsBySubtheme.set(kw.parent_subtheme, list);
+	}
+
+	const themeMeta = new Map(themeTags.map((t) => [t.id, t] as const));
+
+	return themes.map((t) => {
+		const meta = themeMeta.get(t.id);
+		return {
+			id: t.id,
+			label: meta?.label ?? titleCase(t.id),
+			count: t.count,
+			blocks: t.blocks,
+			kind: 'theme',
+			description: meta?.description,
+			children: t.subthemes.map((s) => {
+				const sMeta = (meta?.subthemes ?? []).find((x) => x.id === s.id);
+				return {
+					id: s.id,
+					label: sMeta?.label ?? subthemeLabel(s.id),
+					count: s.count,
+					blocks: s.blocks,
+					kind: 'subtheme',
+					description: sMeta?.description,
+					children: (keywordsBySubtheme.get(s.id) ?? []).sort((a, b) => b.count - a.count)
+				};
+			})
+		};
+	});
 }
 
 const questionOrder = new Map(questions.map((q) => [q.question_id, q.order]));

@@ -11,7 +11,6 @@
 -->
 <script lang="ts">
 	import { untrack } from 'svelte';
-	import { Button } from '$lib/components/ui/button/index.ts';
 	import { MoveUpRight, Star, ArrowRight } from '@lucide/svelte';
 	import {
 		summaryStats,
@@ -20,14 +19,12 @@
 		buildFindings,
 		type Finding
 	} from '$lib/content/wctglpdemo-data/executive-summary';
-	import { questionLabel, participantLabel } from '$lib/content/wctglpdemo-data/analysis';
-	import KeywordText from '$lib/components/KeywordText.svelte';
-	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
+	import KeyQuoteCard from '$lib/components/KeyQuoteCard.svelte';
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
 	import SentimentDonut from '$lib/components/SentimentDonut.svelte';
+	import SentimentBar from '$lib/components/SentimentBar.svelte';
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
-	import { profileName } from '$lib/types/participant-profile';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -65,18 +62,12 @@
 	];
 
 	// Per-tone styling for the finding cards.
-	const tone: Record<Finding['tone'], { accent: string; border: string; bar: string }> = {
-		positive: { accent: 'text-emerald-700', border: 'border-emerald-400', bar: 'bg-emerald-400' },
-		negative: { accent: 'text-rose-700', border: 'border-rose-400', bar: 'bg-rose-400' },
-		divisive: { accent: 'text-amber-700', border: 'border-amber-400', bar: 'bg-amber-400' },
-		neutral: { accent: 'text-accent-mint', border: 'border-accent-mint', bar: 'bg-accent-mint' }
+	const tone: Record<Finding['tone'], { accent: string }> = {
+		positive: { accent: 'text-emerald-700' },
+		negative: { accent: 'text-rose-700' },
+		divisive: { accent: 'text-amber-700' },
+		neutral: { accent: 'text-accent-mint' }
 	};
-
-	function sentimentChip(s: number): string {
-		if (s > 0) return 'bg-emerald-100 text-emerald-800';
-		if (s < 0) return 'bg-rose-100 text-rose-800';
-		return 'bg-slate-100 text-slate-700';
-	}
 
 	const explore = [
 		{
@@ -103,9 +94,6 @@
 	>
 		<div class="flex w-full flex-col gap-2">
 			<span class="pill-white mx-auto mb-8 text-base">Executive summary</span>
-			<span class="mx-auto justify-center text-center text-lg text-white">
-				Prepared for Worldwide Clinical Trials by Patiently Studio
-			</span>
 			<p
 				class="mx-auto justify-center text-pretty text-center text-2xl leading-8 text-primary-foreground md:w-5xl md:text-5xl md:font-light md:leading-11"
 			>
@@ -167,13 +155,13 @@
 			</div>
 		</section>
 
-		<!-- Key findings — five cross-cutting cards, each opening a segment drawer. -->
+		<!-- Key findings — cluster-driven cards, each opening a segment drawer. -->
 		<section class="flex flex-col gap-5">
 			<div class="flex flex-col gap-1">
 				<h2 class="text-2xl font-medium uppercase tracking-wide text-accent-mint">Key findings</h2>
 				<p class="text-sm text-muted-foreground">
-					Where sentiment ran highest and lowest, and the topics that drove the interviews —
-					select a finding to read the coded segments behind it.
+					The keyword clusters that drove the interviews' sharpest reactions — and the expected
+					barriers that didn't. Select a finding to read the coded segments behind it.
 				</p>
 			</div>
 
@@ -212,81 +200,46 @@
 							· {f.stat.caption}
 						</p>
 
-						{#if f.breakdown && f.breakdown.length}
-							{@const maxCount = Math.max(...f.breakdown.map((b) => b.count))}
-							<div class="flex flex-col gap-2 border-t border-slate-100 pt-4">
+						{#if f.clusters.length}
+							{@const maxCount = Math.max(...f.clusters.map((c) => c.count))}
+							<div class="flex flex-col gap-2.5 border-t border-slate-100 pt-4">
 								<span class="text-xs font-semibold uppercase tracking-wide text-slate-400">
-									{f.breakdownLabel}
+									Keyword clusters · one block per coded segment
 								</span>
-								<div class="flex flex-col gap-1.5">
-									{#each f.breakdown as b (b.id)}
-										<div class="flex items-center gap-2.5 text-xs">
-											<span class="w-36 shrink-0 truncate text-slate-600" title={b.label}>
-												{b.label}
-											</span>
-											<div class="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
-												<div
-													class="h-full rounded-full {t.bar}"
-													style="width: {maxCount ? (b.count / maxCount) * 100 : 0}%"
-												></div>
-											</div>
-											<span class="w-5 shrink-0 text-right tabular-nums text-slate-400">
-												{b.count}
-											</span>
-										</div>
+								<div class="flex flex-col gap-2">
+									{#each f.clusters as c (c.id)}
+										<SentimentBar
+											label={c.label}
+											blocks={c.blocks}
+											max={maxCount}
+											labelClass="w-36"
+										/>
 									{/each}
 								</div>
 							</div>
 						{/if}
 
 						{#if f.quote}
-							<figure class="flex flex-col gap-3 border-t border-slate-100 pt-4">
-								<blockquote
-									class="border-l-2 pl-3 text-base text-slate-800 {t.border}"
-								>
-									“<KeywordText text={f.quote.text} />”
-								</blockquote>
-								<figcaption class="flex flex-wrap items-center gap-2">
-									<Button
-										type="button"
-										onclick={(e) => {
-											e.stopPropagation();
-											if (f.quote) openParticipant(f.quote.interview_id);
-										}}
-										class="flex w-fit items-center gap-1.5 rounded-full border border-secondary bg-(--paper) py-0.5 pr-2.5 pl-0.5 text-xs font-medium text-foreground shadow-sm transition-colors hover:cursor-pointer hover:border-accent-mint hover:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-mint"
-										title="View participant details"
+							<div class="flex flex-col gap-2 border-t border-slate-100 pt-4">
+								<KeyQuoteCard
+									text={f.quote.text}
+									sentiment={f.quote.sentiment}
+									interviewId={f.quote.interview_id}
+									questionId={f.quote.question_id}
+									{profiles}
+									onparticipant={openParticipant}
+									size="lg"
+								/>
+								{#if f.quote.isStarred}
+									<span
+										class="flex items-center gap-1 self-center text-xs text-amber-600"
+										title="Analyst-starred highlight"
 									>
-										<ParticipantAvatar
-											interviewId={f.quote.interview_id}
-											size="sm"
-											src={profiles[f.quote.interview_id]?.avatar_url}
-										/>
-										{profileName(
-											profiles[f.quote.interview_id],
-											participantLabel(f.quote.interview_id)
-										)}
-									</Button>
-									<span class="rounded-full px-2 py-0.5 text-xs {sentimentChip(f.quote.sentiment)}">
-										{f.quote.sentiment > 0
-											? 'Positive'
-											: f.quote.sentiment < 0
-												? 'Negative'
-												: 'Neutral'}
+										<Star class="size-3.5 fill-amber-400 text-amber-400" />
+										Starred
 									</span>
-									{#if f.quote.isStarred}
-										<span
-											class="flex items-center gap-1 text-xs text-amber-600"
-											title="Analyst-starred highlight"
-										>
-											<Star class="size-3.5 fill-amber-400 text-amber-400" />
-											Starred
-										</span>
-									{/if}
-									<span class="w-full text-xs text-slate-400">
-										{questionLabel(f.quote.question_id)}
-									</span>
-								</figcaption>
-							</figure>
+								{/if}
+							</div>
 						{/if}
 
 						<span
