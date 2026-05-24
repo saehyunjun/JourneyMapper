@@ -21,7 +21,11 @@ import {
 	drugs as registryDrugs
 } from './registries';
 import type { Indication, TherapeuticArea, Drug } from './registries';
-import { drugsForIndicationFromDb } from './db/queries';
+import {
+	drugsForIndicationFromDb,
+	indicationsFromDb,
+	therapeuticAreasFromDb
+} from './db/queries';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const LEXICON_PATH = `${DATA_DIR}/keyword_lexicon.json`;
@@ -166,11 +170,26 @@ function clusterIndications(c: Cluster & { indication?: string }): string[] {
  *  cross-cutting too. */
 export async function getLexiconSlice(requested?: string): Promise<LexiconSlice> {
 	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
-	if (!registryIndications.length)
-		throw new Error('registries/indications.json is empty — registry is required.');
 
-	const known = new Set<string>(registryIndications.map((i) => i.id));
-	const fallback: string = registryIndications[0].id;
+	// Indications + therapeutic areas: prefer DB, fall back to bundled JSON
+	// using the same pattern as drugs below. Empty DB result with non-empty
+	// JSON triggers fallback (signals an unseeded DB).
+	let indications: Indication[];
+	let therapeutic_areas: TherapeuticArea[];
+	try {
+		const [dbInds, dbTas] = await Promise.all([indicationsFromDb(), therapeuticAreasFromDb()]);
+		indications = dbInds.length > 0 ? dbInds : registryIndications;
+		therapeutic_areas = dbTas.length > 0 ? dbTas : registryTherapeuticAreas;
+	} catch {
+		indications = registryIndications;
+		therapeutic_areas = registryTherapeuticAreas;
+	}
+
+	if (!indications.length)
+		throw new Error('No indications available (DB empty and registries/indications.json missing).');
+
+	const known = new Set<string>(indications.map((i) => i.id));
+	const fallback: string = indications[0].id;
 	const active = requested && known.has(requested) ? requested : fallback;
 
 	const clusters = lex.clusters.filter((c) => {
@@ -202,8 +221,8 @@ export async function getLexiconSlice(requested?: string): Promise<LexiconSlice>
 
 	return {
 		active_indication: active,
-		therapeutic_areas: registryTherapeuticAreas,
-		indications: registryIndications,
+		therapeutic_areas,
+		indications,
 		clusters,
 		themes: codebook.themes,
 		drugs

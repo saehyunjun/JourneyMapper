@@ -10,9 +10,31 @@
  * authoritative read source for everything else.
  */
 import { db } from './client';
-import { drugs, drugIndications } from './schema/drugs';
+import { drugs, drugIndications, sponsors, mechanismsOfAction } from './schema/drugs';
+import {
+	indications,
+	therapeuticAreas,
+	indicationTherapeuticAreas
+} from './schema/indications';
+import { burdenCategories } from './schema/burdens';
+import { contentSources } from './schema/content_sources';
 import { eq, inArray } from 'drizzle-orm';
-import type { Drug, DrugId, IndicationId } from '$lib/content/registries/types';
+import type {
+	Drug,
+	DrugId,
+	Indication,
+	IndicationId,
+	TherapeuticArea,
+	TherapeuticAreaId,
+	BurdenCategory,
+	BurdenCategoryId,
+	Sponsor,
+	SponsorId,
+	MechanismOfAction,
+	MoaId,
+	ContentSource,
+	ContentSourceId
+} from '$lib/content/registries/types';
 
 /** Return every drug whose indication_ids[] includes the given indication.
  *  Performs two queries: (1) the drugs joined to drug_indications filtered
@@ -66,5 +88,79 @@ export async function drugsForIndicationFromDb(indicationId: string): Promise<Dr
 		indication_ids: (indsByDrugId.get(d.id) ?? []) as IndicationId[],
 		description: d.description ?? undefined,
 		embedding: d.embedding ?? undefined
+	}));
+}
+
+/** Every indication row, each with its therapeutic_area_ids[] populated from
+ *  the join table. Same shape as registries/indications.json items. */
+export async function indicationsFromDb(): Promise<Indication[]> {
+	const rows = await db.select().from(indications);
+	if (rows.length === 0) return [];
+
+	const links = await db.select().from(indicationTherapeuticAreas);
+	const tasByInd = new Map<string, string[]>();
+	for (const l of links) {
+		const arr = tasByInd.get(l.indication_id) ?? [];
+		arr.push(l.therapeutic_area_id);
+		tasByInd.set(l.indication_id, arr);
+	}
+
+	return rows.map((r) => ({
+		id: r.id as IndicationId,
+		label: r.label,
+		abbreviation: r.abbreviation,
+		mesh_id: r.mesh_id,
+		mesh_term: r.mesh_term,
+		therapeutic_area_ids: (tasByInd.get(r.id) ?? []) as TherapeuticAreaId[],
+		description: r.description ?? undefined
+	}));
+}
+
+export async function therapeuticAreasFromDb(): Promise<TherapeuticArea[]> {
+	const rows = await db.select().from(therapeuticAreas);
+	return rows.map((r) => ({
+		id: r.id as TherapeuticAreaId,
+		label: r.label,
+		mesh_id: r.mesh_id,
+		mesh_term: r.mesh_term
+	}));
+}
+
+export async function burdenCategoriesFromDb(): Promise<BurdenCategory[]> {
+	const rows = await db.select().from(burdenCategories);
+	return rows.map((r) => ({
+		id: r.id as BurdenCategoryId,
+		label: r.label,
+		parent_id: (r.parent_id ?? null) as BurdenCategoryId | null,
+		description: r.description
+	}));
+}
+
+export async function sponsorsFromDb(): Promise<Sponsor[]> {
+	const rows = await db.select().from(sponsors);
+	return rows.map((r) => ({
+		id: r.id as SponsorId,
+		label: r.label,
+		headquarters_country: r.headquarters_country
+	}));
+}
+
+export async function mechanismsOfActionFromDb(): Promise<MechanismOfAction[]> {
+	const rows = await db.select().from(mechanismsOfAction);
+	return rows.map((r) => ({
+		id: r.id as MoaId,
+		label: r.label,
+		description: r.description,
+		embedding: r.embedding ?? undefined
+	}));
+}
+
+export async function contentSourcesFromDb(): Promise<ContentSource[]> {
+	const rows = await db.select().from(contentSources);
+	return rows.map((r) => ({
+		id: r.id as ContentSourceId,
+		label: r.label,
+		description: r.description,
+		typical_metadata: r.typical_metadata
 	}));
 }
