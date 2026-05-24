@@ -14,3 +14,5 @@ export * from './indications';
 export * from './burdens';
 export * from './drugs';
 export * from './content_sources';
+export * from './content_items';
+export * from './segments';
