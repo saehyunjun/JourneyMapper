@@ -18,7 +18,8 @@ import {
 } from './schema/indications';
 import { burdenCategories } from './schema/burdens';
 import { contentSources } from './schema/content_sources';
-import { eq, inArray } from 'drizzle-orm';
+import { contentItems, contentItemIndications } from './schema/content_items';
+import { eq, inArray, and, desc, sql } from 'drizzle-orm';
 import type {
 	Drug,
 	DrugId,
@@ -154,6 +155,63 @@ export async function mechanismsOfActionFromDb(): Promise<MechanismOfAction[]> {
 		embedding: r.embedding ?? undefined
 	}));
 }
+
+// --- Analytics ---------------------------------------------------------------
+
+/** A single search-trend row: a search-query content_item plus its volume +
+ *  source-dataset metadata extracted from source_metadata. */
+export type SearchTrend = {
+	id: string;
+	topic: string;
+	volume: number | null;
+	unit: string | null;
+	geography: string | null;
+	dataset_id: string | null;
+};
+
+/** Top search-query topics for an indication, ordered by estimated volume
+ *  desc. Reads only from content_items + content_item_indications (no JSON
+ *  fallback — analytics surfaces should fail loudly if the DB isn't seeded
+ *  + ingested, not silently return stale data). */
+export async function searchTrendsFromDb(
+	indicationId: string,
+	limit = 50
+): Promise<SearchTrend[]> {
+	const volumeExpr = sql<number>`CAST(json_extract(${contentItems.source_metadata}, '$.volume') AS INTEGER)`;
+	const rows = await getDb()
+		.select({
+			id: contentItems.id,
+			topic: contentItems.raw_text,
+			volume: volumeExpr,
+			unit: sql<string | null>`json_extract(${contentItems.source_metadata}, '$.unit')`,
+			geography: sql<string | null>`json_extract(${contentItems.source_metadata}, '$.geography')`,
+			dataset_id: sql<string | null>`json_extract(${contentItems.source_metadata}, '$.dataset_id')`
+		})
+		.from(contentItems)
+		.innerJoin(
+			contentItemIndications,
+			eq(contentItemIndications.content_item_id, contentItems.id)
+		)
+		.where(
+			and(
+				eq(contentItems.content_source_id, 'search_query'),
+				eq(contentItemIndications.indication_id, indicationId)
+			)
+		)
+		.orderBy(desc(volumeExpr))
+		.limit(limit);
+
+	return rows.map((r) => ({
+		id: r.id,
+		topic: r.topic,
+		volume: r.volume ?? null,
+		unit: r.unit,
+		geography: r.geography,
+		dataset_id: r.dataset_id
+	}));
+}
+
+// --- Registries --------------------------------------------------------------
 
 export async function contentSourcesFromDb(): Promise<ContentSource[]> {
 	const rows = await getDb().select().from(contentSources);
