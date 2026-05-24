@@ -17,9 +17,10 @@ import bundledCodebook from '$lib/content/wctglpdemo-data/codebook.json';
 import { loadDoc, saveDoc } from './kv-store';
 import {
 	indications as registryIndications,
-	therapeuticAreas as registryTherapeuticAreas
+	therapeuticAreas as registryTherapeuticAreas,
+	drugs as registryDrugs
 } from './registries';
-import type { Indication, TherapeuticArea } from './registries';
+import type { Indication, TherapeuticArea, Drug } from './registries';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const LEXICON_PATH = `${DATA_DIR}/keyword_lexicon.json`;
@@ -51,10 +52,10 @@ export type Cluster = {
 	variants: string[];
 };
 
-/** Indication + TherapeuticArea types re-exported from the registry module so
- *  existing import sites in components keep working. The lexicon file no
- *  longer carries these — they live in src/lib/content/registries/. */
-export type { Indication, TherapeuticArea };
+/** Registry types re-exported so existing import sites in components keep
+ *  working. The lexicon file no longer carries these — they live in
+ *  src/lib/content/registries/. */
+export type { Indication, TherapeuticArea, Drug };
 
 type LexiconMeta = { schema_version?: string; [k: string]: unknown };
 type LexiconFile = { clusters: Cluster[]; meta?: LexiconMeta; [k: string]: unknown };
@@ -122,16 +123,19 @@ async function snapshot(): Promise<LexiconState> {
 
 /** What the /api/lexicon endpoint returns — a slice scoped to one indication
  *  plus the registries the toggle UI needs. `clusters` contains the active
- *  indication's clusters AND every "general" cluster (cross-cutting concepts
- *  that surface under every indication). Codebook themes are bundled so
- *  consumers can resolve parent_subtheme → display label without a second
- *  fetch. */
+ *  indication's clusters AND every cross-cutting cluster (`indications: []`).
+ *  `drugs` contains every drug entity whose `indication_ids` covers the
+ *  active indication — buildKeywordMatcher uses it to inline brand_names
+ *  + generic_name into per-cluster match regexes. Codebook themes are
+ *  bundled so consumers can resolve parent_subtheme → display label without
+ *  a second fetch. */
 export type LexiconSlice = {
 	active_indication: string;
 	therapeutic_areas: TherapeuticArea[];
 	indications: Indication[];
 	clusters: Cluster[];
 	themes: Theme[];
+	drugs: Drug[];
 };
 
 /** Normalize a cluster's indications field across 3.1 and 3.2 shapes.
@@ -167,12 +171,17 @@ export async function getLexiconSlice(requested?: string): Promise<LexiconSlice>
 		return inds.length === 0 || inds.includes(active);
 	});
 
+	const drugs = registryDrugs.filter((d) =>
+		d.indication_ids.includes(active as Drug['indication_ids'][number])
+	);
+
 	return {
 		active_indication: active,
 		therapeutic_areas: registryTherapeuticAreas,
 		indications: registryIndications,
 		clusters,
-		themes: codebook.themes
+		themes: codebook.themes,
+		drugs
 	};
 }
 

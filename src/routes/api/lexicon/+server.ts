@@ -3,11 +3,13 @@
  *
  * Returns the lexicon scoped to one indication — the active indication's
  * clusters plus every cross-cutting cluster (`indications: []`) that surfaces
- * under every condition. The condition-toggle UI fetches this when the analyst
- * switches indications so the drawer / orbit / word cloud only render clusters
+ * under every condition, plus the active indication's drugs[] slice (used by
+ * buildKeywordMatcher to inline brand_names + generic_name into cluster
+ * regexes). The condition-toggle UI fetches this when the analyst switches
+ * indications so the drawer / orbit / word cloud only render clusters
  * relevant to the current study.
  *
- * Falls back to the first indication in meta.indications if no `indication`
+ * Falls back to the first indication in the registry if no `indication`
  * query param is provided or the id is unknown.
  *
  * Response shape: LexiconSlice (see src/lib/server/lexicon.ts).

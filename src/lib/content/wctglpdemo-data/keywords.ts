@@ -9,11 +9,14 @@
  * Two ways to use this module:
  *
  *   1. **Factory (preferred, indication-scoped).** Call
- *      `buildKeywordMatcher(clusters, themes)` with a slice fetched from
- *      `/api/lexicon?indication=<id>` (or the server's `getLexiconSlice`).
- *      Use this for any new consumer — it avoids pulling the full lexicon
- *      into the client bundle and lets the toggle UI swap matchers per
- *      indication.
+ *      `buildKeywordMatcher(clusters, themes, drugs)` with a slice fetched
+ *      from `/api/lexicon?indication=<id>` (or the server's
+ *      `getLexiconSlice`). Use this for any new consumer — it avoids pulling
+ *      the full lexicon into the client bundle and lets the toggle UI swap
+ *      matchers per indication. When a cluster carries a `drug_id`, the
+ *      matching DrugEntity's generic_name + brand_names[] are merged into
+ *      the cluster's match regex, so brand names can drift out of
+ *      cluster.variants over time without losing match coverage.
  *
  *   2. **Default matcher (legacy, full-bundle).** The module-level exports
  *      (`keywordRuns`, `keywordTags`, `keywordCounts`, `keywordBlocks`,
@@ -31,6 +34,10 @@
  */
 import lexiconRaw from './keyword_lexicon.json';
 import codebookRaw from './codebook.json';
+import drugsRaw from '$lib/content/registries/drugs.json';
+import type { Drug as DrugEntity } from '$lib/content/registries/types';
+
+type DrugsRegistryFile = { items: DrugEntity[] };
 
 // --- Types ------------------------------------------------------------------
 
@@ -125,10 +132,29 @@ const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
  * One case-insensitive regex per cluster: an alternation of all its variants,
  * longest first, bounded by non-alphanumeric lookarounds, with space/hyphen
  * runs made flexible. Identical construction to build-keyword-usage.mjs.
+ *
+ * When the cluster carries a drug_id and the matching DrugEntity is provided,
+ * the drug's generic_name and brand_names[] are merged into the source list
+ * (deduped by lowercase form). This lets the lexicon stop hard-coding brand
+ * names in cluster.variants over time without breaking match coverage.
  */
-function clusterRegex(c: Cluster): RegExp {
-	const alts = [...c.variants]
-		.map(normalize)
+function clusterRegex(c: Cluster, drug?: DrugEntity): RegExp {
+	const seen = new Set<string>();
+	const sources: string[] = [];
+	const push = (raw: string | undefined) => {
+		if (!raw) return;
+		const n = normalize(raw);
+		const key = n.toLowerCase().trim();
+		if (!key || seen.has(key)) return;
+		seen.add(key);
+		sources.push(n);
+	};
+	for (const v of c.variants) push(v);
+	if (drug) {
+		push(drug.generic_name);
+		for (const b of drug.brand_names) push(b);
+	}
+	const alts = sources
 		.sort((a, b) => b.length - a.length)
 		.map((v) => escapeRegex(v).replace(/[\s-]+/g, '[\\s-]+'));
 	return new RegExp(`(?<![A-Za-z0-9])(?:${alts.join('|')})(?![A-Za-z0-9])`, 'gi');
@@ -150,15 +176,22 @@ function subthemeLabelMap(themes: CodebookTheme[]): Map<string, string> {
  * `getLexiconSlice` server-side) and pass it through here, so only the active
  * indication's clusters plus every cross-cutting cluster (indications: [])
  * get compiled into regexes and shipped to the client.
+ *
+ * `drugs` (optional) is the drug-entity slice for the active indication. When
+ * a cluster carries `drug_id`, the drug's generic_name and brand_names[] are
+ * merged into that cluster's match regex. Pass `slice.drugs` from
+ * /api/lexicon; matchers without drug awareness can omit it.
  */
 export function buildKeywordMatcher(
 	clusters: Cluster[],
-	themes: CodebookTheme[]
+	themes: CodebookTheme[],
+	drugs: DrugEntity[] = []
 ): KeywordMatcher {
 	const subLabel = subthemeLabelMap(themes);
+	const drugById = new Map<string, DrugEntity>(drugs.map((d) => [d.id, d]));
 	const compiled = clusters.map((cluster) => ({
 		cluster,
-		regex: clusterRegex(cluster),
+		regex: clusterRegex(cluster, cluster.drug_id ? drugById.get(cluster.drug_id) : undefined),
 		parentSubthemeLabel: subLabel.get(cluster.parent_subtheme) ?? cluster.parent_subtheme
 	}));
 	const clusterById = new Map(clusters.map((c) => [c.id, c]));
@@ -353,7 +386,8 @@ export function buildKeywordMatcher(
 
 const defaultMatcher: KeywordMatcher = buildKeywordMatcher(
 	(lexiconRaw as Lexicon).clusters,
-	(codebookRaw as Codebook).themes
+	(codebookRaw as Codebook).themes,
+	(drugsRaw as DrugsRegistryFile).items
 );
 
 /** @deprecated Use `buildKeywordMatcher(slice.clusters, slice.themes).clusters` with a slice from `/api/lexicon`. */
