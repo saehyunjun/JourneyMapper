@@ -38,10 +38,14 @@ export type Cluster = {
 	id: string;
 	label: string;
 	description?: string;
-	/** Lexicon 3.2: string[] FK → meta.indications[].id. Empty array = cross-
-	 *  cutting (visible under every indication). Optional on reads so legacy
-	 *  3.1 rows with singular `indication: string` still parse. */
+	/** Lexicon 3.2+: string[] FK → registries/indications.json items[].id.
+	 *  Empty array = cross-cutting (visible under every indication). Optional
+	 *  on reads so legacy 3.1 rows with singular `indication: string` still
+	 *  parse. */
 	indications?: string[];
+	/** Lexicon 3.4: string[] FK → registries/burden_categories.json items[].id.
+	 *  Empty array = unclassified. Cross-cutting axis parallel to indications. */
+	burden_category_ids?: string[];
 	parent_theme: string;
 	parent_subtheme: string;
 	variants: string[];

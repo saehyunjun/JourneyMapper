@@ -31,11 +31,16 @@ export type Cluster = {
 	id: string;
 	label: string;
 	description: string;
-	/** Lexicon 3.2: string[] FK → meta.indications[].id. Empty array = cross-
-	 *  cutting (visible under every indication toggle); non-empty scopes the
-	 *  cluster to those indications. Optional on reads so legacy 3.1 rows with
-	 *  a singular `indication` field still parse (see normalizeCluster). */
+	/** Lexicon 3.2: string[] FK → registries/indications.json items[].id (since
+	 *  3.3 the registry lives there, not in this lexicon's meta). Empty array
+	 *  = cross-cutting (visible under every indication toggle). Optional on
+	 *  reads so legacy 3.1 rows with a singular `indication` field still
+	 *  parse (see clusterIndications below). */
 	indications?: string[];
+	/** Lexicon 3.4: string[] FK → registries/burden_categories.json items[].id.
+	 *  Empty array = unclassified. Multi-element arrays let one cluster carry
+	 *  multiple burden facets. Optional on reads for pre-3.4 rows. */
+	burden_category_ids?: string[];
 	parent_theme: string;
 	parent_subtheme: string;
 	variants: string[];

@@ -25,6 +25,44 @@ export type DatasetTypeId =
 
 export type SourceTypeId = 'manual_extract' | 'primary_research' | 'third_party_provider';
 
+/** Burden taxonomy ids — tree-structured (parent_id resolves to another
+ *  BurdenCategoryId or null for top-level). Add new ids to the registry first,
+ *  then extend this union. */
+export type BurdenCategoryId =
+	| 'financial'
+	| 'financial_out_of_pocket'
+	| 'financial_insurance'
+	| 'financial_lost_income'
+	| 'physical'
+	| 'physical_symptoms'
+	| 'physical_side_effects'
+	| 'physical_appearance'
+	| 'emotional'
+	| 'emotional_fear'
+	| 'emotional_grief'
+	| 'emotional_isolation'
+	| 'emotional_uncertainty'
+	| 'regimen'
+	| 'regimen_adherence'
+	| 'regimen_monitoring'
+	| 'regimen_appointments'
+	| 'information'
+	| 'information_knowledge_gaps'
+	| 'information_decision_complexity'
+	| 'information_navigation'
+	| 'social'
+	| 'social_stigma'
+	| 'social_relationships'
+	| 'social_disclosure'
+	| 'logistical'
+	| 'logistical_travel'
+	| 'logistical_scheduling'
+	| 'logistical_caregiver'
+	| 'quality_of_life'
+	| 'qol_functional'
+	| 'qol_independence'
+	| 'qol_normalcy';
+
 export type TherapeuticArea = {
 	id: TherapeuticAreaId;
 	label: string;
@@ -54,5 +92,13 @@ export type DatasetType = {
 export type SourceType = {
 	id: SourceTypeId;
 	label: string;
+	description: string;
+};
+
+export type BurdenCategory = {
+	id: BurdenCategoryId;
+	label: string;
+	/** Null for top-level categories; otherwise the parent's id. */
+	parent_id: BurdenCategoryId | null;
 	description: string;
 };

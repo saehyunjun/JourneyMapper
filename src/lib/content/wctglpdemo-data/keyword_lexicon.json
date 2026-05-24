@@ -1,16 +1,17 @@
 {
   "meta": {
-    "schema_version": "3.3",
-    "supersedes": "keyword_lexicon.json @ 3.2",
+    "schema_version": "3.4",
+    "supersedes": "keyword_lexicon.json @ 3.3",
     "status": "live",
-    "description": "Keyword cluster catalog, schema 3.3. The indication and therapeutic-area registries no longer live here — they moved to src/lib/content/registries/ (indications.json + therapeutic_areas.json), which is the single source of truth. Clusters reference indication ids via clusters[].indications: string[] (empty array = cross-cutting). Each cluster also declares parent_theme + parent_subtheme as FKs into codebook.json. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows live in keyword_tags.json keyed by (cluster_id, segment_id, char_start, char_end).",
+    "description": "Keyword cluster catalog, schema 3.4. Adds the BURDEN axis: clusters[].burden_category_ids: string[] is a cross-cutting FK into registries/burden_categories.json. Empty arrays are valid and mean \"not yet classified\". The taxonomy is tree-structured (parent_id resolves to another burden id or null at the top level), so aggregations can roll a leaf-level tag up to its top-level parent. Indication + therapeutic-area registries live exclusively under src/lib/content/registries/ (since 3.3). Each cluster also declares parent_theme + parent_subtheme as FKs into codebook.json. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows live in keyword_tags.json keyed by (cluster_id, segment_id, char_start, char_end).",
     "changelog": [
       "3.0-draft — replaced the `categories[].keywords[]` shape with a flat `clusters[]` keyed by parent_theme + parent_subtheme. The 102 clusters from keyword_lexicon.json @ 2.0 will be re-classified via the codebook-migration map in codebook_migration_map.json; some will split into parallel clusters with different parents (e.g. cost as a treatment vs. trial barrier).",
       "3.0-draft (porting pass) — ported 103 clusters from keyword_lexicon.json @ 2.0 via scripts/migrate-keyword-lexicon.mjs. Each cluster carries parent_theme + parent_subtheme assigned by category default + per-cluster overrides. Descriptions are empty for now; analyst should backfill as part of Phase 0 review.",
       "3.0 — variant expansion pass. Bug-fixed semaglutide cluster (removed stray 'positive' and incorrect 'eli lilly' variants; 'eli lilly' now correctly lives on tirzepatide). Added manufacturer semantic links: semaglutide ↔ novo nordisk/novo/rybelsus; tirzepatide ↔ eli lilly/lilly. Expanded high-traffic clusters (glp_1, injection, oral_medication, dosing_schedule, diabetes, glucose_monitoring, fasting_blood, travel_burden, visit_frequency, trial_site, clinical_trial, placebo, randomized, financial_compensation, side_effects, needle_phobia, weight_maintenance, weight_loss, weight_regain, hunger, food_noise, quality_of_life, obesity, shortages, coverage, insurance, prior_authorization, healthcare_benefits, scary, meal_replacement, gastric_effects, complication, stall, safety, risk, convenience, support, compounded_medication). Added 13 new clusters: a1c, bmi, sleep_apnea, pcos, thyroid, fda_approval, long_term_use, research_self, diet_exercise, previous_weight_loss, transparency, cost_prohibitive. Backfilled descriptions on every touched cluster. Backup of prior live: keyword_lexicon.v2-backup.json.",
       "3.1 — added the condition axis. New meta.therapeutic_areas[] (Endocrinology, Allergy and Immunology, Nephrology) and meta.indications[] (general, obesity, lupus_nephritis) registries, both MeSH-anchored. Every cluster gained an \"indication\" FK: 64 backfilled to \"general\" (cross-cutting), the rest to \"obesity\". Appended 63 lupus_nephritis clusters (Immunology + Nephrology) across medications, symptoms, quality-of-life, renal labs, comorbidities, barriers, decision factors, self-management, stigma, and lupus-specific trial endpoints. Cross-cutting facets (cost, insurance, trial logistics) are NOT duplicated per condition — they stay under \"general\". Backup of prior live: keyword_lexicon.v3-backup.json. Migration: scripts/migrate-lexicon-conditions.mjs.",
       "3.2 — multi-indication clusters. clusters[].indication: string → clusters[].indications: string[]. Dropped the \"general\" sentinel from meta.indications; cross-cutting clusters now use an empty array. Migration summary: 64 clusters cross-cutting; obesity: 54, lupus_nephritis: 63. Backup of prior live: keyword_lexicon.v3.1-backup.json. Migration: scripts/migrate-lexicon-indications-array.mjs.",
-      "3.3 — registry consolidation. Removed meta.indications[] and meta.therapeutic_areas[] from the lexicon; both registries now live exclusively under src/lib/content/registries/. Clusters validated against the registry before drop: 181 total, all indication FKs resolved. Backup: keyword_lexicon.v3.2-backup.json. Migration: scripts/migrate-lexicon-registry-consolidation.mjs."
+      "3.3 — registry consolidation. Removed meta.indications[] and meta.therapeutic_areas[] from the lexicon; both registries now live exclusively under src/lib/content/registries/. Clusters validated against the registry before drop: 181 total, all indication FKs resolved. Backup: keyword_lexicon.v3.2-backup.json. Migration: scripts/migrate-lexicon-registry-consolidation.mjs.",
+      "3.4 — added burden_category_ids[] slot on every cluster (initialized empty). Taxonomy registry at registries/burden_categories.json (status: draft) — 33 nodes, 8 top-level. Backup: keyword_lexicon.v3.3-backup.json. Migration: scripts/migrate-lexicon-burden-slot.mjs."
     ],
     "cluster_shape": {
       "id": "Slug, lowercase + underscores. Globally unique. Example: 'treatment_cost_concerns'.",
@@ -19,7 +20,8 @@
       "parent_theme": "FK → codebook.next.json themes[].id. Required.",
       "parent_subtheme": "FK → codebook.next.json themes[].subthemes[].id. Required. The named subtheme must belong to the named parent_theme.",
       "variants": "Array of lowercase surface forms (spellings, plurals, brand/generic pairs, multi-word phrasings) used to RANK this cluster's suggestion priority when an analyst highlights a phrase in the drawer. Matching is case-insensitive, with hyphen/space runs treated as equivalent. Not used for auto-tagging.",
-      "indications": "string[] FK → meta.indications[].id. Empty array = cross-cutting (visible under every indication toggle). Non-empty = scoped to those indications. Multi-element arrays are allowed and preferred over duplicate per-indication clusters."
+      "indications": "string[] FK → meta.indications[].id. Empty array = cross-cutting (visible under every indication toggle). Non-empty = scoped to those indications. Multi-element arrays are allowed and preferred over duplicate per-indication clusters.",
+      "burden_category_ids": "string[] FK → registries/burden_categories.json items[].id. Empty array is valid (unclassified). Multi-element arrays let one cluster carry multiple burden facets — e.g. steroid_side_effects can be both physical_side_effects and physical_appearance. Prefer leaf-level ids; top-level parents are valid too when ambiguity rules out a leaf."
     },
     "matching_notes": [
       "Matching for suggestions is case-insensitive. Within a variant, runs of spaces/hyphens match any run of whitespace or hyphens (so 'out of pocket' also matches 'out-of-pocket').",
@@ -53,6 +55,7 @@
       "label": "Clinical trial",
       "description": "Generic references to clinical trials — participation, enrollment, phases.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
@@ -87,6 +90,7 @@
       "label": "Placebo",
       "description": "Inactive comparator used in controlled trials — sugar pill, control arm, double-blind designs.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
@@ -115,6 +119,7 @@
       "label": "Randomized",
       "description": "Random assignment to study arms — odds of getting drug vs. placebo.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
@@ -136,6 +141,7 @@
       "label": "Blood work / draws",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -152,6 +158,7 @@
       "label": "Dosing schedule",
       "description": "How often the dose is taken — weekly, monthly, every two weeks, etc.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -190,6 +197,7 @@
       "label": "Fasting blood",
       "description": "Fasted blood draws — typically requiring 8–12 hours without food before the visit.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -211,6 +219,7 @@
       "label": "Follow-up",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -225,6 +234,7 @@
       "label": "Length",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -236,6 +246,7 @@
       "label": "Travel burden",
       "description": "Time, distance, and effort to physically reach a trial site — driving, flying, commuting.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -267,6 +278,7 @@
       "label": "Trial site / clinic",
       "description": "The physical location where trial visits happen — site, clinic, study center, hospital.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -293,6 +305,7 @@
       "label": "Visit frequency",
       "description": "How often trial visits occur — weekly, monthly, every few weeks.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -316,6 +329,7 @@
       "label": "Apple Watch",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -327,6 +341,7 @@
       "label": "Classes",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -341,6 +356,7 @@
       "label": "Convenience",
       "description": "Ease and simplicity as a trial motivator — convenient logistics, fewer obstacles.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -359,6 +375,7 @@
       "label": "Counseling",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -373,6 +390,7 @@
       "label": "Education / teaching",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -390,6 +408,7 @@
       "label": "Financial compensation",
       "description": "Money paid to trial participants — stipend, reimbursement, payment for time.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -412,6 +431,7 @@
       "label": "Fitbit",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -423,6 +443,7 @@
       "label": "Handouts",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -435,6 +456,7 @@
       "label": "Home visits",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -447,6 +469,7 @@
       "label": "In-person advice",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -461,6 +484,7 @@
       "label": "Online learning modules",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -476,6 +500,7 @@
       "label": "Nurse",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -489,6 +514,7 @@
       "label": "Study doctor / provider",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -505,6 +531,7 @@
       "label": "Telehealth",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -518,6 +545,7 @@
       "label": "Provider transparency",
       "description": "Wanting clear, upfront communication from the study team / providers.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -534,6 +562,7 @@
       "label": "Travel concierge",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -546,6 +575,7 @@
       "label": "Videos",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -558,6 +588,7 @@
       "label": "Vouchers",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -570,6 +601,7 @@
       "label": "Webinars",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -582,6 +614,7 @@
       "label": "Support",
       "description": "Support sources — family, community, peer groups, providers.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "advocacy_peer_groups",
       "variants": [
@@ -604,6 +637,7 @@
       "label": "Affordability",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -618,6 +652,7 @@
       "label": "Pharmacy benefit manager",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -632,6 +667,7 @@
       "label": "Cheaper",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -645,6 +681,7 @@
       "label": "Cost",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -660,6 +697,7 @@
       "label": "Cost prohibitive",
       "description": "Cost framed as absolutely blocking access — not just expensive, but impossible.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -677,6 +715,7 @@
       "label": "Coverage",
       "description": "Whether the drug is covered by insurance — formulary status, network, plan rules.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -699,6 +738,7 @@
       "label": "Discount",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -712,6 +752,7 @@
       "label": "Expensive",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -724,6 +765,7 @@
       "label": "Healthcare / employer benefits",
       "description": "How employer-provided healthcare and benefits shape access to GLP-1s.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -745,6 +787,7 @@
       "label": "Insurance",
       "description": "Insurance plan, carrier, and policy as gatekeepers to access.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -765,6 +808,7 @@
       "label": "Lawsuits",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -777,6 +821,7 @@
       "label": "Needle phobia",
       "description": "Fear of needles or injections as a barrier to treatment uptake.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -795,6 +840,7 @@
       "label": "Out of pocket",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -806,6 +852,7 @@
       "label": "Price",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -820,6 +867,7 @@
       "label": "Prior authorization",
       "description": "Insurer pre-approval requirement gating prescription fills — PAs, pre-auth, step therapy.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -842,6 +890,7 @@
       "label": "Prohibitive",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": []
@@ -851,6 +900,7 @@
       "label": "Shortages",
       "description": "Supply disruptions making the drug unavailable — shortages, stockouts, manufacturing gaps.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -873,6 +923,7 @@
       "label": "Side effects (as barrier)",
       "description": "Side effects framed as a reason not to start or to stop treatment.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -887,6 +938,7 @@
       "label": "Concern (explicit)",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -902,6 +954,7 @@
       "label": "Guinea pig",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -913,6 +966,7 @@
       "label": "Harm",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -925,6 +979,7 @@
       "label": "Long-term use",
       "description": "Indefinite or lifelong drug use — \"rest of my life,\" chronic-treatment framing.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -944,6 +999,7 @@
       "label": "Self-research",
       "description": "Independently researching drugs, forums, COIs, certificates — DIY due diligence.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -966,6 +1022,7 @@
       "label": "Risk",
       "description": "Risk language as a decision factor — explicit risk weighing, risk-benefit framing.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -986,6 +1043,7 @@
       "label": "Scary / scared",
       "description": "Fear language as a decision factor — scared, frightened, anxious about an outcome.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -1004,6 +1062,7 @@
       "label": "Implant",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1016,6 +1075,7 @@
       "label": "Injection / shot",
       "description": "Subcutaneous injection delivery — pens, syringes, weekly/monthly shots.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1051,6 +1111,7 @@
       "label": "Name-brand drug",
       "description": "",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1065,6 +1126,7 @@
       "label": "Oral medication / pill",
       "description": "Pill, tablet, or capsule delivery — taken by mouth.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1090,6 +1152,7 @@
       "label": "FDA approval",
       "description": "Regulatory approval status — FDA approved, approval pathways, regulator references.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_knowledge_gaps",
       "variants": [
@@ -1110,6 +1173,7 @@
       "label": "Safety",
       "description": "Drug safety language — safe/unsafe, long-term safety, risk profile.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_knowledge_gaps",
       "variants": [
@@ -1128,6 +1192,7 @@
       "label": "Health complication",
       "description": "Serious medical complications attributed to or risked by treatment.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -1146,6 +1211,7 @@
       "label": "Side effects",
       "description": "Unintended drug effects — both reported in trials (adverse events) and lived experience.",
       "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -1170,6 +1236,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -1193,6 +1260,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -1219,6 +1287,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1237,6 +1306,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1250,6 +1320,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1263,6 +1334,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1277,6 +1349,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1290,6 +1363,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1319,6 +1393,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1334,6 +1409,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1349,6 +1425,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1365,6 +1442,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1380,6 +1458,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1397,6 +1476,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -1414,6 +1494,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "condition_knowledge_gaps",
       "variants": [
@@ -1429,6 +1510,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1442,6 +1524,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1455,6 +1538,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1470,6 +1554,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1489,6 +1574,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1504,6 +1590,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1522,6 +1609,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1536,6 +1624,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1553,6 +1642,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1568,6 +1658,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1585,6 +1676,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1600,6 +1692,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1616,6 +1709,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1629,6 +1723,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1644,6 +1739,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1662,6 +1758,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1676,6 +1773,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1690,6 +1788,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1703,6 +1802,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1717,6 +1817,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1733,6 +1834,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -1746,6 +1848,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "social_stigma",
       "variants": [
@@ -1759,6 +1862,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -1778,6 +1882,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -1804,6 +1909,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1817,6 +1923,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1838,6 +1945,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1865,6 +1973,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1878,6 +1987,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1892,6 +2002,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1905,6 +2016,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1918,6 +2030,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1936,6 +2049,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1953,6 +2067,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -1984,6 +2099,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -2006,6 +2122,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
@@ -2032,6 +2149,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
@@ -2051,6 +2169,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
@@ -2080,6 +2199,7 @@
       "indications": [
         "obesity"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
@@ -2106,6 +2226,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
@@ -2124,6 +2245,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "advocacy_peer_groups",
       "variants": [
@@ -2143,6 +2265,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -2164,6 +2287,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -2182,6 +2306,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -2199,6 +2324,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -2218,6 +2344,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -2235,6 +2362,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -2254,6 +2382,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -2272,6 +2401,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
@@ -2291,6 +2421,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "condition_knowledge_gaps",
       "variants": [
@@ -2314,6 +2445,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "condition_knowledge_gaps",
       "variants": [
@@ -2332,6 +2464,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "condition_knowledge_gaps",
       "variants": [
@@ -2348,6 +2481,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "condition_knowledge_gaps",
       "variants": [
@@ -2366,6 +2500,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "condition_knowledge_gaps",
       "variants": [
@@ -2388,6 +2523,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "condition_knowledge_gaps",
       "variants": [
@@ -2407,6 +2543,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -2424,6 +2561,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -2443,6 +2581,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -2462,6 +2601,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -2482,6 +2622,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
@@ -2501,6 +2642,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "social_stigma",
       "variants": [
@@ -2519,6 +2661,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "social_stigma",
       "variants": [
@@ -2538,6 +2681,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2556,6 +2700,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2573,6 +2718,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2597,6 +2743,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2617,6 +2764,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2636,6 +2784,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2653,6 +2802,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2674,6 +2824,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2690,6 +2841,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2711,6 +2863,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2730,6 +2883,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2749,6 +2903,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2765,6 +2920,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2783,6 +2939,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2801,6 +2958,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2820,6 +2978,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "symptoms",
       "variants": [
@@ -2839,6 +2998,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -2863,6 +3023,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -2881,6 +3042,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -2900,6 +3062,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -2922,6 +3085,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -2942,6 +3106,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -2957,6 +3122,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -2971,6 +3137,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -2987,6 +3154,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -3006,6 +3174,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -3030,6 +3199,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -3047,6 +3217,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -3064,6 +3235,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -3083,6 +3255,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -3102,6 +3275,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -3120,6 +3294,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -3134,6 +3309,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -3151,6 +3327,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -3165,6 +3342,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -3182,6 +3360,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -3202,6 +3381,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -3222,6 +3402,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -3244,6 +3425,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
@@ -3263,6 +3445,7 @@
       "indications": [
         "lupus_nephritis"
       ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
