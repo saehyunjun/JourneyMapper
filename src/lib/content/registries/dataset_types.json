@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "description": "Closed vocabulary of dataset shapes carried in disease-insights manifests. Manifest entries' `type` field must be one of these ids.",
+  "items": [
+    {
+      "id": "keyword_clusters",
+      "label": "Keyword clusters",
+      "description": "Indication-scoped cluster set in the keyword-lexicon shape (id, label, description, indication, parent_theme, parent_subtheme, variants[]). Suggestion fuel for the autotag pipeline."
+    },
+    {
+      "id": "search_volume_topics",
+      "label": "Search-volume topics",
+      "description": "Topic-by-volume table (typically estimated monthly or aggregate query volume). Dimensions: topic. Measures: volume."
+    },
+    {
+      "id": "community_engagement",
+      "label": "Patient community engagement",
+      "description": "Engagement metrics for patient communities (e.g. Facebook groups), grouped by community type. Dimensions: group_type. Measures: avg_membership, avg_monthly_posts."
+    },
+    {
+      "id": "ad_spend_timeseries",
+      "label": "Digital ad spend time series",
+      "description": "Monthly digital ad spend per branded domain. Dimensions: domain, month. Measures: estimated_spend."
+    }
+  ]
+}

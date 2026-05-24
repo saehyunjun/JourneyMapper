@@ -56,9 +56,9 @@
 
 	const SIZES = {
 		sm: 'size-7 text-[10px]',
-		md: 'size-9 text-xs',
-		lg: 'size-12 text-sm',
-		xl: 'size-20 text-xl'
+		md: 'size-15 text-xs',
+		lg: 'size-32 text-sm',
+		xl: 'size-64 text-xl'
 	} as const;
 
 	const label = $derived(participantLabel(interviewId));

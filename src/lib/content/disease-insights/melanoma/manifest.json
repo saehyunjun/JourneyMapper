@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "id": "melanoma",
+  "slug": "melanoma",
+  "label": "Melanoma",
+  "abbreviation": null,
+  "therapeutic_area_ids": ["oncology"],
+  "datasets": [
+    {
+      "id": "melanoma_ad_spend_jan_jun_2023",
+      "type": "ad_spend_timeseries",
+      "label": "Estimated monthly digital search ad spend — highest-spending melanoma players (Jan–Jun 2023)",
+      "path": "search/ad_spend_jan_jun_2023.json",
+      "geography": null,
+      "unit": "USD",
+      "source_id": null
+    }
+  ]
+}

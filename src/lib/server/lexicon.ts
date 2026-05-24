@@ -26,12 +26,40 @@ export type Cluster = {
 	id: string;
 	label: string;
 	description: string;
+	/** Lexicon 3.1: FK → meta.indications[].id. "general" = condition-agnostic
+	 *  (shown under every condition toggle); otherwise the indication this
+	 *  cluster pertains to (e.g. "obesity", "lupus_nephritis"). Optional on
+	 *  reads to tolerate any pre-3.1 rows that slipped through. */
+	indication?: string;
 	parent_theme: string;
 	parent_subtheme: string;
 	variants: string[];
 };
 
-type LexiconFile = { clusters: Cluster[]; meta?: unknown; [k: string]: unknown };
+/** Lexicon 3.1+ meta registries used by the condition toggle. Both are
+ *  optional on read so pre-3.1 files still parse, but `getLexiconSlice` needs
+ *  them populated to filter by indication. */
+export type TherapeuticArea = {
+	id: string;
+	label: string;
+	mesh_id?: string | null;
+	mesh_term?: string | null;
+};
+export type Indication = {
+	id: string;
+	label: string;
+	mesh_id?: string | null;
+	mesh_term?: string | null;
+	therapeutic_areas: string[];
+	description?: string;
+};
+type LexiconMeta = {
+	schema_version?: string;
+	therapeutic_areas?: TherapeuticArea[];
+	indications?: Indication[];
+	[k: string]: unknown;
+};
+type LexiconFile = { clusters: Cluster[]; meta?: LexiconMeta; [k: string]: unknown };
 
 export type Subtheme = { id: string; label?: string; description?: string };
 export type Theme = {
@@ -92,6 +120,56 @@ function assertPair(codebook: CodebookFile, parentTheme: string, parentSubtheme:
 async function snapshot(): Promise<LexiconState> {
 	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
 	return { clusters: lex.clusters, themes: codebook.themes };
+}
+
+/** What the /api/lexicon endpoint returns — a slice scoped to one indication
+ *  plus the registries the toggle UI needs. `clusters` contains the active
+ *  indication's clusters AND every "general" cluster (cross-cutting concepts
+ *  that surface under every indication). Codebook themes are bundled so
+ *  consumers can resolve parent_subtheme → display label without a second
+ *  fetch. */
+export type LexiconSlice = {
+	active_indication: string;
+	therapeutic_areas: TherapeuticArea[];
+	indications: Indication[];
+	clusters: Cluster[];
+	themes: Theme[];
+};
+
+/** Return a lexicon slice for the named indication.
+ *
+ *  Falls back to the first non-"general" indication in the registry if the
+ *  requested id doesn't exist, or to "general" alone if the registry has no
+ *  other indications. Throws if the lexicon is missing its 3.1 registries —
+ *  use the migration script to upgrade.
+ *
+ *  Pre-3.1 clusters without an `indication` field are treated as `general` so
+ *  legacy data still surfaces somewhere. */
+export async function getLexiconSlice(requested?: string): Promise<LexiconSlice> {
+	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
+	const indications = lex.meta?.indications ?? [];
+	const therapeutic_areas = lex.meta?.therapeutic_areas ?? [];
+	if (!indications.length)
+		throw new Error(
+			'keyword_lexicon.json has no meta.indications — run scripts/migrate-lexicon-conditions.mjs to upgrade to schema 3.1+.'
+		);
+
+	const known = new Set(indications.map((i) => i.id));
+	const fallback = indications.find((i) => i.id !== 'general')?.id ?? indications[0].id;
+	const active = requested && known.has(requested) ? requested : fallback;
+
+	const clusters = lex.clusters.filter((c) => {
+		const ind = c.indication ?? 'general';
+		return ind === active || ind === 'general';
+	});
+
+	return {
+		active_indication: active,
+		therapeutic_areas,
+		indications,
+		clusters,
+		themes: codebook.themes
+	};
 }
 
 /** Add a highlighted phrase as a new variant of an existing cluster. */
@@ -194,6 +272,10 @@ export async function createCluster(
 		id,
 		label,
 		description,
+		// Drawer-created clusters have no active-condition signal yet; "general"
+		// keeps them visible under every condition toggle. Reclassify by editing
+		// the lexicon JSON when the cluster belongs to a specific indication.
+		indication: 'general',
 		parent_theme: parentTheme,
 		parent_subtheme: parentSubtheme,
 		variants: [text.toLowerCase()]

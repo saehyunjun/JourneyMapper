@@ -28,6 +28,7 @@
 		type RadialNode
 	} from '$lib/content/wctglpdemo-data/analysis';
 	import RadialThemeChart from '$lib/charts/glp/RadialThemeChart.svelte';
+	import SentimentDonut from '$lib/components/SentimentDonut.svelte';
 	import WordCloud, {
 		type WordCloudDatum,
 		type CloudShape,
@@ -40,10 +41,12 @@
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
 	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
+	import StatBlock from '$lib/components/StatBlock.svelte';
 	import { profileName, participantBio } from '$lib/types/participant-profile';
 	import type { PageProps } from './$types';
 	import { ArrowRight, ChevronDown, Check } from '@lucide/svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import * as Tabs from '$lib/components/ui/tabs/index.js';
 
 	let { data }: PageProps = $props();
 
@@ -59,7 +62,7 @@
 		if (togglingSegment) return;
 		togglingSegment = segmentId;
 		try {
-			const res = await fetch('/wctglpdemo/highlights', {
+			const res = await fetch('/patientlyiq/highlights', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({ kind: 'segment', id: segmentId })
@@ -85,6 +88,24 @@
 	let selectedParticipant = $state(
 		data.interview ?? themedParticipantIds[themedParticipantIds.length - 1] ?? ''
 	);
+
+	// Tabs over the same participant: profile facts, starred quotes, vocabulary,
+	// themes. Participant strip + identity header stay above the tabs so switching
+	// tabs doesn't disrupt who you're looking at.
+	let activeTab = $state<'profile' | 'quotes' | 'vocabulary' | 'themes'>('profile');
+
+	// Demographic key/value rows for the expanded Profile tab. Falls back to "—"
+	// where the analyst hasn't filled the field in yet.
+	const demographics = $derived.by(() => {
+		const p = profiles[selectedParticipant];
+		const typeLabel = p?.participant_type === 'composite' ? 'Composite persona' : 'Individual';
+		return [
+			{ label: 'Age', value: p?.age_range ? p.age_range.replace(/-/g, '–') : '—' },
+			{ label: 'Gender', value: p?.gender ? titleCase(p.gender) : '—' },
+			{ label: 'Country', value: p?.country?.trim() || '—' },
+			{ label: 'Type', value: typeLabel }
+		];
+	});
 
 	// Three-level tree (themes -> subthemes -> keywords) filtered to the
 	// selected participant — passed straight into the zoomable RadialThemeChart.
@@ -234,16 +255,13 @@
 		{ id: 'distinctive', label: 'Most distinctive' }
 	];
 
-	// --- Cloud display controls — sizing + shape, fed straight to <WordCloud> ---
+	// --- Cloud display controls ---
 	let cloudShape = $state<CloudShape>('circle');
 	let autoSize = $state(true);
 	let sizeBoost = $state(1);
 	let minFont = $state(12);
 	let maxFont = $state(34);
 	let cloudRef = $state<WordCloud>();
-
-	// Curated word list emitted by the cloud's local editing layer. Kept only in
-	// component/page state for visual export prep — never written back to data.
 	let curatedWords = $state<CuratedWord[]>([]);
 
 	const CLOUD_SHAPES: { id: CloudShape; label: string }[] = [
@@ -270,6 +288,15 @@
 			else counts.neutral++;
 		}
 		return counts;
+	});
+
+	const sentimentTotal = $derived(
+		sentimentCounts.negative + sentimentCounts.neutral + sentimentCounts.positive
+	);
+	const sentimentPct = $derived({
+		pos: sentimentTotal ? Math.round((sentimentCounts.positive / sentimentTotal) * 100) : 0,
+		neu: sentimentTotal ? Math.round((sentimentCounts.neutral / sentimentTotal) * 100) : 0,
+		neg: sentimentTotal ? Math.round((sentimentCounts.negative / sentimentTotal) * 100) : 0
 	});
 
 	function select(id: string) {
@@ -347,17 +374,13 @@
 <div class="flex flex-1 flex-col">
 	<!-- Hero -->
 	<div
-		class="flex h-80 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
+		class="flex h-48 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
 	>
-		<div class="mx-auto flex w-full max-w-7xl flex-col gap-3 px-8">
-			<span class="figcaption text-white">GLP-1 Interviews · Fingerprint</span>
-			<h1 class="font-heading text-5xl font-light capitalize text-primary-foreground md:text-7xl">
+		<div class="mx-auto flex w-full max-w-7xl flex-col gap-2 px-8">
+			<span class="figcaption text-white">In their own words · Fingerprint</span>
+			<h1 class="font-heading text-4xl font-light capitalize text-primary-foreground md:text-5xl">
 				Each patient's fingerprint
 			</h1>
-			<p class="max-w-2xl text-lg leading-7 text-primary-foreground/85">
-				The analytical themes one patient raised, pooled across every interview question. Switch
-				participants to compare what mattered most to each person.
-			</p>
 		</div>
 	</div>
 
@@ -386,67 +409,138 @@
 				</div>
 			</div>
 
-			<!-- The selected participant -->
-			<section class="flex flex-col gap-6">
-				<!-- Identity header — avatar, name, generated bio, and details link -->
-				<header class="flex flex-col gap-4 border-b border-(--ink)/15 pb-6">
-					<div class="flex items-start gap-5">
+			<!-- The selected participant — tabbed view -->
+			<Tabs.Root value={activeTab} onValueChange={(v) => (activeTab = v as typeof activeTab)}>
+				<Tabs.List variant="line" class="w-full justify-start gap-4 border-b border-(--ink)/15">
+					<Tabs.Trigger value="profile">Profile</Tabs.Trigger>
+					<Tabs.Trigger value="quotes">Key Quotes</Tabs.Trigger>
+					<Tabs.Trigger value="vocabulary">Vocabulary</Tabs.Trigger>
+					<Tabs.Trigger value="themes">Themes</Tabs.Trigger>
+				</Tabs.List>
+
+				<!-- Profile tab — expanded identity, demographics, and tagging activity -->
+				<Tabs.Content value="profile" class="flex flex-col gap-10 pt-10">
+					<header class="flex flex-col gap-6 md:flex-row md:items-start md:gap-8">
 						<ParticipantAvatar
 							interviewId={selectedParticipant}
 							size="lg"
 							src={profiles[selectedParticipant]?.avatar_url}
 						/>
-						<div class="flex min-w-0 flex-1 flex-col gap-2">
-							<h2 class="font-heading text-3xl font-light uppercase text-primary">
+						<div class="flex min-w-0 flex-1 flex-col gap-4">
+							<h2 class="font-heading text-4xl font-light uppercase text-primary md:text-5xl">
 								{profileName(profiles[selectedParticipant], participantLabel(selectedParticipant))}
 							</h2>
-							<p class="max-w-2xl text-base leading-7 text-muted-foreground">
-								{bio}
-							</p>
+							<div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
+								<p class="flex-1 text-lg leading-8 text-muted-foreground">
+									{bio}
+								</p>
+								<dl class="grid shrink-0 grid-cols-2 gap-px overflow-hidden rounded-md bg-(--ink)/15">
+									{#each demographics as item (item.label)}
+										<div class="flex flex-col gap-1 bg-(--paper) p-4">
+											<dt class="text-xs uppercase tracking-wide text-muted-foreground">
+												{item.label}
+											</dt>
+											<dd class="text-base font-medium text-foreground">{item.value}</dd>
+										</div>
+									{/each}
+								</dl>
+							</div>
+							<Button
+								variant="default"
+								class="self-start"
+								onclick={() => openParticipant(selectedParticipant)}
+								title="View participant details"
+							>
+								View Participant Details
+								<ArrowRight />
+							</Button>
 						</div>
-						<Button
-							variant="default"
-							class="shrink-0"
-							onclick={() => openParticipant(selectedParticipant)}
-							title="View participant details"
-						>
-							View Participant Details
-							<ArrowRight />
-						</Button>
-					</div>
+					</header>
 
-					<!-- At-a-glance stats — theme / segment counts and sentiment mix -->
-					<div class="flex flex-wrap items-center gap-1.5">
-						<span class="rounded-full bg-(--ink)/5 px-2.5 py-0.5 text-xs text-foreground">
-							{themeCount} {themeCount === 1 ? 'theme' : 'themes'}
-						</span>
-						<span class="rounded-full bg-(--ink)/5 px-2.5 py-0.5 text-xs text-foreground">
-							{segmentCount} tagged {segmentCount === 1 ? 'segment' : 'segments'}
-						</span>
-						<span class="mx-1 text-(--ink)/25">·</span>
-						<span class="rounded-full bg-rose-100 px-2.5 py-0.5 text-xs text-rose-800">
-							{sentimentCounts.negative} negative
-						</span>
-						<span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-700">
-							{sentimentCounts.neutral} neutral
-						</span>
-						<span class="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs text-emerald-800">
-							{sentimentCounts.positive} positive
-						</span>
-					</div>
-				</header>
+					<!-- Tagging activity — bigger numbered cards instead of chips -->
+					<section class="flex flex-col gap-3">
+						<h3 class="figcaption text-accent-mint">Tagging activity</h3>
+						<div class="grid grid-cols-2 gap-px overflow-hidden rounded-md bg-(--ink)/15 md:grid-cols-5">
+							<StatBlock value={themeCount} label={themeCount === 1 ? 'theme' : 'themes'} />
+							<StatBlock value={segmentCount} label="tagged {segmentCount === 1 ? 'segment' : 'segments'}" />
+							<StatBlock
+								value={sentimentCounts.negative}
+								label="negative"
+								fraction={sentimentTotal ? sentimentCounts.negative / sentimentTotal : 0}
+								valueClass="text-rose-700"
+								labelClass="text-rose-700/70"
+								barClass="bg-rose-500"
+								class="bg-rose-50"
+							/>
+							<StatBlock
+								value={sentimentCounts.neutral}
+								label="neutral"
+								fraction={sentimentTotal ? sentimentCounts.neutral / sentimentTotal : 0}
+								valueClass="text-slate-700"
+								labelClass="text-slate-700/70"
+								barClass="bg-slate-400"
+								class="bg-slate-50"
+							/>
+							<StatBlock
+								value={sentimentCounts.positive}
+								label="positive"
+								fraction={sentimentTotal ? sentimentCounts.positive / sentimentTotal : 0}
+								valueClass="text-emerald-700"
+								labelClass="text-emerald-700/70"
+								barClass="bg-emerald-500"
+								class="bg-emerald-50"
+							/>
+						</div>
+						{#if sentimentTotal > 0}
+							<div class="flex items-center gap-5 rounded-md bg-(--paper) py-2">
+								<SentimentDonut
+									positive={sentimentCounts.positive}
+									neutral={sentimentCounts.neutral}
+									negative={sentimentCounts.negative}
+									size={72}
+									motionMode="dashboard"
+									showTotal
+								/>
+								<div class="flex flex-1 flex-col gap-2">
+									<div class="flex h-2.5 w-full overflow-hidden rounded-full">
+										<div class="bg-emerald-400" style="width: {sentimentPct.pos}%"></div>
+										<div class="bg-slate-200" style="width: {sentimentPct.neu}%"></div>
+										<div class="bg-rose-400" style="width: {sentimentPct.neg}%"></div>
+									</div>
+									<div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+										<span class="flex items-center gap-1.5">
+											<span class="size-2 rounded-full bg-emerald-400"></span>
+											Positive · {sentimentCounts.positive} ({sentimentPct.pos}%)
+										</span>
+										<span class="flex items-center gap-1.5">
+											<span class="size-2 rounded-full bg-slate-200 ring-1 ring-slate-300"></span>
+											Neutral · {sentimentCounts.neutral} ({sentimentPct.neu}%)
+										</span>
+										<span class="flex items-center gap-1.5">
+											<span class="size-2 rounded-full bg-rose-400"></span>
+											Negative · {sentimentCounts.negative} ({sentimentPct.neg}%)
+										</span>
+									</div>
+								</div>
+							</div>
+						{/if}
+					</section>
+				</Tabs.Content>
 
-				<!-- Key quotes — analyst-starred highlights for this participant -->
-				<KeyQuotesSection
-					starredQuoteIds={data.starredQuoteIds}
-					starredSegmentIds={[...starredSegments]}
-					{profiles}
-					onparticipant={openParticipant}
-					participantId={selectedParticipant}
-				/>
+				<!-- Key Quotes tab -->
+				<Tabs.Content value="quotes" class="flex flex-col gap-6 pt-10">
+					<KeyQuotesSection
+						starredQuoteIds={data.starredQuoteIds}
+						starredSegmentIds={[...starredSegments]}
+						{profiles}
+						onparticipant={openParticipant}
+						participantId={selectedParticipant}
+					/>
+				</Tabs.Content>
 
-				<!-- Word cloud — the participant's spoken vocabulary -->
-				<div class="flex flex-col p-5">
+				<!-- Vocabulary tab — word cloud + scope filters + shape + legend -->
+				<Tabs.Content value="vocabulary" class="flex flex-col gap-4 pt-10">
+					<div class="flex flex-col p-5">
 					<div class="flex flex-wrap items-center justify-between gap-3">
 						<div class="flex flex-col gap-0.5">
 							<span class="figcaption text-accent-mint">
@@ -577,14 +671,12 @@
 						{/if}
 					</div>
 
-					<!-- Display controls — shape + responsive sizing, fed to <WordCloud> -->
-					<div
-						class="mt-3 flex flex-wrap items-end gap-x-5 gap-y-3 border-t border-(--ink)/10 pt-3"
-					>
+					<!-- Display controls — shape + sizing + font range + actions -->
+					<div class="mt-3 flex flex-wrap items-end gap-x-5 gap-y-3 border-t border-(--ink)/10 pt-3">
 						<!-- Shape -->
 						<div class="flex flex-col gap-1">
 							<span class="text-xs font-medium text-muted-foreground">Shape</span>
-							<div class="flex flex-row gap-1" role="group">
+							<div class="flex flex-row gap-1" role="group" aria-label="Cloud shape">
 								{#each CLOUD_SHAPES as s (s.id)}
 									<Button
 										variant="secondary"
@@ -655,6 +747,7 @@
 							</div>
 						</div>
 
+						<!-- Action buttons -->
 						<div class="flex items-end gap-1">
 							<Button
 								variant="secondary"
@@ -684,7 +777,7 @@
 								variant="secondary"
 								class="px-2.5 py-1.5 text-xs font-medium text-foreground hover:bg-(--ink)/5"
 								onclick={() => cloudRef?.resetToSource()}
-								title="Return words to the computed layout"
+								title="Return words to the original layout"
 							>
 								↺ Reset
 							</Button>
@@ -695,15 +788,14 @@
 								{curatedWords.length} curated {curatedWords.length === 1 ? 'word' : 'words'} ready for export
 							</span>
 						{/if}
-					</div>
 
-					<!-- Sentiment legend -->
-					<div class="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-						<span>Word colour = average sentiment of its segments</span>
-						<span class="flex items-center gap-1.5">
+						<span
+							class="ml-auto flex items-center gap-1.5 text-xs text-muted-foreground"
+							title="Word colour = average sentiment of its segments"
+						>
 							<span>negative</span>
 							<span
-								class="h-2 w-24 rounded-full"
+								class="h-2 w-20 rounded-full"
 								style="background: linear-gradient(to right, #e11d48, #94a3b8, #059669)"
 							></span>
 							<span>positive</span>
@@ -794,7 +886,10 @@
 						{/if}
 					</p>
 				</div>
+			</Tabs.Content>
 
+			<!-- Themes tab -->
+			<Tabs.Content value="themes" class="flex flex-col gap-4 pt-10">
 				{#if radialTree.length}
 					<RadialThemeChart
 						tree={radialTree}
@@ -811,7 +906,8 @@
 						the upload review page first.
 					</p>
 				{/if}
-			</section>
+			</Tabs.Content>
+		</Tabs.Root>
 		{:else}
 			<p
 				class="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500"
@@ -860,7 +956,7 @@
 				<p
 					class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500"
 				>
-					No coded segments for this theme.
+					No tagged quotes for this theme.
 				</p>
 			{/each}
 		</div>

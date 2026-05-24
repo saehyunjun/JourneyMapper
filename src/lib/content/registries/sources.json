@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "description": "Source-of-record registry. Each dataset's `source.type` should match a `source_type` here; `source_id` on a manifest entry references items[].id when an upstream provider is named.",
+  "source_types": [
+    {
+      "id": "manual_extract",
+      "label": "Manual chart extract",
+      "description": "Numeric values read off a chart image by hand. Original image path kept in source.source_image."
+    },
+    {
+      "id": "primary_research",
+      "label": "Primary research",
+      "description": "First-party data collected by JourneyMapper (interviews, surveys, panels)."
+    },
+    {
+      "id": "third_party_provider",
+      "label": "Third-party provider",
+      "description": "Data licensed or scraped from a named external provider (e.g. SEMrush, Pathmatics)."
+    }
+  ],
+  "items": []
+}

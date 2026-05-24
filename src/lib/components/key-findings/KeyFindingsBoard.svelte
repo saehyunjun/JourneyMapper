@@ -193,7 +193,10 @@
 		</div>
 
 		<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-		<div class="min-w-0 flex-1 overflow-y-auto px-4 py-5 pb-24" onclick={onBackgroundClick}>
+		<div
+			class="min-w-0 flex-1 overflow-y-auto px-4 py-5 pb-24"
+			onclick={onBackgroundClick}
+		>
 			{#if items.length === 0}
 				<div class="mx-auto mt-16 max-w-md rounded-2xl border-2 border-dashed border-slate-200 p-10 text-center">
 					<p class="text-slate-500">Your board is empty.</p>
@@ -223,7 +226,6 @@
 						{/each}
 					</section>
 				</div>
-
 				<div class="mt-4 flex items-center gap-3" data-kf-no-deselect>
 					<button class="kf-tbtn" onclick={addCard}><Plus class="size-4" /> Add card</button>
 					<button class="kf-tbtn text-rose-500 hover:bg-rose-50" onclick={() => { if (confirm('Clear all cards? This can be undone with ⌘Z.')) store.clearAll(); }}>

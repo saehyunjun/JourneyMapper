@@ -19,22 +19,22 @@
 	type NavItem = { title: string; url: string; icon: Component };
 
 	const items: NavItem[] = [
-		{ title: 'Executive Summary', url: '/wctglpdemo', icon: NotebookText },
-		{ title: 'Insight Builder', url: '/wctglpdemo/key-findings', icon: LayoutDashboard },
-		{ title: 'Transcript Review', url: '/wctglpdemo/upload', icon: NotebookPen },
-		{ title: 'Fingerprint', url: '/wctglpdemo/fingerprint', icon: FingerprintPattern },
-		{ title: 'Interview Words', url: '/wctglpdemo/interview-words', icon: MessageSquareText },
-		// { title: 'Journey', url: '/wctglpdemo/journey', icon: Route },
-		{ title: 'Constellation', url: '/wctglpdemo/constellation', icon: Sparkles },
-		{ title: 'Ambient Booth', url: '/wctglpdemo/segment-cloud', icon: Atom },
-		{ title: 'Booth Quiz', url: '/wctglpdemo/quiz', icon: Trophy }
-		// { title: 'Trial Designer', url: '/wctglpdemo/trial-designer', icon: FlaskConical }
+		{ title: 'Executive Summary', url: '/patientlyiq', icon: NotebookText },
+		{ title: 'Insight Builder', url: '/patientlyiq/key-findings', icon: LayoutDashboard },
+		{ title: 'Transcript Review', url: '/patientlyiq/upload', icon: NotebookPen },
+		{ title: 'Fingerprint', url: '/patientlyiq/fingerprint', icon: FingerprintPattern },
+		{ title: 'Interview Words', url: '/patientlyiq/interview-words', icon: MessageSquareText },
+		// { title: 'Journey', url: '/patientlyiq/journey', icon: Route },
+		{ title: 'Constellation', url: '/patientlyiq/constellation', icon: Sparkles },
+		{ title: 'Ambient Booth', url: '/patientlyiq/segment-cloud', icon: Atom },
+		{ title: 'Booth Quiz', url: '/patientlyiq/quiz', icon: Trophy }
+		// { title: 'Trial Designer', url: '/patientlyiq/trial-designer', icon: FlaskConical }
 	];
 
 	const path = $derived(page.url.pathname);
 
 	function isActive(url: string): boolean {
-		return url === '/wctglpdemo'
+		return url === '/patientlyiq'
 			? path === url
 			: path === url || path.startsWith(url + '/');
 	}
@@ -72,9 +72,7 @@
 								</a>
 							{/snippet}
 						</Tooltip.Trigger>
-						{#if !active}
-							<Tooltip.Content side="top">{item.title}</Tooltip.Content>
-						{/if}
+						<Tooltip.Content side="top">{item.title}</Tooltip.Content>
 					</Tooltip.Root>
 				</li>
 			{/each}

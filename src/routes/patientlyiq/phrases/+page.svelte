@@ -74,7 +74,7 @@
 				<p class="text-sm text-slate-600">No key phrases yet.</p>
 				<p class="mt-1 text-xs text-slate-400">
 					Open a segment in <a
-						href="/wctglpdemo/upload"
+						href="/patientlyiq/upload"
 						class="text-accent-mint underline">upload review</a
 					>, highlight a phrase, and use the “As a key phrase” menu to start the bank.
 				</p>
@@ -95,7 +95,7 @@
 								<li class="rounded-md border border-slate-100 bg-slate-50 p-3">
 									<div class="mb-1.5 flex items-baseline justify-between gap-3">
 										<a
-											href={`/wctglpdemo/upload?interview=${v.interview_id}`}
+											href={`/patientlyiq/upload?interview=${v.interview_id}`}
 											class="font-mono text-xs text-accent-mint hover:underline"
 										>
 											{titleCase(v.interview_id)} · {v.segment_id}

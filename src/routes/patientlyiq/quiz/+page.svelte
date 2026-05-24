@@ -203,7 +203,7 @@
 		return `${list.slice(0, -1).join(', ')}, and ${list[list.length - 1]}`;
 	}
 
-	// ── Theme drawer — open the coded segments behind a blind-spot barrier ──
+	// ── Theme drawer — open the tagged quotes behind a blind-spot barrier ──
 	let themeDrawerOpen = $state(false);
 	let drawerThemeId = $state<string | null>(null);
 
@@ -517,7 +517,7 @@
 								<span
 									class="mt-2 flex items-center gap-1 text-xs font-medium text-accent-mint-background"
 								>
-									See every coded segment <ArrowRight class="size-3" />
+									See every tagged quote <ArrowRight class="size-3" />
 								</span>
 							</button>
 						{/each}
@@ -596,5 +596,5 @@
 	</div>
 </div>
 
-<!-- Theme drawer — the coded segments behind a tapped blind-spot barrier -->
+<!-- Theme drawer — the tagged quotes behind a tapped blind-spot barrier -->
 <ThemeDrawer bind:open={themeDrawerOpen} themeId={drawerThemeId} />

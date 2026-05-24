@@ -52,7 +52,7 @@
 		if (togglingSegment) return;
 		togglingSegment = segmentId;
 		try {
-			const res = await fetch('/wctglpdemo/highlights', {
+			const res = await fetch('/patientlyiq/highlights', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({ kind: 'segment', id: segmentId })
@@ -65,7 +65,7 @@
 					message: starred
 						? 'Quote starred — added to highlights.'
 						: 'Quote removed from highlights.',
-					href: starred && result ? `/wctglpdemo/fingerprint?interview=${result.interviewId}` : undefined,
+					href: starred && result ? `/patientlyiq/fingerprint?interview=${result.interviewId}` : undefined,
 					linkLabel: 'View on the fingerprint →'
 				});
 			}
@@ -149,7 +149,7 @@
 		const id = job.interviewId;
 		const timer = setInterval(async () => {
 			try {
-				const res = await fetch(`/wctglpdemo/autotag?interview=${id}`);
+				const res = await fetch(`/patientlyiq/autotag?interview=${id}`);
 				if (!res.ok) return;
 				const { job: cur } = (await res.json()) as { job: AutotagJob | null };
 				if (!cur || cur.state !== 'running') {
@@ -168,7 +168,7 @@
 	async function retryAutotag() {
 		const id = result?.interviewId;
 		if (!id) return;
-		const res = await fetch('/wctglpdemo/autotag', {
+		const res = await fetch('/patientlyiq/autotag', {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
 			body: JSON.stringify({ interview_id: id })
@@ -257,7 +257,7 @@
 		merging = true;
 		segmentActionError = '';
 		try {
-			const res = await fetch('/wctglpdemo/segments', {
+			const res = await fetch('/patientlyiq/segments', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({
@@ -289,7 +289,7 @@
 		unmerging = true;
 		segmentActionError = '';
 		try {
-			const res = await fetch('/wctglpdemo/segments', {
+			const res = await fetch('/patientlyiq/segments', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({
@@ -326,7 +326,7 @@
 		untagging = true;
 		segmentActionError = '';
 		try {
-			const res = await fetch('/wctglpdemo/segment-tags', {
+			const res = await fetch('/patientlyiq/segment-tags', {
 				method: 'DELETE',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({ segment_id: segmentId })
@@ -345,7 +345,7 @@
 	}
 
 	// Per-segment retag — restores the annotation that the previous untag
-	// removed, by POSTing the cached payload back at /wctglpdemo/segment-tags.
+	// removed, by POSTing the cached payload back at /patientlyiq/segment-tags.
 	// Only operates when the cache has an entry for the segment; if there's
 	// nothing to undo, the bubble button falls back to opening the drawer.
 	async function retagSegment(segmentId: string) {
@@ -354,7 +354,7 @@
 		untagging = true;
 		segmentActionError = '';
 		try {
-			const res = await fetch('/wctglpdemo/segment-tags', {
+			const res = await fetch('/patientlyiq/segment-tags', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({
@@ -418,7 +418,7 @@
 		personaSaving = true;
 		personaError = '';
 		try {
-			const res = await fetch('/wctglpdemo/participant-profiles', {
+			const res = await fetch('/patientlyiq/participant-profiles', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({
@@ -458,7 +458,7 @@
 			const body = new FormData();
 			body.append('interviewId', id);
 			body.append('file', file);
-			const res = await fetch('/wctglpdemo/participant-avatar', { method: 'POST', body });
+			const res = await fetch('/patientlyiq/participant-avatar', { method: 'POST', body });
 			if (!res.ok) {
 				personaError = 'Could not upload avatar.';
 				return;
@@ -1204,7 +1204,7 @@
 		annotations = { ...annotations, [a.segment_id]: a };
 		toasts.push({
 			message: `Tags saved for ${titleCase(a.interview_id)}.`,
-			href: `/wctglpdemo/fingerprint?interview=${a.interview_id}`,
+			href: `/patientlyiq/fingerprint?interview=${a.interview_id}`,
 			linkLabel: "View this participant's fingerprint →"
 		});
 	}}

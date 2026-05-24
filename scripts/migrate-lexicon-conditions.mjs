@@ -1,0 +1,1274 @@
+/**
+ * migrate-lexicon-conditions.mjs
+ *
+ * Upgrades keyword_lexicon.json from schema 3.0 → 3.1 by introducing the
+ * CONDITION axis the analysis UI toggles on:
+ *
+ *   meta.therapeutic_areas[]  — MeSH-anchored clinical specialties (registry)
+ *   meta.indications[]        — MeSH-anchored conditions, each linking to one or
+ *                               more therapeutic_areas (registry)
+ *   clusters[].indication     — FK → meta.indications[].id (required)
+ *
+ * Every existing cluster is backfilled with an `indication`:
+ *   - clusters that are condition-agnostic (trial mechanics, cost / access,
+ *     visit logistics, generic decision/knowledge/adverse-event language) →
+ *     `general`, so they stay visible under EVERY condition toggle;
+ *   - everything else → `obesity` (the GLP-1 corpus this lexicon was authored
+ *     against).
+ *
+ * Then it appends a full parallel cluster set for `lupus_nephritis`
+ * (Immunology + Nephrology): medications, symptoms, quality-of-life, labs,
+ * comorbidities, barriers, decision factors, self-management, stigma, and
+ * lupus-specific trial endpoints. Cross-cutting facets (cost, insurance, trial
+ * logistics) are NOT duplicated per condition — they live under `general`.
+ *
+ * Idempotent: re-running strips any prior `lupus_nephritis` clusters and
+ * re-backfills indications before re-appending, so it never duplicates ids.
+ * The pre-migration file is backed up to keyword_lexicon.v3-backup.json (once).
+ *
+ * Validates and writes nothing on any integrity failure (exit 1).
+ *
+ * Run: node scripts/migrate-lexicon-conditions.mjs
+ */
+
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, '..');
+
+const DATA_DIR = 'src/lib/content/wctglpdemo-data';
+const LEXICON = `${DATA_DIR}/keyword_lexicon.json`;
+const BACKUP = `${DATA_DIR}/keyword_lexicon.v3-backup.json`;
+const CODEBOOK = `${DATA_DIR}/codebook.json`;
+
+// --- Registries -------------------------------------------------------------
+
+const THERAPEUTIC_AREAS = [
+	{ id: 'endocrinology', label: 'Endocrinology', mesh_id: 'D004706', mesh_term: 'Endocrinology' },
+	{
+		id: 'immunology',
+		label: 'Allergy and Immunology',
+		mesh_id: 'D000486',
+		mesh_term: 'Allergy and Immunology'
+	},
+	{ id: 'nephrology', label: 'Nephrology', mesh_id: 'D009396', mesh_term: 'Nephrology' }
+];
+
+const INDICATIONS = [
+	{
+		id: 'general',
+		label: 'Condition-agnostic',
+		mesh_id: null,
+		mesh_term: null,
+		therapeutic_areas: [],
+		description:
+			'Cross-cutting clusters that apply regardless of condition — trial mechanics, cost/access, visit logistics, and generic decision/knowledge/adverse-event language. Always shown alongside whichever condition is toggled on.'
+	},
+	{
+		id: 'obesity',
+		label: 'Obesity',
+		mesh_id: 'D009765',
+		mesh_term: 'Obesity',
+		therapeutic_areas: ['endocrinology'],
+		description:
+			'GLP-1 weight-management corpus (WCT GLP-1 interviews). Metabolic comorbidities (diabetes, PCOS, sleep apnea) sit under this indication as comorbidities.'
+	},
+	{
+		id: 'lupus_nephritis',
+		label: 'Lupus Nephritis',
+		mesh_id: 'D008181',
+		mesh_term: 'Lupus Nephritis',
+		therapeutic_areas: ['immunology', 'nephrology'],
+		description:
+			'Kidney manifestation of systemic lupus erythematosus (SLE). Spans induction/maintenance immunosuppression, renal labs, and progression to CKD/ESRD.'
+	}
+];
+
+// --- Backfill classification ------------------------------------------------
+// Condition-agnostic clusters → `general`. Everything else defaults to
+// `obesity` (this lexicon's source corpus). Listed explicitly so the split is
+// auditable rather than heuristic.
+
+const GENERAL_IDS = new Set([
+	// trial mechanics
+	'clinical_trial',
+	'placebo',
+	'randomized',
+	'blood_work',
+	'dosing_schedule',
+	'fasting_blood',
+	'follow_up',
+	'travel_burden',
+	'trial_site',
+	'visit_frequency',
+	'length',
+	// trial logistics / supports
+	'apple_watch',
+	'classes',
+	'convenience',
+	'counseling',
+	'education',
+	'financial_compensation',
+	'fitbit',
+	'handouts',
+	'home_visits',
+	'in_person_advice',
+	'learning_modules',
+	'nurse',
+	'study_doctor',
+	'telehealth',
+	'travel_concierge',
+	'videos',
+	'vouchers',
+	'webinars',
+	'transparency',
+	// cost / access
+	'affordability',
+	'benefit_manager',
+	'cheaper',
+	'cost',
+	'coverage',
+	'discount',
+	'expensive',
+	'healthcare_benefits',
+	'insurance',
+	'lawsuits',
+	'out_of_pocket',
+	'price',
+	'prior_authorization',
+	'prohibitive',
+	'shortages',
+	'cost_prohibitive',
+	// generic delivery forms
+	'needle_phobia',
+	'injection',
+	'oral_medication',
+	'implant',
+	'name_brand',
+	// generic decision factors
+	'concern',
+	'guinea_pig',
+	'harm',
+	'risk',
+	'scary',
+	'long_term_use',
+	'research_self',
+	// generic knowledge
+	'safety',
+	'fda_approval',
+	// generic adverse-event language
+	'complication',
+	'side_effects',
+	'side_effects_2',
+	// generic peer support
+	'support'
+]);
+
+// --- Lupus nephritis clusters -----------------------------------------------
+// Authored full parallel pass. `indication: 'lupus_nephritis'` added below in
+// bulk so it can't drift from the rows.
+
+const LN_CLUSTERS = [
+	// — Medications & delivery (treatment / treatment_health_history) —
+	{
+		id: 'mycophenolate',
+		label: 'Mycophenolate (CellCept / Myfortic)',
+		description:
+			'Mycophenolate mofetil / mycophenolic acid — first-line immunosuppressant for lupus nephritis induction and maintenance.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: [
+			'mycophenolate',
+			'mycophenolate mofetil',
+			'mmf',
+			'cellcept',
+			'mycophenolic acid',
+			'myfortic'
+		]
+	},
+	{
+		id: 'cyclophosphamide',
+		label: 'Cyclophosphamide (Cytoxan)',
+		description:
+			'Alkylating immunosuppressant for induction in severe lupus nephritis; given IV (NIH or Euro-Lupus regimens) or orally.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: ['cyclophosphamide', 'cytoxan', 'euro-lupus', 'euro lupus', 'endoxan']
+	},
+	{
+		id: 'voclosporin',
+		label: 'Voclosporin (Lupkynis)',
+		description:
+			'Calcineurin inhibitor approved 2021 for active lupus nephritis, added on top of mycophenolate and steroids.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: ['voclosporin', 'lupkynis']
+	},
+	{
+		id: 'belimumab',
+		label: 'Belimumab (Benlysta)',
+		description:
+			'Anti-BLyS/BAFF monoclonal antibody approved for lupus nephritis; IV infusion or subcutaneous injection.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: ['belimumab', 'benlysta', 'blys inhibitor', 'baff inhibitor']
+	},
+	{
+		id: 'corticosteroids',
+		label: 'Corticosteroids (prednisone)',
+		description:
+			'Glucocorticoids — prednisone, methylprednisolone pulses — the backbone of induction therapy, tapered over time.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: [
+			'corticosteroid',
+			'corticosteroids',
+			'steroid',
+			'steroids',
+			'prednisone',
+			'prednisolone',
+			'methylprednisolone',
+			'glucocorticoid',
+			'glucocorticoids',
+			'solu-medrol',
+			'pulse steroids',
+			'iv steroids'
+		]
+	},
+	{
+		id: 'hydroxychloroquine',
+		label: 'Hydroxychloroquine (Plaquenil)',
+		description:
+			'Antimalarial background therapy recommended for nearly all lupus patients; reduces flares and renal damage.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: ['hydroxychloroquine', 'plaquenil', 'hcq', 'antimalarial', 'antimalarials']
+	},
+	{
+		id: 'azathioprine',
+		label: 'Azathioprine (Imuran)',
+		description:
+			'Immunosuppressant used for lupus nephritis maintenance, including during pregnancy.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: ['azathioprine', 'imuran']
+	},
+	{
+		id: 'calcineurin_inhibitors',
+		label: 'Calcineurin inhibitors (tacrolimus / cyclosporine)',
+		description:
+			'Tacrolimus and cyclosporine — calcineurin inhibitors used alone or in multi-target therapy for lupus nephritis.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: [
+			'calcineurin inhibitor',
+			'calcineurin inhibitors',
+			'tacrolimus',
+			'prograf',
+			'cyclosporine',
+			'cyclosporin',
+			'ciclosporin'
+		]
+	},
+	{
+		id: 'rituximab',
+		label: 'Rituximab (Rituxan)',
+		description:
+			'Anti-CD20 B-cell-depleting antibody used off-label for refractory lupus nephritis.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: ['rituximab', 'rituxan', 'anti-cd20', 'b-cell depletion', 'b cell depletion']
+	},
+	{
+		id: 'anifrolumab',
+		label: 'Anifrolumab (Saphnelo)',
+		description:
+			'Type-I interferon receptor antagonist approved for SLE and studied in lupus nephritis.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: ['anifrolumab', 'saphnelo', 'interferon inhibitor']
+	},
+	{
+		id: 'obinutuzumab',
+		label: 'Obinutuzumab (Gazyva)',
+		description: 'Anti-CD20 antibody investigated for lupus nephritis (REGENCY trial).',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: ['obinutuzumab', 'gazyva']
+	},
+	{
+		id: 'ace_arb',
+		label: 'ACE inhibitor / ARB (renoprotective)',
+		description:
+			'Renin-angiotensin blockers (lisinopril, losartan) used to lower proteinuria and protect kidney function.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: [
+			'ace inhibitor',
+			'ace inhibitors',
+			'arb',
+			'angiotensin receptor blocker',
+			'lisinopril',
+			'losartan',
+			'ramipril',
+			'enalapril'
+		]
+	},
+	{
+		id: 'multitarget_therapy',
+		label: 'Multi-target / combination therapy',
+		description:
+			'Combining agents (e.g. mycophenolate + calcineurin inhibitor + steroid) to induce remission in lupus nephritis.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: [
+			'multi-target therapy',
+			'multitarget therapy',
+			'multi target therapy',
+			'combination therapy',
+			'triple therapy',
+			'dual therapy',
+			'add-on therapy'
+		]
+	},
+	{
+		id: 'iv_infusion',
+		label: 'IV infusion',
+		description:
+			'Intravenous infusion delivery for biologics and IV cyclophosphamide — infusion-center visits.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_health_history',
+		variants: [
+			'infusion',
+			'infusions',
+			'iv infusion',
+			'intravenous',
+			'infusion center',
+			'infusion centre',
+			'drip'
+		]
+	},
+
+	// — Symptoms (condition_specific / symptoms) —
+	{
+		id: 'lupus_nephritis_dx',
+		label: 'Lupus nephritis (diagnosis)',
+		description:
+			'Identification with the condition — lupus / SLE-related kidney disease as the diagnosis being lived with.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'lupus nephritis',
+			'lupus',
+			'systemic lupus erythematosus',
+			'sle',
+			'kidney lupus',
+			'lupus kidney disease',
+			'glomerulonephritis'
+		]
+	},
+	{
+		id: 'proteinuria',
+		label: 'Proteinuria / foamy urine',
+		description:
+			'Protein leaking into the urine — the hallmark sign of lupus nephritis; often noticed as foamy or frothy urine.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'proteinuria',
+			'protein in urine',
+			'protein in my urine',
+			'foamy urine',
+			'frothy urine',
+			'bubbly urine',
+			'albuminuria'
+		]
+	},
+	{
+		id: 'hematuria',
+		label: 'Hematuria / blood in urine',
+		description:
+			'Blood in the urine, visible or microscopic — a sign of active kidney inflammation.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: ['hematuria', 'haematuria', 'blood in urine', 'blood in my urine', 'bloody urine']
+	},
+	{
+		id: 'edema',
+		label: 'Edema / swelling',
+		description:
+			'Fluid retention causing swelling in the legs, ankles, feet, or around the eyes — common in nephrotic-range lupus nephritis.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'edema',
+			'oedema',
+			'swelling',
+			'swollen',
+			'swollen ankles',
+			'swollen legs',
+			'swollen feet',
+			'puffy',
+			'puffiness',
+			'fluid retention',
+			'water retention',
+			'periorbital'
+		]
+	},
+	{
+		id: 'ln_hypertension',
+		label: 'High blood pressure (renal)',
+		description: 'Elevated blood pressure driven by kidney involvement in lupus nephritis.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: ['high blood pressure', 'hypertension', 'elevated blood pressure', 'hypertensive']
+	},
+	{
+		id: 'lupus_flare',
+		label: 'Lupus flare / renal flare',
+		description:
+			'Periods of disease reactivation — systemic or kidney-specific — with worsening labs and symptoms.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'flare',
+			'flares',
+			'flare up',
+			'flare-up',
+			'flaring',
+			'lupus flare',
+			'renal flare',
+			'disease flare',
+			'relapse'
+		]
+	},
+	{
+		id: 'fatigue',
+		label: 'Fatigue',
+		description:
+			'Persistent, often debilitating tiredness — among the most common and disruptive lupus symptoms.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'fatigue',
+			'fatigued',
+			'exhausted',
+			'exhaustion',
+			'tiredness',
+			'worn out',
+			'no energy',
+			'low energy'
+		]
+	},
+	{
+		id: 'malar_rash',
+		label: 'Malar / butterfly rash',
+		description:
+			'The characteristic facial rash across the cheeks and nose bridge; photosensitive skin involvement in lupus.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'malar rash',
+			'butterfly rash',
+			'facial rash',
+			'cheek rash',
+			'skin rash',
+			'discoid',
+			'discoid rash'
+		]
+	},
+	{
+		id: 'photosensitivity',
+		label: 'Photosensitivity / sun sensitivity',
+		description: 'Skin and systemic flares triggered by sun or UV exposure.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'photosensitivity',
+			'photosensitive',
+			'sun sensitivity',
+			'sun sensitive',
+			'sensitive to sun',
+			'uv sensitivity'
+		]
+	},
+	{
+		id: 'joint_pain',
+		label: 'Joint pain / arthralgia',
+		description: 'Aching, stiff, or swollen joints — frequent in systemic lupus.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'joint pain',
+			'joint pains',
+			'arthralgia',
+			'arthritis',
+			'achy joints',
+			'aching joints',
+			'stiff joints',
+			'joint stiffness',
+			'swollen joints'
+		]
+	},
+	{
+		id: 'nephrotic_syndrome',
+		label: 'Nephrotic syndrome',
+		description:
+			'Heavy proteinuria with low blood albumin, swelling, and high cholesterol — a severe presentation of lupus nephritis.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: ['nephrotic syndrome', 'nephrotic', 'nephrotic range', 'nephrotic-range proteinuria']
+	},
+	{
+		id: 'constitutional_symptoms',
+		label: 'Fever / constitutional symptoms',
+		description: 'Low-grade fevers, night sweats, and malaise during active lupus.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: ['fever', 'fevers', 'low-grade fever', 'low grade fever', 'night sweats', 'malaise']
+	},
+	{
+		id: 'oral_ulcers',
+		label: 'Mouth ulcers / sores',
+		description: 'Painless oral or nasal ulcers — a classification criterion for lupus.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'mouth ulcers',
+			'mouth sores',
+			'oral ulcers',
+			'nasal ulcers',
+			'canker sores',
+			'ulcers in my mouth'
+		]
+	},
+	{
+		id: 'raynauds',
+		label: "Raynaud's phenomenon",
+		description:
+			'Color changes and numbness in fingers and toes with cold or stress — common in lupus.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'raynaud',
+			"raynaud's",
+			'raynauds',
+			"raynaud's phenomenon",
+			'cold fingers',
+			'white fingers',
+			'blue fingers'
+		]
+	},
+	{
+		id: 'hair_loss',
+		label: 'Hair loss / alopecia',
+		description: 'Diffuse hair thinning or patchy loss from lupus activity or treatment.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'hair loss',
+			'losing hair',
+			'hair falling out',
+			'alopecia',
+			'thinning hair',
+			'hair thinning',
+			'bald spots'
+		]
+	},
+	{
+		id: 'decreased_urine',
+		label: 'Reduced / changed urine output',
+		description:
+			'Producing less urine or noticing changes in urination — a sign of declining kidney function.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'symptoms',
+		variants: [
+			'less urine',
+			'decreased urine',
+			'reduced urine output',
+			'peeing less',
+			'dark urine'
+		]
+	},
+
+	// — Comorbidities (condition_specific / comorbidities) —
+	{
+		id: 'chronic_kidney_disease',
+		label: 'Chronic kidney disease (CKD)',
+		description:
+			'Progressive loss of kidney function that can result from lupus nephritis; staged by eGFR.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'comorbidities',
+		variants: [
+			'chronic kidney disease',
+			'ckd',
+			'kidney disease',
+			'renal insufficiency',
+			'renal impairment',
+			'stage 3 ckd',
+			'stage 4 ckd'
+		]
+	},
+	{
+		id: 'kidney_failure',
+		label: 'Kidney failure / ESRD',
+		description:
+			'End-stage renal disease requiring dialysis or transplant — the outcome lupus nephritis treatment aims to prevent.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'comorbidities',
+		variants: [
+			'kidney failure',
+			'renal failure',
+			'end stage renal disease',
+			'end-stage renal disease',
+			'esrd',
+			'eskd',
+			'end stage kidney disease'
+		]
+	},
+	{
+		id: 'dialysis',
+		label: 'Dialysis',
+		description:
+			'Hemodialysis or peritoneal dialysis to replace kidney function in advanced lupus nephritis.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'comorbidities',
+		variants: ['dialysis', 'hemodialysis', 'haemodialysis', 'peritoneal dialysis', 'on dialysis']
+	},
+	{
+		id: 'kidney_transplant',
+		label: 'Kidney transplant',
+		description: 'Transplantation as treatment for kidney failure from lupus nephritis.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'comorbidities',
+		variants: [
+			'kidney transplant',
+			'renal transplant',
+			'transplant',
+			'transplantation',
+			'transplant list',
+			'donor kidney'
+		]
+	},
+	{
+		id: 'antiphospholipid',
+		label: 'Antiphospholipid syndrome',
+		description:
+			'Clotting disorder frequently co-occurring with lupus; raises thrombosis and pregnancy risks.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'comorbidities',
+		variants: [
+			'antiphospholipid syndrome',
+			'antiphospholipid',
+			'aps',
+			'blood clots',
+			'clotting disorder',
+			'lupus anticoagulant'
+		]
+	},
+	{
+		id: 'anemia',
+		label: 'Anemia / cytopenias',
+		description:
+			'Low blood counts — anemia, leukopenia, thrombocytopenia — from lupus or its treatment.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'comorbidities',
+		variants: [
+			'anemia',
+			'anaemia',
+			'anemic',
+			'low blood count',
+			'low blood counts',
+			'leukopenia',
+			'thrombocytopenia',
+			'low platelets',
+			'cytopenia'
+		]
+	},
+	{
+		id: 'cardiovascular',
+		label: 'Cardiovascular disease',
+		description:
+			'Elevated heart and vascular risk in lupus — pericarditis, accelerated atherosclerosis, clots.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'comorbidities',
+		variants: ['cardiovascular', 'heart disease', 'pericarditis', 'atherosclerosis', 'cardiac']
+	},
+	{
+		id: 'osteoporosis',
+		label: 'Osteoporosis / bone loss',
+		description: 'Reduced bone density, often from long-term steroid use in lupus nephritis.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'comorbidities',
+		variants: [
+			'osteoporosis',
+			'osteopenia',
+			'bone loss',
+			'bone density',
+			'brittle bones',
+			'avascular necrosis',
+			'osteonecrosis'
+		]
+	},
+
+	// — Labs & disease mechanics (condition_specific / condition_knowledge_gaps) —
+	{
+		id: 'egfr',
+		label: 'eGFR / kidney function',
+		description:
+			'Estimated glomerular filtration rate — the core measure of how well the kidneys filter; tracked over time in lupus nephritis.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'condition_knowledge_gaps',
+		variants: [
+			'egfr',
+			'gfr',
+			'glomerular filtration rate',
+			'kidney function',
+			'renal function',
+			'filtration rate'
+		]
+	},
+	{
+		id: 'creatinine',
+		label: 'Creatinine',
+		description:
+			'Serum creatinine — a blood marker of kidney function; rising values signal worsening lupus nephritis.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'condition_knowledge_gaps',
+		variants: ['creatinine', 'serum creatinine', 'creatinine level', 'creatinine levels']
+	},
+	{
+		id: 'urine_protein_test',
+		label: 'Urine protein (UPCR / 24-hour)',
+		description:
+			'Urine protein-to-creatinine ratio or 24-hour collection quantifying proteinuria — the key lupus nephritis response measure.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'condition_knowledge_gaps',
+		variants: [
+			'upcr',
+			'uacr',
+			'protein creatinine ratio',
+			'urine protein',
+			'24 hour urine',
+			'24-hour urine',
+			'protein to creatinine'
+		]
+	},
+	{
+		id: 'kidney_biopsy',
+		label: 'Kidney biopsy / ISN class',
+		description:
+			'Renal biopsy that diagnoses lupus nephritis and assigns its histologic class (ISN/RPS Class I–VI).',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'condition_knowledge_gaps',
+		variants: [
+			'kidney biopsy',
+			'renal biopsy',
+			'biopsy',
+			'isn/rps',
+			'isn rps',
+			'class iii',
+			'class iv',
+			'class v',
+			'proliferative',
+			'membranous lupus nephritis'
+		]
+	},
+	{
+		id: 'complement_levels',
+		label: 'Complement levels (C3 / C4)',
+		description:
+			'Low complement (C3, C4) reflects active lupus; tracked alongside autoantibodies.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'condition_knowledge_gaps',
+		variants: ['complement', 'complement levels', 'c3', 'c4', 'low complement', 'ch50']
+	},
+	{
+		id: 'autoantibodies',
+		label: 'Autoantibodies (ANA / anti-dsDNA)',
+		description:
+			'Lupus autoantibodies — ANA, anti-dsDNA, anti-Smith — used for diagnosis and tracking disease activity.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'condition_knowledge_gaps',
+		variants: [
+			'autoantibody',
+			'autoantibodies',
+			'ana',
+			'antinuclear antibody',
+			'anti-dsdna',
+			'dsdna',
+			'double stranded dna',
+			'anti-smith',
+			'anti-sm',
+			'titers',
+			'titres'
+		]
+	},
+
+	// — Treatment positive experiences —
+	{
+		id: 'renal_remission',
+		label: 'Renal remission / response',
+		description:
+			'Achieving complete or partial renal response — proteinuria falling and kidney function stabilizing on treatment.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_positive_experiences',
+		variants: [
+			'remission',
+			'complete renal response',
+			'partial renal response',
+			'in remission',
+			'responded to treatment',
+			'proteinuria improved',
+			'kidney function stable',
+			'labs improved'
+		]
+	},
+	{
+		id: 'ln_quality_of_life',
+		label: 'Quality of life (lupus)',
+		description:
+			'Felt impact of lupus and its treatment on daily life — energy, function, independence, getting back to normal.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_positive_experiences',
+		variants: [
+			'quality of life',
+			'back to normal',
+			'feel like myself',
+			'feel human again',
+			'get my life back',
+			'live normally',
+			'functioning'
+		]
+	},
+
+	// — Treatment negative experiences —
+	{
+		id: 'steroid_side_effects',
+		label: 'Steroid side effects',
+		description:
+			'Weight gain, moon face, mood swings, insomnia, and bone loss from long-term steroid use.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_negative_experiences',
+		variants: [
+			'steroid side effects',
+			'moon face',
+			'moonface',
+			'weight gain',
+			'mood swings',
+			'steroid weight',
+			'puffy face',
+			'roid rage',
+			'insomnia',
+			'steroid acne'
+		]
+	},
+	{
+		id: 'immunosuppression_infections',
+		label: 'Infections (immunosuppression)',
+		description:
+			'Frequent or serious infections resulting from immunosuppressive lupus nephritis treatment.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_negative_experiences',
+		variants: [
+			'frequent infections',
+			'got sick',
+			'getting sick',
+			'immunocompromised',
+			'immunosuppressed',
+			'shingles',
+			'pneumonia',
+			'opportunistic infection'
+		]
+	},
+	{
+		id: 'mmf_gi_effects',
+		label: 'Nausea / GI effects (mycophenolate)',
+		description:
+			'Gastrointestinal upset — nausea, diarrhea, cramping — commonly from mycophenolate.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_negative_experiences',
+		variants: [
+			'nausea',
+			'nauseous',
+			'diarrhea',
+			'diarrhoea',
+			'stomach cramps',
+			'stomach upset',
+			'vomiting',
+			'gi upset'
+		]
+	},
+	{
+		id: 'cyclophosphamide_toxicity',
+		label: 'Cyclophosphamide toxicity',
+		description:
+			'Bladder toxicity, nausea, and being treated with what feels like chemotherapy.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_negative_experiences',
+		variants: [
+			'hemorrhagic cystitis',
+			'bladder toxicity',
+			'chemo',
+			'chemotherapy',
+			'feels like chemo'
+		]
+	},
+
+	// — Treatment barriers —
+	{
+		id: 'fertility_concerns',
+		label: 'Fertility concerns',
+		description:
+			'Worry about infertility from cyclophosphamide and pregnancy risk on teratogenic drugs — a major barrier for patients of childbearing age.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_barriers',
+		variants: [
+			'fertility',
+			'infertility',
+			'infertile',
+			'having kids',
+			'have children',
+			'pregnancy',
+			'pregnant',
+			'family planning',
+			'ovarian failure',
+			'egg freezing',
+			'teratogenic',
+			'birth defects'
+		]
+	},
+	{
+		id: 'pill_burden',
+		label: 'Pill burden / regimen complexity',
+		description:
+			'The load of taking many medications on strict schedules — a barrier to adherence in lupus nephritis.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_barriers',
+		variants: [
+			'pill burden',
+			'so many pills',
+			'too many pills',
+			'handful of pills',
+			'complicated regimen',
+			'pill fatigue'
+		]
+	},
+
+	// — Treatment decision factors —
+	{
+		id: 'avoid_dialysis',
+		label: 'Avoiding dialysis / kidney failure',
+		description:
+			'Preventing progression to dialysis or transplant as the central motivation behind lupus nephritis treatment decisions.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_decision_factors',
+		variants: [
+			'avoid dialysis',
+			"don't want dialysis",
+			'keep my kidneys',
+			'save my kidneys',
+			'kidney survival',
+			'preserve kidney function',
+			'stay off dialysis'
+		]
+	},
+	{
+		id: 'steroid_sparing',
+		label: 'Steroid-sparing goal',
+		description: 'Wanting to minimize or get off steroids as a driver of treatment choices.',
+		parent_theme: 'treatment',
+		parent_subtheme: 'treatment_decision_factors',
+		variants: [
+			'steroid-sparing',
+			'steroid sparing',
+			'get off steroids',
+			'off steroids',
+			'off prednisone',
+			'lower the steroids',
+			'reduce prednisone',
+			'minimize steroids',
+			'steroid taper',
+			'tapering'
+		]
+	},
+
+	// — Medical self-efficacy (condition_specific / medical_self_efficacy) —
+	{
+		id: 'bp_monitoring',
+		label: 'Blood pressure monitoring',
+		description: 'Home blood-pressure tracking to manage renal hypertension in lupus nephritis.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'medical_self_efficacy',
+		variants: [
+			'blood pressure monitor',
+			'checking my blood pressure',
+			'home blood pressure',
+			'bp cuff',
+			'monitoring blood pressure'
+		]
+	},
+	{
+		id: 'sun_protection',
+		label: 'Sun protection',
+		description:
+			'Sunscreen, protective clothing, and sun avoidance to prevent UV-triggered lupus flares.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'medical_self_efficacy',
+		variants: [
+			'sunscreen',
+			'sun protection',
+			'spf',
+			'avoiding the sun',
+			'stay out of the sun',
+			'sun avoidance',
+			'protective clothing'
+		]
+	},
+	{
+		id: 'renal_diet',
+		label: 'Low-sodium / renal diet',
+		description:
+			'Dietary changes — reducing salt, sometimes protein or potassium — to support kidney health.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'medical_self_efficacy',
+		variants: [
+			'low sodium',
+			'low-sodium',
+			'low salt',
+			'reduce salt',
+			'renal diet',
+			'kidney diet',
+			'low protein diet',
+			'watching my sodium'
+		]
+	},
+	{
+		id: 'medication_adherence',
+		label: 'Medication adherence',
+		description: 'Sticking to complex lupus regimens consistently — a core self-management skill.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'medical_self_efficacy',
+		variants: [
+			'adherence',
+			'compliance',
+			'taking my meds',
+			'stay on my meds',
+			'missed doses',
+			'pill organizer',
+			'medication reminder'
+		]
+	},
+	{
+		id: 'lab_tracking',
+		label: 'Symptom / lab tracking',
+		description:
+			'Logging symptoms, labs, and flares to manage lupus nephritis and communicate with the care team.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'medical_self_efficacy',
+		variants: [
+			'tracking symptoms',
+			'symptom diary',
+			'lupus journal',
+			'tracking my labs',
+			'lab results',
+			'patient portal',
+			'mychart'
+		]
+	},
+
+	// — Social life / stigma (condition_specific / social_stigma) —
+	{
+		id: 'invisible_illness',
+		label: 'Invisible illness',
+		description:
+			"The challenge of a serious illness others can't see — feeling disbelieved or having to explain lupus.",
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'social_stigma',
+		variants: [
+			'invisible illness',
+			'invisible disease',
+			"you don't look sick",
+			"don't look sick",
+			'look fine',
+			'but you look healthy',
+			'no one believes'
+		]
+	},
+	{
+		id: 'appearance_stigma',
+		label: 'Appearance changes / stigma',
+		description:
+			'Self-consciousness about steroid weight gain, moon face, hair loss, or rashes from lupus and its treatment.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'social_stigma',
+		variants: [
+			'self-conscious',
+			'embarrassed',
+			'how i look',
+			'people staring',
+			'rash on my face',
+			'hide my face'
+		]
+	},
+
+	// — Advocacy / peer groups (condition_specific / advocacy_peer_groups) —
+	{
+		id: 'lupus_support',
+		label: 'Lupus support / advocacy',
+		description:
+			'Patient communities, foundations, and peer support for people with lupus and lupus nephritis.',
+		parent_theme: 'condition_specific',
+		parent_subtheme: 'advocacy_peer_groups',
+		variants: [
+			'lupus foundation',
+			'lupus foundation of america',
+			'lupus community',
+			'lupus warrior',
+			'lupus warriors',
+			'fundraising walk',
+			'walk to end lupus'
+		]
+	},
+
+	// — Lupus-specific trial endpoints (clinical_trials / clinical_trial_knowledge_gaps) —
+	{
+		id: 'renal_response_endpoint',
+		label: 'Renal response endpoint',
+		description:
+			'Lupus nephritis trial outcome measures — complete renal response, proteinuria reduction, eGFR preservation.',
+		parent_theme: 'clinical_trials',
+		parent_subtheme: 'clinical_trial_knowledge_gaps',
+		variants: [
+			'complete renal response',
+			'renal response',
+			'proteinuria reduction',
+			'primary endpoint',
+			'renal endpoint',
+			'efficacy endpoint'
+		]
+	}
+].map((c) => ({ ...c, indication: 'lupus_nephritis' }));
+
+// --- Read inputs ------------------------------------------------------------
+
+const lex = JSON.parse(readFileSync(resolve(ROOT, LEXICON), 'utf8'));
+const codebook = JSON.parse(readFileSync(resolve(ROOT, CODEBOOK), 'utf8'));
+
+// (theme, subtheme) validator from the live codebook
+const validPairs = new Set();
+for (const t of codebook.themes) {
+	for (const s of t.subthemes ?? []) validPairs.add(`${t.id}::${s.id}`);
+}
+const indicationIds = new Set(INDICATIONS.map((i) => i.id));
+const areaIds = new Set(THERAPEUTIC_AREAS.map((a) => a.id));
+
+const fail = (msg) => {
+	console.error(`[ERROR] ${msg}`);
+	process.exit(1);
+};
+
+// Sanity-check the registries themselves.
+for (const ind of INDICATIONS) {
+	for (const a of ind.therapeutic_areas) {
+		if (!areaIds.has(a)) fail(`indication "${ind.id}" references unknown therapeutic area "${a}"`);
+	}
+}
+
+// --- Backfill existing clusters; drop any prior LN rows (idempotent) --------
+
+const existing = lex.clusters
+	.filter((c) => c.indication !== 'lupus_nephritis')
+	.map((c) => ({
+		...c,
+		indication: GENERAL_IDS.has(c.id) ? 'general' : 'obesity'
+	}));
+
+const all = [...existing, ...LN_CLUSTERS];
+
+// --- Validate ---------------------------------------------------------------
+
+const seen = new Set();
+for (const c of all) {
+	if (seen.has(c.id)) fail(`duplicate cluster id "${c.id}"`);
+	seen.add(c.id);
+	if (!indicationIds.has(c.indication)) fail(`cluster "${c.id}" has unknown indication "${c.indication}"`);
+	const pair = `${c.parent_theme}::${c.parent_subtheme}`;
+	if (!validPairs.has(pair))
+		fail(`cluster "${c.id}" → invalid (theme, subtheme) (${c.parent_theme}, ${c.parent_subtheme})`);
+	if (!Array.isArray(c.variants)) fail(`cluster "${c.id}" missing variants[]`);
+}
+
+// --- Sort: indication → theme → subtheme → id (condition-grouped, diff-stable)
+
+const indOrder = { general: 0, obesity: 1, lupus_nephritis: 2 };
+all.sort((a, b) => {
+	if (a.indication !== b.indication) return indOrder[a.indication] - indOrder[b.indication];
+	if (a.parent_theme !== b.parent_theme) return a.parent_theme.localeCompare(b.parent_theme);
+	if (a.parent_subtheme !== b.parent_subtheme)
+		return a.parent_subtheme.localeCompare(b.parent_subtheme);
+	return a.id.localeCompare(b.id);
+});
+
+// Canonical field order per cluster.
+const orderedClusters = all.map((c) => ({
+	id: c.id,
+	label: c.label,
+	description: c.description ?? '',
+	indication: c.indication,
+	parent_theme: c.parent_theme,
+	parent_subtheme: c.parent_subtheme,
+	variants: c.variants
+}));
+
+// --- Update meta ------------------------------------------------------------
+
+lex.meta.schema_version = '3.1';
+lex.meta.supersedes = 'keyword_lexicon.json @ 3.0';
+lex.meta.description =
+	'Keyword cluster catalog, schema 3.1. Adds a CONDITION axis: meta.therapeutic_areas[] and meta.indications[] registries (MeSH-anchored), and a required clusters[].indication FK into meta.indications[]. The analysis UI toggles by indication; clusters with indication "general" are condition-agnostic and shown under every toggle. Each cluster also declares parent_theme + parent_subtheme as FKs into codebook.json. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows live in keyword_tags.json keyed by (cluster_id, segment_id, char_start, char_end).';
+lex.meta.therapeutic_areas = THERAPEUTIC_AREAS;
+lex.meta.indications = INDICATIONS;
+lex.meta.cluster_shape = {
+	...lex.meta.cluster_shape,
+	indication:
+		'FK → meta.indications[].id. Required. Use "general" for condition-agnostic clusters (trial mechanics, cost/access, visit logistics) so they surface under every condition toggle; otherwise the specific indication this cluster pertains to.'
+};
+lex.meta.changelog = [
+	...(lex.meta.changelog ?? []),
+	`3.1 — added the condition axis. New meta.therapeutic_areas[] (Endocrinology, Allergy and Immunology, Nephrology) and meta.indications[] (general, obesity, lupus_nephritis) registries, both MeSH-anchored. Every cluster gained an `indication` FK: ${existing.filter((c) => c.indication === 'general').length} backfilled to "general" (cross-cutting), the rest to "obesity". Appended ${LN_CLUSTERS.length} lupus_nephritis clusters (Immunology + Nephrology) across medications, symptoms, quality-of-life, renal labs, comorbidities, barriers, decision factors, self-management, stigma, and lupus-specific trial endpoints. Cross-cutting facets (cost, insurance, trial logistics) are NOT duplicated per condition — they stay under "general". Backup of prior live: keyword_lexicon.v3-backup.json. Migration: scripts/migrate-lexicon-conditions.mjs.`
+];
+
+lex.clusters = orderedClusters;
+
+// --- Write (backup once, then overwrite) ------------------------------------
+
+if (!existsSync(resolve(ROOT, BACKUP))) {
+	writeFileSync(resolve(ROOT, BACKUP), readFileSync(resolve(ROOT, LEXICON), 'utf8'), 'utf8');
+	console.log(`Wrote backup ${BACKUP}`);
+} else {
+	console.log(`Backup ${BACKUP} already exists — left untouched.`);
+}
+
+writeFileSync(resolve(ROOT, LEXICON), JSON.stringify(lex, null, 2) + '\n', 'utf8');
+
+// --- Summary ----------------------------------------------------------------
+
+const byInd = {};
+const bySub = {};
+for (const c of orderedClusters) {
+	byInd[c.indication] = (byInd[c.indication] ?? 0) + 1;
+	const k = `${c.indication} / ${c.parent_subtheme}`;
+	bySub[k] = (bySub[k] ?? 0) + 1;
+}
+console.log(`Wrote ${LEXICON}`);
+console.log(`  total clusters: ${orderedClusters.length}`);
+console.log(`  by indication:`);
+for (const [k, n] of Object.entries(byInd)) console.log(`    ${k}: ${n}`);
+console.log(`  lupus_nephritis by subtheme:`);
+for (const [k, n] of Object.entries(bySub)
+	.filter(([k]) => k.startsWith('lupus_nephritis'))
+	.sort())
+	console.log(`    ${k.replace('lupus_nephritis / ', '')}: ${n}`);

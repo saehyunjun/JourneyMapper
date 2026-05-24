@@ -15,6 +15,7 @@
 		type RadialNode
 	} from '$lib/content/wctglpdemo-data/analysis';
 	import { Button } from "$lib/components/ui/button/index.js";
+	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import RadialThemeChart from '$lib/charts/glp/RadialThemeChart.svelte';
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import KeywordText from '$lib/components/KeywordText.svelte';
@@ -22,6 +23,7 @@
 	import KeyQuotesSection from '$lib/components/KeyQuotesSection.svelte';
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
 	import SentimentBar from '$lib/components/SentimentBar.svelte';
+	import StatBlock from '$lib/components/StatBlock.svelte';
 	import { keywordBlocks } from '$lib/content/wctglpdemo-data/keywords';
 	import type { PageProps } from './$types';
 
@@ -42,26 +44,23 @@
 
 	const participantCount = themedParticipantIds.length;
 
-	// One radial chart, many views: an "all interviews" view plus one per themed
-	// question, in interview-guide order. The all view is the default.
-	const views: { id: string; label: string }[] = [
-		{ id: 'all', label: 'Across all interviews' },
-		...themedQuestionIds.map((id) => ({ id, label: questionLabel(id) }))
-	];
-	let selectedView = $state('all');
-	const selectedIndex = $derived(
-		Math.max(0, views.findIndex((v) => v.id === selectedView))
-	);
+	// Three tabs: key quotes, all-interview themes, per-question themes.
+	let activeTab = $state<'quotes' | 'overview' | 'questions'>('quotes');
 
-	// Three-level radial tree: theme -> subtheme -> keyword. Filtered to the
-	// current question selection, if any.
-	const radialTree = $derived(
-		selectedView === 'all'
-			? buildRadialTree()
-			: buildRadialTree(
-					(a) => a.question_id === selectedView,
-					(m) => m.question_id === selectedView
+	const questionViews = themedQuestionIds.map((id) => ({ id, label: questionLabel(id) }));
+	let selectedQuestionId = $state(questionViews[0]?.id ?? '');
+
+	// Overview — unfiltered radial across every themed segment.
+	const overviewTree = $derived(buildRadialTree());
+
+	// By question — same builder, filtered to the active question.
+	const questionTree = $derived(
+		selectedQuestionId
+			? buildRadialTree(
+					(a) => a.question_id === selectedQuestionId,
+					(m) => m.question_id === selectedQuestionId
 				)
+			: []
 	);
 
 	// --- Quote drawer — works for themes, subthemes, or keywords ---
@@ -141,12 +140,15 @@
 				: 'All interviews'
 	);
 
-	// Highlight the active node in the chart when its drawer is open and the
-	// drawer's context still matches the view on screen.
-	const chartSelected = $derived(
-		drawerOpen && drawerNode &&
-			((selectedView === 'all' && drawerContext.kind === 'overall') ||
-				(drawerContext.kind === 'question' && drawerContext.id === selectedView))
+	// Highlight the active node on whichever chart's tab opened the drawer.
+	const overviewSelected = $derived(
+		drawerOpen && drawerNode && drawerContext.kind === 'overall' ? drawerNode.id : null
+	);
+	const questionSelected = $derived(
+		drawerOpen &&
+			drawerNode &&
+			drawerContext.kind === 'question' &&
+			drawerContext.id === selectedQuestionId
 			? drawerNode.id
 			: null
 	);
@@ -161,86 +163,136 @@
 <div class="flex flex-1 flex-col">
 	<!-- Hero -->
 	<div
-		class="flex h-80 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
+		class="flex h-48 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
 	>
-		<div class="mx-auto flex w-full max-w-7xl flex-col gap-3 px-8">
+		<div class="mx-auto flex w-full max-w-7xl flex-col gap-2 px-8">
 			<span class="figcaption text-white">
 				GLP-1 Interviews
 			</span>
-			<h1 class="font-heading text-5xl font-light capitalize text-primary-foreground md:text-7xl">
+			<h1 class="font-heading text-4xl font-light capitalize text-primary-foreground md:text-5xl">
 				What patients said
 			</h1>
-			<p class="max-w-2xl text-lg leading-7 text-primary-foreground/85">
-				The analytical themes that surfaced across {participantCount} GLP-1 patient interviews,
-				counted from coded response segments. Click any theme to see the quotes behind it.
-			</p>
 		</div>
 	</div>
 
-	<div class="mx-auto flex w-full flex-col gap-20 px-8 py-16">
-		<!-- Key quotes — analyst-starred highlights -->
-		<KeyQuotesSection
-			starredQuoteIds={data.starredQuoteIds}
-			starredSegmentIds={data.starredSegmentIds}
-			{profiles}
-			onparticipant={openParticipant}
-		/>
+	<div class="mx-auto flex w-full max-w-6xl flex-col gap-8 px-8 py-12">
+		<Tabs.Root value={activeTab} onValueChange={(v) => (activeTab = v as typeof activeTab)}>
+			<Tabs.List variant="line" class="w-full justify-start gap-4 border-b border-(--ink)/15">
+				<Tabs.Trigger value="quotes">Key Quotes</Tabs.Trigger>
+				<Tabs.Trigger value="overview">Themes</Tabs.Trigger>
+				<Tabs.Trigger value="questions">By question</Tabs.Trigger>
+			</Tabs.List>
 
-		<!-- Theme frequency — one radial chart, all interviews or one question -->
-		<section class="flex flex-col gap-5">
-			<div class="flex flex-col gap-2 border-b border-(--primary)/15 pb-4">
-				<span class="figcaption text-accent-mint">
-					{String(selectedIndex + 1).padStart(2, '0')} · {views[selectedIndex].label}
-				</span>
-				<h2 class="font-heading text-4xl font-light uppercase text-primary">
-					The themes that surfaced
-				</h2>
-				<p class="max-w-2xl text-base text-muted-foreground">
-					{#if selectedView === 'all'}
+			<!-- Key Quotes tab — analyst-starred highlights -->
+			<Tabs.Content value="quotes" class="flex flex-col gap-6 pt-10">
+				<KeyQuotesSection
+					starredQuoteIds={data.starredQuoteIds}
+					starredSegmentIds={data.starredSegmentIds}
+					{profiles}
+					onparticipant={openParticipant}
+				/>
+			</Tabs.Content>
+
+			<!-- Themes tab — radial across every interview -->
+			<Tabs.Content value="overview" class="flex flex-col gap-5 pt-10">
+				<div class="flex flex-col gap-2 border-b border-(--primary)/15 pb-4">
+					<span class="figcaption text-accent-mint">Across all interviews</span>
+					<h2 class="font-heading text-4xl font-light uppercase text-primary">
+						The themes that surfaced
+					</h2>
+					<p class="max-w-2xl text-base text-muted-foreground">
 						How many response segments carried each theme across all {participantCount}
 						interviews. Click a theme to open the quotes behind it.
+					</p>
+				</div>
+
+				<!-- Summary stats -->
+				{#if overviewTree.length}
+					{@const totalSegments = overviewTree.reduce((n, t) => n + t.count, 0)}
+					<div class="grid grid-cols-3 gap-px overflow-hidden rounded-md bg-(--ink)/15">
+						<StatBlock value={participantCount} label={participantCount === 1 ? 'interviewee' : 'interviewees'} />
+						<StatBlock value={totalSegments} label="tagged quotes" />
+						<StatBlock value={overviewTree.length} label="themes" />
+					</div>
+				{/if}
+
+				{#if overviewTree.length}
+					<RadialThemeChart
+						tree={overviewTree}
+						unitLabel="tagged segments"
+						blockLabel="tagged segment"
+						selected={overviewSelected}
+						onselect={(node) => openDrawer(node, { kind: 'overall' })}
+					/>
+
+					<!-- Per-theme sentiment breakdown -->
+					<div class="flex flex-col gap-3 border-t border-(--ink)/10 pt-6">
+						<h3 class="figcaption text-accent-mint">Sentiment by theme</h3>
+						<p class="text-xs text-muted-foreground">
+							One block per tagged quote — click a theme above to see the quotes behind it.
+						</p>
+						<div class="flex flex-col gap-2">
+							{#each overviewTree as theme (theme.id)}
+								<SentimentBar
+									label={theme.label}
+									blocks={theme.blocks}
+									labelClass="w-44"
+								/>
+							{/each}
+						</div>
+					</div>
+				{:else}
+					<p class="text-muted-foreground">No themes tagged yet.</p>
+				{/if}
+			</Tabs.Content>
+
+			<Tabs.Content value="questions" class="flex flex-col gap-8 pt-10">
+				<section class="flex flex-col gap-5">
+					<div class="flex flex-col gap-2 border-b border-(--primary)/15 pb-4">
+						<span class="figcaption text-accent-mint">
+							{questionViews.find((v) => v.id === selectedQuestionId)?.label ?? 'By question'}
+						</span>
+						<h2 class="font-heading text-4xl font-light uppercase text-primary">
+							The themes that surfaced
+						</h2>
+						<p class="max-w-2xl text-base text-muted-foreground">
+							The themes patients raised when answering this question. Click a theme to open
+							the quotes behind it.
+						</p>
+					</div>
+
+					<!-- Per-question selector -->
+					<div class="flex flex-row gap-1 overflow-x-auto pb-3">
+						{#each questionViews as v (v.id)}
+							<Button
+								variant="default"
+								class="shrink-0 rounded-full px-2.5 py-1 text-xs transition-colors duration-150
+									{selectedQuestionId === v.id
+									? 'border-(--darkgrayblue) bg-(--darkgrayblue) text-(--paper)'
+									: 'border-(--ink)/20 bg-(--paper) text-foreground hover:bg-(--ink)/5'}"
+								aria-pressed={selectedQuestionId === v.id}
+								onclick={() => (selectedQuestionId = v.id)}
+							>
+								{v.label}
+							</Button>
+						{/each}
+					</div>
+
+					{#if questionTree.length}
+						<RadialThemeChart
+							tree={questionTree}
+							unitLabel="tagged segments"
+							blockLabel="tagged segment"
+							selected={questionSelected}
+							onselect={(node) =>
+								openDrawer(node, { kind: 'question', id: selectedQuestionId })}
+						/>
 					{:else}
-						The themes patients raised when answering this question. Click a theme to open
-						the quotes behind it.
+						<p class="text-muted-foreground">No themes tagged for this question.</p>
 					{/if}
-				</p>
-			</div>
-
-			<!-- View selector — start with all interviews, refine to one question -->
-			<div class="flex flex-row gap-2 overflow-x-scroll pb-4">
-				{#each views as v, i (v.id)}
-					<Button
-						variant="default"
-						class="shrink-0 rounded-full px-2.5 py-1.5 text-sm transition-colors duration-150
-							{selectedView === v.id
-							? 'border-(--darkgrayblue) bg-(--darkgrayblue) text-(--paper)'
-							: 'border-(--ink)/20 bg-(--paper) text-foreground hover:bg-(--ink)/5'}"
-						aria-pressed={selectedView === v.id}
-						onclick={() => (selectedView = v.id)}
-					>
-						{String(i + 1).padStart(2, '0')} · {v.label}
-					</Button>
-				{/each}
-			</div>
-
-			{#if radialTree.length}
-				<RadialThemeChart
-					tree={radialTree}
-					unitLabel="tagged segments"
-					blockLabel="tagged segment"
-					selected={chartSelected}
-					onselect={(node) =>
-						openDrawer(
-							node,
-							selectedView === 'all'
-								? { kind: 'overall' }
-								: { kind: 'question', id: selectedView }
-						)}
-				/>
-			{:else}
-				<p class="text-muted-foreground">No themes tagged for this question.</p>
-			{/if}
-		</section>
+				</section>
+			</Tabs.Content>
+		</Tabs.Root>
 	</div>
 </div>
 

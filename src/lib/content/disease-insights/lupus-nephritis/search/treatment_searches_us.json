@@ -1,0 +1,28 @@
+{
+  "id": "lupus_nephritis_treatment_searches_us",
+  "type": "search_volume_topics",
+  "indication_id": "lupus_nephritis",
+  "therapeutic_area_ids": ["immunology", "nephrology"],
+  "title": "Lupus nephritis treatment searches",
+  "subtitle": "Monthly estimated volume, US",
+  "unit": "monthly_estimated_search_volume",
+  "geography": "US",
+  "time_period": null,
+  "source": {
+    "type": "manual_extract",
+    "source_image": "CleanShot 2026-05-23 at 10.45.06@2x.png",
+    "notes": "Values manually extracted from chart image."
+  },
+  "dimensions": ["topic"],
+  "measures": ["volume"],
+  "data": [
+    { "topic": "Lupkynis", "volume": 2660 },
+    { "topic": "Belimumab", "volume": 200 },
+    { "topic": "Tacrolimus", "volume": 450 },
+    { "topic": "CAR-T", "volume": 580 },
+    { "topic": "Steroids", "volume": 690 },
+    { "topic": "Rituximab", "volume": 810 },
+    { "topic": "Mycophenolate", "volume": 850 },
+    { "topic": "Cyclosporine", "volume": 900 }
+  ]
+}

@@ -1,0 +1,345 @@
+{
+  "meta": {
+    "schema_version": "2.0",
+    "study_id": "wct_lupus_nephritis_demo",
+    "generated_at": "2026-05-23T00:00:00.000Z",
+    "generator": "hand-authored dummy data",
+    "sources": ["src/lib/content/wctglpdemo-data/keyword_lexicon.json (lupus_nephritis clusters)"],
+    "lexicon_version": "3.1",
+    "scope": "mock participant segments",
+    "notes": [
+      "DUMMY DATA — counts are illustrative, not derived from real transcripts.",
+      "Mirrors the categories[] shape of keyword_usage.json so chart consumers that cast to that shape work uniformly.",
+      "matches[] is intentionally empty — the LN demo corpus doesn't have segments + annotations yet, so any chart that joins matches to segment_tags will filter these out. Chart-side wiring will be addressed in a follow-up.",
+      "Participant ids prefixed with `ln_` to avoid collision with the GLP-1 participant_06..12 set."
+    ]
+  },
+  "totals": {
+    "clusters": 24,
+    "clusters_present": 24,
+    "mentions": 387
+  },
+  "clusters": [],
+  "categories": [
+    {
+      "id": "treatment_health_history",
+      "label": "treatment_health_history",
+      "description": "Lupus nephritis medications and delivery modes.",
+      "total_mentions": 142,
+      "keywords_present": 7,
+      "keywords_total": 7,
+      "keywords": [
+        {
+          "id": "mycophenolate",
+          "label": "Mycophenolate (CellCept / Myfortic)",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_health_history",
+          "variants": ["mycophenolate", "mmf", "cellcept", "myfortic"],
+          "count": 38,
+          "by_participant": { "ln_01": 11, "ln_02": 9, "ln_03": 12, "ln_04": 6 },
+          "matches": []
+        },
+        {
+          "id": "corticosteroids",
+          "label": "Corticosteroids (prednisone)",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_health_history",
+          "variants": ["prednisone", "steroids", "methylprednisolone"],
+          "count": 34,
+          "by_participant": { "ln_01": 9, "ln_02": 8, "ln_03": 10, "ln_04": 7 },
+          "matches": []
+        },
+        {
+          "id": "voclosporin",
+          "label": "Voclosporin (Lupkynis)",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_health_history",
+          "variants": ["voclosporin", "lupkynis"],
+          "count": 18,
+          "by_participant": { "ln_01": 6, "ln_02": 3, "ln_03": 7, "ln_04": 2 },
+          "matches": []
+        },
+        {
+          "id": "belimumab",
+          "label": "Belimumab (Benlysta)",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_health_history",
+          "variants": ["belimumab", "benlysta"],
+          "count": 16,
+          "by_participant": { "ln_01": 5, "ln_02": 4, "ln_03": 4, "ln_04": 3 },
+          "matches": []
+        },
+        {
+          "id": "hydroxychloroquine",
+          "label": "Hydroxychloroquine (Plaquenil)",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_health_history",
+          "variants": ["hydroxychloroquine", "plaquenil", "hcq"],
+          "count": 19,
+          "by_participant": { "ln_01": 5, "ln_02": 5, "ln_03": 5, "ln_04": 4 },
+          "matches": []
+        },
+        {
+          "id": "cyclophosphamide",
+          "label": "Cyclophosphamide (Cytoxan)",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_health_history",
+          "variants": ["cyclophosphamide", "cytoxan"],
+          "count": 11,
+          "by_participant": { "ln_01": 4, "ln_02": 2, "ln_03": 3, "ln_04": 2 },
+          "matches": []
+        },
+        {
+          "id": "iv_infusion",
+          "label": "IV infusion",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_health_history",
+          "variants": ["infusion", "iv infusion", "infusion center"],
+          "count": 6,
+          "by_participant": { "ln_01": 2, "ln_02": 1, "ln_03": 2, "ln_04": 1 },
+          "matches": []
+        }
+      ]
+    },
+    {
+      "id": "symptoms",
+      "label": "symptoms",
+      "description": "Lupus nephritis symptoms — kidney signs and systemic.",
+      "total_mentions": 97,
+      "keywords_present": 6,
+      "keywords_total": 6,
+      "keywords": [
+        {
+          "id": "fatigue",
+          "label": "Fatigue",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "symptoms",
+          "variants": ["fatigue", "exhausted", "no energy"],
+          "count": 28,
+          "by_participant": { "ln_01": 8, "ln_02": 7, "ln_03": 8, "ln_04": 5 },
+          "matches": []
+        },
+        {
+          "id": "proteinuria",
+          "label": "Proteinuria / foamy urine",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "symptoms",
+          "variants": ["proteinuria", "foamy urine", "protein in urine"],
+          "count": 21,
+          "by_participant": { "ln_01": 6, "ln_02": 5, "ln_03": 6, "ln_04": 4 },
+          "matches": []
+        },
+        {
+          "id": "edema",
+          "label": "Edema / swelling",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "symptoms",
+          "variants": ["edema", "swelling", "swollen ankles"],
+          "count": 17,
+          "by_participant": { "ln_01": 5, "ln_02": 4, "ln_03": 5, "ln_04": 3 },
+          "matches": []
+        },
+        {
+          "id": "lupus_flare",
+          "label": "Lupus flare / renal flare",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "symptoms",
+          "variants": ["flare", "lupus flare", "renal flare"],
+          "count": 14,
+          "by_participant": { "ln_01": 4, "ln_02": 3, "ln_03": 4, "ln_04": 3 },
+          "matches": []
+        },
+        {
+          "id": "joint_pain",
+          "label": "Joint pain / arthralgia",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "symptoms",
+          "variants": ["joint pain", "arthralgia"],
+          "count": 10,
+          "by_participant": { "ln_01": 3, "ln_02": 2, "ln_03": 3, "ln_04": 2 },
+          "matches": []
+        },
+        {
+          "id": "malar_rash",
+          "label": "Malar / butterfly rash",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "symptoms",
+          "variants": ["malar rash", "butterfly rash"],
+          "count": 7,
+          "by_participant": { "ln_01": 2, "ln_02": 2, "ln_03": 2, "ln_04": 1 },
+          "matches": []
+        }
+      ]
+    },
+    {
+      "id": "comorbidities",
+      "label": "comorbidities",
+      "description": "Conditions co-occurring with lupus nephritis.",
+      "total_mentions": 41,
+      "keywords_present": 3,
+      "keywords_total": 3,
+      "keywords": [
+        {
+          "id": "chronic_kidney_disease",
+          "label": "Chronic kidney disease (CKD)",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "comorbidities",
+          "variants": ["chronic kidney disease", "ckd"],
+          "count": 19,
+          "by_participant": { "ln_01": 5, "ln_02": 5, "ln_03": 5, "ln_04": 4 },
+          "matches": []
+        },
+        {
+          "id": "kidney_failure",
+          "label": "Kidney failure / ESRD",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "comorbidities",
+          "variants": ["kidney failure", "esrd"],
+          "count": 13,
+          "by_participant": { "ln_01": 4, "ln_02": 3, "ln_03": 4, "ln_04": 2 },
+          "matches": []
+        },
+        {
+          "id": "dialysis",
+          "label": "Dialysis",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "comorbidities",
+          "variants": ["dialysis", "hemodialysis"],
+          "count": 9,
+          "by_participant": { "ln_01": 3, "ln_02": 2, "ln_03": 3, "ln_04": 1 },
+          "matches": []
+        }
+      ]
+    },
+    {
+      "id": "condition_knowledge_gaps",
+      "label": "condition_knowledge_gaps",
+      "description": "Renal labs and disease mechanics.",
+      "total_mentions": 38,
+      "keywords_present": 3,
+      "keywords_total": 3,
+      "keywords": [
+        {
+          "id": "egfr",
+          "label": "eGFR / kidney function",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "condition_knowledge_gaps",
+          "variants": ["egfr", "gfr", "kidney function"],
+          "count": 18,
+          "by_participant": { "ln_01": 5, "ln_02": 4, "ln_03": 5, "ln_04": 4 },
+          "matches": []
+        },
+        {
+          "id": "creatinine",
+          "label": "Creatinine",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "condition_knowledge_gaps",
+          "variants": ["creatinine"],
+          "count": 12,
+          "by_participant": { "ln_01": 4, "ln_02": 3, "ln_03": 3, "ln_04": 2 },
+          "matches": []
+        },
+        {
+          "id": "kidney_biopsy",
+          "label": "Kidney biopsy / ISN class",
+          "parent_theme": "condition_specific",
+          "parent_subtheme": "condition_knowledge_gaps",
+          "variants": ["kidney biopsy", "renal biopsy", "biopsy"],
+          "count": 8,
+          "by_participant": { "ln_01": 2, "ln_02": 2, "ln_03": 2, "ln_04": 2 },
+          "matches": []
+        }
+      ]
+    },
+    {
+      "id": "treatment_positive_experiences",
+      "label": "treatment_positive_experiences",
+      "description": "When treatment is working — remission, QoL gains.",
+      "total_mentions": 23,
+      "keywords_present": 2,
+      "keywords_total": 2,
+      "keywords": [
+        {
+          "id": "renal_remission",
+          "label": "Renal remission / response",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_positive_experiences",
+          "variants": ["remission", "complete renal response"],
+          "count": 14,
+          "by_participant": { "ln_01": 4, "ln_02": 3, "ln_03": 5, "ln_04": 2 },
+          "matches": []
+        },
+        {
+          "id": "ln_quality_of_life",
+          "label": "Quality of life (lupus)",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_positive_experiences",
+          "variants": ["quality of life", "back to normal"],
+          "count": 9,
+          "by_participant": { "ln_01": 3, "ln_02": 2, "ln_03": 3, "ln_04": 1 },
+          "matches": []
+        }
+      ]
+    },
+    {
+      "id": "treatment_negative_experiences",
+      "label": "treatment_negative_experiences",
+      "description": "Side effects and adverse experiences.",
+      "total_mentions": 24,
+      "keywords_present": 2,
+      "keywords_total": 2,
+      "keywords": [
+        {
+          "id": "steroid_side_effects",
+          "label": "Steroid side effects",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_negative_experiences",
+          "variants": ["steroid side effects", "moon face", "weight gain"],
+          "count": 17,
+          "by_participant": { "ln_01": 5, "ln_02": 4, "ln_03": 5, "ln_04": 3 },
+          "matches": []
+        },
+        {
+          "id": "immunosuppression_infections",
+          "label": "Infections (immunosuppression)",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_negative_experiences",
+          "variants": ["immunocompromised", "frequent infections"],
+          "count": 7,
+          "by_participant": { "ln_01": 2, "ln_02": 2, "ln_03": 2, "ln_04": 1 },
+          "matches": []
+        }
+      ]
+    },
+    {
+      "id": "treatment_decision_factors",
+      "label": "treatment_decision_factors",
+      "description": "What's driving treatment choices.",
+      "total_mentions": 22,
+      "keywords_present": 2,
+      "keywords_total": 2,
+      "keywords": [
+        {
+          "id": "avoid_dialysis",
+          "label": "Avoiding dialysis / kidney failure",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_decision_factors",
+          "variants": ["avoid dialysis", "save my kidneys"],
+          "count": 13,
+          "by_participant": { "ln_01": 4, "ln_02": 3, "ln_03": 4, "ln_04": 2 },
+          "matches": []
+        },
+        {
+          "id": "steroid_sparing",
+          "label": "Steroid-sparing goal",
+          "parent_theme": "treatment",
+          "parent_subtheme": "treatment_decision_factors",
+          "variants": ["steroid-sparing", "off steroids", "off prednisone"],
+          "count": 9,
+          "by_participant": { "ln_01": 3, "ln_02": 2, "ln_03": 3, "ln_04": 1 },
+          "matches": []
+        }
+      ]
+    }
+  ]
+}

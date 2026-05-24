@@ -13,6 +13,7 @@
 <script lang="ts">
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import MiniDonut from './blocks/MiniDonut.svelte';
+	import SemiArcChart from './blocks/SemiArcChart.svelte';
 	import WordCloud from '$lib/charts/glp/WordCloud.svelte';
 	import { Search, RotateCcw, Check, Star } from '@lucide/svelte';
 	import {
@@ -281,6 +282,7 @@
 							<div class="mt-0.5 flex gap-1">
 								<button class="rounded-md border px-2.5 py-1 text-sm {d.chartType === 'bar' ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => patch({ chartType: 'bar' })}>Bar</button>
 								<button class="rounded-md border px-2.5 py-1 text-sm {d.chartType === 'donut' ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => patch({ chartType: 'donut' })}>Donut</button>
+								<button class="rounded-md border px-2.5 py-1 text-sm {d.chartType === 'semi-arc' ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => patch({ chartType: 'semi-arc' })}>Arc</button>
 							</div>
 						</div>
 					</div>
@@ -303,6 +305,8 @@
 						<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Preview</p>
 						{#if d.chartType === 'donut'}
 							<div class="flex justify-center"><MiniDonut data={distPreview} size={160} /></div>
+						{:else if d.chartType === 'semi-arc'}
+							<div class="flex justify-center"><SemiArcChart data={distPreview} size={200} /></div>
 						{:else}
 							<ul class="space-y-1.5">
 								{#each distPreview as row (row.label)}

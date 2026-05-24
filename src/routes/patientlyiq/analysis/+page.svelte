@@ -34,7 +34,7 @@
 		if (togglingQuote) return;
 		togglingQuote = quoteId;
 		try {
-			const res = await fetch('/wctglpdemo/highlights', {
+			const res = await fetch('/patientlyiq/highlights', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({ kind: 'quote', id: quoteId })
@@ -109,7 +109,7 @@
 			else summary.cleared++;
 		}
 		try {
-			const res = await fetch('/wctglpdemo/quote-reviews', {
+			const res = await fetch('/patientlyiq/quote-reviews', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({ updates })
@@ -236,7 +236,7 @@
 			<div class="mt-3 flex flex-wrap gap-2">
 				{#each pendingInterviews as id (id)}
 					<a
-						href="/wctglpdemo/upload?interview={id}"
+						href="/patientlyiq/upload?interview={id}"
 						class="rounded bg-amber-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-amber-700"
 					>
 						Review {participantLabel(id)} →

@@ -9,6 +9,8 @@
 -->
 <script lang="ts">
 	import { dragHandle } from 'svelte-dnd-action';
+	import { scale, fly } from 'svelte/transition';
+	import { cubicOut, cubicIn } from 'svelte/easing';
 	import * as ContextMenu from '$lib/components/ui/context-menu/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import {
@@ -31,9 +33,10 @@
 	import DistributionBlock from './blocks/DistributionBlock.svelte';
 	import WordCloudBlock from './blocks/WordCloudBlock.svelte';
 	import QuoteBlock from './blocks/QuoteBlock.svelte';
+	import StackedCards from '../StackedCards.svelte';
 	import { keyFindings } from '$lib/stores/key-findings.svelte';
 	import { WIDGETS, createBlock } from '$lib/key-findings/widgets';
-	import { PRIORITIES, PRIORITY_META, SIZE_META, type Card, type Block, type CardSize } from '$lib/key-findings/types';
+	import { PRIORITIES, PRIORITY_META, SIZE_META, DRAWER_KINDS, blankCard, type Card, type Block, type CardSize } from '$lib/key-findings/types';
 	import type { ParticipantProfile } from '$lib/types/participant-profile';
 
 	let {
@@ -62,8 +65,41 @@
 
 	let tagInput = $state('');
 	let dropActive = $state(false);
+	let stackIndex = $state(0);
+
+	// Push animation: fires when a viz/quote block is replaced by another.
+	let vizPushKey = $state(0);
+	let vizAnimating = $state(false);
+
+	const VIZ_KINDS = new Set<Block['kind']>(DRAWER_KINDS);
+
+	// Respect the user's motion preference (Svelte transitions don't auto-honor it).
+	const reducedMotion =
+		typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const enterTransition = reducedMotion
+		? { duration: 0 }
+		: { start: 0.94, opacity: 0, duration: 260, easing: cubicOut };
+
+	// Keep the stack index in range if blocks are added/removed.
+	$effect(() => {
+		if (card.blocks.length === 0) {
+			if (stackIndex !== 0) stackIndex = 0;
+		} else if (stackIndex >= card.blocks.length) {
+			stackIndex = card.blocks.length - 1;
+		}
+	});
 
 	function addWidget(kind: Block['kind'], atIndex?: number) {
+		if (VIZ_KINDS.has(kind)) {
+			const existing = card.blocks.find((b) => VIZ_KINDS.has(b.kind));
+			if (existing) {
+				// Replace the existing viz/quote with a push animation.
+				vizAnimating = true;
+				vizPushKey += 1;
+				store.replaceBlock(card.id, existing.id, createBlock(kind));
+				return;
+			}
+		}
 		store.addBlock(card.id, createBlock(kind), atIndex);
 	}
 	function blockUpdate(blockId: string, p: Partial<Block>, coalesceKey?: string) {
@@ -91,13 +127,47 @@
 	function onDrop(e: DragEvent) {
 		dropActive = false;
 		const kind = e.dataTransfer?.getData(MIME) as Block['kind'] | undefined;
-		if (kind) {
-			e.preventDefault();
+		if (!kind) return;
+		e.preventDefault();
+		if (card.blocks.length >= 1) {
+			const newCard = blankCard({ blocks: [createBlock(kind)] });
+			store.addCard(newCard);
+			onactivate(newCard.id);
+		} else {
 			onactivate(card.id);
 			addWidget(kind);
 		}
 	}
 </script>
+
+{#snippet renderBlock(block: Block)}
+	<div class="kf-block group/block relative flex h-full flex-col rounded-xl" in:scale={enterTransition}>
+		{#if active}
+			<div class="absolute -top-1 right-0 z-10 flex items-center gap-0.5 rounded-md border border-slate-200 bg-white p-0.5 opacity-0 shadow-sm transition-opacity group-hover/block:opacity-100">
+				{#if block.kind === 'richtext' || block.kind === 'quote'}
+					<button class="rounded px-1 py-0.5 text-xs font-semibold text-slate-400 hover:bg-slate-100" onclick={() => bumpFont(block, -0.1)} aria-label="Decrease font size">A−</button>
+					<button class="rounded px-1 py-0.5 text-sm font-semibold text-slate-500 hover:bg-slate-100" onclick={() => bumpFont(block, 0.1)} aria-label="Increase font size">A+</button>
+					<span class="mx-0.5 h-4 w-px bg-slate-200"></span>
+				{/if}
+				<button class="rounded p-1 text-slate-400 hover:bg-slate-100 disabled:opacity-30" disabled={card.blocks[0]?.id === block.id} onclick={() => store.moveBlock(card.id, block.id, -1)} aria-label="Move block up"><ArrowUp class="size-3.5" /></button>
+				<button class="rounded p-1 text-slate-400 hover:bg-slate-100 disabled:opacity-30" disabled={card.blocks[card.blocks.length - 1]?.id === block.id} onclick={() => store.moveBlock(card.id, block.id, 1)} aria-label="Move block down"><ArrowDown class="size-3.5" /></button>
+				<button class="rounded p-1 text-slate-400 hover:bg-rose-50 hover:text-rose-500" onclick={() => store.removeBlock(card.id, block.id)} aria-label="Delete block"><Trash2 class="size-3.5" /></button>
+			</div>
+		{/if}
+
+		<div class="flex h-full min-h-0 flex-1 flex-col">
+			{#if block.kind === 'richtext'}
+				<RichTextBlock html={block.html} editable={active} fontScale={block.fontScale ?? 1} onChange={(html) => blockUpdate(block.id, { html }, `rt:${block.id}`)} />
+			{:else if block.kind === 'distribution'}
+				<DistributionBlock {block} editable={active} animate={animated} {replayKey} onUpdate={(p) => blockUpdate(block.id, p, `title:${block.id}`)} onConfigure={() => onconfigure(card.id, block.id)} />
+			{:else if block.kind === 'wordcloud'}
+				<WordCloudBlock {block} editable={active} onUpdate={(p) => blockUpdate(block.id, p, `title:${block.id}`)} onConfigure={() => onconfigure(card.id, block.id)} />
+			{:else if block.kind === 'quote'}
+				<QuoteBlock {block} editable={active} animate={animated} {replayKey} fontScale={block.fontScale ?? 1} {profiles} onUpdate={(p, key) => blockUpdate(block.id, p, key)} onConfigure={() => onconfigure(card.id, block.id)} {onparticipant} />
+			{/if}
+		</div>
+	</div>
+{/snippet}
 
 {#snippet commonActions(Item: typeof ContextMenu.Item | typeof DropdownMenu.Item)}
 	<Item onSelect={() => store.duplicateCard(card.id)}><Copy class="size-4" /> Duplicate</Item>
@@ -115,7 +185,7 @@
 			<article
 				{...props}
 				data-kf-card={card.id}
-				class="kf-card group/card relative flex flex-col rounded-2xl border bg-white shadow-sm {active ? 'border-accent-mint ring-2 ring-accent-mint/30' : dropActive ? 'border-accent-mint' : 'border-slate-200 hover:shadow-md'}"
+				class="kf-card group/card relative flex flex-col rounded-2xl border bg-white shadow-md {active ? 'border-accent-mint ring-2 ring-accent-mint/30' : dropActive ? 'kf-dropping border-accent-mint' : 'border-slate-200 hover:shadow-lg'}"
 				style="aspect-ratio: {SIZE_META[card.size].aspect}; min-height: 240px;"
 				aria-label={card.title || 'Key finding'}
 				onclick={() => !active && onactivate(card.id)}
@@ -163,53 +233,54 @@
 				</header>
 
 				<!-- Body -->
-				<div class="flex flex-1 flex-col gap-4 overflow-auto p-4">
-					{#each card.blocks as block (block.id)}
-						<div class="kf-block group/block relative">
-							{#if active}
-								<div class="absolute -top-1 right-0 z-10 flex items-center gap-0.5 rounded-md border border-slate-200 bg-white p-0.5 opacity-0 shadow-sm transition-opacity group-hover/block:opacity-100">
-									{#if block.kind === 'richtext' || block.kind === 'quote'}
-										<button class="rounded px-1 py-0.5 text-xs font-semibold text-slate-400 hover:bg-slate-100" onclick={() => bumpFont(block, -0.1)} aria-label="Decrease font size">A−</button>
-										<button class="rounded px-1 py-0.5 text-sm font-semibold text-slate-500 hover:bg-slate-100" onclick={() => bumpFont(block, 0.1)} aria-label="Increase font size">A+</button>
-										<span class="mx-0.5 h-4 w-px bg-slate-200"></span>
-									{/if}
-									<button class="rounded p-1 text-slate-400 hover:bg-slate-100 disabled:opacity-30" disabled={card.blocks[0]?.id === block.id} onclick={() => store.moveBlock(card.id, block.id, -1)} aria-label="Move block up"><ArrowUp class="size-3.5" /></button>
-									<button class="rounded p-1 text-slate-400 hover:bg-slate-100 disabled:opacity-30" disabled={card.blocks[card.blocks.length - 1]?.id === block.id} onclick={() => store.moveBlock(card.id, block.id, 1)} aria-label="Move block down"><ArrowDown class="size-3.5" /></button>
-									<button class="rounded p-1 text-slate-400 hover:bg-rose-50 hover:text-rose-500" onclick={() => store.removeBlock(card.id, block.id)} aria-label="Delete block"><Trash2 class="size-3.5" /></button>
-								</div>
-							{/if}
-
-							{#if block.kind === 'richtext'}
-								<RichTextBlock html={block.html} editable={active} fontScale={block.fontScale ?? 1} onChange={(html) => blockUpdate(block.id, { html }, `rt:${block.id}`)} />
-							{:else if block.kind === 'distribution'}
-								<DistributionBlock {block} editable={active} animate={animated} {replayKey} onUpdate={(p) => blockUpdate(block.id, p, `title:${block.id}`)} onConfigure={() => onconfigure(card.id, block.id)} />
-							{:else if block.kind === 'wordcloud'}
-								<WordCloudBlock {block} editable={active} onUpdate={(p) => blockUpdate(block.id, p, `title:${block.id}`)} onConfigure={() => onconfigure(card.id, block.id)} />
-							{:else if block.kind === 'quote'}
-								<QuoteBlock {block} editable={active} animate={animated} {replayKey} fontScale={block.fontScale ?? 1} {profiles} onUpdate={(p, key) => blockUpdate(block.id, p, key)} onConfigure={() => onconfigure(card.id, block.id)} {onparticipant} />
-							{/if}
-						</div>
-					{/each}
-
-					{#if active && card.blocks.length === 0}
-						<div class="flex flex-1 flex-col items-center justify-center rounded-xl border-2 border-dashed {dropActive ? 'border-accent-mint bg-accent-mint/5' : 'border-slate-200'} py-8 text-center text-sm text-slate-400">
-							<p>Drag a block here, or</p>
-							<DropdownMenu.Root>
-								<DropdownMenu.Trigger class="mt-1 inline-flex items-center gap-1 rounded-md border border-slate-200 px-2 py-1 text-xs text-slate-600 hover:bg-slate-50">
-									<Plus class="size-3.5" /> Add block
-								</DropdownMenu.Trigger>
-								<DropdownMenu.Content class="w-52">
-									{#each WIDGETS as w (w.id)}
-										{@const Icon = w.icon}
-										<DropdownMenu.Item onSelect={() => addWidget(w.id)}><Icon class="size-4" /> {w.label}</DropdownMenu.Item>
-									{/each}
-								</DropdownMenu.Content>
-							</DropdownMenu.Root>
-						</div>
-					{/if}
+				<div class="flex flex-1 flex-col gap-3 overflow-hidden p-4">
+					<!-- Block area — push-animates when a viz/quote is replaced. -->
+					<div class="relative min-h-0 flex-1">
+						{#key vizPushKey}
+							<div
+								class="absolute inset-0 flex flex-col"
+								in:fly={vizAnimating ? { x: 64, duration: 280, easing: cubicOut } : { duration: 0 }}
+								out:fly={vizAnimating ? { x: -64, duration: 220, easing: cubicIn } : { duration: 0 }}
+							>
+								{#if card.blocks.length > 1}
+									<div class="kf-stack-wrap flex min-h-0 flex-1">
+										<StackedCards
+											items={card.blocks}
+											bind:activeIndex={stackIndex}
+											expandable={false}
+											showControls={true}
+											getKey={(b) => b.id}
+											ariaLabel="Finding blocks"
+										>
+											{#snippet item(block, _i)}
+												{@render renderBlock(block)}
+											{/snippet}
+										</StackedCards>
+									</div>
+								{:else if card.blocks.length === 1}
+									{@render renderBlock(card.blocks[0])}
+								{:else if active}
+									<div class="flex h-full flex-col items-center justify-center rounded-xl border-2 border-dashed {dropActive ? 'border-accent-mint bg-accent-mint/5' : 'border-slate-200'} py-8 text-center text-sm text-slate-400">
+										<p>Drag a block here, or</p>
+										<DropdownMenu.Root>
+											<DropdownMenu.Trigger class="mt-1 inline-flex items-center gap-1 rounded-md border border-slate-200 px-2 py-1 text-xs text-slate-600 hover:bg-slate-50">
+												<Plus class="size-3.5" /> Add block
+											</DropdownMenu.Trigger>
+											<DropdownMenu.Content class="w-52">
+												{#each WIDGETS as w (w.id)}
+													{@const Icon = w.icon}
+													<DropdownMenu.Item onSelect={() => addWidget(w.id)}><Icon class="size-4" /> {w.label}</DropdownMenu.Item>
+												{/each}
+											</DropdownMenu.Content>
+										</DropdownMenu.Root>
+									</div>
+								{/if}
+							</div>
+						{/key}
+					</div>
 
 					{#if active || card.tags.length}
-						<div class="mt-auto flex flex-wrap items-center gap-1.5 pt-2">
+						<div class="shrink-0 flex flex-wrap items-center gap-1.5">
 							{#each card.tags as tag (tag)}
 								<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
 									{tag}
@@ -291,9 +362,29 @@
 			aspect-ratio 0.35s var(--ease-standard, ease),
 			box-shadow 0.2s ease;
 	}
+
+	/* While the user is dragging a block over this card: a soft minty pulse plus
+	   a barely-perceptible lift. Pairs with the new block's scale-in on drop. */
+	.kf-card.kf-dropping {
+		animation: kf-drop-pulse 1.1s ease-in-out infinite;
+	}
+	@keyframes kf-drop-pulse {
+		0%, 100% {
+			box-shadow: 0 0 0 0 rgba(125, 191, 167, 0);
+			transform: scale(1);
+		}
+		50% {
+			box-shadow: 0 0 0 6px rgba(125, 191, 167, 0.22);
+			transform: scale(1.004);
+		}
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.kf-card {
 			transition: box-shadow 0.2s ease;
+		}
+		.kf-card.kf-dropping {
+			animation: none;
 		}
 	}
 </style>

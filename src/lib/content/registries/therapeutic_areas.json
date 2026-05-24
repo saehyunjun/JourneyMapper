@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "description": "MeSH-anchored clinical specialty registry. Stable ids used as FKs from indications and dataset manifests.",
+  "items": [
+    {
+      "id": "immunology",
+      "label": "Allergy and Immunology",
+      "mesh_id": "D000486",
+      "mesh_term": "Allergy and Immunology"
+    },
+    {
+      "id": "nephrology",
+      "label": "Nephrology",
+      "mesh_id": "D009396",
+      "mesh_term": "Nephrology"
+    },
+    {
+      "id": "oncology",
+      "label": "Medical Oncology",
+      "mesh_id": "D009367",
+      "mesh_term": "Medical Oncology"
+    },
+    {
+      "id": "endocrinology",
+      "label": "Endocrinology",
+      "mesh_id": "D004706",
+      "mesh_term": "Endocrinology"
+    }
+  ]
+}

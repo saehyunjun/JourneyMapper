@@ -13,7 +13,7 @@
 		participantLabel,
 		titleCase
 	} from '$lib/content/wctglpdemo-data/analysis';
-	import * as Carousel from '$lib/components/ui/carousel/index.js';
+	import StackedCards from '$lib/components/StackedCards.svelte';
 	import KeyQuoteCard from '$lib/components/KeyQuoteCard.svelte';
 	import { profileName, type ParticipantProfile } from '$lib/types/participant-profile';
 
@@ -73,6 +73,14 @@
 		const t = selectedTheme;
 		return t ? starred.filter((q) => q.themes.includes(t)) : starred;
 	});
+
+	// Reset the stack index when the theme filter changes — the front card
+	// should be the first matching quote, not whatever index we were on.
+	let activeIndex = $state(0);
+	$effect(() => {
+		selectedTheme;
+		activeIndex = 0;
+	});
 </script>
 
 <section class="flex flex-col gap-5">
@@ -118,31 +126,31 @@
 	{/if}
 
 	{#if starred.length}
-	<div class="px-12">
+	<div class="kq-stack-wrap mx-auto w-full max-w-md py-6 md:max-w-xl lg:max-w-2xl">
 		{#key selectedTheme}
-		<Carousel.Root opts={{ align: 'start' }}>
-			<!-- Generous vertical padding so the corner quote marks, which overhang
-			     each card's edge, are not clipped by the carousel's overflow-hidden. -->
-			<Carousel.Content class="py-6">
-		{#each visible as q (q.id)}
-		<Carousel.Item class="basis-full md:basis-1/2 lg:basis-1/3">
-			<KeyQuoteCard
-				text={q.text}
-				sentiment={q.sentiment}
-				interviewId={q.interview_id}
-				questionId={q.question_id}
-				themes={q.themes}
-				score={q.score}
-				{profiles}
-				{onparticipant}
-				size={cardSize}
-			/>
-		</Carousel.Item>
-			{/each}
-			</Carousel.Content>
-			<Carousel.Previous />
-			<Carousel.Next />
-		</Carousel.Root>
+			<StackedCards
+				items={visible}
+				bind:activeIndex
+				aspect="3 / 2"
+				gridCols={3}
+				getKey={(q) => q.id}
+				ariaLabel="Key quotes"
+			>
+				{#snippet item(q, _i)}
+					<div class="h-full p-2">
+						<KeyQuoteCard
+							text={q.text}
+							sentiment={q.sentiment}
+							interviewId={q.interview_id}
+							questionId={q.question_id}
+							themes={q.themes}
+							{profiles}
+							{onparticipant}
+							size={cardSize}
+						/>
+					</div>
+				{/snippet}
+			</StackedCards>
 		{/key}
 	</div>
 	{:else}

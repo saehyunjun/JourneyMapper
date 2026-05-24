@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "description": "MeSH-anchored indication registry. Stable ids used as FKs from disease-insights manifests and keyword cluster files.",
+  "items": [
+    {
+      "id": "lupus_nephritis",
+      "label": "Lupus Nephritis",
+      "abbreviation": "LN",
+      "mesh_id": "D008181",
+      "mesh_term": "Lupus Nephritis",
+      "therapeutic_area_ids": ["immunology", "nephrology"]
+    },
+    {
+      "id": "melanoma",
+      "label": "Melanoma",
+      "abbreviation": null,
+      "mesh_id": "D008545",
+      "mesh_term": "Melanoma",
+      "therapeutic_area_ids": ["oncology"]
+    },
+    {
+      "id": "obesity",
+      "label": "Obesity",
+      "abbreviation": null,
+      "mesh_id": "D009765",
+      "mesh_term": "Obesity",
+      "therapeutic_area_ids": ["endocrinology"]
+    }
+  ]
+}

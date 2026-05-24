@@ -76,7 +76,7 @@ export type QuoteBlock = {
 	filters: BlockFilters;
 };
 
-export type DistChartType = 'bar' | 'donut';
+export type DistChartType = 'bar' | 'donut' | 'semi-arc';
 export type DistMetric = 'sentiment' | 'theme';
 
 export type DistributionBlock = {

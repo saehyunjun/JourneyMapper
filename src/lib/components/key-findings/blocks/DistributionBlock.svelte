@@ -9,6 +9,7 @@
 	import BarX from '$lib/charts/BarX.svelte';
 	import BarY from '$lib/charts/BarY.svelte';
 	import MiniDonut from './MiniDonut.svelte';
+	import SemiArcChart from './SemiArcChart.svelte';
 	import { BarChart3 } from '@lucide/svelte';
 	import { buildDistribution } from '$lib/key-findings/widgets';
 	import type { DistributionBlock } from '$lib/key-findings/types';
@@ -67,6 +68,10 @@
 			{#if block.chartType === 'donut'}
 				<div class="flex justify-center py-2">
 					<MiniDonut {data} {animate} {replayKey} />
+				</div>
+			{:else if block.chartType === 'semi-arc'}
+				<div class="flex justify-center py-2">
+					<SemiArcChart {data} {animate} {replayKey} />
 				</div>
 			{:else if block.metric === 'sentiment'}
 				<BarY figure="" caption="" {data} label="label" value="value" colorBy={(d) => d.color as string} height={280} />

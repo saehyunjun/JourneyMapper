@@ -49,7 +49,7 @@
 				<p
 					class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500"
 				>
-					No coded segments for this theme.
+					No tagged quotes for this theme.
 				</p>
 			{/each}
 		</div>
