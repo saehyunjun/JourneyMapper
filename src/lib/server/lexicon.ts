@@ -50,6 +50,12 @@ export type Cluster = {
 	parent_theme: string;
 	parent_subtheme: string;
 	variants: string[];
+	/** Phase-1-closure addition: optional precomputed embedding for the
+	 *  retrieval-first annotation path (Phase 3). Nothing populates this
+	 *  field today; the slot only declares the contract so the JSON shape
+	 *  doesn't break when Phase 3 starts writing vectors. Convention: a
+	 *  1536-dim float vector. */
+	embedding?: number[];
 };
 
 /** Registry types re-exported so existing import sites in components keep

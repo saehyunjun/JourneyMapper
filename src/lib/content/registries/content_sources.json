@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "description": "Content source registry — the closed vocabulary of WHERE a piece of patient voice originated. Parallel to indications and burdens as a cross-cutting axis. Each segment, quote, or ingested content row carries one content_source_id FK into this registry. Distinct from registries/sources.json, which is dataset PROVENANCE (how data got into the system: manual extract, primary research, third-party provider). A YouTube transcript can be content_source: 'youtube_transcript' AND dataset source.type: 'third_party_provider' — different axes.",
+  "items": [
+    {
+      "id": "interview",
+      "label": "Interview transcript",
+      "description": "Structured one-on-one or focus-group interview. Long-form, question-scaffolded; supports turn-by-turn attribution, structured demographics, and the analyst-curated coding pipeline. The original JourneyMapper content type.",
+      "typical_metadata": ["participant_id", "question_id", "turn_index", "interview_date"]
+    },
+    {
+      "id": "social_post",
+      "label": "Social media post",
+      "description": "Short-form post from a public social platform (Reddit, X / Twitter, Facebook, Instagram, TikTok caption). Author is typically pseudonymous; engagement signals (likes, replies, shares) often available. No question scaffolding; topic-mapping via embedding match is the primary annotation path.",
+      "typical_metadata": ["platform", "post_id", "permalink", "author_handle", "captured_at", "engagement_counts"]
+    },
+    {
+      "id": "youtube_transcript",
+      "label": "YouTube transcript",
+      "description": "Auto- or human-generated transcript of a YouTube video (creator vlogs, patient testimonials, advocacy organization channels). May include multiple speakers; timestamps are usually retained. Public-figure attribution is the norm.",
+      "typical_metadata": ["video_id", "channel_id", "channel_name", "video_title", "uploaded_at", "language"]
+    },
+    {
+      "id": "forum_post",
+      "label": "Forum / community post",
+      "description": "Post or comment from a patient-community forum (Inspire, HealthUnlocked, PatientsLikeMe, Mumsnet health boards, condition-specific Facebook groups). Pseudonymous, often deeper threaded discussion than open social platforms.",
+      "typical_metadata": ["platform", "thread_id", "post_id", "author_handle", "captured_at", "reply_count"]
+    },
+    {
+      "id": "blog_post",
+      "label": "Blog post",
+      "description": "Long-form first-person blog entry (Medium, personal websites, advocacy organization blogs). Patient or caregiver authored. Less ephemeral than social posts; often more reflective and narrative.",
+      "typical_metadata": ["site_domain", "post_url", "author_name", "published_at", "author_attribution_type"]
+    },
+    {
+      "id": "search_query",
+      "label": "Search query",
+      "description": "Anonymous or aggregated search query string (from search-volume providers, autocomplete data, or panel-based query logs). The smallest unit of patient voice — no surrounding narrative, only the question or phrase being searched.",
+      "typical_metadata": ["query_text", "provider", "geography", "time_period", "estimated_volume"]
+    },
+    {
+      "id": "podcast_transcript",
+      "label": "Podcast transcript",
+      "description": "Transcript of a podcast episode (patient story podcasts, condition-specific shows, advocacy podcasts). Multi-speaker, often long-form. Public-figure or pseudonymous attribution depending on the show.",
+      "typical_metadata": ["show_name", "episode_id", "episode_title", "speakers", "published_at"]
+    }
+  ]
+}

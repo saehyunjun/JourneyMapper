@@ -19,6 +19,7 @@ import burdenCategoriesJson from '$lib/content/registries/burden_categories.json
 import sponsorsJson from '$lib/content/registries/sponsors.json';
 import mechanismsOfActionJson from '$lib/content/registries/mechanisms_of_action.json';
 import drugsJson from '$lib/content/registries/drugs.json';
+import contentSourcesJson from '$lib/content/registries/content_sources.json';
 import type {
 	Indication,
 	TherapeuticArea,
@@ -27,7 +28,8 @@ import type {
 	BurdenCategory,
 	Sponsor,
 	MechanismOfAction,
-	Drug
+	Drug,
+	ContentSource
 } from '$lib/content/registries/types';
 
 type RegistryFile<T> = { schema_version: string; description?: string; items: T[] };
@@ -57,12 +59,21 @@ export const mechanismsOfAction: MechanismOfAction[] = (
 
 export const drugs: Drug[] = (drugsJson as RegistryFile<Drug>).items;
 
+/** Content source registry — the WHERE-from of patient voice. Parallel to
+ *  indications and burdens. Used by Phase 5 ingestion to scope content
+ *  handling per source type (interview vs social_post vs youtube_transcript,
+ *  etc.). Distinct from `sourceTypes` (dataset provenance). */
+export const contentSources: ContentSource[] = (
+	contentSourcesJson as RegistryFile<ContentSource>
+).items;
+
 const indicationById = new Map(indications.map((i) => [i.id, i]));
 const therapeuticAreaById = new Map(therapeuticAreas.map((a) => [a.id, a]));
 const burdenCategoryById = new Map(burdenCategories.map((b) => [b.id, b]));
 const sponsorById = new Map(sponsors.map((s) => [s.id, s]));
 const moaById = new Map(mechanismsOfAction.map((m) => [m.id, m]));
 const drugById = new Map(drugs.map((d) => [d.id, d]));
+const contentSourceById = new Map(contentSources.map((c) => [c.id, c]));
 
 export function getIndication(id: string): Indication | undefined {
 	return indicationById.get(id as Indication['id']);
@@ -132,6 +143,16 @@ export function drugsByMoa(moaId: string): Drug[] {
 	return drugs.filter((d) => d.moa_id === (moaId as Drug['moa_id']));
 }
 
+export function getContentSource(id: string): ContentSource | undefined {
+	return contentSourceById.get(id as ContentSource['id']);
+}
+
+/** True if every id resolves against the content source registry. */
+export function contentSourcesExist(ids: readonly string[]): boolean {
+	for (const id of ids) if (!contentSourceById.has(id as ContentSource['id'])) return false;
+	return true;
+}
+
 export type {
 	Indication,
 	TherapeuticArea,
@@ -140,5 +161,6 @@ export type {
 	BurdenCategory,
 	Sponsor,
 	MechanismOfAction,
-	Drug
+	Drug,
+	ContentSource
 };
