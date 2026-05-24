@@ -1,9 +1,9 @@
 {
   "meta": {
-    "schema_version": "3.5",
-    "supersedes": "keyword_lexicon.json @ 3.5",
+    "schema_version": "3.6",
+    "supersedes": "keyword_lexicon.json @ 3.6",
     "status": "live",
-    "description": "Keyword cluster catalog, schema 3.5. Adds the DRUG axis: clusters[].drug_id is an optional FK into registries/drugs.json for clusters that represent a specific drug. The drug entity carries structured metadata (mechanism of action, sponsor, stage, indications) that doesn't belong in the variant-matching lexicon. Drug-class clusters (glp_1, calcineurin_inhibitors, ace_arb) and non-drug treatment concepts (multitarget_therapy, iv_infusion) carry no drug_id. The matcher still uses cluster.variants — brand names are duplicated between variants[] and drugs.brand_names[] until a follow-up rewires the matcher. Indication, therapeutic-area, and burden registries continue to live under src/lib/content/registries/. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows live in keyword_tags.json keyed by (cluster_id, segment_id, char_start, char_end).",
+    "description": "Keyword cluster catalog, schema 3.6. Brand names and generic names of drugs no longer live in cluster.variants[] for clusters that carry a drug_id — the matcher (since 3.5) inlines those tokens from registries/drugs.json at regex-build time. The drug registry is now the authoritative source for brand_names + generic_name; cluster.variants holds only alternative spellings, abbreviations, and related terms that aren't in the drug entity. Other indication, therapeutic-area, burden, MOA, and sponsor concepts continue to live under src/lib/content/registries/. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows live in keyword_tags.json keyed by (cluster_id, segment_id, char_start, char_end).",
     "changelog": [
       "3.0-draft — replaced the `categories[].keywords[]` shape with a flat `clusters[]` keyed by parent_theme + parent_subtheme. The 102 clusters from keyword_lexicon.json @ 2.0 will be re-classified via the codebook-migration map in codebook_migration_map.json; some will split into parallel clusters with different parents (e.g. cost as a treatment vs. trial barrier).",
       "3.0-draft (porting pass) — ported 103 clusters from keyword_lexicon.json @ 2.0 via scripts/migrate-keyword-lexicon.mjs. Each cluster carries parent_theme + parent_subtheme assigned by category default + per-cluster overrides. Descriptions are empty for now; analyst should backfill as part of Phase 0 review.",
@@ -13,7 +13,9 @@
       "3.3 — registry consolidation. Removed meta.indications[] and meta.therapeutic_areas[] from the lexicon; both registries now live exclusively under src/lib/content/registries/. Clusters validated against the registry before drop: 181 total, all indication FKs resolved. Backup: keyword_lexicon.v3.2-backup.json. Migration: scripts/migrate-lexicon-registry-consolidation.mjs.",
       "3.4 — added burden_category_ids[] slot on every cluster (initialized empty). Taxonomy registry at registries/burden_categories.json (status: draft) — 33 nodes, 8 top-level. Backup: keyword_lexicon.v3.3-backup.json. Migration: scripts/migrate-lexicon-burden-slot.mjs.",
       "3.5 — drug entity FK. Added optional drug_id slot on clusters; populated on 17 cluster(s) whose id matches a drugs.json entity (cagrilintide, metformin, orforglipron, phentermine, retatrutide, +12 more). Drug registry validates against MOA + sponsor + indication registries. Backup: keyword_lexicon.v3.4-backup.json. Migration: scripts/migrate-lexicon-drug-fk.mjs.",
-      "3.5 — drug entity FK. Added optional drug_id slot on clusters; populated on 17 cluster(s) whose id matches a drugs.json entity (cagrilintide, metformin, orforglipron, phentermine, retatrutide, +12 more). Drug registry validates against MOA + sponsor + indication registries. Backup: keyword_lexicon.v3.4-backup.json. Migration: scripts/migrate-lexicon-drug-fk.mjs."
+      "3.5 — drug entity FK. Added optional drug_id slot on clusters; populated on 17 cluster(s) whose id matches a drugs.json entity (cagrilintide, metformin, orforglipron, phentermine, retatrutide, +12 more). Drug registry validates against MOA + sponsor + indication registries. Backup: keyword_lexicon.v3.4-backup.json. Migration: scripts/migrate-lexicon-drug-fk.mjs.",
+      "3.6 — stripped drug.generic_name + drug.brand_names from cluster.variants on 17 clusters (33 variant strings removed). Matcher recovers them from registries/drugs.json. Backup: keyword_lexicon.v3.5-backup.json. Migration: scripts/migrate-lexicon-variant-strip.mjs.",
+      "3.6 — stripped drug.generic_name + drug.brand_names from cluster.variants on 0 clusters (0 variant strings removed). Matcher recovers them from registries/drugs.json. Backup: keyword_lexicon.v3.5-backup.json. Migration: scripts/migrate-lexicon-variant-strip.mjs."
     ],
     "cluster_shape": {
       "id": "Slug, lowercase + underscores. Globally unique. Example: 'treatment_cost_concerns'.",
@@ -1915,9 +1917,7 @@
       "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "cagrilintide"
-      ],
+      "variants": [],
       "drug_id": "cagrilintide"
     },
     {
@@ -1980,9 +1980,7 @@
       "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "metformin"
-      ],
+      "variants": [],
       "drug_id": "metformin"
     },
     {
@@ -1996,7 +1994,6 @@
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
-        "orforglipron",
         "orfo"
       ],
       "drug_id": "orforglipron"
@@ -2011,9 +2008,7 @@
       "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "phentermine"
-      ],
+      "variants": [],
       "drug_id": "phentermine"
     },
     {
@@ -2026,9 +2021,7 @@
       "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "retatrutide"
-      ],
+      "variants": [],
       "drug_id": "retatrutide"
     },
     {
@@ -2042,10 +2035,6 @@
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
-        "semaglutide",
-        "wegovy",
-        "ozempic",
-        "rybelsus",
         "novo nordisk",
         "novo"
       ],
@@ -2062,9 +2051,6 @@
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
-        "tirzepatide",
-        "mounjaro",
-        "zepbound",
         "eli lilly",
         "lilly"
       ],
@@ -3120,8 +3106,6 @@
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
-        "anifrolumab",
-        "saphnelo",
         "interferon inhibitor"
       ],
       "drug_id": "anifrolumab"
@@ -3136,10 +3120,7 @@
       "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "azathioprine",
-        "imuran"
-      ],
+      "variants": [],
       "drug_id": "azathioprine"
     },
     {
@@ -3153,8 +3134,6 @@
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
-        "belimumab",
-        "benlysta",
         "blys inhibitor",
         "baff inhibitor"
       ],
@@ -3195,7 +3174,6 @@
         "corticosteroids",
         "steroid",
         "steroids",
-        "prednisone",
         "prednisolone",
         "methylprednisolone",
         "glucocorticoid",
@@ -3217,11 +3195,8 @@
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
-        "cyclophosphamide",
-        "cytoxan",
         "euro-lupus",
-        "euro lupus",
-        "endoxan"
+        "euro lupus"
       ],
       "drug_id": "cyclophosphamide"
     },
@@ -3236,8 +3211,6 @@
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
-        "hydroxychloroquine",
-        "plaquenil",
         "hcq",
         "antimalarial",
         "antimalarials"
@@ -3295,12 +3268,9 @@
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
-        "mycophenolate",
         "mycophenolate mofetil",
         "mmf",
-        "cellcept",
-        "mycophenolic acid",
-        "myfortic"
+        "mycophenolic acid"
       ],
       "drug_id": "mycophenolate"
     },
@@ -3314,10 +3284,7 @@
       "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "obinutuzumab",
-        "gazyva"
-      ],
+      "variants": [],
       "drug_id": "obinutuzumab"
     },
     {
@@ -3331,8 +3298,6 @@
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
-        "rituximab",
-        "rituxan",
         "anti-cd20",
         "b-cell depletion",
         "b cell depletion"
@@ -3349,10 +3314,7 @@
       "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "voclosporin",
-        "lupkynis"
-      ],
+      "variants": [],
       "drug_id": "voclosporin"
     },
     {
