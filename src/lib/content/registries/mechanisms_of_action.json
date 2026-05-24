@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "description": "Mechanism of action registry — pharmacologic class of a drug or drug-class cluster. Stable ids used as FKs from drugs.json and (optionally) from lexicon clusters that represent drug classes (e.g. glp_1, ace_arb).",
+  "items": [
+    {
+      "id": "antimetabolite",
+      "label": "Antimetabolite (IMPDH / purine inhibitor)",
+      "description": "Inhibits nucleotide synthesis to suppress lymphocyte proliferation. Includes mycophenolate (IMPDH) and azathioprine (purine analog)."
+    },
+    {
+      "id": "alkylating_agent",
+      "label": "Alkylating agent",
+      "description": "Crosslinks DNA, broadly immunosuppressive and cytotoxic. Includes cyclophosphamide."
+    },
+    {
+      "id": "calcineurin_inhibitor",
+      "label": "Calcineurin inhibitor",
+      "description": "Blocks T-cell activation via calcineurin/NFAT. Includes tacrolimus, cyclosporine, voclosporin."
+    },
+    {
+      "id": "anti_blys",
+      "label": "Anti-BLyS / BAFF monoclonal antibody",
+      "description": "Neutralizes B-cell activating factor (BLyS/BAFF) to reduce B-cell survival. Includes belimumab."
+    },
+    {
+      "id": "corticosteroid",
+      "label": "Corticosteroid",
+      "description": "Glucocorticoid receptor agonist — broad anti-inflammatory and immunosuppressive. Includes prednisone, methylprednisolone, dexamethasone."
+    },
+    {
+      "id": "antimalarial",
+      "label": "Antimalarial (immunomodulator)",
+      "description": "TLR / autophagy modulator used for autoimmune disease background therapy. Includes hydroxychloroquine, chloroquine."
+    },
+    {
+      "id": "anti_cd20",
+      "label": "Anti-CD20 monoclonal antibody",
+      "description": "Depletes CD20+ B cells. Includes rituximab, obinutuzumab, ocrelizumab."
+    },
+    {
+      "id": "type_i_interferon_antagonist",
+      "label": "Type-I interferon receptor antagonist",
+      "description": "Blocks IFNAR1, attenuating type-I interferon signaling. Includes anifrolumab."
+    },
+    {
+      "id": "glp1_agonist",
+      "label": "GLP-1 receptor agonist",
+      "description": "Activates GLP-1 receptors to promote insulin secretion, slow gastric emptying, and reduce appetite. Includes semaglutide, liraglutide, dulaglutide, orforglipron (oral)."
+    },
+    {
+      "id": "dual_glp1_gip_agonist",
+      "label": "Dual GLP-1 / GIP receptor agonist",
+      "description": "Co-activates GLP-1 and GIP receptors. Includes tirzepatide."
+    },
+    {
+      "id": "triple_agonist",
+      "label": "Triple GLP-1 / GIP / glucagon receptor agonist",
+      "description": "Co-activates GLP-1, GIP, and glucagon receptors. Investigational; includes retatrutide."
+    },
+    {
+      "id": "amylin_analog",
+      "label": "Amylin analog",
+      "description": "Mimics amylin to slow gastric emptying and reduce appetite. Includes pramlintide and the investigational long-acting cagrilintide."
+    },
+    {
+      "id": "biguanide",
+      "label": "Biguanide",
+      "description": "Reduces hepatic glucose output; improves insulin sensitivity. Includes metformin."
+    },
+    {
+      "id": "sympathomimetic",
+      "label": "Sympathomimetic appetite suppressant",
+      "description": "Centrally acting sympathomimetic that suppresses appetite. Includes phentermine, diethylpropion."
+    },
+    {
+      "id": "ace_inhibitor_or_arb",
+      "label": "ACE inhibitor / ARB (renin-angiotensin blocker)",
+      "description": "Blocks renin-angiotensin signaling — ACE inhibitors block angiotensin II formation; ARBs block its receptor. Renoprotective via proteinuria reduction."
+    }
+  ]
+}

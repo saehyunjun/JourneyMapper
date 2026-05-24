@@ -16,12 +16,18 @@ import therapeuticAreasJson from '$lib/content/registries/therapeutic_areas.json
 import datasetTypesJson from '$lib/content/registries/dataset_types.json';
 import sourcesJson from '$lib/content/registries/sources.json';
 import burdenCategoriesJson from '$lib/content/registries/burden_categories.json';
+import sponsorsJson from '$lib/content/registries/sponsors.json';
+import mechanismsOfActionJson from '$lib/content/registries/mechanisms_of_action.json';
+import drugsJson from '$lib/content/registries/drugs.json';
 import type {
 	Indication,
 	TherapeuticArea,
 	DatasetType,
 	SourceType,
-	BurdenCategory
+	BurdenCategory,
+	Sponsor,
+	MechanismOfAction,
+	Drug
 } from '$lib/content/registries/types';
 
 type RegistryFile<T> = { schema_version: string; description?: string; items: T[] };
@@ -43,9 +49,20 @@ export const burdenCategories: BurdenCategory[] = (
 	burdenCategoriesJson as RegistryFile<BurdenCategory>
 ).items;
 
+export const sponsors: Sponsor[] = (sponsorsJson as RegistryFile<Sponsor>).items;
+
+export const mechanismsOfAction: MechanismOfAction[] = (
+	mechanismsOfActionJson as RegistryFile<MechanismOfAction>
+).items;
+
+export const drugs: Drug[] = (drugsJson as RegistryFile<Drug>).items;
+
 const indicationById = new Map(indications.map((i) => [i.id, i]));
 const therapeuticAreaById = new Map(therapeuticAreas.map((a) => [a.id, a]));
 const burdenCategoryById = new Map(burdenCategories.map((b) => [b.id, b]));
+const sponsorById = new Map(sponsors.map((s) => [s.id, s]));
+const moaById = new Map(mechanismsOfAction.map((m) => [m.id, m]));
+const drugById = new Map(drugs.map((d) => [d.id, d]));
 
 export function getIndication(id: string): Indication | undefined {
 	return indicationById.get(id as Indication['id']);
@@ -87,4 +104,41 @@ export function burdenCategoryAncestors(id: string): BurdenCategory[] {
 	return out;
 }
 
-export type { Indication, TherapeuticArea, DatasetType, SourceType, BurdenCategory };
+export function getSponsor(id: string): Sponsor | undefined {
+	return sponsorById.get(id as Sponsor['id']);
+}
+
+export function getMechanismOfAction(id: string): MechanismOfAction | undefined {
+	return moaById.get(id as MechanismOfAction['id']);
+}
+
+export function getDrug(id: string): Drug | undefined {
+	return drugById.get(id as Drug['id']);
+}
+
+/** True if every id resolves against the drug registry. */
+export function drugsExist(ids: readonly string[]): boolean {
+	for (const id of ids) if (!drugById.has(id as Drug['id'])) return false;
+	return true;
+}
+
+/** All drugs whose `indication_ids` include the given indication. */
+export function drugsForIndication(indicationId: string): Drug[] {
+	return drugs.filter((d) => d.indication_ids.includes(indicationId as Drug['indication_ids'][number]));
+}
+
+/** All drugs sharing a given mechanism of action. */
+export function drugsByMoa(moaId: string): Drug[] {
+	return drugs.filter((d) => d.moa_id === (moaId as Drug['moa_id']));
+}
+
+export type {
+	Indication,
+	TherapeuticArea,
+	DatasetType,
+	SourceType,
+	BurdenCategory,
+	Sponsor,
+	MechanismOfAction,
+	Drug
+};

@@ -25,6 +25,63 @@ export type DatasetTypeId =
 
 export type SourceTypeId = 'manual_extract' | 'primary_research' | 'third_party_provider';
 
+/** Pharma sponsor ids — commercial owner / developer of a drug. Add new ids to
+ *  registries/sponsors.json first, then extend this union. */
+export type SponsorId =
+	| 'novo_nordisk'
+	| 'eli_lilly'
+	| 'astrazeneca'
+	| 'gsk'
+	| 'aurinia'
+	| 'roche';
+
+/** Mechanism-of-action ids — pharmacologic class. Add new ids to
+ *  registries/mechanisms_of_action.json first, then extend this union. */
+export type MoaId =
+	| 'antimetabolite'
+	| 'alkylating_agent'
+	| 'calcineurin_inhibitor'
+	| 'anti_blys'
+	| 'corticosteroid'
+	| 'antimalarial'
+	| 'anti_cd20'
+	| 'type_i_interferon_antagonist'
+	| 'glp1_agonist'
+	| 'dual_glp1_gip_agonist'
+	| 'triple_agonist'
+	| 'amylin_analog'
+	| 'biguanide'
+	| 'sympathomimetic'
+	| 'ace_inhibitor_or_arb';
+
+/** Drug ids — specific drugs (not classes). Add new ids to
+ *  registries/drugs.json first, then extend this union. */
+export type DrugId =
+	| 'mycophenolate'
+	| 'cyclophosphamide'
+	| 'voclosporin'
+	| 'belimumab'
+	| 'corticosteroids'
+	| 'hydroxychloroquine'
+	| 'azathioprine'
+	| 'rituximab'
+	| 'anifrolumab'
+	| 'obinutuzumab'
+	| 'semaglutide'
+	| 'tirzepatide'
+	| 'cagrilintide'
+	| 'retatrutide'
+	| 'orforglipron'
+	| 'metformin'
+	| 'phentermine';
+
+export type DrugStage =
+	| 'approved'
+	| 'phase_3'
+	| 'phase_2'
+	| 'phase_1'
+	| 'preclinical';
+
 /** Burden taxonomy ids — tree-structured (parent_id resolves to another
  *  BurdenCategoryId or null for top-level). Add new ids to the registry first,
  *  then extend this union. */
@@ -101,4 +158,28 @@ export type BurdenCategory = {
 	/** Null for top-level categories; otherwise the parent's id. */
 	parent_id: BurdenCategoryId | null;
 	description: string;
+};
+
+export type Sponsor = {
+	id: SponsorId;
+	label: string;
+	headquarters_country: string | null;
+};
+
+export type MechanismOfAction = {
+	id: MoaId;
+	label: string;
+	description: string;
+};
+
+export type Drug = {
+	id: DrugId;
+	label: string;
+	generic_name: string;
+	brand_names: string[];
+	moa_id: MoaId | null;
+	sponsor_id: SponsorId | null;
+	stage: DrugStage;
+	indication_ids: IndicationId[];
+	description?: string;
 };

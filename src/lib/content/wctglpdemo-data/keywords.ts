@@ -46,6 +46,8 @@ export type Cluster = {
 	/** Lexicon 3.4: string[] FK → registries/burden_categories.json items[].id.
 	 *  Empty array = unclassified. Cross-cutting axis parallel to indications. */
 	burden_category_ids?: string[];
+	/** Lexicon 3.5: optional FK → registries/drugs.json items[].id. */
+	drug_id?: string;
 	parent_theme: string;
 	parent_subtheme: string;
 	variants: string[];

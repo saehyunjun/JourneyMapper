@@ -41,6 +41,11 @@ export type Cluster = {
 	 *  Empty array = unclassified. Multi-element arrays let one cluster carry
 	 *  multiple burden facets. Optional on reads for pre-3.4 rows. */
 	burden_category_ids?: string[];
+	/** Lexicon 3.5: optional FK → registries/drugs.json items[].id. Set only
+	 *  on clusters that map 1:1 to a specific drug entity (not classes like
+	 *  glp_1 or non-drug concepts like iv_infusion). The drug entity carries
+	 *  MOA, sponsor, stage, and indications — resolve via getDrug(). */
+	drug_id?: string;
 	parent_theme: string;
 	parent_subtheme: string;
 	variants: string[];
