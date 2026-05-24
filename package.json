@@ -16,7 +16,8 @@
     "db:studio": "drizzle-kit studio",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "node scripts/seed-db.mjs",
-    "db:ingest:search-queries": "node scripts/ingest-search-queries.mjs"
+    "db:ingest:search-queries": "node scripts/ingest-search-queries.mjs",
+    "embeddings:dump": "node scripts/dump-embedding-corpus.mjs"
   },
   "devDependencies": {
     "@fontsource-variable/inter": "^5.2.8",

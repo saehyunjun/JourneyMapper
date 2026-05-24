@@ -34,3 +34,7 @@ vite.config.ts.timestamp-*
 /data/*.db-journal
 /data/*.db-wal
 /data/*.db-shm
+
+# Phase 3 embedding corpus / vector cache
+/data/embedding_corpus.jsonl
+/data/embeddings_*.jsonl
