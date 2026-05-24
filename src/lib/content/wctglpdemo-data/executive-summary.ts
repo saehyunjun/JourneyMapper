@@ -474,7 +474,7 @@ export function buildFindings(starredQuoteIds: string[] = []): Finding[] {
 export const summaryText: string = (() => {
 	const bits = [
 		`${cap(numWord(summaryStats.interviews))} GLP-1 patients sat for in-depth interviews,`,
-		`producing ${summaryStats.segments} coded segments across ${summaryStats.themes} themes.`,
+		`producing ${summaryStats.segments} tagged quotes across ${summaryStats.themes} themes.`,
 		`Sentiment ran ${sentimentLean.lean}: ${sentimentLean.posPct}% of coded moments registered`,
 		`positive against ${sentimentLean.negPct}% negative.`
 	];

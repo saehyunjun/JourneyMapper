@@ -39,7 +39,7 @@ import {
 
 export const themeLabel = (id: string) => themeTags.find((t) => t.id === id)?.label ?? titleCase(id);
 
-const THEME_PALETTE = ['#294457', '#7dbfa7', '#cc6324', '#446079', '#9b8bb4', '#c98a5e', '#5e9c8f', '#b0567f'];
+export const THEME_PALETTE = ['#294457', '#7dbfa7', '#cc6324', '#446079', '#9b8bb4', '#c98a5e', '#5e9c8f', '#b0567f'];
 
 export function sentimentColor(s: number): string {
 	switch (s) {

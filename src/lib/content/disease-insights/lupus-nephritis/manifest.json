@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "id": "lupus_nephritis",
+  "slug": "lupus-nephritis",
+  "label": "Lupus Nephritis",
+  "abbreviation": "LN",
+  "therapeutic_area_ids": ["immunology", "nephrology"],
+  "datasets": [
+    {
+      "id": "lupus_nephritis_keyword_clusters",
+      "type": "keyword_clusters",
+      "label": "Lupus nephritis keyword clusters (expanded)",
+      "path": "lexicon/keyword_clusters.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_relative_search_volume",
+      "type": "search_volume_topics",
+      "label": "Relative search volume — LN clinical-trial vs. treatment vs. alternative-remedy interest",
+      "path": "search/relative_search_volume.json",
+      "geography": null,
+      "unit": "estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_treatment_searches_us",
+      "type": "search_volume_topics",
+      "label": "Lupus nephritis treatment searches (US, monthly)",
+      "path": "search/treatment_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_facebook_group_engagement",
+      "type": "community_engagement",
+      "label": "Public vs. private patient-community engagement on Facebook",
+      "path": "communities/facebook_group_engagement.json",
+      "geography": null,
+      "unit": "count",
+      "source_id": null
+    }
+  ]
+}

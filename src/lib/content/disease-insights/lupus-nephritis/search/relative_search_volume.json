@@ -1,0 +1,41 @@
+{
+  "id": "lupus_nephritis_relative_search_volume",
+  "type": "search_volume_topics",
+  "indication_id": "lupus_nephritis",
+  "therapeutic_area_ids": ["immunology", "nephrology"],
+  "title": "Relatively low search volume for clinical trials",
+  "subtitle": null,
+  "unit": "estimated_search_volume",
+  "geography": null,
+  "time_period": null,
+  "caption_text": "Patients with lupus nephritis show limited online search interest in clinical trials. Search volumes indicate a strong interest in treatment options. There is also a notable level of interest in natural remedies and cannabis for the treatment of LN.",
+  "source": {
+    "type": "manual_extract",
+    "source_image": "D2A3AB6E-9A5C-4B53-952E-746A76DA33E4.png",
+    "notes": "Values manually extracted from chart image."
+  },
+  "dimensions": ["topic", "category"],
+  "measures": ["volume"],
+  "data": [
+    {
+      "topic": "Treatments for lupus nephritis",
+      "volume": 12000,
+      "category": "treatment_options"
+    },
+    {
+      "topic": "Cannabis for lupus nephritis",
+      "volume": 1870,
+      "category": "alternative_or_adjunctive_treatment"
+    },
+    {
+      "topic": "Natural remedies for lupus nephritis",
+      "volume": 1025,
+      "category": "alternative_or_adjunctive_treatment"
+    },
+    {
+      "topic": "Lupus nephritis clinical trials",
+      "volume": 550,
+      "category": "clinical_trials"
+    }
+  ]
+}

@@ -15,6 +15,12 @@
 import bundledLexicon from '$lib/content/wctglpdemo-data/keyword_lexicon.json';
 import bundledCodebook from '$lib/content/wctglpdemo-data/codebook.json';
 import { loadDoc, saveDoc } from './kv-store';
+import {
+	indications as registryIndications,
+	therapeuticAreas as registryTherapeuticAreas,
+	drugs as registryDrugs
+} from './registries';
+import type { Indication, TherapeuticArea, Drug } from './registries';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const LEXICON_PATH = `${DATA_DIR}/keyword_lexicon.json`;
@@ -26,12 +32,33 @@ export type Cluster = {
 	id: string;
 	label: string;
 	description: string;
+	/** Lexicon 3.2: string[] FK → registries/indications.json items[].id (since
+	 *  3.3 the registry lives there, not in this lexicon's meta). Empty array
+	 *  = cross-cutting (visible under every indication toggle). Optional on
+	 *  reads so legacy 3.1 rows with a singular `indication` field still
+	 *  parse (see clusterIndications below). */
+	indications?: string[];
+	/** Lexicon 3.4: string[] FK → registries/burden_categories.json items[].id.
+	 *  Empty array = unclassified. Multi-element arrays let one cluster carry
+	 *  multiple burden facets. Optional on reads for pre-3.4 rows. */
+	burden_category_ids?: string[];
+	/** Lexicon 3.5: optional FK → registries/drugs.json items[].id. Set only
+	 *  on clusters that map 1:1 to a specific drug entity (not classes like
+	 *  glp_1 or non-drug concepts like iv_infusion). The drug entity carries
+	 *  MOA, sponsor, stage, and indications — resolve via getDrug(). */
+	drug_id?: string;
 	parent_theme: string;
 	parent_subtheme: string;
 	variants: string[];
 };
 
-type LexiconFile = { clusters: Cluster[]; meta?: unknown; [k: string]: unknown };
+/** Registry types re-exported so existing import sites in components keep
+ *  working. The lexicon file no longer carries these — they live in
+ *  src/lib/content/registries/. */
+export type { Indication, TherapeuticArea, Drug };
+
+type LexiconMeta = { schema_version?: string; [k: string]: unknown };
+type LexiconFile = { clusters: Cluster[]; meta?: LexiconMeta; [k: string]: unknown };
 
 export type Subtheme = { id: string; label?: string; description?: string };
 export type Theme = {
@@ -92,6 +119,70 @@ function assertPair(codebook: CodebookFile, parentTheme: string, parentSubtheme:
 async function snapshot(): Promise<LexiconState> {
 	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
 	return { clusters: lex.clusters, themes: codebook.themes };
+}
+
+/** What the /api/lexicon endpoint returns — a slice scoped to one indication
+ *  plus the registries the toggle UI needs. `clusters` contains the active
+ *  indication's clusters AND every cross-cutting cluster (`indications: []`).
+ *  `drugs` contains every drug entity whose `indication_ids` covers the
+ *  active indication — buildKeywordMatcher uses it to inline brand_names
+ *  + generic_name into per-cluster match regexes. Codebook themes are
+ *  bundled so consumers can resolve parent_subtheme → display label without
+ *  a second fetch. */
+export type LexiconSlice = {
+	active_indication: string;
+	therapeutic_areas: TherapeuticArea[];
+	indications: Indication[];
+	clusters: Cluster[];
+	themes: Theme[];
+	drugs: Drug[];
+};
+
+/** Normalize a cluster's indications field across 3.1 and 3.2 shapes.
+ *  3.2 stores `indications: string[]` (empty = cross-cutting). 3.1 stored
+ *  `indication: string` with `"general"` as the cross-cutting sentinel. */
+function clusterIndications(c: Cluster & { indication?: string }): string[] {
+	if (Array.isArray(c.indications)) return c.indications;
+	const legacy = c.indication;
+	if (!legacy || legacy === 'general') return [];
+	return [legacy];
+}
+
+/** Return a lexicon slice for the named indication.
+ *
+ *  Falls back to the first registered indication if the requested id is
+ *  missing or unknown. Indications + therapeutic areas come from the
+ *  registries module — keyword_lexicon.json no longer carries them.
+ *
+ *  Clusters with `indications: []` (cross-cutting) surface under every
+ *  indication. Legacy 3.1 rows with `indication: 'general'` are treated as
+ *  cross-cutting too. */
+export async function getLexiconSlice(requested?: string): Promise<LexiconSlice> {
+	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
+	if (!registryIndications.length)
+		throw new Error('registries/indications.json is empty — registry is required.');
+
+	const known = new Set<string>(registryIndications.map((i) => i.id));
+	const fallback: string = registryIndications[0].id;
+	const active = requested && known.has(requested) ? requested : fallback;
+
+	const clusters = lex.clusters.filter((c) => {
+		const inds = clusterIndications(c);
+		return inds.length === 0 || inds.includes(active);
+	});
+
+	const drugs = registryDrugs.filter((d) =>
+		d.indication_ids.includes(active as Drug['indication_ids'][number])
+	);
+
+	return {
+		active_indication: active,
+		therapeutic_areas: registryTherapeuticAreas,
+		indications: registryIndications,
+		clusters,
+		themes: codebook.themes,
+		drugs
+	};
 }
 
 /** Add a highlighted phrase as a new variant of an existing cluster. */
@@ -194,6 +285,11 @@ export async function createCluster(
 		id,
 		label,
 		description,
+		// Drawer-created clusters have no active-condition signal yet; an empty
+		// indications[] keeps them visible under every indication toggle.
+		// Reclassify by editing the lexicon JSON when the cluster belongs to
+		// one or more specific indications.
+		indications: [],
 		parent_theme: parentTheme,
 		parent_subtheme: parentSubtheme,
 		variants: [text.toLowerCase()]

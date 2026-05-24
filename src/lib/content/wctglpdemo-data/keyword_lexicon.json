@@ -1,13 +1,21 @@
 {
   "meta": {
-    "schema_version": "3.0",
-    "supersedes": "keyword_lexicon.json @ 2.0",
+    "schema_version": "3.6",
+    "supersedes": "keyword_lexicon.json @ 3.6",
     "status": "live",
-    "description": "Keyword cluster catalog, schema 3.0. Each cluster declares parent_theme + parent_subtheme as FKs into codebook.next.json. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows continue to live in keyword_tags.json, keyed by (cluster_id, segment_id, char_start, char_end).",
+    "description": "Keyword cluster catalog, schema 3.6. Brand names and generic names of drugs no longer live in cluster.variants[] for clusters that carry a drug_id — the matcher (since 3.5) inlines those tokens from registries/drugs.json at regex-build time. The drug registry is now the authoritative source for brand_names + generic_name; cluster.variants holds only alternative spellings, abbreviations, and related terms that aren't in the drug entity. Other indication, therapeutic-area, burden, MOA, and sponsor concepts continue to live under src/lib/content/registries/. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows live in keyword_tags.json keyed by (cluster_id, segment_id, char_start, char_end).",
     "changelog": [
       "3.0-draft — replaced the `categories[].keywords[]` shape with a flat `clusters[]` keyed by parent_theme + parent_subtheme. The 102 clusters from keyword_lexicon.json @ 2.0 will be re-classified via the codebook-migration map in codebook_migration_map.json; some will split into parallel clusters with different parents (e.g. cost as a treatment vs. trial barrier).",
       "3.0-draft (porting pass) — ported 103 clusters from keyword_lexicon.json @ 2.0 via scripts/migrate-keyword-lexicon.mjs. Each cluster carries parent_theme + parent_subtheme assigned by category default + per-cluster overrides. Descriptions are empty for now; analyst should backfill as part of Phase 0 review.",
-      "3.0 — variant expansion pass. Bug-fixed semaglutide cluster (removed stray 'positive' and incorrect 'eli lilly' variants; 'eli lilly' now correctly lives on tirzepatide). Added manufacturer semantic links: semaglutide ↔ novo nordisk/novo/rybelsus; tirzepatide ↔ eli lilly/lilly. Expanded high-traffic clusters (glp_1, injection, oral_medication, dosing_schedule, diabetes, glucose_monitoring, fasting_blood, travel_burden, visit_frequency, trial_site, clinical_trial, placebo, randomized, financial_compensation, side_effects, needle_phobia, weight_maintenance, weight_loss, weight_regain, hunger, food_noise, quality_of_life, obesity, shortages, coverage, insurance, prior_authorization, healthcare_benefits, scary, meal_replacement, gastric_effects, complication, stall, safety, risk, convenience, support, compounded_medication). Added 13 new clusters: a1c, bmi, sleep_apnea, pcos, thyroid, fda_approval, long_term_use, research_self, diet_exercise, previous_weight_loss, transparency, cost_prohibitive. Backfilled descriptions on every touched cluster. Backup of prior live: keyword_lexicon.v2-backup.json."
+      "3.0 — variant expansion pass. Bug-fixed semaglutide cluster (removed stray 'positive' and incorrect 'eli lilly' variants; 'eli lilly' now correctly lives on tirzepatide). Added manufacturer semantic links: semaglutide ↔ novo nordisk/novo/rybelsus; tirzepatide ↔ eli lilly/lilly. Expanded high-traffic clusters (glp_1, injection, oral_medication, dosing_schedule, diabetes, glucose_monitoring, fasting_blood, travel_burden, visit_frequency, trial_site, clinical_trial, placebo, randomized, financial_compensation, side_effects, needle_phobia, weight_maintenance, weight_loss, weight_regain, hunger, food_noise, quality_of_life, obesity, shortages, coverage, insurance, prior_authorization, healthcare_benefits, scary, meal_replacement, gastric_effects, complication, stall, safety, risk, convenience, support, compounded_medication). Added 13 new clusters: a1c, bmi, sleep_apnea, pcos, thyroid, fda_approval, long_term_use, research_self, diet_exercise, previous_weight_loss, transparency, cost_prohibitive. Backfilled descriptions on every touched cluster. Backup of prior live: keyword_lexicon.v2-backup.json.",
+      "3.1 — added the condition axis. New meta.therapeutic_areas[] (Endocrinology, Allergy and Immunology, Nephrology) and meta.indications[] (general, obesity, lupus_nephritis) registries, both MeSH-anchored. Every cluster gained an \"indication\" FK: 64 backfilled to \"general\" (cross-cutting), the rest to \"obesity\". Appended 63 lupus_nephritis clusters (Immunology + Nephrology) across medications, symptoms, quality-of-life, renal labs, comorbidities, barriers, decision factors, self-management, stigma, and lupus-specific trial endpoints. Cross-cutting facets (cost, insurance, trial logistics) are NOT duplicated per condition — they stay under \"general\". Backup of prior live: keyword_lexicon.v3-backup.json. Migration: scripts/migrate-lexicon-conditions.mjs.",
+      "3.2 — multi-indication clusters. clusters[].indication: string → clusters[].indications: string[]. Dropped the \"general\" sentinel from meta.indications; cross-cutting clusters now use an empty array. Migration summary: 64 clusters cross-cutting; obesity: 54, lupus_nephritis: 63. Backup of prior live: keyword_lexicon.v3.1-backup.json. Migration: scripts/migrate-lexicon-indications-array.mjs.",
+      "3.3 — registry consolidation. Removed meta.indications[] and meta.therapeutic_areas[] from the lexicon; both registries now live exclusively under src/lib/content/registries/. Clusters validated against the registry before drop: 181 total, all indication FKs resolved. Backup: keyword_lexicon.v3.2-backup.json. Migration: scripts/migrate-lexicon-registry-consolidation.mjs.",
+      "3.4 — added burden_category_ids[] slot on every cluster (initialized empty). Taxonomy registry at registries/burden_categories.json (status: draft) — 33 nodes, 8 top-level. Backup: keyword_lexicon.v3.3-backup.json. Migration: scripts/migrate-lexicon-burden-slot.mjs.",
+      "3.5 — drug entity FK. Added optional drug_id slot on clusters; populated on 17 cluster(s) whose id matches a drugs.json entity (cagrilintide, metformin, orforglipron, phentermine, retatrutide, +12 more). Drug registry validates against MOA + sponsor + indication registries. Backup: keyword_lexicon.v3.4-backup.json. Migration: scripts/migrate-lexicon-drug-fk.mjs.",
+      "3.5 — drug entity FK. Added optional drug_id slot on clusters; populated on 17 cluster(s) whose id matches a drugs.json entity (cagrilintide, metformin, orforglipron, phentermine, retatrutide, +12 more). Drug registry validates against MOA + sponsor + indication registries. Backup: keyword_lexicon.v3.4-backup.json. Migration: scripts/migrate-lexicon-drug-fk.mjs.",
+      "3.6 — stripped drug.generic_name + drug.brand_names from cluster.variants on 17 clusters (33 variant strings removed). Matcher recovers them from registries/drugs.json. Backup: keyword_lexicon.v3.5-backup.json. Migration: scripts/migrate-lexicon-variant-strip.mjs.",
+      "3.6 — stripped drug.generic_name + drug.brand_names from cluster.variants on 0 clusters (0 variant strings removed). Matcher recovers them from registries/drugs.json. Backup: keyword_lexicon.v3.5-backup.json. Migration: scripts/migrate-lexicon-variant-strip.mjs."
     ],
     "cluster_shape": {
       "id": "Slug, lowercase + underscores. Globally unique. Example: 'treatment_cost_concerns'.",
@@ -15,7 +23,10 @@
       "description": "One sentence describing what the cluster covers.",
       "parent_theme": "FK → codebook.next.json themes[].id. Required.",
       "parent_subtheme": "FK → codebook.next.json themes[].subthemes[].id. Required. The named subtheme must belong to the named parent_theme.",
-      "variants": "Array of lowercase surface forms (spellings, plurals, brand/generic pairs, multi-word phrasings) used to RANK this cluster's suggestion priority when an analyst highlights a phrase in the drawer. Matching is case-insensitive, with hyphen/space runs treated as equivalent. Not used for auto-tagging."
+      "variants": "Array of lowercase surface forms (spellings, plurals, brand/generic pairs, multi-word phrasings) used to RANK this cluster's suggestion priority when an analyst highlights a phrase in the drawer. Matching is case-insensitive, with hyphen/space runs treated as equivalent. Not used for auto-tagging.",
+      "indications": "string[] FK → meta.indications[].id. Empty array = cross-cutting (visible under every indication toggle). Non-empty = scoped to those indications. Multi-element arrays are allowed and preferred over duplicate per-indication clusters.",
+      "burden_category_ids": "string[] FK → registries/burden_categories.json items[].id. Empty array is valid (unclassified). Multi-element arrays let one cluster carry multiple burden facets — e.g. steroid_side_effects can be both physical_side_effects and physical_appearance. Prefer leaf-level ids; top-level parents are valid too when ambiguity rules out a leaf.",
+      "drug_id": "Optional string FK → registries/drugs.json items[].id. Set only on clusters that map 1:1 to a specific drug entity (not classes or non-drug treatment concepts). Drug metadata (MOA, sponsor, stage, indications) is resolved through the drug entity, not duplicated on the cluster."
     },
     "matching_notes": [
       "Matching for suggestions is case-insensitive. Within a variant, runs of spaces/hyphens match any run of whitespace or hyphens (so 'out of pocket' also matches 'out-of-pocket').",
@@ -48,6 +59,8 @@
       "id": "clinical_trial",
       "label": "Clinical trial",
       "description": "Generic references to clinical trials — participation, enrollment, phases.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
@@ -81,6 +94,8 @@
       "id": "placebo",
       "label": "Placebo",
       "description": "Inactive comparator used in controlled trials — sugar pill, control arm, double-blind designs.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
@@ -108,6 +123,8 @@
       "id": "randomized",
       "label": "Randomized",
       "description": "Random assignment to study arms — odds of getting drug vs. placebo.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
@@ -128,6 +145,8 @@
       "id": "blood_work",
       "label": "Blood work / draws",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -143,6 +162,8 @@
       "id": "dosing_schedule",
       "label": "Dosing schedule",
       "description": "How often the dose is taken — weekly, monthly, every two weeks, etc.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -180,6 +201,8 @@
       "id": "fasting_blood",
       "label": "Fasting blood",
       "description": "Fasted blood draws — typically requiring 8–12 hours without food before the visit.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -200,6 +223,8 @@
       "id": "follow_up",
       "label": "Follow-up",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -210,29 +235,23 @@
       ]
     },
     {
-      "id": "glucose_monitoring",
-      "label": "Continuous glucose monitoring",
-      "description": "CGMs, finger pricks, and other blood-glucose tracking methods.",
+      "id": "length",
+      "label": "Length",
+      "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
-        "continuous glucose monitoring",
-        "glucose monitoring",
-        "glucose monitor",
-        "cgm",
-        "finger prick",
-        "finger pricks",
-        "finger prick test",
-        "finger stick",
-        "blood glucose",
-        "glucose levels",
-        "glucose level"
+        "length"
       ]
     },
     {
       "id": "travel_burden",
       "label": "Travel burden",
       "description": "Time, distance, and effort to physically reach a trial site — driving, flying, commuting.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -263,6 +282,8 @@
       "id": "trial_site",
       "label": "Trial site / clinic",
       "description": "The physical location where trial visits happen — site, clinic, study center, hospital.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -288,6 +309,8 @@
       "id": "visit_frequency",
       "label": "Visit frequency",
       "description": "How often trial visits occur — weekly, monthly, every few weeks.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_barriers",
       "variants": [
@@ -310,6 +333,8 @@
       "id": "apple_watch",
       "label": "Apple Watch",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -320,6 +345,8 @@
       "id": "classes",
       "label": "Classes",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -333,6 +360,8 @@
       "id": "convenience",
       "label": "Convenience",
       "description": "Ease and simplicity as a trial motivator — convenient logistics, fewer obstacles.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -350,6 +379,8 @@
       "id": "counseling",
       "label": "Counseling",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -363,6 +394,8 @@
       "id": "education",
       "label": "Education / teaching",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -379,6 +412,8 @@
       "id": "financial_compensation",
       "label": "Financial compensation",
       "description": "Money paid to trial participants — stipend, reimbursement, payment for time.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -400,6 +435,8 @@
       "id": "fitbit",
       "label": "Fitbit",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -410,6 +447,8 @@
       "id": "handouts",
       "label": "Handouts",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -421,6 +460,8 @@
       "id": "home_visits",
       "label": "Home visits",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -432,6 +473,8 @@
       "id": "in_person_advice",
       "label": "In-person advice",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -445,6 +488,8 @@
       "id": "learning_modules",
       "label": "Online learning modules",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -456,32 +501,11 @@
       ]
     },
     {
-      "id": "meal_replacement",
-      "label": "Meal replacement",
-      "description": "Shakes, protein drinks, and meal boxes offered as trial perks or for nutrition support.",
-      "parent_theme": "clinical_trials",
-      "parent_subtheme": "trial_motivators",
-      "variants": [
-        "meal replacement drinks",
-        "meal replacements",
-        "meal replacement",
-        "fairlife",
-        "fairlife shakes",
-        "shakes",
-        "shake",
-        "protein shake",
-        "protein shakes",
-        "meal box",
-        "meal boxes",
-        "supplementary food",
-        "approved meal",
-        "meal voucher"
-      ]
-    },
-    {
       "id": "nurse",
       "label": "Nurse",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -494,6 +518,8 @@
       "id": "study_doctor",
       "label": "Study doctor / provider",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -509,6 +535,8 @@
       "id": "telehealth",
       "label": "Telehealth",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -518,9 +546,28 @@
       ]
     },
     {
+      "id": "transparency",
+      "label": "Provider transparency",
+      "description": "Wanting clear, upfront communication from the study team / providers.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "transparency",
+        "transparent",
+        "upfront",
+        "up front",
+        "open communication",
+        "clear communication"
+      ]
+    },
+    {
       "id": "travel_concierge",
       "label": "Travel concierge",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -532,6 +579,8 @@
       "id": "videos",
       "label": "Videos",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -543,6 +592,8 @@
       "id": "vouchers",
       "label": "Vouchers",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -554,6 +605,8 @@
       "id": "webinars",
       "label": "Webinars",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
       "parent_subtheme": "trial_motivators",
       "variants": [
@@ -565,6 +618,8 @@
       "id": "support",
       "label": "Support",
       "description": "Support sources — family, community, peer groups, providers.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "advocacy_peer_groups",
       "variants": [
@@ -583,352 +638,11 @@
       ]
     },
     {
-      "id": "blood_pressure",
-      "label": "Blood pressure",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "comorbidities",
-      "variants": [
-        "blood pressure"
-      ]
-    },
-    {
-      "id": "blood_sugar",
-      "label": "Blood sugar",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "comorbidities",
-      "variants": [
-        "blood sugar"
-      ]
-    },
-    {
-      "id": "cholesterol",
-      "label": "Cholesterol",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "comorbidities",
-      "variants": [
-        "cholesterol"
-      ]
-    },
-    {
-      "id": "diabetes",
-      "label": "Diabetes",
-      "description": "Type 1 or type 2 diabetes — diagnosis, management, family history.",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "comorbidities",
-      "variants": [
-        "type 2 diabetes",
-        "type two diabetes",
-        "type 2 diabetic",
-        "type two diabetic",
-        "type 2",
-        "type two",
-        "t2d",
-        "type 1 diabetes",
-        "type one diabetes",
-        "type 1 diabetic",
-        "type one diabetic",
-        "type 1",
-        "type one",
-        "t1d",
-        "diabetes",
-        "diabetic",
-        "diabetics"
-      ]
-    },
-    {
-      "id": "heartburn",
-      "label": "Heartburn / reflux",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "comorbidities",
-      "variants": [
-        "heartburn",
-        "acid reflux",
-        "reflux"
-      ]
-    },
-    {
-      "id": "insulin_resistance",
-      "label": "Insulin resistance",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "comorbidities",
-      "variants": [
-        "insulin resistant",
-        "insulin resistance",
-        "insulin"
-      ]
-    },
-    {
-      "id": "pre_diabetic",
-      "label": "Pre-diabetic",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "comorbidities",
-      "variants": [
-        "pre-diabetic",
-        "prediabetic",
-        "pre diabetic"
-      ]
-    },
-    {
-      "id": "genetics",
-      "label": "Genetics",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "condition_knowledge_gaps",
-      "variants": [
-        "genetics",
-        "genetic",
-        "genes"
-      ]
-    },
-    {
-      "id": "atkins",
-      "label": "Atkins diet",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "atkins"
-      ]
-    },
-    {
-      "id": "better",
-      "label": "Better",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "better"
-      ]
-    },
-    {
-      "id": "diet",
-      "label": "Diet",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "diet",
-        "diets",
-        "dieting"
-      ]
-    },
-    {
-      "id": "exercise",
-      "label": "Exercise",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "exercise",
-        "exercises",
-        "exercising"
-      ]
-    },
-    {
-      "id": "food_noise",
-      "label": "Food noise",
-      "description": "Intrusive, persistent thoughts about food that GLP-1s often quiet.",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "food noise",
-        "thinking about food",
-        "constant thinking about food",
-        "obsessive food thoughts",
-        "intrusive food thoughts",
-        "food chatter"
-      ]
-    },
-    {
-      "id": "gym",
-      "label": "Gym",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "gym",
-        "gyms"
-      ]
-    },
-    {
-      "id": "journaling",
-      "label": "Journaling / self-tracking",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "journaling",
-        "journal",
-        "self-tracking",
-        "tracking",
-        "track"
-      ]
-    },
-    {
-      "id": "lifestyle_change",
-      "label": "Lifestyle change",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "lifestyle change",
-        "lifestyle changes",
-        "lifestyle"
-      ]
-    },
-    {
-      "id": "low_carb",
-      "label": "Low-carb / carbs",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "low carb",
-        "low-carb",
-        "carbs",
-        "carb",
-        "carbohydrates"
-      ]
-    },
-    {
-      "id": "meal_planning",
-      "label": "Meal planning",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "meal planning",
-        "meal plan",
-        "meal plans"
-      ]
-    },
-    {
-      "id": "nutrition",
-      "label": "Nutrition",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "nutrition",
-        "nutritional",
-        "macronutrients",
-        "macros"
-      ]
-    },
-    {
-      "id": "paleo",
-      "label": "Paleo diet",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "paleo"
-      ]
-    },
-    {
-      "id": "physical_fitness",
-      "label": "Physical fitness",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "physical fitness",
-        "physical activity",
-        "fitness"
-      ]
-    },
-    {
-      "id": "recipes",
-      "label": "Recipes",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "recipe",
-        "recipes"
-      ]
-    },
-    {
-      "id": "south_beach",
-      "label": "South Beach Diet",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "south beach diet",
-        "south beach"
-      ]
-    },
-    {
-      "id": "steps",
-      "label": "Steps",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "steps"
-      ]
-    },
-    {
-      "id": "vegan",
-      "label": "Vegan diet",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "vegan",
-        "vegetarian"
-      ]
-    },
-    {
-      "id": "walking",
-      "label": "Walking",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "walking",
-        "walked",
-        "walks",
-        "walk"
-      ]
-    },
-    {
-      "id": "weight_watchers",
-      "label": "Weight Watchers",
-      "description": "",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "medical_self_efficacy",
-      "variants": [
-        "weight watchers"
-      ]
-    },
-    {
-      "id": "obesity",
-      "label": "Obesity / overweight",
-      "description": "Identification with the condition — obesity-as-disease framing, overweight, BMI category.",
-      "parent_theme": "condition_specific",
-      "parent_subtheme": "symptoms",
-      "variants": [
-        "obesity",
-        "obese",
-        "overweight",
-        "weight issue",
-        "weight issues",
-        "weight problem",
-        "weight problems"
-      ]
-    },
-    {
       "id": "affordability",
       "label": "Affordability",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -942,6 +656,8 @@
       "id": "benefit_manager",
       "label": "Pharmacy benefit manager",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -955,6 +671,8 @@
       "id": "cheaper",
       "label": "Cheaper",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -967,6 +685,8 @@
       "id": "cost",
       "label": "Cost",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -978,9 +698,29 @@
       ]
     },
     {
+      "id": "cost_prohibitive",
+      "label": "Cost prohibitive",
+      "description": "Cost framed as absolutely blocking access — not just expensive, but impossible.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "cost prohibitive",
+        "cost-prohibitive",
+        "prohibitively expensive",
+        "can't afford",
+        "cannot afford",
+        "out of reach",
+        "priced out"
+      ]
+    },
+    {
       "id": "coverage",
       "label": "Coverage",
       "description": "Whether the drug is covered by insurance — formulary status, network, plan rules.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1002,6 +742,8 @@
       "id": "discount",
       "label": "Discount",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1014,6 +756,8 @@
       "id": "expensive",
       "label": "Expensive",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1025,6 +769,8 @@
       "id": "healthcare_benefits",
       "label": "Healthcare / employer benefits",
       "description": "How employer-provided healthcare and benefits shape access to GLP-1s.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1045,6 +791,8 @@
       "id": "insurance",
       "label": "Insurance",
       "description": "Insurance plan, carrier, and policy as gatekeepers to access.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1064,6 +812,8 @@
       "id": "lawsuits",
       "label": "Lawsuits",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1075,6 +825,8 @@
       "id": "needle_phobia",
       "label": "Needle phobia",
       "description": "Fear of needles or injections as a barrier to treatment uptake.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1092,6 +844,8 @@
       "id": "out_of_pocket",
       "label": "Out of pocket",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1102,6 +856,8 @@
       "id": "price",
       "label": "Price",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1115,6 +871,8 @@
       "id": "prior_authorization",
       "label": "Prior authorization",
       "description": "Insurer pre-approval requirement gating prescription fills — PAs, pre-auth, step therapy.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1136,6 +894,8 @@
       "id": "prohibitive",
       "label": "Prohibitive",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": []
@@ -1144,6 +904,8 @@
       "id": "shortages",
       "label": "Shortages",
       "description": "Supply disruptions making the drug unavailable — shortages, stockouts, manufacturing gaps.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_barriers",
       "variants": [
@@ -1162,9 +924,26 @@
       ]
     },
     {
+      "id": "side_effects_2",
+      "label": "Side effects (as barrier)",
+      "description": "Side effects framed as a reason not to start or to stop treatment.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "medical side effect",
+        "medical side effects",
+        "major side effects",
+        "major side effect"
+      ]
+    },
+    {
       "id": "concern",
       "label": "Concern (explicit)",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -1179,6 +958,8 @@
       "id": "guinea_pig",
       "label": "Guinea pig",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -1189,6 +970,8 @@
       "id": "harm",
       "label": "Harm",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -1197,9 +980,54 @@
       ]
     },
     {
+      "id": "long_term_use",
+      "label": "Long-term use",
+      "description": "Indefinite or lifelong drug use — \"rest of my life,\" chronic-treatment framing.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "rest of my life",
+        "for life",
+        "lifelong",
+        "long term",
+        "long-term",
+        "indefinitely",
+        "forever",
+        "chronic treatment",
+        "chronic medication"
+      ]
+    },
+    {
+      "id": "research_self",
+      "label": "Self-research",
+      "description": "Independently researching drugs, forums, COIs, certificates — DIY due diligence.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "do my research",
+        "do my own research",
+        "doing research",
+        "did research",
+        "forums",
+        "forum",
+        "reddit",
+        "facebook group",
+        "online community",
+        "certificate of analysis",
+        "coa",
+        "coi"
+      ]
+    },
+    {
       "id": "risk",
       "label": "Risk",
       "description": "Risk language as a decision factor — explicit risk weighing, risk-benefit framing.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -1219,6 +1047,8 @@
       "id": "scary",
       "label": "Scary / scared",
       "description": "Fear language as a decision factor — scared, frightened, anxious about an outcome.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_decision_factors",
       "variants": [
@@ -1233,84 +1063,11 @@
       ]
     },
     {
-      "id": "weight_regain",
-      "label": "Weight regain",
-      "description": "Putting weight back on after stopping or reducing treatment — yo-yo, rebound.",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_decision_factors",
-      "variants": [
-        "weight regain",
-        "regaining weight",
-        "gaining weight",
-        "gain weight",
-        "regain",
-        "regained",
-        "yo-yo",
-        "yo yo",
-        "put back on",
-        "put it back on",
-        "put the weight back on",
-        "weight rebound",
-        "rebound weight",
-        "bounced back"
-      ]
-    },
-    {
-      "id": "cagrilintide",
-      "label": "Cagrilintide",
-      "description": "",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "cagrilintide"
-      ]
-    },
-    {
-      "id": "compounded_medication",
-      "label": "Compounded medication",
-      "description": "Compounding-pharmacy versions of GLP-1s used during shortages or as cheaper alternatives.",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "compounded medication",
-        "compounded medications",
-        "compound medication",
-        "compounded",
-        "compounding",
-        "compound",
-        "compounded semaglutide",
-        "compounded tirzepatide",
-        "compounding pharmacy"
-      ]
-    },
-    {
-      "id": "glp_1",
-      "label": "GLP-1",
-      "description": "Glucagon-like peptide-1 receptor agonist drug class.",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "glp-1",
-        "glp-1s",
-        "glp1",
-        "glp1s",
-        "glp 1",
-        "glp 1s",
-        "glps",
-        "glp",
-        "glp-1 medication",
-        "glp-1 medications",
-        "glp-1 drug",
-        "glp-1 drugs",
-        "glp-1 agonist",
-        "glp-1 receptor agonist",
-        "incretin"
-      ]
-    },
-    {
       "id": "implant",
       "label": "Implant",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1322,6 +1079,8 @@
       "id": "injection",
       "label": "Injection / shot",
       "description": "Subcutaneous injection delivery — pens, syringes, weekly/monthly shots.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1353,19 +1112,11 @@
       ]
     },
     {
-      "id": "metformin",
-      "label": "Metformin",
-      "description": "",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "metformin"
-      ]
-    },
-    {
       "id": "name_brand",
       "label": "Name-brand drug",
       "description": "",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1379,6 +1130,8 @@
       "id": "oral_medication",
       "label": "Oral medication / pill",
       "description": "Pill, tablet, or capsule delivery — taken by mouth.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_health_history",
       "variants": [
@@ -1400,69 +1153,32 @@
       ]
     },
     {
-      "id": "orforglipron",
-      "label": "Orforglipron",
-      "description": "Eli Lilly's experimental oral, non-peptide GLP-1 receptor agonist (in development).",
+      "id": "fda_approval",
+      "label": "FDA approval",
+      "description": "Regulatory approval status — FDA approved, approval pathways, regulator references.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
-      "parent_subtheme": "treatment_health_history",
+      "parent_subtheme": "treatment_knowledge_gaps",
       "variants": [
-        "orforglipron",
-        "orfo"
-      ]
-    },
-    {
-      "id": "phentermine",
-      "label": "Phentermine",
-      "description": "",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "phentermine"
-      ]
-    },
-    {
-      "id": "retatrutide",
-      "label": "Retatrutide",
-      "description": "",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "retatrutide"
-      ]
-    },
-    {
-      "id": "semaglutide",
-      "label": "Semaglutide (Wegovy / Ozempic / Rybelsus)",
-      "description": "Novo Nordisk's GLP-1 receptor agonist molecule — sold as Wegovy (weight loss), Ozempic (T2D), and Rybelsus (oral).",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "semaglutide",
-        "wegovy",
-        "ozempic",
-        "rybelsus",
-        "novo nordisk",
-        "novo"
-      ]
-    },
-    {
-      "id": "tirzepatide",
-      "label": "Tirzepatide (Mounjaro / Zepbound)",
-      "description": "Eli Lilly's dual GIP/GLP-1 receptor agonist — sold as Mounjaro (T2D) and Zepbound (weight loss).",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_health_history",
-      "variants": [
-        "tirzepatide",
-        "mounjaro",
-        "zepbound",
-        "eli lilly",
-        "lilly"
+        "fda",
+        "fda approved",
+        "fda approval",
+        "approved",
+        "approval",
+        "regulator",
+        "regulators",
+        "regulatory",
+        "not yet approved",
+        "newly approved"
       ]
     },
     {
       "id": "safety",
       "label": "Safety",
       "description": "Drug safety language — safe/unsafe, long-term safety, risk profile.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_knowledge_gaps",
       "variants": [
@@ -1480,6 +1196,8 @@
       "id": "complication",
       "label": "Health complication",
       "description": "Serious medical complications attributed to or risked by treatment.",
+      "indications": [],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -1494,9 +1212,858 @@
       ]
     },
     {
+      "id": "side_effects",
+      "label": "Side effects",
+      "description": "Unintended drug effects — both reported in trials (adverse events) and lived experience.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "side effects",
+        "side effect",
+        "adverse effect",
+        "adverse effects",
+        "adverse event",
+        "adverse events",
+        "adverse reaction",
+        "adverse reactions",
+        "reaction",
+        "reactions",
+        "negative reaction",
+        "bad reaction"
+      ]
+    },
+    {
+      "id": "glucose_monitoring",
+      "label": "Continuous glucose monitoring",
+      "description": "CGMs, finger pricks, and other blood-glucose tracking methods.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "continuous glucose monitoring",
+        "glucose monitoring",
+        "glucose monitor",
+        "cgm",
+        "finger prick",
+        "finger pricks",
+        "finger prick test",
+        "finger stick",
+        "blood glucose",
+        "glucose levels",
+        "glucose level"
+      ]
+    },
+    {
+      "id": "meal_replacement",
+      "label": "Meal replacement",
+      "description": "Shakes, protein drinks, and meal boxes offered as trial perks or for nutrition support.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "meal replacement drinks",
+        "meal replacements",
+        "meal replacement",
+        "fairlife",
+        "fairlife shakes",
+        "shakes",
+        "shake",
+        "protein shake",
+        "protein shakes",
+        "meal box",
+        "meal boxes",
+        "supplementary food",
+        "approved meal",
+        "meal voucher"
+      ]
+    },
+    {
+      "id": "a1c",
+      "label": "A1C / HbA1c",
+      "description": "Hemoglobin A1c — three-month average blood sugar; common diabetes/pre-diabetes lab marker.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "a1c",
+        "hba1c",
+        "hemoglobin a1c",
+        "haemoglobin a1c",
+        "a1c level",
+        "a1c levels"
+      ]
+    },
+    {
+      "id": "blood_pressure",
+      "label": "Blood pressure",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "blood pressure"
+      ]
+    },
+    {
+      "id": "blood_sugar",
+      "label": "Blood sugar",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "blood sugar"
+      ]
+    },
+    {
+      "id": "bmi",
+      "label": "BMI",
+      "description": "Body mass index references — used as a clinical eligibility / progress marker.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "bmi",
+        "body mass index"
+      ]
+    },
+    {
+      "id": "cholesterol",
+      "label": "Cholesterol",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "cholesterol"
+      ]
+    },
+    {
+      "id": "diabetes",
+      "label": "Diabetes",
+      "description": "Type 1 or type 2 diabetes — diagnosis, management, family history.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "type 2 diabetes",
+        "type two diabetes",
+        "type 2 diabetic",
+        "type two diabetic",
+        "type 2",
+        "type two",
+        "t2d",
+        "type 1 diabetes",
+        "type one diabetes",
+        "type 1 diabetic",
+        "type one diabetic",
+        "type 1",
+        "type one",
+        "t1d",
+        "diabetes",
+        "diabetic",
+        "diabetics"
+      ]
+    },
+    {
+      "id": "heartburn",
+      "label": "Heartburn / reflux",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "heartburn",
+        "acid reflux",
+        "reflux"
+      ]
+    },
+    {
+      "id": "insulin_resistance",
+      "label": "Insulin resistance",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "insulin resistant",
+        "insulin resistance",
+        "insulin"
+      ]
+    },
+    {
+      "id": "pcos",
+      "label": "PCOS",
+      "description": "Polycystic ovary syndrome — a common GLP-1 adjacent comorbidity.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "pcos",
+        "polycystic ovary syndrome",
+        "polycystic ovarian syndrome",
+        "polycystic ovarian"
+      ]
+    },
+    {
+      "id": "pre_diabetic",
+      "label": "Pre-diabetic",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "pre-diabetic",
+        "prediabetic",
+        "pre diabetic"
+      ]
+    },
+    {
+      "id": "sleep_apnea",
+      "label": "Sleep apnea",
+      "description": "Sleep apnea as a comorbidity often linked to obesity; CPAP usage.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "sleep apnea",
+        "sleep apnoea",
+        "obstructive sleep apnea",
+        "osa",
+        "cpap"
+      ]
+    },
+    {
+      "id": "thyroid",
+      "label": "Thyroid",
+      "description": "Thyroid conditions and history — relevant to GLP-1 boxed warnings.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "thyroid",
+        "hypothyroid",
+        "hyperthyroid",
+        "thyroid cancer",
+        "medullary thyroid"
+      ]
+    },
+    {
+      "id": "genetics",
+      "label": "Genetics",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "genetics",
+        "genetic",
+        "genes"
+      ]
+    },
+    {
+      "id": "atkins",
+      "label": "Atkins diet",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "atkins"
+      ]
+    },
+    {
+      "id": "better",
+      "label": "Better",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "better"
+      ]
+    },
+    {
+      "id": "diet",
+      "label": "Diet",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "diet",
+        "diets",
+        "dieting"
+      ]
+    },
+    {
+      "id": "diet_exercise",
+      "label": "Diet and exercise (paired)",
+      "description": "The paired \"diet and exercise\" framing — the traditional, often-tried-and-failed alternative to GLP-1s.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "diet and exercise",
+        "diet & exercise",
+        "diet exercise",
+        "exercise and diet",
+        "eat less and move more",
+        "calories in calories out",
+        "cico"
+      ]
+    },
+    {
+      "id": "exercise",
+      "label": "Exercise",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "exercise",
+        "exercises",
+        "exercising"
+      ]
+    },
+    {
+      "id": "food_noise",
+      "label": "Food noise",
+      "description": "Intrusive, persistent thoughts about food that GLP-1s often quiet.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "food noise",
+        "thinking about food",
+        "constant thinking about food",
+        "obsessive food thoughts",
+        "intrusive food thoughts",
+        "food chatter"
+      ]
+    },
+    {
+      "id": "gym",
+      "label": "Gym",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "gym",
+        "gyms"
+      ]
+    },
+    {
+      "id": "journaling",
+      "label": "Journaling / self-tracking",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "journaling",
+        "journal",
+        "self-tracking",
+        "tracking",
+        "track"
+      ]
+    },
+    {
+      "id": "lifestyle_change",
+      "label": "Lifestyle change",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "lifestyle change",
+        "lifestyle changes",
+        "lifestyle"
+      ]
+    },
+    {
+      "id": "low_carb",
+      "label": "Low-carb / carbs",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "low carb",
+        "low-carb",
+        "carbs",
+        "carb",
+        "carbohydrates"
+      ]
+    },
+    {
+      "id": "meal_planning",
+      "label": "Meal planning",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "meal planning",
+        "meal plan",
+        "meal plans"
+      ]
+    },
+    {
+      "id": "nutrition",
+      "label": "Nutrition",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "nutrition",
+        "nutritional",
+        "macronutrients",
+        "macros"
+      ]
+    },
+    {
+      "id": "paleo",
+      "label": "Paleo diet",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "paleo"
+      ]
+    },
+    {
+      "id": "physical_fitness",
+      "label": "Physical fitness",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "physical fitness",
+        "physical activity",
+        "fitness"
+      ]
+    },
+    {
+      "id": "previous_weight_loss",
+      "label": "Previous weight loss attempts",
+      "description": "Prior weight-loss attempts that failed, succeeded briefly, or set up the current attempt.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "tried everything",
+        "tried it all",
+        "previous attempts",
+        "in the past",
+        "back in",
+        "years ago"
+      ]
+    },
+    {
+      "id": "recipes",
+      "label": "Recipes",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "recipe",
+        "recipes"
+      ]
+    },
+    {
+      "id": "south_beach",
+      "label": "South Beach Diet",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "south beach diet",
+        "south beach"
+      ]
+    },
+    {
+      "id": "steps",
+      "label": "Steps",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "steps"
+      ]
+    },
+    {
+      "id": "vegan",
+      "label": "Vegan diet",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "vegan",
+        "vegetarian"
+      ]
+    },
+    {
+      "id": "walking",
+      "label": "Walking",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "walking",
+        "walked",
+        "walks",
+        "walk"
+      ]
+    },
+    {
+      "id": "weight_watchers",
+      "label": "Weight Watchers",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "weight watchers"
+      ]
+    },
+    {
+      "id": "stigma",
+      "label": "Stigma",
+      "description": "Stigma towards obesity as disease.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "false"
+      ]
+    },
+    {
+      "id": "obesity",
+      "label": "Obesity / overweight",
+      "description": "Identification with the condition — obesity-as-disease framing, overweight, BMI category.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "obesity",
+        "obese",
+        "overweight",
+        "weight issue",
+        "weight issues",
+        "weight problem",
+        "weight problems"
+      ]
+    },
+    {
+      "id": "weight_regain",
+      "label": "Weight regain",
+      "description": "Putting weight back on after stopping or reducing treatment — yo-yo, rebound.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "weight regain",
+        "regaining weight",
+        "gaining weight",
+        "gain weight",
+        "regain",
+        "regained",
+        "yo-yo",
+        "yo yo",
+        "put back on",
+        "put it back on",
+        "put the weight back on",
+        "weight rebound",
+        "rebound weight",
+        "bounced back"
+      ]
+    },
+    {
+      "id": "cagrilintide",
+      "label": "Cagrilintide",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [],
+      "drug_id": "cagrilintide"
+    },
+    {
+      "id": "compounded_medication",
+      "label": "Compounded medication",
+      "description": "Compounding-pharmacy versions of GLP-1s used during shortages or as cheaper alternatives.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "compounded medication",
+        "compounded medications",
+        "compound medication",
+        "compounded",
+        "compounding",
+        "compound",
+        "compounded semaglutide",
+        "compounded tirzepatide",
+        "compounding pharmacy"
+      ]
+    },
+    {
+      "id": "glp_1",
+      "label": "GLP-1",
+      "description": "Glucagon-like peptide-1 receptor agonist drug class.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "glp-1",
+        "glp-1s",
+        "glp1",
+        "glp1s",
+        "glp 1",
+        "glp 1s",
+        "glps",
+        "glp",
+        "glp-1 medication",
+        "glp-1 medications",
+        "glp-1 drug",
+        "glp-1 drugs",
+        "glp-1 agonist",
+        "glp-1 receptor agonist",
+        "incretin"
+      ]
+    },
+    {
+      "id": "metformin",
+      "label": "Metformin",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [],
+      "drug_id": "metformin"
+    },
+    {
+      "id": "orforglipron",
+      "label": "Orforglipron",
+      "description": "Eli Lilly's experimental oral, non-peptide GLP-1 receptor agonist (in development).",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "orfo"
+      ],
+      "drug_id": "orforglipron"
+    },
+    {
+      "id": "phentermine",
+      "label": "Phentermine",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [],
+      "drug_id": "phentermine"
+    },
+    {
+      "id": "retatrutide",
+      "label": "Retatrutide",
+      "description": "",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [],
+      "drug_id": "retatrutide"
+    },
+    {
+      "id": "semaglutide",
+      "label": "Semaglutide (Wegovy / Ozempic / Rybelsus)",
+      "description": "Novo Nordisk's GLP-1 receptor agonist molecule — sold as Wegovy (weight loss), Ozempic (T2D), and Rybelsus (oral).",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "novo nordisk",
+        "novo"
+      ],
+      "drug_id": "semaglutide"
+    },
+    {
+      "id": "tirzepatide",
+      "label": "Tirzepatide (Mounjaro / Zepbound)",
+      "description": "Eli Lilly's dual GIP/GLP-1 receptor agonist — sold as Mounjaro (T2D) and Zepbound (weight loss).",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "eli lilly",
+        "lilly"
+      ],
+      "drug_id": "tirzepatide"
+    },
+    {
       "id": "gastric_effects",
       "label": "Gastric effects",
       "description": "GI side effects on GLP-1s — nausea, vomiting, constipation, slowed gastric emptying.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -1522,30 +2089,13 @@
       ]
     },
     {
-      "id": "side_effects",
-      "label": "Side effects",
-      "description": "Unintended drug effects — both reported in trials (adverse events) and lived experience.",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_negative_experiences",
-      "variants": [
-        "side effects",
-        "side effect",
-        "adverse effect",
-        "adverse effects",
-        "adverse event",
-        "adverse events",
-        "adverse reaction",
-        "adverse reactions",
-        "reaction",
-        "reactions",
-        "negative reaction",
-        "bad reaction"
-      ]
-    },
-    {
       "id": "stall",
       "label": "Stall / plateau",
       "description": "Weight-loss stalls and plateaus on treatment — the scale stops moving.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_negative_experiences",
       "variants": [
@@ -1565,6 +2115,10 @@
       "id": "hunger",
       "label": "Hunger / appetite / satiety",
       "description": "Appetite signals — hunger, cravings, fullness, satiety changes on GLP-1s.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
@@ -1588,6 +2142,10 @@
       "id": "quality_of_life",
       "label": "Quality of life",
       "description": "Felt life improvement from treatment — energy, confidence, dramatic change.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
@@ -1604,6 +2162,10 @@
       "id": "weight_loss",
       "label": "Weight loss",
       "description": "Active weight loss — pounds lost, percent body weight, the loss phase.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
@@ -1630,6 +2192,10 @@
       "id": "weight_maintenance",
       "label": "Weight maintenance",
       "description": "Holding weight stable after loss — the maintenance phase of treatment.",
+      "indications": [
+        "obesity"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "treatment",
       "parent_subtheme": "treatment_positive_experiences",
       "variants": [
@@ -1650,223 +2216,1229 @@
       ]
     },
     {
-      "id": "length",
-      "label": "Length",
-      "description": "",
+      "id": "renal_response_endpoint",
+      "label": "Renal response endpoint",
+      "description": "Lupus nephritis trial outcome measures — complete renal response, proteinuria reduction, eGFR preservation.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "clinical_trials",
-      "parent_subtheme": "trial_barriers",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
       "variants": [
-        "length"
+        "complete renal response",
+        "renal response",
+        "proteinuria reduction",
+        "primary endpoint",
+        "renal endpoint",
+        "efficacy endpoint"
       ]
     },
     {
-      "id": "side_effects_2",
-      "label": "Side effects (as barrier)",
-      "description": "Side effects framed as a reason not to start or to stop treatment.",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_barriers",
+      "id": "lupus_support",
+      "label": "Lupus support / advocacy",
+      "description": "Patient communities, foundations, and peer support for people with lupus and lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
       "variants": [
-        "medical side effect",
-        "medical side effects",
-        "major side effects",
-        "major side effect"
+        "lupus foundation",
+        "lupus foundation of america",
+        "lupus community",
+        "lupus warrior",
+        "lupus warriors",
+        "fundraising walk",
+        "walk to end lupus"
       ]
     },
     {
-      "id": "a1c",
-      "label": "A1C / HbA1c",
-      "description": "Hemoglobin A1c — three-month average blood sugar; common diabetes/pre-diabetes lab marker.",
+      "id": "anemia",
+      "label": "Anemia / cytopenias",
+      "description": "Low blood counts — anemia, leukopenia, thrombocytopenia — from lupus or its treatment.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
-        "a1c",
-        "hba1c",
-        "hemoglobin a1c",
-        "haemoglobin a1c",
-        "a1c level",
-        "a1c levels"
+        "anemia",
+        "anaemia",
+        "anemic",
+        "low blood count",
+        "low blood counts",
+        "leukopenia",
+        "thrombocytopenia",
+        "low platelets",
+        "cytopenia"
       ]
     },
     {
-      "id": "bmi",
-      "label": "BMI",
-      "description": "Body mass index references — used as a clinical eligibility / progress marker.",
+      "id": "antiphospholipid",
+      "label": "Antiphospholipid syndrome",
+      "description": "Clotting disorder frequently co-occurring with lupus; raises thrombosis and pregnancy risks.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
-        "bmi",
-        "body mass index"
+        "antiphospholipid syndrome",
+        "antiphospholipid",
+        "aps",
+        "blood clots",
+        "clotting disorder",
+        "lupus anticoagulant"
       ]
     },
     {
-      "id": "sleep_apnea",
-      "label": "Sleep apnea",
-      "description": "Sleep apnea as a comorbidity often linked to obesity; CPAP usage.",
+      "id": "cardiovascular",
+      "label": "Cardiovascular disease",
+      "description": "Elevated heart and vascular risk in lupus — pericarditis, accelerated atherosclerosis, clots.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
-        "sleep apnea",
-        "sleep apnoea",
-        "obstructive sleep apnea",
-        "osa",
-        "cpap"
+        "cardiovascular",
+        "heart disease",
+        "pericarditis",
+        "atherosclerosis",
+        "cardiac"
       ]
     },
     {
-      "id": "pcos",
-      "label": "PCOS",
-      "description": "Polycystic ovary syndrome — a common GLP-1 adjacent comorbidity.",
+      "id": "chronic_kidney_disease",
+      "label": "Chronic kidney disease (CKD)",
+      "description": "Progressive loss of kidney function that can result from lupus nephritis; staged by eGFR.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
-        "pcos",
-        "polycystic ovary syndrome",
-        "polycystic ovarian syndrome",
-        "polycystic ovarian"
+        "chronic kidney disease",
+        "ckd",
+        "kidney disease",
+        "renal insufficiency",
+        "renal impairment",
+        "stage 3 ckd",
+        "stage 4 ckd"
       ]
     },
     {
-      "id": "thyroid",
-      "label": "Thyroid",
-      "description": "Thyroid conditions and history — relevant to GLP-1 boxed warnings.",
+      "id": "dialysis",
+      "label": "Dialysis",
+      "description": "Hemodialysis or peritoneal dialysis to replace kidney function in advanced lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "comorbidities",
       "variants": [
-        "thyroid",
-        "hypothyroid",
-        "hyperthyroid",
-        "thyroid cancer",
-        "medullary thyroid"
+        "dialysis",
+        "hemodialysis",
+        "haemodialysis",
+        "peritoneal dialysis",
+        "on dialysis"
       ]
     },
     {
-      "id": "fda_approval",
-      "label": "FDA approval",
-      "description": "Regulatory approval status — FDA approved, approval pathways, regulator references.",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_knowledge_gaps",
+      "id": "kidney_failure",
+      "label": "Kidney failure / ESRD",
+      "description": "End-stage renal disease requiring dialysis or transplant — the outcome lupus nephritis treatment aims to prevent.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
       "variants": [
-        "fda",
-        "fda approved",
-        "fda approval",
-        "approved",
-        "approval",
-        "regulator",
-        "regulators",
-        "regulatory",
-        "not yet approved",
-        "newly approved"
+        "kidney failure",
+        "renal failure",
+        "end stage renal disease",
+        "end-stage renal disease",
+        "esrd",
+        "eskd",
+        "end stage kidney disease"
       ]
     },
     {
-      "id": "long_term_use",
-      "label": "Long-term use",
-      "description": "Indefinite or lifelong drug use — \"rest of my life,\" chronic-treatment framing.",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_decision_factors",
+      "id": "kidney_transplant",
+      "label": "Kidney transplant",
+      "description": "Transplantation as treatment for kidney failure from lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
       "variants": [
-        "rest of my life",
-        "for life",
-        "lifelong",
-        "long term",
-        "long-term",
-        "indefinitely",
-        "forever",
-        "chronic treatment",
-        "chronic medication"
+        "kidney transplant",
+        "renal transplant",
+        "transplant",
+        "transplantation",
+        "transplant list",
+        "donor kidney"
       ]
     },
     {
-      "id": "research_self",
-      "label": "Self-research",
-      "description": "Independently researching drugs, forums, COIs, certificates — DIY due diligence.",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_decision_factors",
+      "id": "osteoporosis",
+      "label": "Osteoporosis / bone loss",
+      "description": "Reduced bone density, often from long-term steroid use in lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
       "variants": [
-        "do my research",
-        "do my own research",
-        "doing research",
-        "did research",
-        "forums",
-        "forum",
-        "reddit",
-        "facebook group",
-        "online community",
-        "certificate of analysis",
-        "coa",
-        "coi"
+        "osteoporosis",
+        "osteopenia",
+        "bone loss",
+        "bone density",
+        "brittle bones",
+        "avascular necrosis",
+        "osteonecrosis"
       ]
     },
     {
-      "id": "diet_exercise",
-      "label": "Diet and exercise (paired)",
-      "description": "The paired \"diet and exercise\" framing — the traditional, often-tried-and-failed alternative to GLP-1s.",
+      "id": "autoantibodies",
+      "label": "Autoantibodies (ANA / anti-dsDNA)",
+      "description": "Lupus autoantibodies — ANA, anti-dsDNA, anti-Smith — used for diagnosis and tracking disease activity.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "autoantibody",
+        "autoantibodies",
+        "ana",
+        "antinuclear antibody",
+        "anti-dsdna",
+        "dsdna",
+        "double stranded dna",
+        "anti-smith",
+        "anti-sm",
+        "titers",
+        "titres"
+      ]
+    },
+    {
+      "id": "complement_levels",
+      "label": "Complement levels (C3 / C4)",
+      "description": "Low complement (C3, C4) reflects active lupus; tracked alongside autoantibodies.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "complement",
+        "complement levels",
+        "c3",
+        "c4",
+        "low complement",
+        "ch50"
+      ]
+    },
+    {
+      "id": "creatinine",
+      "label": "Creatinine",
+      "description": "Serum creatinine — a blood marker of kidney function; rising values signal worsening lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "creatinine",
+        "serum creatinine",
+        "creatinine level",
+        "creatinine levels"
+      ]
+    },
+    {
+      "id": "egfr",
+      "label": "eGFR / kidney function",
+      "description": "Estimated glomerular filtration rate — the core measure of how well the kidneys filter; tracked over time in lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "egfr",
+        "gfr",
+        "glomerular filtration rate",
+        "kidney function",
+        "renal function",
+        "filtration rate"
+      ]
+    },
+    {
+      "id": "kidney_biopsy",
+      "label": "Kidney biopsy / ISN class",
+      "description": "Renal biopsy that diagnoses lupus nephritis and assigns its histologic class (ISN/RPS Class I–VI).",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "kidney biopsy",
+        "renal biopsy",
+        "biopsy",
+        "isn/rps",
+        "isn rps",
+        "class iii",
+        "class iv",
+        "class v",
+        "proliferative",
+        "membranous lupus nephritis"
+      ]
+    },
+    {
+      "id": "urine_protein_test",
+      "label": "Urine protein (UPCR / 24-hour)",
+      "description": "Urine protein-to-creatinine ratio or 24-hour collection quantifying proteinuria — the key lupus nephritis response measure.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "upcr",
+        "uacr",
+        "protein creatinine ratio",
+        "urine protein",
+        "24 hour urine",
+        "24-hour urine",
+        "protein to creatinine"
+      ]
+    },
+    {
+      "id": "bp_monitoring",
+      "label": "Blood pressure monitoring",
+      "description": "Home blood-pressure tracking to manage renal hypertension in lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
-        "diet and exercise",
-        "diet & exercise",
-        "diet exercise",
-        "exercise and diet",
-        "eat less and move more",
-        "calories in calories out",
-        "cico"
+        "blood pressure monitor",
+        "checking my blood pressure",
+        "home blood pressure",
+        "bp cuff",
+        "monitoring blood pressure"
       ]
     },
     {
-      "id": "previous_weight_loss",
-      "label": "Previous weight loss attempts",
-      "description": "Prior weight-loss attempts that failed, succeeded briefly, or set up the current attempt.",
+      "id": "lab_tracking",
+      "label": "Symptom / lab tracking",
+      "description": "Logging symptoms, labs, and flares to manage lupus nephritis and communicate with the care team.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "medical_self_efficacy",
       "variants": [
-        "tried everything",
-        "tried it all",
-        "previous attempts",
-        "in the past",
-        "back in",
-        "years ago"
+        "tracking symptoms",
+        "symptom diary",
+        "lupus journal",
+        "tracking my labs",
+        "lab results",
+        "patient portal",
+        "mychart"
       ]
     },
     {
-      "id": "transparency",
-      "label": "Provider transparency",
-      "description": "Wanting clear, upfront communication from the study team / providers.",
-      "parent_theme": "clinical_trials",
-      "parent_subtheme": "trial_motivators",
+      "id": "medication_adherence",
+      "label": "Medication adherence",
+      "description": "Sticking to complex lupus regimens consistently — a core self-management skill.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
       "variants": [
-        "transparency",
-        "transparent",
-        "upfront",
-        "up front",
-        "open communication",
-        "clear communication"
+        "adherence",
+        "compliance",
+        "taking my meds",
+        "stay on my meds",
+        "missed doses",
+        "pill organizer",
+        "medication reminder"
       ]
     },
     {
-      "id": "cost_prohibitive",
-      "label": "Cost prohibitive",
-      "description": "Cost framed as absolutely blocking access — not just expensive, but impossible.",
-      "parent_theme": "treatment",
-      "parent_subtheme": "treatment_barriers",
+      "id": "renal_diet",
+      "label": "Low-sodium / renal diet",
+      "description": "Dietary changes — reducing salt, sometimes protein or potassium — to support kidney health.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
       "variants": [
-        "cost prohibitive",
-        "cost-prohibitive",
-        "prohibitively expensive",
-        "can't afford",
-        "cannot afford",
-        "out of reach",
-        "priced out"
+        "low sodium",
+        "low-sodium",
+        "low salt",
+        "reduce salt",
+        "renal diet",
+        "kidney diet",
+        "low protein diet",
+        "watching my sodium"
       ]
     },
     {
-      "id": "stigma",
-      "label": "Stigma",
-      "description": "Stigma towards obesity as disease.",
+      "id": "sun_protection",
+      "label": "Sun protection",
+      "description": "Sunscreen, protective clothing, and sun avoidance to prevent UV-triggered lupus flares.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "sunscreen",
+        "sun protection",
+        "spf",
+        "avoiding the sun",
+        "stay out of the sun",
+        "sun avoidance",
+        "protective clothing"
+      ]
+    },
+    {
+      "id": "appearance_stigma",
+      "label": "Appearance changes / stigma",
+      "description": "Self-consciousness about steroid weight gain, moon face, hair loss, or rashes from lupus and its treatment.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
       "parent_theme": "condition_specific",
       "parent_subtheme": "social_stigma",
       "variants": [
-        "false"
+        "self-conscious",
+        "embarrassed",
+        "how i look",
+        "people staring",
+        "rash on my face",
+        "hide my face"
+      ]
+    },
+    {
+      "id": "invisible_illness",
+      "label": "Invisible illness",
+      "description": "The challenge of a serious illness others can't see — feeling disbelieved or having to explain lupus.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "invisible illness",
+        "invisible disease",
+        "you don't look sick",
+        "don't look sick",
+        "look fine",
+        "but you look healthy",
+        "no one believes"
+      ]
+    },
+    {
+      "id": "constitutional_symptoms",
+      "label": "Fever / constitutional symptoms",
+      "description": "Low-grade fevers, night sweats, and malaise during active lupus.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "fever",
+        "fevers",
+        "low-grade fever",
+        "low grade fever",
+        "night sweats",
+        "malaise"
+      ]
+    },
+    {
+      "id": "decreased_urine",
+      "label": "Reduced / changed urine output",
+      "description": "Producing less urine or noticing changes in urination — a sign of declining kidney function.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "less urine",
+        "decreased urine",
+        "reduced urine output",
+        "peeing less",
+        "dark urine"
+      ]
+    },
+    {
+      "id": "edema",
+      "label": "Edema / swelling",
+      "description": "Fluid retention causing swelling in the legs, ankles, feet, or around the eyes — common in nephrotic-range lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "edema",
+        "oedema",
+        "swelling",
+        "swollen",
+        "swollen ankles",
+        "swollen legs",
+        "swollen feet",
+        "puffy",
+        "puffiness",
+        "fluid retention",
+        "water retention",
+        "periorbital"
+      ]
+    },
+    {
+      "id": "fatigue",
+      "label": "Fatigue",
+      "description": "Persistent, often debilitating tiredness — among the most common and disruptive lupus symptoms.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "fatigue",
+        "fatigued",
+        "exhausted",
+        "exhaustion",
+        "tiredness",
+        "worn out",
+        "no energy",
+        "low energy"
+      ]
+    },
+    {
+      "id": "hair_loss",
+      "label": "Hair loss / alopecia",
+      "description": "Diffuse hair thinning or patchy loss from lupus activity or treatment.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "hair loss",
+        "losing hair",
+        "hair falling out",
+        "alopecia",
+        "thinning hair",
+        "hair thinning",
+        "bald spots"
+      ]
+    },
+    {
+      "id": "hematuria",
+      "label": "Hematuria / blood in urine",
+      "description": "Blood in the urine, visible or microscopic — a sign of active kidney inflammation.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "hematuria",
+        "haematuria",
+        "blood in urine",
+        "blood in my urine",
+        "bloody urine"
+      ]
+    },
+    {
+      "id": "joint_pain",
+      "label": "Joint pain / arthralgia",
+      "description": "Aching, stiff, or swollen joints — frequent in systemic lupus.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "joint pain",
+        "joint pains",
+        "arthralgia",
+        "arthritis",
+        "achy joints",
+        "aching joints",
+        "stiff joints",
+        "joint stiffness",
+        "swollen joints"
+      ]
+    },
+    {
+      "id": "ln_hypertension",
+      "label": "High blood pressure (renal)",
+      "description": "Elevated blood pressure driven by kidney involvement in lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "high blood pressure",
+        "hypertension",
+        "elevated blood pressure",
+        "hypertensive"
+      ]
+    },
+    {
+      "id": "lupus_flare",
+      "label": "Lupus flare / renal flare",
+      "description": "Periods of disease reactivation — systemic or kidney-specific — with worsening labs and symptoms.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "flare",
+        "flares",
+        "flare up",
+        "flare-up",
+        "flaring",
+        "lupus flare",
+        "renal flare",
+        "disease flare",
+        "relapse"
+      ]
+    },
+    {
+      "id": "lupus_nephritis_dx",
+      "label": "Lupus nephritis (diagnosis)",
+      "description": "Identification with the condition — lupus / SLE-related kidney disease as the diagnosis being lived with.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "lupus nephritis",
+        "lupus",
+        "systemic lupus erythematosus",
+        "sle",
+        "kidney lupus",
+        "lupus kidney disease",
+        "glomerulonephritis"
+      ]
+    },
+    {
+      "id": "malar_rash",
+      "label": "Malar / butterfly rash",
+      "description": "The characteristic facial rash across the cheeks and nose bridge; photosensitive skin involvement in lupus.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "malar rash",
+        "butterfly rash",
+        "facial rash",
+        "cheek rash",
+        "skin rash",
+        "discoid",
+        "discoid rash"
+      ]
+    },
+    {
+      "id": "nephrotic_syndrome",
+      "label": "Nephrotic syndrome",
+      "description": "Heavy proteinuria with low blood albumin, swelling, and high cholesterol — a severe presentation of lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "nephrotic syndrome",
+        "nephrotic",
+        "nephrotic range",
+        "nephrotic-range proteinuria"
+      ]
+    },
+    {
+      "id": "oral_ulcers",
+      "label": "Mouth ulcers / sores",
+      "description": "Painless oral or nasal ulcers — a classification criterion for lupus.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "mouth ulcers",
+        "mouth sores",
+        "oral ulcers",
+        "nasal ulcers",
+        "canker sores",
+        "ulcers in my mouth"
+      ]
+    },
+    {
+      "id": "photosensitivity",
+      "label": "Photosensitivity / sun sensitivity",
+      "description": "Skin and systemic flares triggered by sun or UV exposure.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "photosensitivity",
+        "photosensitive",
+        "sun sensitivity",
+        "sun sensitive",
+        "sensitive to sun",
+        "uv sensitivity"
+      ]
+    },
+    {
+      "id": "proteinuria",
+      "label": "Proteinuria / foamy urine",
+      "description": "Protein leaking into the urine — the hallmark sign of lupus nephritis; often noticed as foamy or frothy urine.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "proteinuria",
+        "protein in urine",
+        "protein in my urine",
+        "foamy urine",
+        "frothy urine",
+        "bubbly urine",
+        "albuminuria"
+      ]
+    },
+    {
+      "id": "raynauds",
+      "label": "Raynaud's phenomenon",
+      "description": "Color changes and numbness in fingers and toes with cold or stress — common in lupus.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "raynaud",
+        "raynaud's",
+        "raynauds",
+        "raynaud's phenomenon",
+        "cold fingers",
+        "white fingers",
+        "blue fingers"
+      ]
+    },
+    {
+      "id": "fertility_concerns",
+      "label": "Fertility concerns",
+      "description": "Worry about infertility from cyclophosphamide and pregnancy risk on teratogenic drugs — a major barrier for patients of childbearing age.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "fertility",
+        "infertility",
+        "infertile",
+        "having kids",
+        "have children",
+        "pregnancy",
+        "pregnant",
+        "family planning",
+        "ovarian failure",
+        "egg freezing",
+        "teratogenic",
+        "birth defects"
+      ]
+    },
+    {
+      "id": "pill_burden",
+      "label": "Pill burden / regimen complexity",
+      "description": "The load of taking many medications on strict schedules — a barrier to adherence in lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "pill burden",
+        "so many pills",
+        "too many pills",
+        "handful of pills",
+        "complicated regimen",
+        "pill fatigue"
+      ]
+    },
+    {
+      "id": "avoid_dialysis",
+      "label": "Avoiding dialysis / kidney failure",
+      "description": "Preventing progression to dialysis or transplant as the central motivation behind lupus nephritis treatment decisions.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "avoid dialysis",
+        "don't want dialysis",
+        "keep my kidneys",
+        "save my kidneys",
+        "kidney survival",
+        "preserve kidney function",
+        "stay off dialysis"
+      ]
+    },
+    {
+      "id": "steroid_sparing",
+      "label": "Steroid-sparing goal",
+      "description": "Wanting to minimize or get off steroids as a driver of treatment choices.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "steroid-sparing",
+        "steroid sparing",
+        "get off steroids",
+        "off steroids",
+        "off prednisone",
+        "lower the steroids",
+        "reduce prednisone",
+        "minimize steroids",
+        "steroid taper",
+        "tapering"
+      ]
+    },
+    {
+      "id": "ace_arb",
+      "label": "ACE inhibitor / ARB (renoprotective)",
+      "description": "Renin-angiotensin blockers (lisinopril, losartan) used to lower proteinuria and protect kidney function.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "ace inhibitor",
+        "ace inhibitors",
+        "arb",
+        "angiotensin receptor blocker",
+        "lisinopril",
+        "losartan",
+        "ramipril",
+        "enalapril"
+      ]
+    },
+    {
+      "id": "anifrolumab",
+      "label": "Anifrolumab (Saphnelo)",
+      "description": "Type-I interferon receptor antagonist approved for SLE and studied in lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "interferon inhibitor"
+      ],
+      "drug_id": "anifrolumab"
+    },
+    {
+      "id": "azathioprine",
+      "label": "Azathioprine (Imuran)",
+      "description": "Immunosuppressant used for lupus nephritis maintenance, including during pregnancy.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [],
+      "drug_id": "azathioprine"
+    },
+    {
+      "id": "belimumab",
+      "label": "Belimumab (Benlysta)",
+      "description": "Anti-BLyS/BAFF monoclonal antibody approved for lupus nephritis; IV infusion or subcutaneous injection.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "blys inhibitor",
+        "baff inhibitor"
+      ],
+      "drug_id": "belimumab"
+    },
+    {
+      "id": "calcineurin_inhibitors",
+      "label": "Calcineurin inhibitors (tacrolimus / cyclosporine)",
+      "description": "Tacrolimus and cyclosporine — calcineurin inhibitors used alone or in multi-target therapy for lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "calcineurin inhibitor",
+        "calcineurin inhibitors",
+        "tacrolimus",
+        "prograf",
+        "cyclosporine",
+        "cyclosporin",
+        "ciclosporin"
+      ]
+    },
+    {
+      "id": "corticosteroids",
+      "label": "Corticosteroids (prednisone)",
+      "description": "Glucocorticoids — prednisone, methylprednisolone pulses — the backbone of induction therapy, tapered over time.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "corticosteroid",
+        "corticosteroids",
+        "steroid",
+        "steroids",
+        "prednisolone",
+        "methylprednisolone",
+        "glucocorticoid",
+        "glucocorticoids",
+        "solu-medrol",
+        "pulse steroids",
+        "iv steroids"
+      ],
+      "drug_id": "corticosteroids"
+    },
+    {
+      "id": "cyclophosphamide",
+      "label": "Cyclophosphamide (Cytoxan)",
+      "description": "Alkylating immunosuppressant for induction in severe lupus nephritis; given IV (NIH or Euro-Lupus regimens) or orally.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "euro-lupus",
+        "euro lupus"
+      ],
+      "drug_id": "cyclophosphamide"
+    },
+    {
+      "id": "hydroxychloroquine",
+      "label": "Hydroxychloroquine (Plaquenil)",
+      "description": "Antimalarial background therapy recommended for nearly all lupus patients; reduces flares and renal damage.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "hcq",
+        "antimalarial",
+        "antimalarials"
+      ],
+      "drug_id": "hydroxychloroquine"
+    },
+    {
+      "id": "iv_infusion",
+      "label": "IV infusion",
+      "description": "Intravenous infusion delivery for biologics and IV cyclophosphamide — infusion-center visits.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "infusion",
+        "infusions",
+        "iv infusion",
+        "intravenous",
+        "infusion center",
+        "infusion centre",
+        "drip"
+      ]
+    },
+    {
+      "id": "multitarget_therapy",
+      "label": "Multi-target / combination therapy",
+      "description": "Combining agents (e.g. mycophenolate + calcineurin inhibitor + steroid) to induce remission in lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "multi-target therapy",
+        "multitarget therapy",
+        "multi target therapy",
+        "combination therapy",
+        "triple therapy",
+        "dual therapy",
+        "add-on therapy"
+      ]
+    },
+    {
+      "id": "mycophenolate",
+      "label": "Mycophenolate (CellCept / Myfortic)",
+      "description": "Mycophenolate mofetil / mycophenolic acid — first-line immunosuppressant for lupus nephritis induction and maintenance.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "mycophenolate mofetil",
+        "mmf",
+        "mycophenolic acid"
+      ],
+      "drug_id": "mycophenolate"
+    },
+    {
+      "id": "obinutuzumab",
+      "label": "Obinutuzumab (Gazyva)",
+      "description": "Anti-CD20 antibody investigated for lupus nephritis (REGENCY trial).",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [],
+      "drug_id": "obinutuzumab"
+    },
+    {
+      "id": "rituximab",
+      "label": "Rituximab (Rituxan)",
+      "description": "Anti-CD20 B-cell-depleting antibody used off-label for refractory lupus nephritis.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "anti-cd20",
+        "b-cell depletion",
+        "b cell depletion"
+      ],
+      "drug_id": "rituximab"
+    },
+    {
+      "id": "voclosporin",
+      "label": "Voclosporin (Lupkynis)",
+      "description": "Calcineurin inhibitor approved 2021 for active lupus nephritis, added on top of mycophenolate and steroids.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [],
+      "drug_id": "voclosporin"
+    },
+    {
+      "id": "cyclophosphamide_toxicity",
+      "label": "Cyclophosphamide toxicity",
+      "description": "Bladder toxicity, nausea, and being treated with what feels like chemotherapy.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "hemorrhagic cystitis",
+        "bladder toxicity",
+        "chemo",
+        "chemotherapy",
+        "feels like chemo"
+      ]
+    },
+    {
+      "id": "immunosuppression_infections",
+      "label": "Infections (immunosuppression)",
+      "description": "Frequent or serious infections resulting from immunosuppressive lupus nephritis treatment.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "frequent infections",
+        "got sick",
+        "getting sick",
+        "immunocompromised",
+        "immunosuppressed",
+        "shingles",
+        "pneumonia",
+        "opportunistic infection"
+      ]
+    },
+    {
+      "id": "mmf_gi_effects",
+      "label": "Nausea / GI effects (mycophenolate)",
+      "description": "Gastrointestinal upset — nausea, diarrhea, cramping — commonly from mycophenolate.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "nausea",
+        "nauseous",
+        "diarrhea",
+        "diarrhoea",
+        "stomach cramps",
+        "stomach upset",
+        "vomiting",
+        "gi upset"
+      ]
+    },
+    {
+      "id": "steroid_side_effects",
+      "label": "Steroid side effects",
+      "description": "Weight gain, moon face, mood swings, insomnia, and bone loss from long-term steroid use.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "steroid side effects",
+        "moon face",
+        "moonface",
+        "weight gain",
+        "mood swings",
+        "steroid weight",
+        "puffy face",
+        "roid rage",
+        "insomnia",
+        "steroid acne"
+      ]
+    },
+    {
+      "id": "ln_quality_of_life",
+      "label": "Quality of life (lupus)",
+      "description": "Felt impact of lupus and its treatment on daily life — energy, function, independence, getting back to normal.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "quality of life",
+        "back to normal",
+        "feel like myself",
+        "feel human again",
+        "get my life back",
+        "live normally",
+        "functioning"
+      ]
+    },
+    {
+      "id": "renal_remission",
+      "label": "Renal remission / response",
+      "description": "Achieving complete or partial renal response — proteinuria falling and kidney function stabilizing on treatment.",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "burden_category_ids": [],
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "remission",
+        "complete renal response",
+        "partial renal response",
+        "in remission",
+        "responded to treatment",
+        "proteinuria improved",
+        "kidney function stable",
+        "labs improved"
       ]
     }
   ]

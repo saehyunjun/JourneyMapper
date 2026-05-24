@@ -1,0 +1,217 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "description": "Patient burden taxonomy — the cross-cutting axis applied to clusters (and, in future, segments) regardless of indication or source. Categories are inspired by the treatment-burden literature (Eton 2012, May 2014, Tran 2015) and patient-reported outcome frameworks; subcategories refine within each top-level. Tree structure: parent_id = null at the top level. This v1 is a defensible starting point for editorial review — refine the granularity and rename freely; FKs are the ids, not the labels.",
+  "references": [
+    "Eton DT et al. (2012). Building a measurement framework of burden of treatment in complex patients with chronic conditions.",
+    "May CR et al. (2014). Rethinking the patient: using Burden of Treatment Theory to understand the changing dynamics of illness.",
+    "Tran VT et al. (2015). Adaptation and validation of the Treatment Burden Questionnaire (TBQ) in English using an internet platform."
+  ],
+  "items": [
+    {
+      "id": "financial",
+      "label": "Financial burden",
+      "parent_id": null,
+      "description": "Direct and indirect monetary cost of disease and treatment — out-of-pocket spend, insurance navigation, lost income."
+    },
+    {
+      "id": "financial_out_of_pocket",
+      "label": "Out-of-pocket cost",
+      "parent_id": "financial",
+      "description": "Co-pays, deductibles, uncovered medications and procedures."
+    },
+    {
+      "id": "financial_insurance",
+      "label": "Insurance / coverage navigation",
+      "parent_id": "financial",
+      "description": "Prior authorization, claims, appeals, coverage gaps, and benefit-design friction."
+    },
+    {
+      "id": "financial_lost_income",
+      "label": "Lost income / employment impact",
+      "parent_id": "financial",
+      "description": "Time off work, reduced productivity, job loss, or career impact from disease or treatment."
+    },
+
+    {
+      "id": "physical",
+      "label": "Physical burden",
+      "parent_id": null,
+      "description": "Bodily experience of the disease and its treatment — symptoms, side effects, appearance changes."
+    },
+    {
+      "id": "physical_symptoms",
+      "label": "Disease symptoms",
+      "parent_id": "physical",
+      "description": "Symptoms attributable to the disease itself (pain, fatigue, swelling, flares)."
+    },
+    {
+      "id": "physical_side_effects",
+      "label": "Treatment side effects",
+      "parent_id": "physical",
+      "description": "Adverse effects from medications, procedures, or therapy."
+    },
+    {
+      "id": "physical_appearance",
+      "label": "Appearance changes",
+      "parent_id": "physical",
+      "description": "Visible changes from disease or treatment (weight, hair, skin, rashes) and their experiential impact."
+    },
+
+    {
+      "id": "emotional",
+      "label": "Emotional / psychological burden",
+      "parent_id": null,
+      "description": "Affective and mental-health load of living with the disease and its trajectory."
+    },
+    {
+      "id": "emotional_fear",
+      "label": "Fear / anxiety",
+      "parent_id": "emotional",
+      "description": "Worry about progression, treatment risks, recurrence, or future."
+    },
+    {
+      "id": "emotional_grief",
+      "label": "Grief / loss",
+      "parent_id": "emotional",
+      "description": "Mourning lost capacities, identity, or imagined futures."
+    },
+    {
+      "id": "emotional_isolation",
+      "label": "Isolation",
+      "parent_id": "emotional",
+      "description": "Feeling alone with the illness; lack of understanding from others."
+    },
+    {
+      "id": "emotional_uncertainty",
+      "label": "Uncertainty",
+      "parent_id": "emotional",
+      "description": "Not knowing what's coming, conflicting information, ambiguous prognosis."
+    },
+
+    {
+      "id": "regimen",
+      "label": "Treatment regimen burden",
+      "parent_id": null,
+      "description": "Day-to-day workload of executing a treatment plan — taking medications, monitoring, attending visits."
+    },
+    {
+      "id": "regimen_adherence",
+      "label": "Adherence / pill burden",
+      "parent_id": "regimen",
+      "description": "Number, frequency, and complexity of medications; difficulty sticking to schedule."
+    },
+    {
+      "id": "regimen_monitoring",
+      "label": "Self-monitoring effort",
+      "parent_id": "regimen",
+      "description": "Home labs, blood pressure, glucose, symptom logs, weight, device readings."
+    },
+    {
+      "id": "regimen_appointments",
+      "label": "Appointments / visits",
+      "parent_id": "regimen",
+      "description": "Frequency and density of clinic visits, infusions, procedures."
+    },
+
+    {
+      "id": "information",
+      "label": "Information / decisional burden",
+      "parent_id": null,
+      "description": "Cognitive load of understanding the disease and treatment choices."
+    },
+    {
+      "id": "information_knowledge_gaps",
+      "label": "Knowledge gaps",
+      "parent_id": "information",
+      "description": "Not knowing what a label means, what a trial is, or what to expect."
+    },
+    {
+      "id": "information_decision_complexity",
+      "label": "Decision complexity",
+      "parent_id": "information",
+      "description": "Hard tradeoffs across treatment options with imperfect information."
+    },
+    {
+      "id": "information_navigation",
+      "label": "Care navigation",
+      "parent_id": "information",
+      "description": "Coordinating across specialists, systems, and resources."
+    },
+
+    {
+      "id": "social",
+      "label": "Social / relational burden",
+      "parent_id": null,
+      "description": "Impact of disease and treatment on relationships, identity, and social participation."
+    },
+    {
+      "id": "social_stigma",
+      "label": "Stigma",
+      "parent_id": "social",
+      "description": "External or internalized judgment tied to the condition or its visible effects."
+    },
+    {
+      "id": "social_relationships",
+      "label": "Relationships",
+      "parent_id": "social",
+      "description": "Strain on partners, family, friendships; caregiver dynamics."
+    },
+    {
+      "id": "social_disclosure",
+      "label": "Disclosure",
+      "parent_id": "social",
+      "description": "Deciding when and how to tell others about the condition."
+    },
+
+    {
+      "id": "logistical",
+      "label": "Time / logistical burden",
+      "parent_id": null,
+      "description": "Time-cost and operational friction of life-with-disease."
+    },
+    {
+      "id": "logistical_travel",
+      "label": "Travel / transport",
+      "parent_id": "logistical",
+      "description": "Distance to clinic, transit, parking, accommodations."
+    },
+    {
+      "id": "logistical_scheduling",
+      "label": "Scheduling",
+      "parent_id": "logistical",
+      "description": "Calendar friction across appointments, work, family obligations."
+    },
+    {
+      "id": "logistical_caregiver",
+      "label": "Caregiver dependence",
+      "parent_id": "logistical",
+      "description": "Reliance on others for transport, supervision, or daily activities."
+    },
+
+    {
+      "id": "quality_of_life",
+      "label": "Quality of life",
+      "parent_id": null,
+      "description": "Felt impact on function, independence, and the experience of normalcy."
+    },
+    {
+      "id": "qol_functional",
+      "label": "Functional limitations",
+      "parent_id": "quality_of_life",
+      "description": "Ability to do daily activities, work, exercise, hobbies."
+    },
+    {
+      "id": "qol_independence",
+      "label": "Loss of independence",
+      "parent_id": "quality_of_life",
+      "description": "Dependence on others; reduced autonomy in daily life."
+    },
+    {
+      "id": "qol_normalcy",
+      "label": "Loss of normalcy",
+      "parent_id": "quality_of_life",
+      "description": "Feeling that life-with-disease is not the life one had or expected."
+    }
+  ]
+}

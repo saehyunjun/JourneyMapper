@@ -1,0 +1,37 @@
+{
+  "id": "lupus_nephritis_facebook_group_engagement",
+  "type": "community_engagement",
+  "indication_id": "lupus_nephritis",
+  "therapeutic_area_ids": ["immunology", "nephrology"],
+  "title": "The stark differences in engagement and activity, public vs. private patient communities",
+  "subtitle": null,
+  "unit": "count",
+  "geography": null,
+  "time_period": null,
+  "platform": "Facebook groups",
+  "sample": "Five largest public and private independent Facebook groups for LN",
+  "exclusions": [
+    "advocacy group-sponsored communities",
+    "industry-sponsored communities"
+  ],
+  "note": "Averages were taken of the five largest public and private independent (i.e. not sponsored by an advocacy group or industry) Facebook groups for LN.",
+  "source": {
+    "type": "manual_extract",
+    "source_image": "34C355EA-351E-423F-808A-35134AD70C3B.png",
+    "notes": "Values manually extracted from chart image."
+  },
+  "dimensions": ["group_type"],
+  "measures": ["avg_membership", "avg_monthly_posts"],
+  "data": [
+    {
+      "group_type": "public",
+      "avg_membership": 1200,
+      "avg_monthly_posts": 45
+    },
+    {
+      "group_type": "private",
+      "avg_membership": 450,
+      "avg_monthly_posts": 175
+    }
+  ]
+}

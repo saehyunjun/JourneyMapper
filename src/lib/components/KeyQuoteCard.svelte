@@ -28,7 +28,6 @@
 		interviewId,
 		questionId,
 		themes = [],
-		score = null,
 		profiles,
 		onparticipant,
 		size = 'sm'
@@ -37,20 +36,18 @@
 		sentiment: number;
 		interviewId: string;
 		questionId: string;
-		/** Theme ids shown as chips in the footer. */
 		themes?: string[];
-		/** Quote score shown in the footer; hidden when null. */
-		score?: number | null;
 		profiles: Record<string, ParticipantProfile>;
 		onparticipant: (interviewId: string) => void;
 		size?: 'sm' | 'lg';
 	} = $props();
 
 	// Per-size geometry — quote-mark dimensions, the spacing/type scale, and the
-	// corner offset that lets each mark overhang the card edge.
+	// corner offset that places each mark inside the card.
+	// pt/pb are larger than px so the marks (top-3/bottom-3) don't crowd the text.
 	const SIZES = {
-		sm: { markW: 40, markH: 27, pad: 'p-5', gap: 'gap-3', quote: 'text-[15px]', open: '-top-3 -left-3', close: '-right-3 -bottom-3' },
-		lg: { markW: 54, markH: 37, pad: 'p-7', gap: 'gap-4', quote: 'text-lg', open: '-top-4 -left-4', close: '-right-4 -bottom-4' }
+		sm: { markW: 26, markH: 18, pad: 'px-4 pt-7 pb-5', gap: 'gap-2', quote: 'text-xl', open: 'top-2 left-2', close: 'right-2 bottom-2' },
+		lg: { markW: 36, markH: 24, pad: 'px-5 pt-9 pb-7', gap: 'gap-3', quote: 'text-2xl', open: 'top-3 left-3', close: 'right-3 bottom-3' }
 	} as const;
 	const s = $derived(SIZES[size]);
 
@@ -63,9 +60,9 @@
 </script>
 
 <article class="relative flex h-full flex-col {s.gap} rounded-2xl border border-slate-200 bg-white {s.pad}">
-	<!-- Opening quote mark — straddles the top-left corner, colored by sentiment -->
+	<!-- Opening quote mark — inside the top-left corner, colored by sentiment -->
 	<svg
-		class="pointer-events-none absolute {s.open} {sentimentTone(sentiment)}"
+		class="pointer-events-none absolute opacity-40 {s.open} {sentimentTone(sentiment)}"
 		width={s.markW}
 		height={s.markH}
 		viewBox="0 0 65 44"
@@ -108,9 +105,9 @@
 
 	</div>
 
-	<!-- Closing quote mark — straddles the bottom-right corner, same tone -->
+	<!-- Closing quote mark — inside the bottom-right corner, same tone -->
 	<svg
-		class="pointer-events-none absolute {s.close} {sentimentTone(sentiment)}"
+		class="pointer-events-none absolute opacity-40 {s.close} {sentimentTone(sentiment)}"
 		width={s.markW}
 		height={s.markH}
 		viewBox="0 0 65 44"
@@ -124,19 +121,13 @@
 		/>
 	</svg>
 
-	{#if themes.length || score !== null}
+	{#if themes.length}
 		<div class="-mt-1 flex flex-wrap items-center gap-1 border-t border-slate-100 pt-3">
 			{#each themes as t (t)}
 				<span class="rounded-full bg-accent-mint/15 px-2 py-0.5 text-xs text-accent-mint">
 					{titleCase(t)}
 				</span>
 			{/each}
-			{#if score !== null}
-				<span class="ml-auto text-xs text-slate-400">
-					score
-					<span class="ml-0.5 text-base font-light text-accent-mint">{score}</span>
-				</span>
-			{/if}
 		</div>
 	{/if}
 </article>

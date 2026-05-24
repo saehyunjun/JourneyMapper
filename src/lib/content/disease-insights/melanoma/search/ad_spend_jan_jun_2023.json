@@ -1,0 +1,52 @@
+{
+  "id": "melanoma_ad_spend_jan_jun_2023",
+  "type": "ad_spend_timeseries",
+  "indication_id": "melanoma",
+  "therapeutic_area_ids": ["oncology"],
+  "title": "Estimated monthly digital search ad spend across highest-spending melanoma players",
+  "subtitle": "January – June 2023",
+  "unit": "USD",
+  "geography": null,
+  "time_period": {
+    "start": "2023-01",
+    "end": "2023-06",
+    "label": "January - June 2023"
+  },
+  "source": {
+    "type": "manual_extract",
+    "source_image": "1D3F5DF7-F206-49DF-A6B8-B72E7459F254.png",
+    "notes": "Values manually extracted from chart image."
+  },
+  "dimensions": ["domain", "month"],
+  "measures": ["estimated_spend"],
+  "data": [
+    {
+      "domain": "Opdualag.com",
+      "values": [
+        { "month": "2023-01", "label": "Jan 2023", "estimated_spend": 460 },
+        { "month": "2023-06", "label": "Jun 2023", "estimated_spend": 5860 }
+      ]
+    },
+    {
+      "domain": "Opdivo.com",
+      "values": [
+        { "month": "2023-01", "label": "Jan 2023", "estimated_spend": 76000 },
+        { "month": "2023-06", "label": "Jun 2023", "estimated_spend": 56060 }
+      ]
+    },
+    {
+      "domain": "TafinlarMekinist.com",
+      "values": [
+        { "month": "2023-01", "label": "Jan 2023", "estimated_spend": 34700 },
+        { "month": "2023-06", "label": "Jun 2023", "estimated_spend": 39800 }
+      ]
+    },
+    {
+      "domain": "KeytrudaHCP.com",
+      "values": [
+        { "month": "2023-01", "label": "Jan 2023", "estimated_spend": 17500 },
+        { "month": "2023-06", "label": "Jun 2023", "estimated_spend": 47000 }
+      ]
+    }
+  ]
+}

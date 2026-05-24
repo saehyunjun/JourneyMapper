@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "description": "Pharma sponsor / commercial owner registry. Stable ids used as FKs from drugs.json. Sponsor here means the entity commercially developing or marketing the drug — not the trial site or the analyst. Generic drugs with no single commercial owner reference sponsor_id: null.",
+  "items": [
+    {
+      "id": "novo_nordisk",
+      "label": "Novo Nordisk",
+      "headquarters_country": "DK"
+    },
+    {
+      "id": "eli_lilly",
+      "label": "Eli Lilly",
+      "headquarters_country": "US"
+    },
+    {
+      "id": "astrazeneca",
+      "label": "AstraZeneca",
+      "headquarters_country": "GB"
+    },
+    {
+      "id": "gsk",
+      "label": "GSK (GlaxoSmithKline)",
+      "headquarters_country": "GB"
+    },
+    {
+      "id": "aurinia",
+      "label": "Aurinia Pharmaceuticals",
+      "headquarters_country": "CA"
+    },
+    {
+      "id": "roche",
+      "label": "Roche / Genentech",
+      "headquarters_country": "CH"
+    }
+  ]
+}

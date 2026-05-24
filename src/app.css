@@ -2797,3 +2797,145 @@ padding: .25em 1em;
   }
 
 }
+
+/* -------------------------------------------------------------------------- */
+/* DATA VIZ MOTION                                                             */
+/*                                                                             */
+/* SVG-friendly classes for the dashboard / story / none motion system.        */
+/* Tokens (--viz-*) come from src/lib/motion/viz.ts via inline style on a      */
+/* wrapping element. Anything that animates here only touches `opacity` and    */
+/* `transform` so layout is never affected. Components that animate            */
+/* stroke-dasharray (donut sweep) handle that via inline attribute updates, not*/
+/* class-based CSS, because dash values are data-derived.                      */
+/* -------------------------------------------------------------------------- */
+@layer utilities {
+	:root {
+		--viz-dur-dashboard: 600ms;
+		--viz-dur-story: 1100ms;
+		--viz-ease-dashboard: cubic-bezier(0.22, 0.61, 0.36, 1); /* approx easeOutCubic */
+		--viz-ease-story: cubic-bezier(0.65, 0, 0.35, 1);         /* approx cubicInOut */
+	}
+
+	.viz-mark,
+	.viz-label {
+		transform-box: fill-box;
+		transform-origin: center;
+		will-change: opacity, transform;
+	}
+
+	/* Default reveal is dashboard-fast; mode classes can override the duration */
+	.viz-mark {
+		opacity: 0;
+		transition:
+			opacity var(--viz-mark-duration, var(--viz-dur-dashboard)) var(--viz-mark-ease, var(--viz-ease-dashboard)) var(--viz-mark-delay, 0ms),
+			transform var(--viz-mark-duration, var(--viz-dur-dashboard)) var(--viz-mark-ease, var(--viz-ease-dashboard)) var(--viz-mark-delay, 0ms);
+	}
+
+	.viz-mark.is-revealed {
+		opacity: 1;
+	}
+
+	.viz-mark-dashboard {
+		--viz-mark-duration: var(--viz-dur-dashboard);
+		--viz-mark-ease: var(--viz-ease-dashboard);
+	}
+
+	.viz-mark-story {
+		--viz-mark-duration: var(--viz-dur-story);
+		--viz-mark-ease: var(--viz-ease-story);
+	}
+
+	/* Bars grow up from their baseline. Pair with `transform-origin: bottom`    */
+	/* on the rect/g element when not using fill-box. */
+	.viz-bar-grow {
+		transform: scaleY(0.001);
+		transform-origin: center bottom;
+	}
+
+	.viz-bar-grow.is-revealed {
+		transform: scaleY(1);
+	}
+
+	/* Arc sweep — used as a hint class. The actual dasharray animation is       */
+	/* driven from JS so the final geometry is data-exact. This class only       */
+	/* fades the arc in alongside the sweep. */
+	.viz-arc-sweep {
+		opacity: 0;
+		transition: opacity var(--viz-mark-duration, var(--viz-dur-dashboard))
+			var(--viz-mark-ease, var(--viz-ease-dashboard))
+			var(--viz-mark-delay, 0ms);
+	}
+
+	.viz-arc-sweep.is-revealed {
+		opacity: 1;
+	}
+
+	/* Path-draw — for line marks. Caller must set                               */
+	/* `stroke-dasharray: var(--viz-path-length)` and                            */
+	/* `stroke-dashoffset: var(--viz-path-length)` inline. */
+	.viz-path-draw {
+		transition: stroke-dashoffset var(--viz-mark-duration, var(--viz-dur-dashboard))
+			var(--viz-mark-ease, var(--viz-ease-dashboard))
+			var(--viz-mark-delay, 0ms);
+	}
+
+	.viz-path-draw.is-revealed {
+		stroke-dashoffset: 0 !important;
+	}
+
+	.viz-label {
+		opacity: 0;
+		transform: translateY(2px);
+		transition:
+			opacity var(--viz-label-duration, 220ms) var(--viz-ease-dashboard) var(--viz-label-delay, 0ms),
+			transform var(--viz-label-duration, 220ms) var(--viz-ease-dashboard) var(--viz-label-delay, 0ms);
+	}
+
+	.viz-label-reveal.is-revealed,
+	.viz-label.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* One-shot pulse — only used when explicitly requested (story-mode          */
+	/* annotation accents). Never infinite. */
+	.viz-pulse-once {
+		animation: viz-pulse-once 720ms var(--viz-ease-story) 1 both;
+		animation-delay: var(--viz-pulse-delay, 0ms);
+	}
+
+	@keyframes viz-pulse-once {
+		0% { transform: scale(1); opacity: 1; }
+		40% { transform: scale(1.06); opacity: 1; }
+		100% { transform: scale(1); opacity: 1; }
+	}
+
+	/* Marks tagged for export must never run continuous loops. This class is a  */
+	/* safety net: anything inside an .viz-export-safe subtree gets infinite     */
+	/* animations zeroed out and reduced-motion enforced. Wrap GIF/MP4 capture   */
+	/* regions in it. */
+	.viz-export-safe *,
+	.viz-export-safe *::before,
+	.viz-export-safe *::after {
+		animation-iteration-count: 1 !important;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.viz-mark,
+		.viz-arc-sweep,
+		.viz-bar-grow,
+		.viz-label,
+		.viz-label-reveal,
+		.viz-path-draw {
+			transition: none !important;
+			animation: none !important;
+			opacity: 1 !important;
+			transform: none !important;
+			stroke-dashoffset: 0 !important;
+		}
+
+		.viz-pulse-once {
+			animation: none !important;
+		}
+	}
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.1",
+  "description": "MeSH-anchored indication registry. Stable ids used as FKs from disease-insights manifests, keyword cluster files, and the lexicon. The single source of truth — keyword_lexicon.json no longer carries its own meta.indications.",
+  "items": [
+    {
+      "id": "lupus_nephritis",
+      "label": "Lupus Nephritis",
+      "abbreviation": "LN",
+      "mesh_id": "D008181",
+      "mesh_term": "Lupus Nephritis",
+      "therapeutic_area_ids": ["immunology", "nephrology"],
+      "description": "Kidney manifestation of systemic lupus erythematosus (SLE). Spans induction/maintenance immunosuppression, renal labs, and progression to CKD/ESRD."
+    },
+    {
+      "id": "melanoma",
+      "label": "Melanoma",
+      "abbreviation": null,
+      "mesh_id": "D008545",
+      "mesh_term": "Melanoma",
+      "therapeutic_area_ids": ["oncology"],
+      "description": "Cutaneous and metastatic melanoma. Spans surgical excision, immunotherapy (anti-PD-1, anti-CTLA-4), targeted therapy (BRAF/MEK), and surveillance."
+    },
+    {
+      "id": "obesity",
+      "label": "Obesity",
+      "abbreviation": null,
+      "mesh_id": "D009765",
+      "mesh_term": "Obesity",
+      "therapeutic_area_ids": ["endocrinology"],
+      "description": "GLP-1 weight-management corpus (WCT GLP-1 interviews). Metabolic comorbidities (diabetes, PCOS, sleep apnea) sit under this indication as comorbidities."
+    }
+  ]
+}

@@ -214,6 +214,15 @@ class KeyFindingsStore {
 		});
 	}
 
+	replaceBlock(cardId: string, blockId: string, newBlock: Block) {
+		this.update((b) => {
+			const card = b.cards.find((c) => c.id === cardId);
+			if (!card) return;
+			const i = card.blocks.findIndex((bl) => bl.id === blockId);
+			if (i >= 0) card.blocks[i] = newBlock;
+		});
+	}
+
 	updateBlock(cardId: string, blockId: string, patch: Partial<Block>, coalesceKey?: string) {
 		this.update((b) => {
 			const card = b.cards.find((c) => c.id === cardId);

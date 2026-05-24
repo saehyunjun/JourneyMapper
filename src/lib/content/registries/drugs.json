@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.0",
+  "description": "Drug entity registry. Each row describes a specific drug (not a class) with FKs into MOA, sponsor, and indication registries. Lexicon clusters that represent a specific drug carry a drug_id FK into this registry. Drug-class clusters (e.g. glp_1, calcineurin_inhibitors, ace_arb) reference the MOA registry directly via moa_id on the cluster (when wired) — they do NOT get a row here. Brand names are duplicated between this file and cluster.variants until the matcher learns to inline them; treat this file as the authoritative metadata.",
+  "items": [
+    {
+      "id": "mycophenolate",
+      "label": "Mycophenolate (CellCept / Myfortic)",
+      "generic_name": "mycophenolate",
+      "brand_names": ["CellCept", "Myfortic"],
+      "moa_id": "antimetabolite",
+      "sponsor_id": "roche",
+      "stage": "approved",
+      "indication_ids": ["lupus_nephritis"],
+      "description": "First-line immunosuppressant for lupus nephritis induction and maintenance; also widely used in transplant."
+    },
+    {
+      "id": "cyclophosphamide",
+      "label": "Cyclophosphamide (Cytoxan)",
+      "generic_name": "cyclophosphamide",
+      "brand_names": ["Cytoxan", "Endoxan"],
+      "moa_id": "alkylating_agent",
+      "sponsor_id": null,
+      "stage": "approved",
+      "indication_ids": ["lupus_nephritis"],
+      "description": "Alkylating immunosuppressant for induction in severe lupus nephritis; given IV (NIH or Euro-Lupus regimens) or orally."
+    },
+    {
+      "id": "voclosporin",
+      "label": "Voclosporin (Lupkynis)",
+      "generic_name": "voclosporin",
+      "brand_names": ["Lupkynis"],
+      "moa_id": "calcineurin_inhibitor",
+      "sponsor_id": "aurinia",
+      "stage": "approved",
+      "indication_ids": ["lupus_nephritis"],
+      "description": "Calcineurin inhibitor approved 2021 for active lupus nephritis, added on top of mycophenolate and steroids."
+    },
+    {
+      "id": "belimumab",
+      "label": "Belimumab (Benlysta)",
+      "generic_name": "belimumab",
+      "brand_names": ["Benlysta"],
+      "moa_id": "anti_blys",
+      "sponsor_id": "gsk",
+      "stage": "approved",
+      "indication_ids": ["lupus_nephritis"],
+      "description": "Anti-BLyS/BAFF monoclonal antibody approved for SLE (2011) and lupus nephritis (2020); IV infusion or subcutaneous injection."
+    },
+    {
+      "id": "corticosteroids",
+      "label": "Corticosteroids (prednisone)",
+      "generic_name": "prednisone",
+      "brand_names": [],
+      "moa_id": "corticosteroid",
+      "sponsor_id": null,
+      "stage": "approved",
+      "indication_ids": ["lupus_nephritis"],
+      "description": "Glucocorticoids — prednisone, methylprednisolone pulses — the backbone of induction therapy, tapered over time. The cluster is a drug-class shorthand; this entity represents the family."
+    },
+    {
+      "id": "hydroxychloroquine",
+      "label": "Hydroxychloroquine (Plaquenil)",
+      "generic_name": "hydroxychloroquine",
+      "brand_names": ["Plaquenil"],
+      "moa_id": "antimalarial",
+      "sponsor_id": null,
+      "stage": "approved",
+      "indication_ids": ["lupus_nephritis"],
+      "description": "Antimalarial background therapy recommended for nearly all lupus patients; reduces flares and renal damage."
+    },
+    {
+      "id": "azathioprine",
+      "label": "Azathioprine (Imuran)",
+      "generic_name": "azathioprine",
+      "brand_names": ["Imuran"],
+      "moa_id": "antimetabolite",
+      "sponsor_id": null,
+      "stage": "approved",
+      "indication_ids": ["lupus_nephritis"],
+      "description": "Immunosuppressant used for lupus nephritis maintenance, including during pregnancy."
+    },
+    {
+      "id": "rituximab",
+      "label": "Rituximab (Rituxan)",
+      "generic_name": "rituximab",
+      "brand_names": ["Rituxan", "MabThera"],
+      "moa_id": "anti_cd20",
+      "sponsor_id": "roche",
+      "stage": "approved",
+      "indication_ids": ["lupus_nephritis"],
+      "description": "Anti-CD20 B-cell-depleting antibody. Used off-label for refractory lupus nephritis; on-label for non-Hodgkin lymphoma and rheumatoid arthritis."
+    },
+    {
+      "id": "anifrolumab",
+      "label": "Anifrolumab (Saphnelo)",
+      "generic_name": "anifrolumab",
+      "brand_names": ["Saphnelo"],
+      "moa_id": "type_i_interferon_antagonist",
+      "sponsor_id": "astrazeneca",
+      "stage": "approved",
+      "indication_ids": ["lupus_nephritis"],
+      "description": "Type-I interferon receptor antagonist approved for SLE; investigated in lupus nephritis."
+    },
+    {
+      "id": "obinutuzumab",
+      "label": "Obinutuzumab (Gazyva)",
+      "generic_name": "obinutuzumab",
+      "brand_names": ["Gazyva"],
+      "moa_id": "anti_cd20",
+      "sponsor_id": "roche",
+      "stage": "phase_3",
+      "indication_ids": ["lupus_nephritis"],
+      "description": "Glycoengineered anti-CD20 antibody investigated for lupus nephritis (REGENCY trial); approved for CLL and follicular lymphoma."
+    },
+    {
+      "id": "semaglutide",
+      "label": "Semaglutide (Wegovy / Ozempic / Rybelsus)",
+      "generic_name": "semaglutide",
+      "brand_names": ["Wegovy", "Ozempic", "Rybelsus"],
+      "moa_id": "glp1_agonist",
+      "sponsor_id": "novo_nordisk",
+      "stage": "approved",
+      "indication_ids": ["obesity"],
+      "description": "GLP-1 receptor agonist; approved for type-2 diabetes (Ozempic, Rybelsus) and chronic weight management (Wegovy)."
+    },
+    {
+      "id": "tirzepatide",
+      "label": "Tirzepatide (Mounjaro / Zepbound)",
+      "generic_name": "tirzepatide",
+      "brand_names": ["Mounjaro", "Zepbound"],
+      "moa_id": "dual_glp1_gip_agonist",
+      "sponsor_id": "eli_lilly",
+      "stage": "approved",
+      "indication_ids": ["obesity"],
+      "description": "Dual GLP-1 / GIP receptor agonist; approved for type-2 diabetes (Mounjaro) and chronic weight management (Zepbound)."
+    },
+    {
+      "id": "cagrilintide",
+      "label": "Cagrilintide",
+      "generic_name": "cagrilintide",
+      "brand_names": [],
+      "moa_id": "amylin_analog",
+      "sponsor_id": "novo_nordisk",
+      "stage": "phase_3",
+      "indication_ids": ["obesity"],
+      "description": "Long-acting amylin analog under investigation, often in combination with semaglutide (CagriSema)."
+    },
+    {
+      "id": "retatrutide",
+      "label": "Retatrutide",
+      "generic_name": "retatrutide",
+      "brand_names": [],
+      "moa_id": "triple_agonist",
+      "sponsor_id": "eli_lilly",
+      "stage": "phase_3",
+      "indication_ids": ["obesity"],
+      "description": "Triple GLP-1 / GIP / glucagon receptor agonist; investigational for obesity and type-2 diabetes."
+    },
+    {
+      "id": "orforglipron",
+      "label": "Orforglipron",
+      "generic_name": "orforglipron",
+      "brand_names": [],
+      "moa_id": "glp1_agonist",
+      "sponsor_id": "eli_lilly",
+      "stage": "phase_3",
+      "indication_ids": ["obesity"],
+      "description": "Oral small-molecule GLP-1 receptor agonist; investigational for obesity and type-2 diabetes."
+    },
+    {
+      "id": "metformin",
+      "label": "Metformin",
+      "generic_name": "metformin",
+      "brand_names": ["Glucophage", "Glumetza", "Fortamet"],
+      "moa_id": "biguanide",
+      "sponsor_id": null,
+      "stage": "approved",
+      "indication_ids": ["obesity"],
+      "description": "First-line biguanide for type-2 diabetes; used off-label for prediabetes and weight management."
+    },
+    {
+      "id": "phentermine",
+      "label": "Phentermine",
+      "generic_name": "phentermine",
+      "brand_names": ["Adipex-P", "Lomaira"],
+      "moa_id": "sympathomimetic",
+      "sponsor_id": null,
+      "stage": "approved",
+      "indication_ids": ["obesity"],
+      "description": "Short-term sympathomimetic appetite suppressant for obesity."
+    }
+  ]
+}

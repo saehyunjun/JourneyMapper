@@ -1,0 +1,1658 @@
+{
+  "meta": {
+    "schema_version": "3.1",
+    "indication": "lupus_nephritis",
+    "description": "Expanded lupus nephritis keyword clusters for keyword_lexicon.json. Includes indication, theme/subtheme FKs, and variants for suggestion-fuel matching.",
+    "cluster_count": 89
+  },
+  "clusters": [
+    {
+      "id": "mycophenolate",
+      "label": "Mycophenolate (CellCept / Myfortic)",
+      "description": "Mycophenolate mofetil / mycophenolic acid — first-line immunosuppressant for lupus nephritis induction and maintenance.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "mycophenolate",
+        "mycophenolate mofetil",
+        "mmf",
+        "cellcept",
+        "mycophenolic acid",
+        "myfortic"
+      ]
+    },
+    {
+      "id": "cyclophosphamide",
+      "label": "Cyclophosphamide (Cytoxan)",
+      "description": "Alkylating immunosuppressant for induction in severe lupus nephritis; given IV (NIH or Euro-Lupus regimens) or orally.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "cyclophosphamide",
+        "cytoxan",
+        "euro-lupus",
+        "euro lupus",
+        "endoxan"
+      ]
+    },
+    {
+      "id": "voclosporin",
+      "label": "Voclosporin (Lupkynis)",
+      "description": "Calcineurin inhibitor approved for active lupus nephritis, added on top of mycophenolate and steroids.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "voclosporin",
+        "lupkynis"
+      ]
+    },
+    {
+      "id": "belimumab",
+      "label": "Belimumab (Benlysta)",
+      "description": "Anti-BLyS/BAFF monoclonal antibody approved for lupus nephritis; IV infusion or subcutaneous injection.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "belimumab",
+        "benlysta",
+        "blys inhibitor",
+        "baff inhibitor"
+      ]
+    },
+    {
+      "id": "corticosteroids",
+      "label": "Corticosteroids (prednisone)",
+      "description": "Glucocorticoids — prednisone, methylprednisolone pulses — the backbone of induction therapy, tapered over time.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "corticosteroid",
+        "corticosteroids",
+        "steroid",
+        "steroids",
+        "prednisone",
+        "prednisolone",
+        "methylprednisolone",
+        "glucocorticoid",
+        "glucocorticoids",
+        "solu-medrol",
+        "pulse steroids",
+        "iv steroids"
+      ]
+    },
+    {
+      "id": "hydroxychloroquine",
+      "label": "Hydroxychloroquine (Plaquenil)",
+      "description": "Antimalarial background therapy recommended for nearly all lupus patients; reduces flares and renal damage.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "hydroxychloroquine",
+        "plaquenil",
+        "hcq",
+        "antimalarial",
+        "antimalarials"
+      ]
+    },
+    {
+      "id": "azathioprine",
+      "label": "Azathioprine (Imuran)",
+      "description": "Immunosuppressant used for lupus nephritis maintenance, including during pregnancy.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "azathioprine",
+        "imuran"
+      ]
+    },
+    {
+      "id": "calcineurin_inhibitors",
+      "label": "Calcineurin inhibitors (tacrolimus / cyclosporine)",
+      "description": "Tacrolimus and cyclosporine — calcineurin inhibitors used alone or in multi-target therapy for lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "calcineurin inhibitor",
+        "calcineurin inhibitors",
+        "tacrolimus",
+        "prograf",
+        "cyclosporine",
+        "cyclosporin",
+        "ciclosporin"
+      ]
+    },
+    {
+      "id": "rituximab",
+      "label": "Rituximab (Rituxan)",
+      "description": "Anti-CD20 B-cell-depleting antibody used off-label for refractory lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "rituximab",
+        "rituxan",
+        "anti-cd20",
+        "b-cell depletion",
+        "b cell depletion"
+      ]
+    },
+    {
+      "id": "anifrolumab",
+      "label": "Anifrolumab (Saphnelo)",
+      "description": "Type-I interferon receptor antagonist approved for SLE and studied in lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "anifrolumab",
+        "saphnelo",
+        "interferon inhibitor"
+      ]
+    },
+    {
+      "id": "obinutuzumab",
+      "label": "Obinutuzumab (Gazyva)",
+      "description": "Anti-CD20 antibody investigated for lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "obinutuzumab",
+        "gazyva"
+      ]
+    },
+    {
+      "id": "ace_arb",
+      "label": "ACE inhibitor / ARB (renoprotective)",
+      "description": "Renin-angiotensin blockers (lisinopril, losartan) used to lower proteinuria and protect kidney function.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "ace inhibitor",
+        "ace inhibitors",
+        "arb",
+        "angiotensin receptor blocker",
+        "lisinopril",
+        "losartan",
+        "ramipril",
+        "enalapril"
+      ]
+    },
+    {
+      "id": "multitarget_therapy",
+      "label": "Multi-target / combination therapy",
+      "description": "Combining agents such as mycophenolate + calcineurin inhibitor + steroid to induce remission in lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "multi-target therapy",
+        "multitarget therapy",
+        "multi target therapy",
+        "combination therapy",
+        "triple therapy",
+        "dual therapy",
+        "add-on therapy"
+      ]
+    },
+    {
+      "id": "iv_infusion",
+      "label": "IV infusion",
+      "description": "Intravenous infusion delivery for biologics and IV cyclophosphamide — infusion-center visits.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "infusion",
+        "infusions",
+        "iv infusion",
+        "intravenous",
+        "infusion center",
+        "infusion centre",
+        "drip"
+      ]
+    },
+    {
+      "id": "ln_maintenance_therapy",
+      "label": "Maintenance therapy",
+      "description": "Longer-term therapy after induction to maintain renal response and prevent relapse.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "maintenance therapy",
+        "maintenance treatment",
+        "maintenance phase",
+        "long-term treatment",
+        "stay on treatment",
+        "prevent relapse",
+        "prevent flare",
+        "maintenance cellcept",
+        "maintenance azathioprine"
+      ]
+    },
+    {
+      "id": "ln_therapeutic_drug_monitoring",
+      "label": "Drug-level monitoring",
+      "description": "Monitoring calcineurin inhibitor or immunosuppressant levels to balance efficacy and toxicity.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "drug levels",
+        "tacrolimus level",
+        "tacrolimus trough",
+        "cyclosporine level",
+        "monitoring levels",
+        "blood level",
+        "therapeutic drug monitoring",
+        "trough level"
+      ]
+    },
+    {
+      "id": "lupus_nephritis_dx",
+      "label": "Lupus nephritis (diagnosis)",
+      "description": "Identification with the condition — lupus / SLE-related kidney disease as the diagnosis being lived with.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "lupus nephritis",
+        "lupus",
+        "systemic lupus erythematosus",
+        "sle",
+        "kidney lupus",
+        "lupus kidney",
+        "lupus kidneys",
+        "lupus kidney disease",
+        "renal lupus",
+        "sle nephritis",
+        "sle kidney disease",
+        "autoimmune kidney disease",
+        "immune complex nephritis",
+        "glomerulonephritis"
+      ]
+    },
+    {
+      "id": "proteinuria",
+      "label": "Proteinuria / foamy urine",
+      "description": "Protein leaking into the urine — the hallmark sign of lupus nephritis; often noticed as foamy or frothy urine.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "proteinuria",
+        "protein in urine",
+        "protein in my urine",
+        "foamy urine",
+        "frothy urine",
+        "bubbly urine",
+        "albuminuria",
+        "high protein",
+        "high urine protein",
+        "protein leak",
+        "leaking protein",
+        "protein spill",
+        "protein spillage",
+        "protein creatinine ratio high",
+        "upcr high",
+        "uacr high",
+        "nephrotic range protein"
+      ]
+    },
+    {
+      "id": "hematuria",
+      "label": "Hematuria / blood in urine",
+      "description": "Blood in the urine, visible or microscopic — a sign of active kidney inflammation.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "hematuria",
+        "haematuria",
+        "blood in urine",
+        "blood in my urine",
+        "bloody urine"
+      ]
+    },
+    {
+      "id": "edema",
+      "label": "Edema / swelling",
+      "description": "Fluid retention causing swelling in the legs, ankles, feet, or around the eyes — common in nephrotic-range lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "edema",
+        "oedema",
+        "swelling",
+        "swollen",
+        "swollen ankles",
+        "swollen legs",
+        "swollen feet",
+        "puffy",
+        "puffiness",
+        "fluid retention",
+        "water retention",
+        "periorbital",
+        "ankle swelling",
+        "leg swelling",
+        "feet swelling",
+        "face swelling",
+        "hand swelling",
+        "swelling around eyes",
+        "fluid buildup",
+        "fluid build up",
+        "retaining fluid"
+      ]
+    },
+    {
+      "id": "ln_hypertension",
+      "label": "High blood pressure (renal)",
+      "description": "Elevated blood pressure driven by kidney involvement in lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "high blood pressure",
+        "hypertension",
+        "elevated blood pressure",
+        "hypertensive",
+        "blood pressure",
+        "bp",
+        "high bp",
+        "blood pressure high",
+        "renal hypertension",
+        "kidney blood pressure"
+      ]
+    },
+    {
+      "id": "lupus_flare",
+      "label": "Lupus flare / renal flare",
+      "description": "Periods of disease reactivation — systemic or kidney-specific — with worsening labs and symptoms.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "flare",
+        "flares",
+        "flare up",
+        "flare-up",
+        "flaring",
+        "lupus flare",
+        "renal flare",
+        "disease flare",
+        "relapse"
+      ]
+    },
+    {
+      "id": "fatigue",
+      "label": "Fatigue",
+      "description": "Persistent, often debilitating tiredness — among the most common and disruptive lupus symptoms.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "fatigue",
+        "fatigued",
+        "exhausted",
+        "exhaustion",
+        "tiredness",
+        "worn out",
+        "no energy",
+        "low energy"
+      ]
+    },
+    {
+      "id": "malar_rash",
+      "label": "Malar / butterfly rash",
+      "description": "The characteristic facial rash across the cheeks and nose bridge; photosensitive skin involvement in lupus.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "malar rash",
+        "butterfly rash",
+        "facial rash",
+        "cheek rash",
+        "skin rash",
+        "discoid",
+        "discoid rash"
+      ]
+    },
+    {
+      "id": "photosensitivity",
+      "label": "Photosensitivity / sun sensitivity",
+      "description": "Skin and systemic flares triggered by sun or UV exposure.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "photosensitivity",
+        "photosensitive",
+        "sun sensitivity",
+        "sun sensitive",
+        "sensitive to sun",
+        "uv sensitivity"
+      ]
+    },
+    {
+      "id": "joint_pain",
+      "label": "Joint pain / arthralgia",
+      "description": "Aching, stiff, or swollen joints — frequent in systemic lupus.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "joint pain",
+        "joint pains",
+        "arthralgia",
+        "arthritis",
+        "achy joints",
+        "aching joints",
+        "stiff joints",
+        "joint stiffness",
+        "swollen joints"
+      ]
+    },
+    {
+      "id": "nephrotic_syndrome",
+      "label": "Nephrotic syndrome",
+      "description": "Heavy proteinuria with low blood albumin, swelling, and high cholesterol — a severe presentation of lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "nephrotic syndrome",
+        "nephrotic",
+        "nephrotic range",
+        "nephrotic-range proteinuria"
+      ]
+    },
+    {
+      "id": "constitutional_symptoms",
+      "label": "Fever / constitutional symptoms",
+      "description": "Low-grade fevers, night sweats, and malaise during active lupus.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "fever",
+        "fevers",
+        "low-grade fever",
+        "low grade fever",
+        "night sweats",
+        "malaise"
+      ]
+    },
+    {
+      "id": "oral_ulcers",
+      "label": "Mouth ulcers / sores",
+      "description": "Painless oral or nasal ulcers — a classification criterion for lupus.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "mouth ulcers",
+        "mouth sores",
+        "oral ulcers",
+        "nasal ulcers",
+        "canker sores",
+        "ulcers in my mouth"
+      ]
+    },
+    {
+      "id": "raynauds",
+      "label": "Raynaud's phenomenon",
+      "description": "Color changes and numbness in fingers and toes with cold or stress — common in lupus.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "raynaud",
+        "raynaud's",
+        "raynauds",
+        "raynaud's phenomenon",
+        "cold fingers",
+        "white fingers",
+        "blue fingers"
+      ]
+    },
+    {
+      "id": "hair_loss",
+      "label": "Hair loss / alopecia",
+      "description": "Diffuse hair thinning or patchy loss from lupus activity or treatment.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "hair loss",
+        "losing hair",
+        "hair falling out",
+        "alopecia",
+        "thinning hair",
+        "hair thinning",
+        "bald spots"
+      ]
+    },
+    {
+      "id": "decreased_urine",
+      "label": "Reduced / changed urine output",
+      "description": "Producing less urine or noticing changes in urination — a sign of declining kidney function.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "less urine",
+        "decreased urine",
+        "reduced urine output",
+        "peeing less",
+        "dark urine"
+      ]
+    },
+    {
+      "id": "chronic_kidney_disease",
+      "label": "Chronic kidney disease (CKD)",
+      "description": "Progressive loss of kidney function that can result from lupus nephritis; staged by eGFR.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "chronic kidney disease",
+        "ckd",
+        "kidney disease",
+        "renal insufficiency",
+        "renal impairment",
+        "stage 3 ckd",
+        "stage 4 ckd"
+      ]
+    },
+    {
+      "id": "kidney_failure",
+      "label": "Kidney failure / ESRD",
+      "description": "End-stage renal disease requiring dialysis or transplant — the outcome lupus nephritis treatment aims to prevent.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "kidney failure",
+        "renal failure",
+        "end stage renal disease",
+        "end-stage renal disease",
+        "esrd",
+        "eskd",
+        "end stage kidney disease"
+      ]
+    },
+    {
+      "id": "dialysis",
+      "label": "Dialysis",
+      "description": "Hemodialysis or peritoneal dialysis to replace kidney function in advanced lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "dialysis",
+        "hemodialysis",
+        "haemodialysis",
+        "peritoneal dialysis",
+        "on dialysis"
+      ]
+    },
+    {
+      "id": "kidney_transplant",
+      "label": "Kidney transplant",
+      "description": "Transplantation as treatment for kidney failure from lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "kidney transplant",
+        "renal transplant",
+        "transplant",
+        "transplantation",
+        "transplant list",
+        "donor kidney"
+      ]
+    },
+    {
+      "id": "antiphospholipid",
+      "label": "Antiphospholipid syndrome",
+      "description": "Clotting disorder frequently co-occurring with lupus; raises thrombosis and pregnancy risks.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "antiphospholipid syndrome",
+        "antiphospholipid",
+        "aps",
+        "blood clots",
+        "clotting disorder",
+        "lupus anticoagulant"
+      ]
+    },
+    {
+      "id": "anemia",
+      "label": "Anemia / cytopenias",
+      "description": "Low blood counts — anemia, leukopenia, thrombocytopenia — from lupus or its treatment.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "anemia",
+        "anaemia",
+        "anemic",
+        "low blood count",
+        "low blood counts",
+        "leukopenia",
+        "thrombocytopenia",
+        "low platelets",
+        "cytopenia"
+      ]
+    },
+    {
+      "id": "cardiovascular",
+      "label": "Cardiovascular disease",
+      "description": "Elevated heart and vascular risk in lupus — pericarditis, accelerated atherosclerosis, clots.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "cardiovascular",
+        "heart disease",
+        "pericarditis",
+        "atherosclerosis",
+        "cardiac"
+      ]
+    },
+    {
+      "id": "osteoporosis",
+      "label": "Osteoporosis / bone loss",
+      "description": "Reduced bone density, often from long-term steroid use in lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "osteoporosis",
+        "osteopenia",
+        "bone loss",
+        "bone density",
+        "brittle bones",
+        "avascular necrosis",
+        "osteonecrosis"
+      ]
+    },
+    {
+      "id": "ln_nephrotic_lipids",
+      "label": "High cholesterol from nephrotic syndrome",
+      "description": "Elevated cholesterol or triglycerides associated with nephrotic-range proteinuria.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "high cholesterol",
+        "high triglycerides",
+        "hyperlipidemia",
+        "hyperlipidaemia",
+        "cholesterol went up",
+        "nephrotic cholesterol",
+        "lipids",
+        "statin"
+      ]
+    },
+    {
+      "id": "egfr",
+      "label": "eGFR / kidney function",
+      "description": "Estimated glomerular filtration rate — the core measure of how well the kidneys filter; tracked over time in lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "egfr",
+        "gfr",
+        "glomerular filtration rate",
+        "kidney function",
+        "renal function",
+        "filtration rate"
+      ]
+    },
+    {
+      "id": "creatinine",
+      "label": "Creatinine",
+      "description": "Serum creatinine — a blood marker of kidney function; rising values signal worsening lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "creatinine",
+        "serum creatinine",
+        "creatinine level",
+        "creatinine levels"
+      ]
+    },
+    {
+      "id": "urine_protein_test",
+      "label": "Urine protein (UPCR / 24-hour)",
+      "description": "Urine protein-to-creatinine ratio or 24-hour collection quantifying proteinuria — the key lupus nephritis response measure.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "upcr",
+        "uacr",
+        "protein creatinine ratio",
+        "urine protein",
+        "24 hour urine",
+        "24-hour urine",
+        "protein to creatinine",
+        "urine protein creatinine ratio",
+        "protein/creatinine ratio",
+        "protein-creatinine ratio",
+        "albumin creatinine ratio",
+        "albumin/creatinine ratio",
+        "urinalysis",
+        "ua",
+        "dipstick protein",
+        "protein dipstick"
+      ]
+    },
+    {
+      "id": "kidney_biopsy",
+      "label": "Kidney biopsy / ISN class",
+      "description": "Renal biopsy that diagnoses lupus nephritis and assigns its histologic class (ISN/RPS Class I–VI).",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "kidney biopsy",
+        "renal biopsy",
+        "biopsy",
+        "isn/rps",
+        "isn rps",
+        "class iii",
+        "class iv",
+        "class v",
+        "class vi",
+        "class 3",
+        "class 4",
+        "class 5",
+        "class 6",
+        "proliferative",
+        "membranous lupus nephritis",
+        "renal pathology",
+        "pathology report",
+        "biopsy results",
+        "biopsy class",
+        "lupus nephritis class",
+        "mixed class",
+        "crescentic"
+      ]
+    },
+    {
+      "id": "complement_levels",
+      "label": "Complement levels (C3 / C4)",
+      "description": "Low complement (C3, C4) reflects active lupus; tracked alongside autoantibodies.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "complement",
+        "complement levels",
+        "c3",
+        "c4",
+        "low complement",
+        "ch50"
+      ]
+    },
+    {
+      "id": "autoantibodies",
+      "label": "Autoantibodies (ANA / anti-dsDNA)",
+      "description": "Lupus autoantibodies — ANA, anti-dsDNA, anti-Smith — used for diagnosis and tracking disease activity.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "autoantibody",
+        "autoantibodies",
+        "ana",
+        "antinuclear antibody",
+        "anti-dsdna",
+        "dsdna",
+        "double stranded dna",
+        "anti-smith",
+        "anti-sm",
+        "titers",
+        "titres"
+      ]
+    },
+    {
+      "id": "ln_diagnostic_delay",
+      "label": "Diagnostic delay / missed kidney involvement",
+      "description": "Delay between lupus symptoms, abnormal urine/labs, and recognition that the kidneys are involved.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "diagnostic delay",
+        "delayed diagnosis",
+        "missed diagnosis",
+        "missed kidney involvement",
+        "no one checked my urine",
+        "kidney issues were missed",
+        "not taken seriously",
+        "kept being told it was normal",
+        "years to diagnose",
+        "late diagnosis"
+      ]
+    },
+    {
+      "id": "ln_asymptomatic_detection",
+      "label": "Asymptomatic / lab-detected disease",
+      "description": "Lupus nephritis discovered through urine or bloodwork before obvious symptoms appear.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "asymptomatic",
+        "no symptoms",
+        "no kidney symptoms",
+        "found on labs",
+        "found in bloodwork",
+        "found in urine test",
+        "routine labs",
+        "routine urine",
+        "incidental finding",
+        "did not feel sick"
+      ]
+    },
+    {
+      "id": "ln_active_urine_sediment",
+      "label": "Active urine sediment",
+      "description": "Microscopic urine findings such as red blood cell casts, white blood cell casts, or acanthocytes that signal active kidney inflammation.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "urine sediment",
+        "active sediment",
+        "rbc casts",
+        "red blood cell casts",
+        "wbc casts",
+        "white blood cell casts",
+        "acanthocytes",
+        "cellular casts",
+        "casts in urine",
+        "microscopic blood"
+      ]
+    },
+    {
+      "id": "ln_albumin_hypoalbuminemia",
+      "label": "Low albumin / hypoalbuminemia",
+      "description": "Low blood albumin caused by heavy protein loss in urine, often contributing to swelling and nephrotic syndrome.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "low albumin",
+        "hypoalbuminemia",
+        "hypoalbuminaemia",
+        "albumin level",
+        "serum albumin",
+        "albumin was low",
+        "protein levels low",
+        "low protein in blood"
+      ]
+    },
+    {
+      "id": "ln_biopsy_class_activity_chronicity",
+      "label": "Biopsy activity / chronicity score",
+      "description": "Pathology details from kidney biopsy that distinguish active inflammation from chronic scarring and guide treatment intensity.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "activity index",
+        "chronicity index",
+        "activity score",
+        "chronicity score",
+        "active lesions",
+        "chronic lesions",
+        "glomerular scarring",
+        "interstitial fibrosis",
+        "tubular atrophy",
+        "crescent",
+        "crescents",
+        "wire loop",
+        "immune complex deposits"
+      ]
+    },
+    {
+      "id": "ln_anti_c1q",
+      "label": "Anti-C1q / advanced serology",
+      "description": "Additional lupus serologies sometimes discussed in relation to nephritis activity or flare risk.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "anti-c1q",
+        "anti c1q",
+        "c1q antibody",
+        "c1q antibodies",
+        "ec4d",
+        "cb-cap",
+        "cell-bound complement",
+        "advanced lupus test"
+      ]
+    },
+    {
+      "id": "renal_remission",
+      "label": "Renal remission / response",
+      "description": "Achieving complete or partial renal response — proteinuria falling and kidney function stabilizing on treatment.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "remission",
+        "complete renal response",
+        "partial renal response",
+        "in remission",
+        "responded to treatment",
+        "proteinuria improved",
+        "kidney function stable",
+        "labs improved"
+      ]
+    },
+    {
+      "id": "ln_quality_of_life",
+      "label": "Quality of life (lupus)",
+      "description": "Felt impact of lupus and its treatment on daily life — energy, function, independence, getting back to normal.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "quality of life",
+        "back to normal",
+        "feel like myself",
+        "feel human again",
+        "get my life back",
+        "live normally",
+        "functioning"
+      ]
+    },
+    {
+      "id": "steroid_side_effects",
+      "label": "Steroid side effects",
+      "description": "Weight gain, moon face, mood swings, insomnia, and bone loss from long-term steroid use.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "steroid side effects",
+        "moon face",
+        "moonface",
+        "weight gain",
+        "mood swings",
+        "steroid weight",
+        "puffy face",
+        "roid rage",
+        "insomnia",
+        "steroid acne"
+      ]
+    },
+    {
+      "id": "immunosuppression_infections",
+      "label": "Infections (immunosuppression)",
+      "description": "Frequent or serious infections resulting from immunosuppressive lupus nephritis treatment.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "frequent infections",
+        "got sick",
+        "getting sick",
+        "immunocompromised",
+        "immunosuppressed",
+        "shingles",
+        "pneumonia",
+        "opportunistic infection"
+      ]
+    },
+    {
+      "id": "mmf_gi_effects",
+      "label": "Nausea / GI effects (mycophenolate)",
+      "description": "Gastrointestinal upset — nausea, diarrhea, cramping — commonly from mycophenolate.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "nausea",
+        "nauseous",
+        "diarrhea",
+        "diarrhoea",
+        "stomach cramps",
+        "stomach upset",
+        "vomiting",
+        "gi upset"
+      ]
+    },
+    {
+      "id": "cyclophosphamide_toxicity",
+      "label": "Cyclophosphamide toxicity",
+      "description": "Bladder toxicity, nausea, and being treated with what feels like chemotherapy.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "hemorrhagic cystitis",
+        "bladder toxicity",
+        "chemo",
+        "chemotherapy",
+        "feels like chemo"
+      ]
+    },
+    {
+      "id": "ln_steroid_taper",
+      "label": "Steroid taper experience",
+      "description": "The practical and emotional experience of tapering prednisone after induction therapy, including rebound symptoms or fear of flare.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "steroid taper",
+        "prednisone taper",
+        "tapering prednisone",
+        "tapering steroids",
+        "lowering prednisone",
+        "reducing steroids",
+        "withdrawal",
+        "adrenal suppression",
+        "rebound symptoms",
+        "flare when tapering",
+        "afraid to taper"
+      ]
+    },
+    {
+      "id": "ln_medication_toxicity_monitoring",
+      "label": "Medication toxicity monitoring",
+      "description": "Bloodwork and monitoring for liver toxicity, low blood counts, kidney toxicity, or other adverse effects of LN medications.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "toxicity monitoring",
+        "liver enzymes",
+        "alt",
+        "ast",
+        "low white count",
+        "low neutrophils",
+        "neutropenia",
+        "leukopenia",
+        "platelets dropped",
+        "kidney toxicity",
+        "nephrotoxicity",
+        "monitoring side effects"
+      ]
+    },
+    {
+      "id": "fertility_concerns",
+      "label": "Fertility concerns",
+      "description": "Worry about infertility from cyclophosphamide and pregnancy risk on teratogenic drugs — a major barrier for patients of childbearing age.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "fertility",
+        "infertility",
+        "infertile",
+        "having kids",
+        "have children",
+        "pregnancy",
+        "pregnant",
+        "family planning",
+        "ovarian failure",
+        "egg freezing",
+        "teratogenic",
+        "birth defects",
+        "fertility preservation",
+        "preserve fertility",
+        "amh",
+        "premature ovarian insufficiency",
+        "ovarian reserve",
+        "sperm banking",
+        "embryo freezing",
+        "menstrual changes"
+      ]
+    },
+    {
+      "id": "pill_burden",
+      "label": "Pill burden / regimen complexity",
+      "description": "The load of taking many medications on strict schedules — a barrier to adherence in lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "pill burden",
+        "so many pills",
+        "too many pills",
+        "handful of pills",
+        "complicated regimen",
+        "pill fatigue"
+      ]
+    },
+    {
+      "id": "ln_contraception_counseling",
+      "label": "Contraception / teratogenic medication counseling",
+      "description": "Counseling and decision-making around contraception because some LN medications are unsafe during pregnancy.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "contraception",
+        "birth control",
+        "iud",
+        "teratogenic medication",
+        "cannot get pregnant",
+        "pregnancy test",
+        "negative pregnancy test",
+        "medication not safe in pregnancy",
+        "mycophenolate pregnancy",
+        "cellcept pregnancy"
+      ]
+    },
+    {
+      "id": "avoid_dialysis",
+      "label": "Avoiding dialysis / kidney failure",
+      "description": "Preventing progression to dialysis or transplant as the central motivation behind lupus nephritis treatment decisions.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "avoid dialysis",
+        "don't want dialysis",
+        "keep my kidneys",
+        "save my kidneys",
+        "kidney survival",
+        "preserve kidney function",
+        "stay off dialysis"
+      ]
+    },
+    {
+      "id": "steroid_sparing",
+      "label": "Steroid-sparing goal",
+      "description": "Wanting to minimize or get off steroids as a driver of treatment choices.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "steroid-sparing",
+        "steroid sparing",
+        "get off steroids",
+        "off steroids",
+        "off prednisone",
+        "lower the steroids",
+        "reduce prednisone",
+        "minimize steroids",
+        "steroid taper",
+        "tapering"
+      ]
+    },
+    {
+      "id": "ln_treatment_escalation",
+      "label": "Treatment escalation",
+      "description": "Moving from standard therapy to stronger, add-on, or rescue treatment because labs or symptoms are not improving.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "escalate treatment",
+        "treatment escalation",
+        "step up therapy",
+        "add another medication",
+        "not responding",
+        "failed cellcept",
+        "refractory",
+        "refractory lupus nephritis",
+        "resistant disease",
+        "rescue therapy",
+        "induction failed"
+      ]
+    },
+    {
+      "id": "ln_pregnancy_planning",
+      "label": "Pregnancy planning with lupus nephritis",
+      "description": "Planning pregnancy around renal remission, medication safety, flare risk, and maternal-fetal monitoring.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "pregnancy planning",
+        "trying to conceive",
+        "ttc",
+        "high-risk pregnancy",
+        "maternal fetal medicine",
+        "mfm",
+        "pregnancy safe medication",
+        "pregnancy-safe meds",
+        "flare during pregnancy",
+        "kidney flare during pregnancy",
+        "preeclampsia",
+        "postpartum flare"
+      ]
+    },
+    {
+      "id": "bp_monitoring",
+      "label": "Blood pressure monitoring",
+      "description": "Home blood-pressure tracking to manage renal hypertension in lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "blood pressure monitor",
+        "checking my blood pressure",
+        "home blood pressure",
+        "bp cuff",
+        "monitoring blood pressure"
+      ]
+    },
+    {
+      "id": "sun_protection",
+      "label": "Sun protection",
+      "description": "Sunscreen, protective clothing, and sun avoidance to prevent UV-triggered lupus flares.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "sunscreen",
+        "sun protection",
+        "spf",
+        "avoiding the sun",
+        "stay out of the sun",
+        "sun avoidance",
+        "protective clothing"
+      ]
+    },
+    {
+      "id": "renal_diet",
+      "label": "Low-sodium / renal diet",
+      "description": "Dietary changes — reducing salt, sometimes protein or potassium — to support kidney health.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "low sodium",
+        "low-sodium",
+        "low salt",
+        "reduce salt",
+        "renal diet",
+        "kidney diet",
+        "low protein diet",
+        "watching my sodium"
+      ]
+    },
+    {
+      "id": "medication_adherence",
+      "label": "Medication adherence",
+      "description": "Sticking to complex lupus regimens consistently — a core self-management skill.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "adherence",
+        "compliance",
+        "taking my meds",
+        "stay on my meds",
+        "missed doses",
+        "pill organizer",
+        "medication reminder"
+      ]
+    },
+    {
+      "id": "lab_tracking",
+      "label": "Symptom / lab tracking",
+      "description": "Logging symptoms, labs, and flares to manage lupus nephritis and communicate with the care team.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "tracking symptoms",
+        "symptom diary",
+        "lupus journal",
+        "tracking my labs",
+        "lab results",
+        "patient portal",
+        "mychart"
+      ]
+    },
+    {
+      "id": "ln_rheum_nephrology_coordination",
+      "label": "Rheumatology–nephrology coordination",
+      "description": "The need to coordinate care across rheumatology, nephrology, primary care, maternal-fetal medicine, and other specialists.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "rheumatologist and nephrologist",
+        "rheum and nephrology",
+        "rheumatology",
+        "nephrology",
+        "kidney doctor",
+        "renal doctor",
+        "care coordination",
+        "coordinating doctors",
+        "my doctors do not talk",
+        "too many specialists",
+        "multidisciplinary care"
+      ]
+    },
+    {
+      "id": "ln_lab_visit_burden",
+      "label": "Frequent lab monitoring burden",
+      "description": "The recurring logistical burden of urine tests, bloodwork, and follow-up monitoring.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "frequent labs",
+        "constant bloodwork",
+        "monthly labs",
+        "urine tests all the time",
+        "lab appointments",
+        "monitoring appointments",
+        "getting labs drawn",
+        "blood draws",
+        "lab burden",
+        "too many tests"
+      ]
+    },
+    {
+      "id": "ln_trust_in_specialists",
+      "label": "Trust in specialists",
+      "description": "Confidence or mistrust in nephrologists, rheumatologists, and the treatment plan.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "trust my doctor",
+        "trust my nephrologist",
+        "trust my rheumatologist",
+        "second opinion",
+        "do not trust",
+        "dismissed by doctor",
+        "doctor listened",
+        "felt heard",
+        "advocate for myself",
+        "question my doctor"
+      ]
+    },
+    {
+      "id": "invisible_illness",
+      "label": "Invisible illness",
+      "description": "The challenge of a serious illness others can't see — feeling disbelieved or having to explain lupus.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "invisible illness",
+        "invisible disease",
+        "you don't look sick",
+        "don't look sick",
+        "look fine",
+        "but you look healthy",
+        "no one believes"
+      ]
+    },
+    {
+      "id": "appearance_stigma",
+      "label": "Appearance changes / stigma",
+      "description": "Self-consciousness about steroid weight gain, moon face, hair loss, or rashes from lupus and its treatment.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "self-conscious",
+        "embarrassed",
+        "how i look",
+        "people staring",
+        "rash on my face",
+        "hide my face"
+      ]
+    },
+    {
+      "id": "ln_flare_unpredictability",
+      "label": "Flare unpredictability",
+      "description": "Uncertainty about when kidney or systemic lupus activity will return and whether symptoms/labs indicate a flare.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "unpredictable",
+        "never know when",
+        "flare anxiety",
+        "afraid of flaring",
+        "worry about relapse",
+        "worry about labs",
+        "waiting for labs",
+        "every ache worries me",
+        "health anxiety",
+        "lab anxiety"
+      ]
+    },
+    {
+      "id": "ln_mental_health_burden",
+      "label": "Mental health burden",
+      "description": "Depression, anxiety, fear, and emotional exhaustion related to LN, immunosuppression, kidney risk, and long-term uncertainty.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "anxiety",
+        "depression",
+        "depressed",
+        "panic",
+        "mental health",
+        "emotional burden",
+        "overwhelmed",
+        "scared of kidney failure",
+        "fear of dialysis",
+        "medical trauma",
+        "traumatized"
+      ]
+    },
+    {
+      "id": "ln_work_school_disruption",
+      "label": "Work / school disruption",
+      "description": "Impact of LN symptoms, appointments, fatigue, flares, and treatment on employment, school, and daily responsibilities.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "missed work",
+        "missing work",
+        "time off work",
+        "fmla",
+        "disability leave",
+        "could not work",
+        "lost my job",
+        "school absences",
+        "missed school",
+        "accommodations",
+        "work from home",
+        "reduced hours"
+      ]
+    },
+    {
+      "id": "ln_caregiver_family_burden",
+      "label": "Family / caregiver burden",
+      "description": "The effect of LN care, fatigue, appointments, fertility concerns, and kidney risk on partners, parents, children, and caregivers.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "caregiver",
+        "my partner",
+        "my spouse",
+        "my husband",
+        "my wife",
+        "my parents help",
+        "family burden",
+        "burden on my family",
+        "childcare",
+        "kids at home",
+        "parenting with lupus"
+      ]
+    },
+    {
+      "id": "ln_racial_disparities",
+      "label": "Racial / ethnic disparities in lupus nephritis",
+      "description": "Awareness or experience of unequal lupus nephritis burden, care access, severity, or outcomes by race and ethnicity.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "racial disparities",
+        "health disparities",
+        "black women with lupus",
+        "latina lupus",
+        "minority patients",
+        "people of color",
+        "not believed",
+        "bias",
+        "medical bias",
+        "health equity",
+        "unequal care"
+      ]
+    },
+    {
+      "id": "lupus_support",
+      "label": "Lupus support / advocacy",
+      "description": "Patient communities, foundations, and peer support for people with lupus and lupus nephritis.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "lupus foundation",
+        "lupus foundation of america",
+        "lupus community",
+        "lupus warrior",
+        "lupus warriors",
+        "fundraising walk",
+        "walk to end lupus",
+        "lfa",
+        "lupus research alliance",
+        "lupus uk",
+        "lupus europe",
+        "kidney community",
+        "renal support group",
+        "facebook lupus group",
+        "online lupus group",
+        "patient advocacy"
+      ]
+    },
+    {
+      "id": "renal_response_endpoint",
+      "label": "Renal response endpoint",
+      "description": "Lupus nephritis trial outcome measures — complete renal response, proteinuria reduction, eGFR preservation.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "complete renal response",
+        "partial renal response",
+        "renal response",
+        "proteinuria reduction",
+        "primary endpoint",
+        "renal endpoint",
+        "efficacy endpoint",
+        "crr",
+        "prr",
+        "upcr endpoint",
+        "egfr endpoint",
+        "kidney function endpoint",
+        "renal remission endpoint"
+      ]
+    },
+    {
+      "id": "ln_complete_renal_response",
+      "label": "Complete renal response (CRR)",
+      "description": "Trial endpoint describing stringent renal improvement, typically involving proteinuria reduction, stable kidney function, and limited rescue therapy.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "complete renal response",
+        "crr",
+        "complete response",
+        "complete remission",
+        "primary endpoint",
+        "week 52",
+        "week 76",
+        "week 104",
+        "renal response criteria"
+      ]
+    },
+    {
+      "id": "ln_partial_renal_response",
+      "label": "Partial renal response (PRR)",
+      "description": "Trial or clinical response category where proteinuria and kidney measures improve but do not meet complete response criteria.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "partial renal response",
+        "prr",
+        "partial response",
+        "partial remission",
+        "proteinuria improved but",
+        "some improvement",
+        "not complete response"
+      ]
+    },
+    {
+      "id": "ln_rescue_medication_endpoint",
+      "label": "Rescue medication / treatment failure endpoint",
+      "description": "Trial concept where needing rescue therapy, treatment escalation, or excessive steroids may count against endpoint success.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "rescue medication",
+        "rescue therapy",
+        "treatment failure",
+        "escape therapy",
+        "prohibited medication",
+        "background therapy",
+        "steroid limit",
+        "too much prednisone",
+        "endpoint failure"
+      ]
+    },
+    {
+      "id": "ln_kidney_biopsy_trial_requirement",
+      "label": "Kidney biopsy trial requirement",
+      "description": "Clinical-trial eligibility or stratification based on biopsy-confirmed active lupus nephritis class.",
+      "indication": "lupus_nephritis",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "biopsy required",
+        "repeat biopsy",
+        "trial biopsy",
+        "biopsy-confirmed",
+        "class iii or iv",
+        "class v",
+        "active lupus nephritis",
+        "eligibility biopsy",
+        "kidney biopsy for trial"
+      ]
+    }
+  ]
+}
