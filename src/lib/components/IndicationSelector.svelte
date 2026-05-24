@@ -9,7 +9,7 @@
 
 	Lexicon 3.2+: cross-cutting clusters use `indications: []` and surface
 	under every indication. The legacy "general" indication row is no longer
-	in the registry; the filter below is kept as a defensive no-op.
+	in the registry, so every indication in `indications[]` is user-pickable.
 
 	`compact` prop renders the trigger as a small square badge (for use in an
 	icon-rail sidebar) with a tooltip; the dropdown panel floats out to the
@@ -36,9 +36,9 @@
 	let buttonEl: HTMLButtonElement | undefined = $state();
 	let panelEl: HTMLDivElement | undefined = $state();
 
-	const selectable = $derived(indications.filter((i) => i.id !== 'general'));
+	const selectable = $derived(indications);
 	const active = $derived(
-		indications.find((i) => i.id === activeIndication) ?? selectable[0] ?? indications[0]
+		indications.find((i) => i.id === activeIndication) ?? indications[0]
 	);
 	const areaLabel = $derived(
 		(id: string) => therapeuticAreas.find((a) => a.id === id)?.label ?? id
@@ -55,7 +55,7 @@
 			.toUpperCase()
 	);
 	const activeAreas = $derived(
-		(active?.therapeutic_areas ?? []).map(areaLabel).join(' + ')
+		(active?.therapeutic_area_ids ?? []).map(areaLabel).join(' + ')
 	);
 
 	function select(id: string) {
@@ -136,9 +136,9 @@
 					>Indication</span
 				>
 				<span class="truncate font-medium text-zinc-900">{active?.label ?? '—'}</span>
-				{#if active?.therapeutic_areas?.length}
+				{#if active?.therapeutic_area_ids?.length}
 					<div class="mt-0.5 flex flex-wrap gap-1">
-						{#each active.therapeutic_areas as areaId (areaId)}
+						{#each active.therapeutic_area_ids as areaId (areaId)}
 							<span
 								class="rounded-sm bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-600"
 								>{areaLabel(areaId)}</span
@@ -183,9 +183,9 @@
 								{#if ind.mesh_term}
 									<div class="text-[11px] text-zinc-500">MeSH · {ind.mesh_term}</div>
 								{/if}
-								{#if ind.therapeutic_areas?.length}
+								{#if ind.therapeutic_area_ids?.length}
 									<div class="mt-1 flex flex-wrap gap-1">
-										{#each ind.therapeutic_areas as areaId (areaId)}
+										{#each ind.therapeutic_area_ids as areaId (areaId)}
 											<span
 												class="rounded-sm bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium text-zinc-600"
 												>{areaLabel(areaId)}</span

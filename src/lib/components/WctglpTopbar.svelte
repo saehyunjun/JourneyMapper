@@ -9,11 +9,10 @@
 	multiple therapeutic areas appear under each of their groups.
 
 	Options are sourced from `data.slice.indications` + `data.slice.therapeutic_areas`,
-	which the layout server loads from `meta.indications[]` and
-	`meta.therapeutic_areas[]` in `keyword_lexicon.json` — the canonical
-	registry. Lexicon 3.2+: cross-cutting clusters use `indications: []` and
-	always show under whichever indication is active; the "general" row was
-	dropped from the registry, so the filter below is a defensive no-op.
+	which the layout server loads from src/lib/content/registries/ (indications.json
+	and therapeutic_areas.json) — the canonical registry. Cross-cutting
+	clusters use `indications: []` and always show under whichever indication
+	is active.
 
 	On selection: goto(?indication=<id>, { invalidateAll: true }) so every
 	loader downstream (layout + each +page.server.ts) re-runs and the
@@ -26,6 +25,7 @@
 	import { ChevronDown, Check } from '@lucide/svelte';
 	import type { Indication, TherapeuticArea } from '$lib/server/lexicon';
 	import PIQLogo from '$lib/components/PIQLogo.svelte';
+	import ViewModeToggle from '$lib/components/ViewModeToggle.svelte';
 
 	type Props = {
 		indications: Indication[];
@@ -34,9 +34,11 @@
 	};
 	let { indications, therapeuticAreas, activeIndication }: Props = $props();
 
-	// Defensive: filter out any legacy "general" row if present. Lexicon 3.2
-	// no longer registers it.
-	const selectable = $derived(indications.filter((i) => i.id !== 'general'));
+	// The Story / Dashboard toggle is meaningful only on pages that implement
+	// story mode. Today that's just the Executive Summary at /patientlyiq.
+	const showViewToggle = $derived(page.url.pathname === '/patientlyiq');
+
+	const selectable = $derived(indications);
 
 	// Group selectable indications by therapeutic area. An indication that
 	// belongs to multiple TAs appears under each of them, matching the
@@ -46,7 +48,7 @@
 		therapeuticAreas
 			.map((area) => ({
 				area,
-				indications: selectable.filter((i) => i.therapeutic_areas.includes(area.id))
+				indications: selectable.filter((i) => i.therapeutic_area_ids.includes(area.id))
 			}))
 			.filter((g) => g.indications.length > 0)
 	);
@@ -122,6 +124,12 @@
 			{/each}
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
+
+	{#if showViewToggle}
+		<div class="ml-auto flex items-center">
+			<ViewModeToggle />
+		</div>
+	{/if}
 </div>
 
 <style>

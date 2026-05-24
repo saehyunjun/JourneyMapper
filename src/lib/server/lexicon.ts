@@ -15,6 +15,11 @@
 import bundledLexicon from '$lib/content/wctglpdemo-data/keyword_lexicon.json';
 import bundledCodebook from '$lib/content/wctglpdemo-data/codebook.json';
 import { loadDoc, saveDoc } from './kv-store';
+import {
+	indications as registryIndications,
+	therapeuticAreas as registryTherapeuticAreas
+} from './registries';
+import type { Indication, TherapeuticArea } from './registries';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const LEXICON_PATH = `${DATA_DIR}/keyword_lexicon.json`;
@@ -36,29 +41,12 @@ export type Cluster = {
 	variants: string[];
 };
 
-/** Lexicon 3.1+ meta registries used by the condition toggle. Both are
- *  optional on read so pre-3.1 files still parse, but `getLexiconSlice` needs
- *  them populated to filter by indication. */
-export type TherapeuticArea = {
-	id: string;
-	label: string;
-	mesh_id?: string | null;
-	mesh_term?: string | null;
-};
-export type Indication = {
-	id: string;
-	label: string;
-	mesh_id?: string | null;
-	mesh_term?: string | null;
-	therapeutic_areas: string[];
-	description?: string;
-};
-type LexiconMeta = {
-	schema_version?: string;
-	therapeutic_areas?: TherapeuticArea[];
-	indications?: Indication[];
-	[k: string]: unknown;
-};
+/** Indication + TherapeuticArea types re-exported from the registry module so
+ *  existing import sites in components keep working. The lexicon file no
+ *  longer carries these — they live in src/lib/content/registries/. */
+export type { Indication, TherapeuticArea };
+
+type LexiconMeta = { schema_version?: string; [k: string]: unknown };
 type LexiconFile = { clusters: Cluster[]; meta?: LexiconMeta; [k: string]: unknown };
 
 export type Subtheme = { id: string; label?: string; description?: string };
@@ -148,24 +136,20 @@ function clusterIndications(c: Cluster & { indication?: string }): string[] {
 
 /** Return a lexicon slice for the named indication.
  *
- *  Falls back to the first indication in the registry if the requested id
- *  doesn't exist. Throws if the lexicon is missing its registries — use the
- *  migration script to upgrade.
+ *  Falls back to the first registered indication if the requested id is
+ *  missing or unknown. Indications + therapeutic areas come from the
+ *  registries module — keyword_lexicon.json no longer carries them.
  *
  *  Clusters with `indications: []` (cross-cutting) surface under every
  *  indication. Legacy 3.1 rows with `indication: 'general'` are treated as
  *  cross-cutting too. */
 export async function getLexiconSlice(requested?: string): Promise<LexiconSlice> {
 	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
-	const indications = lex.meta?.indications ?? [];
-	const therapeutic_areas = lex.meta?.therapeutic_areas ?? [];
-	if (!indications.length)
-		throw new Error(
-			'keyword_lexicon.json has no meta.indications — run scripts/migrate-lexicon-indications-array.mjs to upgrade.'
-		);
+	if (!registryIndications.length)
+		throw new Error('registries/indications.json is empty — registry is required.');
 
-	const known = new Set(indications.map((i) => i.id));
-	const fallback = indications[0].id;
+	const known = new Set<string>(registryIndications.map((i) => i.id));
+	const fallback: string = registryIndications[0].id;
 	const active = requested && known.has(requested) ? requested : fallback;
 
 	const clusters = lex.clusters.filter((c) => {
@@ -175,8 +159,8 @@ export async function getLexiconSlice(requested?: string): Promise<LexiconSlice>
 
 	return {
 		active_indication: active,
-		therapeutic_areas,
-		indications,
+		therapeutic_areas: registryTherapeuticAreas,
+		indications: registryIndications,
 		clusters,
 		themes: codebook.themes
 	};

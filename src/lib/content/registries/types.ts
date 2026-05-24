@@ -39,6 +39,10 @@ export type Indication = {
 	mesh_id: string | null;
 	mesh_term: string | null;
 	therapeutic_area_ids: TherapeuticAreaId[];
+	/** Short prose summary shown in selectors/tooltips. Optional so the
+	 *  registry can grow incrementally; consumers should treat missing as
+	 *  empty string. */
+	description?: string;
 };
 
 export type DatasetType = {

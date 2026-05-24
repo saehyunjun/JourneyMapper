@@ -1,15 +1,16 @@
 {
   "meta": {
-    "schema_version": "3.2",
-    "supersedes": "keyword_lexicon.json @ 3.1",
+    "schema_version": "3.3",
+    "supersedes": "keyword_lexicon.json @ 3.2",
     "status": "live",
-    "description": "Keyword cluster catalog, schema 3.2. The CONDITION axis is now multi-valued: clusters[].indications is a string[] FK into meta.indications[]. An empty array marks a cross-cutting cluster that surfaces under every indication toggle (trial mechanics, cost/access, visit logistics, generic decision/knowledge/adverse-event language). Single-element arrays scope a cluster to one indication; multi-element arrays let one cluster belong to several without duplication. Each cluster also declares parent_theme + parent_subtheme as FKs into codebook.json. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows live in keyword_tags.json keyed by (cluster_id, segment_id, char_start, char_end).",
+    "description": "Keyword cluster catalog, schema 3.3. The indication and therapeutic-area registries no longer live here — they moved to src/lib/content/registries/ (indications.json + therapeutic_areas.json), which is the single source of truth. Clusters reference indication ids via clusters[].indications: string[] (empty array = cross-cutting). Each cluster also declares parent_theme + parent_subtheme as FKs into codebook.json. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows live in keyword_tags.json keyed by (cluster_id, segment_id, char_start, char_end).",
     "changelog": [
       "3.0-draft — replaced the `categories[].keywords[]` shape with a flat `clusters[]` keyed by parent_theme + parent_subtheme. The 102 clusters from keyword_lexicon.json @ 2.0 will be re-classified via the codebook-migration map in codebook_migration_map.json; some will split into parallel clusters with different parents (e.g. cost as a treatment vs. trial barrier).",
       "3.0-draft (porting pass) — ported 103 clusters from keyword_lexicon.json @ 2.0 via scripts/migrate-keyword-lexicon.mjs. Each cluster carries parent_theme + parent_subtheme assigned by category default + per-cluster overrides. Descriptions are empty for now; analyst should backfill as part of Phase 0 review.",
       "3.0 — variant expansion pass. Bug-fixed semaglutide cluster (removed stray 'positive' and incorrect 'eli lilly' variants; 'eli lilly' now correctly lives on tirzepatide). Added manufacturer semantic links: semaglutide ↔ novo nordisk/novo/rybelsus; tirzepatide ↔ eli lilly/lilly. Expanded high-traffic clusters (glp_1, injection, oral_medication, dosing_schedule, diabetes, glucose_monitoring, fasting_blood, travel_burden, visit_frequency, trial_site, clinical_trial, placebo, randomized, financial_compensation, side_effects, needle_phobia, weight_maintenance, weight_loss, weight_regain, hunger, food_noise, quality_of_life, obesity, shortages, coverage, insurance, prior_authorization, healthcare_benefits, scary, meal_replacement, gastric_effects, complication, stall, safety, risk, convenience, support, compounded_medication). Added 13 new clusters: a1c, bmi, sleep_apnea, pcos, thyroid, fda_approval, long_term_use, research_self, diet_exercise, previous_weight_loss, transparency, cost_prohibitive. Backfilled descriptions on every touched cluster. Backup of prior live: keyword_lexicon.v2-backup.json.",
       "3.1 — added the condition axis. New meta.therapeutic_areas[] (Endocrinology, Allergy and Immunology, Nephrology) and meta.indications[] (general, obesity, lupus_nephritis) registries, both MeSH-anchored. Every cluster gained an \"indication\" FK: 64 backfilled to \"general\" (cross-cutting), the rest to \"obesity\". Appended 63 lupus_nephritis clusters (Immunology + Nephrology) across medications, symptoms, quality-of-life, renal labs, comorbidities, barriers, decision factors, self-management, stigma, and lupus-specific trial endpoints. Cross-cutting facets (cost, insurance, trial logistics) are NOT duplicated per condition — they stay under \"general\". Backup of prior live: keyword_lexicon.v3-backup.json. Migration: scripts/migrate-lexicon-conditions.mjs.",
-      "3.2 — multi-indication clusters. clusters[].indication: string → clusters[].indications: string[]. Dropped the \"general\" sentinel from meta.indications; cross-cutting clusters now use an empty array. Migration summary: 64 clusters cross-cutting; obesity: 54, lupus_nephritis: 63. Backup of prior live: keyword_lexicon.v3.1-backup.json. Migration: scripts/migrate-lexicon-indications-array.mjs."
+      "3.2 — multi-indication clusters. clusters[].indication: string → clusters[].indications: string[]. Dropped the \"general\" sentinel from meta.indications; cross-cutting clusters now use an empty array. Migration summary: 64 clusters cross-cutting; obesity: 54, lupus_nephritis: 63. Backup of prior live: keyword_lexicon.v3.1-backup.json. Migration: scripts/migrate-lexicon-indications-array.mjs.",
+      "3.3 — registry consolidation. Removed meta.indications[] and meta.therapeutic_areas[] from the lexicon; both registries now live exclusively under src/lib/content/registries/. Clusters validated against the registry before drop: 181 total, all indication FKs resolved. Backup: keyword_lexicon.v3.2-backup.json. Migration: scripts/migrate-lexicon-registry-consolidation.mjs."
     ],
     "cluster_shape": {
       "id": "Slug, lowercase + underscores. Globally unique. Example: 'treatment_cost_concerns'.",
@@ -44,50 +45,7 @@
         "price",
         "prohibitive"
       ]
-    },
-    "therapeutic_areas": [
-      {
-        "id": "endocrinology",
-        "label": "Endocrinology",
-        "mesh_id": "D004706",
-        "mesh_term": "Endocrinology"
-      },
-      {
-        "id": "immunology",
-        "label": "Allergy and Immunology",
-        "mesh_id": "D000486",
-        "mesh_term": "Allergy and Immunology"
-      },
-      {
-        "id": "nephrology",
-        "label": "Nephrology",
-        "mesh_id": "D009396",
-        "mesh_term": "Nephrology"
-      }
-    ],
-    "indications": [
-      {
-        "id": "obesity",
-        "label": "Obesity",
-        "mesh_id": "D009765",
-        "mesh_term": "Obesity",
-        "therapeutic_areas": [
-          "endocrinology"
-        ],
-        "description": "GLP-1 weight-management corpus (WCT GLP-1 interviews). Metabolic comorbidities (diabetes, PCOS, sleep apnea) sit under this indication as comorbidities."
-      },
-      {
-        "id": "lupus_nephritis",
-        "label": "Lupus Nephritis",
-        "mesh_id": "D008181",
-        "mesh_term": "Lupus Nephritis",
-        "therapeutic_areas": [
-          "immunology",
-          "nephrology"
-        ],
-        "description": "Kidney manifestation of systemic lupus erythematosus (SLE). Spans induction/maintenance immunosuppression, renal labs, and progression to CKD/ESRD."
-      }
-    ]
+    }
   },
   "clusters": [
     {
