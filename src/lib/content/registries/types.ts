@@ -25,6 +25,20 @@ export type DatasetTypeId =
 
 export type SourceTypeId = 'manual_extract' | 'primary_research' | 'third_party_provider';
 
+/** Content source ids — the closed vocabulary of WHERE a piece of patient
+ *  voice originated. Parallel to indications and burdens as a cross-cutting
+ *  axis. Distinct from SourceTypeId, which is dataset PROVENANCE (how data
+ *  got into the system). A YouTube transcript can be content_source:
+ *  'youtube_transcript' AND dataset source.type: 'third_party_provider'. */
+export type ContentSourceId =
+	| 'interview'
+	| 'social_post'
+	| 'youtube_transcript'
+	| 'forum_post'
+	| 'blog_post'
+	| 'search_query'
+	| 'podcast_transcript';
+
 /** Pharma sponsor ids — commercial owner / developer of a drug. Add new ids to
  *  registries/sponsors.json first, then extend this union. */
 export type SponsorId =
@@ -152,6 +166,16 @@ export type SourceType = {
 	description: string;
 };
 
+export type ContentSource = {
+	id: ContentSourceId;
+	label: string;
+	description: string;
+	/** Metadata fields typically attached to content of this source type — a
+	 *  hint to downstream ingestion code, not a hard schema. Phase 5 (multi-
+	 *  source ingestion) defines the actual per-source-type envelope. */
+	typical_metadata: string[];
+};
+
 export type BurdenCategory = {
 	id: BurdenCategoryId;
 	label: string;
@@ -166,10 +190,25 @@ export type Sponsor = {
 	headquarters_country: string | null;
 };
 
+/** Shape of an embedding vector field. Phase-1-closure addition: every taxonomy
+ *  entity (cluster, drug, MOA, burden) eventually carries a precomputed
+ *  embedding used by the retrieval-first annotation path (Phase 3). The slot
+ *  is OPTIONAL today — no entity in this repo carries an embedding yet, and
+ *  no code reads or writes the field. The type only declares the contract so
+ *  the schema doesn't break when Phase 3 starts populating values.
+ *
+ *  Convention: 1536-dim float vectors (compatible with text-embedding-3-small
+ *  / Voyage / similar). The provider + model id is stored on the same entity
+ *  via `embedding_provider` and `embedding_model` siblings if needed; for now
+ *  a single embedding per entity is enough. */
+export type Embedding = number[];
+
 export type MechanismOfAction = {
 	id: MoaId;
 	label: string;
 	description: string;
+	/** Phase 3 lever — precomputed embedding for retrieval. See Embedding type. */
+	embedding?: Embedding;
 };
 
 export type Drug = {
@@ -182,4 +221,6 @@ export type Drug = {
 	stage: DrugStage;
 	indication_ids: IndicationId[];
 	description?: string;
+	/** Phase 3 lever — precomputed embedding for retrieval. See Embedding type. */
+	embedding?: Embedding;
 };

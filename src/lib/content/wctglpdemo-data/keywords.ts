@@ -58,6 +58,9 @@ export type Cluster = {
 	parent_theme: string;
 	parent_subtheme: string;
 	variants: string[];
+	/** Phase-1-closure: optional precomputed embedding for the retrieval-first
+	 *  annotation path (Phase 3). Today nothing reads or writes this field. */
+	embedding?: number[];
 };
 
 type Lexicon = { meta?: unknown; clusters: Cluster[] };
