@@ -21,6 +21,7 @@ import {
 	drugs as registryDrugs
 } from './registries';
 import type { Indication, TherapeuticArea, Drug } from './registries';
+import { drugsForIndicationFromDb } from './db/queries';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const LEXICON_PATH = `${DATA_DIR}/keyword_lexicon.json`;
@@ -177,9 +178,27 @@ export async function getLexiconSlice(requested?: string): Promise<LexiconSlice>
 		return inds.length === 0 || inds.includes(active);
 	});
 
-	const drugs = registryDrugs.filter((d) =>
-		d.indication_ids.includes(active as Drug['indication_ids'][number])
-	);
+	// Drugs: prefer the Drizzle/libSQL path. Fall back to the bundled JSON
+	// registry if the DB query throws (DB not seeded, no DATABASE_URL set on
+	// the host, etc.) so the API remains usable in environments where the
+	// DB hasn't been provisioned yet. Both paths return the same Drug shape.
+	let drugs: Drug[];
+	try {
+		drugs = await drugsForIndicationFromDb(active);
+		if (drugs.length === 0) {
+			// Empty result might mean the DB isn't seeded OR the indication
+			// genuinely has no drugs. Fall back to JSON only when the JSON has
+			// data the DB doesn't — that's a strong signal the DB is stale.
+			const jsonDrugs = registryDrugs.filter((d) =>
+				d.indication_ids.includes(active as Drug['indication_ids'][number])
+			);
+			if (jsonDrugs.length > 0) drugs = jsonDrugs;
+		}
+	} catch {
+		drugs = registryDrugs.filter((d) =>
+			d.indication_ids.includes(active as Drug['indication_ids'][number])
+		);
+	}
 
 	return {
 		active_indication: active,
