@@ -9,7 +9,7 @@
  * The DB is the parallel path; the bundled JSON registries are still the
  * authoritative read source for everything else.
  */
-import { db } from './client';
+import { getDb } from './client';
 import { drugs, drugIndications, sponsors, mechanismsOfAction } from './schema/drugs';
 import {
 	indications,
@@ -43,7 +43,7 @@ import type {
  *
  *  Throws if the DB is unavailable or the schema isn't migrated. */
 export async function drugsForIndicationFromDb(indicationId: string): Promise<Drug[]> {
-	const matchedDrugs = await db
+	const matchedDrugs = await getDb()
 		.select({
 			id: drugs.id,
 			label: drugs.label,
@@ -62,7 +62,7 @@ export async function drugsForIndicationFromDb(indicationId: string): Promise<Dr
 	if (matchedDrugs.length === 0) return [];
 
 	const drugIds = matchedDrugs.map((d) => d.id);
-	const allLinks = await db
+	const allLinks = await getDb()
 		.select({
 			drug_id: drugIndications.drug_id,
 			indication_id: drugIndications.indication_id
@@ -94,10 +94,10 @@ export async function drugsForIndicationFromDb(indicationId: string): Promise<Dr
 /** Every indication row, each with its therapeutic_area_ids[] populated from
  *  the join table. Same shape as registries/indications.json items. */
 export async function indicationsFromDb(): Promise<Indication[]> {
-	const rows = await db.select().from(indications);
+	const rows = await getDb().select().from(indications);
 	if (rows.length === 0) return [];
 
-	const links = await db.select().from(indicationTherapeuticAreas);
+	const links = await getDb().select().from(indicationTherapeuticAreas);
 	const tasByInd = new Map<string, string[]>();
 	for (const l of links) {
 		const arr = tasByInd.get(l.indication_id) ?? [];
@@ -117,7 +117,7 @@ export async function indicationsFromDb(): Promise<Indication[]> {
 }
 
 export async function therapeuticAreasFromDb(): Promise<TherapeuticArea[]> {
-	const rows = await db.select().from(therapeuticAreas);
+	const rows = await getDb().select().from(therapeuticAreas);
 	return rows.map((r) => ({
 		id: r.id as TherapeuticAreaId,
 		label: r.label,
@@ -127,7 +127,7 @@ export async function therapeuticAreasFromDb(): Promise<TherapeuticArea[]> {
 }
 
 export async function burdenCategoriesFromDb(): Promise<BurdenCategory[]> {
-	const rows = await db.select().from(burdenCategories);
+	const rows = await getDb().select().from(burdenCategories);
 	return rows.map((r) => ({
 		id: r.id as BurdenCategoryId,
 		label: r.label,
@@ -137,7 +137,7 @@ export async function burdenCategoriesFromDb(): Promise<BurdenCategory[]> {
 }
 
 export async function sponsorsFromDb(): Promise<Sponsor[]> {
-	const rows = await db.select().from(sponsors);
+	const rows = await getDb().select().from(sponsors);
 	return rows.map((r) => ({
 		id: r.id as SponsorId,
 		label: r.label,
@@ -146,7 +146,7 @@ export async function sponsorsFromDb(): Promise<Sponsor[]> {
 }
 
 export async function mechanismsOfActionFromDb(): Promise<MechanismOfAction[]> {
-	const rows = await db.select().from(mechanismsOfAction);
+	const rows = await getDb().select().from(mechanismsOfAction);
 	return rows.map((r) => ({
 		id: r.id as MoaId,
 		label: r.label,
@@ -156,7 +156,7 @@ export async function mechanismsOfActionFromDb(): Promise<MechanismOfAction[]> {
 }
 
 export async function contentSourcesFromDb(): Promise<ContentSource[]> {
-	const rows = await db.select().from(contentSources);
+	const rows = await getDb().select().from(contentSources);
 	return rows.map((r) => ({
 		id: r.id as ContentSourceId,
 		label: r.label,
