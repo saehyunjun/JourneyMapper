@@ -2,13 +2,13 @@
  * GET /api/lexicon?indication=<id>
  *
  * Returns the lexicon scoped to one indication — the active indication's
- * clusters PLUS every "general" cluster (cross-cutting concepts that surface
- * under every condition). The condition-toggle UI fetches this when the
- * analyst switches indications so the drawer / orbit / word cloud only render
- * clusters relevant to the current study.
+ * clusters plus every cross-cutting cluster (`indications: []`) that surfaces
+ * under every condition. The condition-toggle UI fetches this when the analyst
+ * switches indications so the drawer / orbit / word cloud only render clusters
+ * relevant to the current study.
  *
- * Falls back to the first non-"general" indication in meta.indications if no
- * `indication` query param is provided or the id is unknown.
+ * Falls back to the first indication in meta.indications if no `indication`
+ * query param is provided or the id is unknown.
  *
  * Response shape: LexiconSlice (see src/lib/server/lexicon.ts).
  *

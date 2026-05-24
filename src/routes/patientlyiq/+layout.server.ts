@@ -3,11 +3,12 @@
  *
  * Reads `?indication=<id>` from the URL and loads the matching lexicon slice
  * via getLexiconSlice. The slice carries:
- *   - active_indication (resolved id; falls back to first non-"general" if
- *     the requested id is missing or invalid)
+ *   - active_indication (resolved id; falls back to the first registered
+ *     indication if the requested id is missing or invalid)
  *   - indications + therapeutic_areas registries (powers the selector UI)
- *   - clusters (active indication + general) — for any consumer that wires
- *     itself onto buildKeywordMatcher
+ *   - clusters (active indication's scoped clusters + every cross-cutting
+ *     cluster with `indications: []`) — for any consumer that wires itself
+ *     onto buildKeywordMatcher
  *   - themes (codebook themes) — same
  *
  * Layout-level rather than per-page because the IndicationSelector lives in

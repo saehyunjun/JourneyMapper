@@ -26,11 +26,11 @@ export type Cluster = {
 	id: string;
 	label: string;
 	description: string;
-	/** Lexicon 3.1: FK → meta.indications[].id. "general" = condition-agnostic
-	 *  (shown under every condition toggle); otherwise the indication this
-	 *  cluster pertains to (e.g. "obesity", "lupus_nephritis"). Optional on
-	 *  reads to tolerate any pre-3.1 rows that slipped through. */
-	indication?: string;
+	/** Lexicon 3.2: string[] FK → meta.indications[].id. Empty array = cross-
+	 *  cutting (visible under every indication toggle); non-empty scopes the
+	 *  cluster to those indications. Optional on reads so legacy 3.1 rows with
+	 *  a singular `indication` field still parse (see normalizeCluster). */
+	indications?: string[];
 	parent_theme: string;
 	parent_subtheme: string;
 	variants: string[];
@@ -136,31 +136,41 @@ export type LexiconSlice = {
 	themes: Theme[];
 };
 
+/** Normalize a cluster's indications field across 3.1 and 3.2 shapes.
+ *  3.2 stores `indications: string[]` (empty = cross-cutting). 3.1 stored
+ *  `indication: string` with `"general"` as the cross-cutting sentinel. */
+function clusterIndications(c: Cluster & { indication?: string }): string[] {
+	if (Array.isArray(c.indications)) return c.indications;
+	const legacy = c.indication;
+	if (!legacy || legacy === 'general') return [];
+	return [legacy];
+}
+
 /** Return a lexicon slice for the named indication.
  *
- *  Falls back to the first non-"general" indication in the registry if the
- *  requested id doesn't exist, or to "general" alone if the registry has no
- *  other indications. Throws if the lexicon is missing its 3.1 registries —
- *  use the migration script to upgrade.
+ *  Falls back to the first indication in the registry if the requested id
+ *  doesn't exist. Throws if the lexicon is missing its registries — use the
+ *  migration script to upgrade.
  *
- *  Pre-3.1 clusters without an `indication` field are treated as `general` so
- *  legacy data still surfaces somewhere. */
+ *  Clusters with `indications: []` (cross-cutting) surface under every
+ *  indication. Legacy 3.1 rows with `indication: 'general'` are treated as
+ *  cross-cutting too. */
 export async function getLexiconSlice(requested?: string): Promise<LexiconSlice> {
 	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
 	const indications = lex.meta?.indications ?? [];
 	const therapeutic_areas = lex.meta?.therapeutic_areas ?? [];
 	if (!indications.length)
 		throw new Error(
-			'keyword_lexicon.json has no meta.indications — run scripts/migrate-lexicon-conditions.mjs to upgrade to schema 3.1+.'
+			'keyword_lexicon.json has no meta.indications — run scripts/migrate-lexicon-indications-array.mjs to upgrade.'
 		);
 
 	const known = new Set(indications.map((i) => i.id));
-	const fallback = indications.find((i) => i.id !== 'general')?.id ?? indications[0].id;
+	const fallback = indications[0].id;
 	const active = requested && known.has(requested) ? requested : fallback;
 
 	const clusters = lex.clusters.filter((c) => {
-		const ind = c.indication ?? 'general';
-		return ind === active || ind === 'general';
+		const inds = clusterIndications(c);
+		return inds.length === 0 || inds.includes(active);
 	});
 
 	return {
@@ -272,10 +282,11 @@ export async function createCluster(
 		id,
 		label,
 		description,
-		// Drawer-created clusters have no active-condition signal yet; "general"
-		// keeps them visible under every condition toggle. Reclassify by editing
-		// the lexicon JSON when the cluster belongs to a specific indication.
-		indication: 'general',
+		// Drawer-created clusters have no active-condition signal yet; an empty
+		// indications[] keeps them visible under every indication toggle.
+		// Reclassify by editing the lexicon JSON when the cluster belongs to
+		// one or more specific indications.
+		indications: [],
 		parent_theme: parentTheme,
 		parent_subtheme: parentSubtheme,
 		variants: [text.toLowerCase()]

@@ -7,8 +7,9 @@
 	layout server load re-runs, so the slice and any downstream consumers
 	refresh.
 
-	"general" is omitted from the selectable list — it's cross-cutting and
-	always shown alongside whichever indication is active.
+	Lexicon 3.2+: cross-cutting clusters use `indications: []` and surface
+	under every indication. The legacy "general" indication row is no longer
+	in the registry; the filter below is kept as a defensive no-op.
 
 	`compact` prop renders the trigger as a small square badge (for use in an
 	icon-rail sidebar) with a tooltip; the dropdown panel floats out to the

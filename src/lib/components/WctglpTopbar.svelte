@@ -11,9 +11,9 @@
 	Options are sourced from `data.slice.indications` + `data.slice.therapeutic_areas`,
 	which the layout server loads from `meta.indications[]` and
 	`meta.therapeutic_areas[]` in `keyword_lexicon.json` — the canonical
-	registry. The "general" indication is hidden from the dropdown because
-	it's cross-cutting (always shown alongside whichever indication is
-	active), not a user-selectable context.
+	registry. Lexicon 3.2+: cross-cutting clusters use `indications: []` and
+	always show under whichever indication is active; the "general" row was
+	dropped from the registry, so the filter below is a defensive no-op.
 
 	On selection: goto(?indication=<id>, { invalidateAll: true }) so every
 	loader downstream (layout + each +page.server.ts) re-runs and the
@@ -34,7 +34,8 @@
 	};
 	let { indications, therapeuticAreas, activeIndication }: Props = $props();
 
-	// Hide "general" — it's cross-cutting, not a user-pickable context.
+	// Defensive: filter out any legacy "general" row if present. Lexicon 3.2
+	// no longer registers it.
 	const selectable = $derived(indications.filter((i) => i.id !== 'general'));
 
 	// Group selectable indications by therapeutic area. An indication that

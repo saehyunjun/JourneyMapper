@@ -159,7 +159,10 @@ function validateClusterFile(payload, label) {
 		return;
 	}
 	const seen = new Set();
-	const required = ['id', 'label', 'description', 'indication', 'parent_theme', 'parent_subtheme', 'variants'];
+	// Schema 3.2 prefers `indications: string[]`; legacy 3.1 used `indication:
+	// string`. Accept either so per-indication cluster files don't have to
+	// migrate in lockstep with the monolithic lexicon.
+	const required = ['id', 'label', 'description', 'parent_theme', 'parent_subtheme', 'variants'];
 	for (const cluster of payload.clusters) {
 		for (const f of required) {
 			if (!(f in cluster)) {
@@ -172,9 +175,21 @@ function validateClusterFile(payload, label) {
 			}
 			seen.add(cluster.id);
 		}
-		if (cluster.indication && !indIds.has(cluster.indication)) {
-			fail(`${label}: cluster "${cluster.id}" has unknown indication "${cluster.indication}"`);
+
+		const hasPlural = Array.isArray(cluster.indications);
+		const hasSingular = typeof cluster.indication === 'string';
+		if (!hasPlural && !hasSingular) {
+			fail(
+				`${label}: cluster "${cluster.id}" missing indication scope (set indications: string[] or legacy indication: string)`
+			);
 		}
+		const indList = hasPlural ? cluster.indications : hasSingular ? [cluster.indication] : [];
+		for (const id of indList) {
+			if (id && id !== 'general' && !indIds.has(id)) {
+				fail(`${label}: cluster "${cluster.id}" has unknown indication "${id}"`);
+			}
+		}
+
 		if (!Array.isArray(cluster.variants)) {
 			fail(`${label}: cluster "${cluster.id}" variants must be an array`);
 		}

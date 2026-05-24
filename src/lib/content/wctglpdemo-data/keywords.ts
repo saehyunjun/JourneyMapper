@@ -38,10 +38,10 @@ export type Cluster = {
 	id: string;
 	label: string;
 	description?: string;
-	/** Lexicon 3.1: FK → meta.indications[].id. "general" = condition-agnostic;
-	 *  otherwise the indication this cluster pertains to. Optional for forward-
-	 *  compatibility with pre-3.1 rows. */
-	indication?: string;
+	/** Lexicon 3.2: string[] FK → meta.indications[].id. Empty array = cross-
+	 *  cutting (visible under every indication). Optional on reads so legacy
+	 *  3.1 rows with singular `indication: string` still parse. */
+	indications?: string[];
 	parent_theme: string;
 	parent_subtheme: string;
 	variants: string[];
@@ -142,8 +142,8 @@ function subthemeLabelMap(themes: CodebookTheme[]): Map<string, string> {
  * Build a matcher from an explicit clusters slice and codebook themes — the
  * indication-scoped path. Consumers fetch a slice from `/api/lexicon` (or
  * `getLexiconSlice` server-side) and pass it through here, so only the active
- * indication's clusters + the "general" clusters get compiled into regexes
- * and shipped to the client.
+ * indication's clusters plus every cross-cutting cluster (indications: [])
+ * get compiled into regexes and shipped to the client.
  */
 export function buildKeywordMatcher(
 	clusters: Cluster[],
