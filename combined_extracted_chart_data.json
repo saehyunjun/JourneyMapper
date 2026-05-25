@@ -1,0 +1,179 @@
+{
+  "extracted_from_images": [
+    "/mnt/data/1D3F5DF7-F206-49DF-A6B8-B72E7459F254.png",
+    "/mnt/data/D2A3AB6E-9A5C-4B53-952E-746A76DA33E4.png",
+    "/mnt/data/34C355EA-351E-423F-808A-35134AD70C3B.png",
+    "/mnt/data/CleanShot 2026-05-23 at 10.45.06@2x.png"
+  ],
+  "datasets": {
+    "melanoma_ad_spend_jan_jun_2023": {
+      "title": "Estimated monthly digital search ad spend across highest-spending melanoma players",
+      "date_range": {
+        "start": "2023-01",
+        "end": "2023-06",
+        "label": "January - June 2023"
+      },
+      "currency": "USD",
+      "data": [
+        {
+          "domain": "Opdualag.com",
+          "values": [
+            {
+              "month": "2023-01",
+              "label": "Jan 2023",
+              "estimated_spend": 460
+            },
+            {
+              "month": "2023-06",
+              "label": "Jun 2023",
+              "estimated_spend": 5860
+            }
+          ]
+        },
+        {
+          "domain": "Opdivo.com",
+          "values": [
+            {
+              "month": "2023-01",
+              "label": "Jan 2023",
+              "estimated_spend": 76000
+            },
+            {
+              "month": "2023-06",
+              "label": "Jun 2023",
+              "estimated_spend": 56060
+            }
+          ]
+        },
+        {
+          "domain": "TafinlarMekinist.com",
+          "values": [
+            {
+              "month": "2023-01",
+              "label": "Jan 2023",
+              "estimated_spend": 34700
+            },
+            {
+              "month": "2023-06",
+              "label": "Jun 2023",
+              "estimated_spend": 39800
+            }
+          ]
+        },
+        {
+          "domain": "KeytrudaHCP.com",
+          "values": [
+            {
+              "month": "2023-01",
+              "label": "Jan 2023",
+              "estimated_spend": 17500
+            },
+            {
+              "month": "2023-06",
+              "label": "Jun 2023",
+              "estimated_spend": 47000
+            }
+          ]
+        }
+      ],
+      "source_image": "1D3F5DF7-F206-49DF-A6B8-B72E7459F254.png"
+    },
+    "lupus_nephritis_relative_search_volume": {
+      "title": "Relatively low search volume for clinical trials",
+      "condition": "lupus_nephritis",
+      "geography": null,
+      "time_period": null,
+      "unit": "estimated_search_volume",
+      "data": [
+        {
+          "topic": "Treatments for lupus nephritis",
+          "volume": 12000,
+          "category": "treatment_options"
+        },
+        {
+          "topic": "Cannabis for lupus nephritis",
+          "volume": 1870,
+          "category": "alternative_or_adjunctive_treatment"
+        },
+        {
+          "topic": "Natural remedies for lupus nephritis",
+          "volume": 1025,
+          "category": "alternative_or_adjunctive_treatment"
+        },
+        {
+          "topic": "Lupus nephritis clinical trials",
+          "volume": 550,
+          "category": "clinical_trials"
+        }
+      ],
+      "caption_text": "Patients with lupus nephritis show limited online search interest in clinical trials. Search volumes indicate a strong interest in treatment options. There is also a notable level of interest in natural remedies and cannabis for the treatment of LN.",
+      "source_image": "D2A3AB6E-9A5C-4B53-952E-746A76DA33E4.png"
+    },
+    "lupus_nephritis_patient_community_engagement": {
+      "title": "The stark differences in engagement and activity, public vs. private patient communities",
+      "condition": "lupus_nephritis",
+      "platform": "Facebook groups",
+      "sample": "Five largest public and private independent Facebook groups for LN",
+      "exclusions": [
+        "advocacy group-sponsored communities",
+        "industry-sponsored communities"
+      ],
+      "data": [
+        {
+          "group_type": "public",
+          "avg_membership": 1200,
+          "avg_monthly_posts": 45
+        },
+        {
+          "group_type": "private",
+          "avg_membership": 450,
+          "avg_monthly_posts": 175
+        }
+      ],
+      "note": "Averages were taken of the five largest public and private independent (i.e. not sponsored by an advocacy group or industry) Facebook groups for LN.",
+      "source_image": "34C355EA-351E-423F-808A-35134AD70C3B.png"
+    },
+    "lupus_nephritis_treatment_searches_us": {
+      "title": "Lupus nephritis treatment searches",
+      "subtitle": "Monthly estimated volume, US",
+      "condition": "lupus_nephritis",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "data": [
+        {
+          "topic": "Lupkynis",
+          "volume": 2660
+        },
+        {
+          "topic": "Belimumab",
+          "volume": 200
+        },
+        {
+          "topic": "Tacrolimus",
+          "volume": 450
+        },
+        {
+          "topic": "CAR-T",
+          "volume": 580
+        },
+        {
+          "topic": "Steroids",
+          "volume": 690
+        },
+        {
+          "topic": "Rituximab",
+          "volume": 810
+        },
+        {
+          "topic": "Mycophenolate",
+          "volume": 850
+        },
+        {
+          "topic": "Cyclosporine",
+          "volume": 900
+        }
+      ],
+      "source_image": "CleanShot 2026-05-23 at 10.45.06@2x.png"
+    }
+  }
+}

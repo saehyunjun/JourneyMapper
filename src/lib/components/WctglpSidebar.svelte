@@ -72,17 +72,17 @@
 	aria-label="Primary"
 	onmouseenter={() => (hovered = true)}
 	onmouseleave={() => (hovered = false)}
-	class="sticky top-14 z-30 flex h-[calc(100svh-3.5rem)] shrink-0 flex-col border-r border-zinc-200 bg-white transition-[width] duration-200 ease-out {hovered
+	class="piq-sidebar sticky top-14 z-30 flex h-[calc(100svh-3.5rem)] shrink-0 flex-col border-r border-(--panel-mid) bg-(--paper) transition-[width] duration-200 ease-out {hovered
 		? 'w-56'
 		: 'w-14'}"
 >
 	<Tooltip.Provider delayDuration={200}>
-		<nav class="min-h-0 flex-1 overflow-y-auto py-2 {hovered ? 'px-2' : 'px-0'}">
-			<ul class="flex flex-col gap-1">
+		<nav class="min-h-0 flex-1 overflow-y-auto py-3 {hovered ? 'px-2' : 'px-1.5'}">
+			<ul class="flex flex-col gap-0.5">
 				{#each items as item (item.url)}
 					{@const Icon = item.icon}
 					{@const active = isActive(item.url)}
-					<li class={hovered ? '' : 'flex justify-center'}>
+					<li>
 						<Tooltip.Root>
 							<Tooltip.Trigger>
 								{#snippet child({ props })}
@@ -91,15 +91,13 @@
 										href="{item.url}{indicationQuery}"
 										aria-label={item.title}
 										aria-current={active ? 'page' : undefined}
-										class="flex h-10 items-center rounded-md transition-colors {hovered
-											? 'w-full gap-2.5 px-2.5'
-											: 'w-10 justify-center'} {active
-											? 'bg-accent-mint-background text-white'
-											: 'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900'}"
+										class="piq-nav-link {active ? 'is-active' : ''} {hovered ? 'is-open' : 'is-rail'}"
 									>
-										<Icon class="size-4 shrink-0" />
+										<span class="piq-nav-icon">
+											<Icon class="size-4 shrink-0" />
+										</span>
 										{#if hovered}
-											<span class="truncate text-sm">{item.title}</span>
+											<span class="piq-nav-label truncate">{item.title}</span>
 										{/if}
 									</a>
 								{/snippet}
@@ -112,3 +110,62 @@
 		</nav>
 	</Tooltip.Provider>
 </aside>
+
+<style>
+	.piq-nav-link {
+		display: flex;
+		align-items: center;
+		height: 2.25rem;
+		border-radius: 8px;
+		border: 1px solid transparent;
+		color: var(--gray);
+		transition:
+			background-color 150ms ease,
+			color 150ms ease,
+			border-color 150ms ease;
+	}
+
+	.piq-nav-link.is-open {
+		width: 100%;
+		gap: 0.625rem;
+		padding-left: 0.375rem;
+		padding-right: 0.625rem;
+		justify-content: flex-start;
+	}
+
+	.piq-nav-link.is-rail {
+		width: 2.5rem;
+		margin: 0 auto;
+		justify-content: center;
+	}
+
+	.piq-nav-link:hover {
+		background: var(--panel-dark);
+		color: var(--darkgrayblue);
+	}
+
+	.piq-nav-link.is-active {
+		background: var(--lightorange);
+		color: var(--orange);
+		border-color: rgba(204, 99, 36, 0.4);
+	}
+
+	.piq-nav-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.5rem;
+		flex-shrink: 0;
+	}
+
+	.piq-nav-label {
+		font-family: var(--font-heading);
+		font-size: 0.78rem;
+		font-weight: 500;
+		letter-spacing: 0.01em;
+	}
+
+	.piq-nav-link.is-active .piq-nav-label {
+		font-weight: 600;
+	}
+</style>

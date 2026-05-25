@@ -38,9 +38,7 @@
 		value,
 		caption = '',
 		frameColor = 'var(--ink, #312f28)',
-		sphereCore = '#FFE0CC',
-		sphereMid = '#FF8341',
-		sphereEdge = '#E66525',
+		color = '#FF8341',
 		valueColor = 'var(--ink, #312f28)',
 		captionColor = '#475569',
 		showValue = true,
@@ -51,9 +49,8 @@
 		value: number;
 		caption?: string;
 		frameColor?: string;
-		sphereCore?: string;
-		sphereMid?: string;
-		sphereEdge?: string;
+		/** Base sphere color. Lighter core + darker edge are derived via color-mix. */
+		color?: string;
 		valueColor?: string;
 		captionColor?: string;
 		showValue?: boolean;
@@ -63,25 +60,30 @@
 	} = $props();
 
 	// --- Geometry (viewBox units; SVG scales responsively) ----------------
+	// Sphere area encodes `value` as a fraction of the outer ring's area:
+	// innerR = r · √(value/100). At value=100 the sphere fills the ring;
+	// at value=50 it covers exactly half the area.
 	const VB_W = 360;
-	const VB_H = 420;
 	const cx = VB_W / 2; // 180
 	const cy = 175;       // ring center
 	const r = 125;        // outer ring radius
-	const innerR = 55;    // sphere radius
-	const settledSphereY = cy + 50;        // sphere settles slightly below centre
-	const sphereStartY = VB_H + innerR + 30; // start fully below the canvas
+	const ringBottom = cy + r;             // 300 — bottom edge of the outer ring
+	const VB_H = ringBottom + 12;          // 312 — small buffer for the stroke
 	const ringCirc = 2 * Math.PI * r;
-
-	// Three guide lines: through-centre, sphere-baseline, divider-above-text.
-	const lines = [
-		{ y: cy },                          // through ring centre
-		{ y: settledSphereY + innerR },     // below sphere baseline
-		{ y: VB_H - 36 }                    // divider above text
-	];
 	const LINE_X1 = 40;
 	const LINE_X2 = VB_W - 40;
 	const lineLen = LINE_X2 - LINE_X1;
+
+	const innerR = $derived(r * Math.sqrt(Math.max(0, Math.min(100, value)) / 100));
+	const settledSphereY = $derived(ringBottom - innerR); // sphere bottom sits on ring bottom
+	const sphereStartY = $derived(VB_H + innerR + 30);    // start fully below the canvas
+
+	// Two guide lines frame the sphere: a tangent at the sphere's top and the
+	// shared sphere-baseline / ring-bottom edge.
+	const lines = $derived([
+		{ y: settledSphereY - innerR }, // tangent to sphere top
+		{ y: ringBottom }               // ring bottom (= sphere baseline)
+	]);
 
 	// --- Stable IDs for clipPath + gradient -------------------------------
 	const id = nextId();
@@ -91,7 +93,9 @@
 	// --- Animation state ---------------------------------------------------
 	let ringProgress = $state(0);     // 0 = unwound, 1 = fully traced
 	let lineProgress = $state(0);     // 0 = hidden, 1 = fully drawn
-	let sphereY = $state(sphereStartY);
+	// `play()` snaps sphereY to sphereStartY on mount and whenever value changes,
+	// so the literal initializer is just a pre-mount placeholder.
+	let sphereY = $state(VB_H + 200);
 	let displayed = $state(0);
 	let valueOpacity = $state(0);
 	let captionOpacity = $state(0);
@@ -163,9 +167,9 @@
 				<circle cx={cx} cy={cy} r={r} />
 			</clipPath>
 			<radialGradient id={gradId} cx="50%" cy="32%" r="70%">
-				<stop offset="0%" stop-color={sphereCore} />
-				<stop offset="68%" stop-color={sphereMid} />
-				<stop offset="100%" stop-color={sphereEdge} />
+				<stop offset="0%" style="stop-color: color-mix(in srgb, white 78%, {color} 22%);" />
+				<stop offset="68%" style="stop-color: {color};" />
+				<stop offset="100%" style="stop-color: color-mix(in srgb, black 22%, {color} 78%);" />
 			</radialGradient>
 		</defs>
 
@@ -227,8 +231,10 @@
 	.ring-sphere-card {
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 		width: 100%;
 		max-width: 360px;
+		margin: 0 auto;
 	}
 	.ring-sphere-card svg {
 		width: 100%;
@@ -238,8 +244,11 @@
 	.ring-sphere-text {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
-		padding-top: 0.25rem;
+		align-items: center;
+		text-align: center;
+		gap: 0.75rem;
+		padding-top: 1rem;
+		width: 100%;
 	}
 
 	@media (prefers-reduced-motion: reduce) {

@@ -8,12 +8,26 @@
 -->
 <script lang="ts">
 	import type { OpeningSlide as OpeningSlideData } from '$lib/story/types';
+	import IndicationPoster from '$lib/components/indication/IndicationPoster.svelte';
 
 	let { slide }: { slide: OpeningSlideData } = $props();
 </script>
 
-<div class="flex h-full w-full flex-col items-center justify-center px-8 py-12 md:px-20">
-	<div class="flex max-w-3xl flex-col gap-8 text-center">
+<div class="relative flex h-full w-full flex-col items-center justify-center overflow-hidden px-8 py-12 md:px-20">
+	{#if slide.poster}
+		<div class="poster-bg pointer-events-none absolute inset-0">
+			<IndicationPoster
+				{...slide.poster}
+				width={1920}
+				height={1080}
+				showFrame={false}
+				fit="slice"
+				animate
+				animateDuration={6000}
+			/>
+		</div>
+	{/if}
+	<div class="relative flex max-w-3xl flex-col gap-8 text-center">
 		<span
 			class="story-fade-in font-heading text-xs font-semibold uppercase tracking-[0.18em] text-accent-mint"
 			style="--delay: 0ms;"
@@ -45,6 +59,15 @@
 </div>
 
 <style>
+	.poster-bg {
+		/* Full-bleed, slightly dimmed so the text stays readable. */
+		opacity: 0.85;
+	}
+	.poster-bg :global(svg) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 	.story-fade-in {
 		opacity: 0;
 		animation: story-rise 600ms cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms) forwards;

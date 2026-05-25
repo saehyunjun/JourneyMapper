@@ -37,6 +37,11 @@
 	import { participantWords, type CloudWord } from '$lib/content/wctglpdemo-data/word-frequency';
 	import { scaleLinear } from 'd3-scale';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
+	import PatientPoster from '$lib/components/indication/PatientPoster.svelte';
+	import {
+		derivePatientPoster,
+		ageBandFor
+	} from '$lib/content/wctglpdemo-data/patient-poster';
 	import KeyQuotesSection from '$lib/components/KeyQuotesSection.svelte';
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
 	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
@@ -420,6 +425,23 @@
 
 				<!-- Profile tab — expanded identity, demographics, and tagging activity -->
 				<Tabs.Content value="profile" class="flex flex-col gap-10 pt-10">
+					{#key selectedParticipant}
+						<div class="fingerprint-poster-cover">
+							<PatientPoster
+								{...derivePatientPoster(selectedParticipant)}
+								ageBand={ageBandFor(profiles[selectedParticipant]?.age_range)}
+								participantType={profiles[selectedParticipant]?.participant_type ?? 'individual'}
+								avatarUrl={profiles[selectedParticipant]?.avatar_url}
+								width={1600}
+								height={500}
+								showFrame={false}
+								fit="slice"
+								animate
+								animateDuration={2600}
+								interactive
+							/>
+						</div>
+					{/key}
 					<header class="flex flex-col gap-6 md:flex-row md:items-start md:gap-8">
 						<ParticipantAvatar
 							interviewId={selectedParticipant}
@@ -962,3 +984,14 @@
 		</div>
 	</div>
 </RightDrawer>
+
+<style>
+	.fingerprint-poster-cover {
+		position: relative;
+		width: 100%;
+		height: 220px;
+		overflow: hidden;
+		border-radius: 12px;
+		border: 1px solid var(--panel-mid);
+	}
+</style>

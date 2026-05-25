@@ -17,6 +17,7 @@
 	import WidgetPalette from './WidgetPalette.svelte';
 	import BlockConfigDrawer from './BlockConfigDrawer.svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import { keyFindings } from '$lib/stores/key-findings.svelte';
 	import { blankCard, type Card, type Block } from '$lib/key-findings/types';
 	import { createBlock } from '$lib/key-findings/widgets';
@@ -174,8 +175,8 @@
 		/>
 
 		<div class="ml-auto flex items-center gap-1">
-			<button class="kf-tbtn" onclick={() => store.undo()} disabled={!store.canUndo} title="Undo (⌘Z)" aria-label="Undo"><Undo2 class="size-4" /></button>
-			<button class="kf-tbtn" onclick={() => store.redo()} disabled={!store.canRedo} title="Redo (⇧⌘Z)" aria-label="Redo"><Redo2 class="size-4" /></button>
+			<Button variant="ghost" size="icon-sm" class="kf-tbtn" onclick={() => store.undo()} disabled={!store.canUndo} title="Undo (⌘Z)" aria-label="Undo"><Undo2 class="size-4" /></Button>
+			<Button variant="ghost" size="icon-sm" class="kf-tbtn" onclick={() => store.redo()} disabled={!store.canRedo} title="Redo (⇧⌘Z)" aria-label="Redo"><Redo2 class="size-4" /></Button>
 			<span class="mx-1 h-5 w-px bg-slate-200"></span>
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger class="kf-tbtn" title="Export"><Image class="size-4" /> Export <ChevronDown class="size-3" /></DropdownMenu.Trigger>
@@ -183,7 +184,7 @@
 					<DropdownMenu.Item onSelect={exportBoardPng}><Image class="size-4" /> Board as PNG</DropdownMenu.Item>
 				</DropdownMenu.Content>
 			</DropdownMenu.Root>
-			<button class="kf-tbtn-primary" onclick={addCard}><Plus class="size-4" /> Card</button>
+			<Button variant="default" size="sm" class="kf-tbtn-primary" onclick={addCard}><Plus class="size-4" /> Card</Button>
 		</div>
 	</header>
 
@@ -200,7 +201,7 @@
 			{#if items.length === 0}
 				<div class="mx-auto mt-16 max-w-md rounded-2xl border-2 border-dashed border-slate-200 p-10 text-center">
 					<p class="text-slate-500">Your board is empty.</p>
-					<button class="kf-tbtn-primary mx-auto mt-3" onclick={addCard}><Plus class="size-4" /> Add your first card</button>
+					<Button variant="default" size="sm" class="kf-tbtn-primary mx-auto mt-3" onclick={addCard}><Plus class="size-4" /> Add your first card</Button>
 				</div>
 			{:else}
 				<div bind:this={boardContentEl}>
@@ -227,10 +228,10 @@
 					</section>
 				</div>
 				<div class="mt-4 flex items-center gap-3" data-kf-no-deselect>
-					<button class="kf-tbtn" onclick={addCard}><Plus class="size-4" /> Add card</button>
-					<button class="kf-tbtn text-rose-500 hover:bg-rose-50" onclick={() => { if (confirm('Clear all cards? This can be undone with ⌘Z.')) store.clearAll(); }}>
+					<Button variant="ghost" size="sm" class="kf-tbtn" onclick={addCard}><Plus class="size-4" /> Add card</Button>
+					<Button variant="ghost" size="sm" class="kf-tbtn text-rose-500 hover:bg-rose-50" onclick={() => { if (confirm('Clear all cards? This can be undone with ⌘Z.')) store.clearAll(); }}>
 						<Trash2 class="size-4" /> Clear all
-					</button>
+					</Button>
 				</div>
 			{/if}
 		</div>

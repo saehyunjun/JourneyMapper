@@ -18,10 +18,15 @@
 -->
 <script lang="ts">
 	import { fly, fade } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
 	import XIcon from '@lucide/svelte/icons/x';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import type { Snippet } from 'svelte';
+	import {
+		DRAWER_PANEL_IN,
+		DRAWER_PANEL_OUT,
+		DRAWER_BACKDROP_IN,
+		DRAWER_BACKDROP_OUT
+	} from '$lib/motion/drawer';
 
 	let {
 		open = $bindable(false),
@@ -69,16 +74,32 @@
 <svelte:window onkeydown={onKeydown} />
 
 {#if open}
+	<!--
+		Stop pointer/click events from bubbling out of the tertiary chrome.
+		The tertiary renders as a descendant of whatever primary drawer hosts
+		it (e.g. RightDrawer's bits-ui Dialog content) — without this, the
+		primary's document-level outside-interaction listener interprets a
+		click on the tertiary's backdrop or close button as "outside" and
+		dismisses the primary along with the tertiary.
+	-->
 	<div
 		class="fixed inset-0 {backdropZ} bg-slate-900/30"
-		transition:fade={{ duration: 180 }}
-		onclick={close}
+		in:fade={DRAWER_BACKDROP_IN}
+		out:fade={DRAWER_BACKDROP_OUT}
+		onpointerdown={(e) => e.stopPropagation()}
+		onclick={(e) => {
+			e.stopPropagation();
+			close();
+		}}
 		aria-hidden="true"
 	></div>
 
 	<aside
 		class="fixed inset-y-0 right-0 {panelZ} flex w-full {widthClass} flex-col bg-white shadow-2xl"
-		transition:fly={{ x: 120, duration: 300, easing: cubicOut }}
+		in:fly={DRAWER_PANEL_IN}
+		out:fly={DRAWER_PANEL_OUT}
+		onpointerdown={(e) => e.stopPropagation()}
+		onclick={(e) => e.stopPropagation()}
 		aria-label={ariaLabel}
 	>
 		<header class="flex items-start justify-between gap-3 border-b border-slate-200 p-4">

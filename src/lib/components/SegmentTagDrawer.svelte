@@ -13,6 +13,12 @@
 <script lang="ts">
 	import { fly, fade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import {
+		DRAWER_PANEL_IN,
+		DRAWER_PANEL_OUT,
+		DRAWER_BACKDROP_IN,
+		DRAWER_BACKDROP_OUT
+	} from '$lib/motion/drawer';
 	import codebook from '$lib/content/wctglpdemo-data/codebook.json';
 	import lexiconRaw from '$lib/content/wctglpdemo-data/keyword_lexicon.json';
 	import phraseLexRaw from '$lib/content/wctglpdemo-data/phrase_lexicon.json';
@@ -1408,7 +1414,8 @@
 	<!-- Backdrop -->
 	<div
 		class="fixed inset-0 z-40 bg-slate-900/30"
-		transition:fade={{ duration: 200 }}
+		in:fade={DRAWER_BACKDROP_IN}
+		out:fade={DRAWER_BACKDROP_OUT}
 		onclick={(e) => {
 			// Only a direct click on the backdrop closes the drawer — never a
 			// click that bubbled out of the context menu portaled inside it.
@@ -1420,7 +1427,8 @@
 	<!-- Drawer — wide, two-column: the segment on the left, codebook tags right -->
 	<aside
 		class="fixed inset-y-0 right-0 z-50 flex w-full max-w-2xl flex-col bg-white shadow-2xl lg:max-w-4xl xl:max-w-5xl"
-		transition:fly={{ x: 120, duration: 320, easing: cubicOut }}
+		in:fly={DRAWER_PANEL_IN}
+		out:fly={DRAWER_PANEL_OUT}
 		aria-label="Edit segment tags"
 	>
 		<!-- Success alert — overlaid on the drawer after a keyword/theme edit -->

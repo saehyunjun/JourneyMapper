@@ -15,6 +15,7 @@
 	import MiniDonut from './blocks/MiniDonut.svelte';
 	import SemiArcChart from './blocks/SemiArcChart.svelte';
 	import WordCloud from '$lib/charts/glp/WordCloud.svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import { Search, RotateCcw, Check, Star } from '@lucide/svelte';
 	import {
 		quotes,
@@ -209,25 +210,27 @@
 								<option value="participant">Participant</option>
 							</select>
 						</label>
-						<button class="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800" onclick={resetFilters}><RotateCcw class="size-3.5" /> Reset filters</button>
+						<Button variant="ghost" size="xs" class="text-xs text-slate-500 hover:text-slate-800" onclick={resetFilters}><RotateCcw class="size-3.5" /> Reset filters</Button>
 					</div>
 				</div>
 
-				<button class="mb-2 w-full rounded-lg border border-dashed border-slate-300 py-2 text-sm text-slate-600 hover:border-accent-mint hover:bg-slate-50" onclick={writeOwn}>
+				<Button variant="outline" size="default" class="mb-2 w-full border-dashed border-slate-300 text-slate-600 hover:border-accent-mint hover:bg-slate-50" onclick={writeOwn}>
 					+ Write your own quote
-				</button>
+				</Button>
 
 				<ul class="space-y-1.5">
 					{#each quoteResults as quote (quote.quote_id)}
 						{@const selected = q.quoteId === quote.quote_id}
 						<li>
-							<button
-								type="button"
-								class="flex w-full flex-col gap-1 rounded-lg border p-3 text-left transition-colors {selected ? 'border-accent-mint bg-accent-mint/5' : 'border-slate-150 hover:border-slate-300 hover:bg-slate-50'}"
+							<Button
+								variant="outline"
+								pressed={selected}
+								activeClass="border-accent-mint bg-accent-mint/5"
+								class="h-auto w-full flex-col items-start gap-1 rounded-lg border-slate-150 p-3 text-left hover:border-slate-300 hover:bg-slate-50"
 								onclick={() => selectQuote(quote.quote_id)}
 							>
 								<p class="line-clamp-3 text-sm text-slate-700">"{quote.text}"</p>
-								<div class="flex items-center gap-2 text-xs text-slate-500">
+								<div class="flex w-full items-center gap-2 text-xs text-slate-500">
 									{#if starredQuoteIds.includes(quote.quote_id)}<Star class="size-3 fill-amber-400 text-amber-400" />{/if}
 									<span class="font-medium">{profileName(profiles[quote.interview_id], participantLabel(quote.interview_id))}</span>
 									<span class="text-slate-300">·</span>
@@ -235,7 +238,7 @@
 									<span class="ml-auto shrink-0">{SENTIMENT_LABELS[quote.sentiment]}</span>
 									{#if selected}<Check class="size-4 text-accent-mint" />{/if}
 								</div>
-							</button>
+							</Button>
 						</li>
 					{:else}
 						<li class="py-8 text-center text-sm text-slate-400">No quotes match these filters.</li>
@@ -255,13 +258,13 @@
 						<div>
 							<span class="text-xs text-slate-500">Layout</span>
 							<div class="mt-0.5 flex gap-1">
-								{#each LAYOUTS as l (l.id)}<button class="rounded-md border px-2 py-1 text-xs {q.layout === l.id ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => patch({ layout: l.id })}>{l.label}</button>{/each}
+								{#each LAYOUTS as l (l.id)}<Button variant="outline" size="xs" pressed={q.layout === l.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ layout: l.id })}>{l.label}</Button>{/each}
 							</div>
 						</div>
 						<div>
 							<span class="text-xs text-slate-500">Reveal</span>
 							<div class="mt-0.5 flex gap-1">
-								{#each REVEALS as r (r.id)}<button class="rounded-md border px-2 py-1 text-xs {q.reveal === r.id ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => patch({ reveal: r.id })}>{r.label}</button>{/each}
+								{#each REVEALS as r (r.id)}<Button variant="outline" size="xs" pressed={q.reveal === r.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ reveal: r.id })}>{r.label}</Button>{/each}
 							</div>
 						</div>
 					</div>
@@ -273,16 +276,16 @@
 						<div>
 							<span class="text-xs text-slate-500">Metric</span>
 							<div class="mt-0.5 flex gap-1">
-								<button class="rounded-md border px-2.5 py-1 text-sm {d.metric === 'sentiment' ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => patch({ metric: 'sentiment' })}>Sentiment</button>
-								<button class="rounded-md border px-2.5 py-1 text-sm {d.metric === 'theme' ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => patch({ metric: 'theme' })}>Theme</button>
+								<Button variant="outline" size="sm" pressed={d.metric === 'sentiment'} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ metric: 'sentiment' })}>Sentiment</Button>
+								<Button variant="outline" size="sm" pressed={d.metric === 'theme'} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ metric: 'theme' })}>Theme</Button>
 							</div>
 						</div>
 						<div>
 							<span class="text-xs text-slate-500">Chart</span>
 							<div class="mt-0.5 flex gap-1">
-								<button class="rounded-md border px-2.5 py-1 text-sm {d.chartType === 'bar' ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => patch({ chartType: 'bar' })}>Bar</button>
-								<button class="rounded-md border px-2.5 py-1 text-sm {d.chartType === 'donut' ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => patch({ chartType: 'donut' })}>Donut</button>
-								<button class="rounded-md border px-2.5 py-1 text-sm {d.chartType === 'semi-arc' ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => patch({ chartType: 'semi-arc' })}>Arc</button>
+								<Button variant="outline" size="sm" pressed={d.chartType === 'bar'} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ chartType: 'bar' })}>Bar</Button>
+								<Button variant="outline" size="sm" pressed={d.chartType === 'donut'} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ chartType: 'donut' })}>Donut</Button>
+								<Button variant="outline" size="sm" pressed={d.chartType === 'semi-arc'} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ chartType: 'semi-arc' })}>Arc</Button>
 							</div>
 						</div>
 					</div>
@@ -292,7 +295,7 @@
 					<div class="space-y-2 rounded-lg bg-slate-50 p-3">
 						<div class="flex items-center justify-between">
 							<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Filters</p>
-							<button class="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800" onclick={resetFilters}><RotateCcw class="size-3.5" /> Reset</button>
+							<Button variant="ghost" size="xs" class="text-xs text-slate-500 hover:text-slate-800" onclick={resetFilters}><RotateCcw class="size-3.5" /> Reset</Button>
 						</div>
 						{@render filterRow('Persona', d.filters.participantId ?? '', PERSONA_OPTIONS, (v) => setFilter('participantId', v || null))}
 						{@render filterRow('Theme', d.filters.theme ?? '', THEME_OPTIONS, (v) => setFilter('theme', v || null))}
@@ -327,7 +330,7 @@
 						<span class="text-xs text-slate-500">Preset</span>
 						<div class="mt-0.5 flex flex-wrap gap-1">
 							{#each WORDCLOUD_PRESETS as p (p.id)}
-								<button class="rounded-md border px-2.5 py-1 text-sm {w.preset === p.id ? 'border-accent-mint bg-accent-mint/10' : 'border-slate-200 text-slate-600'}" onclick={() => { patch({ preset: p.id, filters: p.apply(w.filters) }); }}>{p.label}</button>
+								<Button variant="outline" size="sm" pressed={w.preset === p.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => { patch({ preset: p.id, filters: p.apply(w.filters) }); }}>{p.label}</Button>
 							{/each}
 						</div>
 					</div>
@@ -337,7 +340,7 @@
 					<div class="space-y-2 rounded-lg bg-slate-50 p-3">
 						<div class="flex items-center justify-between">
 							<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Filters</p>
-							<button class="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800" onclick={resetFilters}><RotateCcw class="size-3.5" /> Reset</button>
+							<Button variant="ghost" size="xs" class="text-xs text-slate-500 hover:text-slate-800" onclick={resetFilters}><RotateCcw class="size-3.5" /> Reset</Button>
 						</div>
 						{@render filterRow('Persona', w.filters.participantId ?? '', PERSONA_OPTIONS, (v) => setFilter('participantId', v || null))}
 						{@render filterRow('Theme', w.filters.theme ?? '', THEME_OPTIONS, (v) => setFilter('theme', v || null))}
@@ -357,7 +360,7 @@
 
 		<footer class="flex items-center justify-between gap-2 border-t border-slate-200 px-5 py-3">
 			<span class="text-xs text-slate-400">Selections apply to the card as you go.</span>
-			<button class="rounded-md bg-(--accent-mint-foreground) px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90" onclick={done}>Done</button>
+			<Button variant="secondary" size="sm" onclick={done}>Done</Button>
 		</footer>
 	</div>
 </RightDrawer>

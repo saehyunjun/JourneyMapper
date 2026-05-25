@@ -14,6 +14,7 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { ChevronLeft, ChevronRight, X } from '@lucide/svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import type { Snippet } from 'svelte';
 
 	let {
@@ -25,7 +26,8 @@
 		onNext,
 		onJump,
 		onExit,
-		children
+		children,
+		persistentLayer
 	}: {
 		index: number;
 		total: number;
@@ -36,6 +38,13 @@
 		onJump: (i: number) => void;
 		onExit?: () => void;
 		children: Snippet;
+		/**
+		 * Optional persistent overlay rendered inside the stage but OUTSIDE
+		 * the keyed slide block. Use it for visuals that should survive
+		 * slide transitions (e.g. a dot grid that morphs colors across
+		 * slides instead of crossfading).
+		 */
+		persistentLayer?: Snippet;
 	} = $props();
 
 	const atFirst = $derived(index <= 0);
@@ -160,7 +169,7 @@
 >
 	<header class="story-header">
 		<div class="flex flex-col gap-0.5">
-			<span class="text-[10px] font-heading font-semibold uppercase tracking-[0.14em] text-accent-mint">
+			<span class="text-xs font-heading font-semibold uppercase tracking-[0.14em] text-accent-mint">
 				{eyebrow ?? 'Executive Summary'}
 			</span>
 			<h1 class="font-heading text-base font-medium text-primary">{title}</h1>
@@ -170,19 +179,25 @@
 				{String(index + 1).padStart(2, '0')} <span class="text-slate-300">/ {String(total).padStart(2, '0')}</span>
 			</span>
 			{#if onExit}
-				<button
-					type="button"
-					class="story-exit"
+				<Button
+					variant="ghost"
+					size="icon-sm"
+					class="rounded-full"
 					onclick={onExit}
 					aria-label="Exit story view"
 				>
 					<X class="size-4" />
-				</button>
+				</Button>
 			{/if}
 		</div>
 	</header>
 
 	<div class="story-stage">
+		{#if persistentLayer}
+			<div class="absolute inset-0 pointer-events-none">
+				{@render persistentLayer()}
+			</div>
+		{/if}
 		{#key index}
 			<div class="absolute inset-0 flex" in:fade={{ duration: 240, delay: 60 }}>
 				{@render children()}
@@ -191,16 +206,17 @@
 	</div>
 
 	<footer class="story-footer">
-		<button
-			type="button"
-			class="story-nav font-heading"
+		<Button
+			variant="ghost"
+			size="sm"
+			class="font-heading"
 			onclick={onPrev}
 			disabled={atFirst}
 			aria-label="Previous slide"
 		>
 			<ChevronLeft class="size-4" />
 			<span>Prev</span>
-		</button>
+		</Button>
 
 		<div class="story-dots" role="tablist" aria-label="Slide navigation">
 			{#each { length: total } as _, i (i)}
@@ -216,16 +232,17 @@
 			{/each}
 		</div>
 
-		<button
-			type="button"
-			class="story-nav font-heading"
+		<Button
+			variant="ghost"
+			size="sm"
+			class="font-heading"
 			onclick={onNext}
 			disabled={atLast}
 			aria-label="Next slide"
 		>
 			<span>Next</span>
 			<ChevronRight class="size-4" />
-		</button>
+		</Button>
 	</footer>
 </section>
 
@@ -246,29 +263,13 @@
 		justify-content: space-between;
 		gap: 1rem;
 		padding: 1.25rem 2rem 0.75rem;
-		border-bottom: 1px solid rgba(48, 47, 40, 0.08);
-	}
-
-	.story-exit {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 1.75rem;
-		height: 1.75rem;
-		border-radius: 999px;
-		color: #6b7280;
-		transition: background-color 150ms ease, color 150ms ease;
-	}
-	.story-exit:hover {
-		background: rgba(48, 47, 40, 0.06);
-		color: var(--ink, #312f28);
 	}
 
 	.story-stage {
 		position: relative;
 		flex: 1;
 		min-height: 0;
-		min-height: 32rem;
+		min-height: 50rem;
 	}
 
 	.story-footer {
@@ -278,26 +279,6 @@
 		gap: 1rem;
 		padding: 0.75rem 2rem 1.25rem;
 		border-top: 1px solid rgba(48, 47, 40, 0.08);
-	}
-
-	.story-nav {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.375rem;
-		padding: 0.5rem 0.75rem;
-		border-radius: 6px;
-		font-size: 0.8125rem;
-		font-weight: 500;
-		color: #4b5563;
-		transition: background-color 150ms ease, color 150ms ease;
-	}
-	.story-nav:hover:not(:disabled) {
-		background: rgba(48, 47, 40, 0.06);
-		color: var(--ink, #312f28);
-	}
-	.story-nav:disabled {
-		opacity: 0.3;
-		cursor: not-allowed;
 	}
 
 	.story-dots {

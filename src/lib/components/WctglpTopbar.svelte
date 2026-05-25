@@ -70,28 +70,27 @@
 </script>
 
 <div class="topbar">
-	<div class="brand">
+	<div class="brand-lockup">
 		<PIQLogo />
+		<span class="wordmark">PatientlyIQ</span>
 	</div>
 
 	<div class="divider-v"></div>
 
-	<h3 class="text-sm text-primary">PatientlyIQ</h3>
-	
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger>
 			{#snippet child({ props })}
 			<button
 					{...props}
 					type="button"
-					class="indication-trigger hover:cursor-pointer"
+					class="indication-trigger"
 					aria-label="Select indication"
 				>
 				<span class="trigger-label">
-					<span class="trigger-kicker label-xs">Indication</span>
+					<span class="trigger-kicker">Indication</span>
 					<span class="trigger-value">{active?.label ?? '—'}</span>
 				</span>
-				<ChevronDown class="size-4 shrink-0 text-muted-foreground" />
+				<ChevronDown class="size-4 shrink-0 text-(--gray)" />
 			</button>
 			{/snippet}
 		</DropdownMenu.Trigger>
@@ -101,7 +100,7 @@
 					<DropdownMenu.Separator />
 				{/if}
 				<DropdownMenu.Group>
-					<DropdownMenu.GroupHeading class="text-xs font-heading font-medium uppercase text-accent-mint-background"
+					<DropdownMenu.GroupHeading class="text-[0.65rem] font-heading font-semibold uppercase tracking-wider text-(--orange)"
 						>{group.area.label}</DropdownMenu.GroupHeading
 					>
 					{#each group.indications as ind (ind.id)}
@@ -110,11 +109,11 @@
 							<div class="flex w-full items-start gap-2">
 								<div class="mt-0.5 size-4 shrink-0">
 									{#if isActive}
-										<Check class="size-4 text-accent-mint-foreground" />
+										<Check class="size-4 text-(--orange)" />
 									{/if}
 								</div>
 								<div class="min-w-0 flex-1">
-									<div class="text-base font-medium text-secondary-foreground">
+									<div class="text-sm font-medium text-(--ink)">
 										{ind.label}</div>
 								</div>
 							</div>
@@ -137,22 +136,32 @@
 		display: flex;
 		align-items: center;
 		gap: 1rem;
-		padding: 0 1rem;
-		border-bottom: 1px solid #e4e4e7;
-		background: white;
-		min-height: 3rem;
+		padding: 0 1.25rem;
+		border-bottom: 1px solid var(--panel-mid);
+		background: var(--paper);
+		min-height: 3.5rem;
 	}
 
-	.brand {
+	.brand-lockup {
 		display: flex;
 		align-items: center;
+		gap: 0.625rem;
 		padding: 0.25rem 0;
+	}
+
+	.wordmark {
+		font-family: var(--font-heading);
+		font-size: 0.78rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--darkgrayblue);
 	}
 
 	.divider-v {
 		width: 1px;
-		height: 1.5rem;
-		background: #e4e4e7;
+		height: 1.75rem;
+		background: var(--panel-mid);
 		flex-shrink: 0;
 	}
 
@@ -160,46 +169,49 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		gap: 0.625rem;
-		min-width: 11rem;
+		gap: 0.75rem;
+		min-width: 12rem;
 		justify-content: space-between;
-		border-radius: 8px;
-		height: 2.25rem;
-		padding: 0 0.75rem;
+		height: 2.375rem;
+		padding: 0 0.875rem;
 		text-align: left;
 		background: transparent;
-		border: 1.5px solid transparent;
+		border: 1px solid transparent;
+		border-radius: 999px;
+		cursor: pointer;
 		transition:
-			background-color 150ms ease,
-			border-color 150ms ease;
+			background-color 160ms ease,
+			border-color 160ms ease;
 	}
 
 	.indication-trigger:hover {
-		background: #f4f4f5;
-		border-color: #e4e4e7;
+		background: rgba(255, 255, 255, 0.7);
+		border-color: var(--panel-mid);
 	}
 
 	.trigger-label {
 		display: flex;
 		flex-direction: column;
-		gap: 1px;
+		gap: 2px;
 		min-width: 0;
 	}
 
 	.trigger-kicker {
-		font-size: 9px;
-		font-weight: 600;
+		font-family: var(--font-heading);
+		font-size: 0.5625rem;
+		font-weight: 700;
 		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: #a1a1aa;
+		letter-spacing: 0.1em;
+		color: var(--orange);
 		line-height: 1;
 	}
 
 	.trigger-value {
-		font-size: 12.5px;
+		font-family: var(--font-heading);
+		font-size: 0.8125rem;
 		font-weight: 600;
 		color: var(--ink);
-		line-height: 1.2;
+		line-height: 1.15;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;

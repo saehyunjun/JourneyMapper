@@ -9,6 +9,7 @@
 	import { WIDGETS, type WidgetDef } from '$lib/key-findings/widgets';
 	import SentimentDonut from '$lib/components/SentimentDonut.svelte';
 	import { sentimentLean } from '$lib/content/wctglpdemo-data/executive-summary';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import type { VizMotionMode } from '$lib/motion/viz';
 
 	const MIME = 'application/x-kf-widget';
@@ -30,11 +31,11 @@
 	<div class="flex flex-col gap-1">
 		{#each WIDGETS as w (w.id)}
 			{@const Icon = w.icon}
-			<button
-				type="button"
+			<Button
+				variant="ghost"
 				draggable="true"
 				ondragstart={(e) => onDragStart(e, w)}
-				class="kf-widget flex w-full cursor-grab items-start gap-2 rounded-lg border border-transparent px-2 py-1.5 text-left transition-colors hover:border-slate-200 hover:bg-white active:cursor-grabbing"
+				class="kf-widget h-auto cursor-grab items-start justify-start rounded-lg border border-transparent bg-transparent px-2 py-1.5 text-left hover:border-slate-200 hover:bg-white active:cursor-grabbing"
 				title="Drag onto a card"
 			>
 				<span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-500">
@@ -44,7 +45,7 @@
 					<span class="block truncate text-sm font-medium text-slate-700">{w.label}</span>
 					<span class="block truncate text-xs text-slate-400">{w.description}</span>
 				</span>
-			</button>
+			</Button>
 		{/each}
 	</div>
 	<p class="mt-4 px-1 text-[11px] leading-relaxed text-slate-400">
@@ -68,19 +69,22 @@
 				<div class="flex items-center gap-1.5">
 					<div class="inline-flex overflow-hidden rounded-sm border border-slate-200">
 						{#each storyModes as m (m)}
-							<button
-								type="button"
+							<Button
+								variant="outline"
+								size="xs"
+								pressed={storyMode === m}
+								activeClass="bg-slate-700 text-white hover:bg-slate-700"
 								onclick={() => (storyMode = m)}
-								class="px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide transition-colors {storyMode === m ? 'bg-slate-700 text-white' : 'bg-white text-slate-500 hover:bg-slate-100'}"
-								aria-pressed={storyMode === m}
-							>{m}</button>
+								class="rounded-none border-0 bg-white px-1.5 py-0.5 font-mono text-[10px] text-slate-500 hover:bg-slate-100"
+							>{m}</Button>
 						{/each}
 					</div>
-					<button
-						type="button"
+					<Button
+						variant="outline"
+						size="xs"
 						onclick={() => (storyReplayKey += 1)}
-						class="rounded-sm border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-slate-600 transition-colors hover:bg-slate-100"
-					>Replay</button>
+						class="rounded-sm border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[10px] text-slate-600 hover:bg-slate-100"
+					>Replay</Button>
 				</div>
 			</div>
 		</div>
@@ -93,26 +97,5 @@
 		flex-shrink: 0;
 		overflow-y: auto;
 		padding: 0.75rem 0.5rem;
-	}
-	.kf-widget {
-		transition:
-			transform 0.12s ease,
-			border-color 0.15s ease,
-			background-color 0.15s ease;
-	}
-	.kf-widget:active {
-		transform: scale(0.97);
-	}
-	.kf-widget:focus-visible {
-		outline: 2px solid var(--teal, #7dbfa7);
-		outline-offset: 1px;
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.kf-widget {
-			transition: none;
-		}
-		.kf-widget:active {
-			transform: none;
-		}
 	}
 </style>

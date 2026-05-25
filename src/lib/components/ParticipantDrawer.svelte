@@ -12,6 +12,11 @@
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
+	import PatientPoster from '$lib/components/indication/PatientPoster.svelte';
+	import {
+		derivePatientPoster,
+		ageBandFor
+	} from '$lib/content/wctglpdemo-data/patient-poster';
 	import SentimentBar from '$lib/components/SentimentBar.svelte';
 	import SentimentRing from '$lib/components/SentimentRing.svelte';
 	import {
@@ -123,6 +128,10 @@
 	);
 	const maxEmotion = $derived(Math.max(1, ...emotionRows.map((e) => e.count)));
 	const hasBreakdown = $derived(themeRows.length > 0 || emotionRows.length > 0);
+
+	// Generative cover poster — one signature shape composition per patient.
+	const posterProps = $derived(interviewId ? derivePatientPoster(interviewId) : null);
+	const posterAgeBand = $derived(ageBandFor(profile?.age_range));
 
 	let fileInput = $state<HTMLInputElement | null>(null);
 
@@ -236,6 +245,27 @@
 <RightDrawer bind:open>
 	{#if interviewId && profile}
 		<div class="flex h-full flex-col">
+			<!-- Generative cover — the patient's signature poster, derived from
+			     their tagged-segment rollup. Acts as the drawer's hero banner. -->
+			{#if posterProps}
+				{#key interviewId}
+					<div class="poster-cover">
+						<PatientPoster
+							{...posterProps}
+							ageBand={posterAgeBand}
+							participantType={profile?.participant_type ?? 'individual'}
+							avatarUrl={profile?.avatar_url}
+							width={1280}
+							height={420}
+							showFrame={false}
+							fit="slice"
+							animate
+							animateDuration={2400}
+							interactive
+						/>
+					</div>
+				{/key}
+			{/if}
 			<!-- Top bar — avatar, identity, and the profile facts -->
 			<div class="flex flex-col gap-4 border-b border-slate-200 p-6">
 				<div class="flex items-start gap-4">
@@ -403,13 +433,14 @@
 							<Button onclick={saveDetails} disabled={saving}>
 								{saving ? 'Saving…' : 'Save details'}
 							</Button>
-							<button
-								type="button"
+							<Button
+								variant="link"
+								size="sm"
 								onclick={cancelEdit}
-								class="text-sm font-medium text-slate-500 hover:underline"
+								class="font-medium text-slate-500"
 							>
 								Cancel
-							</button>
+							</Button>
 						</div>
 					</section>
 				{/if}
@@ -429,12 +460,12 @@
 								Themes · {themeRows.length}
 							</p>
 							{#each themeRows as t (t.id)}
-								<button
-									type="button"
+								<Button
+									variant="ghost"
+									size="sm"
 									onclick={() => openThemeFragments(t.id)}
 									title="View tagged segments"
-									class="font-medium px-1.5 py-0.5 text-left transition-colors hover:bg-accent-mint-foreground 
-									hover:font-semibold hover:cursor-pointer" 
+									class="h-auto justify-start bg-transparent px-1.5 py-0.5 font-medium hover:bg-accent-mint-foreground hover:font-semibold"
 								>
 									<SentimentBar
 										label={titleCase(t.id)}
@@ -442,16 +473,16 @@
 										max={maxTheme}
 										labelClass="w-40"
 									/>
-								</button>
+								</Button>
 								{#if t.subthemes.length}
 									<div class="ml-4 flex flex-col gap-1 border-l border-muted-foreground pl-2">
 										{#each t.subthemes as s (s.id)}
-											<button
-												type="button"
+											<Button
+												variant="ghost"
+												size="sm"
 												onclick={() => openSubthemeFragments(s.id)}
 												title="View tagged segments"
-												class="px-1.5 py-.5 text-left transition-colors hover:bg-accent-mint-foreground
-												hover:font-medium hover:cursor-pointer"
+												class="h-auto justify-start bg-transparent px-1.5 py-0.5 hover:bg-accent-mint-foreground hover:font-medium"
 											>
 												<SentimentBar
 													label={titleCase(s.id)}
@@ -460,7 +491,7 @@
 													labelClass="w-40"
 													shape="dots"
 												/>
-											</button>
+											</Button>
 										{/each}
 									</div>
 								{/if}
@@ -474,11 +505,12 @@
 									Emotions · {emotionRows.length}
 								</p>
 								{#each emotionRows as e (e.id)}
-									<button
-										type="button"
+									<Button
+										variant="ghost"
+										size="sm"
 										onclick={() => openEmotionFragments(e.id)}
 										title="View tagged segments"
-										class="-mx-1.5 rounded px-1.5 py-0.5 text-left transition-colors hover:bg-none"
+										class="-mx-1.5 h-auto justify-start rounded bg-transparent px-1.5 py-0.5 hover:bg-transparent"
 									>
 										<SentimentBar
 											label={titleCase(e.id)}
@@ -486,7 +518,7 @@
 											max={maxEmotion}
 											labelClass="w-40"
 										/>
-									</button>
+									</Button>
 								{/each}
 							</div>
 						{/if}
@@ -509,11 +541,12 @@
 						</p>
 						<div class="mt-1 flex flex-col gap-1.5">
 							{#each topWords as w (w.word)}
-								<button
-									type="button"
+								<Button
+									variant="ghost"
+									size="sm"
 									onclick={() => openWordFragments(w.word)}
 									title="View segments using this word"
-									class="-mx-1.5 flex items-center gap-2 rounded px-1.5 py-0.5 text-xs transition-colors hover:bg-none"
+									class="-mx-1.5 h-auto justify-start gap-2 rounded bg-transparent px-1.5 py-0.5 text-xs hover:bg-transparent"
 								>
 									<span class="w-28 shrink-0 truncate text-left text-slate-700">{w.word}</span>
 									<div class="h-3 flex-1 rounded-sm bg-slate-100">
@@ -523,7 +556,7 @@
 										></div>
 									</div>
 									<span class="w-5 shrink-0 text-right tabular-nums text-slate-500">{w.count}</span>
-								</button>
+								</Button>
 							{/each}
 						</div>
 					{:else}
@@ -543,3 +576,14 @@
 		</div>
 	{/if}
 </RightDrawer>
+
+<style>
+	.poster-cover {
+		position: relative;
+		width: 100%;
+		height: 180px;
+		flex-shrink: 0;
+		overflow: hidden;
+		border-bottom: 1px solid var(--panel-mid);
+	}
+</style>

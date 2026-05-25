@@ -2,26 +2,25 @@
 <!--
 	QuoteSlide — patient-voice slide.
 
-	A large blockquote with sentiment-tinted quote marks. Single-column
-	centered layout; attribution chip below. House typography (Jost) — no
-	editorial serifs.
+	Wraps the shared KeyQuoteCard (size="lg") so the story deck speaks the
+	same visual language as the Lab Book's key-findings / fingerprint pages.
+	Eyebrow + card animate in with a short stagger; reduced-motion users get
+	the static frame.
 -->
 <script lang="ts">
-	import {
-		questionLabel,
-		titleCase
-	} from '$lib/content/wctglpdemo-data/analysis';
+	import KeyQuoteCard from '$lib/components/KeyQuoteCard.svelte';
 	import type { QuoteSlide as QuoteSlideData } from '$lib/story/types';
+	import type { ParticipantProfile } from '$lib/types/participant-profile';
 
-	let { slide }: { slide: QuoteSlideData } = $props();
-
-	const sentimentColor = $derived(
-		slide.quote.sentiment > 0
-			? 'var(--green, #599077)'
-			: slide.quote.sentiment < 0
-				? 'var(--orange, #CC6324)'
-				: '#94a3b8'
-	);
+	let {
+		slide,
+		profiles,
+		onparticipant
+	}: {
+		slide: QuoteSlideData;
+		profiles: Record<string, ParticipantProfile>;
+		onparticipant: (interviewId: string) => void;
+	} = $props();
 </script>
 
 <div class="quote-slide">
@@ -32,19 +31,17 @@
 		{slide.eyebrow}
 	</span>
 
-	<blockquote class="story-quote font-heading story-fade-in" style="--delay: 220ms;">
-		<span class="quote-mark left" style="color:{sentimentColor}">&ldquo;</span>
-		<p>{slide.quote.text}</p>
-		<span class="quote-mark right" style="color:{sentimentColor}">&rdquo;</span>
-	</blockquote>
-
-	<div
-		class="story-fade-in flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.06em] text-slate-500"
-		style="--delay: 420ms;"
-	>
-		<span class="font-medium text-primary">{titleCase(slide.quote.interview_id)}</span>
-		<span class="text-slate-300">·</span>
-		<span>{questionLabel(slide.quote.question_id)}</span>
+	<div class="story-fade-in card-wrap" style="--delay: 220ms;">
+		<KeyQuoteCard
+			text={slide.quote.text}
+			sentiment={slide.quote.sentiment}
+			interviewId={slide.quote.interview_id}
+			questionId={slide.quote.question_id}
+			themes={slide.quote.themes}
+			{profiles}
+			{onparticipant}
+			size="lg"
+		/>
 	</div>
 </div>
 
@@ -54,7 +51,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 1.5rem;
+		gap: 1.75rem;
 		padding: 4rem 2rem;
 		max-width: 60rem;
 		margin: 0 auto;
@@ -62,25 +59,10 @@
 		height: 100%;
 	}
 
-	.story-quote {
-		position: relative;
-		font-size: clamp(1.4rem, 3.2vw, 2.25rem);
-		font-weight: 300;
-		line-height: 1.35;
-		color: var(--ink, #312f28);
-		text-align: center;
+	.card-wrap {
+		width: 100%;
 		max-width: 48rem;
 	}
-	.story-quote p { display: inline; }
-
-	.quote-mark {
-		font-size: 1.4em;
-		line-height: 0;
-		vertical-align: -0.2em;
-		font-weight: 400;
-	}
-	.quote-mark.left { margin-right: 0.15em; }
-	.quote-mark.right { margin-left: 0.1em; }
 
 	.story-fade-in {
 		opacity: 0;

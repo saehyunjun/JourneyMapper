@@ -1,37 +1,27 @@
 
 <!--
-	LeanSlide — sentiment lean as a single MetricRing.
+	RecolorSlide — narrative-only slide that piggybacks on the persistent
+	corpus dot grid. The same N circles that introduced the scope morph
+	color to surface a new signal (here: sentiment distribution); the slide
+	itself owns no viz.
 
-	The MetricRing carries the focal number (one data point). Specific
-	driver clusters that pull the corpus positive and negative live in the
-	side drawer; the slide exposes them via an inline link-button on the
-	"N tagged moments" phrase plus an explicit "view drivers" CTA at the
-	bottom of the narrative column.
+	Headlines on these slides should be at sub-theme or sub-population
+	granularity. Corpus-wide claims ("the corpus runs positive") are too
+	broad to read as an insight — see types.ts for the rationale.
 -->
 <script lang="ts">
 	import { ArrowRight } from '@lucide/svelte';
 	import StorySlide from '../StorySlide.svelte';
-	import MetricRing from '../viz/MetricRing.svelte';
 	import InlineLinkButton from '../InlineLinkButton.svelte';
-	import { vizSize } from '$lib/story/responsiveSize.svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import type { LeanSlide as LeanSlideData, SlideDetail } from '$lib/story/types';
+	import type { RecolorSlide as RecolorSlideData, SlideDetail } from '$lib/story/types';
 
 	let {
 		slide,
 		onOpenDetail
 	}: {
-		slide: LeanSlideData;
+		slide: RecolorSlideData;
 		onOpenDetail?: (detail: SlideDetail) => void;
 	} = $props();
-
-	const color = $derived(
-		slide.tone === 'positive'
-			? '#599077'
-			: slide.tone === 'negative'
-				? '#CC6324'
-				: '#6a99c2'
-	);
 
 	const bodyParts = $derived.by<[string, string] | null>(() => {
 		if (!slide.bodyHighlight || !slide.detail || !onOpenDetail) return null;
@@ -42,8 +32,6 @@
 
 	const hasDrawer = $derived(Boolean(slide.detail && onOpenDetail));
 
-	const ringSize = $derived(vizSize({ base: 220, md: 280, lg: 360, xl: 420, '2xl': 500 }));
-
 	function openDetail() {
 		if (slide.detail && onOpenDetail) onOpenDetail(slide.detail);
 	}
@@ -51,7 +39,13 @@
 
 <StorySlide emphasis="balanced">
 	{#snippet visual()}
-		<MetricRing value={slide.value} total={100} size={ringSize} color={color} labelSuffix="%" />
+		<div class="recolor-caption-wrap">
+			{#if slide.caption}
+				<span class="font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+					{slide.caption}
+				</span>
+			{/if}
+		</div>
 	{/snippet}
 
 	{#snippet narrative()}
@@ -79,21 +73,51 @@
 		</p>
 
 		{#if hasDrawer}
-			<Button
-				variant="outline"
-				size="sm"
-				class="story-fade-in font-heading self-start"
+			<button
+				type="button"
+				class="story-fade-in story-cta font-heading"
 				style="--delay: 520ms;"
 				onclick={openDetail}
 			>
 				<span>View driver clusters</span>
 				<ArrowRight class="size-3.5" />
-			</Button>
+			</button>
 		{/if}
 	{/snippet}
 </StorySlide>
 
 <style>
+	.recolor-caption-wrap {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		height: 100%;
+		padding-bottom: 1.5rem;
+		gap: 1.25rem;
+	}
+
+	.story-cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		align-self: flex-start;
+		margin-top: 0.25rem;
+		padding: 0.5rem 0.875rem;
+		border-radius: 999px;
+		font-size: 0.8125rem;
+		font-weight: 500;
+		color: var(--ink, #312f28);
+		border: 1px solid rgba(48, 47, 40, 0.18);
+		background: white;
+		transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+	}
+	.story-cta:hover {
+		border-color: var(--midgreen, #7DBFA7);
+		color: var(--green, #599077);
+		transform: translateY(-1px);
+	}
+
 	.story-fade-in {
 		opacity: 0;
 		animation: story-rise 600ms cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms) forwards;

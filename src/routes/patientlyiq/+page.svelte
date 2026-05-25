@@ -12,6 +12,8 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
 	import { MoveUpRight, Star, ArrowRight } from '@lucide/svelte';
 	import {
 		summaryStats,
@@ -23,18 +25,22 @@
 		type Distribution,
 		type ClusterBar
 	} from '$lib/content/wctglpdemo-data/executive-summary';
-	import { buildRadialTree } from '$lib/content/wctglpdemo-data/analysis';
+	import { buildRadialTree, quotes as allQuotes } from '$lib/content/wctglpdemo-data/analysis';
 	import KeyQuoteCard from '$lib/components/KeyQuoteCard.svelte';
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
 	import SentimentDonut from '$lib/components/SentimentDonut.svelte';
 	import BubbleChart from '$lib/components/BubbleChart.svelte';
 	import StatBlock from '$lib/components/StatBlock.svelte';
+	import StatScatter from '$lib/components/StatScatter.svelte';
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
 	import SegmentTensionMatrix, {
 		type SegmentTensionDatum
 	} from '$lib/charts/glp/SegmentTensionMatrix.svelte';
 	import SemiArcChart from '$lib/components/key-findings/blocks/SemiArcChart.svelte';
+	import ExecutiveSummaryStory from '$lib/components/story/ExecutiveSummaryStory.svelte';
+	import IndicationPoster from '$lib/components/indication/IndicationPoster.svelte';
+	import type { StoryInput } from '$lib/story/types';
 	import { sentimentColor } from '$lib/key-findings/widgets';
 	import type { PageProps } from './$types';
 
@@ -235,6 +241,74 @@
 		)
 	);
 
+	// --- Indication poster — generative SVG driven by corpus telemetry ------
+	function hashSlug(s: string): number {
+		let h = 2166136261 >>> 0;
+		for (let i = 0; i < s.length; i++) {
+			h ^= s.charCodeAt(i);
+			h = Math.imul(h, 16777619);
+		}
+		return h >>> 0;
+	}
+
+	const posterThemes = $derived(
+		displayThemeBreakdown as Array<{
+			id: string;
+			label: string;
+			blocks: { sentiment: number; interview_id?: string }[];
+		}>
+	);
+
+	const posterThemeSizes = $derived(posterThemes.map((t) => t.blocks.length));
+
+	const posterSentimentTimeline = $derived(
+		posterThemes.flatMap((t) => t.blocks.map((b) => b.sentiment))
+	);
+
+	// Pick one best quote per interview — highest overall quote_score wins.
+	// Used by IndicationPoster to show a key quote when the user hovers a dot.
+	const bestQuoteByInterview = (() => {
+		const map = new Map<string, (typeof allQuotes)[number]>();
+		for (const q of allQuotes) {
+			const cur = map.get(q.interview_id);
+			if (!cur || q.quote_score.overall > cur.quote_score.overall) {
+				map.set(q.interview_id, q);
+			}
+		}
+		return map;
+	})();
+
+	const posterAnchors = $derived.by(() => {
+		const seen = new Set<string>();
+		const anchors: {
+			id: string;
+			quote?: string;
+			sentiment?: number;
+			themes?: string[];
+			participant?: string;
+		}[] = [];
+		for (const t of posterThemes) {
+			for (const b of t.blocks) {
+				const id = b.interview_id;
+				if (!id || seen.has(id)) continue;
+				seen.add(id);
+				const q = bestQuoteByInterview.get(id);
+				anchors.push({
+					id,
+					quote: q?.text,
+					sentiment: q?.sentiment,
+					themes: q?.themes,
+					participant: id
+				});
+				if (anchors.length >= 6) return anchors;
+			}
+		}
+		return anchors;
+	});
+
+	const posterSeed = $derived(hashSlug(activeIndication));
+	const posterVariant = $derived(isLupusNephritis ? 'cool' : 'default');
+
 	const SENTIMENT_GRADES = [
 		{ value: -2, label: 'Strongly negative' },
 		{ value: -1, label: 'Negative' },
@@ -296,9 +370,57 @@
 			blurb: 'The interview recut as an awareness-to-participation arc.'
 		}
 	];
+
+	// --- View mode (Dashboard / Story) ---------------------------------------
+	// URL-driven so the choice survives refresh and can be shared. The topbar
+	// toggle writes ?view=story; we read it here without touching the layout
+	// loader (which only watches ?indication).
+	const viewMode = $derived(page.url.searchParams.get('view') === 'story' ? 'story' : 'dashboard');
+
+	function exitStory() {
+		const url = new URL(page.url);
+		url.searchParams.delete('view');
+		goto(url, { keepFocus: true, noScroll: true });
+	}
+
+	// Bundle the data the StoryAssembler needs. Mirrors what the dashboard
+	// view renders below — single source of truth for both. The real corpus
+	// data from buildRadialTree carries sub-theme children; LN placeholder
+	// themes don't, and the assembler skips the drivers zone when they're
+	// missing.
+	const storyInput = $derived<StoryInput>({
+		title: `${activeConditionLabel} Patient Insights`,
+		summaryText: displaySummaryText,
+		stats: displayStats,
+		sentimentLean: displaySentimentLean,
+		themes: (displayThemeBreakdown as Array<{
+			id: string;
+			label: string;
+			blocks: { sentiment: number }[];
+			children?: { kind?: string; id: string; label: string; blocks: { sentiment: number }[] }[];
+		}>).map((t) => ({
+			id: t.id,
+			label: t.label,
+			blocks: t.blocks,
+			subthemes: t.children
+				?.filter((c) => c.kind === 'subtheme')
+				.map((s) => ({ id: s.id, label: s.label, blocks: s.blocks }))
+		})),
+		findings: displayFindings,
+		explore,
+		profiles,
+		posterSeed,
+		posterVariant,
+		posterAnchors
+	});
 </script>
 
 {#key activeIndication}
+	{#if viewMode === 'story'}
+		<div class="flex flex-1 flex-col" in:fade={{ duration: 300 }}>
+			<ExecutiveSummaryStory input={storyInput} frameTitle="{activeConditionLabel} Patient Insights Lab Book" onExit={exitStory} />
+		</div>
+	{:else}
 <div class="flex flex-1 flex-col gap-6" in:fade={{ duration: 300 }}>
 	<div
 		class="mx-auto flex w-full flex-col justify-center bg-muted bg-[url('/content-assets/bgtexture.png')] bg-center align-middle bg-blend-lighten"
@@ -317,18 +439,44 @@
 	<div class="mx-auto flex w-full max-w-6xl flex-col gap-14 px-8 pt-8 pb-16">
 		<!-- Opening read — programmatic paragraph, headline stats, sentiment lean. -->
 		<section class="flex flex-col gap-8">
-			<div class="flex flex-col gap-4">
-				<h2 class="text-sm font-medium uppercase font-heading text-accent-mint">
-					Summary View
-				</h2>
-				<p class="md:max-w-4xl lg:max-w-5xl text-pretty text-lg leading-normal text-secondary-foreground">
-					{displaySummaryText}
-				</p>
+			<div class="grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-start">
+				<div class="flex flex-col gap-4">
+					<h2 class="text-sm font-medium uppercase font-heading text-accent-mint">
+						Summary View
+					</h2>
+					<p class="text-pretty text-lg leading-normal text-secondary-foreground">
+						{displaySummaryText}
+					</p>
+				</div>
+				<div class="w-full max-w-md justify-self-end">
+					<IndicationPoster
+						totalQuotes={displaySentimentLean.total}
+						posPct={displaySentimentLean.posPct}
+						negPct={displaySentimentLean.negPct}
+						neutralPct={displaySentimentLean.neutralPct}
+						themeSizes={posterThemeSizes}
+						interviewAnchors={posterAnchors}
+						sentimentTimeline={posterSentimentTimeline}
+						seed={posterSeed}
+						variant={posterVariant}
+						interactive
+					/>
+				</div>
 			</div>
 
 			<div class="grid grid-cols-2 gap-px overflow-hidden border bg-slate-200 md:grid-cols-4">
 				{#each displayStats as stat (stat.label)}
-					<StatBlock value={stat.value} label={stat.label} />
+					{#if stat.label === 'tagged quotes'}
+						<StatScatter
+							value={stat.value}
+							label={stat.label}
+							positive={displaySentimentLean.positive}
+							neutral={displaySentimentLean.neutral}
+							negative={displaySentimentLean.negative}
+						/>
+					{:else}
+						<StatBlock value={stat.value} label={stat.label} />
+					{/if}
 				{/each}
 			</div>
 
@@ -443,7 +591,6 @@
 						{#if f.clusters.length}
 							<div class="flex flex-col gap-2.5 border-t border-muted pt-4">
 								<span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-									Keyword clusters · bubble size = tagged quote count
 								</span>
 								<div class="exec-bubble-wrap" bind:clientWidth={clusterWidths[f.id]}>
 									{#if clusterWidths[f.id]}
@@ -451,10 +598,10 @@
 											items={f.clusters.map((c) => c.label)}
 											values={f.clusters.map((c) => c.count)}
 											context="card"
-											units=""
-											width={Math.max(260, clusterWidths[f.id])}
-											height={220}
-											allowUserOverride={false}
+											units="%"
+											width={Math.max(320, clusterWidths[f.id])}
+											height={320}
+											allowUserOverride={true}
 										/>
 									{/if}
 								</div>
@@ -551,6 +698,7 @@
 		</section>
 	</div>
 </div>
+	{/if}
 {/key}
 
 <!-- Participant details drawer -->

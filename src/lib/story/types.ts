@@ -16,6 +16,27 @@ import type { ParticipantProfile } from '$lib/types/participant-profile';
 
 export type SlideTone = 'positive' | 'negative' | 'divisive' | 'neutral';
 
+/**
+ * 5-band sentiment bucket — keys are stringified -2..+2 scores. Matches the
+ * SENTIMENT_COLORS palettes used across the chart components.
+ */
+export type SentimentBucket = '-2' | '-1' | '0' | '1' | '2';
+
+/**
+ * What the persistent corpus dot-grid should show on a given slide. The
+ * grid stays mounted across slide transitions and morphs in place; slides
+ * that participate declare a spec rather than rendering their own viz.
+ *
+ *   uniform   — every dot the same color (scope scene-setter)
+ *   sentiment — dots distributed across the 5-band palette by raw counts
+ *   highlight — a subset of dot indices lit in a focus color, rest fade
+ *               back; the "pull a sub-theme out of the corpus" mode
+ */
+export type CorpusVizSpec =
+	| { mode: 'uniform'; color: string }
+	| { mode: 'sentiment'; counts: Record<SentimentBucket, number> }
+	| { mode: 'highlight'; matchingIndices: Set<number>; highlightColor: string; baseColor: string };
+
 /** A small stat — only used internally by the assembler; not surfaced on a slide. */
 export type StoryStat = { value: number; label: string };
 
@@ -31,7 +52,24 @@ export type HeroSupport =
 	 * Sphere-in-ring composition. Owns its own % display, so the slide
 	 * template suppresses its big-figure block when this kind is used.
 	 */
-	| { kind: 'sphere-ring'; value: number };
+	| { kind: 'sphere-ring'; value: number }
+	/**
+	 * Constellation: a transparent outlined "container" ring whose size
+	 * reads as the total denominator, with N (typically 2–4) colored
+	 * bubbles packed inside representing the top drivers. The ring and the
+	 * bubbles animate in sequentially on slide enter.
+	 */
+	| { kind: 'bubble-cluster'; total: number; tone: SlideTone; bubbles: BubbleSpec[] };
+
+/** One bubble inside a cluster stage. */
+export type BubbleSpec = {
+	id: string;
+	label: string;
+	value: number;
+	color?: string;
+	opacity?: number;
+	primary?: boolean;
+};
 
 /**
  * One row of supporting evidence — a named driver (cluster, sub-theme,
@@ -65,12 +103,39 @@ export type SlideDetail = {
 	fragments?: ThemeFragment[];
 };
 
+/**
+ * Generative poster spec — the IndicationPoster's flattened prop bag, derived
+ * once by the assembler from the indication's corpus telemetry. Stays small
+ * (primitives + short arrays) so it can serialize through slide payloads.
+ */
+export type PosterAnchor = {
+	id: string;
+	quote?: string;
+	sentiment?: number;
+	themes?: string[];
+	participant?: string;
+};
+
+export type PosterSpec = {
+	totalQuotes: number;
+	posPct: number;
+	negPct: number;
+	neutralPct: number;
+	themeSizes: number[];
+	interviewAnchors: PosterAnchor[];
+	sentimentTimeline: number[];
+	seed: number;
+	variant: 'default' | 'warm' | 'cool';
+};
+
 /** Cover slide: project title + lead paragraph. No stat grid — the cover stays magazine-clean. */
 export type OpeningSlide = {
 	kind: 'opening';
 	eyebrow: string;
 	title: string;
 	body: string;
+	/** Generative background poster — animates in behind the title text. */
+	poster?: PosterSpec;
 };
 
 /** A scene-setter slide: one big count, one caption. No drillable detail. */
@@ -81,6 +146,36 @@ export type ScopeSlide = {
 	value: number;
 	label: string;
 	body?: string;
+	/**
+	 * If present, the slide hands its visual region over to the persistent
+	 * corpus grid. The slide template skips its own DotGrid and only renders
+	 * the caption beneath where the shared grid sits.
+	 */
+	viz?: CorpusVizSpec;
+};
+
+/**
+ * Recolor slide: piggybacks on the persistent corpus grid to morph the same
+ * dots into a new color story (sentiment distribution, sub-theme highlight,
+ * etc.). The slide carries only narrative — the grid lives in the shell.
+ *
+ * Headlines on recolor slides should be at sub-theme or sub-population
+ * granularity. Corpus-wide claims ("the corpus runs positive") are too
+ * broad to read as an insight and belong in the executive summary text, not
+ * a slide.
+ */
+export type RecolorSlide = {
+	kind: 'recolor';
+	eyebrow: string;
+	headline: string;
+	body: string;
+	/** Substring of `body` to render as an inline link-button. */
+	bodyHighlight?: string;
+	total: number;
+	viz: CorpusVizSpec;
+	/** Caption rendered under the grid (e.g. legend text). */
+	caption?: string;
+	detail?: SlideDetail;
 };
 
 /** Sentiment lean as a single percent. Detail surfaces pos/neg driver clusters. */
@@ -130,6 +225,7 @@ export type ClosingSlide = {
 export type Slide =
 	| OpeningSlide
 	| ScopeSlide
+	| RecolorSlide
 	| LeanSlide
 	| HeroStatSlide
 	| QuoteSlide
@@ -159,4 +255,12 @@ export type StoryInput = {
 	findings: Finding[];
 	explore: StoryExploreLink[];
 	profiles: Record<string, ParticipantProfile>;
+	/**
+	 * Optional indication identity — used to seed the generative poster on the
+	 * opening slide so the same indication always cuts the same composition,
+	 * and to pick the warm/cool background tint.
+	 */
+	posterSeed?: number;
+	posterVariant?: 'default' | 'warm' | 'cool';
+	posterAnchors?: PosterAnchor[];
 };

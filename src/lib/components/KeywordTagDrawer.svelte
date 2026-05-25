@@ -22,6 +22,7 @@
 -->
 <script lang="ts">
 	import TertiaryDrawer from '$lib/components/TertiaryDrawer.svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
 
 	type Keyword = { id: string; label: string; variants: string[] };
 	type Category = { id: string; label: string; description: string; keywords: Keyword[] };
@@ -174,12 +175,12 @@
 				<div class="flex flex-col gap-1">
 					{#each suggestions as s (s.keyword.id)}
 						{@const current = isCurrent(s.keyword.id)}
-						<button
-							type="button"
-							class="flex items-center justify-between gap-2 rounded border px-2 py-1.5 text-left text-sm transition-colors disabled:opacity-50
-								{current
-								? 'cursor-not-allowed border-amber-200 bg-amber-50'
-								: 'border-slate-200 hover:border-accent-mint hover:bg-accent-mint/10'}"
+						<Button
+							variant="outline"
+							size="sm"
+							pressed={current}
+							activeClass="cursor-not-allowed border-amber-200 bg-amber-50"
+							class="h-auto justify-between gap-2 rounded border-slate-200 px-2 py-1.5 text-left hover:border-accent-mint hover:bg-accent-mint/10"
 							disabled={busy || current}
 							onclick={() => ontag(s.keyword.id)}
 						>
@@ -194,7 +195,7 @@
 									{s.keyword.variants.length} variants
 								{/if}
 							</span>
-						</button>
+						</Button>
 					{/each}
 				</div>
 			</section>
@@ -206,14 +207,15 @@
 					<p class="text-[10px] font-bold uppercase tracking-wide text-slate-500">
 						{cat.label}
 					</p>
-					<button
-						type="button"
-						class="text-[11px] text-accent-mint hover:underline disabled:opacity-50"
+					<Button
+						variant="link"
+						size="xs"
+						class="text-[11px] text-accent-mint"
 						disabled={busy || newClusterFor === cat.id}
 						onclick={() => openNewClusterForm(cat.id)}
 					>
 						+ New keyword here
-					</button>
+					</Button>
 				</div>
 
 				{#if newClusterFor === cat.id}
@@ -254,22 +256,24 @@
 							></textarea>
 						</label>
 						<div class="flex justify-end gap-2">
-							<button
-								type="button"
-								class="rounded border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+							<Button
+								variant="outline"
+								size="xs"
+								class="rounded border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
 								disabled={busy}
 								onclick={cancelNewClusterForm}
 							>
 								Cancel
-							</button>
-							<button
-								type="button"
-								class="rounded bg-accent-mint px-2.5 py-1 text-xs font-medium text-white hover:bg-accent-mint/90 disabled:opacity-50"
+							</Button>
+							<Button
+								variant="secondary"
+								size="xs"
+								class="rounded bg-accent-mint font-medium text-white hover:bg-accent-mint/90"
 								disabled={busy || !newClusterLabel.trim()}
 								onclick={submitNewClusterForm}
 							>
 								{busy ? submitBusyLabel : submitLabel}
-							</button>
+							</Button>
 						</div>
 					</div>
 				{/if}
@@ -277,18 +281,18 @@
 				<div class="flex flex-wrap gap-1.5">
 					{#each cat.keywords as kw (kw.id)}
 						{@const current = isCurrent(kw.id)}
-						<button
-							type="button"
+						<Button
+							variant="outline"
+							size="xs"
+							pressed={current}
+							activeClass="cursor-not-allowed border-amber-300 bg-amber-50 text-amber-900"
 							title={current ? 'Currently linked — pick another keyword to move it' : kw.label}
-							class="rounded-full border px-2 py-0.5 text-xs transition-colors disabled:opacity-50
-								{current
-								? 'cursor-not-allowed border-amber-300 bg-amber-50 text-amber-900'
-								: 'border-slate-200 text-slate-600 hover:border-accent-mint hover:bg-accent-mint/10'}"
+							class="rounded-full border-slate-200 text-slate-600 hover:border-accent-mint hover:bg-accent-mint/10"
 							disabled={busy || current}
 							onclick={() => ontag(kw.id)}
 						>
 							{kw.label}{#if current} · current{/if}
-						</button>
+						</Button>
 					{/each}
 					{#if !cat.keywords.length && newClusterFor !== cat.id}
 						<p class="text-[11px] text-slate-400">
