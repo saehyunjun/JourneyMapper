@@ -38,3 +38,7 @@ vite.config.ts.timestamp-*
 # Phase 3 embedding corpus / vector cache
 /data/embedding_corpus.jsonl
 /data/embeddings_*.jsonl
+
+# ClinicalTrials.gov raw envelopes — regenerable via scripts/fetch-clinicaltrials.mjs.
+# Kept out of git because they exceed GitHub's per-file size limit (one is 130 MB).
+**/clinical_trials/raw_studies.json
