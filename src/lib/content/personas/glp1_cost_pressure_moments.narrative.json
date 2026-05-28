@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "persona_id": "glp1_cost_pressure_moments",
+    "corpus_id": "wct_glp1_2025q4",
+    "filter_hash": "881114f61947",
+    "evidence_fragment_ids": [
+      "iv-participant_06_t03_s00",
+      "iv-participant_09_t03_s02",
+      "iv-participant_09_t07_s02",
+      "iv-participant_10_t05_s03",
+      "iv-participant_09_t31_s00",
+      "iv-participant_09_t03_s01",
+      "iv-participant_06_t23_s02",
+      "iv-participant_06_t07_s01",
+      "iv-participant_07_t09_s04",
+      "iv-participant_08_t09_s04",
+      "iv-participant_06_t07_s00",
+      "iv-participant_06_t23_s04",
+      "iv-participant_10_t21_s00",
+      "iv-participant_09_t07_s00",
+      "iv-participant_10_t21_s01",
+      "iv-participant_07_t25_s01",
+      "iv-participant_07_t25_s02",
+      "iv-participant_06_t11_s00",
+      "iv-participant_11_t05_s01",
+      "iv-participant_12_t21_s01"
+    ],
+    "generator": "propose-persona-narrative@0.1",
+    "model": "claude-opus-4-7",
+    "generated_at": "2026-05-28T21:35:39.174Z"
+  },
+  "tagline": "One formulary change away from losing the body I rebuilt.",
+  "paragraph": "I've been on Zepbound for almost eighteen months and it's changed my life — but I never forget that I'm one insurance decision, one lawsuit, one job change away from losing access. My doctor has tried to get coverage approved and the pharmacy benefit manager won't even talk to her office; out of pocket would run me about a thousand dollars a month, which is completely prohibitive. My family and I have actually sat down and factored this into realistically the rest of our life — I won't keep paying for it if it harms them. So I watch the forums. I price-check compounded tirzepatide against Mounjaro. I tell myself if orforglipron drops and it's significantly cheaper, I'd consider a pill even though I'd rather stay on the injection. I'd want to see a pharmacy's COI before I trusted a compound, because there's a lot of scary stuff online about counterfeits, but I'm not against it. There's also this quiet fear that now that I've lost the weight, insurance will decide I don't qualify anymore and pull the rug. In 2026 my employer renegotiates benefits, and obesity still isn't treated like the disease it is, so who knows. Right now I'm fortunate — most of the cost is covered — but \"right now\" is the operative phrase. I'll do whatever I have to do to stay on this medication, but I know the math could stop working at any moment.",
+  "patient_concerns": [
+    "Out-of-pocket costs near $1,000 a month would force me to stop immediately.",
+    "Worried insurance will drop coverage once I've lost the qualifying weight.",
+    "Pharmacy benefit managers won't even talk to my doctor about authorization.",
+    "Need to vet compounding pharmacies carefully so I don't get counterfeit medication."
+  ],
+  "person_concerns": [
+    "I refuse to keep paying for this if it financially harms my family.",
+    "Scared the body I rebuilt could unravel if access disappears overnight.",
+    "Frustrated that obesity still isn't treated like the real disease it is.",
+    "Living with the quiet knowledge that \"right now\" is the only guarantee."
+  ],
+  "hero_quote_fragment_id": "iv-participant_06_t03_s00"
+}

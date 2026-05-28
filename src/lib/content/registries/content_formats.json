@@ -1,0 +1,311 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "description": "Content format × channel registry — the leaf-level vocabulary the suggestor uses to specify HOW an idea ships. Each format declares the channels it can run on, production complexity, evidence requirements, and which strategies/journey-stages it fits best. The LLM proposer is constrained to ids in this file; new formats must be added here before they can be referenced by generated content_suggestions.",
+  "notes": [
+    "format_class groups formats by mode (narrative / explainer / tool / event / community). Used for filtering in the UI.",
+    "production_complexity is qualitative: low (hours, no production), medium (days, light production), high (weeks, full production with consent/legal/medical review).",
+    "evidence_requirement names the kind of patient evidence the format demands. 'consented_quote' means a real patient quote with documented consent; 'composite_archetype' means a synthesized persona, not a real person.",
+    "best_for_strategies and best_for_stages let the mapping layer score format candidates by intersection with the chosen strategy + journey context."
+  ],
+  "items": [
+    {
+      "id": "long_form_explainer",
+      "label": "Long-form explainer article",
+      "format_class": "explainer",
+      "channels": ["search_seo", "advocacy_newsletter", "owned_site"],
+      "production_complexity": "medium",
+      "best_for_stages": ["pre_diagnosis", "diagnostic_odyssey", "induction_treatment", "stable_maintenance"],
+      "best_for_strategies": [
+        "unbranded_awareness",
+        "patient_education_clinical",
+        "early_engagement_serp"
+      ],
+      "evidence_requirement": "cited_clinical_source",
+      "description": "1500-3500 word indexable explainer optimized for organic search. Anchors the SEO strategy and works as the canonical reference other formats link back to."
+    },
+    {
+      "id": "short_explainer_video",
+      "label": "Short explainer video (60-180s)",
+      "format_class": "explainer",
+      "channels": ["youtube", "tiktok", "instagram_reels", "owned_site"],
+      "production_complexity": "medium",
+      "best_for_stages": ["diagnostic_odyssey", "induction_treatment", "trial_consideration"],
+      "best_for_strategies": [
+        "patient_education_clinical",
+        "unbranded_awareness",
+        "trial_recruitment_support"
+      ],
+      "evidence_requirement": "cited_clinical_source",
+      "description": "Short, motion-graphic or simple-talking-head video explaining one concept clearly. Pairs well with long-form explainers as a top-of-funnel hook."
+    },
+    {
+      "id": "patient_story_video",
+      "label": "Patient-story video (3-8 min)",
+      "format_class": "narrative",
+      "channels": ["youtube", "owned_site", "advocacy_newsletter", "instagram", "linkedin"],
+      "production_complexity": "high",
+      "best_for_stages": [
+        "diagnostic_odyssey",
+        "induction_treatment",
+        "stable_maintenance",
+        "post_trial"
+      ],
+      "best_for_strategies": [
+        "peer_storytelling",
+        "advocacy_partnership",
+        "lifestyle_normalization"
+      ],
+      "evidence_requirement": "consented_patient_story",
+      "description": "Documentary-style first-person video. High emotional payoff; high consent, legal, and production cost. Anchor format for MG United / More Than MG playbook."
+    },
+    {
+      "id": "patient_story_essay",
+      "label": "First-person essay",
+      "format_class": "narrative",
+      "channels": ["owned_site", "advocacy_newsletter", "medium", "substack"],
+      "production_complexity": "medium",
+      "best_for_stages": ["diagnostic_odyssey", "stable_maintenance", "post_trial"],
+      "best_for_strategies": [
+        "peer_storytelling",
+        "lifestyle_normalization",
+        "advocacy_partnership"
+      ],
+      "evidence_requirement": "consented_patient_story",
+      "description": "Written first-person essay. Lower production cost than video, easier to syndicate via advocacy newsletters, and indexable for SEO when the headline matches search demand."
+    },
+    {
+      "id": "podcast_episode",
+      "label": "Podcast episode (host-and-guest)",
+      "format_class": "narrative",
+      "channels": [
+        "podcast_apple",
+        "podcast_spotify",
+        "youtube",
+        "advocacy_newsletter",
+        "owned_site"
+      ],
+      "production_complexity": "medium",
+      "best_for_stages": [
+        "stable_maintenance",
+        "trial_consideration",
+        "post_trial",
+        "flare_or_refractory_cycle"
+      ],
+      "best_for_strategies": [
+        "peer_storytelling",
+        "advocacy_partnership",
+        "hcp_enablement"
+      ],
+      "evidence_requirement": "consented_patient_story",
+      "description": "30-60 min conversational episode. Strong fit for partnerships with advocacy podcasts already in-market (e.g., Kaleidoscope Fighting Lupus's podcast, GHLF's Talking Head Pain network)."
+    },
+    {
+      "id": "decision_aid_worksheet",
+      "label": "Decision-aid worksheet",
+      "format_class": "tool",
+      "channels": ["owned_site", "advocacy_newsletter", "clinic_handout"],
+      "production_complexity": "medium",
+      "best_for_stages": [
+        "diagnostic_odyssey",
+        "flare_or_refractory_cycle",
+        "trial_consideration"
+      ],
+      "best_for_strategies": [
+        "patient_education_clinical",
+        "trial_recruitment_support",
+        "payer_navigation"
+      ],
+      "evidence_requirement": "cited_clinical_source",
+      "description": "Printable / fillable worksheet that walks a patient through a structured decision (e.g., 'questions to ask your nephrologist before starting voclosporin', 'is a CAR-T trial right for you'). High utility per artifact."
+    },
+    {
+      "id": "interactive_symptom_checker",
+      "label": "Interactive symptom / trial-eligibility checker",
+      "format_class": "tool",
+      "channels": ["owned_site", "advocacy_partner_site"],
+      "production_complexity": "high",
+      "best_for_stages": ["pre_diagnosis", "diagnostic_odyssey", "trial_consideration"],
+      "best_for_strategies": [
+        "early_engagement_serp",
+        "trial_recruitment_support",
+        "unbranded_awareness"
+      ],
+      "evidence_requirement": "medical_review",
+      "description": "Web-based tool that routes the user through a question tree to a recommendation (see a rheumatologist / explore these trials). Requires medical review, ongoing maintenance, and clear non-diagnostic disclaimers."
+    },
+    {
+      "id": "infographic",
+      "label": "Static infographic / visual explainer",
+      "format_class": "explainer",
+      "channels": [
+        "instagram",
+        "pinterest",
+        "advocacy_newsletter",
+        "owned_site",
+        "clinic_handout"
+      ],
+      "production_complexity": "low",
+      "best_for_stages": ["pre_diagnosis", "diagnostic_odyssey", "stable_maintenance"],
+      "best_for_strategies": [
+        "unbranded_awareness",
+        "patient_education_clinical",
+        "lifestyle_normalization"
+      ],
+      "evidence_requirement": "cited_clinical_source",
+      "description": "Single-image visual explainer. Highly shareable in patient social communities; works as a recurring volume play around an awareness month or campaign launch."
+    },
+    {
+      "id": "reddit_ama",
+      "label": "Reddit AMA / community Q&A",
+      "format_class": "community",
+      "channels": ["reddit_lupus", "reddit_kidneydisease", "facebook_groups"],
+      "production_complexity": "medium",
+      "best_for_stages": [
+        "trial_consideration",
+        "flare_or_refractory_cycle",
+        "stable_maintenance"
+      ],
+      "best_for_strategies": ["peer_storytelling", "advocacy_partnership", "hcp_enablement"],
+      "evidence_requirement": "moderator_coordination",
+      "description": "Hosted Q&A with a clinician, researcher, or trial-experienced patient. Surfaces unanswered questions verbatim, useful as input back into future explainer content. Requires careful pre-coordination with subreddit moderators."
+    },
+    {
+      "id": "advocacy_webinar",
+      "label": "Co-branded advocacy webinar",
+      "format_class": "event",
+      "channels": ["advocacy_partner_site", "youtube", "zoom", "advocacy_newsletter"],
+      "production_complexity": "medium",
+      "best_for_stages": [
+        "diagnostic_odyssey",
+        "induction_treatment",
+        "trial_consideration",
+        "flare_or_refractory_cycle"
+      ],
+      "best_for_strategies": [
+        "advocacy_partnership",
+        "patient_education_clinical",
+        "trial_recruitment_support"
+      ],
+      "evidence_requirement": "advocacy_partner_signoff",
+      "description": "Live or recorded webinar co-produced with an advocacy partner. Borrows the partner's audience, branding, and editorial credibility."
+    },
+    {
+      "id": "search_seo_landing_page",
+      "label": "Search-optimized landing page",
+      "format_class": "explainer",
+      "channels": ["search_seo", "paid_search", "owned_site"],
+      "production_complexity": "low",
+      "best_for_stages": ["pre_diagnosis", "diagnostic_odyssey", "trial_consideration"],
+      "best_for_strategies": ["early_engagement_serp", "unbranded_awareness", "trial_recruitment_support"],
+      "evidence_requirement": "cited_clinical_source",
+      "description": "Tight landing page targeting one search-intent cluster (e.g., 'is fatigue a sign of lupus nephritis'). Often paired with a long-form explainer as the canonical destination."
+    },
+    {
+      "id": "caregiver_guide",
+      "label": "Caregiver guide",
+      "format_class": "explainer",
+      "channels": ["owned_site", "advocacy_newsletter", "clinic_handout"],
+      "production_complexity": "medium",
+      "best_for_stages": [
+        "induction_treatment",
+        "flare_or_refractory_cycle",
+        "trial_consideration",
+        "in_trial_experience"
+      ],
+      "best_for_strategies": ["caregiver_enablement", "advocacy_partnership", "trial_recruitment_support"],
+      "evidence_requirement": "cited_clinical_source",
+      "description": "PDF or web guide aimed at the partner / parent / adult child carrying logistical and emotional load. Often the highest-utility format for trial-consideration phases because the caregiver is the decision-influencer."
+    },
+    {
+      "id": "financial_navigation_worksheet",
+      "label": "Financial / payer-navigation worksheet",
+      "format_class": "tool",
+      "channels": [
+        "owned_site",
+        "advocacy_partner_site",
+        "patient_helpline",
+        "clinic_handout"
+      ],
+      "production_complexity": "medium",
+      "best_for_stages": [
+        "induction_treatment",
+        "stable_maintenance",
+        "flare_or_refractory_cycle",
+        "trial_consideration"
+      ],
+      "best_for_strategies": ["payer_navigation", "advocacy_partnership"],
+      "evidence_requirement": "policy_review",
+      "description": "Structured worksheet covering prior-auth letters, copay programs, foundation grants, and appeal scripts. Typically co-produced with American Kidney Fund or similar."
+    },
+    {
+      "id": "hcp_cme_module",
+      "label": "HCP CME module",
+      "format_class": "explainer",
+      "channels": ["cme_platform", "medical_society_newsletter"],
+      "production_complexity": "high",
+      "best_for_stages": ["pre_diagnosis", "diagnostic_odyssey", "flare_or_refractory_cycle"],
+      "best_for_strategies": ["hcp_enablement"],
+      "evidence_requirement": "accredited_medical_review",
+      "description": "Accredited continuing-medical-education module for clinicians (PCPs, rheumatologists, nephrologists). Long production cycle and regulatory overhead; high credibility ceiling."
+    },
+    {
+      "id": "peer_mentor_program",
+      "label": "Peer-mentor matching program",
+      "format_class": "community",
+      "channels": ["advocacy_partner_site", "owned_site"],
+      "production_complexity": "high",
+      "best_for_stages": [
+        "diagnostic_odyssey",
+        "induction_treatment",
+        "trial_consideration",
+        "in_trial_experience",
+        "post_trial"
+      ],
+      "best_for_strategies": ["peer_storytelling", "advocacy_partnership", "caregiver_enablement"],
+      "evidence_requirement": "trained_volunteer_program",
+      "description": "Structured 1-1 matching between a newly-diagnosed or trial-considering patient and a trained peer mentor. High ongoing operational cost; rare and high-trust when done well."
+    },
+    {
+      "id": "social_short_post",
+      "label": "Short social post (Instagram / TikTok / X)",
+      "format_class": "narrative",
+      "channels": ["instagram", "tiktok", "x", "facebook"],
+      "production_complexity": "low",
+      "best_for_stages": [
+        "pre_diagnosis",
+        "diagnostic_odyssey",
+        "stable_maintenance",
+        "post_trial"
+      ],
+      "best_for_strategies": [
+        "lifestyle_normalization",
+        "peer_storytelling",
+        "unbranded_awareness"
+      ],
+      "evidence_requirement": "consented_patient_story_or_composite",
+      "description": "Short-form social content. High velocity, low individual stakes; works as the surface that drives traffic to higher-investment formats."
+    },
+    {
+      "id": "clinic_handout",
+      "label": "Clinic / point-of-care handout",
+      "format_class": "explainer",
+      "channels": ["clinic_handout", "owned_site_download"],
+      "production_complexity": "low",
+      "best_for_stages": [
+        "diagnostic_odyssey",
+        "induction_treatment",
+        "flare_or_refractory_cycle",
+        "trial_consideration"
+      ],
+      "best_for_strategies": [
+        "patient_education_clinical",
+        "hcp_enablement",
+        "trial_recruitment_support",
+        "payer_navigation"
+      ],
+      "evidence_requirement": "cited_clinical_source",
+      "description": "Printable one- or two-pager designed for handing to a patient at the end of a visit. Often the most-used artifact in clinic workflows and the easiest to get past medical-affairs review."
+    }
+  ]
+}

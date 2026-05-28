@@ -1,0 +1,30 @@
+{
+	"id": "obesity_side_effects_searches_us",
+	"type": "search_volume_topics",
+	"indication_id": "obesity",
+	"therapeutic_area_ids": ["endocrinology", "metabolism"],
+	"title": "GLP-1 side-effect searches",
+	"subtitle": "Monthly estimated volume, US — adverse effects, safety",
+	"unit": "monthly_estimated_search_volume",
+	"geography": "US",
+	"time_period": null,
+	"topic_category": "side_effects_safety",
+	"source": {
+		"type": "manual_estimate",
+		"notes": "Hand-authored estimates for demo purposes. Side-effect search dwarfs every other category for GLP-1 cohorts — the canonical 'ozempic side effects' query alone is the dominant signal."
+	},
+	"dimensions": ["topic"],
+	"measures": ["volume"],
+	"data": [
+		{ "topic": "ozempic side effects", "volume": 165000 },
+		{ "topic": "wegovy side effects", "volume": 49000 },
+		{ "topic": "mounjaro side effects", "volume": 90000 },
+		{ "topic": "zepbound side effects", "volume": 33000 },
+		{ "topic": "nausea on ozempic", "volume": 18000 },
+		{ "topic": "ozempic face", "volume": 22000 },
+		{ "topic": "semaglutide muscle loss", "volume": 9900 },
+		{ "topic": "stomach paralysis ozempic", "volume": 12000 },
+		{ "topic": "wegovy hair loss", "volume": 6600 },
+		{ "topic": "GLP-1 gastroparesis", "volume": 4400 }
+	]
+}

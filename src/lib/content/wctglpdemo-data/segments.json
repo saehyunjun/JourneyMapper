@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-22T19:31:01.678Z",
+    "generated_at": "2026-05-25T23:48:37.430Z",
     "generator": "scripts/build-segments.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/interviews_structured.json",
@@ -15,7 +15,7 @@
       "idea_unit_grouping": "deferred",
       "short_segment_handling": "flagged (\"very_short\"), not merged"
     },
-    "segment_count": 662,
+    "segment_count": 660,
     "notes": [
       "One segment per sentence of participant speech; offsets round-trip against the source file.",
       "question_id is inherited from the most recent interviewer turn in question_map.json.",
@@ -309,43 +309,19 @@
       "segment_index": 1,
       "question_id": null,
       "speaker": "participant",
-      "text": "I mean I've been on it over 72 weeks at this point, which I know was the original study for Eli Lilly for my medication.",
+      "text": "I mean I've been on it over 72 weeks at this point, which I know was the original study for Eli Lilly for my medication. So I think 36 weeks. The reality of it is is that some way, shape or form, I plan on being in GLP-1 medication for the rest of my life.",
       "char_start": 4992,
-      "char_end": 5112,
-      "word_count": 25,
-      "flags": []
+      "char_end": 5248,
+      "word_count": 55,
+      "flags": [
+        "merged"
+      ]
     },
     {
       "segment_id": "participant_06_t15_s02",
       "interview_id": "participant_06",
       "turn_index": 15,
       "segment_index": 2,
-      "question_id": null,
-      "speaker": "participant",
-      "text": "So I think 36 weeks.",
-      "char_start": 5113,
-      "char_end": 5133,
-      "word_count": 5,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_06_t15_s03",
-      "interview_id": "participant_06",
-      "turn_index": 15,
-      "segment_index": 3,
-      "question_id": null,
-      "speaker": "participant",
-      "text": "The reality of it is is that some way, shape or form, I plan on being in GLP-1 medication for the rest of my life.",
-      "char_start": 5134,
-      "char_end": 5248,
-      "word_count": 25,
-      "flags": []
-    },
-    {
-      "segment_id": "participant_06_t15_s04",
-      "interview_id": "participant_06",
-      "turn_index": 15,
-      "segment_index": 4,
       "question_id": null,
       "speaker": "participant",
       "text": "So maintenance is going to be the rest of my life.",
@@ -355,10 +331,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_06_t15_s05",
+      "segment_id": "participant_06_t15_s03",
       "interview_id": "participant_06",
       "turn_index": 15,
-      "segment_index": 5,
+      "segment_index": 3,
       "question_id": null,
       "speaker": "participant",
       "text": "So hopefully I'm around longer than 36 weeks.",
@@ -368,10 +344,10 @@
       "flags": []
     },
     {
-      "segment_id": "participant_06_t15_s06",
+      "segment_id": "participant_06_t15_s04",
       "interview_id": "participant_06",
       "turn_index": 15,
-      "segment_index": 6,
+      "segment_index": 4,
       "question_id": null,
       "speaker": "participant",
       "text": "So 36 weeks for me is fine.",

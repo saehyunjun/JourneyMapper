@@ -9,23 +9,27 @@
  * Distribution and word-cloud data derive from the bundled analysis helpers and
  * honour a shared `BlockFilters`, so the same filter dropdowns drive both.
  */
-import { Type, Quote as QuoteIcon, BarChart3, Cloud } from '@lucide/svelte';
+import {
+	Type,
+	Quote as QuoteIcon,
+	BarChart3,
+	Cloud,
+	SquareSplitHorizontal,
+	Sigma,
+	MessageSquareQuote
+} from '@lucide/svelte';
 import type { Component } from 'svelte';
 import {
-	annotations,
-	themeFrequency,
 	sentimentDistribution,
 	fragmentsMatching,
-	themeTags,
-	titleCase,
 	participantLabel,
 	questionLabel,
 	themedParticipantIds,
 	themedQuestionIds,
-	SENTIMENT_LABELS,
-	type Annotation,
-	type KeywordMatchContext
+	themeTags,
+	SENTIMENT_LABELS
 } from '$lib/content/wctglpdemo-data/analysis';
+import { themeFrequency } from '$lib/content/wctglpdemo-data/analysis';
 import { analyzeWords } from '$lib/content/wctglpdemo-data/word-frequency';
 import type { WordCloudDatum } from '$lib/charts/glp/WordCloud.svelte';
 import {
@@ -36,40 +40,23 @@ import {
 	type BlockFilters,
 	type DistMetric
 } from './types';
+import {
+	annPredFromFilters,
+	sentimentColor,
+	themeLabel,
+	THEME_PALETTE,
+	type DataShape
+} from './data-shapes';
 
-export const themeLabel = (id: string) => themeTags.find((t) => t.id === id)?.label ?? titleCase(id);
-
-export const THEME_PALETTE = ['#294457', '#7dbfa7', '#cc6324', '#446079', '#9b8bb4', '#c98a5e', '#5e9c8f', '#b0567f'];
-
-export function sentimentColor(s: number): string {
-	switch (s) {
-		case -2: return '#b91c1c';
-		case -1: return '#fb7185';
-		case 1: return '#34d399';
-		case 2: return '#059669';
-		default: return '#94a3b8';
-	}
-}
-
-// ---- Filter predicates ------------------------------------------------------
-
-export function annPredFromFilters(f: BlockFilters): (a: Annotation) => boolean {
-	return (a) => {
-		if (f.participantId && a.interview_id !== f.participantId) return false;
-		if (f.theme && !a.themes.includes(f.theme)) return false;
-		if (f.sentiment != null && a.sentiment !== f.sentiment) return false;
-		if (f.questionId && a.question_id !== f.questionId) return false;
-		return true;
-	};
-}
-
-export function matchPredFromFilters(f: BlockFilters): (m: KeywordMatchContext) => boolean {
-	return (m) => {
-		if (f.participantId && m.interview_id !== f.participantId) return false;
-		if (f.questionId && (m.question_id ?? '') !== f.questionId) return false;
-		return true;
-	};
-}
+// Re-export the shared helpers so existing callers (drawer, blocks) keep working
+// after the move into data-shapes.ts.
+export {
+	annPredFromFilters,
+	matchPredFromFilters,
+	sentimentColor,
+	themeLabel,
+	THEME_PALETTE
+} from './data-shapes';
 
 // ---- Distribution data ------------------------------------------------------
 
@@ -128,16 +115,84 @@ export type WidgetDef = {
 	label: string;
 	description: string;
 	icon: Component;
+	/**
+	 * Data shapes this widget renders. A widget that lists 'cohort' here can be
+	 * fed by any builder that returns a Cohort — that's what lets one component
+	 * cover many datasets and what makes the library scale.
+	 */
+	accepts: DataShape[];
+	/** Group used by the palette UI to cluster related widgets. */
+	family: 'text' | 'quote' | 'distribution' | 'comparison' | 'tokens';
+	/** True if the widget renders the same artwork better when the card is wide. */
+	preferLandscape?: boolean;
 };
 
 export const WIDGETS: WidgetDef[] = [
-	{ id: 'richtext', label: 'Rich text', description: 'Headings, lists, links, highlights', icon: Type },
-	{ id: 'quote', label: 'Patient quote', description: 'Pick a starred quote or write one', icon: QuoteIcon },
-	{ id: 'distribution', label: 'Sentiment / Theme', description: 'Bar or donut distribution', icon: BarChart3 },
-	{ id: 'wordcloud', label: 'Word cloud', description: 'Filtered word frequencies', icon: Cloud }
+	{
+		id: 'richtext',
+		label: 'Rich text',
+		description: 'Headings, lists, links, highlights',
+		icon: Type,
+		accepts: [],
+		family: 'text'
+	},
+	{
+		id: 'quote',
+		label: 'Patient quote',
+		description: 'Pick a starred quote or write one',
+		icon: QuoteIcon,
+		accepts: ['quote'],
+		family: 'quote'
+	},
+	{
+		id: 'distribution',
+		label: 'Sentiment / Theme',
+		description: 'Bar or donut distribution',
+		icon: BarChart3,
+		accepts: ['series'],
+		family: 'distribution'
+	},
+	{
+		id: 'wordcloud',
+		label: 'Word cloud',
+		description: 'Filtered word frequencies',
+		icon: Cloud,
+		accepts: ['tokenCloud'],
+		family: 'tokens'
+	},
+	{
+		id: 'comparison',
+		label: 'Comparison',
+		description: 'Two cohorts, big numbers side by side',
+		icon: SquareSplitHorizontal,
+		accepts: ['cohort'],
+		family: 'comparison',
+		preferLandscape: true
+	},
+	{
+		id: 'herostat',
+		label: 'Hero stat',
+		description: 'Big number with a one-line story',
+		icon: Sigma,
+		accepts: ['cohort'],
+		family: 'comparison'
+	},
+	{
+		id: 'quotepull',
+		label: 'Quote pull',
+		description: 'Poster-format quote, ready to share',
+		icon: MessageSquareQuote,
+		accepts: ['quote'],
+		family: 'quote'
+	}
 ];
 
 export const WIDGETS_BY_ID = new Map(WIDGETS.map((w) => [w.id, w]));
+
+/** Widgets grouped by data shape — used by the gallery panel as it grows. */
+export function widgetsForShape(shape: DataShape): WidgetDef[] {
+	return WIDGETS.filter((w) => w.accepts.includes(shape));
+}
 
 /** Mint a blank block for the given kind. Non-text blocks start unconfigured. */
 export function createBlock(kind: BlockKind): Block {
@@ -184,6 +239,44 @@ export function createBlock(kind: BlockKind): Block {
 				title: '',
 				caption: '',
 				filters: emptyFilters()
+			};
+		case 'comparison':
+			return {
+				id: newId('blk'),
+				kind: 'comparison',
+				configured: false,
+				left: { kind: 'custom', label: 'Group A', value: 0, unit: '%', color: THEME_PALETTE[0] },
+				right: { kind: 'custom', label: 'Group B', value: 0, unit: '%', color: THEME_PALETTE[2] },
+				micro: 'topThemes',
+				layout: 'split',
+				title: '',
+				caption: ''
+			};
+		case 'herostat':
+			return {
+				id: newId('blk'),
+				kind: 'herostat',
+				configured: false,
+				cohort: { kind: 'custom', label: 'Subject', value: 0, unit: '%', caption: 'METRIC', color: THEME_PALETTE[0] },
+				micro: 'topThemes',
+				layout: 'centered',
+				title: '',
+				caption: ''
+			};
+		case 'quotepull':
+			return {
+				id: newId('blk'),
+				kind: 'quotepull',
+				configured: false,
+				text: '',
+				attribution: '',
+				context: '',
+				themeLabel: '',
+				sentiment: 0,
+				accentColor: THEME_PALETTE[1],
+				background: 'light',
+				reveal: 'fade',
+				fontScale: 1
 			};
 	}
 }

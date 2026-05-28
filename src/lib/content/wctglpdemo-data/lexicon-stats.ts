@@ -20,30 +20,9 @@ import {
 } from './analysis';
 import { categories, keywordTags, keywordCounts } from './keywords';
 import { countWords } from './word-tokenize';
+import type { GroupKind, GroupStats } from '$lib/types/group-stats';
 
-export type GroupKind = 'keyword' | 'theme';
-
-export type GroupStats = {
-	kind: GroupKind;
-	id: string;
-	label: string;
-	/** A keyword's category, or a theme's codebook description. */
-	context: string;
-	/** Headline count and the unit it is measured in. */
-	invocations: number;
-	invocationUnit: string;
-	segmentCount: number;
-	participantCount: number;
-	/** Sentiment -2..2 distribution across the annotated speech. */
-	sentiment: { value: number; label: string; count: number }[];
-	avgSentiment: number | null;
-	emotions: { id: string; label: string; count: number }[];
-	/** Themes the group co-occurs with (a keyword) or is co-tagged with (a theme). */
-	relatedThemes: { id: string; label: string; count: number }[];
-	/** Most common content words in the group's segments (stoplist applied). */
-	commonWords: { word: string; count: number }[];
-	perParticipant: { interviewId: string; label: string; count: number }[];
-};
+export type { GroupKind, GroupStats };
 
 // --- One-time indexes over the study data -----------------------------------
 

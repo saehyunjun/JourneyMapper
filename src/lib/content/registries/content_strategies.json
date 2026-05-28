@@ -1,0 +1,294 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "description": "Content-strategy archetypes — the top level of the content-suggestor tree. Each archetype encodes WHEN it fits (journey stages), WHAT it addresses (burdens + codebook subthemes), and the competitive pattern observed in real campaigns. Hand-authored: this is editorial opinion, not a derived dataset. Refine freely; FKs are the ids, not the labels. The `addresses_subthemes` keys MUST match codebook.json subtheme ids exactly — validate at build time.",
+  "references": [
+    "MG United (argenX, 2020) — anchor unbranded-awareness benchmark; lifestyle:clinical ≈ 2.76:1 (see casestudies/earlyengagement/data/campaign-comparison.json).",
+    "More Than MG (Alexion, 2024) — lifestyle-led unbranded follow-on; lifestyle:clinical ≈ 2.33:1.",
+    "Understanding gMG (Alexion, 2021-2024) — retired clinical-only archetype; 0 lifestyle pages."
+  ],
+  "items": [
+    {
+      "id": "unbranded_awareness",
+      "label": "Unbranded disease awareness",
+      "description": "Disease-state education that builds category awareness without naming a product. Reaches patients before they've identified what's wrong and HCPs who under-recognize the condition.",
+      "fits_journey_stages": ["pre_diagnosis", "diagnostic_odyssey"],
+      "addresses_burden_categories": [
+        "information_knowledge_gaps",
+        "information_navigation",
+        "emotional_uncertainty",
+        "emotional_isolation"
+      ],
+      "addresses_subthemes": [
+        "condition_knowledge_gaps",
+        "symptoms",
+        "diagnostic_odyssey"
+      ],
+      "typical_kpis": [
+        "organic_search_lift",
+        "advocacy_referral_volume",
+        "newsletter_signup",
+        "time_to_diagnosis_reduction"
+      ],
+      "competitive_pattern": "Dominant archetype in immunology and rare-disease unbranded campaigns. MG United and More Than MG both lean lifestyle-heavy (~2.3-2.8 lifestyle:clinical ratio). Understanding gMG's clinical-only inverse was retired in 2024."
+    },
+    {
+      "id": "patient_education_clinical",
+      "label": "Patient clinical education",
+      "description": "Explainers for patients who already have a diagnosis and need to understand mechanism, options, expected course, monitoring. Plain-language clinical content — not lifestyle.",
+      "fits_journey_stages": [
+        "diagnostic_odyssey",
+        "induction_treatment",
+        "stable_maintenance",
+        "flare_or_refractory_cycle"
+      ],
+      "addresses_burden_categories": [
+        "information_knowledge_gaps",
+        "information_decision_complexity",
+        "regimen_monitoring",
+        "emotional_uncertainty"
+      ],
+      "addresses_subthemes": [
+        "treatment_knowledge_gaps",
+        "treatment_decision_factors",
+        "condition_knowledge_gaps",
+        "medical_self_efficacy"
+      ],
+      "typical_kpis": [
+        "content_completion_rate",
+        "search_seo_share_of_voice",
+        "decision_aid_downloads",
+        "self_reported_understanding"
+      ],
+      "competitive_pattern": "Common but often shallow — competitors publish branded-adjacent explainers anchored to their MOA. Unbranded plain-language explainers covering full option-space are underrepresented in LN."
+    },
+    {
+      "id": "advocacy_partnership",
+      "label": "Advocacy-organization partnership",
+      "description": "Co-branded content, programs, or events produced with established patient-advocacy organizations. Borrows trust, reach, and editorial credibility the sponsor doesn't have alone.",
+      "fits_journey_stages": [
+        "pre_diagnosis",
+        "diagnostic_odyssey",
+        "induction_treatment",
+        "stable_maintenance",
+        "trial_consideration"
+      ],
+      "addresses_burden_categories": [
+        "information_navigation",
+        "emotional_isolation",
+        "social_relationships",
+        "social_stigma"
+      ],
+      "addresses_subthemes": [
+        "advocacy_peer_groups",
+        "condition_knowledge_gaps",
+        "social_stigma",
+        "clinical_trial_awareness"
+      ],
+      "typical_kpis": [
+        "co_branded_reach",
+        "advocacy_member_engagement",
+        "trust_lift_pre_post",
+        "event_attendance"
+      ],
+      "competitive_pattern": "High-prestige archetype but partner bandwidth is finite. Lupus Foundation of America and Lupus Research Alliance partner selectively — co-branded slots are scarce and contested. Differentiation comes from program depth, not volume."
+    },
+    {
+      "id": "peer_storytelling",
+      "label": "Peer storytelling",
+      "description": "First-person patient narratives — written, video, or audio — that surface lived experience and reduce the felt isolation of being newly diagnosed or in a hard treatment phase.",
+      "fits_journey_stages": [
+        "diagnostic_odyssey",
+        "induction_treatment",
+        "stable_maintenance",
+        "flare_or_refractory_cycle",
+        "post_trial"
+      ],
+      "addresses_burden_categories": [
+        "emotional_isolation",
+        "emotional_fear",
+        "emotional_grief",
+        "social_relationships",
+        "qol_normalcy"
+      ],
+      "addresses_subthemes": [
+        "advocacy_peer_groups",
+        "treatment_negative_experiences",
+        "treatment_positive_experiences",
+        "social_stigma"
+      ],
+      "typical_kpis": [
+        "completion_rate",
+        "share_rate",
+        "community_referral",
+        "self_reported_isolation_reduction"
+      ],
+      "competitive_pattern": "MG United's lifestyle-heavy strategy is largely peer storytelling. High emotional payoff per piece; production cost and consent overhead limit volume. Reddit / Facebook communities already produce organic versions — the strategic move is amplifying real voices, not synthesizing them."
+    },
+    {
+      "id": "hcp_enablement",
+      "label": "HCP enablement",
+      "description": "Content aimed at clinicians — PCPs, rheumatologists, nephrologists — to shorten the diagnostic delay, surface novel therapies, or normalize referral pathways. Indirect patient benefit via better clinician behavior.",
+      "fits_journey_stages": [
+        "pre_diagnosis",
+        "diagnostic_odyssey",
+        "flare_or_refractory_cycle",
+        "trial_consideration"
+      ],
+      "addresses_burden_categories": [
+        "information_navigation",
+        "regimen_appointments"
+      ],
+      "addresses_subthemes": [
+        "diagnostic_odyssey",
+        "treatment_decision_factors",
+        "clinical_trial_awareness"
+      ],
+      "typical_kpis": [
+        "cme_completion",
+        "referral_volume_to_specialist",
+        "time_to_diagnosis_reduction",
+        "guideline_concordance"
+      ],
+      "competitive_pattern": "Branded competitors invest heavily in HCP education tied to their drug. Unbranded HCP enablement that improves diagnostic recognition (especially for PCPs and general internists who first see lupus symptoms) is structurally underprovided."
+    },
+    {
+      "id": "trial_recruitment_support",
+      "label": "Trial-recruitment support",
+      "description": "Content that helps prospective trial participants find, evaluate, and decide on clinical-trial enrollment. Distinct from trial-site marketing: focuses on patient-side decision support and barrier resolution.",
+      "fits_journey_stages": ["trial_consideration", "in_trial_experience"],
+      "addresses_burden_categories": [
+        "information_decision_complexity",
+        "information_navigation",
+        "logistical_travel",
+        "logistical_scheduling",
+        "logistical_caregiver",
+        "financial_lost_income",
+        "emotional_fear"
+      ],
+      "addresses_subthemes": [
+        "clinical_trial_awareness",
+        "clinical_trial_knowledge_gaps",
+        "trial_motivators",
+        "trial_barriers",
+        "trial_decision_factors"
+      ],
+      "typical_kpis": [
+        "trial_finder_completions",
+        "site_consult_requests",
+        "screening_to_enrollment_ratio",
+        "self_reported_barrier_resolution"
+      ],
+      "competitive_pattern": "Mostly sponsor-by-sponsor and trial-by-trial. Indication-wide trial-decision-support content (across CAR-T sponsors in LN, for example) does not meaningfully exist. High whitespace if the sponsor can credibly frame the comparison."
+    },
+    {
+      "id": "caregiver_enablement",
+      "label": "Caregiver enablement",
+      "description": "Content for partners, parents, and adult children who carry logistical and emotional load. Often the decision-influencer, especially for trials with travel + recovery requirements.",
+      "fits_journey_stages": [
+        "induction_treatment",
+        "flare_or_refractory_cycle",
+        "trial_consideration",
+        "in_trial_experience",
+        "post_trial"
+      ],
+      "addresses_burden_categories": [
+        "logistical_caregiver",
+        "social_relationships",
+        "emotional_uncertainty",
+        "emotional_grief"
+      ],
+      "addresses_subthemes": [
+        "treatment_decision_factors",
+        "trial_decision_factors",
+        "advocacy_peer_groups"
+      ],
+      "typical_kpis": [
+        "caregiver_resource_downloads",
+        "caregiver_community_signups",
+        "shared_decision_completion"
+      ],
+      "competitive_pattern": "Structurally neglected in immunology unbranded content. The MG and rare-cancer playbooks include caregiver tracks (MG United explicitly tags caregiver content); LN has minimal equivalent."
+    },
+    {
+      "id": "payer_navigation",
+      "label": "Payer / access navigation",
+      "description": "Practical content on prior authorization, appeals, copay assistance, foundation grants, and insurance churn. Doesn't sell access — explains how to obtain it under current policy.",
+      "fits_journey_stages": [
+        "induction_treatment",
+        "stable_maintenance",
+        "flare_or_refractory_cycle",
+        "trial_consideration"
+      ],
+      "addresses_burden_categories": [
+        "financial_out_of_pocket",
+        "financial_insurance",
+        "financial_lost_income",
+        "information_navigation"
+      ],
+      "addresses_subthemes": [
+        "treatment_barriers",
+        "trial_barriers",
+        "treatment_decision_factors"
+      ],
+      "typical_kpis": [
+        "navigator_consults",
+        "appeal_letter_template_downloads",
+        "copay_program_enrollment"
+      ],
+      "competitive_pattern": "Often siloed in sponsor copay portals and advocacy hardship-fund pages. Unbranded, sponsor-agnostic payer-navigation content is rare; advocacy partners are usually the credible voice here."
+    },
+    {
+      "id": "lifestyle_normalization",
+      "label": "Lifestyle normalization",
+      "description": "Day-to-day living content — work, relationships, travel, exercise, parenting — adapted around chronic-disease constraints. Builds identity continuity beyond the patient role.",
+      "fits_journey_stages": [
+        "stable_maintenance",
+        "flare_or_refractory_cycle",
+        "post_trial"
+      ],
+      "addresses_burden_categories": [
+        "qol_functional",
+        "qol_normalcy",
+        "qol_independence",
+        "social_disclosure",
+        "social_stigma",
+        "social_relationships"
+      ],
+      "addresses_subthemes": [
+        "social_stigma",
+        "advocacy_peer_groups",
+        "treatment_positive_experiences"
+      ],
+      "typical_kpis": [
+        "session_duration",
+        "share_rate",
+        "newsletter_retention",
+        "self_reported_normalcy"
+      ],
+      "competitive_pattern": "The bulk of MG United and More Than MG content volume sits here (workplace, relationships, travel, fashion). LN equivalents are thin; the lifestyle pillar is where competitive whitespace is largest and patient demand (search volume on quality-of-life topics) is highest."
+    },
+    {
+      "id": "early_engagement_serp",
+      "label": "Early-engagement / SERP capture",
+      "description": "Long-form indexable content optimized to capture searches before a patient knows the formal diagnosis terms. Catches 'why am I always so tired' and 'kidney protein in urine' queries that precede 'lupus nephritis' awareness.",
+      "fits_journey_stages": ["pre_diagnosis", "diagnostic_odyssey"],
+      "addresses_burden_categories": [
+        "information_knowledge_gaps",
+        "information_navigation",
+        "emotional_uncertainty"
+      ],
+      "addresses_subthemes": [
+        "symptoms",
+        "condition_knowledge_gaps",
+        "diagnostic_odyssey"
+      ],
+      "typical_kpis": [
+        "non_branded_organic_traffic",
+        "symptom_query_share_of_voice",
+        "downstream_navigation_to_advocacy"
+      ],
+      "competitive_pattern": "Heavily contested by WebMD / Healthline / Mayo Clinic for generic queries. Differentiation comes from depth, accuracy, and being routed to advocacy resources rather than ad inventory."
+    }
+  ]
+}

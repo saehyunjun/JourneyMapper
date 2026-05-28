@@ -18,10 +18,67 @@ import type {
 	Slide,
 	SlideDetail,
 	SlideTone,
-	StoryInput
+	StoryInput,
+	ThemeSentimentRow
 } from './types';
+import type {
+	RadialFlowTheme,
+	RadialFlowSubtheme
+} from '$lib/charts/glp/RadialImpactFlow.types';
 
 const CORPUS_UNIFORM_COLOR = '#CC6324';
+
+/**
+ * Bucket a stream of `{ sentiment: number }` blocks into the 5-band sentiment
+ * counts the radial flow chart consumes. Assumes sentiment is an integer in
+ * [-2, +2]; anything beyond clamps into the extreme buckets.
+ */
+function bucketBlocks(blocks: { sentiment: number }[]) {
+	let veryNegative = 0,
+		negative = 0,
+		neutral = 0,
+		positive = 0,
+		veryPositive = 0;
+	for (const b of blocks) {
+		if (b.sentiment <= -2) veryNegative++;
+		else if (b.sentiment === -1) negative++;
+		else if (b.sentiment === 0) neutral++;
+		else if (b.sentiment === 1) positive++;
+		else veryPositive++;
+	}
+	return { total: blocks.length, veryNegative, negative, neutral, positive, veryPositive };
+}
+
+function buildFlowThemes(input: StoryInput): RadialFlowTheme[] {
+	return input.themes.map((t): RadialFlowTheme => {
+		const subthemes: RadialFlowSubtheme[] = (t.subthemes ?? []).map((s) => ({
+			id: s.id,
+			label: s.label,
+			...bucketBlocks(s.blocks)
+		}));
+		// Theme totals derive from subthemes when present, else from the theme's
+		// own blocks — keeps the hub count truthful either way.
+		const themeCounts = subthemes.length
+			? subthemes.reduce(
+				(acc, s) => ({
+					total: acc.total + s.total,
+					veryNegative: acc.veryNegative + (s.veryNegative ?? 0),
+					negative: acc.negative + s.negative,
+					neutral: acc.neutral + s.neutral,
+					positive: acc.positive + s.positive,
+					veryPositive: acc.veryPositive + (s.veryPositive ?? 0)
+				}),
+				{ total: 0, veryNegative: 0, negative: 0, neutral: 0, positive: 0, veryPositive: 0 }
+			)
+			: bucketBlocks(t.blocks);
+		return {
+			id: t.id,
+			label: t.label,
+			...themeCounts,
+			subthemes
+		};
+	});
+}
 
 /**
  * Per-tone Tailwind shade ramp for the bubbles inside a constellation.
@@ -221,6 +278,44 @@ function topDriversFor(findings: Finding[], tone: 'positive' | 'negative', k = 5
 	return [...allClusters].sort((a, b) => sortKey(a) - sortKey(b)).slice(0, k).map(clusterToDriver);
 }
 
+/**
+ * Build per-theme sentiment-bar rows for the theme-sentiment small-multiples
+ * slide. Keeps only themes with at least `minVolume` blocks so a 1-of-3 theme
+ * doesn't read like a meaningful signal. Sorted by total desc; capped at 6
+ * rows so the visual stays scannable on the slide.
+ */
+function buildThemeSentimentRows(input: StoryInput, minVolume = 5, max = 6): ThemeSentimentRow[] {
+	const rows: ThemeSentimentRow[] = [];
+	for (const t of input.themes) {
+		const total = t.blocks.length;
+		if (total < minVolume) continue;
+		const counts: Record<SentimentBucket, number> = {
+			'-2': 0,
+			'-1': 0,
+			'0': 0,
+			'1': 0,
+			'2': 0
+		};
+		let positive = 0;
+		let negative = 0;
+		for (const b of t.blocks) {
+			const k = String(Math.max(-2, Math.min(2, Math.round(b.sentiment)))) as SentimentBucket;
+			counts[k] = (counts[k] ?? 0) + 1;
+			if (b.sentiment > 0) positive++;
+			else if (b.sentiment < 0) negative++;
+		}
+		rows.push({
+			themeId: t.id,
+			themeLabel: t.label,
+			total,
+			counts,
+			posPct: Math.round((positive / total) * 100),
+			negPct: Math.round((negative / total) * 100)
+		});
+	}
+	return rows.sort((a, b) => b.total - a.total).slice(0, max);
+}
+
 /** Find the substring within `body` that most cleanly highlights the focal number. */
 function pickHighlight(body: string, candidates: (string | number)[]): string | undefined {
 	for (const c of candidates) {
@@ -325,6 +420,32 @@ export function assembleStory(input: StoryInput): Slide[] {
 		});
 	}
 
+	// 3b. Per-theme sentiment small-multiples. The recolor slide showed the
+	//     corpus-wide split; this slide splits the same signal by theme so the
+	//     reader can see which theme is pulling which way. Headline calls out
+	//     the most negative theme (or most positive when no theme reads
+	//     negative); body carries the corpus baseline for comparison.
+	const themeRows = buildThemeSentimentRows(input);
+	if (themeRows.length >= 2) {
+		const negSorted = [...themeRows].sort((a, b) => b.negPct - a.negPct);
+		const posSorted = [...themeRows].sort((a, b) => b.posPct - a.posPct);
+		const callout = negSorted[0].negPct >= negSorted[0].posPct
+			? { row: negSorted[0], direction: 'negative' as const }
+			: { row: posSorted[0], direction: 'positive' as const };
+		const headline = callout.direction === 'negative'
+			? `"${callout.row.themeLabel}" runs ${callout.row.negPct}% negative.`
+			: `"${callout.row.themeLabel}" runs ${callout.row.posPct}% positive.`;
+		const body = `Across ${themeRows.length} themes, the sentiment spread isn't uniform — ${callout.row.themeLabel.toLowerCase()} carries the strongest ${callout.direction} pull, against a corpus baseline of ${input.sentimentLean.posPct}% positive vs. ${input.sentimentLean.negPct}% negative.`;
+		slides.push({
+			kind: 'theme-sentiment',
+			eyebrow: 'Sentiment, by theme',
+			headline,
+			body,
+			bodyHighlight: undefined,
+			rows: themeRows
+		});
+	}
+
 	// 4. Top theme — single editorial percent + drawer with sub-themes.
 	if (input.themes.length) {
 		const ranked = [...input.themes].sort((a, b) => b.blocks.length - a.blocks.length);
@@ -357,6 +478,98 @@ export function assembleStory(input: StoryInput): Slide[] {
 					: undefined
 			});
 		}
+	}
+
+	// 4b. Burden-category split. Rolls keyword cluster occurrences up to the
+	//     top-level burden taxonomy (Financial / Physical / Emotional / etc.).
+	//     Surfaces the cross-cutting axis the theme tree doesn't carry.
+	//
+	//     Guarded on minimum coverage: the lexicon's burden_category_ids[] are
+	//     backfilled cluster-by-cluster and the early-stage state is mostly
+	//     empty — the slide only shows when the top slice has at least 5
+	//     mentions AND the leading share is at least 3% of total. Without
+	//     this, the slide would render with headlines like "Emotional leads
+	//     at 0%" while the lexicon catches up.
+	if (input.burdens && input.burdens.slices.length >= 2 && input.burdens.totalMentions > 0) {
+		const slices = input.burdens.slices;
+		const top = slices[0];
+		const topPct = Math.round(top.share * 100);
+		if (top.count >= 5 && topPct >= 3) {
+			const headline = `${top.label} leads the burden mix at ${topPct}%.`;
+			const body = `Across ${input.burdens.totalMentions} keyword mentions, ${top.count} touched ${top.label.toLowerCase()} — more than any other top-level burden category. The next ${Math.min(slices.length - 1, 3)} follow, in order.`;
+			slides.push({
+				kind: 'burden-split',
+				eyebrow: 'Patient burden, by category',
+				headline,
+				body,
+				totalTagged: input.burdens.totalMentions,
+				slices
+			});
+		}
+	}
+
+	// 4c. Search-vs-interview alignment slides (LN-only today). Emit the 1:1
+	//     view first — the editorial read here is "do the specific treatments
+	//     people are searching for show up in the interview talk?" Then the
+	//     categorical mirror chart — same question, zoomed out to topic level.
+	//     Both slides are skipped if the host page didn't pass alignment data.
+	if (input.alignment?.oneToOne) {
+		const a = input.alignment.oneToOne;
+		const topMatch = a.matched[0];
+		const topGap = a.searchOnly[0];
+		const headlineBits: string[] = [];
+		headlineBits.push(
+			`${a.totals.matchedCount} of ${a.totals.searchItems} searched treatments show up in interview talk.`
+		);
+		const bodyBits: string[] = [];
+		if (topMatch) {
+			bodyBits.push(
+				`The strongest aligned pair is "${topMatch.search.query}" (${topMatch.search.volume.toLocaleString()}/mo) against ${topMatch.interview.label} (${topMatch.interview.count} mentions).`
+			);
+		}
+		if (topGap) {
+			bodyBits.push(
+				`The largest gap is "${topGap.query}" — ${topGap.volume.toLocaleString()} searches/mo with no interview echo.`
+			);
+		}
+		slides.push({
+			kind: 'search-alignment',
+			eyebrow: 'Search vs. interview',
+			headline: headlineBits.join(' '),
+			body: bodyBits.join(' '),
+			bodyHighlight: topGap ? `"${topGap.query}"` : undefined,
+			data: a
+		});
+	}
+
+	if (input.alignment?.topical) {
+		const t = input.alignment.topical;
+		const sorted = [...t.rows].sort((a, b) => b.searchVolume - a.searchVolume);
+		const topDemand = sorted[0];
+		const widestGap = t.rows
+			.filter((r) => r.searchVolume > 0 && r.interviewMentions === 0)
+			.sort((a, b) => b.searchVolume - a.searchVolume)[0];
+		const headline = topDemand
+			? `${topDemand.category.label} dominates search; ${t.totals.categoriesWithBoth} of ${t.rows.length} categories have signal on both sides.`
+			: `${t.totals.categoriesWithBoth} of ${t.rows.length} categories have signal on both sides.`;
+		const bodyBits: string[] = [];
+		if (topDemand) {
+			bodyBits.push(
+				`Search demand peaks at ${topDemand.searchVolume.toLocaleString()} queries/mo for ${topDemand.category.label.toLowerCase()}; interviews logged ${topDemand.interviewMentions} mentions.`
+			);
+		}
+		if (widestGap) {
+			bodyBits.push(
+				`The largest scope gap: ${widestGap.category.label.toLowerCase()} (${widestGap.searchVolume.toLocaleString()}/mo searched, no interview clusters in this corpus).`
+			);
+		}
+		slides.push({
+			kind: 'topic-alignment',
+			eyebrow: 'By topic',
+			headline,
+			body: bodyBits.join(' '),
+			data: t
+		});
 	}
 
 	// 5. Findings — each becomes one hero-stat slide; a supporting quote
@@ -393,7 +606,22 @@ export function assembleStory(input: StoryInput): Slide[] {
 		}
 	}
 
-	// 6. Closing CTA.
+	// 6. Theme map — full-bleed radial impact flow over every theme + subtheme.
+	if (input.themes.length) {
+		const flowThemes = buildFlowThemes(input);
+		const total = flowThemes.reduce((s, t) => s + t.total, 0);
+		if (total > 0) {
+			slides.push({
+				kind: 'flow',
+				eyebrow: 'The whole map',
+				headline: 'Every theme, every subtheme, in one view.',
+				total,
+				themes: flowThemes
+			});
+		}
+	}
+
+	// 7. Closing CTA.
 	if (input.explore.length) {
 		slides.push({
 			kind: 'closing',

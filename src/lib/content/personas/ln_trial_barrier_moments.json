@@ -1,0 +1,15 @@
+{
+  "id": "ln_trial_barrier_moments",
+  "label": "LN trial-barrier moments",
+  "description": "Fragments in the LN corpus where the speaker is voicing a trial barrier — cost / coverage, distance from a study site, work or caregiver logistics, eligibility blockers (cancer history, 'not sick enough'), or post-treatment proximity requirements. Demonstrates annotation-predicate filtering across both the stage axis (trial_consideration) AND the theme axis (trial_barriers / trial_decision_factors). One cost-anxious fragment matches regardless of whether the speaker is also CAR-T-curious elsewhere.",
+  "applicable_indications": ["lupus_nephritis"],
+  "filter": {
+    "content_source": ["social_post", "social_comment"],
+    "indications": ["lupus_nephritis"],
+    "annotations": {
+      "has_subtheme": ["trial_barriers", "trial_decision_factors"]
+    }
+  },
+  "weighting": { "type": "uniform" },
+  "color": "#dc2626"
+}

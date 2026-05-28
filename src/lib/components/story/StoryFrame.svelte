@@ -208,7 +208,7 @@
 	<footer class="story-footer">
 		<Button
 			variant="ghost"
-			size="sm"
+			size="lg"
 			class="font-heading"
 			onclick={onPrev}
 			disabled={atFirst}

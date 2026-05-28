@@ -1,0 +1,42 @@
+{
+	"id": "multiple_sclerosis_community_engagement",
+	"type": "community_engagement",
+	"indication_id": "multiple_sclerosis",
+	"therapeutic_area_ids": ["neurology", "immunology"],
+	"title": "Public vs. private MS patient communities",
+	"subtitle": "Reddit (public) vs. Facebook (mostly private) for active MS patients & caregivers",
+	"unit": "count",
+	"geography": null,
+	"time_period": null,
+	"platform": "Reddit + Facebook groups",
+	"sample": "Five largest active MS patient/caregiver communities across each platform",
+	"exclusions": [
+		"advocacy-sponsored communities (e.g. National MS Society official groups)",
+		"industry-sponsored communities",
+		"DMT-specific brand groups (Ocrevus/Kesimpta/etc. official pages)"
+	],
+	"note": "Public-Reddit (r/MultipleSclerosis) is by far the largest single MS patient forum. Private Facebook groups are smaller but more active per-member, especially the DMT-experience and caregiver-support groups. The DMT-decision conversations concentrate in private FB groups where patients share specific clinical experiences without public visibility.",
+	"source": {
+		"type": "manual_estimate",
+		"notes": "Hand-authored estimates for demo purposes. r/MultipleSclerosis size is roughly accurate as of 2026Q1; Facebook estimates are interpolated from public-group page sizes plus reported private-group reach. Calibrate against real platform data before shipping."
+	},
+	"dimensions": ["platform_type"],
+	"measures": ["avg_membership", "avg_monthly_posts"],
+	"data": [
+		{
+			"platform_type": "reddit_public",
+			"avg_membership": 112000,
+			"avg_monthly_posts": 3400
+		},
+		{
+			"platform_type": "facebook_public",
+			"avg_membership": 18000,
+			"avg_monthly_posts": 290
+		},
+		{
+			"platform_type": "facebook_private",
+			"avg_membership": 28000,
+			"avg_monthly_posts": 1500
+		}
+	]
+}

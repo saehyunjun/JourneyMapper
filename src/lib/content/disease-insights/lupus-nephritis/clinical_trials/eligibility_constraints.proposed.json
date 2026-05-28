@@ -1,0 +1,564 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "indication_id": "lupus_nephritis",
+    "generator": "propose-eligibility-barriers@0.1",
+    "model": "claude-opus-4-7",
+    "source_studies_file": "src/lib/content/disease-insights/lupus-nephritis/clinical_trials/studies_normalized.json",
+    "last_updated_at": "2026-05-26T23:17:27.604Z",
+    "category_enum": [
+      "kidney_function",
+      "kidney_biopsy",
+      "disease_activity",
+      "lab_threshold",
+      "prior_therapy_required",
+      "prior_therapy_excluded",
+      "washout_required",
+      "comorbidity_excluded",
+      "pregnancy_contraception",
+      "weight_bmi",
+      "geography_site_access",
+      "age_specific",
+      "language_literacy",
+      "concomitant_medication",
+      "other"
+    ],
+    "comparator_enum": [
+      "<",
+      "<=",
+      ">",
+      ">=",
+      "=",
+      "!=",
+      "range",
+      "present",
+      "absent",
+      ""
+    ],
+    "notes": [
+      "AI-proposed structured eligibility constraints. Every quote validated as a verbatim substring of the source criteria_text at write time.",
+      "review_status starts as \"pending\". A separate human-review or auto-confidence-threshold step can promote rows.",
+      "Re-propose with: node scripts/propose-eligibility-barriers.mjs [--indication=<id>] [--limit=N] [--only=NCT,...] [--force]"
+    ]
+  },
+  "count": 3,
+  "annotations": {
+    "NCT00001212": {
+      "constraints": [
+        {
+          "category": "disease_activity",
+          "direction": "include",
+          "measure": "SLE ACR criteria",
+          "comparator": ">=",
+          "value": "4",
+          "unit": "criteria",
+          "quote": "SLE as defined by the presence of at least 4 criteria established by the American Rheumatism Association.",
+          "note": ""
+        },
+        {
+          "category": "kidney_biopsy",
+          "direction": "include",
+          "measure": "membranous lupus nephropathy on biopsy",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "A renal biopsy must reveal typical membranous lupus nephropathy by light microscopy.",
+          "note": ""
+        },
+        {
+          "category": "disease_activity",
+          "direction": "include",
+          "measure": "proteinuria",
+          "comparator": ">=",
+          "value": "2",
+          "unit": "g/day",
+          "quote": "Membranous lupus nephropathy manifested by 2 or more grams per day of proteinuria",
+          "note": ""
+        },
+        {
+          "category": "prior_therapy_excluded",
+          "direction": "exclude",
+          "measure": "cytotoxic drugs or cyclosporin A",
+          "comparator": ">",
+          "value": "2 weeks in prior 10 weeks",
+          "unit": "",
+          "quote": "cytotoxic drugs or cyclosporin A for more than 2 weeks during the 10 week period prior to study entry.",
+          "note": ""
+        },
+        {
+          "category": "prior_therapy_excluded",
+          "direction": "exclude",
+          "measure": "cytotoxic drug therapy or cyclosporin A",
+          "comparator": ">",
+          "value": "10 weeks ever",
+          "unit": "",
+          "quote": "cytotoxic drug therapy or cyclosporin A for more than 10 weeks at anytime in the past.",
+          "note": ""
+        },
+        {
+          "category": "washout_required",
+          "direction": "exclude",
+          "measure": "cytotoxic drug therapy or cyclosporin A",
+          "comparator": ">=",
+          "value": "30",
+          "unit": "days",
+          "quote": "cytotoxic drug therapy or cyclosporin A during the 30 day period prior to study entry.",
+          "note": ""
+        },
+        {
+          "category": "concomitant_medication",
+          "direction": "exclude",
+          "measure": "prednisone for extrarenal disease",
+          "comparator": ">",
+          "value": "20",
+          "unit": "mg/m2/day",
+          "quote": "requirement of corticosteroids in doses greater than 20 mg/m(2)/day of prednisone (or equivalent) for control of extrarenal disease at the time of study entry.",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "active acute or chronic infection",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Active acute or chronic infection requiring antimicrobial therapy, or serious viral infection (eg. hepatitis, herpes zoster).",
+          "note": ""
+        },
+        {
+          "category": "pregnancy_contraception",
+          "direction": "exclude",
+          "measure": "pregnancy/nursing/no birth control",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Pregnant females, nursing mothers, or females not practicing birth control.",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "single functioning kidney",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Patients with a single functioning kidney.",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "pre-existent malignancy",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Pre-existent malignancy.",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "insulin-treated diabetes mellitus",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Insulin-treated diabetes mellitus.",
+          "note": ""
+        },
+        {
+          "category": "kidney_function",
+          "direction": "exclude",
+          "measure": "GFR",
+          "comparator": "<",
+          "value": "25",
+          "unit": "ml/min/1.73m2",
+          "quote": "GFR less than 25 ml/min/1.73m(2) BSA.",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "cyclophosphamide toxicity",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Known toxicity to cyclophosphamide.",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "HIV infection",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Positive tests for HIV infection.",
+          "note": ""
+        }
+      ],
+      "overall_confidence": 0.88,
+      "note": "",
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "criteria_length_chars": 2426
+    },
+    "NCT00001372": {
+      "constraints": [
+        {
+          "category": "disease_activity",
+          "direction": "include",
+          "measure": "SLE by ACR/EULAR or ACR criteria",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "SLE or suspected SLE established by ACR/EULAR or ACR criteria",
+          "note": "includes suspected SLE"
+        },
+        {
+          "category": "age_specific",
+          "direction": "include",
+          "measure": "affected individuals age",
+          "comparator": ">=",
+          "value": "3",
+          "unit": "years",
+          "quote": "Affected individuals age \\>= 3 years with no upper age limit",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "HIV in blood, active malignancies, or significant medical conditions",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Included in this is the presence of HIV in the blood, active malignancies, or other significant medical conditions that may interferes with interpretation of some lupus studies.",
+          "note": ""
+        },
+        {
+          "category": "geography_site_access",
+          "direction": "exclude",
+          "measure": "unable to comply with follow up (distance/social/physical)",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Inability or unwillingness to comply with follow up requirements (e.g. distance, social, physical limitations)",
+          "note": ""
+        },
+        {
+          "category": "kidney_function",
+          "direction": "exclude",
+          "measure": "eGFR (CKD-EPI)",
+          "comparator": "<",
+          "value": "60",
+          "unit": "ml/min/1.73m2",
+          "quote": "estimated glomerular filtration rate \\< 60 mL/min/1.73m\\^2 using the CKD-EPI equation",
+          "note": "applies to vascular substudy contrast exposure"
+        },
+        {
+          "category": "pregnancy_contraception",
+          "direction": "exclude",
+          "measure": "pregnant or lactating",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Pregnant or lactating women will be excluded from vascular studies.",
+          "note": "vascular substudy"
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "MRI contraindication (implants/foreign body)",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Subjects with a contraindication to MRI scanning will not receive the optional Cardiovascular MRI.",
+          "note": "vascular substudy"
+        },
+        {
+          "category": "age_specific",
+          "direction": "exclude",
+          "measure": "age for vascular studies",
+          "comparator": "<",
+          "value": "18",
+          "unit": "years",
+          "quote": "Individuals younger than 18 years old will be excluded given the radiation exposure",
+          "note": "vascular substudy only"
+        }
+      ],
+      "overall_confidence": 0.7,
+      "note": "Many criteria are general; vascular substudy has additional criteria.",
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "criteria_length_chars": 4139
+    },
+    "NCT00001676": {
+      "constraints": [
+        {
+          "category": "disease_activity",
+          "direction": "include",
+          "measure": "SLE ARA criteria",
+          "comparator": ">=",
+          "value": "4",
+          "unit": "criteria",
+          "quote": "Patients must have at least 4 criteria for SLE as defined by the American Rheumatism Association (ARA).",
+          "note": ""
+        },
+        {
+          "category": "kidney_biopsy",
+          "direction": "include",
+          "measure": "biopsy class III or IV",
+          "comparator": "present",
+          "value": "class III/IV",
+          "unit": "",
+          "quote": "Renal biopsy within 1 year with class III or class IV active lupus nephritis",
+          "note": ""
+        },
+        {
+          "category": "kidney_biopsy",
+          "direction": "include",
+          "measure": "biopsy recency",
+          "comparator": "<=",
+          "value": "1",
+          "unit": "years",
+          "quote": "Renal biopsy within 1 year",
+          "note": ""
+        },
+        {
+          "category": "disease_activity",
+          "direction": "include",
+          "measure": "RBC/hpf with casts",
+          "comparator": ">",
+          "value": "10",
+          "unit": "RBC/hpf",
+          "quote": "Greater than 10 RBC/hpf and cellular (RBC, WBC or mixed) casts",
+          "note": "OR branch"
+        },
+        {
+          "category": "disease_activity",
+          "direction": "include",
+          "measure": "proteinuria with hematuria",
+          "comparator": ">",
+          "value": "2",
+          "unit": "g/day",
+          "quote": "Greater than 10 RBC/hpf and proteinuria greater than 2 g/day",
+          "note": "OR branch"
+        },
+        {
+          "category": "disease_activity",
+          "direction": "include",
+          "measure": "proteinuria",
+          "comparator": ">",
+          "value": "3.5",
+          "unit": "g/day",
+          "quote": "Proteinuria greater than 3.5 g/day.",
+          "note": "OR branch"
+        },
+        {
+          "category": "kidney_biopsy",
+          "direction": "exclude",
+          "measure": "crescents or necrosis in glomeruli",
+          "comparator": ">",
+          "value": "25",
+          "unit": "% glomeruli",
+          "quote": "very active renal histology with crescents or necrosis in more than 25% of glomeruli",
+          "note": ""
+        },
+        {
+          "category": "disease_activity",
+          "direction": "exclude",
+          "measure": "rapidly progressive GN (doubling of serum creatinine)",
+          "comparator": "<=",
+          "value": "3",
+          "unit": "months",
+          "quote": "rapidly progressive glomerulonephritis (doubling of serum creatinine in less than or equal to 3 months)",
+          "note": ""
+        },
+        {
+          "category": "kidney_function",
+          "direction": "exclude",
+          "measure": "serum creatinine",
+          "comparator": ">",
+          "value": "2.5",
+          "unit": "mg/dL",
+          "quote": "severe impairment of renal function Cr greater than 2.5 mg/dL",
+          "note": ""
+        },
+        {
+          "category": "kidney_function",
+          "direction": "exclude",
+          "measure": "GFR by inulin clearance",
+          "comparator": "<",
+          "value": "50",
+          "unit": "ml/min",
+          "quote": "GFR less than 50 mL/min measured by inulin clearance.",
+          "note": ""
+        },
+        {
+          "category": "prior_therapy_excluded",
+          "direction": "exclude",
+          "measure": "previous immunosuppressive therapy",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Patient has not had previous immunosuppressive therapy",
+          "note": ""
+        },
+        {
+          "category": "washout_required",
+          "direction": "exclude",
+          "measure": "azathioprine, cyclosporine, methotrexate",
+          "comparator": ">=",
+          "value": "4",
+          "unit": "weeks",
+          "quote": "Patients receiving these drugs will be eligible only if these drugs are discontinued and after a waiting period of greater than or equal to 4 weeks",
+          "note": ""
+        },
+        {
+          "category": "prior_therapy_excluded",
+          "direction": "exclude",
+          "measure": "cyclophosphamide pulses (recent)",
+          "comparator": ">",
+          "value": "3",
+          "unit": "pulses in 12 months",
+          "quote": "Greater than 3 pulses (maximum 1 g/m(2)/pulse) within the last 12 months or since last renal biopsy showing active disease",
+          "note": ""
+        },
+        {
+          "category": "prior_therapy_excluded",
+          "direction": "exclude",
+          "measure": "cyclophosphamide pulses (ever)",
+          "comparator": ">",
+          "value": "6",
+          "unit": "pulses",
+          "quote": "greater than 6 pulses ever.",
+          "note": ""
+        },
+        {
+          "category": "washout_required",
+          "direction": "exclude",
+          "measure": "pulse glucocorticoids or experimental therapy",
+          "comparator": ">=",
+          "value": "4",
+          "unit": "weeks",
+          "quote": "Patients must not have had pulse therapy with glucocorticoids or any experimental therapy during the 4 weeks before study entry.",
+          "note": ""
+        },
+        {
+          "category": "concomitant_medication",
+          "direction": "exclude",
+          "measure": "oral prednisone for extrarenal disease",
+          "comparator": ">",
+          "value": "0.5",
+          "unit": "mg/kg/day",
+          "quote": "oral corticosteroids in dosages greater than 0.5 mg/kg/day of predisone to control extrarenal disease",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "active or chronic infection",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Patients with active or chronic infection are not eligible.",
+          "note": ""
+        },
+        {
+          "category": "pregnancy_contraception",
+          "direction": "exclude",
+          "measure": "pregnancy/breastfeeding/inadequate contraception",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Patients who are pregnant, breast-feeding or using inadequate birth control are not eligible.",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "poorly controlled diabetes or end-organ damage",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Patients who have poorly controlled diabetes mellitus or with evidence of end-organ damage are not eligible.",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "CVA or seizures (within 5 yr) or chronic neurologic disease",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "No history of cerebrovascular accident, seizures within the last 5 years or chronic neurologic disease.",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "malignancy (except skin SCC/BCC)",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "No history of malignancy other than squamous cell and/or basal carcinoma of the skin.",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "unstable cardiac disease",
+          "comparator": "present",
+          "value": "",
+          "unit": "",
+          "quote": "Unstable coronary artery disease, cardiomyopathy or dysrhythmia requiring therapy",
+          "note": ""
+        },
+        {
+          "category": "comorbidity_excluded",
+          "direction": "exclude",
+          "measure": "pulmonary disease (PFTs)",
+          "comparator": "<",
+          "value": "70",
+          "unit": "% predicted",
+          "quote": "Pulmonary disease (PFTs less 70% of predicted value or DLCO less than 60%)",
+          "note": ""
+        },
+        {
+          "category": "lab_threshold",
+          "direction": "exclude",
+          "measure": "hemoglobin",
+          "comparator": "<",
+          "value": "8",
+          "unit": "mg/dL",
+          "quote": "Hb less than 8 mg/dL",
+          "note": "unit as written in source"
+        },
+        {
+          "category": "lab_threshold",
+          "direction": "exclude",
+          "measure": "platelets",
+          "comparator": "<",
+          "value": "100000",
+          "unit": "/microliter",
+          "quote": "platelets less than 100,000 micro liters",
+          "note": ""
+        },
+        {
+          "category": "lab_threshold",
+          "direction": "exclude",
+          "measure": "WBC",
+          "comparator": "<",
+          "value": "2500",
+          "unit": "/microliter",
+          "quote": "WBC less than 2,500/micro liters",
+          "note": ""
+        }
+      ],
+      "overall_confidence": 0.92,
+      "note": "",
+      "source": "ai_proposed",
+      "review_status": "pending",
+      "criteria_length_chars": 2521
+    }
+  }
+}

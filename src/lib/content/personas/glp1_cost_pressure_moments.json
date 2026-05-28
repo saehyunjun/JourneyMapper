@@ -1,0 +1,18 @@
+{
+  "id": "glp1_cost_pressure_moments",
+  "label": "GLP-1 cost-pressure moments",
+  "description": "Fragments where GLP-1 patients are speaking about cost / coverage as a discontinuation pressure. Demonstrates annotation-level filtering: this is a MOMENT persona, not a person persona — one cost-anxious fragment matches, regardless of the rest of the speaker's interview.",
+  "applicable_indications": ["obesity"],
+  "filter": {
+    "content_source": ["interview"],
+    "indications": ["obesity"],
+    "speaker_attrs": {
+      "role": { "in": ["patient"] }
+    },
+    "annotations": {
+      "has_step": ["cost_pressure"]
+    }
+  },
+  "weighting": { "type": "uniform" },
+  "color": "#f59e0b"
+}

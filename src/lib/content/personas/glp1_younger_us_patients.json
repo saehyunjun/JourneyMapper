@@ -1,0 +1,17 @@
+{
+  "id": "glp1_younger_us_patients",
+  "label": "Younger US patients on GLP-1",
+  "description": "US-based patients aged 26-45 — typically less lifestyle-attempt history and a different cost / career calculus than the older cohort. Useful contrast persona.",
+  "applicable_indications": ["obesity"],
+  "filter": {
+    "content_source": ["interview"],
+    "indications": ["obesity"],
+    "speaker_attrs": {
+      "role": { "in": ["patient"] },
+      "age_band": { "in": ["26-35", "36-45"] },
+      "country": { "in": ["US"], "allow_unknown": true }
+    }
+  },
+  "weighting": { "type": "uniform" },
+  "color": "#0ea5e9"
+}

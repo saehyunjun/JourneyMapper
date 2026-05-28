@@ -1,0 +1,413 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_glp1",
+    "generated_at": "2026-05-26T00:06:22.076Z",
+    "generator": "scripts/propose-persona-goals-barriers.mjs",
+    "model": "claude-opus-4-7",
+    "codebook_schema_version": "2.0",
+    "segment_tags_generated_at": "2026-05-25T23:48:37.435Z",
+    "participants": [
+      "participant_06",
+      "participant_07",
+      "participant_08",
+      "participant_09",
+      "participant_10",
+      "participant_11",
+      "participant_12"
+    ],
+    "notes": [
+      "AI-generated persona goals (3) and barriers (3) per participant, grounded in their tagged segments.",
+      "Each item carries 1–2 supporting_segment_ids and optionally one subtheme_id.",
+      "supporting_segment_ids are constrained to the participant's own segments at generation time.",
+      "Re-generate one participant with: node scripts/propose-persona-goals-barriers.mjs <participant_id> --force"
+    ]
+  },
+  "personas": {
+    "participant_06": {
+      "goals": [
+        {
+          "summary": "Stay on some form of GLP-1 for life to protect the maintenance weight she's held since 15.",
+          "supporting_segment_ids": [
+            "participant_06_t15_s01",
+            "participant_06_t13_s02"
+          ],
+          "subtheme_id": "treatment_decision_factors"
+        },
+        {
+          "summary": "Join a trial for a longer-acting injectable or implant to help future maintenance patients like her.",
+          "supporting_segment_ids": [
+            "participant_06_t11_s04",
+            "participant_06_t53_s03"
+          ],
+          "subtheme_id": "trial_motivators"
+        },
+        {
+          "summary": "Keep a cheaper backup plan ready, eyeing semaglutide, orforglipron, or vetted compounders if Zepbound becomes unaffordable.",
+          "supporting_segment_ids": [
+            "participant_06_t07_s00",
+            "participant_06_t23_s02"
+          ],
+          "subtheme_id": "treatment_decision_factors"
+        }
+      ],
+      "barriers": [
+        {
+          "summary": "Zepbound's US price could force her off it if continuing would financially harm her family.",
+          "supporting_segment_ids": [
+            "participant_06_t03_s00",
+            "participant_06_t03_s01"
+          ],
+          "subtheme_id": "treatment_barriers"
+        },
+        {
+          "summary": "Landing on a trial placebo would risk regaining the weight she's kept off since age 15.",
+          "supporting_segment_ids": [
+            "participant_06_t13_s03",
+            "participant_06_t27_s00"
+          ],
+          "subtheme_id": "trial_barriers"
+        },
+        {
+          "summary": "An oral GLP-1's strict timing-and-food rules would trip her up versus her current weekly shot.",
+          "supporting_segment_ids": [
+            "participant_06_t51_s01",
+            "participant_06_t51_s06"
+          ],
+          "subtheme_id": "treatment_decision_factors"
+        }
+      ]
+    },
+    "participant_07": {
+      "goals": [
+        {
+          "summary": "Stay on some dose of Tirzepatide long-term to protect the inflammation, sleep apnea, and teeth-grinding gains he's already seen.",
+          "supporting_segment_ids": [
+            "participant_07_t05_s00",
+            "participant_07_t07_s01"
+          ],
+          "subtheme_id": "treatment_positive_experiences"
+        },
+        {
+          "summary": "Move to next-generation GLP-1s as the science evolves, having already tracked first- and second-gen options closely.",
+          "supporting_segment_ids": [
+            "participant_07_t11_s01",
+            "participant_07_t71_s00"
+          ],
+          "subtheme_id": "treatment_decision_factors"
+        },
+        {
+          "summary": "Contribute to GLP-1 research as a pro-science participant if a trial fits around his heavy work travel schedule.",
+          "supporting_segment_ids": [
+            "participant_07_t15_s00",
+            "participant_07_t33_s00"
+          ],
+          "subtheme_id": "trial_motivators"
+        }
+      ],
+      "barriers": [
+        {
+          "summary": "Fears losing Tirzepatide access if US policy or insurance coverage shifts, even though he's stable on it now.",
+          "supporting_segment_ids": [
+            "participant_07_t09_s04",
+            "participant_07_t25_s01"
+          ],
+          "subtheme_id": "treatment_barriers"
+        },
+        {
+          "summary": "Frequent work travel makes in-person trial visits and at-home nurse appointments hard to commit to a week out.",
+          "supporting_segment_ids": [
+            "participant_07_t31_s01",
+            "participant_07_t37_s02"
+          ],
+          "subtheme_id": "trial_barriers"
+        },
+        {
+          "summary": "Wants clearer answers on adverse-event medical coverage and compounding pharmacy sourcing before fully trusting a trial drug.",
+          "supporting_segment_ids": [
+            "participant_07_t23_s02",
+            "participant_07_t73_s01"
+          ],
+          "subtheme_id": "clinical_trial_knowledge_gaps"
+        }
+      ]
+    },
+    "participant_08": {
+      "goals": [
+        {
+          "summary": "Hold onto the inflammation, sleep apnea, and teeth-grinding wins he's seen in three months on tirzepatide.",
+          "supporting_segment_ids": [
+            "participant_08_t07_s02",
+            "participant_08_t07_s05"
+          ],
+          "subtheme_id": "treatment_positive_experiences"
+        },
+        {
+          "summary": "Stay ahead of the next-generation GLP-1s and switch when a better-fitting injectable reaches market.",
+          "supporting_segment_ids": [
+            "participant_08_t11_s01",
+            "participant_08_t71_s00"
+          ],
+          "subtheme_id": "treatment_decision_factors"
+        },
+        {
+          "summary": "Contribute to GLP-1 science as a willing trial participant since friends are already enrolled.",
+          "supporting_segment_ids": [
+            "participant_08_t15_s00",
+            "participant_08_t63_s00"
+          ],
+          "subtheme_id": "trial_motivators"
+        }
+      ],
+      "barriers": [
+        {
+          "summary": "Heavy work travel makes fixed clinic visits and at-home nurse appointments nearly impossible to commit to.",
+          "supporting_segment_ids": [
+            "participant_08_t19_s02",
+            "participant_08_t31_s01"
+          ],
+          "subtheme_id": "trial_barriers"
+        },
+        {
+          "summary": "Fears US policy or supply shifts could cut off his tirzepatide access mid-treatment.",
+          "supporting_segment_ids": [
+            "participant_08_t09_s04",
+            "participant_08_t09_s05"
+          ],
+          "subtheme_id": "treatment_barriers"
+        },
+        {
+          "summary": "Lacks clarity on who covers care if a trial drug triggers a serious adverse event like a heart issue.",
+          "supporting_segment_ids": [
+            "participant_08_t73_s01",
+            "participant_08_t73_s02"
+          ],
+          "subtheme_id": "trial_decision_factors"
+        }
+      ]
+    },
+    "participant_09": {
+      "goals": [
+        {
+          "summary": "Stay on compounded GLP-1 long-term to protect the blood pressure and heartburn improvements she's already gained.",
+          "supporting_segment_ids": [
+            "participant_09_t03_s00",
+            "participant_09_t03_s07"
+          ],
+          "subtheme_id": "treatment_decision_factors"
+        },
+        {
+          "summary": "Transition to the upcoming Orforglipron maintenance pill once it's FDA-approved to avoid weekly injections she dislikes.",
+          "supporting_segment_ids": [
+            "participant_09_t13_s00",
+            "participant_09_t39_s00"
+          ],
+          "subtheme_id": "treatment_decision_factors"
+        },
+        {
+          "summary": "Contribute to GLP-1 research as a master's-trained academic, ideally through a locally-run trial near her town.",
+          "supporting_segment_ids": [
+            "participant_09_t17_s03",
+            "participant_09_t25_s04"
+          ],
+          "subtheme_id": "trial_motivators"
+        }
+      ],
+      "barriers": [
+        {
+          "summary": "Her PBM won't even speak to her doctor's office, leaving a $1,000/month out-of-pocket cost she can't sustain.",
+          "supporting_segment_ids": [
+            "participant_09_t03_s02",
+            "participant_09_t03_s01"
+          ],
+          "subtheme_id": "treatment_barriers"
+        },
+        {
+          "summary": "The only Eli Lilly trial she qualified for is a three-hour drive each way from where she lives.",
+          "supporting_segment_ids": [
+            "participant_09_t35_s03",
+            "participant_09_t21_s02"
+          ],
+          "subtheme_id": "trial_barriers"
+        },
+        {
+          "summary": "Eight to ten weekly hours for clinic visits, counseling, and injections is impossible alongside her busy life.",
+          "supporting_segment_ids": [
+            "participant_09_t37_s03",
+            "participant_09_t25_s02"
+          ],
+          "subtheme_id": "trial_barriers"
+        }
+      ]
+    },
+    "participant_10": {
+      "goals": [
+        {
+          "summary": "Stay on compound tirzepatide for life since GLP-1s were her last hope after decades of obesity since age 12.",
+          "supporting_segment_ids": [
+            "participant_10_t05_s02",
+            "participant_10_t05_s03",
+            "participant_10_t51_s09"
+          ],
+          "subtheme_id": "treatment_decision_factors"
+        },
+        {
+          "summary": "Get into a cutting-edge trial like Retatrutide to help advance obesity treatment after being rejected once already.",
+          "supporting_segment_ids": [
+            "participant_10_t53_s01",
+            "participant_10_t53_s02",
+            "participant_10_t63_s03"
+          ],
+          "subtheme_id": "trial_motivators"
+        },
+        {
+          "summary": "Switch or stack GLP-1s with her doctor's help to break stalls, the way compounding recently restarted her loss.",
+          "supporting_segment_ids": [
+            "participant_10_t11_s01",
+            "participant_10_t07_s01",
+            "participant_10_t21_s03"
+          ],
+          "subtheme_id": "treatment_decision_factors"
+        }
+      ],
+      "barriers": [
+        {
+          "summary": "Affordability and supply shortages dictate her med choice, pushing her to compound tirzepatide instead of brand Mounjaro.",
+          "supporting_segment_ids": [
+            "participant_10_t21_s00",
+            "participant_10_t21_s01",
+            "participant_10_t05_s03"
+          ],
+          "subtheme_id": "treatment_barriers"
+        },
+        {
+          "summary": "Living rural with Atlanta an hour away makes frequent trial visits unworkable unless monthly or transportation is arranged.",
+          "supporting_segment_ids": [
+            "participant_10_t43_s03",
+            "participant_10_t43_s04",
+            "participant_10_t45_s03"
+          ],
+          "subtheme_id": "trial_barriers"
+        },
+        {
+          "summary": "Worries about being a guinea pig for unknown side effects beyond the usual GLP-1 gastric issues.",
+          "supporting_segment_ids": [
+            "participant_10_t47_s00",
+            "participant_10_t47_s03",
+            "participant_10_t47_s01"
+          ],
+          "subtheme_id": "treatment_knowledge_gaps"
+        }
+      ]
+    },
+    "participant_11": {
+      "goals": [
+        {
+          "summary": "Protect the GLP-1 quality-of-life gains — better sleep, lower blood pressure, quieter food noise — that finally stuck after years of failed diets.",
+          "supporting_segment_ids": [
+            "participant_11_t07_s02",
+            "participant_11_t33_s02"
+          ],
+          "subtheme_id": "treatment_positive_experiences"
+        },
+        {
+          "summary": "Stay on top of emerging GLP-1 options, hoping for monthly dosing or an oral version with equal efficacy.",
+          "supporting_segment_ids": [
+            "participant_11_t09_s02",
+            "participant_11_t39_s01"
+          ],
+          "subtheme_id": "treatment_decision_factors"
+        },
+        {
+          "summary": "Join a trial that guarantees continued medication access and offers evidence-based nutrition guidance over gimmicks like meal replacements.",
+          "supporting_segment_ids": [
+            "participant_11_t13_s02",
+            "participant_11_t25_s01"
+          ],
+          "subtheme_id": "trial_motivators"
+        }
+      ],
+      "barriers": [
+        {
+          "summary": "Worries employer insurance could drop coverage, leaving a $1,000+ monthly out-of-pocket cost he couldn't justify long term.",
+          "supporting_segment_ids": [
+            "participant_11_t05_s01",
+            "participant_11_t05_s02"
+          ],
+          "subtheme_id": "treatment_barriers"
+        },
+        {
+          "summary": "Frequent work travel makes monthly in-person clinic visits and half-day appointment blocks logistically unworkable for trial participation.",
+          "supporting_segment_ids": [
+            "participant_11_t19_s01",
+            "participant_11_t27_s02"
+          ],
+          "subtheme_id": "trial_barriers"
+        },
+        {
+          "summary": "Fears being randomized into a placebo arm and regaining weight, erasing the mental and physical benefits he's built.",
+          "supporting_segment_ids": [
+            "participant_11_t15_s01",
+            "participant_11_t15_s02"
+          ],
+          "subtheme_id": "trial_barriers"
+        }
+      ]
+    },
+    "participant_12": {
+      "goals": [
+        {
+          "summary": "Stay on the current GLP-1 long-term to protect the quiet-from-food-noise relief and reduced knee inflammation.",
+          "supporting_segment_ids": [
+            "participant_12_t05_s04",
+            "participant_12_t07_s01",
+            "participant_12_t07_s03"
+          ],
+          "subtheme_id": "treatment_positive_experiences"
+        },
+        {
+          "summary": "Join a trial only if telehealth visits and monthly injections fit around an unpredictable work schedule.",
+          "supporting_segment_ids": [
+            "participant_12_t17_s02",
+            "participant_12_t19_s02"
+          ],
+          "subtheme_id": "trial_decision_factors"
+        },
+        {
+          "summary": "Get real obesity-literate support like nutrition coaching and post-medication maintenance guidance, not just 'eat less' advice.",
+          "supporting_segment_ids": [
+            "participant_12_t23_s02",
+            "participant_12_t27_s01"
+          ],
+          "subtheme_id": "medical_self_efficacy"
+        }
+      ],
+      "barriers": [
+        {
+          "summary": "Constant anxiety that insurance changes or GLP-1 shortages could yank away the medication that finally worked.",
+          "supporting_segment_ids": [
+            "participant_12_t05_s01",
+            "participant_12_t05_s02"
+          ],
+          "subtheme_id": "treatment_barriers"
+        },
+        {
+          "summary": "Fear of being randomized to placebo and rapidly regaining weight, reviving the old shame cycle.",
+          "supporting_segment_ids": [
+            "participant_12_t15_s00",
+            "participant_12_t15_s02"
+          ],
+          "subtheme_id": "trial_barriers"
+        },
+        {
+          "summary": "Years of keto, Weight Watchers, and bootcamps that failed left a residue of self-blame around weight loss.",
+          "supporting_segment_ids": [
+            "participant_12_t31_s02",
+            "participant_12_t31_s03"
+          ],
+          "subtheme_id": "treatment_health_history"
+        }
+      ]
+    }
+  }
+}

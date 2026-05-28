@@ -14,7 +14,6 @@
 	import { fade } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import { MoveUpRight, Star, ArrowRight } from '@lucide/svelte';
 	import {
 		summaryStats,
 		summaryText,
@@ -25,30 +24,33 @@
 		type Distribution,
 		type ClusterBar
 	} from '$lib/content/wctglpdemo-data/executive-summary';
-	import { buildRadialTree, quotes as allQuotes } from '$lib/content/wctglpdemo-data/analysis';
-	import KeyQuoteCard from '$lib/components/KeyQuoteCard.svelte';
+	import {
+		buildRadialTree,
+		quotes as allQuotes,
+		type Quote,
+		type RadialNode
+	} from '$lib/content/wctglpdemo-data/analysis';
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
-	import SentimentDonut from '$lib/components/SentimentDonut.svelte';
-	import BubbleChart from '$lib/components/BubbleChart.svelte';
-	import StatBlock from '$lib/components/StatBlock.svelte';
-	import StatScatter from '$lib/components/StatScatter.svelte';
-	import RightDrawer from '$lib/components/RightDrawer.svelte';
-	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
-	import SegmentTensionMatrix, {
-		type SegmentTensionDatum
-	} from '$lib/charts/glp/SegmentTensionMatrix.svelte';
-	import SemiArcChart from '$lib/components/key-findings/blocks/SemiArcChart.svelte';
 	import ExecutiveSummaryStory from '$lib/components/story/ExecutiveSummaryStory.svelte';
-	import IndicationPoster from '$lib/components/indication/IndicationPoster.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
+	import InteractiveCorpusGrid, {
+		type Dot as CorpusDot,
+		type GroupSpec as CorpusGroupSpec
+	} from '$lib/components/exec-summary/InteractiveCorpusGrid.svelte';
+	import { vizSize } from '$lib/story/responsiveSize.svelte';
+	import InsightOverview from '$lib/components/exec-summary/InsightOverview.svelte';
+	import FindingDetail from '$lib/components/exec-summary/FindingDetail.svelte';
+	import ThemeDetail from '$lib/components/exec-summary/ThemeDetail.svelte';
+	import QuoteDetail from '$lib/components/exec-summary/QuoteDetail.svelte';
+	import type { Selection } from '$lib/components/exec-summary/types';
 	import type { StoryInput } from '$lib/story/types';
-	import { sentimentColor } from '$lib/key-findings/widgets';
+	import { computeBurdenDistribution } from '$lib/content/wctglpdemo-data/burden-distribution';
+	import { getOverviewBlurb, getFindingBlurb } from '$lib/content/wctglpdemo-data/dashboard-blurbs';
+	import { computeLupusNephritisAlignment } from '$lib/content/wctglpdemo-data/search-interview-alignment';
+	import { computeLupusNephritisTopicAlignment } from '$lib/content/wctglpdemo-data/topic-alignment';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
-
-	// Per-finding wrapper width for the keyword-cluster BubbleChart so each
-	// chart resizes to the card's actual content width.
-	let clusterWidths = $state<Record<string, number>>({});
 
 	// Participant profiles — seeded from the server, updated locally when the
 	// drawer persists an edit.
@@ -79,6 +81,22 @@
 		];
 	}
 
+	// Split a theme's mock blocks into N subtheme child buckets so the LN
+	// placeholder has subtheme data to drive the InteractiveCorpusHero's
+	// subtheme grouping. Blocks are partitioned round-robin so each subtheme
+	// inherits a representative slice of the theme's sentiment mix.
+	function mockSubtheme(
+		themeId: string,
+		subId: string,
+		label: string,
+		themeBlocks: { sentiment: number; interview_id: string }[],
+		bucketIndex: number,
+		bucketCount: number
+	) {
+		const slice = themeBlocks.filter((_, i) => i % bucketCount === bucketIndex);
+		return { id: `${themeId}__${subId}`, label, kind: 'subtheme' as const, blocks: slice };
+	}
+
 	const LN_SUMMARY_TEXT =
 		'Twenty-four lupus nephritis patients sat for in-depth interviews, producing 187 tagged quotes across eleven themes. Sentiment ran mixed: 41% of coded moments registered positive against 38% negative. Negative reactions clustered around immunosuppressive side effects and renal monitoring burden; warmest mentions were of disease remission and long-term renal protection.';
 
@@ -86,7 +104,8 @@
 		{ value: 24, label: 'interviews' },
 		{ value: 187, label: 'tagged quotes' },
 		{ value: 11, label: 'themes' },
-		{ value: 43, label: 'pull quotes' }
+		{ value: 33, label: 'subthemes' },
+		{ value: 4, label: 'findings' }
 	];
 
 	const LN_SENTIMENT_LEAN = {
@@ -100,19 +119,29 @@
 		neutralPct: 21
 	};
 
-	const LN_THEMES = [
-		{ id: 'disease_activity', label: 'Disease activity & flares', blocks: mockBlocks(8, 6, 14) },
-		{ id: 'treatment', label: 'Treatment & medication', blocks: mockBlocks(12, 8, 10) },
-		{ id: 'side_effects', label: 'Side effects', blocks: mockBlocks(4, 7, 15) },
-		{ id: 'renal_function', label: 'Renal function', blocks: mockBlocks(6, 5, 11) },
-		{ id: 'quality_of_life', label: 'Quality of life', blocks: mockBlocks(14, 9, 6) },
-		{ id: 'clinical_trials', label: 'Clinical trials', blocks: mockBlocks(10, 12, 8) },
-		{ id: 'monitoring', label: 'Disease monitoring', blocks: mockBlocks(7, 10, 9) },
-		{ id: 'mental_health', label: 'Mental health & stress', blocks: mockBlocks(5, 8, 13) },
-		{ id: 'social_life', label: 'Social & lifestyle impact', blocks: mockBlocks(9, 11, 7) },
-		{ id: 'support', label: 'Healthcare support', blocks: mockBlocks(15, 6, 5) },
-		{ id: 'future_outlook', label: 'Future outlook', blocks: mockBlocks(13, 7, 6) }
-	];
+	const LN_THEMES = (() => {
+		const themeSpecs: { id: string; label: string; subs: string[]; blocks: { sentiment: number; interview_id: string }[] }[] = [
+			{ id: 'disease_activity', label: 'Disease activity & flares', subs: ['Flares', 'Symptom load', 'Disease progression'], blocks: mockBlocks(8, 6, 14) },
+			{ id: 'treatment', label: 'Treatment & medication', subs: ['Steroids', 'Immunosuppressants', 'Adherence'], blocks: mockBlocks(12, 8, 10) },
+			{ id: 'side_effects', label: 'Side effects', subs: ['Fatigue', 'Infection risk', 'Weight changes'], blocks: mockBlocks(4, 7, 15) },
+			{ id: 'renal_function', label: 'Renal function', subs: ['Lab results', 'Protein in urine', 'Kidney decline'], blocks: mockBlocks(6, 5, 11) },
+			{ id: 'quality_of_life', label: 'Quality of life', subs: ['Energy', 'Work / school', 'Relationships'], blocks: mockBlocks(14, 9, 6) },
+			{ id: 'clinical_trials', label: 'Clinical trials', subs: ['Awareness', 'Hesitation', 'Logistics'], blocks: mockBlocks(10, 12, 8) },
+			{ id: 'monitoring', label: 'Disease monitoring', subs: ['Lab visits', 'Self-tracking', 'Appointment burden'], blocks: mockBlocks(7, 10, 9) },
+			{ id: 'mental_health', label: 'Mental health & stress', subs: ['Anxiety', 'Depression', 'Coping'], blocks: mockBlocks(5, 8, 13) },
+			{ id: 'social_life', label: 'Social & lifestyle impact', subs: ['Family', 'Diet', 'Activity'], blocks: mockBlocks(9, 11, 7) },
+			{ id: 'support', label: 'Healthcare support', subs: ['Provider trust', 'Communication', 'Access'], blocks: mockBlocks(15, 6, 5) },
+			{ id: 'future_outlook', label: 'Future outlook', subs: ['Hope', 'Treatment expectations', 'Long-term concerns'], blocks: mockBlocks(13, 7, 6) }
+		];
+		return themeSpecs.map((t) => ({
+			id: t.id,
+			label: t.label,
+			blocks: t.blocks,
+			children: t.subs.map((label, i) =>
+				mockSubtheme(t.id, label.toLowerCase().replace(/[^a-z0-9]+/g, '_'), label, t.blocks, i, t.subs.length)
+			)
+		}));
+	})();
 
 	const LN_FINDINGS: Finding[] = [
 		{
@@ -200,20 +229,24 @@
 		participantDrawerOpen = true;
 	}
 
-	// --- Finding drawer — the tagged quotes behind one finding ---
-	let findingDrawerOpen = $state(false);
-	let activeFinding = $state<Finding | null>(null);
-
-	function openFinding(f: Finding) {
-		activeFinding = f;
-		findingDrawerOpen = true;
-	}
+	// Subtheme count from the radial tree — sum of unique subtheme nodes across
+	// all themes. Kept here so the headline stat stays a single source of truth.
+	const realSubthemeCount = (() => {
+		const ids = new Set<string>();
+		for (const t of buildRadialTree()) {
+			for (const c of t.children ?? []) {
+				if (c.kind === 'subtheme') ids.add(c.id);
+			}
+		}
+		return ids.size;
+	})();
 
 	const headlineStats = [
 		{ value: summaryStats.interviews, label: 'interviews' },
 		{ value: summaryStats.segments, label: 'tagged quotes' },
 		{ value: summaryStats.themes, label: 'themes' },
-		{ value: summaryStats.quotes, label: 'pull quotes' }
+		{ value: realSubthemeCount, label: 'subthemes' },
+		{ value: findings.length, label: 'findings' }
 	];
 
 	// All themes with their per-segment sentiment blocks — for the theme breakdown strip.
@@ -224,22 +257,130 @@
 	const displayStats = $derived(isLupusNephritis ? LN_STATS : headlineStats);
 	const displaySentimentLean = $derived(isLupusNephritis ? LN_SENTIMENT_LEAN : sentimentLean);
 	const displayThemeBreakdown = $derived(isLupusNephritis ? LN_THEMES : themeBreakdown);
-	const displayFindings = $derived(isLupusNephritis ? LN_FINDINGS : findings);
-
-	// Convert theme blocks into SegmentTensionDatum for the matrix viz.
-	// Both RadialNode[] and LN_THEMES share id, label, blocks[{sentiment}].
-	const displayTensionData = $derived(
-		(displayThemeBreakdown as Array<{ id: string; label: string; blocks: { sentiment: number }[] }>).map(
-			(t): SegmentTensionDatum => ({
-				id: t.id,
-				label: t.label,
-				total: t.blocks.length,
-				positive: t.blocks.filter((b) => b.sentiment > 0).length,
-				neutral:  t.blocks.filter((b) => b.sentiment === 0).length,
-				negative: t.blocks.filter((b) => b.sentiment < 0).length
-			})
-		)
+	// Per-indication generated copy (Haiku 4.5). Layered over the template
+	// strings — the components prefer these when present, fall back when not.
+	const displayOverviewBlurb = $derived(getOverviewBlurb(activeIndication));
+	const displayFindings = $derived(
+		(isLupusNephritis ? LN_FINDINGS : findings).map((f) => {
+			const blurb = getFindingBlurb(activeIndication, f.id);
+			return blurb ? { ...f, lede: blurb.lede, analysis: blurb.analysis } : f;
+		})
 	);
+
+	// --- Interactive corpus hero — flatten blocks into one dot per tagged
+	//     moment, plus the theme + interview group specs the hero needs to
+	//     render its regroup-by-axis modes.
+	//
+	//     We don't carry .starred on dots: the 'pull quotes' axis is currently
+	//     unwired (blocks don't carry quote_id, so we can't map a block to its
+	//     starred status without a heavier join). The InteractiveCorpusHero
+	//     disables that stat-button when no dots are flagged.
+	const corpusDots = $derived.by<CorpusDot[]>(() => {
+		const out: CorpusDot[] = [];
+		const themes = displayThemeBreakdown as Array<{
+			id: string;
+			blocks: { sentiment: number; interview_id?: string }[];
+			children?: {
+				id: string;
+				kind?: string;
+				blocks: { sentiment: number; interview_id?: string }[];
+			}[];
+		}>;
+
+		// Build a global (sentiment, interview_id) → FIFO queue of finding_ids
+		// from every finding's clusters. Each theme block (regardless of which
+		// theme it came from) is matched against this queue and consumes one
+		// finding tag if available; leftover blocks get `finding_id = undefined`
+		// and fall into the '__unassigned_finding' group. Findings can cut
+		// across themes, so the queue is corpus-wide (not per-theme like the
+		// subtheme matcher below).
+		const findingQueue = new Map<string, string[]>();
+		for (const f of displayFindings) {
+			for (const c of f.clusters) {
+				for (const b of c.blocks) {
+					const key = `${b.sentiment}|${b.interview_id ?? 'unknown'}`;
+					const list = findingQueue.get(key) ?? [];
+					list.push(f.id);
+					findingQueue.set(key, list);
+				}
+			}
+		}
+
+		for (const t of themes) {
+			// Build a (sentiment, interview_id) → FIFO queue of subtheme_ids
+			// from this theme's children. Each theme block is matched against
+			// the queue and consumes one subtheme tag if available; leftover
+			// blocks (no matching child) get `subtheme_id = undefined` and fall
+			// into the '__no_subtheme' group in subtheme mode.
+			const subQueue = new Map<string, string[]>();
+			for (const c of t.children ?? []) {
+				if (c.kind !== 'subtheme') continue;
+				for (const b of c.blocks) {
+					const key = `${b.sentiment}|${b.interview_id ?? 'unknown'}`;
+					const list = subQueue.get(key) ?? [];
+					list.push(c.id);
+					subQueue.set(key, list);
+				}
+			}
+			for (let i = 0; i < t.blocks.length; i++) {
+				const b = t.blocks[i];
+				const iid = b.interview_id ?? 'unknown';
+				const key = `${b.sentiment}|${iid}`;
+				const subQ = subQueue.get(key);
+				const subtheme_id = subQ && subQ.length ? subQ.shift() : undefined;
+				const fQ = findingQueue.get(key);
+				const finding_id = fQ && fQ.length ? fQ.shift() : undefined;
+				out.push({
+					id: `${t.id}__${iid}__${i}`,
+					sentiment: b.sentiment,
+					theme_id: t.id,
+					interview_id: iid,
+					subtheme_id,
+					finding_id
+				});
+			}
+		}
+		return out;
+	});
+
+	const corpusThemeGroups = $derived<CorpusGroupSpec[]>(
+		(displayThemeBreakdown as Array<{ id: string; label: string }>).map((t) => ({
+			id: t.id,
+			label: t.label
+		}))
+	);
+
+	const corpusSubthemeGroups = $derived.by<CorpusGroupSpec[]>(() => {
+		const out: CorpusGroupSpec[] = [];
+		const seen = new Set<string>();
+		const themes = displayThemeBreakdown as Array<{
+			children?: { id: string; label?: string; kind?: string }[];
+		}>;
+		for (const t of themes) {
+			for (const c of t.children ?? []) {
+				if (c.kind !== 'subtheme' || seen.has(c.id)) continue;
+				seen.add(c.id);
+				out.push({ id: c.id, label: c.label ?? c.id });
+			}
+		}
+		return out;
+	});
+
+	const corpusFindingGroups = $derived<CorpusGroupSpec[]>(
+		displayFindings.map((f) => ({ id: f.id, label: f.eyebrow }))
+	);
+
+	const corpusInterviewGroups = $derived.by<CorpusGroupSpec[]>(() => {
+		const seen = new Set<string>();
+		const out: CorpusGroupSpec[] = [];
+		for (const d of corpusDots) {
+			const iid = d.interview_id ?? 'unknown';
+			if (seen.has(iid)) continue;
+			seen.add(iid);
+			out.push({ id: iid, label: iid });
+		}
+		return out.sort((a, b) => a.id.localeCompare(b.id));
+	});
 
 	// --- Indication poster — generative SVG driven by corpus telemetry ------
 	function hashSlug(s: string): number {
@@ -257,12 +398,6 @@
 			label: string;
 			blocks: { sentiment: number; interview_id?: string }[];
 		}>
-	);
-
-	const posterThemeSizes = $derived(posterThemes.map((t) => t.blocks.length));
-
-	const posterSentimentTimeline = $derived(
-		posterThemes.flatMap((t) => t.blocks.map((b) => b.sentiment))
 	);
 
 	// Pick one best quote per interview — highest overall quote_score wins.
@@ -307,60 +442,151 @@
 	});
 
 	const posterSeed = $derived(hashSlug(activeIndication));
-	const posterVariant = $derived(isLupusNephritis ? 'cool' : 'default');
+	const posterVariant = $derived<'default' | 'cool'>(isLupusNephritis ? 'cool' : 'default');
 
-	const SENTIMENT_GRADES = [
-		{ value: -2, label: 'Strongly negative' },
-		{ value: -1, label: 'Negative' },
-		{ value:  0, label: 'Neutral / mixed' },
-		{ value:  1, label: 'Positive' },
-		{ value:  2, label: 'Strongly positive' }
-	] as const;
+	// --- Dashboard selection model -------------------------------------------
+	// Single source of truth for what the right-pane detail view renders.
+	// Resets to 'overview' whenever the active indication changes (the {#key}
+	// block re-mounts the dashboard, which re-initialises this state).
+	let selection = $state<Selection>({ kind: 'overview' });
 
-	const themeCharts = $derived(
-		(displayThemeBreakdown as Array<{ id: string; label: string; blocks: { sentiment: number }[] }>).map(
-			(t) => ({
-				label: t.label,
-				data: SENTIMENT_GRADES.map((s) => ({
-					label: s.label,
-					value: t.blocks.filter((b) => b.sentiment === s.value).length,
-					color: sentimentColor(s.value)
-				}))
-			})
-		)
+	// --- Grid lens state -----------------------------------------------------
+	// Drives the InteractiveCorpusGrid's grouping. Toggling the active tile
+	// in the left rail returns the grid to the corpus-wide 'none' view.
+	type Lens = 'none' | 'theme' | 'subtheme' | 'interview' | 'finding';
+	let lens = $state<Lens>('none');
+
+	// Dot size scales with viewport so the corpus reads as a dense field on
+	// desktop without overflowing the center column on smaller screens.
+	// Dots shrink when the grid breaks into per-group mini-grids — at 11
+	// themes / 33 subthemes / 24 interviews the larger 'none'-mode cells
+	// would crowd each mini-grid, so we step down ~35% across the board.
+	// The grid component transitions width/height/transform together so the
+	// resize reads as part of the regroup morph.
+	const corpusCellSize = $derived(
+		lens === 'none'
+			? vizSize({ base: 13, md: 16, lg: 20, xl: 24, '2xl': 28 })
+			: vizSize({ base: 9, md: 11, lg: 13, xl: 15, '2xl': 17 })
+	);
+	const corpusIntraGap = $derived(
+		lens === 'none'
+			? vizSize({ base: 4, md: 5, lg: 6, xl: 7, '2xl': 8 })
+			: vizSize({ base: 3, md: 3, lg: 4, xl: 4, '2xl': 5 })
 	);
 
-	let themeReplayKey = $state(0);
+	function toggleLens(next: Lens) {
+		lens = lens === next ? 'none' : next;
+	}
 
-	// Per-tone styling for the finding cards.
-	const tone: Record<Finding['tone'], { accent: string }> = {
-		positive: { accent: 'text-emerald-700' },
-		negative: { accent: 'text-rose-700' },
-		divisive: { accent: 'text-amber-700' },
-		neutral: { accent: 'text-accent-mint' }
-	};
+	function lensForLabel(label: string): Lens {
+		const l = label.toLowerCase();
+		if (l.includes('interview')) return 'interview';
+		if (l.includes('subtheme')) return 'subtheme';
+		if (l.includes('theme')) return 'theme';
+		if (l.includes('finding')) return 'finding';
+		return 'none';
+	}
 
-	const LN_TENSION_DATA: SegmentTensionDatum[] = [
-		{ id: 'immunosuppressive_side_effects', label: 'Immunosuppressive side effects', group: 'Treatment & medication', total: 21, positive: 2, neutral: 4, negative: 15 },
-		{ id: 'steroid_dependency',             label: 'Steroid dependency',             group: 'Treatment & medication', total: 18, positive: 1, neutral: 5, negative: 12 },
-		{ id: 'infection_risk',                 label: 'Infection risk',                 group: 'Treatment & medication', total: 15, positive: 1, neutral: 4, negative: 10 },
-		{ id: 'remission_control',              label: 'Remission & disease control',    group: 'Positive treatment drivers', total: 22, positive: 16, neutral: 4, negative: 2 },
-		{ id: 'renal_function_preservation',    label: 'Renal function preservation',    group: 'Positive treatment drivers', total: 18, positive: 12, neutral: 4, negative: 2 },
-		{ id: 'washout_flare_risk',             label: 'Washout / flare risk',           group: 'Clinical trials',            total: 14, positive: 1,  neutral: 3, negative: 10 },
-		{ id: 'visit_burden',                   label: 'Visit frequency & burden',       group: 'Clinical trials',            total: 16, positive: 2,  neutral: 5, negative: 9 },
-		{ id: 'questionnaire_burden',           label: 'Questionnaire burden',           group: 'Trial non-issues',           total: 11, positive: 6,  neutral: 3, negative: 2 }
-	];
+	// Subtheme → parent theme id, so clicking a subtheme cluster in the grid
+	// can resolve to its parent theme's detail card (we don't have a dedicated
+	// subtheme detail component).
+	const subthemeParentByGid = $derived.by(() => {
+		const map = new Map<string, string>();
+		const themes = displayThemeBreakdown as Array<{
+			id: string;
+			children?: { id: string; kind?: string }[];
+		}>;
+		for (const t of themes) {
+			for (const c of t.children ?? []) {
+				if (c.kind !== 'subtheme') continue;
+				map.set(c.id, t.id);
+			}
+		}
+		return map;
+	});
 
-	let tensionReplayKey = $state(0);
+	// Shared dispatcher for any "navigate to X" click — grid label, blurb
+	// inline ref, considerations callout. Keeps the ref-resolution rules
+	// (subtheme → parent theme, interview → drawer) in one place.
+	function navigateTo(kind: 'theme' | 'subtheme' | 'finding' | 'interview' | 'quote', id: string) {
+		if (kind === 'theme') {
+			selection = { kind: 'theme', id };
+		} else if (kind === 'subtheme') {
+			const parent = subthemeParentByGid.get(id);
+			if (parent) selection = { kind: 'theme', id: parent };
+		} else if (kind === 'finding') {
+			if (id !== '__unassigned_finding') selection = { kind: 'finding', id };
+		} else if (kind === 'interview') {
+			openParticipant(id);
+		} else if (kind === 'quote') {
+			selection = { kind: 'quote', id };
+		}
+	}
+
+	// Allow-list of valid ids per ref kind for the BlurbText renderer.
+	// Refs to ids outside this set render as plain text (soft-fail) — Haiku
+	// occasionally invents ids and we'd rather show the surface text than a
+	// broken link.
+	const knownRefs = $derived.by(() => {
+		const themes = new Set<string>(
+			(displayThemeBreakdown as Array<{ id: string }>).map((t) => t.id)
+		);
+		const subthemes = new Set<string>();
+		for (const t of displayThemeBreakdown as Array<{ children?: { id: string; kind?: string }[] }>) {
+			for (const c of t.children ?? []) {
+				if (c.kind === 'subtheme') subthemes.add(c.id);
+			}
+		}
+		const findings = new Set<string>(displayFindings.map((f) => f.id));
+		const interviews = new Set<string>(corpusInterviewGroups.map((g) => g.id));
+		return { theme: themes, subtheme: subthemes, finding: findings, interview: interviews };
+	});
+
+	function handleGroupClick(payload: { mode: string; id: string }) {
+		const { mode, id } = payload;
+		if (mode === 'theme' || mode === 'subtheme' || mode === 'finding' || mode === 'interview') {
+			navigateTo(mode, id);
+		}
+	}
+
+	const selectedFinding = $derived.by(() => {
+		const sel = selection;
+		if (sel.kind !== 'finding') return null;
+		return displayFindings.find((f) => f.id === sel.id) ?? null;
+	});
+
+	const selectedTheme = $derived.by<RadialNode | null>(() => {
+		const sel = selection;
+		if (sel.kind !== 'theme') return null;
+		return (displayThemeBreakdown as RadialNode[]).find((t) => t.id === sel.id) ?? null;
+	});
+
+	const selectedQuote = $derived.by<Quote | null>(() => {
+		const sel = selection;
+		if (sel.kind !== 'quote') return null;
+		return allQuotes.find((q) => q.quote_id === sel.id) ?? null;
+	});
+
+	// Theme detail wants a small sample of the strongest quotes tagged with
+	// the selected theme — sorted by overall quote_score so the highlights
+	// surface first.
+	const themeTopQuotes = $derived<Quote[]>(
+		selectedTheme
+			? allQuotes
+				.filter((q) => q.themes.includes(selectedTheme!.id))
+				.sort((a, b) => b.quote_score.overall - a.quote_score.overall)
+				.slice(0, 8)
+			: []
+	);
 
 	const explore = [
 		{
-			href: '/patientlyiq/fingerprint',
-			title: 'Participant fingerprint',
+			href: '/patientlyiq/personas',
+			title: 'Participant persona',
 			blurb: "Each interviewee's distinctive theme profile."
 		},
 		{
-			href: '/patientlyiq/interview-words',
+			href: '/patientlyiq/community',
 			title: 'What patients said',
 			blurb: 'Sortable word-usage and theme charts.'
 		},
@@ -411,7 +637,18 @@
 		profiles,
 		posterSeed,
 		posterVariant,
-		posterAnchors
+		posterAnchors,
+		burdens: computeBurdenDistribution(activeIndication),
+		// LN-only today: the search-side data files live under
+		// disease-insights/lupus-nephritis/, and the interview cluster rollup
+		// reads lupus_nephritis_keyword_usage.json. Pass undefined for other
+		// indications so the assembler skips the two alignment slides.
+		alignment: isLupusNephritis
+			? {
+				oneToOne: computeLupusNephritisAlignment(),
+				topical: computeLupusNephritisTopicAlignment()
+			}
+			: undefined
 	});
 </script>
 
@@ -421,279 +658,129 @@
 			<ExecutiveSummaryStory input={storyInput} frameTitle="{activeConditionLabel} Patient Insights Lab Book" onExit={exitStory} />
 		</div>
 	{:else}
-<div class="flex flex-1 flex-col gap-6" in:fade={{ duration: 300 }}>
-	<div
-		class="mx-auto flex w-full flex-col justify-center bg-muted bg-[url('/content-assets/bgtexture.png')] bg-center align-middle bg-blend-lighten"
-	>
-		<div class="flex w-full flex-col gap-2">
-			<span class="pill-white mx-auto text-base">
-				Executive summary</span>
-			<p
-				class="mx-auto justify-center text-pretty text-center text-2xl leading-8 text-primary md:w-5xl md:text-4xl md:font-light md:leading-10"
-			>
-				<span class="font-bold font-heading border-b-2 border-accent-orange text-primary">{activeConditionLabel}</span> Patient Insights Lab Book
-			</p>
-		</div>
-	</div>
+<div class="flex flex-1 flex-col" in:fade={{ duration: 300 }}>
+	<PageHeader
+		eyebrow="Executive summary"
+		title="{activeConditionLabel} Patient Insights Lab Book"
+	/>
 
-	<div class="mx-auto flex w-full max-w-6xl flex-col gap-14 px-8 pt-8 pb-16">
-		<!-- Opening read — programmatic paragraph, headline stats, sentiment lean. -->
-		<section class="flex flex-col gap-8">
-			<div class="grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-start">
-				<div class="flex flex-col gap-4">
-					<h2 class="text-sm font-medium uppercase font-heading text-accent-mint">
-						Summary View
-					</h2>
-					<p class="text-pretty text-lg leading-normal text-secondary-foreground">
-						{displaySummaryText}
-					</p>
+	<!-- 3-column workspace — circle grid is the dashboard's main component.
+		 Left rail: lens tiles (just wide enough for the buttons). Center: dot
+		 grid, takes most of the remaining space. Right: findings dropdown +
+		 detail card. The left rail + grid stay sticky under the topbar; the
+		 right pane scrolls with the page so analysis can extend past the
+		 viewport without losing the lens/grid context. Below md the layout
+		 stacks (sticky disengages on flex-row alignment). -->
+	<div class="dashboard-grid grid grid-cols-1 gap-6 px-6 py-6 md:grid-cols-[9rem_minmax(0,1fr)_30rem] md:items-start md:gap-8 md:px-8 xl:grid-cols-[9rem_minmax(0,1fr)_34rem]">
+		<!-- Left rail: stat tiles act as lens toggles. -->
+		<aside class="sticky-col flex flex-row flex-wrap gap-2 md:flex-col md:gap-2">
+			{#each displayStats as stat (stat.label)}
+				{@const targetLens = lensForLabel(stat.label)}
+				{@const active = targetLens !== 'none' && lens === targetLens}
+				<button
+					type="button"
+					class="lens-tile"
+					class:is-active={active}
+					onclick={() => toggleLens(targetLens)}
+					aria-pressed={active}
+					title="Regroup by {stat.label}"
+				>
+					<span class="lens-tile-value font-heading tabular-nums">{stat.value}</span>
+					<span class="lens-tile-label">{stat.label}</span>
+				</button>
+			{/each}
+
+			<div class="legend mt-4 hidden md:flex">
+				<div class="legend-bars">
+					<span class="legend-bar" style="background: #e11d48;"></span>
+					<span class="legend-bar" style="background: #fb7185;"></span>
+					<span class="legend-bar" style="background: #cbd5e1;"></span>
+					<span class="legend-bar" style="background: #34d399;"></span>
+					<span class="legend-bar" style="background: #059669;"></span>
 				</div>
-				<div class="w-full max-w-md justify-self-end">
-					<IndicationPoster
-						totalQuotes={displaySentimentLean.total}
-						posPct={displaySentimentLean.posPct}
-						negPct={displaySentimentLean.negPct}
-						neutralPct={displaySentimentLean.neutralPct}
-						themeSizes={posterThemeSizes}
-						interviewAnchors={posterAnchors}
-						sentimentTimeline={posterSentimentTimeline}
-						seed={posterSeed}
-						variant={posterVariant}
-						interactive
-					/>
+				<div class="legend-text font-mono">
+					<span><span class="text-rose-700">{displaySentimentLean.negPct}%</span> neg</span>
+					<span><span class="text-slate-500">{displaySentimentLean.neutralPct}%</span> neu</span>
+					<span><span class="text-emerald-700">{displaySentimentLean.posPct}%</span> pos</span>
 				</div>
 			</div>
+		</aside>
 
-			<div class="grid grid-cols-2 gap-px overflow-hidden border bg-slate-200 md:grid-cols-4">
-				{#each displayStats as stat (stat.label)}
-					{#if stat.label === 'tagged quotes'}
-						<StatScatter
-							value={stat.value}
-							label={stat.label}
-							positive={displaySentimentLean.positive}
-							neutral={displaySentimentLean.neutral}
-							negative={displaySentimentLean.negative}
-						/>
-					{:else}
-						<StatBlock value={stat.value} label={stat.label} />
-					{/if}
-				{/each}
-			</div>
-
-			<!-- Overall sentiment lean across every tagged quote. -->
-			<div class="flex flex-col gap-3">
-				<div class="flex items-baseline justify-between">
-					<h3 class="text-sm font-medium uppercase tracking-wide text-slate-500">
-						Sentiment across {displaySentimentLean.total} tagged quotes
-					</h3>
-					<span class="text-sm text-slate-500">
-						Leans <span class="font-medium text-secondary-foreground">{displaySentimentLean.lean}</span>
-					</span>
-				</div>
-
-				<div class="flex h-3 w-full overflow-hidden rounded-full">
-					<div class="bg-emerald-400" style="width: {displaySentimentLean.posPct}%"></div>
-					<div class="bg-slate-200" style="width: {displaySentimentLean.neutralPct}%"></div>
-					<div class="bg-rose-400" style="width: {displaySentimentLean.negPct}%"></div>
-				</div>
-				<div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-500">
-					<span class="flex items-center gap-1.5">
-						<span class="size-2.5 rounded-full bg-emerald-400"></span>
-						Positive — {displaySentimentLean.positive} ({displaySentimentLean.posPct}%)
-					</span>
-					<span class="flex items-center gap-1.5">
-						<span class="size-2.5 rounded-full bg-slate-200"></span>
-						Neutral / mixed — {displaySentimentLean.neutral} ({displaySentimentLean.neutralPct}%)
-					</span>
-					<span class="flex items-center gap-1.5">
-						<span class="size-2.5 rounded-full bg-rose-400"></span>
-						Negative — {displaySentimentLean.negative} ({displaySentimentLean.negPct}%)
-					</span>
-				</div>
-			</div>
+		<!-- Center: the dot grid, hero of the dashboard. -->
+		<section class="grid-region sticky-col">
+			<InteractiveCorpusGrid
+				dots={corpusDots}
+				mode={lens === 'none' ? 'none' : lens}
+				themeGroups={corpusThemeGroups}
+				subthemeGroups={corpusSubthemeGroups}
+				interviewGroups={corpusInterviewGroups}
+				findingGroups={corpusFindingGroups}
+				cellSize={corpusCellSize}
+				intraGap={corpusIntraGap}
+				onSelectGroup={handleGroupClick}
+			/>
 		</section>
 
-		<!-- Theme breakdown — segment tension matrix, one glyph per theme. -->
-		{#if displayTensionData.length}
-			<section class="flex flex-col gap-4">
-				<div class="flex items-baseline justify-between gap-4">
-					<div class="flex flex-col gap-1">
-						<h2 class="text-2xl font-medium uppercase tracking-wide text-accent-mint">
-							By theme
-						</h2>
-						<p class="text-sm text-muted-foreground">
-							Segment volume and sentiment balance across {displayTensionData.length} coded themes.
-						</p>
-					</div>
-					<button
-						class="font-mono text-xs text-muted-foreground underline-offset-2 hover:underline"
-						onclick={() => themeReplayKey++}
-					>
-						Replay
-					</button>
-				</div>
-				<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-					{#each themeCharts as theme (theme.label)}
-						<div class="flex flex-col items-center gap-1">
-							<p class="text-sm font-medium text-slate-700">{theme.label}</p>
-							<SemiArcChart data={theme.data} animate replayKey={themeReplayKey} size={240} />
-						</div>
+		<!-- Right pane: findings dropdown + selected detail. -->
+		<section class="right-pane flex flex-col gap-4">
+			<label class="findings-picker">
+				<span class="findings-picker-label font-mono">Jump to a finding</span>
+				<select
+					class="findings-picker-select"
+					value={selection.kind === 'finding' ? selection.id : ''}
+					onchange={(e) => {
+						const id = (e.currentTarget as HTMLSelectElement).value;
+						selection = id ? { kind: 'finding', id } : { kind: 'overview' };
+					}}
+				>
+					<option value="">— Overview —</option>
+					{#each displayFindings as f (f.id)}
+						<option value={f.id}>{f.eyebrow}</option>
 					{/each}
-				</div>
-			</section>
-		{/if}
+				</select>
+			</label>
 
-		<!-- Key findings — cluster-driven cards, each opening a segment drawer. -->
-		<section class="flex flex-col gap-5">
-			<div class="flex flex-col gap-1">
-				<h2 class="text-2xl font-medium uppercase tracking-wide text-accent-mint">
-					Key findings</h2>
-				<p class="text-sm text-muted-foreground">
-					The keyword clusters that drove the interviews' sharpest reactions.
-				</p>
-			</div>
-
-			<div class="grid gap-4 md:grid-cols-2">
-				{#each displayFindings as f (f.id)}
-					{@const t = tone[f.tone]}
-					<div
-						role="button"
-						tabindex="0"
-						onclick={() => openFinding(f)}
-						onkeydown={(e) => {
-							if (e.key === 'Enter' || e.key === ' ') {
-								e.preventDefault();
-								openFinding(f);
-							}
-						}}
-						class="group hover:cursor-pointer flex cursor-pointer flex-col gap-4 border border-slate-200 bg-white p-6 transition duration-200 hover:-translate-y-1 hover:border-accent-mint hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-mint"
-					>
-						<div class="flex items-start justify-between gap-4">
-							<div class="flex flex-col gap-2">
-								<span class="text-xs font-semibold uppercase tracking-wide {t.accent}">
-									{f.eyebrow}
-								</span>
-								<h3 class="text-lg font-medium text-slate-800">{f.headline}</h3>
-							</div>
-							<SentimentDonut
-								positive={f.distribution.positive}
-								neutral={f.distribution.neutral}
-								negative={f.distribution.negative}
-							/>
-						</div>
-
-						<p class="text-sm leading-6 text-slate-600">{f.detail}</p>
-						<p class="text-xs text-muted-foreground">
-							<span class="text-sm font-medium {t.accent}">{f.stat.value}</span>
-							· {f.stat.caption}
-						</p>
-
-						{#if f.clusters.length}
-							<div class="flex flex-col gap-2.5 border-t border-muted pt-4">
-								<span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-								</span>
-								<div class="exec-bubble-wrap" bind:clientWidth={clusterWidths[f.id]}>
-									{#if clusterWidths[f.id]}
-										<BubbleChart
-											items={f.clusters.map((c) => c.label)}
-											values={f.clusters.map((c) => c.count)}
-											context="card"
-											units="%"
-											width={Math.max(320, clusterWidths[f.id])}
-											height={320}
-											allowUserOverride={true}
-										/>
-									{/if}
-								</div>
-							</div>
-						{/if}
-
-						{#if f.quote}
-							<div class="flex flex-col gap-2 border-t border-muted pt-4">
-								<KeyQuoteCard
-									text={f.quote.text}
-									sentiment={f.quote.sentiment}
-									interviewId={f.quote.interview_id}
-									questionId={f.quote.question_id}
-									{profiles}
-									onparticipant={openParticipant}
-									size="sm"
-								/>
-								{#if f.quote.isStarred}
-									<span
-										class="flex items-center gap-1 self-center text-xs text-amber-600"
-										title="Analyst-starred highlight"
-									>
-										<Star class="size-3.5 fill-amber-400 text-amber-400" />
-										Starred
-									</span>
-								{/if}
-							</div>
-						{/if}
-
-						{#if f.fragments.length > 0}
-							<span
-								class="mt-auto flex items-center gap-1 pt-1 text-sm font-medium {t.accent}"
-							>
-								View {f.fragments.length} tagged quotes
-								<ArrowRight
-									class="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
-								/>
-							</span>
-						{:else}
-							<span class="mt-auto pt-1 text-xs text-muted-foreground">Placeholder data</span>
-						{/if}
+			<div class="detail-card">
+				{#if selection.kind === 'overview'}
+					<InsightOverview
+						summaryText={displaySummaryText}
+						overviewBlurb={displayOverviewBlurb}
+						{explore}
+						onref={navigateTo}
+						{knownRefs}
+					/>
+				{:else if selectedFinding}
+					{#key selectedFinding.id}
+						<FindingDetail
+							finding={selectedFinding}
+							{profiles}
+							onparticipant={openParticipant}
+							onref={navigateTo}
+							{knownRefs}
+						/>
+					{/key}
+				{:else if selectedTheme}
+					{#key selectedTheme.id}
+						<ThemeDetail
+							theme={selectedTheme}
+							topQuotes={themeTopQuotes}
+							{profiles}
+							onparticipant={openParticipant}
+						/>
+					{/key}
+				{:else if selectedQuote}
+					{#key selectedQuote.quote_id}
+						<QuoteDetail
+							quote={selectedQuote}
+							{profiles}
+							onparticipant={openParticipant}
+						/>
+					{/key}
+				{:else}
+					<div class="flex h-full items-center justify-center p-12 text-sm text-muted-foreground">
+						Selection no longer available. Pick a finding above or click a label in the grid.
 					</div>
-				{/each}
-			</div>
-		</section>
-
-		<!-- Sentiment tension matrix — lupus nephritis keyword clusters -->
-		{#if isLupusNephritis}
-			<section class="flex flex-col gap-4">
-				<div class="flex items-baseline justify-between gap-4">
-					<h2 class="text-2xl font-medium font-heading text-accent-mint">
-						Sentiment tension by keyword cluster
-					</h2>
-					<button
-						class="font-mono text-xs text-muted-foreground underline-offset-2 hover:underline"
-						onclick={() => tensionReplayKey++}
-					>
-						Replay
-					</button>
-				</div>
-				<p class="max-w-2xl text-sm text-muted-foreground">
-					Each glyph represents a keyword cluster. Left bar height = tagged quote volume.
-					Diagonal slope direction = sentiment balance. Color = sentiment class.
-				</p>
-				<SegmentTensionMatrix
-					data={LN_TENSION_DATA}
-					groupBy="group"
-					sortBy="total"
-					motionMode="story"
-					replayKey={tensionReplayKey}
-				/>
-			</section>
-		{/if}
-
-		<!-- Onward — the read-only views over the same dataset. -->
-		<section class="flex flex-col gap-4">
-			<h2 class="text-2xl font-medium uppercase tracking-wide text-accent-mint">Go deeper</h2>
-			<div class="grid gap-4 md:grid-cols-3">
-				{#each explore as out (out.href)}
-					<a
-						href={out.href}
-						class="flex flex-col gap-2 border p-6 duration-300 ease-in-out hover:-translate-y-2 hover:text-muted-foreground"
-					>
-						<div class="flex flex-row items-start justify-between gap-3">
-							<h3 class="text-lg font-medium uppercase tracking-tight text-accent-mint">
-								{out.title}
-							</h3>
-							<MoveUpRight class="size-5 shrink-0 text-accent-mint" />
-						</div>
-						<p class="text-sm">{out.blurb}</p>
-					</a>
-				{/each}
+				{/if}
 			</div>
 		</section>
 	</div>
@@ -708,32 +795,123 @@
 	bind:profiles
 />
 
-<!-- Finding drawer — the tagged quotes behind the selected finding -->
-<RightDrawer bind:open={findingDrawerOpen}>
-	{#if activeFinding}
-		<div class="flex h-full flex-col">
-			<div class="flex flex-col gap-1 border-b border-slate-200 p-6">
-				<span class="figcaption text-accent-mint">{activeFinding.eyebrow}</span>
-				<h2 class="font-heading text-2xl font-light text-primary">{activeFinding.headline}</h2>
-				<p class="text-sm text-muted-foreground">
-					{activeFinding.detail}
-				</p>
-				<p class="pt-1 text-xs uppercase tracking-wide text-muted-foreground">
-					{activeFinding.fragments.length} tagged quotes
-				</p>
-			</div>
+<style>
+	.lens-tile {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.125rem;
+		padding: 0.5rem 0.875rem;
+		border-radius: 8px;
+		border: 1px solid rgba(48, 47, 40, 0.12);
+		background: transparent;
+		color: var(--ink, #312f28);
+		cursor: pointer;
+		text-align: left;
+		transition:
+			border-color 160ms ease,
+			background 160ms ease,
+			color 160ms ease;
+	}
+	.lens-tile:hover {
+		border-color: rgba(48, 47, 40, 0.4);
+		background: rgba(48, 47, 40, 0.04);
+	}
+	.lens-tile.is-active {
+		border-color: var(--ink, #312f28);
+		background: var(--ink, #312f28);
+		color: var(--paper, #f5f1ea);
+	}
+	.lens-tile-value {
+		font-size: 1rem;
+		font-weight: 500;
+		line-height: 1.1;
+	}
+	.lens-tile-label {
+		font-size: 0.7rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		opacity: 0.7;
+	}
+	.lens-tile.is-active .lens-tile-label {
+		opacity: 0.85;
+	}
 
-			<div class="flex flex-1 flex-col gap-3 overflow-y-auto p-6">
-				{#each activeFinding.fragments as f (f.segment_id)}
-					<CodedFragmentCard fragment={f} {profiles} />
-				{:else}
-					<p
-						class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500"
-					>
-						No tagged quotes behind this finding.
-					</p>
-				{/each}
-			</div>
-		</div>
-	{/if}
-</RightDrawer>
+	.legend {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.375rem;
+	}
+	.legend-bars {
+		display: inline-flex;
+		gap: 2px;
+		height: 6px;
+		align-items: center;
+	}
+	.legend-bar {
+		display: inline-block;
+		width: 10px;
+		height: 6px;
+		border-radius: 999px;
+	}
+	.legend-text {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		font-size: 0.7rem;
+		color: var(--muted-foreground, #64748b);
+	}
+
+	.grid-region {
+		min-width: 0;
+	}
+
+	/* Sticky columns — the left rail and dot grid pin under the topbar while
+	   the right pane (analysis) scrolls with the page. The 3.5rem offset
+	   matches WctglpTopbar's min-height; max-height keeps tall sticky columns
+	   from clipping out of view by allowing internal overflow. */
+	@media (min-width: 768px) {
+		.sticky-col {
+			position: sticky;
+			top: 3.5rem;
+			align-self: start;
+			max-height: calc(100vh - 3.5rem);
+			overflow-y: auto;
+		}
+	}
+
+	.findings-picker {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+	.findings-picker-label {
+		font-size: 0.65rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--muted-foreground, #64748b);
+	}
+	.findings-picker-select {
+		width: 100%;
+		padding: 0.5rem 0.75rem;
+		border: 1px solid rgba(48, 47, 40, 0.2);
+		border-radius: 6px;
+		background: var(--paper, #fff);
+		color: var(--ink, #312f28);
+		font-size: 0.875rem;
+		font-family: inherit;
+		cursor: pointer;
+	}
+	.findings-picker-select:focus-visible {
+		outline: 2px solid rgba(48, 47, 40, 0.4);
+		outline-offset: 2px;
+	}
+
+	.detail-card {
+		border: 1px solid rgba(48, 47, 40, 0.1);
+		border-radius: 10px;
+		background: var(--paper, #fff);
+		overflow: hidden;
+	}
+</style>

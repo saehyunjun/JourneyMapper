@@ -23,7 +23,7 @@
 	import lexiconRaw from '$lib/content/wctglpdemo-data/keyword_lexicon.json';
 	import phraseLexRaw from '$lib/content/wctglpdemo-data/phrase_lexicon.json';
 	import { EMOTION_PICKER } from '$lib/journeymapper2/plutchikEmotionsConfig.js';
-	import { emotionDots } from '$lib/utils/emotion-colors';
+	import EmotionDyadChip from '$lib/components/EmotionDyadChip.svelte';
 	import { questionLabel } from '$lib/content/wctglpdemo-data/analysis';
 	import * as ContextMenu from '$lib/components/ui/context-menu/index.js';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
@@ -1386,30 +1386,6 @@
 	<p class="mb-1.5 text-[11px] font-medium tracking-wide text-slate-400 uppercase">{text}</p>
 {/snippet}
 
-<!-- Emotion indicator — one circle for an intensity level, two overlapping
-	 circles for a dyad's two primaries. Kept compact so it sits inside a chip. -->
-{#snippet emotionDot(id: string)}
-	{@const colors = emotionDots(id)}
-	{#if colors.c2}
-		<span class="relative inline-block h-2.5 w-[18px] shrink-0" aria-hidden="true">
-			<span
-				class="absolute left-0 top-0 size-2.5 rounded-full border border-black/10"
-				style="background: {colors.c1}"
-			></span>
-			<span
-				class="absolute left-2 top-0 size-2.5 rounded-full border border-black/10"
-				style="background: {colors.c2}"
-			></span>
-		</span>
-	{:else}
-		<span
-			class="inline-block size-2.5 shrink-0 rounded-full border border-black/10"
-			style="background: {colors.c1}"
-			aria-hidden="true"
-		></span>
-	{/if}
-{/snippet}
-
 {#if segment}
 	<!-- Backdrop -->
 	<div
@@ -1668,7 +1644,7 @@
 									onclick={() => applyRemoveEmotion(e)}
 									class="flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700"
 								>
-									{@render emotionDot(e)}
+									<EmotionDyadChip id={e} showLabel={false} />
 									{titleCase(e)}<span class="opacity-70">✕</span>
 								</button>
 							{/each}
@@ -1715,7 +1691,7 @@
 												? 'border-slate-700 bg-slate-100 text-slate-800'
 												: 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'}"
 										>
-											{@render emotionDot(lvl.id)}
+											<EmotionDyadChip id={lvl.id} showLabel={false} />
 											{titleCase(lvl.id)}
 										</button>
 									{/each}
@@ -1741,7 +1717,7 @@
 																	? 'border-slate-700 bg-slate-100 text-slate-800'
 																	: 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'}"
 															>
-																{@render emotionDot(d.id)}
+																<EmotionDyadChip id={d.id} showLabel={false} />
 																{titleCase(d.id)}
 															</button>
 														{/snippet}

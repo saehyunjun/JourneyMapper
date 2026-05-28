@@ -1,0 +1,12 @@
+{
+  "id": "glp1_obesity_all_voices",
+  "label": "All GLP-1 obesity voices",
+  "description": "Every interview fragment in the obesity corpus, no demographic filter. Baseline view — useful as a 'compared to everyone else' reference when looking at narrower personas.",
+  "applicable_indications": ["obesity"],
+  "filter": {
+    "content_source": ["interview"],
+    "indications": ["obesity"]
+  },
+  "weighting": { "type": "uniform" },
+  "color": "#64748b"
+}

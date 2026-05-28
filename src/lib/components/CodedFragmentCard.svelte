@@ -1,8 +1,8 @@
 <!--
 	CodedFragmentCard — the shared card for one theme-coded segment fragment.
 
-	Used by every drawer that lists coded fragments (the fingerprint theme
-	drawer, the interview-words theme drawer, the theme heatmap cell drawer) so
+	Used by every drawer that lists coded fragments (the personas theme
+	drawer, the community theme drawer, the theme heatmap cell drawer) so
 	they stay consistent. It shows the participant (avatar + name, falling back
 	to the interview id when no name is set), the segment text, its question,
 	its sentiment, and its emotions.
@@ -23,7 +23,7 @@
 		type ThemeFragment
 	} from '$lib/content/wctglpdemo-data/analysis';
 	import { profileName, type ParticipantProfile } from '$lib/types/participant-profile';
-	import { emotionDots } from '$lib/utils/emotion-colors';
+	import EmotionDyadChip from '$lib/components/EmotionDyadChip.svelte';
 
 	let {
 		fragment,
@@ -101,26 +101,8 @@
 			{SENTIMENT_LABELS[fragment.sentiment]}
 		</span>
 		{#each fragment.emotions as e (e)}
-			{@const c = emotionDots(e)}
 			<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-1.5 py-0.5 text-slate-600">
-				{#if c.c2}
-					<span class="relative inline-block h-2 w-3.5" aria-hidden="true">
-						<span
-							class="absolute left-0 top-0 size-2 rounded-full border border-black/10"
-							style="background: {c.c1}"
-						></span>
-						<span
-							class="absolute left-1.5 top-0 size-2 rounded-full border border-black/10"
-							style="background: {c.c2}"
-						></span>
-					</span>
-				{:else}
-					<span
-						class="inline-block size-2 rounded-full border border-black/10"
-						style="background: {c.c1}"
-						aria-hidden="true"
-					></span>
-				{/if}
+				<EmotionDyadChip id={e} showLabel={false} />
 				{titleCase(e)}
 			</span>
 		{/each}

@@ -1,0 +1,26 @@
+{
+  "corpus_id": "ms_reddit_2026q1",
+  "label": "Multiple sclerosis / CAR-T forum discussion, 2026 Q1 ingest",
+  "platform": "reddit",
+  "indications": ["multiple_sclerosis"],
+  "input_file": "src/lib/content/corpora/ms_reddit_2026q1/source/comments.json",
+  "license": "research_fair_use",
+  "redistribute_verbatim": false,
+  "deid_rules_version": "ms_reddit@v1",
+  "deidentifier_version": "analyst-anonymization@v1",
+  "context_to_speaker_attrs": {
+    "Diagnosed MS": { "role": "patient" },
+    "Diagnosed RRMS": { "role": "patient" },
+    "Diagnosed SPMS": { "role": "patient" },
+    "Diagnosed PPMS": { "role": "patient" },
+    "Seeking Diagnosis": { "role": "patient" },
+    "Caregiver/Loved one": { "role": "caregiver" },
+    "Physician": { "role": "clinician" }
+  },
+  "notes": [
+    "Context column is per-USER. The ingester aggregates contexts per anonymized id and picks the dominant non-empty value; inconsistencies are warned.",
+    "MS Reddit threads frequently leave Context empty (no user-flair convention enforced) — those fragments end up without speaker_attrs.role, which is the correct three-state behavior (missing key).",
+    "Reddit '[deleted]' raw usernames are NOT trusted to map to one person. Each [deleted] occurrence gets a fresh per-row anonymous id.",
+    "DMT-class / disease-course tags (e.g. 'CAR-T', 'KYV-101', 'aHSCT') are NOT mapped to roles — they're topic flairs, not speaker traits."
+  ]
+}

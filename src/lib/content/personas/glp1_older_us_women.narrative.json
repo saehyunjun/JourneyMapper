@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "persona_id": "glp1_older_us_women",
+    "corpus_id": "wct_glp1_2025q4",
+    "filter_hash": "0f3cd9321915",
+    "evidence_fragment_ids": [
+      "iv-participant_07_t05_s00",
+      "iv-participant_07_t73_s01",
+      "iv-participant_07_t69_s02",
+      "iv-participant_07_t63_s00",
+      "iv-participant_07_t71_s00",
+      "iv-participant_07_t09_s04",
+      "iv-participant_07_t41_s01",
+      "iv-participant_07_t61_s01",
+      "iv-participant_07_t59_s02",
+      "iv-participant_07_t43_s04",
+      "iv-participant_07_t41_s00",
+      "iv-participant_07_t29_s01",
+      "iv-participant_07_t25_s01",
+      "iv-participant_07_t43_s02",
+      "iv-participant_07_t25_s02",
+      "iv-participant_07_t07_s00",
+      "iv-participant_07_t07_s05",
+      "iv-participant_07_t11_s00",
+      "iv-participant_07_t77_s02",
+      "iv-participant_07_t59_s00"
+    ],
+    "generator": "propose-persona-narrative@0.1",
+    "model": "claude-opus-4-7",
+    "generated_at": "2026-05-28T21:35:12.994Z"
+  },
+  "tagline": "Watching the next generation arrive, hoping access holds.",
+  "paragraph": "I started the medication for weight loss, but honestly, the goal weight isn't really the ending for me anymore. My inflammation is better. Other things have quietly improved. I fully expect I'll stay on some dosage continually, because if I went off, I anticipate those things would come right back — even at the number on the scale I was aiming for. So when people talk about \"finishing,\" I'm not sure that word fits what this is. What I do worry about is access. I started this, I have it now, but depending on how things go in the industry and with my government, there may be a time when I don't. The current branded pricing is priced out for many people without insurance, and in the US not everybody has that. I've watched the generations of GLP-1s — first gen, second gen, and the ones on the horizon — and I have friends in trials now, so I'm paying attention. I'd consider moving to a newer injectable when it becomes available. If an oral version comes out, I'd probably stay with shots; I like the predictability of knowing how it absorbs versus all the variables of a pill. I'd think about a trial too, knowing adverse things can happen and we don't know yet — I don't think everyone signing up fully understands that. What would make trials genuinely valuable: a nutritionist voucher, a food-tracking app, a real plan to follow. The medication alone is a lot to figure out on your own.",
+  "patient_concerns": [
+    "Worry insurance or policy shifts will cut off my GLP-1 access overnight.",
+    "Branded pricing is unaffordable in the US without strong insurance coverage.",
+    "Want clarity on who covers adverse reactions if I join a trial.",
+    "Prefer injectables over orals because absorption feels more predictable to me."
+  ],
+  "person_concerns": [
+    "Not sure \"goal weight\" is really an ending — I expect lifelong dosing.",
+    "Fear inflammation and other quiet improvements will return if I stop.",
+    "Watching friends in trials and wondering when it's my turn.",
+    "Feel overwhelmed figuring out nutrition and food tracking on my own."
+  ],
+  "hero_quote_fragment_id": "iv-participant_07_t05_s00"
+}

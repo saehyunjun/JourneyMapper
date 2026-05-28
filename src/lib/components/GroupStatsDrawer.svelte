@@ -1,35 +1,53 @@
 <!--
-	GroupStatsDrawer — the study-wide stats drawer for one keyword or theme.
+	GroupStatsDrawer — the shared stats drawer for one keyword / theme /
+	subtheme group. Presentational only: it renders sentiment, emotions,
+	common words, co-themes, and per-participant breakdown for a precomputed
+	`stats` object. Callers own the data and the open/close lifecycle.
 
-	Opened by clicking a highlighted keyword/theme in any quote
-	(KeywordText.svelte → the groupDrawer store). Stacks at the top level
-	(z-99/109) so it can layer above both a primary drawer and a secondary
-	drawer underneath. Mounted once in the wctglpdemo layout; reads the
-	groupDrawer store. Chrome is owned by TertiaryDrawer.
+	Used in two places today:
+	- patientlyiq layout: mounts an instance backed by the global
+	  groupDrawer store + wctglpdemo lexicon-stats (lexicon keyword/theme
+	  clicks anywhere in the app).
+	- journey-workbench page: mounts an instance backed by stats computed
+	  on the fly from the active corpus annotations, opened by subtheme
+	  chip clicks.
+
+	Chrome (panel, backdrop, animation) is owned by TertiaryDrawer.
 -->
 <script lang="ts">
 	import StatBar from '$lib/components/StatBar.svelte';
 	import TertiaryDrawer from '$lib/components/TertiaryDrawer.svelte';
-	import { groupDrawer } from '$lib/stores/group-drawer.svelte.js';
-	import { groupStats } from '$lib/content/wctglpdemo-data/lexicon-stats';
+	import type { GroupStats } from '$lib/types/group-stats';
 
-	const stats = $derived(
-		groupDrawer.current ? groupStats(groupDrawer.current.kind, groupDrawer.current.id) : null
-	);
+	let {
+		stats,
+		onclose,
+		level = 'top'
+	}: {
+		stats: GroupStats | null;
+		onclose: () => void;
+		/** Stacking depth. 'top' (default) layers above two stacked drawers;
+		 *  use 'secondary' when the host page only has one drawer underneath. */
+		level?: 'secondary' | 'top';
+	} = $props();
+
 	const open = $derived(stats !== null);
 
 	const max = (ns: number[]) => Math.max(1, ...ns);
 	const sentimentTint = (v: number) =>
 		v > 0 ? 'bg-emerald-400' : v < 0 ? 'bg-rose-400' : 'bg-slate-300';
+
+	const kindEyebrow = (kind: GroupStats['kind']) =>
+		kind === 'keyword' ? 'Keyword' : kind === 'subtheme' ? 'Subtheme' : 'Theme';
 </script>
 
 <TertiaryDrawer
 	{open}
-	onclose={() => groupDrawer.close()}
+	{onclose}
 	ariaLabel="Keyword and theme stats"
-	level="top"
+	{level}
 	width="wide"
-	eyebrow={stats ? `${stats.kind === 'keyword' ? 'Keyword' : 'Theme'} · study-wide` : undefined}
+	eyebrow={stats ? `${kindEyebrow(stats.kind)} · study-wide` : undefined}
 	title={stats?.label}
 	subtitle={stats?.context}
 >

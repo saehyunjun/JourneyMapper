@@ -1,0 +1,2347 @@
+{
+  "source_raw_file": "src/lib/content/disease-insights/lupus-nephritis/clinical_trials/raw_studies.json",
+  "source_fetched_at": "2026-05-26T17:27:39.570Z",
+  "source_dataset": "lupus_nephritis",
+  "schema_version": "1.0",
+  "generated_at": "2026-05-27T17:03:04.514Z",
+  "activity_filter": {
+    "rule": "overall_status ∈ active OR last_update_post ≥ fetched_at − window",
+    "active_statuses": [
+      "ACTIVE_NOT_RECRUITING",
+      "ENROLLING_BY_INVITATION",
+      "NOT_YET_RECRUITING",
+      "RECRUITING"
+    ],
+    "window_years": 3,
+    "recent_cutoff": "2023-05",
+    "source_total": 352,
+    "kept": 195,
+    "dropped": 157
+  },
+  "count": 187,
+  "sponsors": [
+    {
+      "name": "Assiut University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 13,
+      "collaborator_count": 0,
+      "total_count": 13,
+      "nct_ids": [
+        "NCT06228222",
+        "NCT06287125",
+        "NCT06288308",
+        "NCT06428539",
+        "NCT06520670",
+        "NCT06564181",
+        "NCT06588192",
+        "NCT06610422",
+        "NCT06654024",
+        "NCT06837558",
+        "NCT07130448",
+        "NCT07149402",
+        "NCT07505576"
+      ]
+    },
+    {
+      "name": "Novartis Pharmaceuticals",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 9,
+      "collaborator_count": 0,
+      "total_count": 9,
+      "nct_ids": [
+        "NCT03610516",
+        "NCT04181762",
+        "NCT04645589",
+        "NCT05126277",
+        "NCT05232864",
+        "NCT05268289",
+        "NCT05798117",
+        "NCT06581198",
+        "NCT06711887"
+      ]
+    },
+    {
+      "name": "Sohag University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 6,
+      "collaborator_count": 0,
+      "total_count": 6,
+      "nct_ids": [
+        "NCT05964751",
+        "NCT06119763",
+        "NCT06491602",
+        "NCT06631404",
+        "NCT06796569",
+        "NCT07017868"
+      ]
+    },
+    {
+      "name": "Beijing GoBroad Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 4,
+      "collaborator_count": 1,
+      "total_count": 5,
+      "nct_ids": [
+        "NCT06585514",
+        "NCT06653556",
+        "NCT06947460",
+        "NCT06947473",
+        "NCT07593911"
+      ]
+    },
+    {
+      "name": "The University of Hong Kong",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 5,
+      "collaborator_count": 0,
+      "total_count": 5,
+      "nct_ids": [
+        "NCT02453997",
+        "NCT02630628",
+        "NCT02954939",
+        "NCT04870359",
+        "NCT06155604"
+      ]
+    },
+    {
+      "name": "China Immunotech (Beijing) Biotechnology Co., Ltd.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 4,
+      "collaborator_count": 0,
+      "total_count": 4,
+      "nct_ids": [
+        "NCT06943937",
+        "NCT07104721",
+        "NCT07123519",
+        "NCT07236762"
+      ]
+    },
+    {
+      "name": "GlaxoSmithKline",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 2,
+      "total_count": 4,
+      "nct_ids": [
+        "NCT03747159",
+        "NCT04870333",
+        "NCT04971590",
+        "NCT06527872"
+      ]
+    },
+    {
+      "name": "Hoffmann-La Roche",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 4,
+      "collaborator_count": 0,
+      "total_count": 4,
+      "nct_ids": [
+        "NCT02550652",
+        "NCT04221477",
+        "NCT05039619",
+        "NCT07598396"
+      ]
+    },
+    {
+      "name": "Kyverna Therapeutics",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 3,
+      "collaborator_count": 1,
+      "total_count": 4,
+      "nct_ids": [
+        "NCT05938725",
+        "NCT06152172",
+        "NCT06342960",
+        "NCT07403188"
+      ]
+    },
+    {
+      "name": "Alexion Pharmaceuticals, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 3,
+      "collaborator_count": 0,
+      "total_count": 3,
+      "nct_ids": [
+        "NCT04564339",
+        "NCT05097989",
+        "NCT05314231"
+      ]
+    },
+    {
+      "name": "Aurinia Pharmaceuticals Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 3,
+      "collaborator_count": 0,
+      "total_count": 3,
+      "nct_ids": [
+        "NCT05288855",
+        "NCT05337124",
+        "NCT05962788"
+      ]
+    },
+    {
+      "name": "Genentech, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 2,
+      "total_count": 3,
+      "nct_ids": [
+        "NCT05039619",
+        "NCT05538208",
+        "NCT06984341"
+      ]
+    },
+    {
+      "name": "Janssen Research & Development, LLC",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 1,
+      "total_count": 3,
+      "nct_ids": [
+        "NCT01156428",
+        "NCT04376827",
+        "NCT04883619"
+      ]
+    },
+    {
+      "name": "Nanjing University School of Medicine",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 3,
+      "collaborator_count": 0,
+      "total_count": 3,
+      "nct_ids": [
+        "NCT05863936",
+        "NCT06285279",
+        "NCT07340463"
+      ]
+    },
+    {
+      "name": "National Institute of Arthritis and Musculoskeletal and Skin Diseases (NIAMS)",
+      "classes": [
+        "NIH"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 1,
+      "total_count": 3,
+      "nct_ids": [
+        "NCT00001372",
+        "NCT05538208",
+        "NCT05567198"
+      ]
+    },
+    {
+      "name": "Shenzhen Pregene Biopharma Co., Ltd.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 3,
+      "total_count": 3,
+      "nct_ids": [
+        "NCT06277427",
+        "NCT06497361",
+        "NCT06497387"
+      ]
+    },
+    {
+      "name": "The Affiliated Nanjing Drum Tower Hospital of Nanjing University Medical School",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 2,
+      "total_count": 3,
+      "nct_ids": [
+        "NCT06058078",
+        "NCT06681337",
+        "NCT07517536"
+      ]
+    },
+    {
+      "name": "Tongji Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 3,
+      "collaborator_count": 0,
+      "total_count": 3,
+      "nct_ids": [
+        "NCT06497361",
+        "NCT06497387",
+        "NCT06902844"
+      ]
+    },
+    {
+      "name": "Ain Shams University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT05714670",
+        "NCT06113900"
+      ]
+    },
+    {
+      "name": "Assistance Publique - Hôpitaux de Paris",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT03921398",
+        "NCT04702256"
+      ]
+    },
+    {
+      "name": "AstraZeneca",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT05138133",
+        "NCT06897930"
+      ]
+    },
+    {
+      "name": "Children's Hospital Medical Center, Cincinnati",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT05101447",
+        "NCT05538208"
+      ]
+    },
+    {
+      "name": "Chinese SLE Treatment And Research Group",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT05916781",
+        "NCT06167174"
+      ]
+    },
+    {
+      "name": "Columbia University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT02226341",
+        "NCT06518668"
+      ]
+    },
+    {
+      "name": "Fate Therapeutics",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT06308978",
+        "NCT07570862"
+      ]
+    },
+    {
+      "name": "Institutul Clinic Fundeni",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 1,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT05207358",
+        "NCT07575347"
+      ]
+    },
+    {
+      "name": "Janssen Scientific Affairs, LLC",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 2,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT06217107",
+        "NCT06445127"
+      ]
+    },
+    {
+      "name": "Juno Therapeutics, Inc., a Bristol-Myers Squibb Company",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT07015983",
+        "NCT07115745"
+      ]
+    },
+    {
+      "name": "Kezar Life Sciences, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT03393013",
+        "NCT05781750"
+      ]
+    },
+    {
+      "name": "Mansoura University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT05704088",
+        "NCT05748925"
+      ]
+    },
+    {
+      "name": "Nanjing IASO Biotechnology Co., Ltd.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 1,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT06902844",
+        "NCT07109986"
+      ]
+    },
+    {
+      "name": "Peking Union Medical College Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 1,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT05916781",
+        "NCT05930314"
+      ]
+    },
+    {
+      "name": "The Rogosin Institute",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 2,
+      "collaborator_count": 0,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT01156428",
+        "NCT01802034"
+      ]
+    },
+    {
+      "name": "United Christian Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 2,
+      "total_count": 2,
+      "nct_ids": [
+        "NCT02453997",
+        "NCT04870359"
+      ]
+    },
+    {
+      "name": "Aalborg University Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05315739"
+      ]
+    },
+    {
+      "name": "AbelZeta Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06935474"
+      ]
+    },
+    {
+      "name": "Addenbrookes Charitable Trust",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04870333"
+      ]
+    },
+    {
+      "name": "Adicet Therapeutics",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06375993"
+      ]
+    },
+    {
+      "name": "Affiliated Hospital of Shandong University of Traditional Chinese Medicine",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07031674"
+      ]
+    },
+    {
+      "name": "Air Force Military Medical University, China",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07535138"
+      ]
+    },
+    {
+      "name": "Alice Bertaina",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05508009"
+      ]
+    },
+    {
+      "name": "Allogene Therapeutics",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07085104"
+      ]
+    },
+    {
+      "name": "Alpine Immune Sciences, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05732402"
+      ]
+    },
+    {
+      "name": "Amgen",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05540665"
+      ]
+    },
+    {
+      "name": "Annexon, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05780515"
+      ]
+    },
+    {
+      "name": "Apellis Pharmaceuticals, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03453619"
+      ]
+    },
+    {
+      "name": "argenx",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05810948"
+      ]
+    },
+    {
+      "name": "Artiva Biotherapeutics, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06265220"
+      ]
+    },
+    {
+      "name": "ARTMEDICA",
+      "classes": [
+        "UNKNOWN"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04369495"
+      ]
+    },
+    {
+      "name": "Asoarx Therapeutics Co., Ltd., Shanghai Branch",
+      "classes": [
+        "UNKNOWN"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07412210"
+      ]
+    },
+    {
+      "name": "Astellas Pharma China, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT02457221"
+      ]
+    },
+    {
+      "name": "Astellas Pharma Inc",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT01410747"
+      ]
+    },
+    {
+      "name": "Astellas Pharma Korea, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT01316133"
+      ]
+    },
+    {
+      "name": "Atara Biotherapeutics",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06429800"
+      ]
+    },
+    {
+      "name": "Autolus Limited",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07053800"
+      ]
+    },
+    {
+      "name": "BeiGene",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04643470"
+      ]
+    },
+    {
+      "name": "Beijing Biotech",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07523542"
+      ]
+    },
+    {
+      "name": "Beijing Friendship Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07031674"
+      ]
+    },
+    {
+      "name": "Beijing Mabworks Biotech Co., Ltd.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07044115"
+      ]
+    },
+    {
+      "name": "Beijing Medical Award Foundation",
+      "classes": [
+        "UNKNOWN"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05933213"
+      ]
+    },
+    {
+      "name": "Biocon Limited",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04128579"
+      ]
+    },
+    {
+      "name": "Bioray Laboratories",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06681337"
+      ]
+    },
+    {
+      "name": "Boehringer Ingelheim",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT02770170"
+      ]
+    },
+    {
+      "name": "Brigham and Women's Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07323524"
+      ]
+    },
+    {
+      "name": "Bristol-Myers Squibb",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07175285"
+      ]
+    },
+    {
+      "name": "Cabaletta Bio",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06121297"
+      ]
+    },
+    {
+      "name": "California Institute for Regenerative Medicine (CIRM)",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05508009"
+      ]
+    },
+    {
+      "name": "Cambridge University Hospitals NHS Foundation Trust",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04870333"
+      ]
+    },
+    {
+      "name": "Caribou Biosciences, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06752876"
+      ]
+    },
+    {
+      "name": "Centre de Ressources Biologiques de la Martinique (CeRBiM)",
+      "classes": [
+        "UNKNOWN"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06365359"
+      ]
+    },
+    {
+      "name": "Century Therapeutics, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06255028"
+      ]
+    },
+    {
+      "name": "Children's Hospital of Philadelphia",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06839976"
+      ]
+    },
+    {
+      "name": "Chinese PLA General Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06485648"
+      ]
+    },
+    {
+      "name": "CHU de Reims",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03664908"
+      ]
+    },
+    {
+      "name": "Chung-Ang University Hosptial, Chung-Ang University College of Medicine",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03929887"
+      ]
+    },
+    {
+      "name": "Citospin",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03673748"
+      ]
+    },
+    {
+      "name": "Cliniques universitaires Saint-Luc- Université Catholique de Louvain",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05443516"
+      ]
+    },
+    {
+      "name": "Corestemchemon, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04522505"
+      ]
+    },
+    {
+      "name": "CRISPR Therapeutics",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06925542"
+      ]
+    },
+    {
+      "name": "Curocell Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07364396"
+      ]
+    },
+    {
+      "name": "David Porter",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06152172"
+      ]
+    },
+    {
+      "name": "Department of Medical Services Ministry of Public Health of Thailand",
+      "classes": [
+        "OTHER_GOV"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05260255"
+      ]
+    },
+    {
+      "name": "Duke University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03938324"
+      ]
+    },
+    {
+      "name": "Dutch Kidney Foundation",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03747159"
+      ]
+    },
+    {
+      "name": "Equillium",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04128579"
+      ]
+    },
+    {
+      "name": "Essen Biotech",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06350110"
+      ]
+    },
+    {
+      "name": "Federal University of Maranhao",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07493655"
+      ]
+    },
+    {
+      "name": "Federico II University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07035834"
+      ]
+    },
+    {
+      "name": "First Affiliated Hospital, Sun Yat-Sen University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06682507"
+      ]
+    },
+    {
+      "name": "Guangdong Hengrui Pharmaceutical Co., Ltd",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07229742"
+      ]
+    },
+    {
+      "name": "Guangdong Provincial People's Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06676631"
+      ]
+    },
+    {
+      "name": "Guangzhou Women and Children's Medical Center",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06904729"
+      ]
+    },
+    {
+      "name": "Hager Zanaty",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06231303"
+      ]
+    },
+    {
+      "name": "Haisco Pharmaceutical Group Co., Ltd.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07363460"
+      ]
+    },
+    {
+      "name": "Hanyang University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04522505"
+      ]
+    },
+    {
+      "name": "He Huang",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06785519"
+      ]
+    },
+    {
+      "name": "HI-Bio, A Biogen Company",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06064929"
+      ]
+    },
+    {
+      "name": "Hinge Bio",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07491900"
+      ]
+    },
+    {
+      "name": "Hospital Clínico Universitario de Valladolid",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03673748"
+      ]
+    },
+    {
+      "name": "Hospital del Rio Hortega",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03673748"
+      ]
+    },
+    {
+      "name": "Hospital for Special Surgery, New York",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07107659"
+      ]
+    },
+    {
+      "name": "iCell Gene Therapeutics",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07328581"
+      ]
+    },
+    {
+      "name": "Institut National de la Santé Et de la Recherche Médicale, France",
+      "classes": [
+        "OTHER_GOV"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03921398"
+      ]
+    },
+    {
+      "name": "Institut Pasteur de Guadeloupe",
+      "classes": [
+        "UNKNOWN"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06365359"
+      ]
+    },
+    {
+      "name": "Institute of Hematology & Blood Diseases Hospital, China",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07123519"
+      ]
+    },
+    {
+      "name": "Jiangsu Renocell Biotech Company",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06058078"
+      ]
+    },
+    {
+      "name": "Johns Hopkins University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06445127"
+      ]
+    },
+    {
+      "name": "KangWon National University Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03929887"
+      ]
+    },
+    {
+      "name": "Karolinska Institutet",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04449991"
+      ]
+    },
+    {
+      "name": "Kasr El Aini Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06757725"
+      ]
+    },
+    {
+      "name": "Keimyung University Dongsan Medical Center",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03929887"
+      ]
+    },
+    {
+      "name": "Kidney Research UK (KRUK)",
+      "classes": [
+        "UNKNOWN"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04870333"
+      ]
+    },
+    {
+      "name": "Kite, A Gilead Company",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07038447"
+      ]
+    },
+    {
+      "name": "Kolding Sygehus",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06642402"
+      ]
+    },
+    {
+      "name": "Leiden University Medical Center",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03747159"
+      ]
+    },
+    {
+      "name": "Life Arc",
+      "classes": [
+        "UNKNOWN"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04870333"
+      ]
+    },
+    {
+      "name": "Lingli Dong",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06277427"
+      ]
+    },
+    {
+      "name": "Lupus Foundation of America",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06927219"
+      ]
+    },
+    {
+      "name": "Lupus Research Alliance",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05934149"
+      ]
+    },
+    {
+      "name": "Lyell Immunopharma, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06153095"
+      ]
+    },
+    {
+      "name": "M.D. Anderson Cancer Center",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06434363"
+      ]
+    },
+    {
+      "name": "MagicTime Medicine",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07593911"
+      ]
+    },
+    {
+      "name": "Massachusetts General Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07323524"
+      ]
+    },
+    {
+      "name": "Mayo Clinic",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04868838"
+      ]
+    },
+    {
+      "name": "Meyer Children's Hospital IRCCS",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06586710"
+      ]
+    },
+    {
+      "name": "Miltenyi Biomedicine GmbH",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06708845"
+      ]
+    },
+    {
+      "name": "Ministry of Health & Welfare, Korea",
+      "classes": [
+        "OTHER_GOV"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03929887"
+      ]
+    },
+    {
+      "name": "Morehouse School of Medicine",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06217107"
+      ]
+    },
+    {
+      "name": "Nan Shen",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06210464"
+      ]
+    },
+    {
+      "name": "Nanjing Immunophage Biotech Co., Ltd",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06717815"
+      ]
+    },
+    {
+      "name": "Nanjing Legend Biotech Co.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06653556"
+      ]
+    },
+    {
+      "name": "National Institute for Health Research, United Kingdom",
+      "classes": [
+        "OTHER_GOV"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04870333"
+      ]
+    },
+    {
+      "name": "National Institute of Allergy and Infectious Diseases (NIAID)",
+      "classes": [
+        "NIH"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05201469"
+      ]
+    },
+    {
+      "name": "National Institute of Nursing Research (NINR)",
+      "classes": [
+        "NIH"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03938324"
+      ]
+    },
+    {
+      "name": "National Institutes of Health (NIH)",
+      "classes": [
+        "NIH"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03938324"
+      ]
+    },
+    {
+      "name": "NephroNet, Inc.",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07225387"
+      ]
+    },
+    {
+      "name": "New York Presbyterian Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT01802034"
+      ]
+    },
+    {
+      "name": "Nkarta, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06557265"
+      ]
+    },
+    {
+      "name": "Novartis",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06210464"
+      ]
+    },
+    {
+      "name": "Odense University Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06642402"
+      ]
+    },
+    {
+      "name": "Omeros Corporation",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT02682407"
+      ]
+    },
+    {
+      "name": "Otsuka Pharmaceutical Co., Ltd.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07053891"
+      ]
+    },
+    {
+      "name": "PPD Development, LP",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07053800"
+      ]
+    },
+    {
+      "name": "Q32 Bio Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06419205"
+      ]
+    },
+    {
+      "name": "Qilu Pharmaceutical Co., Ltd.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06406205"
+      ]
+    },
+    {
+      "name": "Red de Terapia Celular",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03673748"
+      ]
+    },
+    {
+      "name": "Regeneron Pharmaceuticals",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06975787"
+      ]
+    },
+    {
+      "name": "RemeGen Co., Ltd.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05680480"
+      ]
+    },
+    {
+      "name": "RenJi Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05585671"
+      ]
+    },
+    {
+      "name": "Renmin Hospital of Wuhan University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07031674"
+      ]
+    },
+    {
+      "name": "Rigshospitalet, Denmark",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05315739"
+      ]
+    },
+    {
+      "name": "Roche Pharma AG",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04702256"
+      ]
+    },
+    {
+      "name": "Ruijin Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05845151"
+      ]
+    },
+    {
+      "name": "Sana Biotechnology",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06294236"
+      ]
+    },
+    {
+      "name": "Sanguine Biosciences",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT01931644"
+      ]
+    },
+    {
+      "name": "Seoul National University Bundang Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03929887"
+      ]
+    },
+    {
+      "name": "Seoul National University Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03929887"
+      ]
+    },
+    {
+      "name": "Severance Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03929887"
+      ]
+    },
+    {
+      "name": "Shanghai Changzheng Hospital",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07000292"
+      ]
+    },
+    {
+      "name": "Shanghai Henlius Biotech",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07038382"
+      ]
+    },
+    {
+      "name": "Shanghai Jiao Tong University School of Medicine",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07412210"
+      ]
+    },
+    {
+      "name": "Simcere Pharmaceutical Co., Ltd",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07393451"
+      ]
+    },
+    {
+      "name": "SMG-SNU Boramae Medical Center",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03929887"
+      ]
+    },
+    {
+      "name": "Stefan Lujinschi",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07575347"
+      ]
+    },
+    {
+      "name": "Sun Yat-sen University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03001973"
+      ]
+    },
+    {
+      "name": "Synthekine",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06544330"
+      ]
+    },
+    {
+      "name": "Takeda",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06377228"
+      ]
+    },
+    {
+      "name": "The First Affiliated Hospital of Anhui Medical University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07104721"
+      ]
+    },
+    {
+      "name": "The First Affiliated Hospital with Nanjing Medical University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07109986"
+      ]
+    },
+    {
+      "name": "The University of Texas Medical Branch, Galveston",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07107659"
+      ]
+    },
+    {
+      "name": "Theodor Bilharz Research Institute",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06872138"
+      ]
+    },
+    {
+      "name": "Union Hospital, Tongji Medical College, Huazhong University of Science and Technology",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06653556"
+      ]
+    },
+    {
+      "name": "UNION therapeutics",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04870333"
+      ]
+    },
+    {
+      "name": "United BioSource, LLC",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05337124"
+      ]
+    },
+    {
+      "name": "Universidad de Antioquia",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04369495"
+      ]
+    },
+    {
+      "name": "Universidade Federal de Alfenas",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07493655"
+      ]
+    },
+    {
+      "name": "Université Catholique de Louvain",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT04449991"
+      ]
+    },
+    {
+      "name": "University Hospital Center of Martinique",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06365359"
+      ]
+    },
+    {
+      "name": "University of Southern Denmark",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06642402"
+      ]
+    },
+    {
+      "name": "University of Valladolid",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT03673748"
+      ]
+    },
+    {
+      "name": "Vera Therapeutics, Inc.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05609812"
+      ]
+    },
+    {
+      "name": "Viatris Innovation GmbH",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07201129"
+      ]
+    },
+    {
+      "name": "Weill Medical College of Cornell University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT01802034"
+      ]
+    },
+    {
+      "name": "Xiangya Hospital of Central South University",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05933213"
+      ]
+    },
+    {
+      "name": "Yake Biotechnology Ltd.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT06785519"
+      ]
+    },
+    {
+      "name": "Yipeng Liu",
+      "classes": [
+        "OTHER"
+      ],
+      "lead_count": 1,
+      "collaborator_count": 0,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT07031674"
+      ]
+    },
+    {
+      "name": "Zai Lab (Shanghai) Co., Ltd.",
+      "classes": [
+        "INDUSTRY"
+      ],
+      "lead_count": 0,
+      "collaborator_count": 1,
+      "total_count": 1,
+      "nct_ids": [
+        "NCT05810948"
+      ]
+    }
+  ]
+}

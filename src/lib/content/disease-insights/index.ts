@@ -16,7 +16,11 @@ export type DiseaseDatasetType =
 	| 'keyword_clusters'
 	| 'search_volume_topics'
 	| 'community_engagement'
-	| 'ad_spend_timeseries';
+	| 'ad_spend_timeseries'
+	| 'clinical_trials_raw'
+	| 'clinical_trials_normalized'
+	| 'clinical_trials_sponsors_observed'
+	| 'clinical_trials_interventions_observed';
 
 export type DiseaseDatasetRef = {
 	id: string;

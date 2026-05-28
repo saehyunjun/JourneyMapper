@@ -9,6 +9,7 @@
 		questionLabel,
 		participantLabel
 	} from '$lib/content/wctglpdemo-data/analysis';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 
 	type Scope = 'all' | 'question' | 'participant';
 	type View = 'tree' | 'sunburst';
@@ -51,22 +52,11 @@
 </script>
 
 <div class="flex flex-1 flex-col">
-	<!-- Hero -->
-	<div
-		class="flex h-80 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
-	>
-		<div class="mx-auto flex w-full max-w-7xl flex-col gap-3 px-8">
-			<span class="figcaption text-white">GLP-1 Interviews</span>
-			<h1 class="font-heading text-5xl font-light capitalize text-primary-foreground md:text-7xl">
-				The shape of a theme
-			</h1>
-			<p class="max-w-2xl text-lg leading-7 text-primary-foreground/85">
-				From theme to subtheme to the words participants actually used inside it — explored
-				three ways: a radial tree, a zoomable sunburst, and a heatmap that lays every
-				participant and question side by side.
-			</p>
-		</div>
-	</div>
+	<PageHeader
+		eyebrow="PatientlyIQ"
+		title="The shape of a theme"
+		subtitle="From theme to subtheme to the words participants actually used inside it — explored three ways: a radial tree, a zoomable sunburst, and a heatmap that lays every participant and question side by side."
+	/>
 
 	<div class="mx-auto flex w-full max-w-6xl flex-col gap-8 px-8 py-16">
 		<section class="flex flex-col gap-5">

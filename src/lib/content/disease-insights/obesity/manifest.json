@@ -1,0 +1,100 @@
+{
+	"schema_version": "1.0",
+	"id": "obesity",
+	"slug": "obesity",
+	"label": "Obesity",
+	"abbreviation": null,
+	"therapeutic_area_ids": ["endocrinology", "metabolism"],
+	"datasets": [
+		{
+			"id": "obesity_treatment_searches_us",
+			"type": "search_volume_topics",
+			"label": "Obesity / weight-management treatment searches (US, monthly)",
+			"path": "search/treatment_searches_us.json",
+			"geography": "US",
+			"unit": "monthly_estimated_search_volume",
+			"source_id": null
+		},
+		{
+			"id": "obesity_side_effects_searches_us",
+			"type": "search_volume_topics",
+			"label": "GLP-1 side-effect searches (US, monthly)",
+			"path": "search/side_effects_searches_us.json",
+			"geography": "US",
+			"unit": "monthly_estimated_search_volume",
+			"source_id": null
+		},
+		{
+			"id": "obesity_cost_access_searches_us",
+			"type": "search_volume_topics",
+			"label": "GLP-1 cost & access searches (US, monthly)",
+			"path": "search/cost_access_searches_us.json",
+			"geography": "US",
+			"unit": "monthly_estimated_search_volume",
+			"source_id": null
+		},
+		{
+			"id": "obesity_clinical_trials_searches_us",
+			"type": "search_volume_topics",
+			"label": "Obesity clinical-trial searches (US, monthly)",
+			"path": "search/clinical_trials_searches_us.json",
+			"geography": "US",
+			"unit": "monthly_estimated_search_volume",
+			"source_id": null
+		},
+		{
+			"id": "obesity_lifestyle_searches_us",
+			"type": "search_volume_topics",
+			"label": "GLP-1 lifestyle & durability searches (US, monthly)",
+			"path": "search/lifestyle_searches_us.json",
+			"geography": "US",
+			"unit": "monthly_estimated_search_volume",
+			"source_id": null
+		},
+		{
+			"id": "obesity_community_engagement",
+			"type": "community_engagement",
+			"label": "Public vs. private GLP-1 patient communities (Reddit + Facebook)",
+			"path": "communities/community_engagement.json",
+			"geography": null,
+			"unit": "count",
+			"source_id": null
+		},
+		{
+			"id": "obesity_clinicaltrials_raw",
+			"type": "clinical_trials_raw",
+			"label": "ClinicalTrials.gov studies (obesity + GLP-1, all statuses)",
+			"path": "clinical_trials/raw_studies.json",
+			"geography": null,
+			"unit": null,
+			"source_id": null
+		},
+		{
+			"id": "obesity_clinicaltrials_normalized",
+			"type": "clinical_trials_normalized",
+			"label": "ClinicalTrials.gov normalized studies (obesity)",
+			"path": "clinical_trials/studies_normalized.json",
+			"geography": null,
+			"unit": null,
+			"source_id": null
+		},
+		{
+			"id": "obesity_clinicaltrials_sponsors_observed",
+			"type": "clinical_trials_sponsors_observed",
+			"label": "Sponsors observed in obesity clinical trials",
+			"path": "clinical_trials/sponsors_observed.json",
+			"geography": null,
+			"unit": null,
+			"source_id": null
+		},
+		{
+			"id": "obesity_clinicaltrials_interventions_observed",
+			"type": "clinical_trials_interventions_observed",
+			"label": "Interventions observed in obesity clinical trials",
+			"path": "clinical_trials/interventions_observed.json",
+			"geography": null,
+			"unit": null,
+			"source_id": null
+		}
+	]
+}

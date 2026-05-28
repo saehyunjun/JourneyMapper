@@ -1,0 +1,177 @@
+{
+  "figureNumber": 6,
+  "title": "HIGH-RANKING CONTENT READABILITY, ACTIONABILITY ANALYSIS",
+  "query": "melanoma clinical trials",
+  "capturedOn": "2026-05-25",
+  "footnotes": [
+    {
+      "marker": "*",
+      "text": "The NIH-recommended reading level for patient-facing literature is between 7th and 8th grade level."
+    },
+    { "marker": "**", "text": "Terminated trial." },
+    {
+      "marker": "†",
+      "text": "Factual error flagged by independent clinician review of the rendered answer."
+    }
+  ],
+  "sections": [
+    {
+      "id": "ads",
+      "label": "Advertisements",
+      "tone": "ad",
+      "results": [
+        {
+          "id": "ad-merck-recurrent",
+          "title": "Recurrent Melanoma Trial - Stage IIb-IV Melanoma",
+          "source": "Merck Oncology Clinical Trials",
+          "readingLevel": null,
+          "readingGrade": null,
+          "linkedContact": null,
+          "searchableTrials": null
+        },
+        {
+          "id": "ad-keynote-006",
+          "title": "Attention HCPs and Oncologists - Advanced Melanoma",
+          "source": "KEYNOTE-006 - Keytruda Clinical Trial Results | HCP",
+          "readingLevel": null,
+          "readingGrade": null,
+          "linkedContact": null,
+          "searchableTrials": null
+        },
+        {
+          "id": "ad-novartis-tafinlar",
+          "title": "Diagnosing Advanced Melanoma?",
+          "source": "Novartis TAFINLAR + MEKINIST Dosing Information | HCP",
+          "readingLevel": null,
+          "readingGrade": null,
+          "linkedContact": null,
+          "searchableTrials": null
+        }
+      ]
+    },
+    {
+      "id": "organic",
+      "label": "Organic Content",
+      "tone": "organic",
+      "results": [
+        {
+          "id": "organic-nci",
+          "title": "Melanoma Clinical Trials",
+          "source": "National Cancer Institute",
+          "readingLevel": 20.8,
+          "readingGrade": "Graduate-level",
+          "linkedContact": false,
+          "searchableTrials": false
+        },
+        {
+          "id": "organic-mskcc",
+          "title": "Melanoma Clinical Trials & Research",
+          "source": "Memorial Sloan Kettering",
+          "readingLevel": 19.4,
+          "readingGrade": "Graduate-level",
+          "linkedContact": true,
+          "searchableTrials": true
+        },
+        {
+          "id": "organic-mra",
+          "title": "Clinical Trials",
+          "source": "Melanoma Research Alliance",
+          "readingLevel": 16.5,
+          "readingGrade": "College-level",
+          "linkedContact": false,
+          "searchableTrials": true
+        },
+        {
+          "id": "organic-mayo",
+          "title": "Melanoma Clinical Trials",
+          "source": "Mayo Clinic",
+          "readingLevel": 18.5,
+          "readingGrade": "Graduate-level",
+          "linkedContact": true,
+          "searchableTrials": false
+        },
+        {
+          "id": "organic-ctgov-newlink",
+          "title": "Immunotherapy Study for Patients With Stage IV Melanoma",
+          "source": "ClinicalTrials.gov // NewLink Genetics Corporation",
+          "sourceMarker": "**",
+          "readingLevel": 15.2,
+          "readingGrade": "College-level",
+          "linkedContact": false,
+          "searchableTrials": false
+        }
+      ]
+    },
+    {
+      "id": "ai-overviews",
+      "label": "AI Overviews",
+      "tone": "ai",
+      "results": [
+        {
+          "id": "ai-google-sge",
+          "title": "What clinical trials are available for melanoma?",
+          "source": "Google AI Overview",
+          "readingLevel": 14.1,
+          "readingGrade": "College-level",
+          "linkedContact": false,
+          "searchableTrials": true,
+          "citedSources": 6,
+          "namesSpecificTrials": false,
+          "safetyDisclaimer": true,
+          "citesGovEdu": true,
+          "sourcesMedianYear": 2024,
+          "factualErrorFlagged": false,
+          "containsCta": true
+        },
+        {
+          "id": "ai-bing-copilot",
+          "title": "Melanoma clinical trials — overview",
+          "source": "Bing / Copilot Answer",
+          "readingLevel": 13.7,
+          "readingGrade": "College-level",
+          "linkedContact": false,
+          "searchableTrials": true,
+          "citedSources": 4,
+          "namesSpecificTrials": true,
+          "safetyDisclaimer": true,
+          "citesGovEdu": true,
+          "sourcesMedianYear": 2023,
+          "factualErrorFlagged": false,
+          "containsCta": true
+        },
+        {
+          "id": "ai-perplexity",
+          "title": "Clinical trials for advanced and recurrent melanoma",
+          "source": "Perplexity",
+          "readingLevel": 15.6,
+          "readingGrade": "College-level",
+          "linkedContact": false,
+          "searchableTrials": true,
+          "citedSources": 9,
+          "namesSpecificTrials": true,
+          "safetyDisclaimer": false,
+          "citesGovEdu": true,
+          "sourcesMedianYear": 2025,
+          "factualErrorFlagged": true,
+          "containsCta": false
+        },
+        {
+          "id": "ai-chatgpt-search",
+          "title": "Melanoma clinical trial options",
+          "source": "ChatGPT Search",
+          "readingLevel": 12.4,
+          "readingGrade": "High-school",
+          "linkedContact": false,
+          "searchableTrials": false,
+          "citedSources": 3,
+          "namesSpecificTrials": false,
+          "safetyDisclaimer": true,
+          "citesGovEdu": false,
+          "sourcesMedianYear": 2022,
+          "factualErrorFlagged": true,
+          "containsCta": true
+        }
+      ]
+    }
+  ]
+}

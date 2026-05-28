@@ -1,0 +1,418 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "corpus_id": "ln_reddit_2026q1",
+    "generator": "propose-persona-suggestions@0.1",
+    "generated_at": "2026-05-26T22:41:17.620Z",
+    "params": {
+      "min_fragments": 2,
+      "distance_cutoff": 0.5,
+      "min_cluster_size": 3,
+      "share_threshold": 0.4,
+      "role_threshold": 0.6,
+      "singleton_attach_cutoff": 0.6
+    },
+    "universe": {
+      "total_fragments": 178,
+      "total_authors": 111,
+      "seed_authors": 28,
+      "singleton_authors": 83,
+      "attached_singletons": 40,
+      "unattached_authors": 47
+    },
+    "notes": [
+      "Deterministic pass; no Claude call. Re-run after re-tagging fragments.",
+      "proposed_filter is a starting point — analyst widens/narrows in the UI.",
+      "seed_authors anchored each cluster; attached_singletons joined via nearest-medoid.",
+      "Re-run with: node scripts/propose-persona-suggestions.mjs <corpus> --force"
+    ]
+  },
+  "suggestions": [
+    {
+      "id": "sugg-ln_reddit_2026q1-2",
+      "rank": 1,
+      "proposed_filter": {
+        "content_source": [
+          "social_comment",
+          "social_post"
+        ],
+        "indications": [
+          "lupus_nephritis"
+        ],
+        "annotations": {
+          "has_stage": [
+            "trial_consideration"
+          ]
+        }
+      },
+      "seed_authors": [
+        "Participant 032",
+        "Participant 003",
+        "Participant 005",
+        "Participant 002",
+        "Participant 081",
+        "Participant 077",
+        "Participant 094",
+        "Participant 012",
+        "Participant 065",
+        "Participant 087",
+        "Participant 057",
+        "Participant 085",
+        "Participant 042",
+        "Participant 066",
+        "Participant 072",
+        "Participant 018",
+        "Participant 060",
+        "Participant 082",
+        "Participant 052",
+        "Participant 076"
+      ],
+      "exemplar_author": "Participant 094",
+      "attached_singletons": [
+        "Participant 004",
+        "Participant 008",
+        "Participant 013",
+        "Participant 016",
+        "Participant 017",
+        "Participant 022",
+        "Participant 023",
+        "Participant 031",
+        "Participant 033",
+        "Participant 035",
+        "Participant 039",
+        "Participant 049",
+        "Anon_ln_reddit_2026q1_0002",
+        "Participant 054",
+        "Participant 056",
+        "Participant 059",
+        "Participant 064",
+        "Anon_ln_reddit_2026q1_0003",
+        "Participant 070",
+        "Participant 075",
+        "Participant 078",
+        "Participant 079",
+        "Participant 080",
+        "Anon_ln_reddit_2026q1_0013",
+        "Anon_ln_reddit_2026q1_0014",
+        "Anon_ln_reddit_2026q1_0015",
+        "Participant 086",
+        "Participant 095",
+        "Participant 096",
+        "Participant 045",
+        "Anon_ln_reddit_2026q1_0008"
+      ],
+      "fragment_count": 74,
+      "cohesion": 0.596,
+      "distinctness": 0.653,
+      "top_themes": [
+        {
+          "id": "clinical_trials",
+          "share": 0.762
+        },
+        {
+          "id": "treatment",
+          "share": 0.256
+        },
+        {
+          "id": "condition_specific",
+          "share": 0.192
+        }
+      ],
+      "top_subthemes": [
+        {
+          "id": "clinical_trial_awareness",
+          "share": 0.385
+        },
+        {
+          "id": "clinical_trial_knowledge_gaps",
+          "share": 0.221
+        },
+        {
+          "id": "trial_barriers",
+          "share": 0.18
+        },
+        {
+          "id": "trial_motivators",
+          "share": 0.165
+        },
+        {
+          "id": "trial_decision_factors",
+          "share": 0.158
+        }
+      ],
+      "top_stages": [
+        {
+          "id": "trial_consideration",
+          "share": 0.958
+        },
+        {
+          "id": "flare_or_refractory_cycle",
+          "share": 0.098
+        },
+        {
+          "id": "in_trial_experience",
+          "share": 0.054
+        },
+        {
+          "id": "post_trial",
+          "share": 0.031
+        }
+      ],
+      "top_steps": [
+        {
+          "id": "trial_awareness",
+          "share": 0.405
+        },
+        {
+          "id": "eligibility_self_assessment",
+          "share": 0.327
+        },
+        {
+          "id": "logistical_assessment",
+          "share": 0.126
+        },
+        {
+          "id": "consent_or_decline",
+          "share": 0.09
+        },
+        {
+          "id": "drug_switching",
+          "share": 0.055
+        }
+      ],
+      "top_emotions": [
+        {
+          "id": "hope",
+          "share": 0.331
+        },
+        {
+          "id": "optimism",
+          "share": 0.228
+        },
+        {
+          "id": "curiosity",
+          "share": 0.167
+        },
+        {
+          "id": "interest",
+          "share": 0.149
+        },
+        {
+          "id": "acceptance",
+          "share": 0.139
+        }
+      ],
+      "sentiment": {
+        "mean": 0.68,
+        "std": 0.53
+      },
+      "evidence_fragment_ids": [
+        "fc-ln_reddit_2026q1-4-1-1_a",
+        "fc-ln_reddit_2026q1-6-1-1_a",
+        "fc-ln_reddit_2026q1-2-1-1_a",
+        "fc-ln_reddit_2026q1-9-1-1_a",
+        "fc-ln_reddit_2026q1-5-1-1_j"
+      ],
+      "overlaps_existing": []
+    },
+    {
+      "id": "sugg-ln_reddit_2026q1-1",
+      "rank": 2,
+      "proposed_filter": {
+        "content_source": [
+          "social_comment",
+          "social_post"
+        ],
+        "indications": [
+          "lupus_nephritis"
+        ],
+        "annotations": {
+          "has_subtheme": [
+            "trial_barriers",
+            "trial_decision_factors"
+          ],
+          "has_stage": [
+            "in_trial_experience",
+            "trial_consideration"
+          ]
+        }
+      },
+      "seed_authors": [
+        "Participant 088",
+        "Participant 093",
+        "Participant 073",
+        "Participant 090"
+      ],
+      "exemplar_author": "Participant 093",
+      "attached_singletons": [
+        "Participant 021",
+        "Participant 046",
+        "Participant 047",
+        "Participant 048",
+        "Participant 053",
+        "Participant 058",
+        "Participant 061",
+        "Anon_ln_reddit_2026q1_0006",
+        "Anon_ln_reddit_2026q1_0009"
+      ],
+      "fragment_count": 11,
+      "cohesion": 0.675,
+      "distinctness": 0.653,
+      "top_themes": [
+        {
+          "id": "clinical_trials",
+          "share": 0.938
+        },
+        {
+          "id": "condition_specific",
+          "share": 0.063
+        }
+      ],
+      "top_subthemes": [
+        {
+          "id": "trial_barriers",
+          "share": 0.521
+        },
+        {
+          "id": "trial_decision_factors",
+          "share": 0.438
+        },
+        {
+          "id": "clinical_trial_interest",
+          "share": 0.333
+        },
+        {
+          "id": "clinical_trial_knowledge_gaps",
+          "share": 0.313
+        },
+        {
+          "id": "trial_negative_experiences",
+          "share": 0.167
+        }
+      ],
+      "top_stages": [
+        {
+          "id": "in_trial_experience",
+          "share": 1.208
+        },
+        {
+          "id": "trial_consideration",
+          "share": 0.583
+        },
+        {
+          "id": "post_trial",
+          "share": 0.063
+        }
+      ],
+      "top_steps": [
+        {
+          "id": "lymphodepletion",
+          "share": 0.604
+        },
+        {
+          "id": "consent_or_decline",
+          "share": 0.333
+        },
+        {
+          "id": "logistical_assessment",
+          "share": 0.25
+        },
+        {
+          "id": "infusion_and_hospitalization",
+          "share": 0.25
+        },
+        {
+          "id": "cell_collection",
+          "share": 0.208
+        }
+      ],
+      "top_emotions": [
+        {
+          "id": "apprehension",
+          "share": 0.458
+        },
+        {
+          "id": "curiosity",
+          "share": 0.375
+        },
+        {
+          "id": "hope",
+          "share": 0.208
+        },
+        {
+          "id": "anxiety",
+          "share": 0.208
+        },
+        {
+          "id": "acceptance",
+          "share": 0.167
+        }
+      ],
+      "sentiment": {
+        "mean": -0.42,
+        "std": 0.25
+      },
+      "evidence_fragment_ids": [
+        "fc-ln_reddit_2026q1-8-1-1_g",
+        "fc-ln_reddit_2026q1-8-1-1_a",
+        "fc-ln_reddit_2026q1-7-1-1_m",
+        "fc-ln_reddit_2026q1-8-1-1_h"
+      ],
+      "overlaps_existing": [
+        {
+          "persona_id": "ln_trial_barrier_moments",
+          "jaccard": 1
+        }
+      ]
+    }
+  ],
+  "unattached_authors": [
+    "Participant 001",
+    "Participant 006",
+    "Participant 007",
+    "Participant 009",
+    "Participant 010",
+    "Anon_ln_reddit_2026q1_0000",
+    "Participant 014",
+    "Anon_ln_reddit_2026q1_0001",
+    "Participant 015",
+    "Participant 019",
+    "Participant 020",
+    "Participant 024",
+    "Participant 025",
+    "Participant 026",
+    "Participant 027",
+    "Participant 028",
+    "Participant 029",
+    "Participant 030",
+    "Participant 034",
+    "Participant 036",
+    "Participant 037",
+    "Participant 040",
+    "Participant 041",
+    "Participant 043",
+    "Participant 044",
+    "Participant 050",
+    "Participant 062",
+    "Participant 063",
+    "Participant 067",
+    "Participant 068",
+    "Participant 069",
+    "Participant 071",
+    "Anon_ln_reddit_2026q1_0004",
+    "Anon_ln_reddit_2026q1_0005",
+    "Anon_ln_reddit_2026q1_0007",
+    "Anon_ln_reddit_2026q1_0010",
+    "Anon_ln_reddit_2026q1_0011",
+    "Participant 074",
+    "Anon_ln_reddit_2026q1_0012",
+    "Participant 083",
+    "Participant 084",
+    "Participant 089",
+    "Participant 092",
+    "Participant 038",
+    "Participant 091",
+    "Participant 051",
+    "Participant 055"
+  ]
+}

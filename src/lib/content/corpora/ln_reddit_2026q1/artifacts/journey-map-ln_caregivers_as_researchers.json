@@ -1,0 +1,254 @@
+{
+  "meta": {
+    "schema_version": "0.1",
+    "corpus_id": "ln_reddit_2026q1",
+    "persona_id": "ln_caregivers_as_researchers",
+    "persona_label": "Caregivers researching CAR-T for lupus",
+    "persona_color": "#14b8a6",
+    "journey_indication": "lupus_nephritis",
+    "journey_schema_version": "1.0",
+    "generated_at": "2026-05-26T20:05:22.951Z",
+    "generator": "scripts/synthesize-journey-map.mjs",
+    "generator_version": "synthesize-journey-map@0.1",
+    "model": "claude-haiku-4-5-20251001",
+    "fragment_count_total": 7,
+    "stage_count": 1,
+    "decision_point_count": 1,
+    "notes": [
+      "Generative journey-map artifact. Stage observations + decision-point panels synthesized from corpus fragments via Claude with JSON-schema-constrained output.",
+      "external_observations[] slot reserved on each step for future world-knowledge integration (PubMed / NCT / disease-insights).",
+      "Re-run with: node scripts/synthesize-journey-map.mjs <corpus> <persona> --force"
+    ],
+    "external_observations_proposer": {
+      "generator": "scripts/propose-external-observations.mjs",
+      "generator_version": "propose-external-observations@0.1",
+      "model": "claude-haiku-4-5-20251001",
+      "generated_at": "2026-05-26T20:05:37.420Z",
+      "datasets_consumed": [
+        "lupus_nephritis_relative_search_volume",
+        "lupus_nephritis_treatment_searches_us",
+        "lupus_nephritis_symptoms_searches_us",
+        "lupus_nephritis_quality_of_life_searches_us",
+        "lupus_nephritis_diagnostics_monitoring_searches_us",
+        "lupus_nephritis_side_effects_searches_us",
+        "lupus_nephritis_comorbidities_searches_us",
+        "lupus_nephritis_clinical_trials_searches_us",
+        "lupus_nephritis_facebook_group_engagement",
+        "lupus_nephritis_clinicaltrials_normalized",
+        "lupus_nephritis_clinicaltrials_sponsors_observed",
+        "lupus_nephritis_clinicaltrials_interventions_observed"
+      ],
+      "count": 3
+    }
+  },
+  "stages": [
+    {
+      "stage_id": "trial_consideration",
+      "label": "Trial consideration",
+      "description": "Exploring CAR-T or other novel therapies. Reading the German study, searching ClinicalTrials.gov, talking to community, working out eligibility, weighing logistical / financial / personal cost.",
+      "fragment_count": 5,
+      "avg_sentiment": 0.6,
+      "emotion_label": "optimism",
+      "stage_summary": "Caregivers are energized by emerging CAR-T options for lupus and related autoimmune conditions, actively researching trial specifics, outcome data, and eligibility pathways with measured confidence tempered by awareness of knowledge gaps.",
+      "drill_down": {
+        "text": "This cohort demonstrates a distinctive researcher posture: they surface trial sponsors by name (Fate Therapeutics, BMS), cite NCT registry links, and parse outcome measures (fatigue scores, hospitalization duration) with clinical precision. Yet this optimism coexists with epistemic humility—caregivers acknowledge uncertainty about timing, site expansion, and applicability across different CAR-T approaches, declining to over-generalize from early phase-1 data to their own loved one's case.",
+        "supporting_fragment_ids": [
+          "fc-ln_reddit_2026q1-3-1-1_n",
+          "fc-ln_reddit_2026q1-3-1-1_o",
+          "fc-ln_reddit_2026q1-3-1-1_q"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "trial_awareness",
+          "label": "Trial awareness",
+          "observations": [
+            {
+              "title": "FATE THERAPEUTICS EMERGING AS FRONTLINE OPTION",
+              "polarity": "positive",
+              "body": "Multiple caregivers identify Fate's CAR-T approach as the most mature lupus trial, valued for minimal hospitalization (3-day stay with potential further reduction) and low side-effect burden compared to chemotherapy-intensive protocols.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_k",
+                "fc-ln_reddit_2026q1-3-1-1_n"
+              ],
+              "confidence": 0.9
+            },
+            {
+              "title": "FATIGUE REMISSION DOCUMENTED IN EARLY COHORTS",
+              "polarity": "positive",
+              "body": "First eight Fate participants showed fatigue scores improving from severe to no-fatigue levels, providing concrete, patient-centered outcome evidence that motivates further investigation.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_o"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "title": "TRIAL PATHWAY UNCERTAINTY AND TIMELINE CAUTION",
+              "polarity": "mixed",
+              "body": "While registrational trials are anticipated this year with expanded sites, caregivers explicitly resist firm timeline expectations and note knowledge gaps around when RA-directed trials (FT839) will launch, balancing hope against the need for actual human data.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_n",
+                "fc-ln_reddit_2026q1-3-1-1_q"
+              ],
+              "confidence": 0.88
+            },
+            {
+              "title": "DESPAIR-TO-HOPE PIVOT IN TREATMENT-RESISTANT PATIENTS",
+              "polarity": "mixed",
+              "body": "A caregiver navigating failed biologics and aggressive disease expresses both despair and hope, asking whether CAR-T might enable remission—illustrating how trial awareness reframes seemingly exhausted options as potential lifelines.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_p"
+              ],
+              "confidence": 0.8
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "320/MO SEARCHES SPECIFICALLY FOR 'CAR-T LUPUS TRIAL'",
+              "body": "CAR-T query volume, while niche, reflects emerging caregiver curiosity—caregivers are already searching by name, indicating early awareness-building before registrational trials open enrollment.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "lupus_nephritis_clinical_trials_searches_us"
+              ],
+              "confidence": 0.7
+            }
+          ]
+        },
+        {
+          "step_id": "eligibility_self_assessment",
+          "label": "Eligibility self-assessment",
+          "observations": [],
+          "external_observations": [
+            {
+              "title": "FLUDARABINE + CYCLOPHOSPHAMIDE IN 12 LN TRIALS EACH",
+              "body": "Standard lymphodepletion agents appear in 24+ trials; caregivers cross-reference these drug lists to understand whether prior exposure disqualifies them or signals they're a fit for CAR-T-like regimens.",
+              "citation": "ClinicalTrials.gov interventions observed",
+              "source_dataset_ids": [
+                "lupus_nephritis_clinicaltrials_interventions_observed"
+              ],
+              "confidence": 0.91
+            }
+          ]
+        },
+        {
+          "step_id": "logistical_assessment",
+          "label": "Logistical assessment",
+          "observations": [],
+          "external_observations": [
+            {
+              "title": "NOVARTIS, AURINIA, HOFFMANN-LA ROCHE LEADING PHARMA SPONSORS",
+              "body": "The sponsor landscape reveals which companies have invested trial infrastructure in LN; caregivers reference these names and their trial networks when assessing whether a site is accessible or credible.",
+              "citation": "ClinicalTrials.gov sponsors observed",
+              "source_dataset_ids": [
+                "lupus_nephritis_clinicaltrials_sponsors_observed"
+              ],
+              "confidence": 0.92
+            }
+          ]
+        },
+        {
+          "step_id": "consent_or_decline",
+          "label": "Consent or decline",
+          "observations": [],
+          "external_observations": []
+        }
+      ]
+    }
+  ],
+  "decision_panels": [
+    {
+      "stage_id": "trial_consideration",
+      "label": "Trial consideration",
+      "drivers": [
+        {
+          "title": "MINIMAL HOSPITALIZATION AND NO CHEMOTHERAPY REQUIREMENT",
+          "body": "Fate Therapeutics' CAR-T approach for lupus requires only 3-day hospitalization with plans to reduce further, eliminating the chemotherapy burden that has historically defined CAR-T treatment.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_k",
+            "fc-ln_reddit_2026q1-3-1-1_n"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "title": "DOCUMENTED FATIGUE IMPROVEMENT IN EARLY TRIAL PARTICIPANTS",
+          "body": "Phase 1 data shows the first 8 lupus participants improved from severe fatigue to no fatigue, providing a concrete and patient-relevant outcome measure.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_o"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "title": "EXPANDING TRIAL SITES AND REGISTRATIONAL-PHASE ENROLLMENT OPPORTUNITY",
+          "body": "Fate Therapeutics is transitioning from phase 1 to a registrational trial expected to begin later in the year with additional treatment sites, improving geographic accessibility.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_n"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "title": "LOW SIDE-EFFECT PROFILE ENABLING PROTOCOL SIMPLIFICATION",
+          "body": "The trial sponsor has explicitly noted minimal adverse events, which enabled them to reduce the originally planned hospitalization window and move toward de-escalated treatment protocols.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_n"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "title": "DIRECT SPONSOR CONTACT AND TRANSPARENT TRIAL INFORMATION ACCESS",
+          "body": "Caregivers can directly reach the trial sponsor via published contact information and registry links, enabling informed questions about eligibility and outcomes before enrollment.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_n"
+          ],
+          "confidence": 0.8
+        }
+      ],
+      "barriers": [
+        {
+          "title": "FATIGUE IN LOCATING AND VETTING MULTIPLE CAR-T TRIAL OPTIONS",
+          "body": "Caregivers must distinguish between different sponsors and CAR-T modalities (CAR-T vs. CAR-NK), with incomplete public information about which trials exist for lupus versus related autoimmune diseases.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_n",
+            "fc-ln_reddit_2026q1-3-1-1_q"
+          ],
+          "confidence": 0.75
+        },
+        {
+          "title": "UNCERTAINTY ABOUT TRIAL TIMELINES AND ENROLLMENT START DATES",
+          "body": "Caregivers encounter vague enrollment timelines ('late this year is possible') and are advised not to set firm expectations until human data is available, creating planning friction.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_q"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "title": "LIMITED TRIAL APPLICABILITY ACROSS AUTOIMMUNE CONDITIONS",
+          "body": "Lupus-specific trials may not enroll for related conditions (e.g., rheumatoid arthritis), leaving caregivers with unmet needs despite shared autoimmune pathology and similar disease burden.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_p",
+            "fc-ln_reddit_2026q1-3-1-1_q"
+          ],
+          "confidence": 0.75
+        }
+      ],
+      "mixed": [
+        {
+          "title": "DISTINCT CAR-T MODALITY APPROACHES ACROSS TRIAL SPONSORS",
+          "body": "Not all CAR-T trials are equivalent—different sponsors use different underlying technologies (e.g., Fate's off-the-shelf approach vs. other modalities), requiring caregivers to understand technical nuances to make informed comparisons.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_n"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "title": "EMERGING OFF-THE-SHELF CAR-T OPTIONS WITHOUT CHEMOTHERAPY PRECEDENT",
+          "body": "Caregivers are aware that 'no chemo' CAR-T approaches exist but lack long-term human outcome data beyond early phase 1, creating uncertainty about durability and real-world safety.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_k",
+            "fc-ln_reddit_2026q1-3-1-1_q"
+          ],
+          "confidence": 0.8
+        }
+      ]
+    }
+  ]
+}

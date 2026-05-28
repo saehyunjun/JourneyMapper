@@ -382,7 +382,7 @@ export function buildKeywordMatcher(
 // The exports below build a matcher from the statically-imported lexicon +
 // codebook. This forces the whole lexicon into every page that imports this
 // module. Existing consumers (KeywordOrbit, ThemeHeatmap, analysis +page,
-// interview-words +page, topicTree, journey, lexicon-stats, quote-text) still
+// community +page, topicTree, journey, lexicon-stats, quote-text) still
 // use this path; migrate them to `buildKeywordMatcher` + `/api/lexicon` as
 // each one is touched. Once all callers have migrated, delete the static
 // imports above and the block below.

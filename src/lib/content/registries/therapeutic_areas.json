@@ -25,6 +25,12 @@
       "label": "Endocrinology",
       "mesh_id": "D004706",
       "mesh_term": "Endocrinology"
+    },
+    {
+      "id": "neurology",
+      "label": "Neurology",
+      "mesh_id": "D009464",
+      "mesh_term": "Neurology"
     }
   ]
 }

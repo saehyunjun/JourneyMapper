@@ -342,6 +342,12 @@ export type Finding = {
 	headline: string;
 	/** Generated supporting sentence with the underlying counts. */
 	detail: string;
+	/** Optional analyst-voice lede (from dashboard-blurbs.ts) that supersedes
+	 *  the templated `headline` when present. */
+	lede?: string;
+	/** Optional analyst-voice analysis paragraph (from dashboard-blurbs.ts)
+	 *  that supersedes the templated `detail` when present. */
+	analysis?: string;
 	/** Top keyword clusters behind the finding — one row per cluster, one
 	 *  sentiment-coloured block per matched segment. */
 	clusters: ClusterBar[];

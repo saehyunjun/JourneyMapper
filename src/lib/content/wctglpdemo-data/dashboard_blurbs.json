@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "generator": "scripts/propose-dashboard-blurbs.mjs",
+  "model": "claude-haiku-4-5",
+  "notes": [
+    "Analyst-voice copy for the executive-summary dashboard.",
+    "Layered over the runtime template strings in executive-summary.ts and the LN mocks in +page.svelte — UI prefers these when present, falls back when missing.",
+    "Re-generate one indication with: node scripts/propose-dashboard-blurbs.mjs <indication> --force"
+  ],
+  "indications": {
+    "obesity": {
+      "generated_at": "2026-05-26T02:37:43.353Z",
+      "model": "claude-haiku-4-5",
+      "corpus_kind": "real",
+      "overview": "Seven interviews, 473 segments, 47% positive lean. Patients report strong satisfaction with GLP-1 efficacy—weekly dosing, appetite suppression, and rapid onset drive sustained engagement—yet access and cost constraints shadow that optimism. [Travel burden](ref:subtheme:treatment_barriers) and [insurance uncertainty](ref:subtheme:treatment_barriers) create a separate gravity: patients embrace the treatment but fear losing access to it mid-trajectory. Trial logistics like dosing frequency and bloodwork do not block interest; the real friction is logistical (geographic) and financial (coverage).",
+      "findings": {
+        "negative-trial": {
+          "lede": "Travel unpredictability and clinic inflexibility deter participation among mobile professionals.",
+          "analysis": "Travel burden dominates the negative trial cluster—13 of 19 segments flag geography as a dealbreaker. Site-based visit requirements conflict with frequent work travel and the impossibility of knowing location a week ahead. One participant summarizes the tension: 'not having that flexibility.' Injection phobia and explicit concerns about trial design add friction but at lower volume. The pattern suggests trial recruitment should screen candidacy around work stability, not trial design per se.",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "Frequent travelers cite scheduling unpredictability, not distance, as the primary obstacle."
+            },
+            {
+              "kind": "implication",
+              "text": "Eligibility screening or remote visit options could unlock enrollment among high-travel occupations."
+            }
+          ]
+        },
+        "negative-treatment": {
+          "lede": "Access loss and cost anxiety outweigh drug efficacy gains in long-term treatment calculus.",
+          "analysis": "Concern clusters (18 segments) surface existential access risk: patients worry that coverage will vanish mid-course despite current availability. Insurance and coverage clusters (22 segments combined) anchor the financial barrier. Cost, divorced from insurance status, adds 10 segments of pure affordability dread. Side-effect concerns (17 segments) appear scattered—roughly balanced between positive and negative sentiment—suggesting tolerability is not the core driver of negativity. Accessibility fears frame the treatment as a precarious privilege, not a durable solution.",
+          "considerations": [
+            {
+              "kind": "tension",
+              "text": "Patients on effective therapy report greatest anxiety about losing access, not about tolerating the drug itself."
+            },
+            {
+              "kind": "implication",
+              "text": "Counsel patients explicitly on coverage sustainability and cost-assistance pathways at treatment initiation."
+            }
+          ]
+        },
+        "positive-treatment": {
+          "lede": "Weekly injection convenience and appetite suppression speed anchor sustained treatment commitment.",
+          "analysis": "Dosing convenience (15 segments, 9 positive) and injection format (23 segments, 13 positive) drive the bulk of favorable sentiment. Patients prefer a single weekly shot over competing oral or daily regimens, and many explicitly anticipate adopting newer injectables as they enter the market. Rapid appetite-suppression onset (described as 'food noise' disappearing within 48 hours) creates early behavioral win. Nutrition education (12 segments, 10 positive) reinforces this momentum, suggesting that counseling around appetite shifts and meal planning translates skeptics into advocates. The profile is operationally simple and sensorially immediate.",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "Once-weekly dosing and rapid appetite effects create behavioral momentum within days, not weeks."
+            },
+            {
+              "kind": "implication",
+              "text": "Emphasize onset speed and format preference during recruitment; these are primary satisfaction drivers."
+            }
+          ]
+        },
+        "trial-non-barriers": {
+          "lede": "Dosing frequency, fasting protocols, and trial duration raise minimal objection among engaged candidates.",
+          "analysis": "Dosing schedules (25 segments, 13 positive) emerged as potential trial load without triggering major resistance; participants discuss monthly or fortnightly frequency as manageable or even preferable to daily burden. Fasting blood draws and routine bloodwork (7 segments combined, all neutral or positive) register as tolerable. Trial length was barely mentioned (2 segments, neutral). The absence of complaint here is striking: patients who have already adopted self-injected GLP-1s view phlebotomy and visit cadence as minor frictions relative to the therapeutic benefit or the logistics of real-world access. This cohort has been filter-selected by prior treatment engagement.",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "Regular bloodwork and structured visit schedules do not deter patients already on GLP-1 therapy."
+            },
+            {
+              "kind": "implication",
+              "text": "Trial design can iterate on dosing frequency without sacrificing recruitment from engaged, treatment-experienced candidates."
+            }
+          ]
+        }
+      }
+    },
+    "lupus_nephritis": {
+      "generated_at": "2026-05-26T02:37:58.539Z",
+      "model": "claude-haiku-4-5",
+      "corpus_kind": "placeholder",
+      "overview": "Across 24 interviews (187 segments), sentiment is mixed: 41% positive, 38% negative, 21% neutral. Patients' negative pull centers on [steroid dependency](ref:subtheme:treatment__steroids), [immunosuppressive side effects](ref:subtheme:side_effects__fatigue), and [infection risk](ref:subtheme:side_effects__infection_risk)—burdens that compete directly with treatment efficacy. The positive pull is anchored in [remission](ref:subtheme:disease_activity__flares), [renal function preservation](ref:subtheme:renal_function__kidney_decline), and reduced [flare frequency](ref:subtheme:disease_activity__flares). Patients will endure considerable toxicity to protect kidney function, but the durability of that trade-off hinges on side-effect burden staying manageable over time.",
+      "findings": {
+        "negative-treatment": {
+          "lede": "Steroid dependency and immunosuppressive toxicity drive persistent treatment hesitation despite disease control.",
+          "analysis": "[Side effects](ref:subtheme:side_effects__fatigue) from immunosuppressants (21 segments, 57% negative) and [steroid dependency](ref:subtheme:treatment__steroids) (18 segments, 61% negative) dominate the negative landscape, with [fatigue & energy loss](ref:subtheme:side_effects__fatigue) and [infection risk](ref:subtheme:side_effects__infection_risk) splitting patient concern. Steroid tapering emerges as a recurrent pain point—patients fear both the symptoms of withdrawal and the impossibility of full discontinuation. Infection anxiety does less heavy lifting than side-effect burden itself, suggesting that risk communication alone will not shift acceptance.",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "Patients distinguish between side effects they can tolerate and those that erode daily function; fatigue and weight changes rank higher in complaint volume than infection risk."
+            },
+            {
+              "kind": "tension",
+              "text": "The more successful the immunosuppressant at controlling disease, the longer patients remain on steroids; cumulative toxicity becomes a slow-motion compliance risk."
+            },
+            {
+              "kind": "implication",
+              "text": "Trial design should prospectively assess side-effect burden and steroid-taper schedules; counselling must separate reversible from chronic toxicity."
+            }
+          ]
+        },
+        "negative-trial": {
+          "lede": "Washout flare risk and visit burden overshadow trial interest, even among patients motivated by disease control.",
+          "analysis": "[Washout / flare risk](ref:subtheme:disease_activity__flares) (14 segments, 57% negative) and [visit frequency & burden](ref:subtheme:monitoring__appointment_burden) (16 segments, 44% negative) create a compounding deterrent. Travel distance (12 segments, 33% negative) matters less than the intensity of the visit schedule itself. Patients frame trial entry as a gamble they will lose if a flare occurs during washout or if appointments force them to miss work or deplete healthcare navigation bandwidth already taxed by [disease monitoring](ref:theme:monitoring).",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "Washout flare risk functions as a hard enrollment barrier only for patients currently in remission; those in active disease see the trial as potentially beneficial."
+            },
+            {
+              "kind": "tension",
+              "text": "Trial visit requirements conflict with the unpredictability of lupus nephritis; patients cannot commit to a rigid schedule when flares can derail any plan."
+            },
+            {
+              "kind": "implication",
+              "text": "Highlight pre-trial optimization and prophylactic bridging strategies in recruitment; minimize washout windows and offer telehealth where protocol permits."
+            }
+          ]
+        },
+        "positive-treatment": {
+          "lede": "Remission, kidney preservation, and flare reduction sustain treatment adherence despite side-effect burden.",
+          "analysis": "[Remission & disease control](ref:subtheme:disease_activity__flares) (22 segments, 64% positive), [renal function preservation](ref:subtheme:renal_function__kidney_decline) (18 segments, 61% positive), and [reduced flare frequency](ref:subtheme:disease_activity__flares) (16 segments, 56% positive) collectively form the primary driver of positive sentiment. Kidney preservation carries particular weight—patients view renal protection as non-negotiable and will accept substantial side effects to achieve it. Remission does not eliminate side-effect complaints but reframes them as acceptable trade-offs rather than failures of therapy.",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "Renal function preservation is the dominant outcome that justifies toxicity; patients tolerate side effects when they see creatinine stable and proteinuria declining."
+            },
+            {
+              "kind": "tension",
+              "text": "Patients praise remission but remain aware that remission is fragile; positive sentiment coexists with anxiety about flare recurrence and long-term kidney decline."
+            },
+            {
+              "kind": "implication",
+              "text": "Anchor trial messaging on renal endpoints and remission durability; communicate kidney-preservation data prominently in safety discussions to offset side-effect concerns."
+            }
+          ]
+        },
+        "trial-non-barriers": {
+          "lede": "Biomarker testing, imaging, and sampling pose no substantive resistance; patients view them as standard monitoring.",
+          "analysis": "[Genetic / biomarker testing](ref:subtheme:renal_function__lab_results) (14 segments, 57% positive), [imaging visits](ref:subtheme:monitoring__lab_visits) (12 segments, 58% positive), [questionnaire burden](ref:subtheme:monitoring__appointment_burden) (11 segments, 55% positive), and [blood / urine samples](ref:subtheme:renal_function__protein_in_urine) (10 segments, 50% positive) all skew positive or neutral. These are not obstacles; patients already embed lab work and imaging into their disease management routine. Questionnaires are seen as acceptable if they avoid duplication of clinic paperwork.",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "Patients with lupus nephritis expect intensive monitoring; trial assessments feel continuous with standard care rather than added burden."
+            },
+            {
+              "kind": "implication",
+              "text": "Use biomarker and imaging requirements to clarify disease mechanisms to participants; position these as value-adds that will inform their own clinical care."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "corpus_id": "ln_reddit_2026q1",
+  "label": "Lupus nephritis / CAR-T forum discussion, 2026 Q1 ingest",
+  "platform": "reddit",
+  "indications": ["lupus_nephritis"],
+  "input_file": "src/lib/content/corpora/ln_reddit_2026q1/source/comments.json",
+  "license": "research_fair_use",
+  "redistribute_verbatim": false,
+  "deid_rules_version": "ln_reddit@v1",
+  "deidentifier_version": "analyst-anonymization@v1",
+  "context_to_speaker_attrs": {
+    "Diagnosed SLE": { "role": "patient" },
+    "Diagnosed with UCTD/MCTD": { "role": "patient" },
+    "Seeking Diagnosis": { "role": "patient" },
+    "Caregiver/Loved one": { "role": "caregiver" },
+    "Physician": { "role": "clinician" }
+  },
+  "split_long_fragments": {
+    "enabled": true,
+    "min_chars": 400,
+    "min_sentences": 4,
+    "applies_to": ["social_post", "social_comment"]
+  },
+  "notes": [
+    "Context column is per-USER. The ingester aggregates contexts per anonymized id and picks the dominant non-empty value; inconsistencies are warned.",
+    "Reddit '[deleted]' raw usernames are NOT trusted to map to one person. Each [deleted] occurrence gets a fresh per-row anonymous id.",
+    "Context values 'CAR-T therapy' or other topic-flair-style values aren't mapped to a role; the corresponding speaker_attrs.role is omitted (missing-key semantics).",
+    "Long announcement-style posts are sentence-split at ingest (>=400 chars AND >=4 sentences). Short replies stay as one fragment per row. Split children share source_ref.post_id with siblings; offsets are relative to the parent post's normalized text."
+  ]
+}

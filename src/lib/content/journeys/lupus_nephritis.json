@@ -1,0 +1,209 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "indication": "lupus_nephritis",
+    "label": "Lupus nephritis patient journey",
+    "notes": [
+      "Chronological clinical arc for SLE / lupus nephritis, anchored to the moments patients describe rather than the chapters clinicians use.",
+      "Trial-related stages (6-8) are weighted toward CAR-T because that's the corpus we have. The taxonomy still applies to other trial-considered therapies; rename steps when a richer corpus arrives.",
+      "Includes UCTD/MCTD adjacent voices in the corpus; their early stages (1-2) are similar enough that this taxonomy covers them with light reinterpretation.",
+      "Replace with corpus-driven taxonomy (see feature_backlog 'Corpus-driven journey-stage taxonomy') when that pipeline lands."
+    ]
+  },
+  "stages": [
+    {
+      "id": "pre_diagnosis",
+      "order": 1,
+      "label": "Pre-diagnosis",
+      "description": "Before lupus is named. Fatigue, joint pain, edema, rashes, kidney symptoms — speakers reach for explanations, often dismissed by clinicians for years.",
+      "steps": [
+        {
+          "id": "symptom_onset",
+          "label": "Symptom onset",
+          "description": "First noticing something is wrong. Often non-specific (fatigue, pain) and easily attributable to other causes."
+        },
+        {
+          "id": "seeking_answers",
+          "label": "Seeking answers",
+          "description": "Repeated PCP visits, online research, advocacy from family / patient communities to be taken seriously."
+        },
+        {
+          "id": "pre_diagnosis_uncertainty",
+          "label": "Pre-diagnosis uncertainty",
+          "description": "Living without a name for what's happening; navigating uncertainty about whether this is permanent."
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_odyssey",
+      "order": 2,
+      "label": "Diagnostic odyssey",
+      "description": "Bouncing through PCP → rheumatology → nephrology. ANA / dsDNA labs, kidney workup, biopsy for classification (Class III, IV, V LN). The point where lupus becomes the named diagnosis.",
+      "steps": [
+        {
+          "id": "specialist_bouncing",
+          "label": "Specialist bouncing",
+          "description": "Referral cascade between primary care and rheumatology / nephrology; often delayed by months."
+        },
+        {
+          "id": "kidney_workup",
+          "label": "Kidney workup",
+          "description": "Bloodwork, urine protein, imaging — the steps that escalate suspicion to a biopsy decision."
+        },
+        {
+          "id": "biopsy_and_classification",
+          "label": "Biopsy and classification",
+          "description": "Kidney biopsy and the moment of getting an LN class assignment (III, IV, V), which sets the treatment intensity."
+        }
+      ]
+    },
+    {
+      "id": "induction_treatment",
+      "order": 3,
+      "label": "Induction treatment",
+      "description": "First-line aggressive immunosuppression to stop active inflammation. High-dose steroids + cyclophosphamide or mycophenolate (CellCept), often with rituximab or anifrolumab.",
+      "steps": [
+        {
+          "id": "starting_induction",
+          "label": "Starting induction",
+          "description": "First weeks on high-dose steroids + chemotherapy / biologic; logistic shock of infusions and side effects."
+        },
+        {
+          "id": "induction_side_effects",
+          "label": "Induction side effects",
+          "description": "Steroid weight gain, mood changes, infection risk, infusion reactions; quality-of-life trough."
+        },
+        {
+          "id": "induction_response",
+          "label": "Induction response",
+          "description": "Labs improving, protein dropping; first signs the treatment is working (or not)."
+        }
+      ]
+    },
+    {
+      "id": "stable_maintenance",
+      "order": 4,
+      "label": "Stable maintenance",
+      "description": "Long-term immunosuppression to hold remission. Plaquenil + lower-dose immunosuppressant + tapered steroids. Lifestyle adapted around medication schedule and infection avoidance.",
+      "steps": [
+        {
+          "id": "long_term_immunosuppression",
+          "label": "Long-term immunosuppression",
+          "description": "Daily medication regimen settled; infusions on schedule; labs every 1-3 months."
+        },
+        {
+          "id": "lifestyle_adjustments",
+          "label": "Lifestyle adjustments",
+          "description": "Sun avoidance, infection precautions, exercise modifications, navigating fatigue around work / family."
+        },
+        {
+          "id": "monitoring_routine",
+          "label": "Monitoring routine",
+          "description": "Regular nephrologist / rheumatologist visits, lab monitoring, watching for early flare signs."
+        }
+      ]
+    },
+    {
+      "id": "flare_or_refractory_cycle",
+      "order": 5,
+      "label": "Flare / refractory cycle",
+      "description": "Disease returns despite maintenance. New flare or recognition that current therapy is failing. Drug switching, retreatment with induction, accumulating treatment fatigue.",
+      "steps": [
+        {
+          "id": "flare_recognition",
+          "label": "Flare recognition",
+          "description": "Symptoms or labs signal active disease return; clinical confirmation of relapse."
+        },
+        {
+          "id": "drug_switching",
+          "label": "Drug switching",
+          "description": "Trying a new biologic / immunosuppressant (Gazyva, anifrolumab, voclosporin, rituximab); hope-then-disappointment cycles."
+        },
+        {
+          "id": "treatment_fatigue",
+          "label": "Treatment fatigue",
+          "description": "Cumulative burden of years of immunosuppression, infusions, side effects; questioning whether the current path is sustainable."
+        }
+      ]
+    },
+    {
+      "id": "trial_consideration",
+      "order": 6,
+      "label": "Trial consideration",
+      "description": "Exploring CAR-T or other novel therapies. Reading the German study, searching ClinicalTrials.gov, talking to community, working out eligibility, weighing logistical / financial / personal cost.",
+      "steps": [
+        {
+          "id": "trial_awareness",
+          "label": "Trial awareness",
+          "description": "Hearing about CAR-T-for-lupus (German Erlangen study, Fate, BMS, etc.) through community or clinician; initial reading."
+        },
+        {
+          "id": "eligibility_self_assessment",
+          "label": "Eligibility self-assessment",
+          "description": "Working out whether one's disease severity, prior therapies, comorbidities, and geography qualify for a given trial."
+        },
+        {
+          "id": "logistical_assessment",
+          "label": "Logistical assessment",
+          "description": "Travel to site, time off work, caregiver availability, post-infusion proximity requirements, insurance / cost — the practical blockers."
+        },
+        {
+          "id": "consent_or_decline",
+          "label": "Consent or decline",
+          "description": "The decision moment — sign on, defer, or decline. Often shaped by family situation more than medical reasoning."
+        }
+      ]
+    },
+    {
+      "id": "in_trial_experience",
+      "order": 7,
+      "label": "In-trial experience",
+      "description": "Active treatment phase. Apheresis / cell collection, lymphodepleting chemotherapy, infusion, hospitalization for acute monitoring (CRS, ICANS, infection).",
+      "steps": [
+        {
+          "id": "cell_collection",
+          "label": "Cell collection",
+          "description": "Apheresis / leukapheresis to harvest T cells; weeks of waiting for engineered cells to be manufactured."
+        },
+        {
+          "id": "lymphodepletion",
+          "label": "Lymphodepletion",
+          "description": "Conditioning chemotherapy (usually fludarabine + cyclophosphamide) to prepare for the CAR-T infusion."
+        },
+        {
+          "id": "infusion_and_hospitalization",
+          "label": "Infusion and hospitalization",
+          "description": "The actual cell infusion (often a quick procedure), followed by inpatient monitoring; staying near the center for 30 days post-infusion."
+        },
+        {
+          "id": "acute_complications",
+          "label": "Acute complications",
+          "description": "Cytokine Release Syndrome (CRS), Immune Effector Cell-Associated Neurotoxicity (ICANS), infections — the high-stakes side-effect window."
+        }
+      ]
+    },
+    {
+      "id": "post_trial",
+      "order": 8,
+      "label": "Post-trial",
+      "description": "After acute recovery. Off all immunosuppression (the headline outcome), slow return to baseline, long-term follow-up for safety + durability of remission. Re-integrating identity around 'in remission' or 'cured.'",
+      "steps": [
+        {
+          "id": "short_term_recovery",
+          "label": "Short-term recovery",
+          "description": "First weeks-to-months home; gradual return to work / normal life; vigilant follow-up for relapse signs."
+        },
+        {
+          "id": "off_immunosuppression",
+          "label": "Off immunosuppression",
+          "description": "The unfamiliar state of no daily lupus medication; reframing identity from chronic patient toward something new."
+        },
+        {
+          "id": "long_term_follow_up",
+          "label": "Long-term follow-up",
+          "description": "Years-out monitoring for delayed effects, B-cell repopulation, secondary autoimmunity, durability of remission."
+        }
+      ]
+    }
+  ]
+}

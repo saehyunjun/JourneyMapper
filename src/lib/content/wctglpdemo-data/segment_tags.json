@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.2",
     "study_id": "wct_glp1",
-    "generated_at": "2026-05-22T19:31:01.682Z",
+    "generated_at": "2026-05-25T23:48:37.435Z",
     "generator": "scripts/migrate-segment-tags.mjs",
     "sources": [
       "src/lib/content/wctglpdemo-data/segment_tags.json",
@@ -388,63 +388,28 @@
       "question_id": null,
       "topics": [
         "current_medication_zepbound",
-        "trial_duration"
-      ],
-      "themes": [
-        "treatment"
-      ],
-      "subthemes": [
-        "treatment_decision_factors"
-      ],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.6,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": ""
-    },
-    {
-      "segment_id": "participant_06_t15_s02",
-      "interview_id": "participant_06",
-      "question_id": null,
-      "topics": [
-        "trial_duration"
-      ],
-      "themes": [],
-      "subthemes": [],
-      "emotions": [],
-      "sentiment": 0,
-      "confidence": 0.4,
-      "source": "ai_proposed",
-      "review_status": "pending",
-      "reviewer_notes": "fragment"
-    },
-    {
-      "segment_id": "participant_06_t15_s03",
-      "interview_id": "participant_06",
-      "question_id": null,
-      "topics": [
+        "trial_duration",
         "lifelong_maintenance"
       ],
       "themes": [
-        "condition_specific",
-        "treatment"
+        "treatment",
+        "condition_specific"
       ],
       "subthemes": [
-        "medical_self_efficacy",
-        "treatment_decision_factors"
+        "treatment_decision_factors",
+        "medical_self_efficacy"
       ],
       "emotions": [
         "vigilance"
       ],
       "sentiment": 1,
-      "confidence": 0.9,
-      "source": "ai_proposed",
+      "confidence": 1,
+      "source": "human",
       "review_status": "pending",
-      "reviewer_notes": ""
+      "reviewer_notes": "fragment"
     },
     {
-      "segment_id": "participant_06_t15_s04",
+      "segment_id": "participant_06_t15_s02",
       "interview_id": "participant_06",
       "question_id": null,
       "topics": [
@@ -466,7 +431,7 @@
       "reviewer_notes": ""
     },
     {
-      "segment_id": "participant_06_t15_s05",
+      "segment_id": "participant_06_t15_s03",
       "interview_id": "participant_06",
       "question_id": null,
       "topics": [
@@ -485,7 +450,7 @@
       "reviewer_notes": "aside humor"
     },
     {
-      "segment_id": "participant_06_t15_s06",
+      "segment_id": "participant_06_t15_s04",
       "interview_id": "participant_06",
       "question_id": null,
       "topics": [

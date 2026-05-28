@@ -1,0 +1,709 @@
+{
+  "meta": {
+    "schema_version": "3.1",
+    "indication": "multiple_sclerosis",
+    "description": "Multiple sclerosis keyword clusters projected from the main lexicon (wctglpdemo-data/keyword_lexicon.json, schema 3.7) into the per-indication disease-insights file shape. Drug-cluster variants are hydrated with generic + brand names from registries/drugs.json since the main lexicon strips them out (3.6+ matcher inlines them at regex-build time).",
+    "cluster_count": 41,
+    "source": "src/lib/content/wctglpdemo-data/keyword_lexicon.json",
+    "generated_at": "2026-05-26T23:56:18.755Z"
+  },
+  "clusters": [
+    {
+      "id": "ms_trial_endpoints",
+      "label": "MS trial endpoints (EDSS / ARR / MRI)",
+      "description": "The endpoints MS trials use — confirmed disability progression on EDSS, annualized relapse rate, new T2 / gad-enhancing MRI lesions, NEDA.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "confirmed disability progression",
+        "cdp",
+        "neda",
+        "no evidence of disease activity",
+        "primary endpoint",
+        "mri endpoint"
+      ]
+    },
+    {
+      "id": "ms_society_advocacy",
+      "label": "MS Society / advocacy",
+      "description": "National MS Society, MS International Federation, MS Trust, and local chapters — patient education, advocacy, and peer programs.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "national ms society",
+        "nmss",
+        "ms society",
+        "ms trust",
+        "msaa",
+        "walk ms",
+        "msif"
+      ]
+    },
+    {
+      "id": "ms_depression_anxiety",
+      "label": "Depression / anxiety (MS)",
+      "description": "Mood disorders are common comorbidities in MS — partly disease-driven (cortical involvement, immune signaling), partly reactive.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "depression",
+        "anxiety",
+        "mood disorder",
+        "antidepressant",
+        "mental health"
+      ]
+    },
+    {
+      "id": "ms_pml_history",
+      "label": "PML / opportunistic CNS infection",
+      "description": "Progressive multifocal leukoencephalopathy — a rare JC-virus opportunistic infection most associated with natalizumab in JCV-positive patients.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "pml",
+        "progressive multifocal leukoencephalopathy",
+        "jc virus",
+        "jcv",
+        "opportunistic infection"
+      ]
+    },
+    {
+      "id": "edss_score",
+      "label": "EDSS / disability score",
+      "description": "Expanded Disability Status Scale — the 0–10 walking-distance-anchored disability score used in MS trials and clinic.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "edss",
+        "disability score",
+        "expanded disability status scale"
+      ]
+    },
+    {
+      "id": "jcv_antibody_status",
+      "label": "JC virus antibody status",
+      "description": "JCV serostatus — checked before and during natalizumab; positive index raises PML risk and drives DMT decisions.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "jcv antibody",
+        "jc virus antibody",
+        "jcv positive",
+        "jcv negative",
+        "stratify test"
+      ]
+    },
+    {
+      "id": "ms_mri_lesions",
+      "label": "MRI / lesions",
+      "description": "Brain and spinal-cord MRI — T2 lesion burden, gadolinium-enhancing (active) lesions, new vs stable; the standard MS monitoring tool.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "mri",
+        "mri scan",
+        "lesion",
+        "lesions",
+        "new lesion",
+        "t2 lesion",
+        "gadolinium",
+        "gad enhancing",
+        "enhancing lesion",
+        "plaque",
+        "plaques",
+        "demyelination",
+        "spinal cord lesion"
+      ]
+    },
+    {
+      "id": "ms_relapse_rate",
+      "label": "Annualized relapse rate (ARR)",
+      "description": "The standard relapse-frequency metric used in MS trials and patient-facing data.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "annualized relapse rate",
+        "arr",
+        "relapse rate",
+        "relapse free"
+      ]
+    },
+    {
+      "id": "ms_cooling_strategies",
+      "label": "Cooling strategies",
+      "description": "Cooling vests, ice packs, cold drinks, air conditioning — patient workarounds for heat sensitivity.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "cooling vest",
+        "ice pack",
+        "cold drink",
+        "air conditioning",
+        "cooling strategies"
+      ]
+    },
+    {
+      "id": "ms_pt_ot",
+      "label": "Physical / occupational therapy",
+      "description": "PT, OT, and speech therapy — the workhorse non-pharm interventions for MS function and mobility.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "physical therapy",
+        "pt",
+        "occupational therapy",
+        "ot",
+        "speech therapy",
+        "rehab",
+        "rehabilitation"
+      ]
+    },
+    {
+      "id": "ms_symptom_journal",
+      "label": "MS symptom / relapse journal",
+      "description": "Logging symptoms, suspected relapses, and treatment response to share with the neurology team.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "symptom journal",
+        "symptom diary",
+        "tracking symptoms",
+        "relapse log",
+        "ms tracker app"
+      ]
+    },
+    {
+      "id": "ms_invisible_disability",
+      "label": "Invisible disability (MS)",
+      "description": "Symptoms — fatigue, cognitive dysfunction, pain — that aren't visible; the disbelief and judgment that follow.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "invisible disability",
+        "invisible illness",
+        "you don't look sick",
+        "don't look sick",
+        "people don’t believe me",
+        "no one believes me"
+      ]
+    },
+    {
+      "id": "ms_bladder_bowel",
+      "label": "Bladder / bowel dysfunction",
+      "description": "Urinary urgency, frequency, retention, incontinence; constipation. Common, embarrassing, and frequently undisclosed.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "bladder",
+        "urinary urgency",
+        "urinary frequency",
+        "urinary retention",
+        "incontinence",
+        "leakage",
+        "self catheterize",
+        "self-cath",
+        "bowel",
+        "constipation"
+      ]
+    },
+    {
+      "id": "ms_cognitive_dysfunction",
+      "label": "Cog fog / cognitive dysfunction",
+      "description": "Slowed processing speed, working-memory and attention deficits — common but under-reported in MS.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "cog fog",
+        "brain fog",
+        "cognitive fog",
+        "cognitive issues",
+        "memory problems",
+        "forgetful",
+        "slow processing",
+        "word finding",
+        "sdmt"
+      ]
+    },
+    {
+      "id": "ms_fatigue",
+      "label": "MS fatigue (lassitude)",
+      "description": "The MS-specific fatigue — distinct from ordinary tiredness; one of the most disabling and under-treated symptoms.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "ms fatigue",
+        "lassitude",
+        "crushing fatigue",
+        "wiped out",
+        "fatigue wall",
+        "exhausted",
+        "no energy"
+      ]
+    },
+    {
+      "id": "ms_heat_sensitivity",
+      "label": "Heat sensitivity (Uhthoff's)",
+      "description": "Uhthoff's phenomenon — symptoms worsen with heat (hot shower, exercise, weather). Drives cooling strategies.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "heat sensitivity",
+        "heat intolerance",
+        "uhthoff",
+        "uhthoff's",
+        "hot shower",
+        "hot weather"
+      ]
+    },
+    {
+      "id": "ms_numbness_tingling",
+      "label": "Numbness / tingling (paresthesia)",
+      "description": "Sensory disturbances — numbness, pins and needles, burning — often the first MS symptom patients notice.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "numbness",
+        "numb",
+        "tingling",
+        "pins and needles",
+        "paresthesia",
+        "paraesthesia",
+        "burning sensation",
+        "electric shock",
+        "lhermitte's"
+      ]
+    },
+    {
+      "id": "ms_optic_neuritis",
+      "label": "Optic neuritis / vision changes",
+      "description": "Inflammation of the optic nerve — blurred or lost vision, pain with eye movement — often a presenting MS symptom.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "optic neuritis",
+        "blurred vision",
+        "lost vision",
+        "vision loss",
+        "eye pain",
+        "color desaturation",
+        "double vision",
+        "diplopia"
+      ]
+    },
+    {
+      "id": "ms_pain",
+      "label": "MS pain (neuropathic, MS hug)",
+      "description": "Neuropathic pain syndromes in MS — trigeminal neuralgia, the \"MS hug\" (truncal banding), burning extremities.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "neuropathic pain",
+        "trigeminal neuralgia",
+        "ms hug",
+        "ms band",
+        "banding sensation",
+        "nerve pain"
+      ]
+    },
+    {
+      "id": "ms_progression",
+      "label": "Disability progression",
+      "description": "The accumulating disability arc patients fear — independent of relapses in progressive forms; \"PIRA\" in trials.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "progression",
+        "getting worse",
+        "progressive",
+        "pira",
+        "disability progression",
+        "losing function",
+        "losing ability"
+      ]
+    },
+    {
+      "id": "ms_relapse",
+      "label": "MS relapse / attack",
+      "description": "A new neurologic episode lasting >24 hours — the central event in relapsing MS. Patients call them attacks, flares, or exacerbations.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "relapse",
+        "relapses",
+        "attack",
+        "attacks",
+        "flare",
+        "flare up",
+        "flare-up",
+        "exacerbation",
+        "pseudoexacerbation",
+        "new episode"
+      ]
+    },
+    {
+      "id": "ms_spasticity",
+      "label": "Spasticity / muscle stiffness",
+      "description": "Increased muscle tone, spasms, and stiffness — common in lower limbs.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "spasticity",
+        "spasms",
+        "muscle spasms",
+        "leg spasms",
+        "stiffness",
+        "tight muscles",
+        "clonus"
+      ]
+    },
+    {
+      "id": "ms_walking_difficulty",
+      "label": "Walking difficulty / gait",
+      "description": "Loss of ambulation — slowed walking speed, foot drop, falls, eventual use of cane, walker, or wheelchair.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "walking",
+        "gait",
+        "foot drop",
+        "falling",
+        "falls",
+        "unsteady",
+        "use a cane",
+        "walker",
+        "wheelchair",
+        "mobility aid",
+        "25 foot walk",
+        "t25fw"
+      ]
+    },
+    {
+      "id": "multiple_sclerosis_dx",
+      "label": "Multiple sclerosis (diagnosis)",
+      "description": "Identification with the diagnosis and its course — relapsing-remitting (RRMS), secondary-progressive (SPMS), primary-progressive (PPMS), clinically isolated syndrome (CIS).",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "multiple sclerosis",
+        "ms",
+        "relapsing remitting",
+        "relapsing-remitting",
+        "rrms",
+        "secondary progressive",
+        "spms",
+        "primary progressive",
+        "ppms",
+        "clinically isolated syndrome",
+        "cis"
+      ]
+    },
+    {
+      "id": "ms_refractory",
+      "label": "Refractory / failed-everything framing",
+      "description": "The \"tried everything\" arc — DMT failures stack up, motivating openness to CAR-T or autologous stem-cell transplant.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "tried everything",
+        "failed dmt",
+        "failed multiple dmts",
+        "refractory ms",
+        "out of options",
+        "nothing is working"
+      ]
+    },
+    {
+      "id": "pml_jcv_concerns",
+      "label": "PML / JCV risk concerns",
+      "description": "PML risk weighed against natalizumab benefit — JCV positivity, prior immunosuppression, treatment duration.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "pml risk",
+        "jcv risk",
+        "pml concern",
+        "risk of pml",
+        "afraid of pml"
+      ]
+    },
+    {
+      "id": "dmt_discontinuation_risk",
+      "label": "DMT discontinuation risk",
+      "description": "Fear that stopping DMT in older or stable MS will trigger rebound or new disease activity — DISCOMS-type questions.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "stop dmt",
+        "stop my dmt",
+        "come off dmt",
+        "discontinue dmt",
+        "rebound",
+        "rebound disease"
+      ]
+    },
+    {
+      "id": "high_efficacy_first",
+      "label": "High-efficacy first vs escalation",
+      "description": "The treatment-strategy debate patients hear about — start with high-efficacy DMT vs escalate from platform therapy.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "high efficacy first",
+        "high-efficacy first",
+        "hit hard early",
+        "aggressive treatment",
+        "escalation",
+        "platform first"
+      ]
+    },
+    {
+      "id": "fingolimod",
+      "label": "Fingolimod (Gilenya)",
+      "description": "First oral DMT for relapsing MS; S1P receptor modulator. First-dose cardiac monitoring required.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "fingolimod",
+        "gilenya",
+        "first dose observation",
+        "cardiac monitoring",
+        "s1p oral"
+      ]
+    },
+    {
+      "id": "ms_anti_cd20_class",
+      "label": "Anti-CD20 DMTs (class)",
+      "description": "The high-efficacy anti-CD20 class — ocrelizumab, ofatumumab, ublituximab, off-label rituximab — for relapsing and progressive MS.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "anti-cd20",
+        "anti cd20",
+        "b cell depleting therapy",
+        "b-cell depleting therapy",
+        "cd20 depletion"
+      ]
+    },
+    {
+      "id": "ms_dmt_switching",
+      "label": "DMT switching / cycling",
+      "description": "The pattern of moving between DMTs over years — switching for breakthrough disease, side effects, or pregnancy planning.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "switched dmt",
+        "switched medications",
+        "changed dmt",
+        "breakthrough disease",
+        "failed therapy",
+        "new dmt"
+      ]
+    },
+    {
+      "id": "ms_injectable_dmt",
+      "label": "Injectable DMTs (interferons / glatiramer)",
+      "description": "Platform injectable DMTs — interferon-beta products (Avonex, Rebif, Betaseron, Plegridy) and glatiramer acetate (Copaxone).",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "interferon",
+        "interferon beta",
+        "beta interferon",
+        "avonex",
+        "rebif",
+        "betaseron",
+        "plegridy",
+        "extavia",
+        "copaxone",
+        "glatiramer",
+        "glatiramer acetate"
+      ]
+    },
+    {
+      "id": "ms_oral_dmt",
+      "label": "Oral DMTs (fumarates / teriflunomide / cladribine)",
+      "description": "The oral disease-modifying therapy options patients name — fumarates (Tecfidera, Vumerity), teriflunomide (Aubagio), cladribine (Mavenclad).",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "oral dmt",
+        "oral medication",
+        "tecfidera",
+        "dimethyl fumarate",
+        "vumerity",
+        "diroximel fumarate",
+        "aubagio",
+        "teriflunomide",
+        "mavenclad",
+        "cladribine"
+      ]
+    },
+    {
+      "id": "ms_s1p_class",
+      "label": "S1P modulators (class)",
+      "description": "Sphingosine-1-phosphate receptor modulators — fingolimod, siponimod, ozanimod, ponesimod. Oral, lymphocyte-sequestering.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "s1p modulator",
+        "s1p inhibitor",
+        "sphingosine",
+        "gilenya",
+        "mayzent",
+        "zeposia",
+        "ponvory",
+        "siponimod",
+        "ozanimod",
+        "ponesimod"
+      ]
+    },
+    {
+      "id": "natalizumab",
+      "label": "Natalizumab (Tysabri)",
+      "description": "Alpha-4 integrin antagonist for relapsing MS; IV every 4 weeks via TOUCH program. High efficacy offset by PML risk in JCV-positive patients.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "natalizumab",
+        "tysabri",
+        "tysabri infusion",
+        "touch program",
+        "monthly infusion",
+        "every 4 weeks"
+      ]
+    },
+    {
+      "id": "ocrelizumab",
+      "label": "Ocrelizumab (Ocrevus)",
+      "description": "Anti-CD20 B-cell-depleting antibody approved for relapsing and primary progressive MS; 600 mg IV every 6 months.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "ocrelizumab",
+        "ocrevus",
+        "anti-cd20 mab",
+        "b-cell depleting",
+        "every 6 months",
+        "twice a year infusion"
+      ]
+    },
+    {
+      "id": "ofatumumab",
+      "label": "Ofatumumab (Kesimpta)",
+      "description": "Anti-CD20 antibody for relapsing MS; subcutaneous self-injection monthly. Same class as ocrelizumab but home-administered.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "ofatumumab",
+        "kesimpta",
+        "self-inject",
+        "self-injection",
+        "home injection",
+        "monthly injection",
+        "pen injector"
+      ]
+    },
+    {
+      "id": "ublituximab",
+      "label": "Ublituximab (Briumvi)",
+      "description": "Glycoengineered anti-CD20 antibody for relapsing MS; ~1-hour infusion every 6 months.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "ublituximab",
+        "briumvi",
+        "one hour infusion",
+        "1 hour infusion",
+        "short infusion"
+      ]
+    },
+    {
+      "id": "ms_dmt_side_effects",
+      "label": "DMT side effects (injection / flushing / labs)",
+      "description": "Common DMT side effects patients name — injection-site reactions, fumarate flushing, GI upset, lymphopenia, fatigue.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "injection site reaction",
+        "injection site",
+        "flushing",
+        "flush reaction",
+        "lymphopenia",
+        "low lymphocytes",
+        "flu like symptoms",
+        "flu-like"
+      ]
+    },
+    {
+      "id": "ms_infusion_reactions",
+      "label": "Infusion reactions",
+      "description": "Infusion-related reactions to anti-CD20 DMTs — itching, throat tightness, fevers — usually with the first dose.",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "infusion reaction",
+        "itchy throat",
+        "throat tightness",
+        "chills during infusion"
+      ]
+    },
+    {
+      "id": "ms_quality_of_life",
+      "label": "Quality of life (MS)",
+      "description": "Felt impact of MS and DMTs on daily life — stamina, function, independence, \"stop the progression,\" \"back to myself.\"",
+      "indication": "multiple_sclerosis",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "quality of life",
+        "back to myself",
+        "stop the progression",
+        "stop progression",
+        "no new lesions",
+        "no relapses",
+        "feeling normal",
+        "back to normal"
+      ]
+    }
+  ]
+}

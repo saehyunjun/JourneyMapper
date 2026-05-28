@@ -1,0 +1,30 @@
+{
+	"id": "multiple_sclerosis_clinical_trials_searches_us",
+	"type": "search_volume_topics",
+	"indication_id": "multiple_sclerosis",
+	"therapeutic_area_ids": ["neurology", "immunology"],
+	"title": "MS clinical-trial searches",
+	"subtitle": "Monthly estimated volume, US — trial-seeking and pipeline-curious queries",
+	"unit": "monthly_estimated_search_volume",
+	"geography": "US",
+	"time_period": null,
+	"topic_category": "clinical_trials",
+	"source": {
+		"type": "manual_estimate",
+		"notes": "Hand-authored estimates. The BTK-inhibitor class draws the largest pipeline-curious volume in 2026; remyelination and EBV-vaccine queries are smaller but high-intent — patients hunting for disease-reversal rather than slowing."
+	},
+	"dimensions": ["topic"],
+	"measures": ["volume"],
+	"data": [
+		{ "topic": "MS clinical trial", "volume": 1300 },
+		{ "topic": "BTK inhibitor MS trial", "volume": 2900 },
+		{ "topic": "tolebrutinib trial", "volume": 880 },
+		{ "topic": "fenebrutinib trial", "volume": 720 },
+		{ "topic": "remyelination drug trial", "volume": 1600 },
+		{ "topic": "EBV vaccine MS", "volume": 1100 },
+		{ "topic": "stem cell MS trial", "volume": 2400 },
+		{ "topic": "HSCT for MS", "volume": 4400 },
+		{ "topic": "MS trial near me", "volume": 210 },
+		{ "topic": "new MS treatment 2026", "volume": 3600 }
+	]
+}

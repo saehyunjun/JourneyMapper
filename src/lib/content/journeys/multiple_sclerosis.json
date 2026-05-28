@@ -1,0 +1,238 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "indication": "multiple_sclerosis",
+    "label": "Multiple sclerosis patient journey",
+    "notes": [
+      "Chronological clinical arc for relapsing and progressive MS, anchored to the moments patients describe rather than the chapters clinicians use.",
+      "DMT-decision stage is intentionally separated from on-DMT stable life — the high-efficacy-first vs. escalation decision is a distinct experiential beat patients describe in detail.",
+      "Trial-related stages (7-8) currently lean on CAR-T-for-MS vocabulary because that's the corpus we have. The taxonomy still applies to aHSCT and other intensive-immunoreconstitution programs; rename steps when a richer corpus arrives.",
+      "Disease-course transition (RRMS → SPMS) is often slow and contested — the stage captures the years-long recognition and re-framing, not a single clinic visit.",
+      "Replace with corpus-driven taxonomy (see feature_backlog 'Corpus-driven journey-stage taxonomy') when that pipeline lands."
+    ]
+  },
+  "stages": [
+    {
+      "id": "pre_diagnosis",
+      "order": 1,
+      "label": "Pre-diagnosis",
+      "description": "Before MS is named. Numbness, optic neuritis, fatigue, balance trouble, heat intolerance — speakers reach for explanations, often dismissed by clinicians or attributed to stress, dehydration, or a pinched nerve.",
+      "steps": [
+        {
+          "id": "symptom_onset",
+          "label": "Symptom onset",
+          "description": "First noticing something neurological. Often a single dramatic event (optic neuritis, sudden numbness) or a slow accumulation of vague symptoms (fatigue, tingling, brain fog)."
+        },
+        {
+          "id": "seeking_answers",
+          "label": "Seeking answers",
+          "description": "Repeated PCP / urgent care / ophthalmology visits, online research, advocacy from family to be taken seriously when symptoms remit and recur."
+        },
+        {
+          "id": "pre_diagnosis_uncertainty",
+          "label": "Pre-diagnosis uncertainty",
+          "description": "Living without a name for what's happening; common dismissals (anxiety, dehydration, pinched nerve, conversion disorder) and the toll of being disbelieved."
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_odyssey",
+      "order": 2,
+      "label": "Diagnostic odyssey",
+      "description": "Bouncing through PCP → neurology. Brain + spine MRI with and without contrast, lumbar puncture for oligoclonal bands, evoked potentials, blood work to rule out alternatives. The point where MS becomes the named diagnosis under the McDonald criteria — often after a clinically isolated syndrome (CIS) and a second event in time or space.",
+      "steps": [
+        {
+          "id": "specialist_bouncing",
+          "label": "Specialist bouncing",
+          "description": "Referral cascade between primary care, ophthalmology, and neurology; often delayed by months or rebuffed when MRI is initially unremarkable."
+        },
+        {
+          "id": "mri_workup",
+          "label": "MRI and lumbar puncture workup",
+          "description": "Brain + cervical / thoracic spine MRI with gadolinium, lumbar puncture for CSF oligoclonal bands and IgG index, evoked potentials. The investigations that establish dissemination in time and space."
+        },
+        {
+          "id": "mcdonald_criteria_diagnosis",
+          "label": "McDonald-criteria diagnosis",
+          "description": "Formal MS diagnosis under McDonald criteria, often after a clinically isolated syndrome (CIS) and a confirmatory second event or MRI. The moment of getting the label — sometimes years after first symptoms."
+        }
+      ]
+    },
+    {
+      "id": "dmt_decision",
+      "order": 3,
+      "label": "DMT decision",
+      "description": "The first major shared decision: choosing a disease-modifying therapy. High-efficacy-first (anti-CD20, S1P, alpha-4 integrin) versus escalation (start with a platform injectable / fumarate and escalate on activity). Includes weighing risk profiles (PML for natalizumab, infection risk for B-cell-depleting therapies, JCV antibody status), pregnancy planning, route of administration, and personal risk tolerance.",
+      "steps": [
+        {
+          "id": "dmt_landscape_orientation",
+          "label": "DMT landscape orientation",
+          "description": "First exposure to the menu of disease-modifying therapies — injectables, orals, infusions — and the high-efficacy vs. escalation framing."
+        },
+        {
+          "id": "risk_benefit_weighing",
+          "label": "Risk-benefit weighing",
+          "description": "Working through PML risk (JCV antibody status, prior immunosuppression), infection risk on B-cell depletion, pregnancy timing, route of administration, monitoring burden, and personal life context."
+        },
+        {
+          "id": "dmt_initiation",
+          "label": "DMT initiation",
+          "description": "Starting the chosen therapy — first infusion / first injection / first dose. Often a logistical shock (infusion center, premedications, monitoring window)."
+        }
+      ]
+    },
+    {
+      "id": "stable_on_dmt",
+      "order": 4,
+      "label": "Stable on DMT",
+      "description": "Long-term on a disease-modifying therapy with no relapses and stable MRI. Life adapted around infusion / injection schedule, periodic MRI surveillance, symptom-management routines, and watching for early flare signs.",
+      "steps": [
+        {
+          "id": "scheduled_dosing",
+          "label": "Scheduled dosing",
+          "description": "Settled rhythm of dosing — biannual infusions (ocrelizumab, ofatumumab loading), monthly natalizumab, daily orals, or self-injected DMTs. The administrative load of staying on therapy."
+        },
+        {
+          "id": "surveillance_mri",
+          "label": "Surveillance MRI",
+          "description": "Periodic MRI surveillance (annual or as-indicated), labs (JCV titres, CBC), and the weeks-long wait for results that becomes its own emotional cycle."
+        },
+        {
+          "id": "lifestyle_adjustments",
+          "label": "Lifestyle adjustments",
+          "description": "Heat management (cooling vests, avoiding hot showers / saunas), pacing around fatigue, infection precautions, exercise modifications, navigating work and family around symptoms."
+        }
+      ]
+    },
+    {
+      "id": "relapse_or_breakthrough",
+      "order": 5,
+      "label": "Relapse / breakthrough activity",
+      "description": "New neurological symptoms or new MRI activity despite DMT. IV steroid pulse, recovery (or not), and the conversation about escalating to a higher-efficacy therapy or switching DMTs.",
+      "steps": [
+        {
+          "id": "relapse_recognition",
+          "label": "Relapse recognition",
+          "description": "Recognizing a true relapse versus a pseudoflare from heat, illness, or stress; deciding when to call the MS clinic; the diagnostic dance of confirming new vs. old lesions."
+        },
+        {
+          "id": "steroid_pulse",
+          "label": "Steroid pulse",
+          "description": "Three to five days of high-dose IV methylprednisolone (Solu-Medrol), the sleep / mood / metallic-taste side effects, and the waiting to see how much function returns."
+        },
+        {
+          "id": "dmt_escalation",
+          "label": "DMT escalation",
+          "description": "Switching to a higher-efficacy therapy, dealing with washout periods, repeat baseline labs, and the hope-then-uncertainty of starting again."
+        }
+      ]
+    },
+    {
+      "id": "course_transition",
+      "order": 6,
+      "label": "Disease-course transition",
+      "description": "Slow recognition that disease course has shifted — typically RRMS → secondary progressive (SPMS), or recognition of primary-progressive MS (PPMS) from the start. Accumulating disability without discrete relapses; few DMT options proven for progression; the re-framing of long-term expectations.",
+      "steps": [
+        {
+          "id": "progression_recognition",
+          "label": "Progression recognition",
+          "description": "The years-long, often contested process of recognizing that disability is accumulating between relapses (or without them) — confirmed disability progression measured on EDSS over time."
+        },
+        {
+          "id": "limited_dmt_options",
+          "label": "Limited DMT options",
+          "description": "Confronting that few DMTs are approved or effective for progression (ocrelizumab for PPMS, siponimod for active SPMS); reckoning with discontinuation or staying on a therapy whose value is uncertain."
+        },
+        {
+          "id": "reframing_long_term",
+          "label": "Re-framing long-term expectations",
+          "description": "Adjusting identity, work, and relationships around a progressive trajectory; weighing assistive devices, accommodations, and the slow rewrite of what 'normal' looks like."
+        }
+      ]
+    },
+    {
+      "id": "trial_consideration",
+      "order": 7,
+      "label": "Trial consideration",
+      "description": "Exploring CAR-T (KYV-101, Descartes-08), aHSCT, or other intensive immunoreconstitution programs after refractory disease or progression. Reading the literature, searching ClinicalTrials.gov, talking to community, working out eligibility, weighing logistical / financial / personal cost. Patients often discover trials through online communities long before their neurologist raises them.",
+      "steps": [
+        {
+          "id": "trial_awareness",
+          "label": "Trial awareness",
+          "description": "Hearing about CAR-T-for-MS, aHSCT in Mexico / Russia / Sweden, or other intensive programs through community, podcasts, or research news; initial reading and disbelief."
+        },
+        {
+          "id": "eligibility_self_assessment",
+          "label": "Eligibility self-assessment",
+          "description": "Working out whether one's disease course (often progressive forms are excluded), prior therapies, comorbidities, EDSS, and geography qualify for a given trial."
+        },
+        {
+          "id": "trial_risk_benefit_weighing",
+          "label": "Trial risk-benefit weighing",
+          "description": "Trading the trial's safety profile (CRS, ICANS, prolonged cytopenias, secondary malignancy risk, placebo arm exposure, time off work) against potential durable remission. Distinct from the dmt_decision step of the same name — this one is about a single high-stakes intensive program, not the standing DMT menu."
+        },
+        {
+          "id": "logistical_assessment",
+          "label": "Logistical assessment",
+          "description": "Travel to site (often international for aHSCT), time off work, caregiver availability, insurance / out-of-pocket cost, and the realistic blockers."
+        },
+        {
+          "id": "consent_or_decline",
+          "label": "Consent or decline",
+          "description": "The decision moment — sign on, defer, or decline. Often shaped by family situation and financial reality more than clinical reasoning."
+        }
+      ]
+    },
+    {
+      "id": "in_trial_experience",
+      "order": 8,
+      "label": "In-trial experience",
+      "description": "Active treatment phase for intensive immunoreconstitution. For CAR-T: apheresis, lymphodepleting chemotherapy, infusion, hospitalization for acute monitoring (CRS, ICANS, infection). For aHSCT: stem-cell mobilization and collection, high-dose chemotherapy, reinfusion, weeks of cytopenia. Both share an inpatient or near-site monitoring window of 30+ days.",
+      "steps": [
+        {
+          "id": "cell_collection",
+          "label": "Cell collection",
+          "description": "Apheresis / leukapheresis to harvest T cells (CAR-T) or peripheral blood stem cells (aHSCT); the wait for cells to be manufactured or cryopreserved."
+        },
+        {
+          "id": "lymphodepletion",
+          "label": "Conditioning chemotherapy",
+          "description": "Lymphodepleting or myeloablative conditioning — fludarabine + cyclophosphamide (CAR-T) or high-dose cyclophosphamide (aHSCT) — and the side-effect window."
+        },
+        {
+          "id": "infusion_and_hospitalization",
+          "label": "Infusion and hospitalization",
+          "description": "The actual cell infusion, followed by inpatient monitoring; staying near the center for 30 days post-infusion."
+        },
+        {
+          "id": "acute_complications",
+          "label": "Acute complications",
+          "description": "CRS, ICANS, prolonged cytopenias, infections — the high-stakes side-effect window unique to intensive immunoreconstitution."
+        }
+      ]
+    },
+    {
+      "id": "post_trial",
+      "order": 9,
+      "label": "Post-trial",
+      "description": "After acute recovery from an intensive program. Off all DMTs (the headline outcome for CAR-T / aHSCT), slow return to baseline, long-term follow-up for safety + durability of disease stability. Re-integrating identity around 'in remission' or 'cured' — language MS patients use cautiously.",
+      "steps": [
+        {
+          "id": "short_term_recovery",
+          "label": "Short-term recovery",
+          "description": "First weeks-to-months home; gradual return to work / normal life; vigilant follow-up for relapse signs and infections during B-cell recovery."
+        },
+        {
+          "id": "off_dmt",
+          "label": "Off DMT",
+          "description": "The unfamiliar state of no daily / monthly MS medication; reframing identity from chronic patient toward something new; tension between cautious hope and disbelief."
+        },
+        {
+          "id": "long_term_follow_up",
+          "label": "Long-term follow-up",
+          "description": "Years-out monitoring for delayed effects, B-cell repopulation, secondary autoimmunity, secondary malignancy, and durability of MS stability."
+        }
+      ]
+    }
+  ]
+}

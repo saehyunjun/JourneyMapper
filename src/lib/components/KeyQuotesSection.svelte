@@ -3,7 +3,7 @@
 
 	Renders every highlight starred across the Lab Book (highlights.json) —
 	quote-bank quotes starred on the analysis page and segments starred on the
-	review page or the fingerprint theme drawer — ranked by score. Each card's
+	review page or the personas theme drawer — ranked by score. Each card's
 	participant is a clickable chip; the `onparticipant` callback opens the host
 	page's participant drawer.
 -->
@@ -26,7 +26,7 @@
 		cardSize = 'sm'
 	}: {
 		starredQuoteIds: string[];
-		/** Segments starred on the review page / fingerprint theme drawer. */
+		/** Segments starred on the review page / personas theme drawer. */
 		starredSegmentIds?: string[];
 		profiles: Record<string, ParticipantProfile>;
 		onparticipant: (interviewId: string) => void;

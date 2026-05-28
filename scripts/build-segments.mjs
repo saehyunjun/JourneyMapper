@@ -21,6 +21,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { splitSentences } from './lib/sentence-split.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -29,58 +30,6 @@ const STRUCTURED_FILE = 'src/lib/content/wctglpdemo-data/interviews_structured.j
 const QUESTION_MAP_FILE = 'src/lib/content/wctglpdemo-data/question_map.json';
 const QUESTIONS_FILE = 'src/lib/content/wctglpdemo-data/questions.json';
 const OUTPUT_FILE = 'src/lib/content/wctglpdemo-data/segments.json';
-
-// Words that take a trailing period without ending a sentence.
-const ABBREV = new Set([
-	'dr', 'mr', 'mrs', 'ms', 'etc', 'vs', 'inc', 'st', 'jr', 'sr', 'no', 'fig',
-	'dept', 'approx', 'ph', 'e.g', 'i.e', 'a.m', 'p.m', 'u.s', 'u.k'
-]);
-
-function isAbbrev(word) {
-	const w = word.toLowerCase().replace(/[^a-z.]/g, '');
-	if (w.length === 1) return true; // single-letter initial, e.g. "A."
-	return ABBREV.has(w) || ABBREV.has(w.replace(/\.$/, ''));
-}
-
-/**
- * Split `text` into sentences. Returns [{ text, start, end }] with start/end
- * being offsets into `text` such that text.slice(start, end) === segment text.
- */
-function splitSentences(text) {
-	const boundaries = []; // exclusive end offsets, just after a terminator
-	const re = /[.!?]+['"’”)\]]*(\s+|$)/g;
-	let m;
-	while ((m = re.exec(text)) !== null) {
-		const trailingWs = m[1];
-		const termEnd = m.index + m[0].length - trailingWs.length;
-
-		// Skip if the word before the terminator is an abbreviation/initial.
-		const before = text.slice(0, m.index);
-		const lastWord = (before.match(/(\S+)$/) || [])[1] || '';
-		if (isAbbrev(lastWord)) continue;
-
-		// Skip if the next sentence does not begin like a sentence (transcribed
-		// speech reliably starts sentences with a capital, digit, or quote).
-		const nextIdx = m.index + m[0].length;
-		if (nextIdx < text.length && !/[A-Z0-9"'‘“(]/.test(text[nextIdx])) continue;
-
-		boundaries.push(termEnd);
-	}
-
-	const segments = [];
-	let prev = 0;
-	for (const cut of [...boundaries, text.length]) {
-		if (cut <= prev) continue;
-		const raw = text.slice(prev, cut);
-		const lead = raw.length - raw.trimStart().length;
-		const trimmed = raw.trim();
-		if (trimmed.length > 0) {
-			segments.push({ text: trimmed, start: prev + lead, end: prev + lead + trimmed.length });
-		}
-		prev = cut;
-	}
-	return segments;
-}
 
 const pad = (n) => String(n).padStart(2, '0');
 const wordCount = (s) => s.split(/\s+/).filter(Boolean).length;

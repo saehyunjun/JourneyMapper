@@ -42,8 +42,19 @@
 		type DistributionBlock,
 		type WordCloudBlock,
 		type QuoteLayout,
-		type QuoteReveal
+		type QuoteReveal,
+		type ComparisonBlock,
+		type ComparisonMicroKind,
+		type ComparisonLayout,
+		type CohortSpecJSON,
+		type HeroStatBlock,
+		type HeroStatMicro,
+		type HeroStatLayout,
+		type QuotePullBlock,
+		type QuotePullBackground,
+		type QuotePullReveal
 	} from '$lib/key-findings/types';
+	import { buildCohort, THEME_PALETTE } from '$lib/key-findings/data-shapes';
 
 	let {
 		open = $bindable(false),
@@ -156,6 +167,82 @@
 		{ id: 'typewriter', label: 'Typewriter' }
 	];
 
+	// ---- Comparison editor -------------------------------------------------
+	const COMPARISON_LAYOUTS: { id: ComparisonLayout; label: string }[] = [
+		{ id: 'split', label: 'Side by side' },
+		{ id: 'stacked', label: 'Stacked' }
+	];
+	const COMPARISON_MICROS: { id: ComparisonMicroKind; label: string }[] = [
+		{ id: 'topThemes', label: 'Top themes' },
+		{ id: 'sentiment', label: 'Sentiment' },
+		{ id: 'none', label: 'None' }
+	];
+	const COHORT_KINDS: { id: CohortSpecJSON['kind']; label: string }[] = [
+		{ id: 'custom', label: 'Custom' },
+		{ id: 'theme', label: 'Theme' },
+		{ id: 'sentiment', label: 'Sentiment' }
+	];
+	const COMPARISON_PALETTE = THEME_PALETTE;
+
+	/** Build a fresh spec when the analyst switches a side's `kind`. */
+	function blankCohort(kind: CohortSpecJSON['kind'], color: string): CohortSpecJSON {
+		if (kind === 'custom') return { kind: 'custom', label: 'Group', value: 0, unit: '%', color };
+		if (kind === 'theme') return { kind: 'theme', themeId: THEME_OPTIONS[0]?.id ?? '', color, filters: emptyFilters() };
+		return { kind: 'sentiment', sentimentBucket: 2, color, filters: emptyFilters() };
+	}
+
+	function patchSide(side: 'left' | 'right', next: Partial<CohortSpecJSON>) {
+		const c = draft as ComparisonBlock | null;
+		if (!c) return;
+		const merged = { ...(c[side] as CohortSpecJSON), ...next } as CohortSpecJSON;
+		// First real edit promotes the block out of placeholder state.
+		patch({ [side]: merged, configured: true });
+	}
+
+	function setSideKind(side: 'left' | 'right', kind: CohortSpecJSON['kind']) {
+		const c = draft as ComparisonBlock | null;
+		if (!c) return;
+		const existing = c[side] as CohortSpecJSON;
+		patch({ [side]: blankCohort(kind, existing.color ?? COMPARISON_PALETTE[side === 'left' ? 0 : 2]), configured: true });
+	}
+
+	// ---- HeroStat editor ---------------------------------------------------
+	const HEROSTAT_LAYOUTS: { id: HeroStatLayout; label: string }[] = [
+		{ id: 'centered', label: 'Centered' },
+		{ id: 'corner', label: 'Corner' }
+	];
+	const HEROSTAT_MICROS: { id: HeroStatMicro; label: string }[] = COMPARISON_MICROS as { id: HeroStatMicro; label: string }[];
+
+	function patchCohort(next: Partial<CohortSpecJSON>) {
+		const h = draft as HeroStatBlock | null;
+		if (!h) return;
+		const merged = { ...(h.cohort as CohortSpecJSON), ...next } as CohortSpecJSON;
+		patch({ cohort: merged, configured: true });
+	}
+
+	function setCohortKind(kind: CohortSpecJSON['kind']) {
+		const h = draft as HeroStatBlock | null;
+		if (!h) return;
+		patch({ cohort: blankCohort(kind, h.cohort.color ?? COMPARISON_PALETTE[0]), configured: true });
+	}
+
+	// ---- QuotePull editor --------------------------------------------------
+	const QUOTEPULL_BACKGROUNDS: { id: QuotePullBackground; label: string }[] = [
+		{ id: 'light', label: 'Light' },
+		{ id: 'dark', label: 'Dark' },
+		{ id: 'accent', label: 'Accent' }
+	];
+	const QUOTEPULL_REVEALS: { id: QuotePullReveal; label: string }[] = [
+		{ id: 'none', label: 'None' },
+		{ id: 'fade', label: 'Fade' },
+		{ id: 'word', label: 'Word' },
+		{ id: 'typewriter', label: 'Typewriter' }
+	];
+
+	function patchQuotePull(p: Partial<QuotePullBlock>) {
+		patch({ ...p, configured: true });
+	}
+
 	// ---- Live previews ------------------------------------------------------
 	const distPreview = $derived.by(() => {
 		const d = draft as DistributionBlock | null;
@@ -182,7 +269,7 @@
 	<div class="flex h-full flex-col">
 		<header class="border-b border-slate-200 px-5 py-4">
 			<h2 class="text-lg font-semibold text-slate-800" style="font-family: var(--font-body);">
-				{#if draft?.kind === 'quote'}Configure quote{:else if draft?.kind === 'distribution'}Configure distribution{:else if draft?.kind === 'wordcloud'}Configure word cloud{/if}
+				{#if draft?.kind === 'quote'}Configure quote{:else if draft?.kind === 'distribution'}Configure distribution{:else if draft?.kind === 'wordcloud'}Configure word cloud{:else if draft?.kind === 'comparison'}Configure comparison{:else if draft?.kind === 'herostat'}Configure hero stat{:else if draft?.kind === 'quotepull'}Configure quote pull{/if}
 			</h2>
 		</header>
 
@@ -353,6 +440,239 @@
 						{#key `${w.filters.participantId}:${w.filters.theme}:${w.filters.sentiment}:${w.filters.questionId}`}
 							<WordCloud words={wcPreview} width={360} height={220} interactive={false} editable={false} />
 						{/key}
+					</div>
+				</div>
+			{:else if draft?.kind === 'comparison'}
+				{@const c = draft as ComparisonBlock}
+				{@const leftPreview = buildCohort(c.left, undefined, c.micro)}
+				{@const rightPreview = buildCohort(c.right, undefined, c.micro)}
+				<div class="space-y-3">
+					<div class="flex flex-wrap gap-4">
+						<div>
+							<span class="text-xs text-slate-500">Layout</span>
+							<div class="mt-0.5 flex gap-1">
+								{#each COMPARISON_LAYOUTS as l (l.id)}
+									<Button variant="outline" size="sm" pressed={c.layout === l.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ layout: l.id })}>{l.label}</Button>
+								{/each}
+							</div>
+						</div>
+						<div>
+							<span class="text-xs text-slate-500">Micro-viz</span>
+							<div class="mt-0.5 flex gap-1">
+								{#each COMPARISON_MICROS as m (m.id)}
+									<Button variant="outline" size="sm" pressed={c.micro === m.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ micro: m.id })}>{m.label}</Button>
+								{/each}
+							</div>
+						</div>
+					</div>
+					<label class="block text-xs text-slate-600">Title<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={c.title} oninput={(e) => patch({ title: e.currentTarget.value })} /></label>
+					<label class="block text-xs text-slate-600">Caption<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={c.caption} oninput={(e) => patch({ caption: e.currentTarget.value })} /></label>
+
+					{#each ['left', 'right'] as const as side (side)}
+						{@const spec = side === 'left' ? c.left : c.right}
+						<div class="space-y-2 rounded-lg bg-slate-50 p-3">
+							<div class="flex items-center justify-between">
+								<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">{side === 'left' ? 'Left' : 'Right'} cohort</p>
+								<div class="flex gap-1">
+									{#each COHORT_KINDS as k (k.id)}
+										<Button variant="outline" size="xs" pressed={spec.kind === k.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => setSideKind(side, k.id)}>{k.label}</Button>
+									{/each}
+								</div>
+							</div>
+
+							<div>
+								<span class="text-xs text-slate-500">Accent</span>
+								<div class="mt-0.5 flex flex-wrap gap-1">
+									{#each COMPARISON_PALETTE as hex (hex)}
+										<button
+											type="button"
+											class="size-5 rounded-full border-2 {spec.color === hex ? 'border-slate-700' : 'border-transparent'} transition"
+											style="background: {hex};"
+											aria-label="Pick accent {hex}"
+											onclick={() => patchSide(side, { color: hex })}
+										></button>
+									{/each}
+								</div>
+							</div>
+
+							{#if spec.kind === 'custom'}
+								<div class="grid grid-cols-2 gap-2">
+									<label class="text-xs text-slate-600">Label
+										<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={spec.label} oninput={(e) => patchSide(side, { label: e.currentTarget.value })} />
+									</label>
+									<label class="text-xs text-slate-600">Sublabel
+										<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={spec.sublabel ?? ''} placeholder="e.g. of 12 participants" oninput={(e) => patchSide(side, { sublabel: e.currentTarget.value })} />
+									</label>
+									<label class="text-xs text-slate-600">Value
+										<input type="number" class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm tabular-nums" value={spec.value} oninput={(e) => patchSide(side, { value: Number(e.currentTarget.value) || 0 })} />
+									</label>
+									<label class="text-xs text-slate-600">Unit
+										<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={spec.unit ?? ''} placeholder="% / M / mentions" oninput={(e) => patchSide(side, { unit: e.currentTarget.value })} />
+									</label>
+									<label class="col-span-2 text-xs text-slate-600">Caption
+										<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={spec.caption ?? ''} placeholder="e.g. RENEWABLES" oninput={(e) => patchSide(side, { caption: e.currentTarget.value })} />
+									</label>
+								</div>
+							{:else if spec.kind === 'theme'}
+								<label class="block text-xs text-slate-600">Theme
+									<select class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={spec.themeId} onchange={(e) => patchSide(side, { themeId: e.currentTarget.value })}>
+										{#each THEME_OPTIONS as o (o.id)}<option value={o.id}>{o.label}</option>{/each}
+									</select>
+								</label>
+								<label class="block text-xs text-slate-600">Override label
+									<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={spec.label ?? ''} placeholder="(use theme name)" oninput={(e) => patchSide(side, { label: e.currentTarget.value })} />
+								</label>
+							{:else}
+								<label class="block text-xs text-slate-600">Sentiment
+									<select class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={String(spec.sentimentBucket)} onchange={(e) => patchSide(side, { sentimentBucket: Number(e.currentTarget.value) as -2 | -1 | 0 | 1 | 2 })}>
+										{#each SENTIMENT_OPTIONS as o (o.id)}<option value={o.id}>{o.label}</option>{/each}
+									</select>
+								</label>
+								<label class="block text-xs text-slate-600">Override label
+									<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={spec.label ?? ''} placeholder="(use sentiment name)" oninput={(e) => patchSide(side, { label: e.currentTarget.value })} />
+								</label>
+							{/if}
+						</div>
+					{/each}
+
+					<div class="rounded-lg border border-slate-200 p-3">
+						<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Preview</p>
+						<div class="flex items-stretch gap-3 text-sm">
+							<div class="flex-1 rounded-md p-2" style="border-left: 3px solid {leftPreview.color ?? '#cbd5e1'};">
+								<p class="text-xs font-semibold" style="color: {leftPreview.color};">{leftPreview.label}</p>
+								<p class="font-heading text-2xl font-bold tabular-nums text-slate-900">{leftPreview.value}{leftPreview.unit ?? ''}</p>
+								{#if leftPreview.sublabel}<p class="text-[11px] text-slate-500">{leftPreview.sublabel}</p>{/if}
+							</div>
+							<div class="flex-1 rounded-md p-2" style="border-left: 3px solid {rightPreview.color ?? '#cbd5e1'};">
+								<p class="text-xs font-semibold" style="color: {rightPreview.color};">{rightPreview.label}</p>
+								<p class="font-heading text-2xl font-bold tabular-nums text-slate-900">{rightPreview.value}{rightPreview.unit ?? ''}</p>
+								{#if rightPreview.sublabel}<p class="text-[11px] text-slate-500">{rightPreview.sublabel}</p>{/if}
+							</div>
+						</div>
+					</div>
+				</div>
+			{:else if draft?.kind === 'herostat'}
+				{@const h = draft as HeroStatBlock}
+				{@const heroPreview = buildCohort(h.cohort, undefined, h.micro)}
+				<div class="space-y-3">
+					<div class="flex flex-wrap gap-4">
+						<div>
+							<span class="text-xs text-slate-500">Layout</span>
+							<div class="mt-0.5 flex gap-1">
+								{#each HEROSTAT_LAYOUTS as l (l.id)}
+									<Button variant="outline" size="sm" pressed={h.layout === l.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ layout: l.id })}>{l.label}</Button>
+								{/each}
+							</div>
+						</div>
+						<div>
+							<span class="text-xs text-slate-500">Micro-viz</span>
+							<div class="mt-0.5 flex gap-1">
+								{#each HEROSTAT_MICROS as m (m.id)}
+									<Button variant="outline" size="sm" pressed={h.micro === m.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patch({ micro: m.id })}>{m.label}</Button>
+								{/each}
+							</div>
+						</div>
+					</div>
+					<label class="block text-xs text-slate-600">Title<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={h.title} oninput={(e) => patch({ title: e.currentTarget.value })} /></label>
+					<label class="block text-xs text-slate-600">Caption<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={h.caption} oninput={(e) => patch({ caption: e.currentTarget.value })} /></label>
+
+					<div class="space-y-2 rounded-lg bg-slate-50 p-3">
+						<div class="flex items-center justify-between">
+							<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Cohort</p>
+							<div class="flex gap-1">
+								{#each COHORT_KINDS as k (k.id)}
+									<Button variant="outline" size="xs" pressed={h.cohort.kind === k.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => setCohortKind(k.id)}>{k.label}</Button>
+								{/each}
+							</div>
+						</div>
+
+						<div>
+							<span class="text-xs text-slate-500">Accent</span>
+							<div class="mt-0.5 flex flex-wrap gap-1">
+								{#each COMPARISON_PALETTE as hex (hex)}
+									<button type="button" class="size-5 rounded-full border-2 {h.cohort.color === hex ? 'border-slate-700' : 'border-transparent'} transition" style="background: {hex};" aria-label="Pick accent {hex}" onclick={() => patchCohort({ color: hex })}></button>
+								{/each}
+							</div>
+						</div>
+
+						{#if h.cohort.kind === 'custom'}
+							{@const cust = h.cohort}
+							<div class="grid grid-cols-2 gap-2">
+								<label class="text-xs text-slate-600">Label<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={cust.label} oninput={(e) => patchCohort({ label: e.currentTarget.value })} /></label>
+								<label class="text-xs text-slate-600">Sublabel<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={cust.sublabel ?? ''} placeholder="e.g. of 12 participants" oninput={(e) => patchCohort({ sublabel: e.currentTarget.value })} /></label>
+								<label class="text-xs text-slate-600">Value<input type="number" class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm tabular-nums" value={cust.value} oninput={(e) => patchCohort({ value: Number(e.currentTarget.value) || 0 })} /></label>
+								<label class="text-xs text-slate-600">Unit<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={cust.unit ?? ''} placeholder="% / M / mentions" oninput={(e) => patchCohort({ unit: e.currentTarget.value })} /></label>
+								<label class="col-span-2 text-xs text-slate-600">Caption<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={cust.caption ?? ''} placeholder="e.g. RENEWABLES" oninput={(e) => patchCohort({ caption: e.currentTarget.value })} /></label>
+							</div>
+						{:else if h.cohort.kind === 'theme'}
+							{@const tspec = h.cohort}
+							<label class="block text-xs text-slate-600">Theme<select class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={tspec.themeId} onchange={(e) => patchCohort({ themeId: e.currentTarget.value })}>{#each THEME_OPTIONS as o (o.id)}<option value={o.id}>{o.label}</option>{/each}</select></label>
+							<label class="block text-xs text-slate-600">Override label<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={tspec.label ?? ''} placeholder="(use theme name)" oninput={(e) => patchCohort({ label: e.currentTarget.value })} /></label>
+						{:else}
+							{@const sspec = h.cohort}
+							<label class="block text-xs text-slate-600">Sentiment<select class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={String(sspec.sentimentBucket)} onchange={(e) => patchCohort({ sentimentBucket: Number(e.currentTarget.value) as -2 | -1 | 0 | 1 | 2 })}>{#each SENTIMENT_OPTIONS as o (o.id)}<option value={o.id}>{o.label}</option>{/each}</select></label>
+							<label class="block text-xs text-slate-600">Override label<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={sspec.label ?? ''} placeholder="(use sentiment name)" oninput={(e) => patchCohort({ label: e.currentTarget.value })} /></label>
+						{/if}
+					</div>
+
+					<div class="rounded-lg border border-slate-200 p-3">
+						<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Preview</p>
+						<div class="rounded-md p-3" style="border-left: 3px solid {heroPreview.color ?? '#cbd5e1'};">
+							<p class="text-xs font-semibold" style="color: {heroPreview.color};">{heroPreview.label}</p>
+							<p class="font-heading text-3xl font-bold tabular-nums text-slate-900">{heroPreview.value}{heroPreview.unit ?? ''}</p>
+							{#if heroPreview.sublabel}<p class="text-[11px] text-slate-500">{heroPreview.sublabel}</p>{/if}
+							{#if heroPreview.caption}<p class="text-[11px] font-semibold uppercase tracking-wider" style="color: {heroPreview.color};">{heroPreview.caption}</p>{/if}
+						</div>
+					</div>
+				</div>
+			{:else if draft?.kind === 'quotepull'}
+				{@const qp = draft as QuotePullBlock}
+				<div class="space-y-3">
+					<label class="block text-xs text-slate-600">Quote
+						<textarea
+							class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm leading-snug"
+							rows="4"
+							placeholder="Paste the quote here…"
+							value={qp.text}
+							oninput={(e) => patchQuotePull({ text: e.currentTarget.value })}
+						></textarea>
+					</label>
+					<div class="grid grid-cols-2 gap-2">
+						<label class="text-xs text-slate-600">Attribution<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={qp.attribution} placeholder="e.g. Patient, age 42" oninput={(e) => patchQuotePull({ attribution: e.currentTarget.value })} /></label>
+						<label class="text-xs text-slate-600">Context<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={qp.context} placeholder="e.g. Interview 06" oninput={(e) => patchQuotePull({ context: e.currentTarget.value })} /></label>
+						<label class="text-xs text-slate-600">Theme chip<input class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={qp.themeLabel} placeholder="Optional" oninput={(e) => patchQuotePull({ themeLabel: e.currentTarget.value })} /></label>
+						<label class="text-xs text-slate-600">Sentiment
+							<select class="mt-0.5 w-full rounded-md border border-slate-200 px-2 py-1 text-sm" value={String(qp.sentiment)} onchange={(e) => patchQuotePull({ sentiment: Number(e.currentTarget.value) })}>
+								{#each SENTIMENT_OPTIONS as o (o.id)}<option value={o.id}>{o.label}</option>{/each}
+							</select>
+						</label>
+					</div>
+
+					<div>
+						<span class="text-xs text-slate-500">Background</span>
+						<div class="mt-0.5 flex gap-1">
+							{#each QUOTEPULL_BACKGROUNDS as b (b.id)}
+								<Button variant="outline" size="sm" pressed={qp.background === b.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patchQuotePull({ background: b.id })}>{b.label}</Button>
+							{/each}
+						</div>
+					</div>
+
+					<div>
+						<span class="text-xs text-slate-500">Accent</span>
+						<div class="mt-0.5 flex flex-wrap gap-1">
+							{#each COMPARISON_PALETTE as hex (hex)}
+								<button type="button" class="size-5 rounded-full border-2 {qp.accentColor === hex ? 'border-slate-700' : 'border-transparent'} transition" style="background: {hex};" aria-label="Pick accent {hex}" onclick={() => patchQuotePull({ accentColor: hex })}></button>
+							{/each}
+						</div>
+					</div>
+
+					<div>
+						<span class="text-xs text-slate-500">Reveal</span>
+						<div class="mt-0.5 flex gap-1">
+							{#each QUOTEPULL_REVEALS as r (r.id)}
+								<Button variant="outline" size="sm" pressed={qp.reveal === r.id} activeClass="border-accent-mint bg-accent-mint/10" class="rounded-md border-slate-200 text-slate-600" onclick={() => patchQuotePull({ reveal: r.id })}>{r.label}</Button>
+							{/each}
+						</div>
 					</div>
 				</div>
 			{/if}

@@ -31,8 +31,18 @@
  *     (e.g. "oral GLP-1" counting for both oral_medication and glp_1) are NOT
  *     de-duplicated. This is intentional and documented in the lexicon.
  *
+ * Surface-form resolution (since lexicon schema 3.6): clusters that carry a
+ * `drug_id` FK do NOT duplicate the drug entity's generic_name + brand_names in
+ * `cluster.variants[]` — those names live in registries/drugs.json and this
+ * script inlines them at regex-build time. So the effective match set for any
+ * cluster is the union of (cluster.variants, drug.generic_name, drug.brand_names).
+ * A cluster with `drug_id` and an empty variants[] is valid as long as the drug
+ * entity contributes at least one surface form. The output's `clusters[].variants`
+ * field reflects the EFFECTIVE list (what the regex matched against), so a
+ * downstream consumer sees the surface forms that produced the counts.
+ *
  * Known limitation: no stemming/lemmatization. Coverage of a keyword is exactly
- * the variants listed for it in the lexicon — nothing more.
+ * the variants listed for it in the lexicon plus any drug-entity names — nothing more.
  *
  * Validates before writing: on any integrity failure it logs and exit(1)s
  * without writing output.
@@ -49,6 +59,7 @@ const ROOT = resolve(__dirname, '..');
 
 const LEXICON_FILE = 'src/lib/content/wctglpdemo-data/keyword_lexicon.json';
 const SEGMENTS_FILE = 'src/lib/content/wctglpdemo-data/segments.json';
+const DRUGS_FILE = 'src/lib/content/registries/drugs.json';
 const OUTPUT_FILE = 'src/lib/content/wctglpdemo-data/keyword_usage.json';
 
 /** Collected integrity failures; if non-empty at the end, nothing is written. */
@@ -57,6 +68,30 @@ const errors = [];
 // --- Load inputs ---
 const lexicon = JSON.parse(readFileSync(resolve(ROOT, LEXICON_FILE), 'utf8'));
 const segmentsData = JSON.parse(readFileSync(resolve(ROOT, SEGMENTS_FILE), 'utf8'));
+const drugsRegistry = JSON.parse(readFileSync(resolve(ROOT, DRUGS_FILE), 'utf8'));
+const drugById = new Map(drugsRegistry.items.map((d) => [d.id, d]));
+
+/**
+ * Resolve the effective surface forms for a cluster.
+ *
+ * Since lexicon schema 3.6, clusters carrying `drug_id` no longer duplicate the
+ * drug entity's generic_name + brand_names in `variants[]` — the matcher pulls
+ * them from the drug registry at regex-build time. So the effective surface
+ * forms for matching = (cluster.variants ∪ drug.generic_name ∪ drug.brand_names),
+ * lowercased, with empties dropped. A cluster with `drug_id` and an empty
+ * variants[] is valid as long as the drug entity contributes at least one name.
+ */
+function effectiveSurfaceForms(cluster) {
+	const surfaces = [...(cluster.variants ?? [])];
+	if (cluster.drug_id) {
+		const drug = drugById.get(cluster.drug_id);
+		if (drug) {
+			if (drug.generic_name) surfaces.push(drug.generic_name);
+			for (const b of drug.brand_names ?? []) surfaces.push(b);
+		}
+	}
+	return [...new Set(surfaces.map((s) => s.toLowerCase().trim()).filter(Boolean))];
+}
 
 // --- Validate the lexicon shape ---
 const clusterIds = new Set();
@@ -70,8 +105,13 @@ for (const cluster of lexicon.clusters ?? []) {
 	if (!cluster.parent_theme || !cluster.parent_subtheme) {
 		errors.push(`Cluster "${cluster.id}" is missing parent_theme or parent_subtheme.`);
 	}
-	if (!Array.isArray(cluster.variants) || cluster.variants.length === 0) {
-		errors.push(`Cluster "${cluster.id}" has no variants.`);
+	if (cluster.drug_id && !drugById.has(cluster.drug_id)) {
+		errors.push(`Cluster "${cluster.id}" references unknown drug_id "${cluster.drug_id}".`);
+	}
+	if (effectiveSurfaceForms(cluster).length === 0) {
+		errors.push(
+			`Cluster "${cluster.id}" has no effective surface forms (no variants[] and no drug_id contributing names).`
+		);
 	}
 }
 
@@ -83,12 +123,13 @@ const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /**
  * Build one case-insensitive regex per cluster: an alternation of all its
- * variants, longest first (so a longer phrase wins over a shorter prefix),
- * bounded by non-alphanumeric lookarounds. Space/hyphen runs in a variant are
- * made flexible.
+ * effective surface forms (cluster.variants ∪ drug.generic_name ∪ drug.brand_names
+ * when drug_id is set), longest first (so a longer phrase wins over a shorter
+ * prefix), bounded by non-alphanumeric lookarounds. Space/hyphen runs in a
+ * variant are made flexible.
  */
 function clusterRegex(cluster) {
-	const alts = [...cluster.variants]
+	const alts = effectiveSurfaceForms(cluster)
 		.map(normalize)
 		.sort((a, b) => b.length - a.length)
 		.map((v) => escapeRegex(v).replace(/[\s-]+/g, '[\\s-]+'));
@@ -164,7 +205,7 @@ for (const cluster of lexicon.clusters) {
 		label: cluster.label,
 		parent_theme: cluster.parent_theme,
 		parent_subtheme: cluster.parent_subtheme,
-		variants: cluster.variants,
+		variants: effectiveSurfaceForms(cluster),
 		count,
 		by_participant: perParticipant,
 		matches
@@ -209,13 +250,13 @@ const output = {
 		study_id: segmentsData.meta.study_id,
 		generated_at: new Date().toISOString(),
 		generator: 'scripts/build-keyword-usage.mjs',
-		sources: [LEXICON_FILE, SEGMENTS_FILE],
+		sources: [LEXICON_FILE, SEGMENTS_FILE, DRUGS_FILE],
 		lexicon_version: lexicon.meta.schema_version,
 		scope: 'participant segments',
 		notes: [
-			'Deterministic, code-counted cluster frequencies. Same lexicon + segments produces identical output.',
+			'Deterministic, code-counted cluster frequencies. Same lexicon + segments + drug registry produces identical output.',
 			'Counts participant speech only; interviewer prompts are not in segments.json.',
-			'Coverage of each cluster is exactly the variants listed in keyword_lexicon.json — no stemming.',
+			'Coverage of each cluster is its effective surface forms (cluster.variants ∪ drug.generic_name ∪ drug.brand_names when drug_id is set) — no stemming.',
 			'Clusters are counted independently; overlapping spans across clusters are not de-duplicated.',
 			'Every match carries absolute source char offsets (segment.char_start + local offset).',
 			'Per-participant counts roll up to per-subtheme via the cluster\'s parent_subtheme.'

@@ -8,6 +8,7 @@
   "unit": "monthly_estimated_search_volume",
   "geography": "US",
   "time_period": null,
+  "topic_category": "treatments",
   "source": {
     "type": "manual_extract",
     "source_image": "CleanShot 2026-05-23 at 10.45.06@2x.png",

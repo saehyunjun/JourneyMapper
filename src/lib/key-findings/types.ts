@@ -101,11 +101,107 @@ export type WordCloudBlock = {
 	filters: BlockFilters;
 };
 
-export type Block = RichTextBlock | QuoteBlock | DistributionBlock | WordCloudBlock;
+/**
+ * ComparisonBlock — two cohorts shown side by side, big-number-first.
+ *
+ * Inspired by the "Chile vs Germany" share format: one subject per side, a
+ * dominant hero metric, a small supporting micro-viz, and a brand-coloured
+ * accent. Each side is described by a CohortSpec serialised inline so the
+ * board stays JSON-only (the live Cohort is rebuilt by `buildCohort` at
+ * render time).
+ *
+ * Spec lives in `data-shapes.ts` as `CohortSpec` — re-imported as a plain
+ * JSON-safe object here. We don't import the type to keep types.ts free of
+ * downstream dependencies; the renderer re-asserts the shape.
+ */
+export type CohortSpecJSON =
+	| { kind: 'custom'; label: string; sublabel?: string; value: number; unit?: string; caption?: string; color?: string }
+	| { kind: 'theme'; themeId: string; label?: string; color?: string; filters: BlockFilters }
+	| { kind: 'sentiment'; sentimentBucket: -2 | -1 | 0 | 1 | 2; label?: string; color?: string; filters: BlockFilters };
+
+export type ComparisonMicroKind = 'topThemes' | 'sentiment' | 'none';
+export type ComparisonLayout = 'split' | 'stacked';
+
+export type ComparisonBlock = {
+	id: string;
+	kind: 'comparison';
+	configured: boolean;
+	left: CohortSpecJSON;
+	right: CohortSpecJSON;
+	micro: ComparisonMicroKind;
+	layout: ComparisonLayout;
+	title: string;
+	caption: string;
+};
+
+/**
+ * HeroStatBlock — single-cohort hero-metric poster.
+ *
+ * The library's most-used shape: one subject, one big number, one optional
+ * micro-viz. Reuses `CohortSpecJSON` so the same custom/theme/sentiment
+ * sourcing applies. Layout swaps between number-centered (square posters) and
+ * corner-anchored (label top-left, number bottom-right) for variety.
+ */
+export type HeroStatMicro = 'topThemes' | 'sentiment' | 'none';
+export type HeroStatLayout = 'centered' | 'corner';
+
+export type HeroStatBlock = {
+	id: string;
+	kind: 'herostat';
+	configured: boolean;
+	cohort: CohortSpecJSON;
+	micro: HeroStatMicro;
+	layout: HeroStatLayout;
+	title: string;
+	caption: string;
+};
+
+/**
+ * QuotePullBlock — a poster-format quote, optimised for square LinkedIn export.
+ *
+ * Distinct from `QuoteBlock`: that one is a corpus-aware picker with rich
+ * attribution. This one is a paste-and-style poster — the analyst already has
+ * the text and wants a bold, brand-coloured artwork. Background, accent, and
+ * reveal animation are first-class so it can be re-themed without re-typing.
+ */
+export type QuotePullBackground = 'light' | 'dark' | 'accent';
+export type QuotePullReveal = 'none' | 'fade' | 'word' | 'typewriter';
+
+export type QuotePullBlock = {
+	id: string;
+	kind: 'quotepull';
+	configured: boolean;
+	text: string;
+	attribution: string;
+	context: string;
+	themeLabel: string;
+	/** -2..2; drives the small sentiment dot. */
+	sentiment: number;
+	accentColor: string;
+	background: QuotePullBackground;
+	reveal: QuotePullReveal;
+	fontScale: number;
+};
+
+export type Block =
+	| RichTextBlock
+	| QuoteBlock
+	| DistributionBlock
+	| WordCloudBlock
+	| ComparisonBlock
+	| HeroStatBlock
+	| QuotePullBlock;
 export type BlockKind = Block['kind'];
 
 /** Block kinds whose configuration happens in the right drawer (not inline). */
-export const DRAWER_KINDS: BlockKind[] = ['quote', 'distribution', 'wordcloud'];
+export const DRAWER_KINDS: BlockKind[] = [
+	'quote',
+	'distribution',
+	'wordcloud',
+	'comparison',
+	'herostat',
+	'quotepull'
+];
 
 export type Priority = 'none' | 'low' | 'medium' | 'high';
 export type CardSize = 'square' | 'landscape';

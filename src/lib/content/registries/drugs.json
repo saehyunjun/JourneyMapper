@@ -188,6 +188,94 @@
       "stage": "approved",
       "indication_ids": ["obesity"],
       "description": "Short-term sympathomimetic appetite suppressant for obesity."
+    },
+    {
+      "id": "ocrelizumab",
+      "label": "Ocrelizumab (Ocrevus)",
+      "generic_name": "ocrelizumab",
+      "brand_names": ["Ocrevus"],
+      "moa_id": "anti_cd20",
+      "sponsor_id": "roche",
+      "stage": "approved",
+      "indication_ids": ["multiple_sclerosis"],
+      "description": "Anti-CD20 B-cell-depleting antibody approved for relapsing and primary progressive MS; 600 mg IV every 6 months."
+    },
+    {
+      "id": "ofatumumab",
+      "label": "Ofatumumab (Kesimpta)",
+      "generic_name": "ofatumumab",
+      "brand_names": ["Kesimpta"],
+      "moa_id": "anti_cd20",
+      "sponsor_id": "novartis",
+      "stage": "approved",
+      "indication_ids": ["multiple_sclerosis"],
+      "description": "Anti-CD20 B-cell-depleting antibody for relapsing MS; subcutaneous self-injection monthly. Same class as ocrelizumab but home-administered."
+    },
+    {
+      "id": "ublituximab",
+      "label": "Ublituximab (Briumvi)",
+      "generic_name": "ublituximab",
+      "brand_names": ["Briumvi"],
+      "moa_id": "anti_cd20",
+      "sponsor_id": "tg_therapeutics",
+      "stage": "approved",
+      "indication_ids": ["multiple_sclerosis"],
+      "description": "Glycoengineered anti-CD20 antibody for relapsing MS; shorter (~1 hour) infusion than ocrelizumab."
+    },
+    {
+      "id": "natalizumab",
+      "label": "Natalizumab (Tysabri)",
+      "generic_name": "natalizumab",
+      "brand_names": ["Tysabri"],
+      "moa_id": "alpha_4_integrin",
+      "sponsor_id": "biogen",
+      "stage": "approved",
+      "indication_ids": ["multiple_sclerosis"],
+      "description": "Alpha-4 integrin antagonist for relapsing MS; IV every 4 weeks via TOUCH program. High efficacy offset by PML risk in JCV-antibody-positive patients."
+    },
+    {
+      "id": "fingolimod",
+      "label": "Fingolimod (Gilenya)",
+      "generic_name": "fingolimod",
+      "brand_names": ["Gilenya"],
+      "moa_id": "s1p_modulator",
+      "sponsor_id": "novartis",
+      "stage": "approved",
+      "indication_ids": ["multiple_sclerosis"],
+      "description": "First oral DMT for relapsing MS; S1P receptor modulator. First-dose cardiac monitoring required; macular edema and infection risks."
+    },
+    {
+      "id": "kyv_101",
+      "label": "KYV-101 (anti-CD19 CAR-T)",
+      "generic_name": "kyv-101",
+      "brand_names": [],
+      "moa_id": "car_t_autologous",
+      "sponsor_id": "kyverna",
+      "stage": "phase_2",
+      "indication_ids": ["lupus_nephritis", "multiple_sclerosis"],
+      "description": "Investigational autologous anti-CD19 CAR-T (fully human binder) in clinical development for lupus nephritis, progressive MS, myasthenia gravis, and other antibody-mediated autoimmune diseases."
+    },
+    {
+      "id": "caba_201",
+      "label": "CABA-201 (anti-CD19 CAR-T)",
+      "generic_name": "caba-201",
+      "brand_names": [],
+      "moa_id": "car_t_autologous",
+      "sponsor_id": "cabaletta_bio",
+      "stage": "phase_2",
+      "indication_ids": ["lupus_nephritis", "multiple_sclerosis"],
+      "description": "Investigational autologous anti-CD19 CAR-T in development for lupus nephritis, generalized myasthenia gravis, systemic sclerosis, idiopathic inflammatory myopathies, and MS."
+    },
+    {
+      "id": "descartes_08",
+      "label": "Descartes-08 (anti-BCMA CAR-T)",
+      "generic_name": "descartes-08",
+      "brand_names": [],
+      "moa_id": "car_t_autologous",
+      "sponsor_id": "cartesian_therapeutics",
+      "stage": "phase_2",
+      "indication_ids": ["multiple_sclerosis"],
+      "description": "Investigational autologous mRNA-engineered anti-BCMA CAR-T; non-lentiviral, given outpatient without lymphodepletion. In trials for myasthenia gravis and being explored in MS."
     }
   ]
 }

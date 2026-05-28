@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "study_id": "wct_lupus_nephritis_demo",
+    "status": "placeholder_demo_data",
+    "generated_at": "2026-05-25T00:00:00.000Z",
+    "generator": "hand-authored placeholder quotes",
+    "notes": [
+      "PLACEHOLDER DATA — these are NOT real interview quotes. They were hand-authored to populate the demo UI alongside the synthetic LN cluster usage (lupus_nephritis_keyword_usage.json) and the manual-estimate search files under disease-insights/lupus-nephritis/search/.",
+      "One quote per canonical topic category in topic-alignment.ts. Attribution uses the same ln_01..ln_04 synthetic participant ids that lupus_nephritis_keyword_usage.json uses, so participant counts and quote counts stay internally consistent.",
+      "Replace this file with real transcript-anchored quotes once a real LN corpus exists; the consuming code (narrativeForTopicRow in topic-alignment.ts) looks each quote up by category_id, so a real-data replacement only needs to preserve the key shape."
+    ],
+    "shape": {
+      "category_id": "Canonical TopicCategoryId from topic-alignment.ts (treatments, symptoms, ...).",
+      "text": "The quote itself. Kept under ~35 words for pull-quote display.",
+      "participant_id": "Synthetic ln_NN id matching the demo participant set."
+    }
+  },
+  "quotes": [
+    {
+      "category_id": "symptoms",
+      "text": "It's a different kind of tired. After sleeping ten hours, your bones are still tired. People don't get that until they see it.",
+      "participant_id": "ln_02"
+    },
+    {
+      "category_id": "diagnostics_monitoring",
+      "text": "They told me my eGFR was forty-three and I was supposed to know what that meant. I went home and Googled it for an hour before I understood I had stage three kidney disease.",
+      "participant_id": "ln_03"
+    },
+    {
+      "category_id": "treatments",
+      "text": "My doctor switched me to Lupkynis after the mycophenolate stopped working. I had to ask her how to pronounce it. None of these drug names sound like real words.",
+      "participant_id": "ln_01"
+    },
+    {
+      "category_id": "side_effects_safety",
+      "text": "The prednisone gave me the moon face within six weeks. I stopped sending photos to family — I told my husband I felt like I was wearing a costume of someone else's body.",
+      "participant_id": "ln_04"
+    },
+    {
+      "category_id": "quality_of_life",
+      "text": "I had to leave my teaching job. I couldn't be in a room with thirty unvaccinated kids while I was immunocompromised. That decision broke something in me.",
+      "participant_id": "ln_02"
+    },
+    {
+      "category_id": "comorbidities_complications",
+      "text": "My grandmother went on dialysis at the end. When my nephrologist said a transplant might be on the table in five years, I just — I had to leave the office.",
+      "participant_id": "ln_03"
+    },
+    {
+      "category_id": "clinical_trials",
+      "text": "I read about a CAR-T trial that sounded promising — it's in Boston and I'm in Albuquerque. I never even brought it up with my doctor.",
+      "participant_id": "ln_01"
+    }
+  ]
+}

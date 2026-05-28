@@ -1,0 +1,16 @@
+{
+  "id": "glp1_negative_at_trial_consideration",
+  "label": "Negative sentiment at trial consideration",
+  "description": "Fragments tagged to the trial_consideration stage with sentiment <= -1. Surfaces the friction in the corpus's densest stage — what's pushing patients away from saying yes to a maintenance study.",
+  "applicable_indications": ["obesity"],
+  "filter": {
+    "content_source": ["interview"],
+    "indications": ["obesity"],
+    "annotations": {
+      "has_stage": ["trial_consideration"],
+      "sentiment": { "max": -1 }
+    }
+  },
+  "weighting": { "type": "uniform" },
+  "color": "#8b5cf6"
+}

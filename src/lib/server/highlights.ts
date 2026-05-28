@@ -12,25 +12,39 @@ import { loadDoc, saveDoc } from './kv-store';
 const HIGHLIGHTS_PATH = 'src/lib/content/wctglpdemo-data/highlights.json';
 const KV_KEY = 'wctglpdemo:highlights';
 
-export type HighlightKind = 'segment' | 'quote';
+export type HighlightKind = 'segment' | 'quote' | 'fragment';
 
 type HighlightsFile = {
 	meta: { schema_version: string; study_id: string; description: string; updated_at: string };
 	starred_segment_ids: string[];
 	starred_quote_ids: string[];
+	/** Optional on disk for backward compatibility with snapshots written before
+	 *  fragment-starring landed; readers default to []. */
+	starred_fragment_ids?: string[];
 };
 
 export type HighlightState = {
 	starredSegmentIds: string[];
 	starredQuoteIds: string[];
+	starredFragmentIds: string[];
+};
+
+const KEY_BY_KIND: Record<HighlightKind, keyof Pick<
+	HighlightsFile,
+	'starred_segment_ids' | 'starred_quote_ids' | 'starred_fragment_ids'
+>> = {
+	segment: 'starred_segment_ids',
+	quote: 'starred_quote_ids',
+	fragment: 'starred_fragment_ids'
 };
 
 const read = () => loadDoc<HighlightsFile>(KV_KEY, HIGHLIGHTS_PATH, bundledHighlights as HighlightsFile);
 
 function project(file: HighlightsFile): HighlightState {
 	return {
-		starredSegmentIds: file.starred_segment_ids,
-		starredQuoteIds: file.starred_quote_ids
+		starredSegmentIds: file.starred_segment_ids ?? [],
+		starredQuoteIds: file.starred_quote_ids ?? [],
+		starredFragmentIds: file.starred_fragment_ids ?? []
 	};
 }
 
@@ -42,8 +56,8 @@ export async function readHighlights(): Promise<HighlightState> {
 /** Toggle one id on/off and persist; returns the updated state. */
 export async function toggleHighlight(kind: HighlightKind, id: string): Promise<HighlightState> {
 	const file = await read();
-	const key = kind === 'segment' ? 'starred_segment_ids' : 'starred_quote_ids';
-	const set = new Set(file[key]);
+	const key = KEY_BY_KIND[kind];
+	const set = new Set(file[key] ?? []);
 	if (set.has(id)) set.delete(id);
 	else set.add(id);
 	file[key] = [...set].sort();

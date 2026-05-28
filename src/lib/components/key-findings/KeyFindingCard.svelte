@@ -33,6 +33,9 @@
 	import DistributionBlock from './blocks/DistributionBlock.svelte';
 	import WordCloudBlock from './blocks/WordCloudBlock.svelte';
 	import QuoteBlock from './blocks/QuoteBlock.svelte';
+	import ComparisonBlock from './blocks/ComparisonBlock.svelte';
+	import HeroStatBlock from './blocks/HeroStatBlock.svelte';
+	import QuotePullBlock from './blocks/QuotePullBlock.svelte';
 	import StackedCards from '../StackedCards.svelte';
 	import { keyFindings } from '$lib/stores/key-findings.svelte';
 	import { WIDGETS, createBlock } from '$lib/key-findings/widgets';
@@ -164,6 +167,12 @@
 				<WordCloudBlock {block} editable={active} onUpdate={(p) => blockUpdate(block.id, p, `title:${block.id}`)} onConfigure={() => onconfigure(card.id, block.id)} />
 			{:else if block.kind === 'quote'}
 				<QuoteBlock {block} editable={active} animate={animated} {replayKey} fontScale={block.fontScale ?? 1} {profiles} onUpdate={(p, key) => blockUpdate(block.id, p, key)} onConfigure={() => onconfigure(card.id, block.id)} {onparticipant} />
+			{:else if block.kind === 'comparison'}
+				<ComparisonBlock {block} editable={active} animate={animated} {replayKey} onUpdate={(p) => blockUpdate(block.id, p, `title:${block.id}`)} onConfigure={() => onconfigure(card.id, block.id)} />
+			{:else if block.kind === 'herostat'}
+				<HeroStatBlock {block} editable={active} animate={animated} {replayKey} onUpdate={(p) => blockUpdate(block.id, p, `title:${block.id}`)} onConfigure={() => onconfigure(card.id, block.id)} />
+			{:else if block.kind === 'quotepull'}
+				<QuotePullBlock {block} editable={active} animate={animated} {replayKey} onUpdate={(p, key) => blockUpdate(block.id, p, key)} onConfigure={() => onconfigure(card.id, block.id)} />
 			{/if}
 		</div>
 	</div>

@@ -1,0 +1,30 @@
+{
+	"id": "multiple_sclerosis_quality_of_life_searches_us",
+	"type": "search_volume_topics",
+	"indication_id": "multiple_sclerosis",
+	"therapeutic_area_ids": ["neurology", "immunology"],
+	"title": "MS quality-of-life searches",
+	"subtitle": "Monthly estimated volume, US — daily life, work, family, prognosis",
+	"unit": "monthly_estimated_search_volume",
+	"geography": "US",
+	"time_period": null,
+	"topic_category": "quality_of_life",
+	"source": {
+		"type": "manual_estimate",
+		"notes": "Hand-authored estimates. Work, pregnancy, and progression-anxiety queries are the dominant lifestyle category. MS-and-pregnancy is uniquely high because MS skews young and female and DMT washout adds complexity."
+	},
+	"dimensions": ["topic"],
+	"measures": ["volume"],
+	"data": [
+		{ "topic": "MS life expectancy", "volume": 12000 },
+		{ "topic": "MS and pregnancy", "volume": 8100 },
+		{ "topic": "working with MS", "volume": 4400 },
+		{ "topic": "MS disability rate", "volume": 3200 },
+		{ "topic": "MS diet", "volume": 9900 },
+		{ "topic": "exercise with MS", "volume": 5400 },
+		{ "topic": "MS sleep problems", "volume": 2400 },
+		{ "topic": "MS progression rate", "volume": 3600 },
+		{ "topic": "driving with MS", "volume": 1800 },
+		{ "topic": "MS depression", "volume": 4400 }
+	]
+}

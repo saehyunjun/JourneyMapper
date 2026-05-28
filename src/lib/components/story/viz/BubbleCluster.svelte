@@ -155,7 +155,7 @@
 			<svg class="leaders" viewBox="0 0 {size} {size}" aria-hidden="true">
 				{#each laidOut as bubble, i (bubble.id)}
 					{@const lead = leaderFor(bubble.x, bubble.y, bubble.r)}
-					{@const delay = entranceStartMs + i * stagger + 80}
+					{@const delay = entranceStartMs + i * stagger + Math.round(bubbleDurationMs * 0.7)}
 					<polyline
 						points="{lead.edge.x},{lead.edge.y} {lead.elbow.x},{lead.elbow.y} {lead.end.x},{lead.end.y}"
 						fill="none"
@@ -175,14 +175,16 @@
 			{@const delay = entranceStartMs + i * stagger}
 			{@const shade = shadeByIndex[i] ?? 1}
 			{@const lead = leaderFor(bubble.x, bubble.y, bubble.r)}
+			{@const dx = bubble.x - stageRadius}
+			{@const dy = bubble.y - stageRadius}
 			<button
 				class="bubble"
 				class:dimmed={hoveredId !== null && hoveredId !== bubble.id}
 				class:primary={bubble.primary}
-				style:left="{bubble.x}px"
-				style:top="{bubble.y}px"
 				style:width="{bubble.r * 2}px"
 				style:height="{bubble.r * 2}px"
+				style:--bubble-dx="{dx}px"
+				style:--bubble-dy="{dy}px"
 				style:--bubble-base={bubble.color ?? 'var(--ink)'}
 				style:--bubble-shade="{Math.round(shade * 100)}%"
 				style:--bubble-final-opacity={bubble.opacity ?? 1}
@@ -210,7 +212,7 @@
 					style:left="{lead.labelX}px"
 					style:top="{lead.labelY}px"
 					style:color={nameColor}
-					style:--bubble-delay="{delay + 200}ms"
+					style:--bubble-delay="{delay + Math.round(bubbleDurationMs * 0.8)}ms"
 					aria-hidden="true"
 				>
 					{bubble.label}
@@ -253,6 +255,10 @@
 
 	.bubble {
 		position: absolute;
+		/* All bubbles anchor at the stage center; the keyframe carries them out
+		   to their packed position via translate(--bubble-dx, --bubble-dy). */
+		left: 50%;
+		top: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -262,10 +268,9 @@
 		margin: 0;
 		cursor: pointer;
 		opacity: var(--bubble-final-opacity, 1);
-		transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%)
+			translate(var(--bubble-dx, 0), var(--bubble-dy, 0));
 		transform-origin: center center;
-		/* Shade lower-value bubbles toward white so count differences read at
-		   a glance. var(--bubble-shade) is set by BubbleCluster per bubble. */
 		background: color-mix(
 			in oklab,
 			var(--bubble-base, var(--ink)) var(--bubble-shade, 100%),
@@ -275,7 +280,7 @@
 			transform var(--dur-fast) var(--ease-standard),
 			opacity var(--dur-fast) var(--ease-standard),
 			filter var(--dur-fast) var(--ease-standard);
-		animation: bubble-enter var(--bubble-duration) var(--ease-smooth) both;
+		animation: bubble-emerge var(--bubble-duration) var(--ease-smooth) both;
 		animation-delay: var(--bubble-delay, 0ms);
 	}
 
@@ -325,7 +330,9 @@
 
 	.bubble:hover,
 	.bubble:focus-visible {
-		transform: translate(-50%, -50%) scale(1.08);
+		transform: translate(-50%, -50%)
+			translate(var(--bubble-dx, 0), var(--bubble-dy, 0))
+			scale(1.08);
 		outline: none;
 		z-index: 3;
 		filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.18));
@@ -340,32 +347,42 @@
 		z-index: 2;
 	}
 
-	@keyframes bubble-enter {
+	/* Bubbles begin at the stage center with r=0 and travel outward to their
+	   final packed offset (--bubble-dx, --bubble-dy) while scaling up to full
+	   radius. Position and radius interpolate on the same eased curve, so each
+	   bubble reads as a circle growing as it finds its place. */
+	@keyframes bubble-emerge {
 		from {
-			transform: translate(-50%, -50%) scale(0.85);
+			transform: translate(-50%, -50%) translate(0, 0) scale(0);
 			opacity: 0;
 		}
 		to {
-			transform: translate(-50%, -50%) scale(1);
+			transform: translate(-50%, -50%)
+				translate(var(--bubble-dx, 0), var(--bubble-dy, 0))
+				scale(1);
 			opacity: var(--bubble-final-opacity, 1);
 		}
 	}
 
 	@keyframes bubble-loop {
 		0% {
-			transform: translate(-50%, -50%) scale(0.85);
+			transform: translate(-50%, -50%) translate(0, 0) scale(0);
 			opacity: 0;
 		}
 		18% {
-			transform: translate(-50%, -50%) scale(1);
+			transform: translate(-50%, -50%)
+				translate(var(--bubble-dx, 0), var(--bubble-dy, 0))
+				scale(1);
 			opacity: var(--bubble-final-opacity, 1);
 		}
 		82% {
-			transform: translate(-50%, -50%) scale(1);
+			transform: translate(-50%, -50%)
+				translate(var(--bubble-dx, 0), var(--bubble-dy, 0))
+				scale(1);
 			opacity: var(--bubble-final-opacity, 1);
 		}
 		100% {
-			transform: translate(-50%, -50%) scale(0.85);
+			transform: translate(-50%, -50%) translate(0, 0) scale(0);
 			opacity: 0;
 		}
 	}
@@ -375,7 +392,10 @@
 		.bubble-name {
 			animation: none;
 			opacity: var(--bubble-final-opacity, 1);
-			transform: translate(-50%, -50%);
+		}
+		.bubble {
+			transform: translate(-50%, -50%)
+				translate(var(--bubble-dx, 0), var(--bubble-dy, 0));
 		}
 		.stage.loop .bubble {
 			animation: none;

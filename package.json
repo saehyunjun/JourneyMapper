@@ -77,7 +77,9 @@
     "gifenc": "^1.0.3",
     "html-to-image": "^1.11.13",
     "layerchart": "^1.0.13",
+    "marked": "^18.0.4",
     "redis": "^5.12.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "topojson-client": "^3.1.0"
   }
 }

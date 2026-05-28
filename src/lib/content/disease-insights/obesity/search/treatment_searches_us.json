@@ -1,0 +1,30 @@
+{
+	"id": "obesity_treatment_searches_us",
+	"type": "search_volume_topics",
+	"indication_id": "obesity",
+	"therapeutic_area_ids": ["endocrinology", "metabolism"],
+	"title": "Obesity / weight-management treatment searches",
+	"subtitle": "Monthly estimated volume, US",
+	"unit": "monthly_estimated_search_volume",
+	"geography": "US",
+	"time_period": null,
+	"topic_category": "treatments",
+	"source": {
+		"type": "manual_estimate",
+		"notes": "Hand-authored estimates for the GLP-1 / obesity demo corpus. GLP-1 brand-name queries dwarf almost every other clinical query in the US market. Calibrate against real keyword data before shipping."
+	},
+	"dimensions": ["topic"],
+	"measures": ["volume"],
+	"data": [
+		{ "topic": "Ozempic", "volume": 1850000 },
+		{ "topic": "Wegovy", "volume": 740000 },
+		{ "topic": "Mounjaro", "volume": 920000 },
+		{ "topic": "Zepbound", "volume": 410000 },
+		{ "topic": "semaglutide", "volume": 280000 },
+		{ "topic": "tirzepatide", "volume": 165000 },
+		{ "topic": "compounded semaglutide", "volume": 88000 },
+		{ "topic": "bariatric surgery", "volume": 49000 },
+		{ "topic": "weight loss injection", "volume": 33000 },
+		{ "topic": "GLP-1 medication", "volume": 22000 }
+	]
+}

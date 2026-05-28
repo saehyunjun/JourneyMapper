@@ -1,0 +1,537 @@
+{
+  "meta": {
+    "schema_version": "0.1",
+    "corpus_id": "wct_glp1_2025q4",
+    "persona_id": "glp1_negative_at_trial_consideration",
+    "persona_label": "Negative sentiment at trial consideration",
+    "persona_color": "#8b5cf6",
+    "journey_indication": "obesity",
+    "journey_schema_version": "1.0",
+    "generated_at": "2026-05-26T20:04:55.170Z",
+    "generator": "scripts/synthesize-journey-map.mjs",
+    "generator_version": "synthesize-journey-map@0.1",
+    "model": "claude-haiku-4-5-20251001",
+    "fragment_count_total": 82,
+    "stage_count": 3,
+    "decision_point_count": 1,
+    "notes": [
+      "Generative journey-map artifact. Stage observations + decision-point panels synthesized from corpus fragments via Claude with JSON-schema-constrained output.",
+      "external_observations[] slot reserved on each step for future world-knowledge integration (PubMed / NCT / disease-insights).",
+      "Re-run with: node scripts/synthesize-journey-map.mjs <corpus> <persona> --force"
+    ],
+    "external_observations_proposer": {
+      "generator": "scripts/propose-external-observations.mjs",
+      "generator_version": "propose-external-observations@0.1",
+      "model": "claude-haiku-4-5-20251001",
+      "generated_at": "2026-05-26T20:31:36.908Z",
+      "datasets_consumed": [
+        "obesity_treatment_searches_us",
+        "obesity_side_effects_searches_us",
+        "obesity_cost_access_searches_us",
+        "obesity_clinical_trials_searches_us",
+        "obesity_lifestyle_searches_us",
+        "obesity_community_engagement",
+        "obesity_clinicaltrials_normalized",
+        "obesity_clinicaltrials_sponsors_observed",
+        "obesity_clinicaltrials_interventions_observed"
+      ],
+      "count": 9
+    }
+  },
+  "stages": [
+    {
+      "stage_id": "discontinuation_consideration",
+      "label": "Discontinuation consideration",
+      "description": "Active weighing of staying on vs. coming off. Cost, side-effect fatigue, supply issues, clinical guidance, and personal philosophy all in play.",
+      "fragment_count": 2,
+      "avg_sentiment": -1,
+      "emotion_label": "apprehension",
+      "stage_summary": "This patient anticipates potential barriers—insurance denial or coverage withdrawal due to side effects—that could force discontinuation, creating uncertainty about whether continuation is even feasible.",
+      "drill_down": {
+        "text": "Insurance emerges as a decisive gatekeeper in the discontinuation calculus. Rather than deciding to stop based on personal tolerance, the patient worries that an insurance company might deny coverage or refuse to cover them if side effects occur, shifting agency away from informed choice into external constraint. This tension—between clinical need and administrative gatekeeping—frames discontinuation not as a patient decision but as a potential mandate.",
+        "supporting_fragment_ids": [
+          "iv-participant_06_t47_s01",
+          "iv-participant_06_t47_s02"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "cost_pressure",
+          "label": "Cost pressure",
+          "observations": [
+            {
+              "title": "Insurance Denial Could Mandate Discontinuation",
+              "polarity": "negative",
+              "body": "The patient identifies insurance refusal as a major discontinuation trigger—one beyond their control—where coverage could be withdrawn unilaterally, forcing them off treatment regardless of clinical benefit.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t47_s01"
+              ],
+              "confidence": 0.85
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "74,000/MO SEARCH 'OZEMPIC COST' IN US",
+              "body": "Cost anxiety is not isolated to this persona's insurance fears—it is the single largest cost-access query nationally, confirming that financial discontinuation pressure is a population-scale driver, not an outlier.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_cost_access_searches_us"
+              ],
+              "confidence": 0.85
+            }
+          ]
+        },
+        {
+          "step_id": "side_effect_fatigue",
+          "label": "Side-effect fatigue",
+          "observations": [
+            {
+              "title": "Side Effects as Insurance Coverage Disqualifier",
+              "polarity": "negative",
+              "body": "The patient anticipates that experiencing side effects could itself become grounds for insurance denial, creating a double bind where the burden of treatment side effects is compounded by the risk of losing coverage.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t47_s02"
+              ],
+              "confidence": 0.8
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "165,000/MO SEARCH 'OZEMPIC SIDE EFFECTS' IN US",
+              "body": "The persona's dread about side-effect–driven insurance denial reflects a broader pattern: side-effect searches outnumber cost searches by 2:1, suggesting that adverse-effect burden is the primary reason patients query their treatment, amplifying the likelihood of discontinuation consideration.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_side_effects_searches_us"
+              ],
+              "confidence": 0.88
+            }
+          ]
+        },
+        {
+          "step_id": "clinical_taper_discussion",
+          "label": "Clinical taper discussion",
+          "observations": [],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "post_discontinuation",
+      "label": "Post-discontinuation",
+      "description": "Off therapy. Short-term stability vs. emerging regain; attempted self-maintenance; awareness of the body's drive to return to higher weight.",
+      "fragment_count": 5,
+      "avg_sentiment": -1,
+      "emotion_label": "fear",
+      "stage_summary": "For patients with negative trial sentiment, post-discontinuation surfaces acute dread about weight regain and loss of medication access, crystallizing the core tension between research participation and personal stability.",
+      "drill_down": {
+        "text": "All five fragments in this cohort converge on a single, visceral fear: the prospect of discontinuing medication and watching weight return. Participants speak of regain as not abstract but historically lived—they know \"how quickly\" they regained before—and frame medication discontinuation as a high-stakes gamble they are unwilling to take, even for science.",
+        "supporting_fragment_ids": [
+          "iv-participant_06_t13_s01",
+          "iv-participant_11_t15_s01",
+          "iv-participant_12_t15_s00"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "short_term_stability",
+          "label": "Short-term stability",
+          "observations": [],
+          "external_observations": []
+        },
+        {
+          "step_id": "regain_awareness",
+          "label": "Regain awareness",
+          "observations": [
+            {
+              "title": "FEAR OF REVERTING TO PRIOR WEIGHT TRAJECTORY",
+              "polarity": "negative",
+              "body": "Participants who have experienced decades of weight cycling or recent rapid regain before medication express profound dread at the prospect of discontinuation, rooted in lived history of how quickly they can regain.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t13_s01",
+                "iv-participant_11_t15_s01",
+                "iv-participant_12_t15_s00"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "title": "ANXIETY ABOUT MEDICATION ACCESS LOSS POST-TRIAL",
+              "polarity": "negative",
+              "body": "Participants worry not only about regain but about the structural problem of trial end—losing access to a treatment that has materially changed their health trajectory and daily functioning.",
+              "supporting_fragment_ids": [
+                "iv-participant_12_t13_s02",
+                "iv-participant_12_t15_s00"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "title": "EMOTIONAL VS. SCIENTIFIC RATIONALITY CONFLICT",
+              "polarity": "mixed",
+              "body": "Participants acknowledge intellectually why placebo or discontinuation is scientifically necessary, but report the emotional reality of that ask as irreconcilable with their fear of reverting to a harmful health state they have experienced before.",
+              "supporting_fragment_ids": [
+                "iv-participant_12_t15_s00"
+              ],
+              "confidence": 0.75
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "14,000/MO SEARCH 'WEIGHT REGAIN AFTER OZEMPIC' IN US",
+              "body": "The persona's fear of rapid regain is grounded in lived experience—and 14,000 monthly searches on regain post-discontinuation indicate that this anxiety is widespread enough to be a major information-seeking trigger across the discontinuation–to–trial pipeline.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_lifestyle_searches_us"
+              ],
+              "confidence": 0.82
+            }
+          ]
+        },
+        {
+          "step_id": "attempted_self_maintenance",
+          "label": "Attempted self-maintenance",
+          "observations": [],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "trial_consideration",
+      "label": "Clinical-trial consideration",
+      "description": "Hearing about and weighing a clinical trial — in the WCT GLP-1 case, a maintenance trial for people who have discontinued and are at risk of regain. This stage is where the WCT corpus is densest.",
+      "fragment_count": 83,
+      "avg_sentiment": -1,
+      "emotion_label": "apprehension",
+      "stage_summary": "This persona confronts trial participation with deep wariness—fear of placebo assignment and weight regain, skepticism about logistics, and uncertainty about safety and access, even as they weigh potential benefits.",
+      "drill_down": {
+        "text": "The dominant tension is between urgent need (risk of rapid regain post-discontinuation) and profound risk aversion. Participants frame trial entry as a high-stakes gamble: placebo assignment could undo months of progress, logistical demands feel insurmountable, and unanswered questions about adverse events and post-trial access loom large. This is not indifference—it is active, reasoned skepticism grounded in lived experience of weight cycling.",
+        "supporting_fragment_ids": [
+          "iv-participant_06_t13_s01",
+          "iv-participant_12_t15_s00",
+          "iv-participant_09_t37_s01"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "trial_awareness",
+          "label": "Trial awareness",
+          "observations": [
+            {
+              "title": "SKEPTICISM ABOUT ORAL FORMULATION EFFICACY",
+              "polarity": "negative",
+              "body": "At least one participant expressed doubt that newly available oral GLP-1 alternatives will match the effectiveness of injectable versions, viewing them as inferior options for weight loss outcomes.",
+              "supporting_fragment_ids": [
+                "iv-participant_10_t55_s00",
+                "iv-participant_10_t55_s02",
+                "iv-participant_10_t55_s03"
+              ],
+              "confidence": 0.65
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "10,550/MO TOTAL OBESITY CLINICAL-TRIAL SEARCHES US",
+              "body": "Trial awareness nationally is sparse relative to treatment and side-effect queries (10× lower volume than side-effect searches), meaning this persona's wariness reflects a broader challenge: potential trial enrollees have far less pre-existing familiarity with trials than with the drugs themselves.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_clinical_trials_searches_us"
+              ],
+              "confidence": 0.8
+            },
+            {
+              "title": "357 PLACEBO ARMS ACROSS 353 OBESITY TRIALS CLINICALTRIALS.GOV",
+              "body": "The persona's fear of placebo assignment is not hypothetical—placebo is by far the most common control intervention in obesity trials, meaning randomization genuinely carries substantial risk of active-arm deprivation, amplifying rational concern about trial participation.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "obesity_clinicaltrials_interventions_observed"
+              ],
+              "confidence": 0.92
+            }
+          ]
+        },
+        {
+          "step_id": "eligibility_self_assessment",
+          "label": "Eligibility self-assessment",
+          "observations": [],
+          "external_observations": []
+        },
+        {
+          "step_id": "logistics_assessment",
+          "label": "Logistics assessment",
+          "observations": [
+            {
+              "title": "SCHEDULING AND TRAVEL LOGISTICS POSE MAJOR BARRIER",
+              "polarity": "negative",
+              "body": "Multiple participants with work travel or unpredictable schedules report that trial-mandated in-person visits create insurmountable conflicts; those unable to attend the same clinic consistently describe this as a dealbreaker.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t19_s01",
+                "iv-participant_07_t31_s01",
+                "iv-participant_11_t19_s01",
+                "iv-participant_09_t21_s02",
+                "iv-participant_09_t37_s03"
+              ],
+              "confidence": 0.92
+            },
+            {
+              "title": "TIME COMMITMENT EXCEEDS AVAILABLE CAPACITY",
+              "polarity": "negative",
+              "body": "Participants consistently cite time—both travel duration and total hours per week—as the deciding friction; six to ten hours per week for clinic visits and waiting is framed as unrealistic given work and family obligations.",
+              "supporting_fragment_ids": [
+                "iv-participant_09_t25_s02",
+                "iv-participant_09_t37_s01",
+                "iv-participant_11_t27_s02",
+                "iv-participant_12_t25_s01"
+              ],
+              "confidence": 0.88
+            },
+            {
+              "title": "ORAL FORMULATION ADHERENCE CONCERNS",
+              "polarity": "negative",
+              "body": "One participant flagged difficulty remembering to take medication at specific times and in a specific manner, raising concerns about consistency and efficacy if trial uses an oral version.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t51_s01",
+                "iv-participant_06_t51_s03"
+              ],
+              "confidence": 0.68
+            },
+            {
+              "title": "INJECTABLE PROCESS ITSELF AVERSIVE",
+              "polarity": "negative",
+              "body": "Two participants stated they dislike the injection process itself, framing it as something they tolerate only because of demonstrated benefit, raising friction if trial adds perceived inconvenience.",
+              "supporting_fragment_ids": [
+                "iv-participant_09_t13_s00",
+                "iv-participant_07_t53_s00",
+                "iv-participant_08_t53_s00"
+              ],
+              "confidence": 0.72
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "SEMAGLUTIDE + TIRZEPATIDE: 118 + 114 TRIALS (232 COMBINED)",
+              "body": "The persona's skepticism about trial alternatives (e.g., oral formulations) is warranted: the vast majority of active-arm trials use injectable semaglutide or tirzepatide, meaning trial-offered alternatives will often be novel, unproven formulations with uncertain efficacy relative to the standard therapy they already know works.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "obesity_clinicaltrials_interventions_observed"
+              ],
+              "confidence": 0.9
+            },
+            {
+              "title": "NOVO NORDISK + ELI LILLY LEAD 149 + 76 TRIALS",
+              "body": "Industry-sponsored trials (Novo Nordisk 149 lead, Eli Lilly 76 lead) dominate the landscape, meaning trial protocols are often optimized for commercial endpoints and scalability, not for patient convenience—a structural reason why the persona's logistical friction may be endemic to trial design, not specific to this one.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "obesity_clinicaltrials_sponsors_observed"
+              ],
+              "confidence": 0.88
+            }
+          ]
+        },
+        {
+          "step_id": "consent_or_decline",
+          "label": "Consent or decline",
+          "observations": [
+            {
+              "title": "FEAR OF PLACEBO ASSIGNMENT AND RAPID WEIGHT REGAIN",
+              "polarity": "negative",
+              "body": "Multiple participants express visceral fear at the prospect of placebo assignment, anchored in recent personal history of rapid regain after discontinuation; the risk feels emotionally intolerable despite intellectual understanding of scientific rationale.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t13_s01",
+                "iv-participant_06_t27_s00",
+                "iv-participant_11_t15_s01",
+                "iv-participant_12_t15_s00"
+              ],
+              "confidence": 0.91
+            },
+            {
+              "title": "UNCERTAINTY ABOUT ADVERSE REACTIONS AND MEDICAL LIABILITY",
+              "polarity": "negative",
+              "body": "Participants raise unanswered questions about medical care if adverse events occur during the trial—particularly cardiac concerns—and worry about who bears responsibility if unknown side effects emerge, signaling lack of trust in trial safeguards.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t73_s01",
+                "iv-participant_08_t73_s01",
+                "iv-participant_08_t73_s02",
+                "iv-participant_10_t47_s03"
+              ],
+              "confidence": 0.78
+            },
+            {
+              "title": "ANXIETY ABOUT POST-TRIAL MEDICATION ACCESS",
+              "polarity": "negative",
+              "body": "Participants worry that trial participation will create a cliff edge at study conclusion—they fear losing access to beneficial medication and being unable to afford or obtain it afterward, adding existential risk to the decision.",
+              "supporting_fragment_ids": [
+                "iv-participant_12_t13_s02"
+              ],
+              "confidence": 0.7
+            },
+            {
+              "title": "INSURANCE BARRIERS AND SIDE-EFFECT COVERAGE GAPS",
+              "polarity": "negative",
+              "body": "One participant raised concern that insurance may deny coverage if a trial-related adverse event emerges, creating financial and medical vulnerability.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t47_s01",
+                "iv-participant_06_t47_s02"
+              ],
+              "confidence": 0.61
+            },
+            {
+              "title": "SHAME AND JUDGMENT AS SILENT ATTRITION DRIVERS",
+              "polarity": "negative",
+              "body": "One participant surfaced that participants often carry shame about weight and may feel judged by clinicians or society; if a trial feels difficult, impersonal, or burdensome, they may quietly drop out rather than ask for help, making study design friction especially damaging.",
+              "supporting_fragment_ids": [
+                "iv-participant_12_t39_s00",
+                "iv-participant_12_t39_s01",
+                "iv-participant_12_t39_s02"
+              ],
+              "confidence": 0.72
+            },
+            {
+              "title": "KNOWLEDGE GAPS ABOUT TRIAL REALITIES",
+              "polarity": "negative",
+              "body": "Participants express concern that prospective trial enrollees underestimate the actual burden of participation; there is a mismatch between casual trial interest and the lived logistics of commitment.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t43_s04",
+                "iv-participant_08_t43_s04"
+              ],
+              "confidence": 0.68
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "PRIVATE FB GROUPS 4.7× MORE ACTIVE THAN PUBLIC ONES",
+              "body": "The persona's hesitation likely reflects a deeper cultural pattern: private patient communities (avg. 1,800 posts/month) dwarf public ones (380/month), suggesting negative trial experiences and cost–burden conversations concentrate in spaces where skepticism is reinforced and burnout is normalized, not counterbalanced.",
+              "citation": "Facebook patient-community engagement",
+              "source_dataset_ids": [
+                "obesity_community_engagement"
+              ],
+              "confidence": 0.75
+            },
+            {
+              "title": "REDDIT SEMAGLUTIDE COMMUNITIES: 185K MEMBERS, 4,200 POSTS/MO",
+              "body": "The sheer scale of public GLP-1 discourse (185,000 average members across major Reddit communities) means the persona will encounter not just their own fears but aggregated trial-skepticism narratives from thousands of peers, amplifying hesitation through social proof of collective caution.",
+              "citation": "Reddit patient-community engagement",
+              "source_dataset_ids": [
+                "obesity_community_engagement"
+              ],
+              "confidence": 0.8
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "decision_panels": [
+    {
+      "stage_id": "trial_consideration",
+      "label": "Clinical-trial consideration",
+      "drivers": [],
+      "barriers": [
+        {
+          "title": "FEAR OF LOSING TREATMENT BENEFITS OR REGAINING WEIGHT",
+          "body": "Participants express deep anxiety about placebo arms or trial discontinuation, fearing rapid weight regain after experiencing significant benefits from their current medication.",
+          "supporting_fragment_ids": [
+            "iv-participant_06_t13_s01",
+            "iv-participant_11_t15_s01",
+            "iv-participant_12_t13_s02",
+            "iv-participant_12_t15_s00"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "title": "LOGISTICAL BARRIERS: TRAVEL AND SCHEDULING CONSTRAINTS",
+          "body": "Multiple participants cite inflexible trial visit schedules, geographic distance to sites (3+ hours), and inability to attend in-person appointments due to work travel and unpredictable schedules as deal-breakers.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t31_s00",
+            "iv-participant_07_t31_s01",
+            "iv-participant_09_t21_s02",
+            "iv-participant_11_t19_s01",
+            "iv-participant_12_t17_s02"
+          ],
+          "confidence": 0.97
+        },
+        {
+          "title": "TIME COMMITMENT OVERWHELMS BUSY LIVES",
+          "body": "Participants describe the cumulative time burden—travel, clinic waiting, appointments—as unsustainable alongside work and daily responsibilities, with some estimating 8–10 hours weekly.",
+          "supporting_fragment_ids": [
+            "iv-participant_09_t37_s01",
+            "iv-participant_09_t37_s03",
+            "iv-participant_11_t27_s02",
+            "iv-participant_12_t25_s01"
+          ],
+          "confidence": 0.96
+        },
+        {
+          "title": "UNKNOWN OR POORLY COMMUNICATED SIDE EFFECTS",
+          "body": "Participants worry about undefined or undisclosed adverse effects, including rare complications like heart issues, and uncertainty about what happens if side effects emerge during the trial.",
+          "supporting_fragment_ids": [
+            "iv-participant_08_t43_s01",
+            "iv-participant_08_t73_s01",
+            "iv-participant_10_t47_s03"
+          ],
+          "confidence": 0.88
+        },
+        {
+          "title": "MEDICATION ADHERENCE CHALLENGES AND REGIMEN HASSLES",
+          "body": "Participants cite difficulty remembering timed doses, dislike of injection procedure, and concerns about pharmacy quality variability as barriers to reliable trial participation.",
+          "supporting_fragment_ids": [
+            "iv-participant_06_t51_s01",
+            "iv-participant_06_t51_s03",
+            "iv-participant_09_t13_s00",
+            "iv-participant_08_t23_s02"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "title": "INSTITUTIONAL INFLEXIBILITY AND SHAME-INDUCING ENVIRONMENT",
+          "body": "Participants express concern that study design feels impersonal, disruptive, and emotionally difficult; shame around weight and medical judgment compounds reluctance to engage with rigid or demanding protocols.",
+          "supporting_fragment_ids": [
+            "iv-participant_11_t41_s02",
+            "iv-participant_12_t39_s00",
+            "iv-participant_12_t39_s01",
+            "iv-participant_12_t39_s02"
+          ],
+          "confidence": 0.82
+        },
+        {
+          "title": "LOSS OF AUTONOMY: HOME INJECTION PREFERENCE VS. CLINIC REQUIREMENT",
+          "body": "Participants accustomed to self-administered home injections resist being forced into inconvenient clinic-based injection protocols as a trial requirement.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t19_s01",
+            "iv-participant_08_t19_s01"
+          ],
+          "confidence": 0.8
+        }
+      ],
+      "mixed": [
+        {
+          "title": "SKEPTICISM ABOUT ALTERNATIVE FORMULATIONS' EFFICACY",
+          "body": "Participants express doubt that oral or alternative formulations will match the weight-loss effectiveness of current injections, lowering perceived value of trial participation.",
+          "supporting_fragment_ids": [
+            "iv-participant_10_t55_s00",
+            "iv-participant_10_t55_s02",
+            "iv-participant_10_t55_s03"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "title": "INSUFFICIENT AWARENESS OF TRIAL RISKS AND TRADE-OFFS",
+          "body": "Participants indicate that people casually signing up for trials may not fully grasp the downsides—early access is offset by undefined risks and study burdens.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t43_s04",
+            "iv-participant_08_t43_s04",
+            "iv-participant_08_t43_s05"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "title": "UNCLEAR MEDICAL LIABILITY AND ADVERSE EVENT HANDLING POST-TRIAL",
+          "body": "Participants raise unanswered questions about what happens if an adverse event occurs during the trial and how medical care and insurance coverage are handled afterward.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t73_s01",
+            "iv-participant_08_t73_s02",
+            "iv-participant_08_t73_s03"
+          ],
+          "confidence": 0.78
+        }
+      ]
+    }
+  ]
+}

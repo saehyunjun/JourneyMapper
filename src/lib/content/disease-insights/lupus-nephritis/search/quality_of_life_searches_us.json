@@ -1,0 +1,28 @@
+{
+  "id": "lupus_nephritis_quality_of_life_searches_us",
+  "type": "search_volume_topics",
+  "indication_id": "lupus_nephritis",
+  "therapeutic_area_ids": ["immunology", "nephrology"],
+  "title": "Lupus nephritis quality-of-life searches",
+  "subtitle": "Monthly estimated volume, US — HRQoL, daily life, prognosis",
+  "unit": "monthly_estimated_search_volume",
+  "geography": "US",
+  "time_period": null,
+  "topic_category": "quality_of_life",
+  "source": {
+    "type": "manual_estimate",
+    "notes": "Hand-authored estimates for demo purposes. HRQoL searches lean broader-lupus because LN-specific HRQoL volume is thin; the LN-context queries that do exist are included verbatim. Calibrate against real keyword data before shipping."
+  },
+  "dimensions": ["topic"],
+  "measures": ["volume"],
+  "data": [
+    { "topic": "lupus nephritis prognosis", "volume": 920 },
+    { "topic": "lupus nephritis life expectancy", "volume": 540 },
+    { "topic": "living with lupus nephritis", "volume": 380 },
+    { "topic": "lupus and pregnancy", "volume": 1620 },
+    { "topic": "lupus diet", "volume": 2900 },
+    { "topic": "exercise with lupus", "volume": 580 },
+    { "topic": "lupus and work", "volume": 240 },
+    { "topic": "lupus nephritis remission", "volume": 310 }
+  ]
+}

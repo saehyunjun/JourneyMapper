@@ -29,7 +29,11 @@
 		Atom,
 		MessageSquareText,
 		Trophy,
-		LayoutDashboard
+		LayoutDashboard,
+		Route,
+		Database,
+		Lightbulb,
+		FlaskConical
 	} from '@lucide/svelte';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 
@@ -39,18 +43,39 @@
 	let { activeIndication }: Props = $props();
 
 	type NavItem = { title: string; url: string; icon: Component };
+	type NavSection = { label: string; items: NavItem[] };
 
-	// Mirrors the prior wctglp-menubar list verbatim. Update both in lockstep
-	// if you add or remove a route.
-	const items: NavItem[] = [
-		{ title: 'Executive Summary', url: '/patientlyiq', icon: NotebookText },
-		{ title: 'Insight Builder', url: '/patientlyiq/key-findings', icon: LayoutDashboard },
-		{ title: 'Transcript Review', url: '/patientlyiq/upload', icon: NotebookPen },
-		{ title: 'Fingerprint', url: '/patientlyiq/fingerprint', icon: FingerprintPattern },
-		{ title: 'Interview Words', url: '/patientlyiq/interview-words', icon: MessageSquareText },
-		{ title: 'Constellation', url: '/patientlyiq/constellation', icon: Sparkles },
-		{ title: 'Ambient Booth', url: '/patientlyiq/segment-cloud', icon: Atom },
-		{ title: 'Booth Quiz', url: '/patientlyiq/quiz', icon: Trophy }
+	const sections: NavSection[] = [
+		{
+			label: 'Overview',
+			items: [{ title: 'Executive Summary', url: '/patientlyiq', icon: NotebookText }]
+		},
+		{
+			label: 'Build',
+			items: [
+				{ title: 'Insight Builder', url: '/patientlyiq/key-findings', icon: LayoutDashboard },
+				{ title: 'Transcript Review', url: '/patientlyiq/upload', icon: NotebookPen },
+				{ title: 'Journey Workbench', url: '/patientlyiq/journey-workbench', icon: Route },
+				{ title: 'Content Planner', url: '/patientlyiq/suggestor', icon: Lightbulb }
+			]
+		},
+		{
+			label: 'Audiences',
+			items: [
+				{ title: 'Personas', url: '/patientlyiq/personas', icon: FingerprintPattern },
+				{ title: 'Community', url: '/patientlyiq/community', icon: MessageSquareText },
+				{ title: 'Digital Data', url: '/patientlyiq/digital-data', icon: Database },
+				{ title: 'Clinical Trials', url: '/patientlyiq/clinical-trials', icon: FlaskConical }
+			]
+		},
+		{
+			label: 'Experiences',
+			items: [
+				{ title: 'Constellation', url: '/patientlyiq/constellation', icon: Sparkles },
+				{ title: 'Ambient Booth', url: '/patientlyiq/segment-cloud', icon: Atom },
+				{ title: 'Booth Quiz', url: '/patientlyiq/quiz', icon: Trophy }
+			]
+		}
 	];
 
 	const path = $derived(page.url.pathname);
@@ -78,35 +103,47 @@
 >
 	<Tooltip.Provider delayDuration={200}>
 		<nav class="min-h-0 flex-1 overflow-y-auto py-3 {hovered ? 'px-2' : 'px-1.5'}">
-			<ul class="flex flex-col gap-0.5">
-				{#each items as item (item.url)}
-					{@const Icon = item.icon}
-					{@const active = isActive(item.url)}
-					<li>
-						<Tooltip.Root>
-							<Tooltip.Trigger>
-								{#snippet child({ props })}
-									<a
-										{...props}
-										href="{item.url}{indicationQuery}"
-										aria-label={item.title}
-										aria-current={active ? 'page' : undefined}
-										class="piq-nav-link {active ? 'is-active' : ''} {hovered ? 'is-open' : 'is-rail'}"
-									>
-										<span class="piq-nav-icon">
-											<Icon class="size-4 shrink-0" />
-										</span>
-										{#if hovered}
-											<span class="piq-nav-label truncate">{item.title}</span>
-										{/if}
-									</a>
-								{/snippet}
-							</Tooltip.Trigger>
-							<Tooltip.Content side="right" sideOffset={8}>{item.title}</Tooltip.Content>
-						</Tooltip.Root>
-					</li>
-				{/each}
-			</ul>
+			{#each sections as section, sectionIndex (section.label)}
+				{#if sectionIndex > 0}
+					{#if hovered}
+						<div class="piq-section-gap-open" aria-hidden="true"></div>
+					{:else}
+						<div class="piq-section-gap-rail" aria-hidden="true"></div>
+					{/if}
+				{/if}
+				{#if hovered}
+					<div class="piq-section-label">{section.label}</div>
+				{/if}
+				<ul class="flex flex-col gap-0.5">
+					{#each section.items as item (item.url)}
+						{@const Icon = item.icon}
+						{@const active = isActive(item.url)}
+						<li>
+							<Tooltip.Root>
+								<Tooltip.Trigger>
+									{#snippet child({ props })}
+										<a
+											{...props}
+											href="{item.url}{indicationQuery}"
+											aria-label={item.title}
+											aria-current={active ? 'page' : undefined}
+											class="piq-nav-link {active ? 'is-active' : ''} {hovered ? 'is-open' : 'is-rail'}"
+										>
+											<span class="piq-nav-icon">
+												<Icon class="size-4 shrink-0" />
+											</span>
+											{#if hovered}
+												<span class="piq-nav-label truncate">{item.title}</span>
+											{/if}
+										</a>
+									{/snippet}
+								</Tooltip.Trigger>
+								<Tooltip.Content side="right" sideOffset={8}>{item.title}</Tooltip.Content>
+							</Tooltip.Root>
+						</li>
+					{/each}
+				</ul>
+			{/each}
 		</nav>
 	</Tooltip.Provider>
 </aside>
@@ -167,5 +204,27 @@
 
 	.piq-nav-link.is-active .piq-nav-label {
 		font-weight: 600;
+	}
+
+	.piq-section-label {
+		font-family: var(--font-heading);
+		font-size: 0.65rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--gray);
+		padding: 0 0.5rem 0.25rem;
+		opacity: 0.7;
+	}
+
+	.piq-section-gap-open {
+		height: 0.875rem;
+	}
+
+	.piq-section-gap-rail {
+		height: 0.5rem;
+		margin: 0.25rem auto;
+		width: 1.25rem;
+		border-top: 1px solid var(--panel-mid);
 	}
 </style>

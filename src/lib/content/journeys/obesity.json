@@ -1,0 +1,204 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "indication": "obesity",
+    "label": "Obesity / GLP-1 weight-management patient journey",
+    "notes": [
+      "Chronological clinical arc, NOT an interview-guide recut. Fragments from any source can be tagged into these stages independent of how the source materials were structured.",
+      "The WCT GLP-1 corpus (wct_glp1_2025q4) is specifically about post-loss MAINTENANCE; expect fragments to concentrate in stages 4-7. Sparse coverage of stages 1-3 is expected, not a bug.",
+      "Stages 1-3 describe the pre-pharmacotherapy journey (lifestyle-only attempts → first clinical conversation → drug initiation). They exist so fragments narrating that history have somewhere to land.",
+      "Step granularity is intentionally moderate (2-3 steps per stage). Finer-grained sub-steps belong in journey-map artifact authoring, not in the registry."
+    ]
+  },
+  "stages": [
+    {
+      "id": "lifestyle_attempts",
+      "order": 1,
+      "label": "Lifestyle attempts",
+      "description": "Pre-pharmacotherapy period. Diet cycles, exercise programs, commercial weight-loss programs; building knowledge of what does and doesn't work for the individual; accumulating frustration with weight regain.",
+      "steps": [
+        {
+          "id": "diet_cycles",
+          "label": "Diet cycles",
+          "description": "Repeated weight-loss attempts via diet (keto, intermittent fasting, calorie counting, commercial programs); typically with eventual regain."
+        },
+        {
+          "id": "exercise_attempts",
+          "label": "Exercise attempts",
+          "description": "Structured or unstructured exercise as a weight-management strategy; often paired with diet."
+        },
+        {
+          "id": "plateau_acceptance",
+          "label": "Plateau acceptance",
+          "description": "The point where the speaker has internalized that lifestyle alone has not produced durable results; readiness for medical intervention."
+        }
+      ]
+    },
+    {
+      "id": "clinical_conversation",
+      "order": 2,
+      "label": "First clinical conversation",
+      "description": "First substantive medical engagement about weight as a treatable condition. BMI / comorbidity evaluation, GLP-1 awareness, qualification discussion.",
+      "steps": [
+        {
+          "id": "pcp_or_specialist_visit",
+          "label": "PCP or specialist visit",
+          "description": "Initial appointment where weight is named as a clinical issue, not just a personal goal."
+        },
+        {
+          "id": "comorbidity_or_bmi_eval",
+          "label": "Comorbidity / BMI evaluation",
+          "description": "Clinical assessment of weight-related risk (BMI, A1c, blood pressure, sleep apnea, etc.)."
+        },
+        {
+          "id": "glp1_qualification",
+          "label": "GLP-1 qualification",
+          "description": "Discussion of GLP-1 / GIP eligibility, insurance coverage, and prescription decision."
+        }
+      ]
+    },
+    {
+      "id": "glp1_initiation",
+      "order": 3,
+      "label": "GLP-1 initiation",
+      "description": "Starting therapy. First doses, titration ladder, early side effects (nausea, fatigue), first changes in appetite/satiety.",
+      "steps": [
+        {
+          "id": "first_doses",
+          "label": "First doses",
+          "description": "Initial low-dose phase; learning injection technique; managing expectations."
+        },
+        {
+          "id": "titration",
+          "label": "Titration",
+          "description": "Stepping up dose per the prescriber's schedule; common point of dropout if side effects are severe."
+        },
+        {
+          "id": "initial_side_effects",
+          "label": "Initial side effects",
+          "description": "GI side effects, fatigue, food aversions; deciding whether to push through."
+        }
+      ]
+    },
+    {
+      "id": "active_weight_loss",
+      "order": 4,
+      "label": "Active weight loss",
+      "description": "Visible weight loss while on therapy. Reshaping of eating habits; social and identity changes; engagement with weight-loss community.",
+      "steps": [
+        {
+          "id": "visible_progress",
+          "label": "Visible progress",
+          "description": "Scale numbers move; clothes fit differently; external feedback from family / coworkers."
+        },
+        {
+          "id": "lifestyle_integration",
+          "label": "Lifestyle integration",
+          "description": "Eating, exercise, and social patterns reshape around the medication's effects."
+        },
+        {
+          "id": "identity_shift",
+          "label": "Identity shift",
+          "description": "Self-concept changes ('I'm a person who has lost weight' / 'I'm a person on medication'); often ambivalent."
+        }
+      ]
+    },
+    {
+      "id": "weight_stabilization",
+      "order": 5,
+      "label": "Weight stabilization",
+      "description": "The 'maintenance' plateau. Target weight reached or approached; dose may be held; daily routine has stabilized around the medication.",
+      "steps": [
+        {
+          "id": "target_approached",
+          "label": "Target approached",
+          "description": "Weight near or at the personally-meaningful goal; loss rate slows."
+        },
+        {
+          "id": "dose_continuation_question",
+          "label": "Dose continuation question",
+          "description": "Conversation with self / prescriber about whether to continue at full dose, taper, or hold."
+        },
+        {
+          "id": "daily_normalization",
+          "label": "Daily normalization",
+          "description": "Medication becomes a routine fixture rather than a project."
+        }
+      ]
+    },
+    {
+      "id": "discontinuation_consideration",
+      "order": 6,
+      "label": "Discontinuation consideration",
+      "description": "Active weighing of staying on vs. coming off. Cost, side-effect fatigue, supply issues, clinical guidance, and personal philosophy all in play.",
+      "steps": [
+        {
+          "id": "cost_pressure",
+          "label": "Cost pressure",
+          "description": "Out-of-pocket cost, insurance changes, supply / compounding considerations driving the question."
+        },
+        {
+          "id": "side_effect_fatigue",
+          "label": "Side-effect fatigue",
+          "description": "Cumulative tolerance burden — even mild side effects sustained over time become a reason to stop."
+        },
+        {
+          "id": "clinical_taper_discussion",
+          "label": "Clinical taper discussion",
+          "description": "Prescriber-led conversation about safe discontinuation, taper schedules, and what to expect."
+        }
+      ]
+    },
+    {
+      "id": "post_discontinuation",
+      "order": 7,
+      "label": "Post-discontinuation",
+      "description": "Off therapy. Short-term stability vs. emerging regain; attempted self-maintenance; awareness of the body's drive to return to higher weight.",
+      "steps": [
+        {
+          "id": "short_term_stability",
+          "label": "Short-term stability",
+          "description": "The first weeks/months off, when weight typically holds and the speaker is most optimistic."
+        },
+        {
+          "id": "regain_awareness",
+          "label": "Regain awareness",
+          "description": "First noticing weight creeping back; appetite return; reassessment of the discontinuation decision."
+        },
+        {
+          "id": "attempted_self_maintenance",
+          "label": "Attempted self-maintenance",
+          "description": "Doubling down on lifestyle to hold the loss without medication."
+        }
+      ]
+    },
+    {
+      "id": "trial_consideration",
+      "order": 8,
+      "label": "Clinical-trial consideration",
+      "description": "Hearing about and weighing a clinical trial — in the WCT GLP-1 case, a maintenance trial for people who have discontinued and are at risk of regain. This stage is where the WCT corpus is densest.",
+      "steps": [
+        {
+          "id": "trial_awareness",
+          "label": "Trial awareness",
+          "description": "Hearing about the trial; first impressions of what it is and what it would involve."
+        },
+        {
+          "id": "eligibility_self_assessment",
+          "label": "Eligibility self-assessment",
+          "description": "Working out whether the trial's criteria (weight loss history, discontinuation window, stability period) apply to oneself."
+        },
+        {
+          "id": "logistics_assessment",
+          "label": "Logistics assessment",
+          "description": "Travel, time commitment, financial implications, work / family compatibility."
+        },
+        {
+          "id": "consent_or_decline",
+          "label": "Consent or decline",
+          "description": "The decision moment — would I do it, on what terms, and why or why not."
+        }
+      ]
+    }
+  ]
+}

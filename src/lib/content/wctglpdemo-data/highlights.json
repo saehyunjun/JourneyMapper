@@ -3,7 +3,7 @@
     "schema_version": "1.0",
     "study_id": "wct_glp1",
     "description": "Analyst-starred highlights. starred_segment_ids reference segments.json; starred_quote_ids reference quote_bank.json.",
-    "updated_at": "2026-05-22T18:24:02.425Z"
+    "updated_at": "2026-05-28T21:16:53.789Z"
   },
   "starred_segment_ids": [
     "participant_06_t03_s00",
@@ -78,5 +78,13 @@
     "q_participant_09_002",
     "q_participant_10_001",
     "q_participant_10_012"
+  ],
+  "starred_fragment_ids": [
+    "fc-ln_reddit_2026q1-12-1-1_a_s00",
+    "fc-ln_reddit_2026q1-2-1-1_a",
+    "fc-ln_reddit_2026q1-2-1-1_ak_s04",
+    "fc-ln_reddit_2026q1-2-1-1_j",
+    "fc-ln_reddit_2026q1-2-1-1_t",
+    "fc-ln_reddit_2026q1-2-1-1_z"
   ]
 }

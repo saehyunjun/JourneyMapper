@@ -1,0 +1,1492 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "corpus_id": "ln_reddit_2026q1",
+    "content_source": "social_post",
+    "updated_at": "2026-05-27T22:02:22.375Z",
+    "dimensions": {
+      "stages": {
+        "generator": "scripts/propose-fragment-stages.mjs",
+        "model": "claude-opus-4-7",
+        "indication": "lupus_nephritis",
+        "journey_schema_version": "1.0",
+        "last_generated_at": "2026-05-27T21:58:02.202Z",
+        "annotated_batches": [
+          "ln_reddit_2026q1-T2-C1",
+          "ln_reddit_2026q1-T3-C1",
+          "ln_reddit_2026q1-T4-C1",
+          "ln_reddit_2026q1-T5-C1",
+          "ln_reddit_2026q1-T6-C1",
+          "ln_reddit_2026q1-T7-C1",
+          "ln_reddit_2026q1-T8-C1",
+          "ln_reddit_2026q1-T9-C1"
+        ]
+      },
+      "segment_tags": {
+        "generator": "scripts/propose-fragment-sentiment.mjs",
+        "model": "claude-opus-4-7",
+        "codebook_schema_version": "2.0",
+        "last_generated_at": "2026-05-27T22:02:22.375Z",
+        "annotated_batches": [
+          "ln_reddit_2026q1-T2-C1",
+          "ln_reddit_2026q1-T3-C1",
+          "ln_reddit_2026q1-T4-C1",
+          "ln_reddit_2026q1-T5-C1",
+          "ln_reddit_2026q1-T6-C1",
+          "ln_reddit_2026q1-T7-C1",
+          "ln_reddit_2026q1-T8-C1",
+          "ln_reddit_2026q1-T9-C1"
+        ],
+        "fields_populated": [
+          "sentiment_score",
+          "emotions",
+          "confidence",
+          "note"
+        ],
+        "fields_unpopulated": [
+          "themes",
+          "subthemes",
+          "topics"
+        ]
+      }
+    },
+    "notes": [
+      "Multi-dimensional annotation file. Each fragment may carry multiple dimension keys (stages, segment_tags, ...).",
+      "stages dimension: AI-proposed journey-stage tags, multi-label per fragment. Enum-constrained at generation time.",
+      "Every stages entry is source: ai_proposed, review_status: pending.",
+      "Re-propose with: node scripts/propose-fragment-stages.mjs <corpus> [--source <name>] [--batch <id>] [--force]",
+      "segment_tags dimension: AI-proposed sentiment + emotion. themes/subthemes/topics left empty (codebook is indication-specific; not in scope here).",
+      "Re-propose with: node scripts/propose-fragment-sentiment.mjs <corpus> [--source <name>] [--batch <id>] [--force]"
+    ]
+  },
+  "annotations": {
+    "fc-ln_reddit_2026q1-2-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_interest"
+        ],
+        "emotions": [
+          "anticipation",
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.8,
+        "note": "Title announcing start of trial, mixed excitement and nerves",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "consent_or_decline",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": null,
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "Announcing start of CAR-T trial — straddles decision/consent and entry into trial experience.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-2-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "treatment"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "trial_motivators",
+          "treatment_negative_experiences",
+          "treatment_health_history"
+        ],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Factual background with implicit weight of failed treatments",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "drug_switching",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "consent_or_decline",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Refractory flare context plus signing up for CAR-T trial.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-2-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_barriers"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "Reporting milestone after long wait",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "lymphodepletion",
+            "confidence": 0.95
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "cell_collection",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "Cells manufactured (post collection), starting lymphodepletion chemo.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-2-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "trial_decision_factors"
+        ],
+        "emotions": [
+          "apprehension",
+          "anticipation",
+          "pride"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.85,
+        "note": "Explicit mix of nerve-wracking and exciting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": null,
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Reflecting on being early recipient in trial.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-2-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Bare offer to update",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "Meta/admin — offering future updates.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-2-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Open invitation, content-free",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "Meta/admin — AMA invitation.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-2-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "symptoms"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "Clinical background, neutral",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "biopsy_and_classification",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "flare_recognition",
+            "confidence": 0.75
+          },
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "drug_switching",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Diagnostic/treatment history including biopsy-confirmed class IV relapse and prior therapies.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-2-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "Factual statement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": null,
+            "confidence": 0.6
+          },
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "drug_switching",
+            "confidence": 0.4
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "On prednisolone only as trial prep — bridging refractory cycle and trial entry.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-2-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "medical_self_efficacy"
+        ],
+        "emotions": [
+          "acceptance",
+          "trust"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "Notes professional context helps cope",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.8,
+        "note": "Personal/professional context, not stage-specific.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-3-1-1_a": {
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Asking community about CAR-T experience; awareness/exploration phase.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "treatment_knowledge_gaps",
+          "clinical_trial_awareness",
+          "clinical_trial_interest",
+          "clinical_trial_knowledge_gaps"
+        ],
+        "emotions": [
+          "curiosity",
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Information-seeking inquiry about CAR-T-like therapy; mild hope implied",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-26T06:19:59.602Z",
+        "themes_confidence": 0.7,
+        "themes_note": "Asking peers about experience with experimental cell therapy — signals awareness/interest in an investigational treatment and knowledge gaps."
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anticipation",
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "impatience",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "content-free teaser line",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "trial_motivators"
+        ],
+        "emotions": [
+          "joy",
+          "ecstasy",
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "consent_or_decline",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "preliminary approval for CAR-T trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "sadness",
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "long struggle",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "treatment_fatigue",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "drug_switching",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "treatment_decision_factors",
+          "trial_decision_factors"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "factual",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "logistical_assessment",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "drug_switching",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "current med review gates trial start",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "drug_switching",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_barriers",
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "annoyance",
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "treatment_fatigue",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "drug_switching",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific",
+          "treatment"
+        ],
+        "subthemes": [
+          "symptoms",
+          "comorbidities",
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "sadness",
+          "annoyance",
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.85,
+        "note": "disease progression and daily limitations",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "flare_recognition",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "stable_maintenance",
+            "step_id": "lifestyle_adjustments",
+            "confidence": 0.4
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "ongoing progression and daily impact",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences",
+          "treatment_barriers",
+          "trial_barriers"
+        ],
+        "emotions": [
+          "annoyance",
+          "pessimism"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "drug_switching",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "failing current med to qualify",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "treatment_decision_factors",
+          "trial_decision_factors"
+        ],
+        "emotions": [
+          "hope",
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.75,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "logistical_assessment",
+            "confidence": 0.75
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "sadness",
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "tired of waiting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "treatment_fatigue",
+            "confidence": 0.75
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_knowledge_gaps",
+          "trial_barriers"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "informational",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-4-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_barriers",
+          "trial_negative_experiences",
+          "comorbidities"
+        ],
+        "emotions": [
+          "disappointment",
+          "sadness",
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.9,
+        "note": "rejected from trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "declined due to comorbidities",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-5-1-1_a": {
+      "stages": {
+        "values": [
+          {
+            "stage_id": "flare_or_refractory_cycle",
+            "step_id": "treatment_fatigue",
+            "confidence": 0.6
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Refractory disease prompting clinician-referred CAR-T trial awareness.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences",
+          "clinical_trial_awareness",
+          "clinical_trial_interest",
+          "trial_motivators",
+          "comorbidities"
+        ],
+        "emotions": [
+          "hope",
+          "apprehension",
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Frustration with stubborn disease mixed with cautious hope about potential trial; seeking peer input.",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-26T19:24:12.766Z",
+        "themes_confidence": 0.9,
+        "themes_note": "Refractory lupus + dermatomyositis; rheum referring to CAR-T trial; seeking peer trial experiences."
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "comorbidities"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "factual diagnosis disclosure",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": null,
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "SLE diagnosis context",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness",
+          "clinical_trial_interest"
+        ],
+        "emotions": [
+          "surprise",
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "factual with anticipation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "upcoming screening call",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "trial_motivators"
+        ],
+        "emotions": [
+          "joy",
+          "amazement",
+          "sentimentality"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "overwhelmed with emotion",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": null,
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "emotional reaction to trial possibility",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_motivators"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": null,
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "hope re: trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_barriers",
+          "comorbidities"
+        ],
+        "emotions": [
+          "fear",
+          "apprehension",
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_barriers",
+          "clinical_trial_knowledge_gaps"
+        ],
+        "emotions": [
+          "confusion",
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "uncertainty about eligibility",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms",
+          "comorbidities"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "reassuring self about eligibility",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "factual",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "clinical detail",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "clinical detail relevant to eligibility",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "disappointment",
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "current med not working",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "stable_maintenance",
+            "step_id": "long_term_immunosuppression",
+            "confidence": 0.6
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.65,
+        "note": "current regimen relevant to eligibility",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "comorbidities"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.85,
+        "note": "clinical detail, mildly positive framing",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "disease status relevant to eligibility",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s12": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_knowledge_gaps"
+        ],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.85,
+        "note": "seeking info",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": null,
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "asking community about trial screening",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s13": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "resignation/acceptance",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "content-free fatalistic remark",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-6-1-1_a_s14": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "content-free",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ln_reddit_2026q1-7-1-1_a": {
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "consent_or_decline",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": null,
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Just consented to a trial and asking about upcoming in-trial steps.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "clinical_trial_knowledge_gaps"
+        ],
+        "emotions": [
+          "hope",
+          "optimism",
+          "interest",
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "Excited about joining trial, seeking peer experiences",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-26T19:24:19.957Z",
+        "themes_confidence": 0.8,
+        "themes_note": "Enrolled in trial, expressing enthusiasm and asking about next steps (gap in process knowledge)."
+      }
+    },
+    "fc-ln_reddit_2026q1-8-1-1_a": {
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "cell_collection",
+            "confidence": 0.9
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "lymphodepletion",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "infusion_and_hospitalization",
+            "confidence": 0.9
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "consent_or_decline",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Patient accepted into CAR-T trial, completed apheresis, awaiting chemo conditioning and hospitalization dates; seeking peer experiences.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "trial_barriers",
+          "clinical_trial_interest"
+        ],
+        "emotions": [
+          "apprehension",
+          "anxiety",
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "Patient accepted to CAR-T trial, mix of hope and growing nervousness about upcoming chemo/hospitalization",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-26T19:24:23.287Z",
+        "themes_confidence": 0.7,
+        "themes_note": "Patient enrolled in CAR-T trial, completed screening/apheresis, seeking peer info about chemo/hospitalization stages; expressing nervousness about upcoming trial procedures."
+      }
+    },
+    "fc-ln_reddit_2026q1-9-1-1_a": {
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.6
+          },
+          {
+            "stage_id": "post_trial",
+            "step_id": "long_term_follow_up",
+            "confidence": 0.55
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Speaker is at screening stage and seeking updates on others' post-trial outcomes.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "trial_positive_experiences",
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "anticipation",
+          "apprehension",
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Seeking updates before CAR-T screening; mix of anticipation and uncertainty",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-26T19:24:27.858Z",
+        "themes_confidence": 0.8,
+        "themes_note": "OP screening for CAR-T trial, seeking updates from others who participated; touches awareness via TikTok and interest in others' trial experiences."
+      }
+    }
+  }
+}

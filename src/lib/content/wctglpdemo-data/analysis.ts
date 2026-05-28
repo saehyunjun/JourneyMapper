@@ -18,6 +18,7 @@ import segmentTagsRaw from './segment_tags.json';
 import codebookRaw from './codebook.json';
 import quoteBankRaw from './quote_bank.json';
 import keywordUsageRaw from './keyword_usage.json';
+import personaGoalsBarriersRaw from './persona_goals_barriers.json';
 
 export type WordCount = { word: string; count: number };
 
@@ -105,6 +106,33 @@ export const annotations = segmentTags.annotations;
 
 export const pendingInterviews: string[] = segmentTags.meta.pending_interviews ?? [];
 export const questions = (questionsRaw as { questions: Question[] }).questions;
+
+/**
+ * AI-generated goals (what the participant is reaching for) and barriers
+ * (specific obstacles they hit) per persona, sourced from their tagged
+ * segments. Generated offline by scripts/propose-persona-goals-barriers.mjs;
+ * stays empty until the script has been run. Each item carries 1–2
+ * supporting segment_ids for click-through evidence in the persona drawer.
+ */
+export type PersonaGoalBarrier = {
+	summary: string;
+	supporting_segment_ids: string[];
+	subtheme_id: string | null;
+};
+export type PersonaGoalsBarriers = {
+	goals: PersonaGoalBarrier[];
+	barriers: PersonaGoalBarrier[];
+};
+const personaGoalsBarriersData = personaGoalsBarriersRaw as {
+	meta: Record<string, unknown>;
+	personas: Record<string, PersonaGoalsBarriers>;
+};
+export const personaGoalsBarriers = personaGoalsBarriersData.personas;
+
+/** Goals + barriers for one participant, or null if the script hasn't run for them. */
+export function goalsBarriersFor(interviewId: string): PersonaGoalsBarriers | null {
+	return personaGoalsBarriers[interviewId] ?? null;
+}
 
 /** The three top-level themes from codebook 2.0, each carrying its subthemes. */
 export const themeTags = (codebookRaw as { themes: ThemeTag[] }).themes;

@@ -70,7 +70,7 @@ function proseList(items: string[]): string {
 }
 
 /**
- * A generated two-sentence bio for the fingerprint page. The first sentence
+ * A generated two-sentence bio for the personas page. The first sentence
  * places the participant (age, country, individual/composite); the second
  * names the themes their tagged segments returned to most. `themeLabels`
  * should be human-readable and ordered most-raised first.

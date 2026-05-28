@@ -6,6 +6,7 @@
 	segment in the upload review view.
 -->
 <script lang="ts">
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -34,21 +35,11 @@
 </svelte:head>
 
 <div class="flex flex-1 flex-col">
-	<div
-		class="flex h-64 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
-	>
-		<div class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-8">
-			<span class="figcaption text-white">GLP-1 Interviews</span>
-			<h1 class="font-heading text-5xl font-light capitalize text-primary-foreground md:text-6xl">
-				Key phrases
-			</h1>
-			<p class="max-w-2xl text-lg leading-7 text-primary-foreground/85">
-				Canonical labels that unify disparate participant phrasings — “gained weight
-				multiple times” and “always gained it back eventually” can sit under one phrase
-				like “Recurrent past weight gain”.
-			</p>
-		</div>
-	</div>
+	<PageHeader
+		eyebrow="PatientlyIQ"
+		title="Key phrases"
+		subtitle="Canonical labels that unify disparate participant phrasings — “gained weight multiple times” and “always gained it back eventually” can sit under one phrase like “Recurrent past weight gain”."
+	/>
 
 	<div class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-8 py-12">
 		<div class="flex items-baseline justify-between border-b border-slate-200 pb-3">

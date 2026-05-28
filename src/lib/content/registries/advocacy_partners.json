@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0",
+  "status": "draft",
+  "description": "Advocacy / patient-organization registry. Stable ids used as FKs from content-suggestor tactics. Indication-scoped via indication_ids. Focus areas, audience segments, and channels are coarse and editorial — refine with primary research before treating reach figures as quantitative. Initial scope: lupus / lupus-nephritis-relevant US organizations. Add new orgs to this file before referencing them from tactic data.",
+  "notes": [
+    "estimated_reach is qualitative (national / regional / local / niche) until we have actual newsletter and membership numbers.",
+    "partnership_modes are the formats this org HAS historically supported, not an offer of partnership.",
+    "Some orgs (NephCure, American Kidney Fund) are nephrology-first but engage LN through the kidney-disease lens; flagged via secondary_indication_relevance."
+  ],
+  "items": [
+    {
+      "id": "lupus_foundation_america",
+      "label": "Lupus Foundation of America",
+      "url": "https://www.lupus.org",
+      "indication_ids": ["lupus_nephritis"],
+      "secondary_indication_relevance": ["systemic_lupus_erythematosus"],
+      "focus_areas": ["education", "research_funding", "policy", "peer_support"],
+      "audience_segments": ["newly_diagnosed", "long_term_patients", "caregivers", "hcps"],
+      "channels": ["newsletter", "national_events", "chapter_events", "support_groups", "social_media", "podcast"],
+      "estimated_reach": "national",
+      "partnership_modes": [
+        "co_branded_content",
+        "event_sponsorship",
+        "research_grants",
+        "patient_registry",
+        "policy_advocacy"
+      ],
+      "description": "The largest US lupus advocacy organization. National scope with regional chapters; runs the National Resource Center on Lupus, Lupus Awareness Month, and Capitol Hill advocacy."
+    },
+    {
+      "id": "lupus_research_alliance",
+      "label": "Lupus Research Alliance",
+      "url": "https://www.lupusresearch.org",
+      "indication_ids": ["lupus_nephritis"],
+      "secondary_indication_relevance": ["systemic_lupus_erythematosus"],
+      "focus_areas": ["research_funding", "trial_acceleration", "education"],
+      "audience_segments": ["long_term_patients", "researchers", "hcps", "donors"],
+      "channels": ["newsletter", "research_summit", "social_media", "trial_finder"],
+      "estimated_reach": "national",
+      "partnership_modes": [
+        "research_grants",
+        "trial_acceleration_program",
+        "co_branded_content",
+        "scientific_conference"
+      ],
+      "description": "Largest private funder of lupus research in the US. Runs Lupus Therapeutics, which operates the LuCIN clinical-trial network — strategically relevant for any trial-recruitment-support strategy."
+    },
+    {
+      "id": "kaleidoscope_fighting_lupus",
+      "label": "Kaleidoscope Fighting Lupus",
+      "url": "https://kaleidoscopefightinglupus.org",
+      "indication_ids": ["lupus_nephritis"],
+      "secondary_indication_relevance": ["systemic_lupus_erythematosus"],
+      "focus_areas": ["education", "peer_support", "lifestyle"],
+      "audience_segments": ["newly_diagnosed", "long_term_patients", "caregivers"],
+      "channels": ["newsletter", "podcast", "youtube", "social_media", "webinar"],
+      "estimated_reach": "national",
+      "partnership_modes": ["co_branded_content", "podcast_sponsorship", "webinar_series"],
+      "description": "Patient-led nonprofit with a strong digital media output (podcast, video). Lower barrier to partnership than the LFA tier; good fit for peer_storytelling and lifestyle_normalization strategies."
+    },
+    {
+      "id": "sle_lupus_foundation",
+      "label": "S.L.E. Lupus Foundation",
+      "url": "https://www.lupusla.org",
+      "indication_ids": ["lupus_nephritis"],
+      "secondary_indication_relevance": ["systemic_lupus_erythematosus"],
+      "focus_areas": ["research_funding", "education", "peer_support"],
+      "audience_segments": ["long_term_patients", "researchers", "donors"],
+      "channels": ["newsletter", "events", "social_media"],
+      "estimated_reach": "regional",
+      "partnership_modes": ["co_branded_content", "research_grants", "event_sponsorship"],
+      "description": "Bicoastal foundation (LA and NY chapters) with research-funding focus. Smaller reach than LFA but high editorial trust within its community."
+    },
+    {
+      "id": "lupus_and_allied_diseases_association",
+      "label": "Lupus and Allied Diseases Association",
+      "url": "https://www.ladainc.org",
+      "indication_ids": ["lupus_nephritis"],
+      "secondary_indication_relevance": ["systemic_lupus_erythematosus"],
+      "focus_areas": ["policy", "education", "peer_support"],
+      "audience_segments": ["long_term_patients", "caregivers", "policymakers"],
+      "channels": ["newsletter", "policy_briefings", "social_media"],
+      "estimated_reach": "national",
+      "partnership_modes": ["policy_advocacy", "co_branded_content", "patient_registry"],
+      "description": "Policy-leaning organization that co-chairs the Lupus and Allied Diseases Foundation policy coalition. Relevant when payer_navigation or hcp_enablement strategies need a policy backbone."
+    },
+    {
+      "id": "nephcure",
+      "label": "NephCure",
+      "url": "https://nephcure.org",
+      "indication_ids": ["lupus_nephritis"],
+      "secondary_indication_relevance": ["fsgs", "minimal_change_disease", "iga_nephropathy"],
+      "focus_areas": ["research_funding", "education", "trial_recruitment", "policy"],
+      "audience_segments": ["newly_diagnosed", "long_term_patients", "caregivers"],
+      "channels": ["newsletter", "patient_summit", "social_media", "trial_finder"],
+      "estimated_reach": "national",
+      "partnership_modes": [
+        "co_branded_content",
+        "trial_finder_listing",
+        "patient_registry",
+        "research_grants"
+      ],
+      "description": "Kidney-disease-first advocacy reaching LN through the proteinuric-kidney-disease lens. Good fit for content that emphasizes the kidney side of LN (biopsy, proteinuria monitoring) rather than the systemic-lupus framing."
+    },
+    {
+      "id": "american_kidney_fund",
+      "label": "American Kidney Fund",
+      "url": "https://www.kidneyfund.org",
+      "indication_ids": ["lupus_nephritis"],
+      "secondary_indication_relevance": ["ckd", "esrd", "dialysis"],
+      "focus_areas": ["financial_assistance", "education", "policy"],
+      "audience_segments": ["long_term_patients", "caregivers", "hcps"],
+      "channels": ["newsletter", "financial_assistance_program", "social_media", "patient_helpline"],
+      "estimated_reach": "national",
+      "partnership_modes": [
+        "financial_assistance",
+        "co_branded_content",
+        "patient_helpline_resource"
+      ],
+      "description": "Provides direct financial assistance for kidney-related costs. The credible voice for payer_navigation strategies; will not co-brand product-adjacent content but does collaborate on access-and-affordability education."
+    },
+    {
+      "id": "global_healthy_living_foundation",
+      "label": "Global Healthy Living Foundation",
+      "url": "https://www.ghlf.org",
+      "indication_ids": ["lupus_nephritis"],
+      "secondary_indication_relevance": [
+        "rheumatoid_arthritis",
+        "psoriatic_arthritis",
+        "axspa",
+        "ibd"
+      ],
+      "focus_areas": ["education", "patient_research", "policy", "peer_support"],
+      "audience_segments": ["long_term_patients", "caregivers", "hcps"],
+      "channels": [
+        "podcast",
+        "newsletter",
+        "patient_panel",
+        "social_media",
+        "creakyjoints_community"
+      ],
+      "estimated_reach": "national",
+      "partnership_modes": [
+        "patient_research",
+        "co_branded_content",
+        "podcast_sponsorship",
+        "advocacy_campaign"
+      ],
+      "description": "Multi-disease auto-immune advocacy with a sizable patient-research arm (ArthritisPower, CreakyJoints). Good fit for cross-condition lifestyle and HCP-enablement content."
+    },
+    {
+      "id": "molly_meanswell_lupus",
+      "label": "Molly's Fund Fighting Lupus",
+      "url": "https://www.mollysfund.org",
+      "indication_ids": ["lupus_nephritis"],
+      "secondary_indication_relevance": ["systemic_lupus_erythematosus"],
+      "focus_areas": ["education", "peer_support", "youth_outreach"],
+      "audience_segments": ["newly_diagnosed", "adolescent_young_adult", "caregivers"],
+      "channels": ["newsletter", "social_media", "school_outreach"],
+      "estimated_reach": "niche",
+      "partnership_modes": ["co_branded_content", "youth_education_program"],
+      "description": "Smaller, youth-and-AYA-focused organization. Strategic value when targeting newly-diagnosed adolescents and young adults — a notoriously hard-to-reach segment for lupus."
+    },
+    {
+      "id": "lupus_la",
+      "label": "Lupus LA",
+      "url": "https://www.lupusla.org",
+      "indication_ids": ["lupus_nephritis"],
+      "secondary_indication_relevance": ["systemic_lupus_erythematosus"],
+      "focus_areas": ["research_funding", "patient_services", "education"],
+      "audience_segments": ["long_term_patients", "donors", "caregivers"],
+      "channels": ["newsletter", "events", "patient_services"],
+      "estimated_reach": "regional",
+      "partnership_modes": ["co_branded_content", "patient_services", "event_sponsorship"],
+      "description": "Los Angeles regional foundation. Strong donor and event base; regional rather than national reach. Often partners with S.L.E. Lupus Foundation."
+    }
+  ]
+}

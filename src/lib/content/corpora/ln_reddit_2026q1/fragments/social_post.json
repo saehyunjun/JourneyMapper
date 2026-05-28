@@ -1,0 +1,1412 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "corpus_id": "ln_reddit_2026q1",
+    "content_source": "social_post",
+    "platform": "reddit",
+    "generated_at": "2026-05-28T21:41:23.819Z",
+    "generator": "scripts/import-forum-as-fragments.mjs",
+    "ingester_version": "import-forum-as-fragments@0.3",
+    "sources": [
+      "src/lib/content/corpora/ln_reddit_2026q1/source/comments.json"
+    ],
+    "fragment_count": 41,
+    "notes": [
+      "Long rows (>=400 chars, >=4 sentences) sentence-split into child fragments; short rows emit one fragment per row.",
+      "Thread-starting row per (Thread, Conversation) → social_post; subsequent rows → social_comment.",
+      "Per-user Context resolved to one value per anonymized id; 0 user(s) had conflicting Context values (most-frequent used).",
+      "16 [deleted] row(s) replaced with fresh per-row anonymous ids.",
+      "1 anonymized id(s) map to >1 raw username (logged; not auto-fixed).",
+      "Split children share source_ref.post_id + comment_id with their siblings; offsets are relative to the parent post's normalized text."
+    ]
+  },
+  "fragments": [
+    {
+      "id": "fc-ln_reddit_2026q1-2-1-1_a_s00",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-02-04T00:00:00.000000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-02-04T00:00:00.000000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.814Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T2-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 005",
+        "char_start": 0,
+        "char_end": 41
+      },
+      "text": "About to embark on the CAR-T cell trial…!"
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-2-1-1_a_s01",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-02-04T00:00:00.000000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-02-04T00:00:00.000000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.814Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T2-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 005",
+        "char_start": 42,
+        "char_end": 248
+      },
+      "text": "Hi all, some of you may have seen my comments/replies about me signing up to the London CAR-T cell phase 1 trial after unsuccessful treatments for my ongoing lupus nephritis flare over the last half a year."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-2-1-1_a_s02",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-02-04T00:00:00.000000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-02-04T00:00:00.000000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.814Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T2-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 005",
+        "char_start": 249,
+        "char_end": 447
+      },
+      "text": "Well after many weeks of investigations, procedures and appointments my CAR-T cells are finally ready and I am starting the actual treatment this week, beginning with chemo lymphodepletion tomorrow."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-2-1-1_a_s03",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-02-04T00:00:00.000000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-02-04T00:00:00.000000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.814Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T2-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 005",
+        "char_start": 448,
+        "char_end": 574
+      },
+      "text": "I’ll only be the fifth person in the entire country to receive this, which is nerve wracking but also incredible and exciting."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-2-1-1_a_s04",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-02-04T00:00:00.000000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-02-04T00:00:00.000000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.814Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T2-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 005",
+        "char_start": 575,
+        "char_end": 650
+      },
+      "text": "I will aim to update here with progress throughout if anyone is interested."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-2-1-1_a_s05",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-02-04T00:00:00.000000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-02-04T00:00:00.000000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.814Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T2-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 005",
+        "char_start": 651,
+        "char_end": 766
+      },
+      "text": "If anyone wants to ask me anything more specific, especially regarding the trial, feel free to reply here or DM me."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-2-1-1_a_s06",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-02-04T00:00:00.000000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-02-04T00:00:00.000000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.814Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T2-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 005",
+        "char_start": 767,
+        "char_end": 1011
+      },
+      "text": "For context: I am a 31-year-old male with childhood-onset lupus diagnosed at age 8, a recent biopsy-confirmed relapse of class IV lupus nephritis, and prior treatment with MMF (CellCept), hydroxychloroquine (Plaquenil), and rituximab (Rituxan)."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-2-1-1_a_s07",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-02-04T00:00:00.000000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-02-04T00:00:00.000000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.814Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T2-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 005",
+        "char_start": 1012,
+        "char_end": 1081
+      },
+      "text": "Currently I am only taking prednisolone in preparation for the trial."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-2-1-1_a_s08",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-02-04T00:00:00.000000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-02-04T00:00:00.000000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.814Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T2-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 005",
+        "char_start": 1082,
+        "char_end": 1177
+      },
+      "text": "I also work as an oncologist, which I think has helped me process all of this with less stress."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-3-1-1_a",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-01-07T23:15:46.674000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-01-07T23:15:46.674000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T3-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 045"
+      },
+      "text": "Has anyone tried this or had any experience with this experimental process of engineering your own cell, and then give it back to you to help eliminate the bad T-cells? Any experience?"
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s00",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 0,
+        "char_end": 22
+      },
+      "text": "Impatiently waiting..."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s01",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 23,
+        "char_end": 118
+      },
+      "text": "CAR-T I've received preliminary approval to join a CAR-T trial and I'm over the freaking moon!!"
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s02",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 119,
+        "char_end": 240
+      },
+      "text": "I've been struggling for years to find treatments that work and have been unsuccessful minus a 2-ish year period of time."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s03",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 241,
+        "char_end": 344
+      },
+      "text": "I go to my regular rheumy in a few weeks to review meds which will determine when/if I start the trial."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s04",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 345,
+        "char_end": 438
+      },
+      "text": "I've somewhat recently started Benlysta but, to date, I've experienced zero positive effects."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s05",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 439,
+        "char_end": 558
+      },
+      "text": "It's so frustrating, as many of you now, to fight ins to try and get on a new medication just for it to be ineffective."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s06",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 559,
+        "char_end": 830
+      },
+      "text": "My disease processes are still progressing and this week I had to have a biopsy for my lupus rash (not responding to any treatment) and I couldn't make my coffee because I couldn't open the sweetener and cream I use (items that require a twist-motion are sent from hell)."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s07",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 831,
+        "char_end": 940
+      },
+      "text": "If my rheumy wants me to truly \"fail\" Benlysta I'll have another month of injections that feel like placebos."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s08",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 941,
+        "char_end": 1012
+      },
+      "text": "If they decide to end the medication early, I can start the trial asap."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s09",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 1013,
+        "char_end": 1147
+      },
+      "text": "I know a month isn't that long considering how long I've waited for so many other things but I have to admit, I'm so tired of waiting."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s10",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 1148,
+        "char_end": 1282
+      },
+      "text": "PS- preliminary approval because you have to go through multiple evaluations by multiple medical disciplines before you get treatment."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-4-1-1_a_s11",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-06-27T19:56:35.972000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "stated",
+          "source_quote": "Diagnosed SLE"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-06-27T19:56:35.972000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.816Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 002",
+        "char_start": 1283,
+        "char_end": 1419
+      },
+      "text": "Update--- I wasn't accepted into the trial because I have too many overlapping issues (Lupus, RA, connective tissue/hypermobility, etc)."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-5-1-1_a",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-03-26T21:53:28.205000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-03-26T21:53:28.205000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.817Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Anon_ln_reddit_2026q1_0008"
+      },
+      "text": "I saw my rheum today. My lupus and accompanying dermatomyositis is being so stubborn. He mentioned there is a trial in the summer at a hospital in my state for the new Car T Cell therapy and he will let them know about me. Wondering if anyone here has participated or is scheduled to participate in a trial?"
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s00",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 0,
+        "char_end": 71
+      },
+      "text": "I was diagnosed with SLE (and a few overlaps) a little over a year ago."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s01",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 72,
+        "char_end": 178
+      },
+      "text": "I emailed about a CAR-T cell therapy and to my surprise it is happening right near me, and they responded."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s02",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 179,
+        "char_end": 209
+      },
+      "text": "I have a phone call coming up."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s03",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 210,
+        "char_end": 278
+      },
+      "text": "I could cry just because I never imagined I would even get this far."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s04",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 279,
+        "char_end": 314
+      },
+      "text": "This gives me a little bit of hope."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s05",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 315,
+        "char_end": 440
+      },
+      "text": "My only fear is, I was recently diagnosed with intercranial hypertension and I am worried this will automatically exclude me."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s06",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 441,
+        "char_end": 532
+      },
+      "text": "It says no severe neuro complications, but i dont know if I'd really classify it as severe."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s07",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 533,
+        "char_end": 651
+      },
+      "text": "I do not have seizures, my optic nerve has not been compromised, and I am not experiencing anything too crazy from it."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s08",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 652,
+        "char_end": 728
+      },
+      "text": "Just the occasional headache which honestly may or may not be related to it."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s09",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 729,
+        "char_end": 756
+      },
+      "text": "My opening pressure was 26."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s10",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 757,
+        "char_end": 874
+      },
+      "text": "I have not tried immunosuppressants either as my rheum only has me on plaquenil and it honestly isn't working at all."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s11",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 875,
+        "char_end": 897
+      },
+      "text": "No kidney involvement."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s12",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 898,
+        "char_end": 950
+      },
+      "text": "Anybody have experience with these trial interviews?"
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s13",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 951,
+        "char_end": 984
+      },
+      "text": "Whatever is meant to be will be.."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-6-1-1_a_s14",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-19T18:52:55.006000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-19T18:52:55.006000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 081",
+        "char_start": 985,
+        "char_end": 997
+      },
+      "text": "I know this."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-7-1-1_a",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-05-13T19:27:31.151000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-05-13T19:27:31.151000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 085"
+      },
+      "text": "I just signed up to be part of this trial. Has anyone else? Interested to hear about next steps! I feel it’s such a huge breakthrough!"
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-8-1-1_a",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-09-09T23:35:09.072000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-09-09T23:35:09.072000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.818Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 090"
+      },
+      "text": "Hi! Ive been accepted into the car T Cell Trail in NY and I’ve already done the screening and apheresis process. Has anyone completed the chemo and hospitalizations or know someone who has? I’m waiting to hear back about my dates for both and the closer I get to getting a call the more nervous I become."
+    },
+    {
+      "id": "fc-ln_reddit_2026q1-9-1-1_a",
+      "corpus_id": "ln_reddit_2026q1",
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-07-23T18:12:23.261000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-07-23T18:12:23.261000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "ln_reddit@v1",
+      "ingested_at": "2026-05-28T21:41:23.819Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "ln_reddit_2026q1-T9-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Participant 094"
+      },
+      "text": "I just got the phone call about doing a screening for car T cell therapy. I know there have been posts about people getting into the trial and I just wanted an update on how those who have done it are doing. I’ve seen two girls on tiktok post about them doing the trial but I have not seen an update since last month."
+    }
+  ]
+}

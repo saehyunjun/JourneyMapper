@@ -10,12 +10,14 @@ export type TherapeuticAreaId =
 	| 'immunology'
 	| 'nephrology'
 	| 'oncology'
-	| 'endocrinology';
+	| 'endocrinology'
+	| 'neurology';
 
 export type IndicationId =
 	| 'lupus_nephritis'
 	| 'melanoma'
-	| 'obesity';
+	| 'obesity'
+	| 'multiple_sclerosis';
 
 export type DatasetTypeId =
 	| 'keyword_clusters'
@@ -47,7 +49,13 @@ export type SponsorId =
 	| 'astrazeneca'
 	| 'gsk'
 	| 'aurinia'
-	| 'roche';
+	| 'roche'
+	| 'biogen'
+	| 'novartis'
+	| 'tg_therapeutics'
+	| 'kyverna'
+	| 'cabaletta_bio'
+	| 'cartesian_therapeutics';
 
 /** Mechanism-of-action ids — pharmacologic class. Add new ids to
  *  registries/mechanisms_of_action.json first, then extend this union. */
@@ -66,7 +74,10 @@ export type MoaId =
 	| 'amylin_analog'
 	| 'biguanide'
 	| 'sympathomimetic'
-	| 'ace_inhibitor_or_arb';
+	| 'ace_inhibitor_or_arb'
+	| 's1p_modulator'
+	| 'alpha_4_integrin'
+	| 'car_t_autologous';
 
 /** Drug ids — specific drugs (not classes). Add new ids to
  *  registries/drugs.json first, then extend this union. */
@@ -87,7 +98,15 @@ export type DrugId =
 	| 'retatrutide'
 	| 'orforglipron'
 	| 'metformin'
-	| 'phentermine';
+	| 'phentermine'
+	| 'ocrelizumab'
+	| 'ofatumumab'
+	| 'ublituximab'
+	| 'natalizumab'
+	| 'fingolimod'
+	| 'kyv_101'
+	| 'caba_201'
+	| 'descartes_08';
 
 export type DrugStage =
 	| 'approved'
@@ -95,6 +114,75 @@ export type DrugStage =
 	| 'phase_2'
 	| 'phase_1'
 	| 'preclinical';
+
+/** Content-strategy archetype ids — top level of the content-suggestor tree.
+ *  Add new ids to registries/content_strategies.json first, then extend this
+ *  union. Strategies declare which burden categories, codebook subthemes, and
+ *  journey stages they address; the mapping layer intersects those arrays to
+ *  score fit. */
+export type ContentStrategyId =
+	| 'unbranded_awareness'
+	| 'patient_education_clinical'
+	| 'advocacy_partnership'
+	| 'peer_storytelling'
+	| 'hcp_enablement'
+	| 'trial_recruitment_support'
+	| 'caregiver_enablement'
+	| 'payer_navigation'
+	| 'lifestyle_normalization'
+	| 'early_engagement_serp';
+
+/** Advocacy / patient-organization ids — referenced by tactics that pair a
+ *  strategy with a specific partnership. Add new orgs to
+ *  registries/advocacy_partners.json first, then extend this union. */
+export type AdvocacyPartnerId =
+	| 'lupus_foundation_america'
+	| 'lupus_research_alliance'
+	| 'kaleidoscope_fighting_lupus'
+	| 'sle_lupus_foundation'
+	| 'lupus_and_allied_diseases_association'
+	| 'nephcure'
+	| 'american_kidney_fund'
+	| 'global_healthy_living_foundation'
+	| 'molly_meanswell_lupus'
+	| 'lupus_la';
+
+/** Content format ids — the leaf level of the content-suggestor tree. Each
+ *  format declares the channels it can run on and the strategies/stages it
+ *  fits best. Add new formats to registries/content_formats.json first, then
+ *  extend this union. */
+export type ContentFormatId =
+	| 'long_form_explainer'
+	| 'short_explainer_video'
+	| 'patient_story_video'
+	| 'patient_story_essay'
+	| 'podcast_episode'
+	| 'decision_aid_worksheet'
+	| 'interactive_symptom_checker'
+	| 'infographic'
+	| 'reddit_ama'
+	| 'advocacy_webinar'
+	| 'search_seo_landing_page'
+	| 'caregiver_guide'
+	| 'financial_navigation_worksheet'
+	| 'hcp_cme_module'
+	| 'peer_mentor_program'
+	| 'social_short_post'
+	| 'clinic_handout';
+
+/** LN patient-journey stage ids. Mirrors journeys/lupus_nephritis.json. The
+ *  content_strategies registry's `fits_journey_stages` references these. When
+ *  we generalize to other indications, this union will likely move to a
+ *  per-indication map; for now LN is the only typed journey. */
+export type LnJourneyStageId =
+	| 'pre_diagnosis'
+	| 'diagnostic_odyssey'
+	| 'induction_treatment'
+	| 'stable_maintenance'
+	| 'flare_or_refractory_cycle'
+	| 'trial_consideration'
+	| 'in_trial_experience'
+	| 'post_trial';
 
 /** Burden taxonomy ids — tree-structured (parent_id resolves to another
  *  BurdenCategoryId or null for top-level). Add new ids to the registry first,
@@ -223,4 +311,58 @@ export type Drug = {
 	description?: string;
 	/** Phase 3 lever — precomputed embedding for retrieval. See Embedding type. */
 	embedding?: Embedding;
+};
+
+/** A content-strategy archetype — top level of the content-suggestor tree.
+ *  `addresses_subthemes` references codebook.json subtheme ids (typed loosely
+ *  as string here because the subtheme union lives in the codebook layer, not
+ *  this file). Validate at build time that every entry exists. */
+export type ContentStrategy = {
+	id: ContentStrategyId;
+	label: string;
+	description: string;
+	fits_journey_stages: LnJourneyStageId[];
+	addresses_burden_categories: BurdenCategoryId[];
+	addresses_subthemes: string[];
+	typical_kpis: string[];
+	competitive_pattern: string;
+};
+
+/** An advocacy / patient organization. `partnership_modes` is a coarse
+ *  vocabulary of formats the org has historically supported — not an offer of
+ *  partnership and not a hard schema. */
+export type AdvocacyPartner = {
+	id: AdvocacyPartnerId;
+	label: string;
+	url: string;
+	indication_ids: IndicationId[];
+	/** Adjacent indications the partner engages secondarily. Free-text because
+	 *  these spill outside the IndicationId union (e.g. fsgs, iga_nephropathy,
+	 *  systemic_lupus_erythematosus). Promote to typed ids if those indications
+	 *  ever join the registry. */
+	secondary_indication_relevance: string[];
+	focus_areas: string[];
+	audience_segments: string[];
+	channels: string[];
+	/** Qualitative until we have actual reach numbers: national / regional /
+	 *  local / niche. */
+	estimated_reach: 'national' | 'regional' | 'local' | 'niche';
+	partnership_modes: string[];
+	description: string;
+};
+
+/** A content format — leaf level of the content-suggestor tree. Production
+ *  complexity is qualitative (low / medium / high); evidence_requirement is
+ *  free-text so authors can describe nuanced needs (e.g. 'consented_patient_
+ *  story', 'accredited_medical_review'). */
+export type ContentFormat = {
+	id: ContentFormatId;
+	label: string;
+	format_class: 'narrative' | 'explainer' | 'tool' | 'event' | 'community';
+	channels: string[];
+	production_complexity: 'low' | 'medium' | 'high';
+	best_for_stages: LnJourneyStageId[];
+	best_for_strategies: ContentStrategyId[];
+	evidence_requirement: string;
+	description: string;
 };

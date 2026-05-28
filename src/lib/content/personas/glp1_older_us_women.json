@@ -1,0 +1,18 @@
+{
+  "id": "glp1_older_us_women",
+  "label": "Older US women on GLP-1",
+  "description": "Women aged 46+ in the US speaking about their GLP-1 weight-management experience. Mid-to-late life cohort — typically a long lifestyle-attempt history before pharmacotherapy, and cost / coverage sensitivity around discontinuation.",
+  "applicable_indications": ["obesity"],
+  "filter": {
+    "content_source": ["interview"],
+    "indications": ["obesity"],
+    "speaker_attrs": {
+      "role": { "in": ["patient"] },
+      "gender": { "in": ["female"] },
+      "age_band": { "in": ["46-55", "56-65", "65+"] },
+      "country": { "in": ["US"], "allow_unknown": true }
+    }
+  },
+  "weighting": { "type": "uniform" },
+  "color": "#f43f5e"
+}

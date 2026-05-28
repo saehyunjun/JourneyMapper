@@ -17,6 +17,9 @@
 	import { Button } from "$lib/components/ui/button/index.js";
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import RadialThemeChart from '$lib/charts/glp/RadialThemeChart.svelte';
+	import RadialImpactFlow, {
+		type RadialFlowTheme
+	} from '$lib/charts/glp/RadialImpactFlow.svelte';
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import KeywordText from '$lib/components/KeywordText.svelte';
 	import CodedFragmentCard from '$lib/components/CodedFragmentCard.svelte';
@@ -24,6 +27,7 @@
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
 	import SentimentBar from '$lib/components/SentimentBar.svelte';
 	import StatBlock from '$lib/components/StatBlock.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { keywordBlocks } from '$lib/content/wctglpdemo-data/keywords';
 	import type { PageProps } from './$types';
 
@@ -44,14 +48,68 @@
 
 	const participantCount = themedParticipantIds.length;
 
-	// Three tabs: key quotes, all-interview themes, per-question themes.
-	let activeTab = $state<'quotes' | 'overview' | 'questions'>('quotes');
+	// Four tabs: key quotes, theme bars, theme-map flow, per-question themes.
+	let activeTab = $state<'quotes' | 'overview' | 'flow' | 'questions'>('quotes');
 
 	const questionViews = themedQuestionIds.map((id) => ({ id, label: questionLabel(id) }));
 	let selectedQuestionId = $state(questionViews[0]?.id ?? '');
 
 	// Overview — unfiltered radial across every themed segment.
 	const overviewTree = $derived(buildRadialTree());
+
+	// Theme-map flow — adapt the overview tree into the impact-flow shape.
+	// Sentiment scores are integers in [-2, +2]; bucket each block accordingly.
+	function bucketBlocks(blocks: { sentiment: number }[]) {
+		let veryNegative = 0,
+			negative = 0,
+			neutral = 0,
+			positive = 0,
+			veryPositive = 0;
+		for (const b of blocks) {
+			if (b.sentiment <= -2) veryNegative++;
+			else if (b.sentiment === -1) negative++;
+			else if (b.sentiment === 0) neutral++;
+			else if (b.sentiment === 1) positive++;
+			else veryPositive++;
+		}
+		return { total: blocks.length, veryNegative, negative, neutral, positive, veryPositive };
+	}
+
+	const flowThemes = $derived.by((): RadialFlowTheme[] => {
+		return overviewTree.map((theme) => {
+			const subthemes = (theme.children ?? [])
+				.filter((c) => c.kind === 'subtheme')
+				.map((s) => ({
+					id: s.id,
+					label: s.label,
+					description: s.description,
+					...bucketBlocks(s.blocks),
+					keywords: (s.children ?? [])
+						.filter((c) => c.kind === 'keyword')
+						.map((k) => ({ id: k.id, label: k.label, count: k.count }))
+				}));
+			const themeCounts = subthemes.length
+				? subthemes.reduce(
+					(acc, s) => ({
+						total: acc.total + s.total,
+						veryNegative: acc.veryNegative + (s.veryNegative ?? 0),
+						negative: acc.negative + s.negative,
+						neutral: acc.neutral + s.neutral,
+						positive: acc.positive + s.positive,
+						veryPositive: acc.veryPositive + (s.veryPositive ?? 0)
+					}),
+					{ total: 0, veryNegative: 0, negative: 0, neutral: 0, positive: 0, veryPositive: 0 }
+				)
+				: bucketBlocks(theme.blocks);
+			return {
+				id: theme.id,
+				label: theme.label,
+				description: theme.description,
+				...themeCounts,
+				subthemes
+			};
+		});
+	});
 
 	// By question — same builder, filtered to the active question.
 	const questionTree = $derived(
@@ -161,25 +219,17 @@
 </script>
 
 <div class="flex flex-1 flex-col">
-	<!-- Hero -->
-	<div
-		class="flex h-48 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
-	>
-		<div class="mx-auto flex w-full max-w-7xl flex-col gap-2 px-8">
-			<span class="figcaption text-white">
-				GLP-1 Interviews
-			</span>
-			<h1 class="font-heading text-4xl font-light capitalize text-primary-foreground md:text-5xl">
-				What patients said
-			</h1>
-		</div>
-	</div>
+	<PageHeader
+		eyebrow="PatientlyIQ"
+		title="What patients said"
+	/>
 
 	<div class="mx-auto flex w-full max-w-6xl flex-col gap-8 px-8 py-12">
 		<Tabs.Root value={activeTab} onValueChange={(v) => (activeTab = v as typeof activeTab)}>
 			<Tabs.List variant="line" class="w-full justify-start gap-4 border-b border-(--ink)/15">
 				<Tabs.Trigger value="quotes">Key Quotes</Tabs.Trigger>
 				<Tabs.Trigger value="overview">Themes</Tabs.Trigger>
+				<Tabs.Trigger value="flow">Theme map</Tabs.Trigger>
 				<Tabs.Trigger value="questions">By question</Tabs.Trigger>
 			</Tabs.List>
 
@@ -246,6 +296,27 @@
 				{/if}
 			</Tabs.Content>
 
+			<!-- Theme map tab — radial impact-flow across every theme + subtheme -->
+			<Tabs.Content value="flow" class="flex flex-col gap-5 pt-10">
+				<div class="flex flex-col gap-2 border-b border-(--primary)/15 pb-4">
+					<span class="figcaption text-accent-mint">Across all interviews</span>
+					<h2 class="font-heading text-4xl font-light uppercase text-primary">
+						Every theme, every subtheme
+					</h2>
+					<p class="max-w-2xl text-base text-muted-foreground">
+						The whole tag map at once. Each cluster is one subtheme; each dot is a tagged
+						segment coloured by its sentiment. Hover or pin a theme to spotlight just that
+						branch.
+					</p>
+				</div>
+
+				{#if flowThemes.length}
+					<RadialImpactFlow themes={flowThemes} motionMode="dashboard" />
+				{:else}
+					<p class="text-muted-foreground">No themes tagged yet.</p>
+				{/if}
+			</Tabs.Content>
+
 			<Tabs.Content value="questions" class="flex flex-col gap-8 pt-10">
 				<section class="flex flex-col gap-5">
 					<div class="flex flex-col gap-2 border-b border-(--primary)/15 pb-4">
@@ -300,7 +371,7 @@
 <RightDrawer bind:open={drawerOpen}>
 	<div class="flex h-full flex-col">
 		<div class="flex flex-col gap-1 border-b border-slate-200 p-6">
-			<span class="figcaption text-accent-mint">
+			<span class="figcaption text-orange-600">
 				{drawerKindLabel} · {drawerContextLabel}
 			</span>
 			<h2 class="font-heading text-3xl font-light uppercase text-primary">

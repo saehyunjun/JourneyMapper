@@ -1,0 +1,30 @@
+{
+	"id": "obesity_cost_access_searches_us",
+	"type": "search_volume_topics",
+	"indication_id": "obesity",
+	"therapeutic_area_ids": ["endocrinology", "metabolism"],
+	"title": "GLP-1 cost & access searches",
+	"subtitle": "Monthly estimated volume, US — price, insurance, coverage",
+	"unit": "monthly_estimated_search_volume",
+	"geography": "US",
+	"time_period": null,
+	"topic_category": "cost_access",
+	"source": {
+		"type": "manual_estimate",
+		"notes": "Hand-authored estimates. Cost queries are the second-largest GLP-1 search category after side effects — list price, insurance coverage, and compounded alternatives drive the highest-volume queries."
+	},
+	"dimensions": ["topic"],
+	"measures": ["volume"],
+	"data": [
+		{ "topic": "ozempic cost", "volume": 74000 },
+		{ "topic": "wegovy cost", "volume": 33000 },
+		{ "topic": "mounjaro cost", "volume": 40000 },
+		{ "topic": "zepbound cost", "volume": 22000 },
+		{ "topic": "ozempic without insurance", "volume": 27000 },
+		{ "topic": "does insurance cover wegovy", "volume": 14000 },
+		{ "topic": "compounded semaglutide cost", "volume": 18000 },
+		{ "topic": "GLP-1 prior authorization", "volume": 6600 },
+		{ "topic": "ozempic coupon", "volume": 12000 },
+		{ "topic": "wegovy savings card", "volume": 8100 }
+	]
+}

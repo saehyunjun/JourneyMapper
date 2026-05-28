@@ -15,8 +15,11 @@ export const POST: RequestHandler = async ({ request }) => {
 	const kind = body?.kind as HighlightKind | undefined;
 	const id = typeof body?.id === 'string' ? body.id.trim() : '';
 
-	if ((kind !== 'segment' && kind !== 'quote') || !id) {
-		error(400, 'Expected a JSON body { kind: "segment" | "quote", id: string }.');
+	if ((kind !== 'segment' && kind !== 'quote' && kind !== 'fragment') || !id) {
+		error(
+			400,
+			'Expected a JSON body { kind: "segment" | "quote" | "fragment", id: string }.'
+		);
 	}
 
 	return json(await toggleHighlight(kind, id));

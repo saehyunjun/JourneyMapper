@@ -1,0 +1,3397 @@
+{
+  "source_raw_file": "src/lib/content/disease-insights/lupus-nephritis/clinical_trials/raw_studies.json",
+  "source_fetched_at": "2026-05-26T17:27:39.570Z",
+  "source_dataset": "lupus_nephritis",
+  "schema_version": "1.0",
+  "generated_at": "2026-05-27T17:03:04.514Z",
+  "activity_filter": {
+    "rule": "overall_status ∈ active OR last_update_post ≥ fetched_at − window",
+    "active_statuses": [
+      "ACTIVE_NOT_RECRUITING",
+      "ENROLLING_BY_INVITATION",
+      "NOT_YET_RECRUITING",
+      "RECRUITING"
+    ],
+    "window_years": 3,
+    "recent_cutoff": "2023-05",
+    "source_total": 352,
+    "kept": 195,
+    "dropped": 157
+  },
+  "count": 234,
+  "interventions": [
+    {
+      "name_key": "placebo",
+      "name_variants": [
+        "Placebo",
+        "placebo"
+      ],
+      "types": [
+        "DRUG",
+        "OTHER"
+      ],
+      "count": 28,
+      "nct_id_count": 26,
+      "nct_ids": [
+        "NCT02550652",
+        "NCT02770170",
+        "NCT03610516",
+        "NCT03673748",
+        "NCT04181762",
+        "NCT04221477",
+        "NCT04376827",
+        "NCT04564339",
+        "NCT04643470",
+        "NCT04870333",
+        "NCT04883619",
+        "NCT05039619",
+        "NCT05097989",
+        "NCT05138133",
+        "NCT05260255",
+        "NCT05609812",
+        "NCT05680480",
+        "NCT05704088",
+        "NCT05748925",
+        "NCT05781750",
+        "NCT05810948",
+        "NCT06406205",
+        "NCT07044115",
+        "NCT07201129",
+        "NCT07323524",
+        "NCT07363460"
+      ]
+    },
+    {
+      "name_key": "cyclophosphamide",
+      "name_variants": [
+        "Cyclophosphamide"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 14,
+      "nct_id_count": 14,
+      "nct_ids": [
+        "NCT05207358",
+        "NCT06152172",
+        "NCT06265220",
+        "NCT06308978",
+        "NCT06375993",
+        "NCT06434363",
+        "NCT06708845",
+        "NCT06897930",
+        "NCT06984341",
+        "NCT07015983",
+        "NCT07038447",
+        "NCT07085104",
+        "NCT07115745",
+        "NCT07523542"
+      ]
+    },
+    {
+      "name_key": "fludarabine",
+      "name_variants": [
+        "Fludarabine"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 12,
+      "nct_id_count": 12,
+      "nct_ids": [
+        "NCT05508009",
+        "NCT06152172",
+        "NCT06265220",
+        "NCT06308978",
+        "NCT06375993",
+        "NCT06708845",
+        "NCT06897930",
+        "NCT06984341",
+        "NCT07015983",
+        "NCT07038447",
+        "NCT07115745",
+        "NCT07523542"
+      ]
+    },
+    {
+      "name_key": "mycophenolate mofetil",
+      "name_variants": [
+        "Mycophenolate Mofetil",
+        "Mycophenolate mofetil"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 7,
+      "nct_id_count": 6,
+      "nct_ids": [
+        "NCT02630628",
+        "NCT05039619",
+        "NCT05101447",
+        "NCT05207358",
+        "NCT05538208",
+        "NCT05916781"
+      ]
+    },
+    {
+      "name_key": "obinutuzumab",
+      "name_variants": [
+        "Obinutuzumab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 4,
+      "nct_id_count": 4,
+      "nct_ids": [
+        "NCT02550652",
+        "NCT04221477",
+        "NCT05039619",
+        "NCT06265220"
+      ]
+    },
+    {
+      "name_key": "prednisone",
+      "name_variants": [
+        "Prednisone"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 4,
+      "nct_id_count": 4,
+      "nct_ids": [
+        "NCT02457221",
+        "NCT02550652",
+        "NCT04221477",
+        "NCT05039619"
+      ]
+    },
+    {
+      "name_key": "rituximab",
+      "name_variants": [
+        "Rituximab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 4,
+      "nct_id_count": 4,
+      "nct_ids": [
+        "NCT05207358",
+        "NCT05508009",
+        "NCT06265220",
+        "NCT06676631"
+      ]
+    },
+    {
+      "name_key": "tacrolimus",
+      "name_variants": [
+        "Tacrolimus",
+        "tacrolimus"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 4,
+      "nct_id_count": 4,
+      "nct_ids": [
+        "NCT01316133",
+        "NCT01410747",
+        "NCT02630628",
+        "NCT05916781"
+      ]
+    },
+    {
+      "name_key": "impt-514",
+      "name_variants": [
+        "IMPT-514"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 3,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06153095"
+      ]
+    },
+    {
+      "name_key": "methylprednisolone",
+      "name_variants": [
+        "Methylprednisolone"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 3,
+      "nct_id_count": 3,
+      "nct_ids": [
+        "NCT02550652",
+        "NCT04221477",
+        "NCT05039619"
+      ]
+    },
+    {
+      "name_key": "voclosporin",
+      "name_variants": [
+        "Voclosporin",
+        "voclosporin"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 3,
+      "nct_id_count": 3,
+      "nct_ids": [
+        "NCT05288855",
+        "NCT05962788",
+        "NCT07225387"
+      ]
+    },
+    {
+      "name_key": "yts109 cell",
+      "name_variants": [
+        "YTS109 cell"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 3,
+      "nct_id_count": 3,
+      "nct_ids": [
+        "NCT07104721",
+        "NCT07123519",
+        "NCT07236762"
+      ]
+    },
+    {
+      "name_key": "belimumab",
+      "name_variants": [
+        "Belimumab",
+        "belimumab"
+      ],
+      "types": [
+        "BIOLOGICAL",
+        "DRUG"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT05585671",
+        "NCT07340463"
+      ]
+    },
+    {
+      "name_key": "belimumab injection",
+      "name_variants": [
+        "Belimumab Injection"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT03747159",
+        "NCT05863936"
+      ]
+    },
+    {
+      "name_key": "caba-201",
+      "name_variants": [
+        "CABA-201"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 2,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06121297"
+      ]
+    },
+    {
+      "name_key": "daxdilimab",
+      "name_variants": [
+        "Daxdilimab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 2,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05540665"
+      ]
+    },
+    {
+      "name_key": "ft819",
+      "name_variants": [
+        "FT819"
+      ],
+      "types": [
+        "BIOLOGICAL",
+        "DRUG"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT06308978",
+        "NCT07570862"
+      ]
+    },
+    {
+      "name_key": "glucocorticoids",
+      "name_variants": [
+        "Glucocorticoids"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT05933213",
+        "NCT07340463"
+      ]
+    },
+    {
+      "name_key": "kidney biopsy",
+      "name_variants": [
+        "Kidney Biopsy",
+        "Kidney biopsy"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST",
+        "OTHER"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT03929887",
+        "NCT06642402"
+      ]
+    },
+    {
+      "name_key": "kyv-101",
+      "name_variants": [
+        "KYV-101"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT06152172",
+        "NCT07403188"
+      ]
+    },
+    {
+      "name_key": "kyv-101 anti-cd19 car-t cell therapy",
+      "name_variants": [
+        "KYV-101 anti-CD19 CAR-T cell therapy"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT05938725",
+        "NCT06342960"
+      ]
+    },
+    {
+      "name_key": "nkx019",
+      "name_variants": [
+        "NKX019"
+      ],
+      "types": [
+        "BIOLOGICAL",
+        "DRUG"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT06518668",
+        "NCT06557265"
+      ]
+    },
+    {
+      "name_key": "renal biopsy",
+      "name_variants": [
+        "renal biopsy"
+      ],
+      "types": [
+        "OTHER",
+        "PROCEDURE"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT06228222",
+        "NCT07505576"
+      ]
+    },
+    {
+      "name_key": "secukinumab",
+      "name_variants": [
+        "Secukinumab",
+        "secukinumab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT04181762",
+        "NCT05232864"
+      ]
+    },
+    {
+      "name_key": "standard lymphodepletion regimen",
+      "name_variants": [
+        "Standard lymphodepletion regimen"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT05938725",
+        "NCT06342960"
+      ]
+    },
+    {
+      "name_key": "standard-of-care treatment",
+      "name_variants": [
+        "Standard-of-care treatment"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 2,
+      "nct_id_count": 2,
+      "nct_ids": [
+        "NCT04376827",
+        "NCT04883619"
+      ]
+    },
+    {
+      "name_key": "68ga-fapi-04 pet",
+      "name_variants": [
+        "68Ga-FAPI-04 PET"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05845151"
+      ]
+    },
+    {
+      "name_key": "ab-101",
+      "name_variants": [
+        "AB-101"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06265220"
+      ]
+    },
+    {
+      "name_key": "acetaminophen",
+      "name_variants": [
+        "Acetaminophen"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04221477"
+      ]
+    },
+    {
+      "name_key": "acetaminophen/paracetamol",
+      "name_variants": [
+        "Acetaminophen/paracetamol"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05039619"
+      ]
+    },
+    {
+      "name_key": "acthar gel",
+      "name_variants": [
+        "ACTHar gel"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02226341"
+      ]
+    },
+    {
+      "name_key": "adi-001",
+      "name_variants": [
+        "ADI-001"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06375993"
+      ]
+    },
+    {
+      "name_key": "administration of methylprednisolone + prednisone + mycophenolate mofetil",
+      "name_variants": [
+        "Administration of Methylprednisolone + Prednisone + Mycophenolate mofetil"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04702256"
+      ]
+    },
+    {
+      "name_key": "administration of methylprednisolone, paracetamol and dexchlorpheniramine",
+      "name_variants": [
+        "Administration of methylprednisolone, paracetamol and dexchlorpheniramine"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04702256"
+      ]
+    },
+    {
+      "name_key": "adx-097",
+      "name_variants": [
+        "ADX-097"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06419205"
+      ]
+    },
+    {
+      "name_key": "allo-329",
+      "name_variants": [
+        "ALLO-329"
+      ],
+      "types": [
+        "GENETIC"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07085104"
+      ]
+    },
+    {
+      "name_key": "alxn1720",
+      "name_variants": [
+        "ALXN1720"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05314231"
+      ]
+    },
+    {
+      "name_key": "alxn2050",
+      "name_variants": [
+        "ALXN2050"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05097989"
+      ]
+    },
+    {
+      "name_key": "anifrolumab",
+      "name_variants": [
+        "Anifrolumab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05138133"
+      ]
+    },
+    {
+      "name_key": "anti dfs70 antibodies",
+      "name_variants": [
+        "anti dfs70 antibodies"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06119763"
+      ]
+    },
+    {
+      "name_key": "anti-cd19/70 car t cells (cht105)",
+      "name_variants": [
+        "anti-CD19/70 CAR T cells (CHT105)"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07517536"
+      ]
+    },
+    {
+      "name_key": "anx009",
+      "name_variants": [
+        "ANX009"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05780515"
+      ]
+    },
+    {
+      "name_key": "apl-2",
+      "name_variants": [
+        "APL-2"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT03453619"
+      ]
+    },
+    {
+      "name_key": "assessment activation of interferon pathway",
+      "name_variants": [
+        "Assessment activation of interferon pathway"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06586710"
+      ]
+    },
+    {
+      "name_key": "ata3219",
+      "name_variants": [
+        "ATA3219"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06429800"
+      ]
+    },
+    {
+      "name_key": "atacicept",
+      "name_variants": [
+        "Atacicept"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05609812"
+      ]
+    },
+    {
+      "name_key": "atg",
+      "name_variants": [
+        "ATG"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05508009"
+      ]
+    },
+    {
+      "name_key": "autoimmunity in plasma",
+      "name_variants": [
+        "Autoimmunity in plasma"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06642402"
+      ]
+    },
+    {
+      "name_key": "autologous anti-cd19 car-t cells, intravenous single infusion at protocol-defined dose level (1 x 10^6 or 3 x 10^6 car-positive viable t cells/kg).",
+      "name_variants": [
+        "Autologous anti-CD19 CAR-T cells, intravenous single infusion at protocol-defined dose level (1 x 10^6 or 3 x 10^6 CAR-positive viable T cells/kg)."
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07523542"
+      ]
+    },
+    {
+      "name_key": "axa-nk02",
+      "name_variants": [
+        "AXA-NK02"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07412210"
+      ]
+    },
+    {
+      "name_key": "azd0120",
+      "name_variants": [
+        "AZD0120"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06897930"
+      ]
+    },
+    {
+      "name_key": "background therapy",
+      "name_variants": [
+        "Background Therapy"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04564339"
+      ]
+    },
+    {
+      "name_key": "baff serum levels",
+      "name_variants": [
+        "BAFF serum levels"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04369495"
+      ]
+    },
+    {
+      "name_key": "basic treatment",
+      "name_variants": [
+        "Basic treatment"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06058078"
+      ]
+    },
+    {
+      "name_key": "bcma cart + cd19 cart",
+      "name_variants": [
+        "BCMA CART + CD19 CART"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06681337"
+      ]
+    },
+    {
+      "name_key": "bendamustine",
+      "name_variants": [
+        "Bendamustine"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06308978"
+      ]
+    },
+    {
+      "name_key": "bi 655064 dose 1",
+      "name_variants": [
+        "BI 655064 dose 1"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02770170"
+      ]
+    },
+    {
+      "name_key": "bi 655064 dose 2",
+      "name_variants": [
+        "BI 655064 dose 2"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02770170"
+      ]
+    },
+    {
+      "name_key": "bi 655064 dose 3",
+      "name_variants": [
+        "BI 655064 dose 3"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02770170"
+      ]
+    },
+    {
+      "name_key": "blood sample for analysis of plasma of organochlorine pesticides concentration",
+      "name_variants": [
+        "Blood sample for analysis of plasma of organochlorine pesticides concentration"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06365359"
+      ]
+    },
+    {
+      "name_key": "blood sample for cell collection",
+      "name_variants": [
+        "Blood sample for cell collection"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06365359"
+      ]
+    },
+    {
+      "name_key": "bms-986515",
+      "name_variants": [
+        "BMS-986515"
+      ],
+      "types": [
+        "GENETIC"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07115745"
+      ]
+    },
+    {
+      "name_key": "c-car168",
+      "name_variants": [
+        "C-CAR168"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06935474"
+      ]
+    },
+    {
+      "name_key": "cart19",
+      "name_variants": [
+        "CART19"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06839976"
+      ]
+    },
+    {
+      "name_key": "cb-010",
+      "name_variants": [
+        "CB-010"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06752876"
+      ]
+    },
+    {
+      "name_key": "cbc, serum creatinine and urea, estimated gfr, esr, crp, urine analysis, ana, anti dsdna, c3 & c4, serum albumin, 24-hrs urinary protein, and u. acr",
+      "name_variants": [
+        "CBC, serum creatinine and urea, estimated GFR, ESR, CRP, urine analysis, ANA, anti dsDNA, C3 & C4, serum albumin, 24-hrs urinary protein, and U. ACR"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07505576"
+      ]
+    },
+    {
+      "name_key": "cc-97540",
+      "name_variants": [
+        "CC-97540"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07015983"
+      ]
+    },
+    {
+      "name_key": "cd19 car-t cells",
+      "name_variants": [
+        "CD19 CAR-T cells"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06585514"
+      ]
+    },
+    {
+      "name_key": "cd19 car-γδ t cell",
+      "name_variants": [
+        "CD19 CAR-γδ T cell"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07535138"
+      ]
+    },
+    {
+      "name_key": "cd19- bcma car-t cells",
+      "name_variants": [
+        "CD19- BCMA CAR-T cells"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06350110"
+      ]
+    },
+    {
+      "name_key": "cd19-bcma car-t cells infusion",
+      "name_variants": [
+        "CD19-BCMA CAR-T cells infusion"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06947460"
+      ]
+    },
+    {
+      "name_key": "cd19/bcma lupus nephritis targeted car t-cells injection",
+      "name_variants": [
+        "CD19/BCMA Lupus Nephritis Targeted CAR T-cells injection"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06785519"
+      ]
+    },
+    {
+      "name_key": "cellcept",
+      "name_variants": [
+        "CellCept"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02226341"
+      ]
+    },
+    {
+      "name_key": "cenerimod",
+      "name_variants": [
+        "Cenerimod"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07201129"
+      ]
+    },
+    {
+      "name_key": "cfz533",
+      "name_variants": [
+        "CFZ533"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT03610516"
+      ]
+    },
+    {
+      "name_key": "chemotherapy agents",
+      "name_variants": [
+        "Chemotherapy Agents"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06377228"
+      ]
+    },
+    {
+      "name_key": "ciclesonide",
+      "name_variants": [
+        "Ciclesonide"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04870333"
+      ]
+    },
+    {
+      "name_key": "clinimacs® tcr α/β reagent kit and clinimacs® cd19 system",
+      "name_variants": [
+        "CliniMACS® TCR α/β Reagent Kit and CliniMACS® CD19 System"
+      ],
+      "types": [
+        "DEVICE"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05508009"
+      ]
+    },
+    {
+      "name_key": "cnct19 cell injection",
+      "name_variants": [
+        "CNCT19 cell injection"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05930314"
+      ]
+    },
+    {
+      "name_key": "cnty-101",
+      "name_variants": [
+        "CNTY-101"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06255028"
+      ]
+    },
+    {
+      "name_key": "colour doppler of the renal artery and measurement of resistive index",
+      "name_variants": [
+        "colour doppler of the renal artery and measurement of resistive index"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06757725"
+      ]
+    },
+    {
+      "name_key": "corticosteroids",
+      "name_variants": [
+        "Corticosteroids"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05207358"
+      ]
+    },
+    {
+      "name_key": "crc01",
+      "name_variants": [
+        "CRC01"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07364396"
+      ]
+    },
+    {
+      "name_key": "ctx-aza",
+      "name_variants": [
+        "CTX-AZA"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02954939"
+      ]
+    },
+    {
+      "name_key": "ctx112",
+      "name_variants": [
+        "CTX112"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06925542"
+      ]
+    },
+    {
+      "name_key": "culturally congruent coaching",
+      "name_variants": [
+        "Culturally congruent coaching"
+      ],
+      "types": [
+        "BEHAVIORAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06217107"
+      ]
+    },
+    {
+      "name_key": "curcumin oral capsule",
+      "name_variants": [
+        "Curcumin Oral Capsule"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05714670"
+      ]
+    },
+    {
+      "name_key": "current standard of care treatment options",
+      "name_variants": [
+        "Current standard of care treatment options"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07175285"
+      ]
+    },
+    {
+      "name_key": "cyclophosphamide 100 mg/kg",
+      "name_variants": [
+        "Cyclophosphamide 100 mg/Kg"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05508009"
+      ]
+    },
+    {
+      "name_key": "cyclophosphamide 1200 mg/kg",
+      "name_variants": [
+        "Cyclophosphamide 1200 mg/Kg"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05508009"
+      ]
+    },
+    {
+      "name_key": "cyclophosphamide injections",
+      "name_variants": [
+        "Cyclophosphamide injections"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02457221"
+      ]
+    },
+    {
+      "name_key": "cyclophosphamide ld",
+      "name_variants": [
+        "Cyclophosphamide LD"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06518668"
+      ]
+    },
+    {
+      "name_key": "dapagliflozin",
+      "name_variants": [
+        "dapagliflozin"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05748925"
+      ]
+    },
+    {
+      "name_key": "dapagliflozin (10mg tab) along with standard medical therapy",
+      "name_variants": [
+        "Dapagliflozin (10Mg Tab) along with standard medical therapy"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07323524"
+      ]
+    },
+    {
+      "name_key": "dapagliflozin 10mg tab",
+      "name_variants": [
+        "Dapagliflozin 10mg Tab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06155604"
+      ]
+    },
+    {
+      "name_key": "dapagliflozin 10mg tab orally once daily",
+      "name_variants": [
+        "Dapagliflozin 10mg Tab orally once daily"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06113900"
+      ]
+    },
+    {
+      "name_key": "dapagliflozin tablet",
+      "name_variants": [
+        "Dapagliflozin tablet"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05704088"
+      ]
+    },
+    {
+      "name_key": "daratumumab",
+      "name_variants": [
+        "Daratumumab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04868838"
+      ]
+    },
+    {
+      "name_key": "detection of circulating anti-gbm antibodies (using chemiluminescence method and indirect immunofluorescence (iif) method).",
+      "name_variants": [
+        "Detection of circulating anti-GBM antibodies (using chemiluminescence method and indirect immunofluorescence (IIF) method)."
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT03664908"
+      ]
+    },
+    {
+      "name_key": "diphenhydramine",
+      "name_variants": [
+        "Diphenhydramine"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04221477"
+      ]
+    },
+    {
+      "name_key": "diphenhydramine hydrochloride (hcl)",
+      "name_variants": [
+        "Diphenhydramine hydrochloride (HCl)"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05039619"
+      ]
+    },
+    {
+      "name_key": "dna extraction and pcr amplification",
+      "name_variants": [
+        "DNA extraction and PCR amplification"
+      ],
+      "types": [
+        "GENETIC"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06231303"
+      ]
+    },
+    {
+      "name_key": "efgartigimod iv",
+      "name_variants": [
+        "efgartigimod IV"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05810948"
+      ]
+    },
+    {
+      "name_key": "equecabtagene autoleucel injection",
+      "name_variants": [
+        "Equecabtagene Autoleucel Injection"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06902844"
+      ]
+    },
+    {
+      "name_key": "fasting blood suger",
+      "name_variants": [
+        "fasting blood suger"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05964751"
+      ]
+    },
+    {
+      "name_key": "felzartamab",
+      "name_variants": [
+        "Felzartamab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06064929"
+      ]
+    },
+    {
+      "name_key": "fibroblast growth factor 23",
+      "name_variants": [
+        "fibroblast growth factor 23"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06837558"
+      ]
+    },
+    {
+      "name_key": "fibronigin to albumin ratio",
+      "name_variants": [
+        "fibronigin to albumin ratio"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06288308"
+      ]
+    },
+    {
+      "name_key": "fkc288",
+      "name_variants": [
+        "FKC288"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06285279"
+      ]
+    },
+    {
+      "name_key": "fludarabine phosphate",
+      "name_variants": [
+        "Fludarabine phosphate"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06434363"
+      ]
+    },
+    {
+      "name_key": "fludarabine, cyclophosphamide",
+      "name_variants": [
+        "Fludarabine, Cyclophosphamide"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06557265"
+      ]
+    },
+    {
+      "name_key": "gliflozin",
+      "name_variants": [
+        "Gliflozin"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07035834"
+      ]
+    },
+    {
+      "name_key": "glucocorticoid",
+      "name_variants": [
+        "Glucocorticoid"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05916781"
+      ]
+    },
+    {
+      "name_key": "guselkumab dose 1",
+      "name_variants": [
+        "Guselkumab Dose 1"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04376827"
+      ]
+    },
+    {
+      "name_key": "guselkumab dose 2",
+      "name_variants": [
+        "Guselkumab Dose 2"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04376827"
+      ]
+    },
+    {
+      "name_key": "hb2198",
+      "name_variants": [
+        "HB2198"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07491900"
+      ]
+    },
+    {
+      "name_key": "health360x app",
+      "name_variants": [
+        "Health360x app"
+      ],
+      "types": [
+        "BEHAVIORAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06217107"
+      ]
+    },
+    {
+      "name_key": "high-dose car-t cells group",
+      "name_variants": [
+        "High-dose CAR-T cells group"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06904729"
+      ]
+    },
+    {
+      "name_key": "hlx79 10mg/kg/placebo+hlx01",
+      "name_variants": [
+        "HLX79 10mg/kg/Placebo+HLX01"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07038382"
+      ]
+    },
+    {
+      "name_key": "hlx79 20mg/kg/placebo + hlx01",
+      "name_variants": [
+        "HLX79 20mg/kg/Placebo + HLX01"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07038382"
+      ]
+    },
+    {
+      "name_key": "hlx79 30mg/kg/placebo+hlx01",
+      "name_variants": [
+        "HLX79 30mg/kg/placebo+HLX01"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07038382"
+      ]
+    },
+    {
+      "name_key": "hsk39297 200mgqd",
+      "name_variants": [
+        "HSK39297 200mgQD"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07363460"
+      ]
+    },
+    {
+      "name_key": "hsk39297 300mgqd",
+      "name_variants": [
+        "HSK39297 300mgQD"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07363460"
+      ]
+    },
+    {
+      "name_key": "ianalumab",
+      "name_variants": [
+        "Ianalumab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06711887"
+      ]
+    },
+    {
+      "name_key": "ianalumab s.c. q12w",
+      "name_variants": [
+        "ianalumab s.c. q12w"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05126277"
+      ]
+    },
+    {
+      "name_key": "ianalumab s.c. q4w",
+      "name_variants": [
+        "ianalumab s.c. q4w"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05126277"
+      ]
+    },
+    {
+      "name_key": "icg318, bcma-cd19-il-15/il-15 sushi compound car t following cyclophosphamide-only lymphodepletion",
+      "name_variants": [
+        "ICG318, BCMA-CD19-IL-15/IL-15 sushi Compound CAR T following cyclophosphamide-only lymphodepletion"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07328581"
+      ]
+    },
+    {
+      "name_key": "il-2",
+      "name_variants": [
+        "IL-2"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06255028"
+      ]
+    },
+    {
+      "name_key": "immunosuppressive agents",
+      "name_variants": [
+        "Immunosuppressive Agents"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05863936"
+      ]
+    },
+    {
+      "name_key": "injection of msc303",
+      "name_variants": [
+        "Injection of MSC303"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07000292"
+      ]
+    },
+    {
+      "name_key": "interleukin- 17",
+      "name_variants": [
+        "interleukin- 17"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07017868"
+      ]
+    },
+    {
+      "name_key": "ipg11406",
+      "name_variants": [
+        "IPG11406"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06717815"
+      ]
+    },
+    {
+      "name_key": "iptacopan (part 1)",
+      "name_variants": [
+        "Iptacopan (part 1)"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05268289"
+      ]
+    },
+    {
+      "name_key": "iptacopan (part 2)",
+      "name_variants": [
+        "Iptacopan (part 2)"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05268289"
+      ]
+    },
+    {
+      "name_key": "iptacopan + placebo",
+      "name_variants": [
+        "Iptacopan + placebo"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05268289"
+      ]
+    },
+    {
+      "name_key": "itolizumab [bmab 600]",
+      "name_variants": [
+        "Itolizumab [Bmab 600]"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04128579"
+      ]
+    },
+    {
+      "name_key": "kidney transplant",
+      "name_variants": [
+        "Kidney Transplant"
+      ],
+      "types": [
+        "PROCEDURE"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05508009"
+      ]
+    },
+    {
+      "name_key": "kite-363",
+      "name_variants": [
+        "KITE-363"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07038447"
+      ]
+    },
+    {
+      "name_key": "kzr-616",
+      "name_variants": [
+        "KZR-616"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT03393013"
+      ]
+    },
+    {
+      "name_key": "lcar-aio t cells",
+      "name_variants": [
+        "LCAR-AIO T cells"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06653556"
+      ]
+    },
+    {
+      "name_key": "lipid profile",
+      "name_variants": [
+        "lipid profile"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05964751"
+      ]
+    },
+    {
+      "name_key": "low-dose car-t cells group",
+      "name_variants": [
+        "Low-dose CAR-T cells group"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06904729"
+      ]
+    },
+    {
+      "name_key": "lupkynis",
+      "name_variants": [
+        "LUPKYNIS"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05337124"
+      ]
+    },
+    {
+      "name_key": "lymphodepleting chemotherapy",
+      "name_variants": [
+        "Lymphodepleting Chemotherapy"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06255028"
+      ]
+    },
+    {
+      "name_key": "medical chart review",
+      "name_variants": [
+        "Medical chart review"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04971590"
+      ]
+    },
+    {
+      "name_key": "melphalan",
+      "name_variants": [
+        "Melphalan"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05508009"
+      ]
+    },
+    {
+      "name_key": "mescaline sodium enteric-coated tablets",
+      "name_variants": [
+        "Mescaline sodium enteric-coated tablets"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05933213"
+      ]
+    },
+    {
+      "name_key": "mesenchymal stem cells (msc)",
+      "name_variants": [
+        "Mesenchymal stem cells (MSC)"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT03673748"
+      ]
+    },
+    {
+      "name_key": "methylprednisolone injectable suspension",
+      "name_variants": [
+        "Methylprednisolone Injectable Suspension"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05863936"
+      ]
+    },
+    {
+      "name_key": "micro-learning content",
+      "name_variants": [
+        "Micro-learning content"
+      ],
+      "types": [
+        "BEHAVIORAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06217107"
+      ]
+    },
+    {
+      "name_key": "mmf",
+      "name_variants": [
+        "MMF"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04221477"
+      ]
+    },
+    {
+      "name_key": "mmf-mmf",
+      "name_variants": [
+        "MMF-MMF"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02954939"
+      ]
+    },
+    {
+      "name_key": "morte-mescaline",
+      "name_variants": [
+        "Morte-mescaline"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05933213"
+      ]
+    },
+    {
+      "name_key": "mosunetuzumab",
+      "name_variants": [
+        "Mosunetuzumab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07598396"
+      ]
+    },
+    {
+      "name_key": "mtm-h-001 injection",
+      "name_variants": [
+        "MTM-H-001 Injection"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07593911"
+      ]
+    },
+    {
+      "name_key": "mycophenolate mofetil (mmf)",
+      "name_variants": [
+        "Mycophenolate mofetil (MMF)"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07340463"
+      ]
+    },
+    {
+      "name_key": "mycophenolate mofetil/mycophenolic acid",
+      "name_variants": [
+        "Mycophenolate Mofetil/Mycophenolic Acid"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02550652"
+      ]
+    },
+    {
+      "name_key": "myfortic",
+      "name_variants": [
+        "Myfortic"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04645589"
+      ]
+    },
+    {
+      "name_key": "niclosamide",
+      "name_variants": [
+        "Niclosamide"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04870333"
+      ]
+    },
+    {
+      "name_key": "nipocalimab",
+      "name_variants": [
+        "Nipocalimab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04883619"
+      ]
+    },
+    {
+      "name_key": "nk 010 or nk042",
+      "name_variants": [
+        "NK 010 or NK042"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06676631"
+      ]
+    },
+    {
+      "name_key": "no intervention",
+      "name_variants": [
+        "No Intervention"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT03001973"
+      ]
+    },
+    {
+      "name_key": "no intervention: observational cohort",
+      "name_variants": [
+        "No Intervention: Observational Cohort"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06682507"
+      ]
+    },
+    {
+      "name_key": "non-invasive transcutaneous vagus nerve stimulation (tvns)",
+      "name_variants": [
+        "Non-invasive transcutaneous vagus nerve stimulation (tVNS)"
+      ],
+      "types": [
+        "DEVICE"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05315739"
+      ]
+    },
+    {
+      "name_key": "none (observational study)",
+      "name_variants": [
+        "None (Observational study)"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06527872"
+      ]
+    },
+    {
+      "name_key": "normal saline",
+      "name_variants": [
+        "Normal saline"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06485648"
+      ]
+    },
+    {
+      "name_key": "obecabtagene autoleucel",
+      "name_variants": [
+        "Obecabtagene autoleucel"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07053800"
+      ]
+    },
+    {
+      "name_key": "obinutuzumab administration",
+      "name_variants": [
+        "Obinutuzumab administration"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04702256"
+      ]
+    },
+    {
+      "name_key": "observational assessment",
+      "name_variants": [
+        "Observational assessment"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07575347"
+      ]
+    },
+    {
+      "name_key": "odronextamab",
+      "name_variants": [
+        "Odronextamab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06975787"
+      ]
+    },
+    {
+      "name_key": "oms721 (narsoplimab)",
+      "name_variants": [
+        "OMS721 (narsoplimab)"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02682407"
+      ]
+    },
+    {
+      "name_key": "ont01 is a small molecule cd11b modulator.",
+      "name_variants": [
+        "ONT01 is a small molecule CD11b modulator."
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07107659"
+      ]
+    },
+    {
+      "name_key": "p-cd19cd20-allo1 cells",
+      "name_variants": [
+        "P-CD19CD20-ALLO1 Cells"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06984341"
+      ]
+    },
+    {
+      "name_key": "participant completed survey",
+      "name_variants": [
+        "Participant completed survey"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04971590"
+      ]
+    },
+    {
+      "name_key": "picaso intervention group",
+      "name_variants": [
+        "PiCASO Intervention Group"
+      ],
+      "types": [
+        "BEHAVIORAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT03938324"
+      ]
+    },
+    {
+      "name_key": "placebo (normal saline)",
+      "name_variants": [
+        "Placebo (Normal Saline)"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05540665"
+      ]
+    },
+    {
+      "name_key": "placebo + standard of care",
+      "name_variants": [
+        "Placebo + standard of care"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05268289"
+      ]
+    },
+    {
+      "name_key": "placebo for vib4920",
+      "name_variants": [
+        "Placebo for VIB4920"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05201469"
+      ]
+    },
+    {
+      "name_key": "placebo oral capsule",
+      "name_variants": [
+        "Placebo Oral Capsule"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05288855"
+      ]
+    },
+    {
+      "name_key": "placebo s.c.",
+      "name_variants": [
+        "placebo s.c."
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05126277"
+      ]
+    },
+    {
+      "name_key": "povetacicept",
+      "name_variants": [
+        "Povetacicept"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05732402"
+      ]
+    },
+    {
+      "name_key": "pre-emptive increase of immunosuppressive treatments",
+      "name_variants": [
+        "Pre-emptive increase of immunosuppressive treatments"
+      ],
+      "types": [
+        "PROCEDURE"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04870359"
+      ]
+    },
+    {
+      "name_key": "prednisolone and/or aza/mmf",
+      "name_variants": [
+        "Prednisolone and/or AZA/MMF"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04870359"
+      ]
+    },
+    {
+      "name_key": "prg-1801",
+      "name_variants": [
+        "PRG-1801"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06497387"
+      ]
+    },
+    {
+      "name_key": "prg-1801 （car-t against bcma）",
+      "name_variants": [
+        "PRG-1801 （CAR-T against BCMA）"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06277427"
+      ]
+    },
+    {
+      "name_key": "prg-2311",
+      "name_variants": [
+        "PRG-2311"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06497361"
+      ]
+    },
+    {
+      "name_key": "rapcabtagene autoleucel",
+      "name_variants": [
+        "rapcabtagene autoleucel"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06581198"
+      ]
+    },
+    {
+      "name_key": "ravulizumab",
+      "name_variants": [
+        "Ravulizumab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04564339"
+      ]
+    },
+    {
+      "name_key": "recombinant humanized monoclonal antibody mil62 injection",
+      "name_variants": [
+        "Recombinant Humanized Monoclonal Antibody MIL62 Injection"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07044115"
+      ]
+    },
+    {
+      "name_key": "renal biobsy",
+      "name_variants": [
+        "renal biobsy"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06491602"
+      ]
+    },
+    {
+      "name_key": "renal doppler",
+      "name_variants": [
+        "renal doppler"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06631404"
+      ]
+    },
+    {
+      "name_key": "renal multi-parametric mri, renal doppler ultrasound, serum cd147",
+      "name_variants": [
+        "Renal multi-parametric MRI, Renal doppler ultrasound, Serum CD147"
+      ],
+      "types": [
+        "DEVICE"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06287125"
+      ]
+    },
+    {
+      "name_key": "repeat kidney biopsy",
+      "name_variants": [
+        "Repeat kidney biopsy"
+      ],
+      "types": [
+        "PROCEDURE"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04449991"
+      ]
+    },
+    {
+      "name_key": "rimiducid",
+      "name_variants": [
+        "Rimiducid"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06984341"
+      ]
+    },
+    {
+      "name_key": "ry_sw01 cell injection",
+      "name_variants": [
+        "RY_SW01 cell injection"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06058078"
+      ]
+    },
+    {
+      "name_key": "sc291",
+      "name_variants": [
+        "SC291"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06294236"
+      ]
+    },
+    {
+      "name_key": "serum anti-alpha-actinin antibodies",
+      "name_variants": [
+        "serum anti-alpha-actinin antibodies"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07505576"
+      ]
+    },
+    {
+      "name_key": "sham comparator: attention control group",
+      "name_variants": [
+        "Sham Comparator: Attention Control Group"
+      ],
+      "types": [
+        "BEHAVIORAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT03938324"
+      ]
+    },
+    {
+      "name_key": "sham vagus nerve stimulation",
+      "name_variants": [
+        "Sham vagus nerve stimulation"
+      ],
+      "types": [
+        "DEVICE"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05315739"
+      ]
+    },
+    {
+      "name_key": "shr-2173 injection",
+      "name_variants": [
+        "SHR-2173 Injection"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07229742"
+      ]
+    },
+    {
+      "name_key": "shr-2173 injection blank preparation",
+      "name_variants": [
+        "SHR-2173 Injection Blank Preparation"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07229742"
+      ]
+    },
+    {
+      "name_key": "sim0278 injection",
+      "name_variants": [
+        "SIM0278 injection"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07393451"
+      ]
+    },
+    {
+      "name_key": "sotrovimab",
+      "name_variants": [
+        "Sotrovimab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04870333"
+      ]
+    },
+    {
+      "name_key": "standard clinical care",
+      "name_variants": [
+        "Standard clinical care"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07493655"
+      ]
+    },
+    {
+      "name_key": "standard maintenance therapy",
+      "name_variants": [
+        "Standard maintenance therapy"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06155604"
+      ]
+    },
+    {
+      "name_key": "stk-009",
+      "name_variants": [
+        "STK-009"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06544330"
+      ]
+    },
+    {
+      "name_key": "syncar-001",
+      "name_variants": [
+        "SYNCAR-001"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06544330"
+      ]
+    },
+    {
+      "name_key": "systemic immune inflammatory index",
+      "name_variants": [
+        "systemic immune inflammatory index"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06796569"
+      ]
+    },
+    {
+      "name_key": "t-reg cells",
+      "name_variants": [
+        "T-reg cells"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06428539"
+      ]
+    },
+    {
+      "name_key": "tacrolimus capsules",
+      "name_variants": [
+        "Tacrolimus capsules"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT02457221"
+      ]
+    },
+    {
+      "name_key": "tafasitamab",
+      "name_variants": [
+        "Tafasitamab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06434363"
+      ]
+    },
+    {
+      "name_key": "tafasitamab and nk cells",
+      "name_variants": [
+        "Tafasitamab and NK cells"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06434363"
+      ]
+    },
+    {
+      "name_key": "tak-007",
+      "name_variants": [
+        "TAK-007"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06377228"
+      ]
+    },
+    {
+      "name_key": "telitacicept",
+      "name_variants": [
+        "Telitacicept"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07340463"
+      ]
+    },
+    {
+      "name_key": "telitacicept 160 mg",
+      "name_variants": [
+        "Telitacicept 160 mg"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05680480"
+      ]
+    },
+    {
+      "name_key": "telitacicept 240 mg",
+      "name_variants": [
+        "Telitacicept 240 mg"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05680480"
+      ]
+    },
+    {
+      "name_key": "therapeutic drug monitoring",
+      "name_variants": [
+        "Therapeutic Drug Monitoring"
+      ],
+      "types": [
+        "OTHER"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07493655"
+      ]
+    },
+    {
+      "name_key": "tocilizumab",
+      "name_variants": [
+        "Tocilizumab"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07115745"
+      ]
+    },
+    {
+      "name_key": "total body irradiation",
+      "name_variants": [
+        "Total Body Irradiation"
+      ],
+      "types": [
+        "RADIATION"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05508009"
+      ]
+    },
+    {
+      "name_key": "ub-vv410",
+      "name_variants": [
+        "UB-VV410"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07109986"
+      ]
+    },
+    {
+      "name_key": "umbilical cord blood cd19-bcma car-t cells infusion",
+      "name_variants": [
+        "umbilical cord blood CD19-BCMA CAR-T cells infusion"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06947473"
+      ]
+    },
+    {
+      "name_key": "umbilical cord mesenchymal stem cells",
+      "name_variants": [
+        "Umbilical cord mesenchymal stem cells"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06485648"
+      ]
+    },
+    {
+      "name_key": "urinary extracellular vesicle testing",
+      "name_variants": [
+        "Urinary extracellular vesicle testing"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06642402"
+      ]
+    },
+    {
+      "name_key": "urinary galectin-3 binding protein",
+      "name_variants": [
+        "Urinary galectin-3 binding protein"
+      ],
+      "types": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06520670"
+      ]
+    },
+    {
+      "name_key": "vib4920",
+      "name_variants": [
+        "VIB4920"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05201469"
+      ]
+    },
+    {
+      "name_key": "vitamin d2 ( calciferol )",
+      "name_variants": [
+        "vitamin D2 ( calciferol )"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05260255"
+      ]
+    },
+    {
+      "name_key": "voclosporin (lupkynis)",
+      "name_variants": [
+        "Voclosporin (LUPKYNIS)"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT07053891"
+      ]
+    },
+    {
+      "name_key": "voclosporin（ql1074）",
+      "name_variants": [
+        "Voclosporin（QL1074）"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06406205"
+      ]
+    },
+    {
+      "name_key": "vonsetamig",
+      "name_variants": [
+        "Vonsetamig"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06975787"
+      ]
+    },
+    {
+      "name_key": "ytb323",
+      "name_variants": [
+        "YTB323"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05798117"
+      ]
+    },
+    {
+      "name_key": "yts109 cell injection",
+      "name_variants": [
+        "YTS109 cell injection"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06943937"
+      ]
+    },
+    {
+      "name_key": "zamtocabtagene autoleucel",
+      "name_variants": [
+        "zamtocabtagene autoleucel"
+      ],
+      "types": [
+        "BIOLOGICAL"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT06708845"
+      ]
+    },
+    {
+      "name_key": "zanubrutinib",
+      "name_variants": [
+        "Zanubrutinib"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT04643470"
+      ]
+    },
+    {
+      "name_key": "zetomipzomib",
+      "name_variants": [
+        "zetomipzomib"
+      ],
+      "types": [
+        "DRUG"
+      ],
+      "count": 1,
+      "nct_id_count": 1,
+      "nct_ids": [
+        "NCT05781750"
+      ]
+    }
+  ]
+}

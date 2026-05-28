@@ -21,6 +21,26 @@
       "id": "ad_spend_timeseries",
       "label": "Digital ad spend time series",
       "description": "Monthly digital ad spend per branded domain. Dimensions: domain, month. Measures: estimated_spend."
+    },
+    {
+      "id": "clinical_trials_raw",
+      "label": "ClinicalTrials.gov raw study records",
+      "description": "Cached, unflattened CT.gov v2 study records for an indication. Envelope: { schema_version, queries[], fetched_at, raw_total_count_by_query, deduped_count, studies[] }. Each study carries its NCT id, matched_queries[] (which fetch queries returned it), and the full CT.gov protocolSection + derivedSection payload."
+    },
+    {
+      "id": "clinical_trials_normalized",
+      "label": "ClinicalTrials.gov normalized studies",
+      "description": "Deterministic flatten of clinical_trials_raw. One row per NCT id with brief/official title, status + why_stopped, dates, phases, study_type, enrollment, lead_sponsor + collaborators[], conditions[], condition_keywords[], interventions[] (with name_key), locations[] (with geoPoint), eligibility (sex, age bounds in years, healthy_volunteers, criteria_text, etc.)."
+    },
+    {
+      "id": "clinical_trials_sponsors_observed",
+      "label": "ClinicalTrials.gov sponsor occurrences",
+      "description": "Per-name sponsor table derived from normalized studies: lead_count, collaborator_count, total_count, observed classes[], referenced NCT ids[]. Observation-only — does not merge against the live sponsors registry."
+    },
+    {
+      "id": "clinical_trials_interventions_observed",
+      "label": "ClinicalTrials.gov intervention occurrences",
+      "description": "Per-name_key intervention table derived from normalized studies: case-collapsed name_key, observed name_variants[], types[], count, referenced NCT ids[]. Observation-only — does not merge against the live drugs or mechanisms-of-action registries."
     }
   ]
 }

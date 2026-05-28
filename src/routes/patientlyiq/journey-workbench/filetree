@@ -1,0 +1,675 @@
+/Users/aaronjun/JourneyMapper/
+├─] .DS_Store (ignored)
+├── .agents/
+│   └── skills/
+│       ├── adapt/
+│       │   └── SKILL.md
+│       ├── animate/
+│       │   └── SKILL.md
+│       ├── arrange/
+│       │   └── SKILL.md
+│       ├── audit/
+│       │   └── SKILL.md
+│       ├── bolder/
+│       │   └── SKILL.md
+│       ├── clarify/
+│       │   └── SKILL.md
+│       ├── colorize/
+│       │   └── SKILL.md
+│       ├── critique/
+│       │   └── SKILL.md
+│       ├── delight/
+│       │   └── SKILL.md
+│       ├── distill/
+│       │   └── SKILL.md
+│       ├── extract/
+│       │   └── SKILL.md
+│       ├── frontend-design/
+│       │   ├── SKILL.md
+│       │   └── reference/
+│       │       ├── color-and-contrast.md
+│       │       ├── interaction-design.md
+│       │       ├── motion-design.md
+│       │       ├── responsive-design.md
+│       │       ├── spatial-design.md
+│       │       ├── typography.md
+│       │       └── ux-writing.md
+│       ├── harden/
+│       │   └── SKILL.md
+│       ├── normalize/
+│       │   └── SKILL.md
+│       ├── onboard/
+│       │   └── SKILL.md
+│       ├── optimize/
+│       │   └── SKILL.md
+│       ├── overdrive/
+│       │   └── SKILL.md
+│       ├── polish/
+│       │   └── SKILL.md
+│       ├── quieter/
+│       │   └── SKILL.md
+│       ├── shadcn-svelte/
+│       │   └── SKILL.md
+│       ├── teach-impeccable/
+│       │   └── SKILL.md
+│       └── typeset/
+│           └── SKILL.md
+├── .claude/
+│   ├── settings.json
+│   └── settings.local.json
+├─] .env (ignored)
+├── .gitattributes
+├── .github/
+│   └── workflows/
+│       └── playwright.yml
+├── .gitignore
+├── .npmrc
+├─] .svelte-kit/ (ignored)
+├── Example Interview 2.md
+├── Example Interview.md
+├── README.md
+├── combined_extracted_chart_data.json
+├── components.json
+├── inspect-tmp.mjs
+├── interview_analysis_system_plan.md
+├── lexicon_expansion_prompt.md
+├── lupus_nephritis_clusters_expanded.json
+├── lupus_nephritis_patient_community_engagement.json
+├── lupus_nephritis_relative_search_volume.json
+├── lupus_nephritis_treatment_searches_us.json
+├── melanoma_ad_spend_jan_jun_2023.json
+├─] node_modules/ (ignored)
+├── package-lock.json
+├── package.json
+├─] playwright-report/ (ignored)
+├── playwright.config.ts
+├── postcss.config.js
+├── scripts/
+│   ├── build-keyword-usage.mjs
+│   ├── build-question-map.mjs
+│   ├── build-quote-bank.mjs
+│   ├── build-segment-tags.mjs
+│   ├── build-segments.mjs
+│   ├── build-word-usage.mjs
+│   ├── migrate-keyword-lexicon.mjs
+│   ├── migrate-lexicon-conditions.mjs
+│   ├── migrate-segment-tags.mjs
+│   ├── normalize-topics.mjs
+│   ├── parse-transcripts.mjs
+│   ├── propose-questions.mjs
+│   ├── propose-segment-tags.mjs
+│   └── propose-topics.mjs
+├── skills-lock.json
+├── src/
+│   ├── .DS_Store
+│   ├── app.css
+│   ├── app.d.ts
+│   ├── app.html
+│   ├── gifenc.d.ts
+│   ├── lib/
+│   │   ├── .DS_Store
+│   │   ├── analysis/
+│   │   ├── archive/
+│   │   │   ├── ContentTabs.svelte
+│   │   │   ├── CurrentStateScreen.svelte
+│   │   │   ├── IndexMetricBars.svelte
+│   │   │   ├── JourneyAxis.svelte
+│   │   │   ├── JourneyIndex.svelte
+│   │   │   ├── JourneyInfoSidebarRight.svelte
+│   │   │   ├── JourneyInfoSources.svelte
+│   │   │   ├── JourneyLayoutToggle.svelte
+│   │   │   ├── JourneyPersonaBar.svelte
+│   │   │   ├── JourneySentimentGrid.svelte
+│   │   │   ├── JourneySentimentRadial.svelte
+│   │   │   ├── JourneySidebar.svelte
+│   │   │   ├── JourneySidebarContent.svelte
+│   │   │   ├── JourneyWordCloud.svelte
+│   │   │   ├── PersonaCardStack.svelte
+│   │   │   ├── PersonaSelectorSidebar.svelte
+│   │   │   ├── PersonaTab.svelte
+│   │   │   ├── PlutchikCombinations.svelte
+│   │   │   ├── PlutchikWheel.svelte
+│   │   │   ├── StepDetailContent_direct_personas.svelte
+│   │   │   ├── StepDetailContent_with_wordcloud.svelte
+│   │   │   ├── StepEvents.svelte
+│   │   │   ├── wctglpdemo-tag-page.server.ts
+│   │   │   └── wctglpdemo-tag-page.svelte
+│   │   ├── assets/
+│   │   │   └── favicon.svg
+│   │   ├── charts/
+│   │   │   ├── BarX.svelte
+│   │   │   ├── BarXStacked.svelte
+│   │   │   ├── BarY.svelte
+│   │   │   ├── BarYGrouped.svelte
+│   │   │   ├── ChartFrame.svelte
+│   │   │   ├── ComboBarLine.svelte
+│   │   │   ├── Radar.svelte
+│   │   │   ├── glp/
+│   │   │   │   ├── KeywordOrbit.svelte
+│   │   │   │   ├── RadialThemeChart.svelte
+│   │   │   │   ├── RadialTree.svelte
+│   │   │   │   ├── SortableBarChart.svelte
+│   │   │   │   ├── Sunburst.svelte
+│   │   │   │   ├── ThemeConstellation.svelte
+│   │   │   │   ├── ThemeHeatmap.svelte
+│   │   │   │   └── WordCloud.svelte
+│   │   │   └── reveal.ts
+│   │   ├── components/
+│   │   │   ├── CodedFragmentCard.svelte
+│   │   │   ├── GroupStatsDrawer.svelte
+│   │   │   ├── IndicationSelector.svelte
+│   │   │   ├── KeyQuoteCard.svelte
+│   │   │   ├── KeyQuotesSection.svelte
+│   │   │   ├── KeywordTagDrawer.svelte
+│   │   │   ├── KeywordText.svelte
+│   │   │   ├── ParticipantAvatar.svelte
+│   │   │   ├── ParticipantDrawer.svelte
+│   │   │   ├── ParticipantFragmentsDrawer.svelte
+│   │   │   ├── PhraseLinkDrawer.svelte
+│   │   │   ├── RightDrawer.svelte
+│   │   │   ├── SegmentTagDrawer.svelte
+│   │   │   ├── SentimentBar.svelte
+│   │   │   ├── SentimentDonut.svelte
+│   │   │   ├── SentimentRing.svelte
+│   │   │   ├── StatBar.svelte
+│   │   │   ├── TableOfContents.svelte
+│   │   │   ├── TertiaryDrawer.svelte
+│   │   │   ├── ThemeDrawer.svelte
+│   │   │   ├── ToastViewport.svelte
+│   │   │   ├── WctglpSidebar.svelte
+│   │   │   ├── WctglpTopbar.svelte
+│   │   │   ├── app-sidebar.svelte
+│   │   │   ├── journey/
+│   │   │   │   └── JourneyStep.svelte
+│   │   │   ├── key-findings/
+│   │   │   │   ├── BlockConfigDrawer.svelte
+│   │   │   │   ├── KeyFindingCard.svelte
+│   │   │   │   ├── KeyFindingsBoard.svelte
+│   │   │   │   ├── WidgetPalette.svelte
+│   │   │   │   └── blocks/
+│   │   │   │       ├── DistributionBlock.svelte
+│   │   │   │       ├── MiniDonut.svelte
+│   │   │   │       ├── QuoteBlock.svelte
+│   │   │   │       ├── RichTextBlock.svelte
+│   │   │   │       └── WordCloudBlock.svelte
+│   │   │   ├── nav-main.svelte
+│   │   │   ├── nav-projects.svelte
+│   │   │   ├── nav-user.svelte
+│   │   │   ├── team-switcher.svelte
+│   │   │   ├── ui/
+│   │   │   │   ├── alert-dialog/
+│   │   │   │   │   ├── alert-dialog-action.svelte
+│   │   │   │   │   ├── alert-dialog-cancel.svelte
+│   │   │   │   │   ├── alert-dialog-content.svelte
+│   │   │   │   │   ├── alert-dialog-description.svelte
+│   │   │   │   │   ├── alert-dialog-footer.svelte
+│   │   │   │   │   ├── alert-dialog-header.svelte
+│   │   │   │   │   ├── alert-dialog-overlay.svelte
+│   │   │   │   │   ├── alert-dialog-portal.svelte
+│   │   │   │   │   ├── alert-dialog-title.svelte
+│   │   │   │   │   ├── alert-dialog-trigger.svelte
+│   │   │   │   │   ├── alert-dialog.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── avatar/
+│   │   │   │   │   ├── avatar-badge.svelte
+│   │   │   │   │   ├── avatar-fallback.svelte
+│   │   │   │   │   ├── avatar-group-count.svelte
+│   │   │   │   │   ├── avatar-group.svelte
+│   │   │   │   │   ├── avatar-image.svelte
+│   │   │   │   │   ├── avatar.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── badge/
+│   │   │   │   │   ├── badge.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── breadcrumb/
+│   │   │   │   │   ├── breadcrumb-ellipsis.svelte
+│   │   │   │   │   ├── breadcrumb-item.svelte
+│   │   │   │   │   ├── breadcrumb-link.svelte
+│   │   │   │   │   ├── breadcrumb-list.svelte
+│   │   │   │   │   ├── breadcrumb-page.svelte
+│   │   │   │   │   ├── breadcrumb-separator.svelte
+│   │   │   │   │   ├── breadcrumb.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── button/
+│   │   │   │   │   ├── button.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── button-group/
+│   │   │   │   │   ├── button-group-separator.svelte
+│   │   │   │   │   ├── button-group-text.svelte
+│   │   │   │   │   ├── button-group.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── carousel/
+│   │   │   │   │   ├── carousel-content.svelte
+│   │   │   │   │   ├── carousel-item.svelte
+│   │   │   │   │   ├── carousel-next.svelte
+│   │   │   │   │   ├── carousel-previous.svelte
+│   │   │   │   │   ├── carousel.svelte
+│   │   │   │   │   ├── context.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── checkbox/
+│   │   │   │   │   ├── checkbox.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── collapsible/
+│   │   │   │   │   ├── collapsible-content.svelte
+│   │   │   │   │   ├── collapsible-trigger.svelte
+│   │   │   │   │   ├── collapsible.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── context-menu/
+│   │   │   │   │   ├── context-menu-content.svelte
+│   │   │   │   │   ├── context-menu-group-heading.svelte
+│   │   │   │   │   ├── context-menu-group.svelte
+│   │   │   │   │   ├── context-menu-item.svelte
+│   │   │   │   │   ├── context-menu-label.svelte
+│   │   │   │   │   ├── context-menu-portal.svelte
+│   │   │   │   │   ├── context-menu-separator.svelte
+│   │   │   │   │   ├── context-menu-sub-content.svelte
+│   │   │   │   │   ├── context-menu-sub-trigger.svelte
+│   │   │   │   │   ├── context-menu-sub.svelte
+│   │   │   │   │   ├── context-menu-trigger.svelte
+│   │   │   │   │   ├── context-menu.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── dialog/
+│   │   │   │   │   ├── dialog-close.svelte
+│   │   │   │   │   ├── dialog-content.svelte
+│   │   │   │   │   ├── dialog-description.svelte
+│   │   │   │   │   ├── dialog-footer.svelte
+│   │   │   │   │   ├── dialog-header.svelte
+│   │   │   │   │   ├── dialog-overlay.svelte
+│   │   │   │   │   ├── dialog-portal.svelte
+│   │   │   │   │   ├── dialog-title.svelte
+│   │   │   │   │   ├── dialog-trigger.svelte
+│   │   │   │   │   ├── dialog.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── dropdown-menu/
+│   │   │   │   │   ├── dropdown-menu-checkbox-group.svelte
+│   │   │   │   │   ├── dropdown-menu-checkbox-item.svelte
+│   │   │   │   │   ├── dropdown-menu-content.svelte
+│   │   │   │   │   ├── dropdown-menu-group-heading.svelte
+│   │   │   │   │   ├── dropdown-menu-group.svelte
+│   │   │   │   │   ├── dropdown-menu-item.svelte
+│   │   │   │   │   ├── dropdown-menu-label.svelte
+│   │   │   │   │   ├── dropdown-menu-portal.svelte
+│   │   │   │   │   ├── dropdown-menu-radio-group.svelte
+│   │   │   │   │   ├── dropdown-menu-radio-item.svelte
+│   │   │   │   │   ├── dropdown-menu-separator.svelte
+│   │   │   │   │   ├── dropdown-menu-shortcut.svelte
+│   │   │   │   │   ├── dropdown-menu-sub-content.svelte
+│   │   │   │   │   ├── dropdown-menu-sub-trigger.svelte
+│   │   │   │   │   ├── dropdown-menu-sub.svelte
+│   │   │   │   │   ├── dropdown-menu-trigger.svelte
+│   │   │   │   │   ├── dropdown-menu.svelte
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── input/
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   └── input.svelte
+│   │   │   │   ├── popover/
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   └── popover-content.svelte
+│   │   │   │   ├── separator/
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   └── separator.svelte
+│   │   │   │   ├── sheet/
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   ├── sheet-close.svelte
+│   │   │   │   │   ├── sheet-content.svelte
+│   │   │   │   │   ├── sheet-description.svelte
+│   │   │   │   │   ├── sheet-footer.svelte
+│   │   │   │   │   ├── sheet-header.svelte
+│   │   │   │   │   ├── sheet-overlay.svelte
+│   │   │   │   │   ├── sheet-portal.svelte
+│   │   │   │   │   ├── sheet-title.svelte
+│   │   │   │   │   ├── sheet-trigger.svelte
+│   │   │   │   │   └── sheet.svelte
+│   │   │   │   ├── sidebar/
+│   │   │   │   │   ├── constants.ts
+│   │   │   │   │   ├── context.svelte.ts
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   ├── sidebar-content.svelte
+│   │   │   │   │   ├── sidebar-footer.svelte
+│   │   │   │   │   ├── sidebar-group-action.svelte
+│   │   │   │   │   ├── sidebar-group-content.svelte
+│   │   │   │   │   ├── sidebar-group-label.svelte
+│   │   │   │   │   ├── sidebar-group.svelte
+│   │   │   │   │   ├── sidebar-header.svelte
+│   │   │   │   │   ├── sidebar-input.svelte
+│   │   │   │   │   ├── sidebar-inset.svelte
+│   │   │   │   │   ├── sidebar-menu-action.svelte
+│   │   │   │   │   ├── sidebar-menu-badge.svelte
+│   │   │   │   │   ├── sidebar-menu-button.svelte
+│   │   │   │   │   ├── sidebar-menu-item.svelte
+│   │   │   │   │   ├── sidebar-menu-skeleton.svelte
+│   │   │   │   │   ├── sidebar-menu-sub-button.svelte
+│   │   │   │   │   ├── sidebar-menu-sub-item.svelte
+│   │   │   │   │   ├── sidebar-menu-sub.svelte
+│   │   │   │   │   ├── sidebar-menu.svelte
+│   │   │   │   │   ├── sidebar-provider.svelte
+│   │   │   │   │   ├── sidebar-rail.svelte
+│   │   │   │   │   ├── sidebar-separator.svelte
+│   │   │   │   │   ├── sidebar-trigger.svelte
+│   │   │   │   │   └── sidebar.svelte
+│   │   │   │   ├── skeleton/
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   └── skeleton.svelte
+│   │   │   │   ├── tabs/
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   ├── tabs-content.svelte
+│   │   │   │   │   ├── tabs-list.svelte
+│   │   │   │   │   ├── tabs-trigger.svelte
+│   │   │   │   │   └── tabs.svelte
+│   │   │   │   └── tooltip/
+│   │   │   │       ├── index.ts
+│   │   │   │       ├── tooltip-content.svelte
+│   │   │   │       ├── tooltip-portal.svelte
+│   │   │   │       ├── tooltip-provider.svelte
+│   │   │   │       ├── tooltip-trigger.svelte
+│   │   │   │       └── tooltip.svelte
+│   │   │   └── wctglp-menubar.svelte
+│   │   ├── content/
+│   │   │   ├── casestudies/
+│   │   │   │   ├── earlyengagement/
+│   │   │   │   │   ├── Argenx.md
+│   │   │   │   │   └── data/
+│   │   │   │   │       ├── campaign-comparison.json
+│   │   │   │   │       ├── index.ts
+│   │   │   │   │       ├── keyword-targets.json
+│   │   │   │   │       ├── lifestyle-healthcare-ratio.json
+│   │   │   │   │       ├── marketing-spend.json
+│   │   │   │   │       └── mg-united-content-mix.json
+│   │   │   │   ├── fulllength/
+│   │   │   │   ├── hcp/
+│   │   │   │   │   └── LetsChatCarT.md
+│   │   │   │   ├── pxclips/
+│   │   │   │   │   └── ShareOfVoice.md
+│   │   │   │   └── unbranded/
+│   │   │   │       └── Sarepta.md
+│   │   │   ├── components/
+│   │   │   │   ├── Callout.svelte
+│   │   │   │   ├── Figure.svelte
+│   │   │   │   └── Takeaways.svelte
+│   │   │   ├── glossary/
+│   │   │   │   ├── pxmeasures/
+│   │   │   │   │   └── CuriosityGap.md
+│   │   │   │   └── uxbasics/
+│   │   │   │       ├── ContentBlindness.md
+│   │   │   │       ├── CuriosityGap.md
+│   │   │   │       ├── DecisionBlindness.md
+│   │   │   │       └── MagicMoment.md
+│   │   │   ├── index.ts
+│   │   │   ├── markups/
+│   │   │   │   ├── socialmedia/
+│   │   │   │   │   └── LetsChatCARTWebsite.md
+│   │   │   │   └── websites/
+│   │   │   │       └── LetsChatCARTWebsite.md
+│   │   │   ├── mdsvex-layout.svelte
+│   │   │   └── wctglpdemo-data/
+│   │   │       ├── analysis.ts
+│   │   │       ├── avatars/
+│   │   │       │   ├── Participant 06.png
+│   │   │       │   ├── Participant 07.png
+│   │   │       │   ├── Participant 08.png
+│   │   │       │   ├── Participant 09.png
+│   │   │       │   ├── Participant 10.png
+│   │   │       │   └── WCTLogo.png
+│   │   │       ├── cluster_synonyms.json
+│   │   │       ├── codebook.json
+│   │   │       ├── codebook.v18-backup.json
+│   │   │       ├── codebook_migration_checklist.md
+│   │   │       ├── codebook_migration_map.json
+│   │   │       ├── executive-summary.ts
+│   │   │       ├── glpInterviewWordUsage.json
+│   │   │       ├── highlights.json
+│   │   │       ├── index.ts
+│   │   │       ├── interviews_structured.json
+│   │   │       ├── journey.ts
+│   │   │       ├── keyword_lexicon.json
+│   │   │       ├── keyword_lexicon.v2-backup.json
+│   │   │       ├── keyword_lexicon.v3-backup.json
+│   │   │       ├── keyword_tags.json
+│   │   │       ├── keyword_usage.json
+│   │   │       ├── keywords.ts
+│   │   │       ├── lexicon-stats.ts
+│   │   │       ├── participant_profiles.json
+│   │   │       ├── phrase_lexicon.json
+│   │   │       ├── question_map.json
+│   │   │       ├── questions.json
+│   │   │       ├── quiz.json
+│   │   │       ├── quiz.ts
+│   │   │       ├── quote-text.ts
+│   │   │       ├── quote_bank.json
+│   │   │       ├── quote_reviews.json
+│   │   │       ├── segment_tags.json
+│   │   │       ├── segment_tags.proposed.json
+│   │   │       ├── segment_tags.proposed.v1-backup.json
+│   │   │       ├── segment_tags.v18-backup.json
+│   │   │       ├── segments.json
+│   │   │       ├── topicTree.ts
+│   │   │       ├── topic_tags.proposed.json
+│   │   │       ├── topics.json
+│   │   │       ├── transcripts/
+│   │   │       │   ├── WCT_GLP-1 Interviews_Participant 10_Transcript .md
+│   │   │       │   └── WCT_GLP-1 Interviews_Participant 9_Transcript.md
+│   │   │       ├── uploads/
+│   │   │       │   ├── participant_06.txt
+│   │   │       │   ├── participant_07.txt
+│   │   │       │   ├── participant_08.txt
+│   │   │       │   ├── participant_11.txt
+│   │   │       │   ├── participant_12.txt
+│   │   │       │   └── participant_13.txt
+│   │   │       ├── word-frequency.ts
+│   │   │       ├── word-tokenize.ts
+│   │   │       └── word_usage.json
+│   │   ├── data/
+│   │   │   └── dataConfig/
+│   │   │       ├── metrics.json
+│   │   │       └── taxonomies.json
+│   │   ├── hooks/
+│   │   │   └── is-mobile.svelte.ts
+│   │   ├── index.ts
+│   │   ├── journeymapper2/
+│   │   │   ├── .DS_Store
+│   │   │   ├── DiseaseSelectDropdowns.svelte
+│   │   │   ├── ExperienceWheel.svelte
+│   │   │   ├── FlowConnector.svelte
+│   │   │   ├── FlowSentimentHUD.svelte
+│   │   │   ├── FlowSentimentSidebar.svelte
+│   │   │   ├── FlowStageCard.svelte
+│   │   │   ├── FlowStepCard.svelte
+│   │   │   ├── InflectionDetailContent.svelte
+│   │   │   ├── JourneyDrawer.svelte
+│   │   │   ├── JourneyEventCard.svelte
+│   │   │   ├── JourneyFlowDiagram.svelte
+│   │   │   ├── JourneyGrid.svelte
+│   │   │   ├── JourneyIndexBars.svelte
+│   │   │   ├── JourneyInfoSidebarTop.svelte
+│   │   │   ├── JourneyInterventions/
+│   │   │   │   ├── InterventionDropZone.svelte
+│   │   │   │   ├── InterventionPalette.svelte
+│   │   │   │   └── interventionStore.js
+│   │   │   ├── JourneyLegend.svelte
+│   │   │   ├── JourneyLine.svelte
+│   │   │   ├── JourneyNodes.svelte
+│   │   │   ├── JourneyReportView.svelte
+│   │   │   ├── JourneySentiment.svelte
+│   │   │   ├── JourneyStages.svelte
+│   │   │   ├── JourneySteps.svelte
+│   │   │   ├── JourneySubDrawer.svelte
+│   │   │   ├── JourneyTooltip.svelte
+│   │   │   ├── PersonaBioBar
+│   │   │   ├── PersonaBioBar.svelte
+│   │   │   ├── PersonaDetailContent.svelte
+│   │   │   ├── PersonaProfileCard.svelte
+│   │   │   ├── PersonaStory.svelte
+│   │   │   ├── PersonaTopSelector.svelte
+│   │   │   ├── PlutchikContent.svelte
+│   │   │   ├── PlutchikDyadGradient.svelte
+│   │   │   ├── Plutchikstore.js
+│   │   │   ├── StateBarList.svelte
+│   │   │   ├── StepDetailContent.svelte
+│   │   │   ├── StoryComponents/
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── BaseScreen.svelte
+│   │   │   │   ├── IntroScreen.svelte
+│   │   │   │   ├── QuoteScreen.svelte
+│   │   │   │   └── ThemeScreen.svelte
+│   │   │   ├── diseaseList.json
+│   │   │   ├── event_card_schema_v1.1.json
+│   │   │   ├── journeyConfig.js
+│   │   │   ├── journeyPersonaWordclouds.json
+│   │   │   ├── journeyPersonas.json
+│   │   │   ├── journeyStore.js
+│   │   │   ├── plutchikEmotionsConfig.js
+│   │   │   ├── storyConfig.js
+│   │   │   └── textUtils.js
+│   │   ├── key-findings/
+│   │   │   ├── export.ts
+│   │   │   ├── types.ts
+│   │   │   └── widgets.ts
+│   │   ├── pageElements/
+│   │   │   ├── Appsidebar.svelte
+│   │   │   ├── NavigationMenu.svelte
+│   │   │   └── navbar.svelte
+│   │   ├── participant-avatars.ts
+│   │   ├── server/
+│   │   │   ├── autotag-pipeline.ts
+│   │   │   ├── autotag.ts
+│   │   │   ├── highlights.ts
+│   │   │   ├── keyword-tags.ts
+│   │   │   ├── kv-store.ts
+│   │   │   ├── lexicon.ts
+│   │   │   ├── participant-profiles.ts
+│   │   │   ├── phrases.ts
+│   │   │   ├── quote-reviews.ts
+│   │   │   ├── segment-tags.ts
+│   │   │   └── segments.ts
+│   │   ├── sidebar-state.svelte.ts
+│   │   ├── stores/
+│   │   │   ├── group-drawer.svelte.ts
+│   │   │   ├── key-findings.svelte.ts
+│   │   │   └── toasts.svelte.ts
+│   │   ├── types/
+│   │   │   ├── d3-cloud.d.ts
+│   │   │   ├── participant-profile.ts
+│   │   │   └── segment-tags.ts
+│   │   ├── utils/
+│   │   │   └── emotion-colors.ts
+│   │   └── utils.ts
+│   └── routes/
+│       ├── +layout.svelte
+│       ├── +page.svelte
+│       ├── .DS_Store
+│       ├── Untitled
+│       ├── api/
+│       │   └── lexicon/
+│       │       └── +server.ts
+│       ├── journeymap/
+│       │   └── +page.svelte
+│       ├── plhd/
+│       │   └── +page.svelte
+│       ├── pxreview/
+│       │   ├── +layout.svelte
+│       │   ├── +page.svelte
+│       │   └── [folder]/
+│       │       ├── +page.svelte
+│       │       ├── +page.ts
+│       │       └── [subfolder]/
+│       │           ├── +page.svelte
+│       │           └── [slug]/
+│       │               ├── +page.svelte
+│       │               └── +page.ts
+│       └── wctglpdemo/
+│           ├── +layout.server.ts
+│           ├── +layout.svelte
+│           ├── +page.server.ts
+│           ├── +page.svelte
+│           ├── [folder]/
+│           │   ├── +page.svelte
+│           │   └── +page.ts
+│           ├── analysis/
+│           │   ├── +page.server.ts
+│           │   └── +page.svelte
+│           ├── autotag/
+│           │   └── +server.ts
+│           ├── constellation/
+│           │   └── +page.svelte
+│           ├── fingerprint/
+│           │   ├── +page.server.ts
+│           │   ├── +page.svelte
+│           │   └── +page.ts
+│           ├── highlights/
+│           │   └── +server.ts
+│           ├── interview-words/
+│           │   ├── +page.server.ts
+│           │   └── +page.svelte
+│           ├── journey/
+│           │   └── +page.svelte
+│           ├── key-findings/
+│           │   ├── +page.server.ts
+│           │   └── +page.svelte
+│           ├── keyword-tags/
+│           │   └── +server.ts
+│           ├── lexicon/
+│           │   └── +server.ts
+│           ├── participant-avatar/
+│           │   └── +server.ts
+│           ├── participant-profiles/
+│           │   └── +server.ts
+│           ├── phrases/
+│           │   ├── +page.server.ts
+│           │   ├── +page.svelte
+│           │   └── +server.ts
+│           ├── quiz/
+│           │   └── +page.svelte
+│           ├── quote-reviews/
+│           │   └── +server.ts
+│           ├── segment-cloud/
+│           │   └── +page.svelte
+│           ├── segment-tags/
+│           │   └── +server.ts
+│           ├── segments/
+│           │   └── +server.ts
+│           ├── topic-tree/
+│           │   └── +page.svelte
+│           ├── trial-designer/
+│           │   └── +page.svelte
+│           └── upload/
+│               ├── +page.server.ts
+│               └── +page.svelte
+├── static/
+│   ├── .DS_Store
+│   ├── assets/
+│   │   ├── .DS_Store
+│   │   ├── illustrations/
+│   │   │   ├── Regression1.jpeg
+│   │   │   ├── quotationMarkDown.svg
+│   │   │   └── quotationMarkUp.svg
+│   │   └── profiles/
+│   │       ├── .DS_Store
+│   │       ├── CandaceD.jpg
+│   │       ├── DavidW.jpeg
+│   │       ├── KarlW.jpeg
+│   │       ├── MargaretW.jpeg
+│   │       ├── StuartSiedmanChiesi.jpg
+│   │       ├── TomasK.jpg
+│   │       ├── WeiLinC.jpg
+│   │       ├── davidR.jpeg
+│   │       ├── emmal.jpg
+│   │       ├── kristenT.jpg
+│   │       ├── maggieP.jpeg
+│   │       ├── patriciaK.jpg
+│   │       └── timothyK.jpg
+│   ├── content-assets/
+│   │   ├── .DS_Store
+│   │   ├── bgtexture.png
+│   │   └── casestudies/
+│   │       ├── .DS_Store
+│   │       ├── argenx-hero.png
+│   │       ├── argenx2019report.png
+│   │       └── argenx2020report.png
+│   └── robots.txt
+├── svelte.config.js
+├── tailwind.config.js
+├─] test-results/ (ignored)
+├── tests/
+│   └── example.spec.ts
+├── tsconfig.json
+└── vite.config.ts

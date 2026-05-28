@@ -3,7 +3,7 @@
 
 	Drop it in wherever a participant is shown or selectable. `size` controls
 	the dimensions; `preview` wraps the avatar in a LinkPreview hover card with
-	the participant's demographics, counts, and a link to their fingerprint.
+	the participant's demographics, counts, and a link to their persona.
 	With `preview` off it renders a bare avatar, safe to nest inside a button.
 -->
 <script lang="ts" module>
@@ -85,7 +85,7 @@
 {#if preview}
 	<LinkPreview.Root>
 		<LinkPreview.Trigger
-			href="/wctglpdemo/fingerprint?interview={interviewId}"
+			href="/patientlyiq/personas?interview={interviewId}"
 			class="inline-flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-mint"
 		>
 			{@render avatarEl(size, className)}
@@ -109,10 +109,10 @@
 						</p>
 					{/if}
 					<a
-						href="/wctglpdemo/fingerprint?interview={interviewId}"
+						href="/patientlyiq/personas?interview={interviewId}"
 						class="mt-1 text-xs font-medium text-accent-mint hover:underline"
 					>
-						View fingerprint →
+						View persona →
 					</a>
 				</div>
 			</div>

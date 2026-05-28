@@ -1,0 +1,27 @@
+{
+  "id": "lupus_nephritis_diagnostics_monitoring_searches_us",
+  "type": "search_volume_topics",
+  "indication_id": "lupus_nephritis",
+  "therapeutic_area_ids": ["immunology", "nephrology"],
+  "title": "Lupus nephritis diagnostics & monitoring searches",
+  "subtitle": "Monthly estimated volume, US — labs, biopsy, tests",
+  "unit": "monthly_estimated_search_volume",
+  "geography": "US",
+  "time_period": null,
+  "topic_category": "diagnostics_monitoring",
+  "source": {
+    "type": "manual_estimate",
+    "notes": "Hand-authored estimates for demo purposes. Mix of LN-specific lab queries and the canonical diagnostic terms an LN patient would search after a clinic visit."
+  },
+  "dimensions": ["topic"],
+  "measures": ["volume"],
+  "data": [
+    { "topic": "kidney biopsy procedure", "volume": 1480 },
+    { "topic": "ANA test lupus", "volume": 720 },
+    { "topic": "what does proteinuria mean", "volume": 410 },
+    { "topic": "creatinine levels lupus", "volume": 220 },
+    { "topic": "eGFR low lupus", "volume": 180 },
+    { "topic": "urine albumin to creatinine ratio", "volume": 510 },
+    { "topic": "kidney function test", "volume": 1240 }
+  ]
+}

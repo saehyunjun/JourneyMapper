@@ -1,0 +1,42 @@
+{
+	"id": "obesity_community_engagement",
+	"type": "community_engagement",
+	"indication_id": "obesity",
+	"therapeutic_area_ids": ["endocrinology", "metabolism"],
+	"title": "Public vs. private GLP-1 patient communities",
+	"subtitle": "Reddit (public) vs. Facebook (mostly private) for active GLP-1 users",
+	"unit": "count",
+	"geography": null,
+	"time_period": null,
+	"platform": "Reddit + Facebook groups",
+	"sample": "Five largest active GLP-1 / weight-loss-drug communities across each platform",
+	"exclusions": [
+		"advocacy-sponsored communities",
+		"industry-sponsored communities",
+		"general-fitness subs without GLP-1 focus"
+	],
+	"note": "Reddit communities (r/Semaglutide, r/Mounjaro, r/Zepbound, r/WegovyWeightLoss, r/Ozempic) skew public, while Facebook groups split between public (smaller, brand-named) and private (larger, often paid-coaching adjacent). The cost-pressure / side-effect conversations concentrate in private FB groups.",
+	"source": {
+		"type": "manual_estimate",
+		"notes": "Hand-authored estimates for demo purposes. Reddit numbers are roughly accurate as of 2026Q1; Facebook estimates are interpolated from public-group page sizes plus reported private-group reach."
+	},
+	"dimensions": ["platform_type"],
+	"measures": ["avg_membership", "avg_monthly_posts"],
+	"data": [
+		{
+			"platform_type": "reddit_public",
+			"avg_membership": 185000,
+			"avg_monthly_posts": 4200
+		},
+		{
+			"platform_type": "facebook_public",
+			"avg_membership": 24000,
+			"avg_monthly_posts": 380
+		},
+		{
+			"platform_type": "facebook_private",
+			"avg_membership": 38000,
+			"avg_monthly_posts": 1800
+		}
+	]
+}

@@ -20,7 +20,12 @@
 	import LeanSlide from './slides/LeanSlide.svelte';
 	import HeroStatSlide from './slides/HeroStatSlide.svelte';
 	import QuoteSlide from './slides/QuoteSlide.svelte';
+	import FlowSlide from './slides/FlowSlide.svelte';
 	import ClosingSlide from './slides/ClosingSlide.svelte';
+	import ThemeSentimentSlide from './slides/ThemeSentimentSlide.svelte';
+	import BurdenSlide from './slides/BurdenSlide.svelte';
+	import SearchAlignmentSlide from './slides/SearchAlignmentSlide.svelte';
+	import TopicAlignmentSlide from './slides/TopicAlignmentSlide.svelte';
 	import StoryDetailDrawer from './StoryDetailDrawer.svelte';
 	import CorpusGrid from './viz/CorpusGrid.svelte';
 	import { vizSize } from '$lib/story/responsiveSize.svelte';
@@ -130,8 +135,18 @@
 				<LeanSlide slide={active} onOpenDetail={openDetail} />
 			{:else if active.kind === 'hero-stat'}
 				<HeroStatSlide slide={active} onOpenDetail={openDetail} />
+			{:else if active.kind === 'theme-sentiment'}
+				<ThemeSentimentSlide slide={active} onOpenDetail={openDetail} />
+			{:else if active.kind === 'burden-split'}
+				<BurdenSlide slide={active} />
+			{:else if active.kind === 'search-alignment'}
+				<SearchAlignmentSlide slide={active} />
+			{:else if active.kind === 'topic-alignment'}
+				<TopicAlignmentSlide slide={active} />
 			{:else if active.kind === 'quote'}
 				<QuoteSlide slide={active} profiles={input.profiles} onparticipant={() => {}} />
+			{:else if active.kind === 'flow'}
+				<FlowSlide slide={active} />
 			{:else if active.kind === 'closing'}
 				<ClosingSlide slide={active} />
 			{/if}

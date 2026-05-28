@@ -11,6 +11,7 @@
 	import { untrack } from 'svelte';
 	import KeyFindingsBoard from '$lib/components/key-findings/KeyFindingsBoard.svelte';
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -33,6 +34,11 @@
 </svelte:head>
 
 <div class="flex min-h-0 flex-1 flex-col">
+	<PageHeader
+		eyebrow="PatientlyIQ"
+		title="Insight Builder"
+		subtitle="A workshop for building shareable insight cards, charts, and patient quotes"
+	/>
 	<KeyFindingsBoard {profiles} {starredQuoteIds} onparticipant={openParticipant} />
 </div>
 

@@ -1,0 +1,15 @@
+{
+  "id": "ln_sle_carT_curious_patients",
+  "label": "SLE / LN patients in CAR-T discussions",
+  "description": "Lupus patients (SLE or UCTD/MCTD) speaking in the CAR-T-for-lupus community thread. Spans the full curiosity-to-eligibility-to-experience arc: the trial enrollee narrating their own treatment, refractory patients considering CAR-T after multiple drug failures, eligibility-blocked patients (cancer history, distance from site, no caregiver support, 'not sick enough'), and onlookers asking practical questions about the process.",
+  "applicable_indications": ["lupus_nephritis"],
+  "filter": {
+    "content_source": ["social_post", "social_comment"],
+    "indications": ["lupus_nephritis"],
+    "speaker_attrs": {
+      "role": { "in": ["patient"] }
+    }
+  },
+  "weighting": { "type": "uniform" },
+  "color": "#ec4899"
+}

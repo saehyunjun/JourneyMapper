@@ -16,6 +16,7 @@
 		type ThemeFragment
 	} from '$lib/content/wctglpdemo-data/analysis';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 
 	const SENT_COLOR: Record<number, string> = {
 		[-2]: '#e11d48',
@@ -101,21 +102,11 @@
 </script>
 
 <div class="flex flex-1 flex-col">
-	<!-- Hero -->
-	<div
-		class="flex h-80 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
-	>
-		<div class="mx-auto flex w-full max-w-7xl flex-col gap-3 px-8">
-			<span class="figcaption text-white">GLP-1 Interviews</span>
-			<h1 class="font-heading text-5xl font-light capitalize text-primary-foreground md:text-7xl">
-				Design a trial they'd join
-			</h1>
-			<p class="max-w-2xl text-lg leading-7 text-primary-foreground/85">
-				Pick the motivators and barriers you'd build your trial around. Each one is drawn from
-				what {TOTAL} interviewees actually said — select a few and hear them in their own words.
-			</p>
-		</div>
-	</div>
+	<PageHeader
+		eyebrow="PatientlyIQ"
+		title="Design a trial they'd join"
+		subtitle={`Pick the motivators and barriers you'd build your trial around. Each one is drawn from what ${TOTAL} interviewees actually said — select a few and hear them in their own words.`}
+	/>
 
 	<div class="mx-auto flex w-full max-w-6xl flex-col gap-10 px-8 py-16">
 		<!-- Factor picker -->

@@ -4,6 +4,7 @@
 	import IconArrowRightRegular from "phosphor-icons-svelte/IconArrowRightRegular.svelte";
 	import { page } from "$app/state";
 	import { goto } from "$app/navigation";
+	import PageHeader from "$lib/components/PageHeader.svelte";
 
 	let { data } = $props();
 
@@ -39,33 +40,13 @@
 
 <div class="flex flex-1 flex-col gap-6">
 	{#if section}
-		<div class="flex h-96 w-full flex-col justify-center bg-accent-orange bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten">
-			<div class="mx-auto flex w-full max-w-7xl flex-col gap-4 px-8">
-				<div class="flex flex-row flex-wrap gap-2">
-					<p class="w-fit rounded-xl bg-accent px-2 text-center text-muted-foreground">
-						{visibleEntries.length}
-						{visibleEntries.length === 1 ? "entry" : "entries"}
-					</p>
-
-					{#if activeTag}
-						<p class="text-mono w-fit rounded-xl px-2 text-center font-normal text-primary-foreground/80">
-							Filtered by
-							<span class="uppercase">{activeTag}</span>
-						</p>
-					{/if}
-				</div>
-
-				<h1 class="font-heading text-6xl font-light uppercase text-primary-foreground md:text-7xl">
-					{section.title}
-				</h1>
-
-				{#if section.description}
-					<p class="max-w-3xl text-xl leading-8 text-primary-foreground/85">
-						{section.description}
-					</p>
-				{/if}
-			</div>
-		</div>
+		<PageHeader
+			eyebrow={activeTag
+				? `${visibleEntries.length} ${visibleEntries.length === 1 ? 'entry' : 'entries'} · filtered by ${activeTag.toUpperCase()}`
+				: `${visibleEntries.length} ${visibleEntries.length === 1 ? 'entry' : 'entries'}`}
+			title={section.title}
+			subtitle={section.description}
+		/>
 
 		<div class="mx-auto flex w-full max-w-7xl flex-col px-8">
 			{#if allTags.length}

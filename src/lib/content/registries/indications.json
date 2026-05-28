@@ -28,6 +28,15 @@
       "mesh_term": "Obesity",
       "therapeutic_area_ids": ["endocrinology"],
       "description": "GLP-1 weight-management corpus (WCT GLP-1 interviews). Metabolic comorbidities (diabetes, PCOS, sleep apnea) sit under this indication as comorbidities."
+    },
+    {
+      "id": "multiple_sclerosis",
+      "label": "Multiple Sclerosis",
+      "abbreviation": "MS",
+      "mesh_id": "D009103",
+      "mesh_term": "Multiple Sclerosis",
+      "therapeutic_area_ids": ["neurology", "immunology"],
+      "description": "Autoimmune demyelinating disease of the CNS. Spans the disease-modifying therapy (DMT) landscape (anti-CD20, S1P modulators, fumarates, alpha-4 integrin, interferon-betas), MRI-based monitoring, EDSS-based disability tracking, and disease courses (RRMS, SPMS, PPMS). CAR-T programs targeting CD19+ B cells (e.g., KYV-101, Descartes-08) are in development for refractory / progressive MS."
     }
   ]
 }

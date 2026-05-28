@@ -3,6 +3,7 @@
 		type RadialThemeCompositionDatum
 	} from '$lib/charts/glp/RadialThemeComposition.svelte';
 	import type { VizMotionMode } from '$lib/motion/viz';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 
 	const themeData: RadialThemeCompositionDatum[] = [
 		{
@@ -139,11 +140,12 @@
 	}
 </script>
 
-<div class="preview-page">
-	<header class="preview-header">
-		<h1>RadialThemeComposition — dev preview</h1>
-	</header>
+<PageHeader
+	eyebrow="Dev preview"
+	title="RadialThemeComposition"
+/>
 
+<div class="preview-page">
 	<div class="preview-controls">
 		<label>
 			Motion
@@ -204,18 +206,6 @@
 		margin: 0 auto;
 		padding: 2rem 1.5rem 4rem;
 		font-family: var(--font-body, 'IBM Plex Sans', sans-serif);
-	}
-
-	.preview-header {
-		margin-bottom: 1.5rem;
-	}
-
-	.preview-header h1 {
-		font-family: var(--font-heading, 'Jost', sans-serif);
-		font-size: 1.25rem;
-		font-weight: 600;
-		color: var(--ink, #312f28);
-		margin: 0 0 0.25rem;
 	}
 
 	.preview-controls {

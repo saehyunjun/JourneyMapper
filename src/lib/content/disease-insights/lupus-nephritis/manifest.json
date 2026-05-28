@@ -34,12 +34,102 @@
       "source_id": null
     },
     {
+      "id": "lupus_nephritis_symptoms_searches_us",
+      "type": "search_volume_topics",
+      "label": "Lupus nephritis symptom searches (US, monthly)",
+      "path": "search/symptoms_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_quality_of_life_searches_us",
+      "type": "search_volume_topics",
+      "label": "Lupus nephritis quality-of-life searches (US, monthly)",
+      "path": "search/quality_of_life_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_diagnostics_monitoring_searches_us",
+      "type": "search_volume_topics",
+      "label": "Lupus nephritis diagnostics & monitoring searches (US, monthly)",
+      "path": "search/diagnostics_monitoring_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_side_effects_searches_us",
+      "type": "search_volume_topics",
+      "label": "Lupus nephritis side-effect searches (US, monthly)",
+      "path": "search/side_effects_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_comorbidities_searches_us",
+      "type": "search_volume_topics",
+      "label": "Lupus nephritis comorbidity & complication searches (US, monthly)",
+      "path": "search/comorbidities_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_clinical_trials_searches_us",
+      "type": "search_volume_topics",
+      "label": "Lupus nephritis clinical-trial searches (US, monthly)",
+      "path": "search/clinical_trials_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
       "id": "lupus_nephritis_facebook_group_engagement",
       "type": "community_engagement",
       "label": "Public vs. private patient-community engagement on Facebook",
       "path": "communities/facebook_group_engagement.json",
       "geography": null,
       "unit": "count",
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_clinicaltrials_raw",
+      "type": "clinical_trials_raw",
+      "label": "ClinicalTrials.gov studies (LN + SLE-renal, all statuses)",
+      "path": "clinical_trials/raw_studies.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_clinicaltrials_normalized",
+      "type": "clinical_trials_normalized",
+      "label": "ClinicalTrials.gov normalized studies (LN)",
+      "path": "clinical_trials/studies_normalized.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_clinicaltrials_sponsors_observed",
+      "type": "clinical_trials_sponsors_observed",
+      "label": "Sponsors observed in LN clinical trials",
+      "path": "clinical_trials/sponsors_observed.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    },
+    {
+      "id": "lupus_nephritis_clinicaltrials_interventions_observed",
+      "type": "clinical_trials_interventions_observed",
+      "label": "Interventions observed in LN clinical trials",
+      "path": "clinical_trials/interventions_observed.json",
+      "geography": null,
+      "unit": null,
       "source_id": null
     }
   ]

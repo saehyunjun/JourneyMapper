@@ -17,7 +17,11 @@
 	import { keywordTags, categories as keywordCategories } from '$lib/content/wctglpdemo-data/keywords';
 	import KeywordText from '$lib/components/KeywordText.svelte';
 	import StatBar from '$lib/components/StatBar.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
+	import FilterSelect from '$lib/components/FilterSelect.svelte';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
+	import * as Tabs from '$lib/components/ui/tabs/index.js';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -249,21 +253,11 @@
 
 
 <div class="flex flex-1 flex-col bg-slate-50">
-	<!-- Hero -->
-	<div
-		class="flex h-72 w-full flex-col justify-center bg-accent-mint-background bg-[url('/content-assets/bgtexture.png')] bg-center bg-blend-lighten"
-	>
-		<div class="mx-auto flex w-full max-w-7xl flex-col gap-3 px-8">
-			<span class="figcaption text-white">GLP-1 Interviews · Analysis workspace</span>
-			<h1 class="font-heading text-5xl font-light uppercase text-primary-foreground md:text-6xl">
-				Interview analysis
-			</h1>
-			<p class="max-w-2xl text-lg leading-7 text-primary-foreground">
-				Review-stage workspace over the structured pipeline outputs — every quote, tag, and count
-				is AI-proposed and pending analyst review.
-			</p>
-		</div>
-	</div>
+	<PageHeader
+		eyebrow="Analysis workspace"
+		title="Interview analysis"
+		subtitle="Review-stage workspace over the structured pipeline outputs — every quote, tag, and count is AI-proposed and pending analyst review."
+	/>
 
 	<!-- Stat bar -->
 	<div class="w-full bg-accent-mint">
@@ -277,71 +271,45 @@
 	</div>
 
 	<div class="mx-auto flex w-full max-w-7xl flex-col gap-6 px-8 py-10">
-		<!-- Tabs -->
-		<nav class="flex gap-1 border-b border-slate-200">
-			{#each [['quotes', 'Quote bank'], ['themes', 'Themes & emotions'], ['words', 'Word usage']] as [id, label] (id)}
-				<button
-					class="border-b-2 px-4 py-2 text-sm font-medium transition-colors
-					{activeTab === id
-						? 'border-accent-mint text-accent-mint'
-						: 'border-transparent text-slate-500 hover:text-slate-800'}"
-					onclick={() => (activeTab = id as Tab)}
-				>
-					{label}
-				</button>
-			{/each}
-		</nav>
+		<Tabs.Root value={activeTab} onValueChange={(v) => (activeTab = v as Tab)}>
+			<Tabs.List variant="line" class="w-full justify-start gap-1 border-b border-slate-200">
+				<Tabs.Trigger value="quotes">Quote bank</Tabs.Trigger>
+				<Tabs.Trigger value="themes">Themes & emotions</Tabs.Trigger>
+				<Tabs.Trigger value="words">Word usage</Tabs.Trigger>
+			</Tabs.List>
 
-		{#if activeTab === 'quotes'}
+			<Tabs.Content value="quotes" class="flex flex-col gap-6 pt-6">
 			{@render pendingNotice('the quote bank')}
 			<!-- Filters -->
 			<div class="flex flex-wrap items-end gap-4  border border-slate-200 bg-white p-4">
-				<label class="flex flex-col gap-1 text-xs font-semibold text-slate-500">
-					Participant
-					<select bind:value={fParticipant} class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
-						<option value="all">All</option>
-						{#each participantIds as id (id)}<option value={id}>{participantLabel(id)}</option>{/each}
-					</select>
-				</label>
-				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
-					Question
-					<select bind:value={fQuestion} class="max-w-xs rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
-						<option value="all">All</option>
-						{#each questionIds as id (id)}<option value={id}>{titleCase(id)}</option>{/each}
-					</select>
-				</label>
-				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
-					Theme <span class="font-normal text-slate-400">· AI</span>
-					<select bind:value={fTheme} class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
-						<option value="all">All</option>
-						{#each themeIds as id (id)}<option value={id}>{titleCase(id)}</option>{/each}
-					</select>
-				</label>
-				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
-					Keyword category <span class="font-normal text-slate-400">· deterministic</span>
-					<select bind:value={fCategory} class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
-						<option value="all">All</option>
-						{#each keywordCategories as c (c.id)}<option value={c.id}>{c.label}</option>{/each}
-					</select>
-				</label>
-				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
-					Sentiment
-					<select bind:value={fSentiment} class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
-						<option value="all">All</option>
-						<option value="positive">Positive</option>
-						<option value="neutral">Neutral / mixed</option>
-						<option value="negative">Negative</option>
-					</select>
-				</label>
-				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
-					Review status
-					<select bind:value={fReview} class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
-						<option value="all">All</option>
-						<option value="pending">Pending</option>
-						<option value="approved">Approved</option>
-						<option value="rejected">Rejected</option>
-					</select>
-				</label>
+				<FilterSelect label="Participant" bind:value={fParticipant}>
+					<option value="all">All</option>
+					{#each participantIds as id (id)}<option value={id}>{participantLabel(id)}</option>{/each}
+				</FilterSelect>
+				<FilterSelect label="Question" bind:value={fQuestion} selectClass="max-w-xs">
+					<option value="all">All</option>
+					{#each questionIds as id (id)}<option value={id}>{titleCase(id)}</option>{/each}
+				</FilterSelect>
+				<FilterSelect label="Theme" hint="AI" bind:value={fTheme}>
+					<option value="all">All</option>
+					{#each themeIds as id (id)}<option value={id}>{titleCase(id)}</option>{/each}
+				</FilterSelect>
+				<FilterSelect label="Keyword category" hint="deterministic" bind:value={fCategory}>
+					<option value="all">All</option>
+					{#each keywordCategories as c (c.id)}<option value={c.id}>{c.label}</option>{/each}
+				</FilterSelect>
+				<FilterSelect label="Sentiment" bind:value={fSentiment}>
+					<option value="all">All</option>
+					<option value="positive">Positive</option>
+					<option value="neutral">Neutral / mixed</option>
+					<option value="negative">Negative</option>
+				</FilterSelect>
+				<FilterSelect label="Review status" bind:value={fReview}>
+					<option value="all">All</option>
+					<option value="pending">Pending</option>
+					<option value="approved">Approved</option>
+					<option value="rejected">Rejected</option>
+				</FilterSelect>
 				<label class="flex flex-col gap-1 text-xs font-medium text-slate-500">
 					Min. overall score · {fMinScore}
 					<input type="range" min="1" max="5" step="0.25" bind:value={fMinScore} class="w-40 accent-accent-mint" />
@@ -560,7 +528,9 @@
 					</p>
 				{/each}
 			</div>
-		{:else if activeTab === 'themes'}
+			</Tabs.Content>
+
+			<Tabs.Content value="themes" class="flex flex-col gap-6 pt-6">
 			{@render pendingNotice('the theme and emotion counts')}
 			<div class="grid gap-8 lg:grid-cols-2">
 				<!-- Theme frequency -->
@@ -620,27 +590,29 @@
 					</section>
 				</div>
 			</div>
-		{:else}
-			<!-- Word usage -->
-			<section class="flex flex-col gap-3">
-				<div class="flex items-center justify-between">
-					<h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">
-						Top words · deterministic counts
-					</h2>
-					<select bind:value={wordScope} class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
-						<option value="overall">All participants</option>
-						{#each Object.keys(wordUsage.by_participant) as id (id)}
-							<option value={id}>{participantLabel(id)}</option>
+			</Tabs.Content>
+
+			<Tabs.Content value="words" class="flex flex-col gap-6 pt-6">
+				<section class="flex flex-col gap-3">
+					<div class="flex items-center justify-between">
+						<h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">
+							Top words · deterministic counts
+						</h2>
+						<select bind:value={wordScope} class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800">
+							<option value="overall">All participants</option>
+							{#each Object.keys(wordUsage.by_participant) as id (id)}
+								<option value={id}>{participantLabel(id)}</option>
+							{/each}
+						</select>
+					</div>
+					<div class="grid gap-x-8 gap-y-2  border border-slate-200 bg-white p-5 sm:grid-cols-2">
+						{#each topWords as w (w.word)}
+							<StatBar label={w.word} count={w.count} max={maxWord} />
 						{/each}
-					</select>
-				</div>
-				<div class="grid gap-x-8 gap-y-2  border border-slate-200 bg-white p-5 sm:grid-cols-2">
-					{#each topWords as w (w.word)}
-						<StatBar label={w.word} count={w.count} max={maxWord} />
-					{/each}
-				</div>
-			</section>
-		{/if}
+					</div>
+				</section>
+			</Tabs.Content>
+		</Tabs.Root>
 	</div>
 </div>
 

@@ -1,0 +1,241 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "corpus_id": "ms_reddit_2026q1",
+    "generator": "propose-persona-suggestions@0.1",
+    "generated_at": "2026-05-28T02:26:14.976Z",
+    "params": {
+      "min_fragments": 2,
+      "distance_cutoff": 0.5,
+      "min_cluster_size": 3,
+      "share_threshold": 0.4,
+      "role_threshold": 0.6,
+      "singleton_attach_cutoff": 0.6
+    },
+    "universe": {
+      "total_fragments": 100,
+      "total_authors": 67,
+      "seed_authors": 20,
+      "singleton_authors": 47,
+      "attached_singletons": 28,
+      "unattached_authors": 25
+    },
+    "notes": [
+      "Deterministic pass; no Claude call. Re-run after re-tagging fragments.",
+      "proposed_filter is a starting point — analyst widens/narrows in the UI.",
+      "seed_authors anchored each cluster; attached_singletons joined via nearest-medoid.",
+      "Re-run with: node scripts/propose-persona-suggestions.mjs <corpus> --force"
+    ]
+  },
+  "suggestions": [
+    {
+      "id": "sugg-ms_reddit_2026q1-1",
+      "rank": 1,
+      "proposed_filter": {
+        "content_source": [
+          "social_comment",
+          "social_post"
+        ],
+        "indications": [
+          "multiple_sclerosis"
+        ],
+        "annotations": {
+          "has_stage": [
+            "trial_consideration"
+          ]
+        }
+      },
+      "seed_authors": [
+        "Participant 116",
+        "Participant 117",
+        "Participant 110",
+        "Participant 099",
+        "Participant 108",
+        "Participant 137",
+        "Participant 144",
+        "Participant 118",
+        "Participant 119",
+        "Participant 052",
+        "Participant 102",
+        "Participant 133",
+        "Participant 123",
+        "Participant 097"
+      ],
+      "exemplar_author": "Participant 137",
+      "attached_singletons": [
+        "Participant 103",
+        "Participant 104",
+        "Participant 111",
+        "Participant 112",
+        "Participant 113",
+        "Participant 114",
+        "Participant 120",
+        "Participant 121",
+        "Anon_ms_reddit_2026q1_0002",
+        "Participant 129",
+        "Anon_ms_reddit_2026q1_0004",
+        "Participant 130",
+        "Participant 135",
+        "Participant 141",
+        "Participant 142",
+        "Participant 145",
+        "Participant 147",
+        "Participant 148",
+        "Participant 149",
+        "Anon_ms_reddit_2026q1_0006",
+        "Anon_ms_reddit_2026q1_0007",
+        "Participant 150",
+        "Participant 154",
+        "Participant 100",
+        "Participant 115",
+        "Participant 122",
+        "Participant 139",
+        "Participant 152"
+      ],
+      "fragment_count": 40,
+      "cohesion": 0.609,
+      "distinctness": 1,
+      "top_themes": [
+        {
+          "id": "clinical_trials",
+          "share": 0.805
+        },
+        {
+          "id": "treatment",
+          "share": 0.583
+        },
+        {
+          "id": "condition_specific",
+          "share": 0.119
+        }
+      ],
+      "top_subthemes": [
+        {
+          "id": "treatment_decision_factors",
+          "share": 0.381
+        },
+        {
+          "id": "trial_barriers",
+          "share": 0.35
+        },
+        {
+          "id": "trial_decision_factors",
+          "share": 0.29
+        },
+        {
+          "id": "treatment_knowledge_gaps",
+          "share": 0.25
+        },
+        {
+          "id": "treatment_negative_experiences",
+          "share": 0.238
+        }
+      ],
+      "top_stages": [
+        {
+          "id": "trial_consideration",
+          "share": 1.043
+        },
+        {
+          "id": "in_trial_experience",
+          "share": 0.274
+        },
+        {
+          "id": "post_trial",
+          "share": 0.071
+        },
+        {
+          "id": "stable_on_dmt",
+          "share": 0.048
+        },
+        {
+          "id": "dmt_decision",
+          "share": 0.048
+        }
+      ],
+      "top_steps": [
+        {
+          "id": "trial_awareness",
+          "share": 0.548
+        },
+        {
+          "id": "consent_or_decline",
+          "share": 0.243
+        },
+        {
+          "id": "eligibility_self_assessment",
+          "share": 0.133
+        },
+        {
+          "id": "acute_complications",
+          "share": 0.095
+        },
+        {
+          "id": "logistical_assessment",
+          "share": 0.083
+        }
+      ],
+      "top_emotions": [
+        {
+          "id": "hope",
+          "share": 0.31
+        },
+        {
+          "id": "apprehension",
+          "share": 0.264
+        },
+        {
+          "id": "interest",
+          "share": 0.262
+        },
+        {
+          "id": "anticipation",
+          "share": 0.179
+        },
+        {
+          "id": "pensiveness",
+          "share": 0.143
+        }
+      ],
+      "sentiment": {
+        "mean": 0.03,
+        "std": 0.66
+      },
+      "evidence_fragment_ids": [
+        "fc-ms_reddit_2026q1-16-1-1_b",
+        "fc-ms_reddit_2026q1-17-1-1_g",
+        "fc-ms_reddit_2026q1-12-1-1_f",
+        "fc-ms_reddit_2026q1-10-1-1_d",
+        "fc-ms_reddit_2026q1-10-1-1_a"
+      ],
+      "overlaps_existing": []
+    }
+  ],
+  "unattached_authors": [
+    "Participant 101",
+    "Anon_ms_reddit_2026q1_0000",
+    "Participant 106",
+    "Participant 107",
+    "Participant 109",
+    "Anon_ms_reddit_2026q1_0001",
+    "Anon_ms_reddit_2026q1_0003",
+    "Anon_ms_reddit_2026q1_0005",
+    "Participant 131",
+    "Participant 132",
+    "Participant 136",
+    "Participant 138",
+    "Participant 140",
+    "Participant 143",
+    "Participant 146",
+    "Participant 151",
+    "Participant 153",
+    "Participant 124",
+    "Participant 127",
+    "Participant 098",
+    "Participant 105",
+    "Participant 128",
+    "Participant 134",
+    "Participant 125",
+    "Participant 126"
+  ]
+}

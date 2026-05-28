@@ -1,0 +1,26 @@
+{
+  "id": "lupus_nephritis_clinical_trials_searches_us",
+  "type": "search_volume_topics",
+  "indication_id": "lupus_nephritis",
+  "therapeutic_area_ids": ["immunology", "nephrology"],
+  "title": "Lupus nephritis clinical trial searches",
+  "subtitle": "Monthly estimated volume, US — trial-seeking and trial-curious queries",
+  "unit": "monthly_estimated_search_volume",
+  "geography": "US",
+  "time_period": null,
+  "topic_category": "clinical_trials",
+  "source": {
+    "type": "manual_estimate",
+    "notes": "Hand-authored estimates. Expands the single 'Lupus nephritis clinical trials' query in relative_search_volume.json (550/mo) with trial-adjacent queries — site-finding intent, modality-specific trial curiosity (CAR-T), and generic 'is there a trial?' searches."
+  },
+  "dimensions": ["topic"],
+  "measures": ["volume"],
+  "data": [
+    { "topic": "lupus nephritis clinical trials", "volume": 550 },
+    { "topic": "CAR-T lupus trial", "volume": 320 },
+    { "topic": "lupus nephritis trial near me", "volume": 90 },
+    { "topic": "lupus drug trial", "volume": 140 },
+    { "topic": "clinicaltrials.gov lupus", "volume": 220 },
+    { "topic": "new lupus medication 2026", "volume": 410 }
+  ]
+}

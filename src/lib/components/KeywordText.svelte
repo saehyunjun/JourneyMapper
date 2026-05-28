@@ -12,7 +12,7 @@
 -->
 <script lang="ts">
 	import { quoteRuns, type QuoteRun } from '$lib/content/wctglpdemo-data/quote-text';
-	import type { InstanceKeywordTag } from '$lib/content/wctglpdemo-data/keywords';
+	import type { InstanceKeywordTag, KeywordMatcher } from '$lib/content/wctglpdemo-data/keywords';
 	import { groupDrawer } from '$lib/stores/group-drawer.svelte.js';
 
 	type Pick = { kind: 'keyword' | 'theme'; id: string; label: string };
@@ -20,10 +20,18 @@
 	let {
 		text,
 		instanceTags = [],
+		matcher,
 		onpick
-	}: { text: string; instanceTags?: InstanceKeywordTag[]; onpick?: (sel: Pick) => void } = $props();
+	}: {
+		text: string;
+		instanceTags?: InstanceKeywordTag[];
+		/** Indication-scoped matcher. When omitted, the legacy static-lexicon
+		 *  path runs — keeps interview-side callers unchanged. */
+		matcher?: KeywordMatcher;
+		onpick?: (sel: Pick) => void;
+	} = $props();
 
-	const runs = $derived(quoteRuns(text ?? '', instanceTags));
+	const runs = $derived(quoteRuns(text ?? '', instanceTags, matcher));
 
 	function runTitle(run: QuoteRun): string {
 		const parts: string[] = [];

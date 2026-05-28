@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "persona_id": "ms_all_voices",
+    "corpus_id": "ms_reddit_2026q1",
+    "filter_hash": "8c1e96e2e790",
+    "evidence_fragment_ids": [
+      "fc-ms_reddit_2026q1-11-1-1_u",
+      "fc-ms_reddit_2026q1-16-1-1_b",
+      "fc-ms_reddit_2026q1-17-1-1_g",
+      "fc-ms_reddit_2026q1-16-1-1_g",
+      "fc-ms_reddit_2026q1-12-1-1_f",
+      "fc-ms_reddit_2026q1-12-1-1_b",
+      "fc-ms_reddit_2026q1-12-1-1_i",
+      "fc-ms_reddit_2026q1-11-1-1_d",
+      "fc-ms_reddit_2026q1-17-1-1_p",
+      "fc-ms_reddit_2026q1-16-1-1_c",
+      "fc-ms_reddit_2026q1-13-1-1_d",
+      "fc-ms_reddit_2026q1-13-1-1_e",
+      "fc-ms_reddit_2026q1-11-1-1_t",
+      "fc-ms_reddit_2026q1-16-1-1_l",
+      "fc-ms_reddit_2026q1-12-1-1_n",
+      "fc-ms_reddit_2026q1-10-1-1_a",
+      "fc-ms_reddit_2026q1-11-1-1_s",
+      "fc-ms_reddit_2026q1-14-1-1_d",
+      "fc-ms_reddit_2026q1-14-1-1_b",
+      "fc-ms_reddit_2026q1-11-1-1_p"
+    ],
+    "generator": "propose-persona-narrative@0.1",
+    "model": "claude-opus-4-7",
+    "generated_at": "2026-05-28T21:36:15.114Z"
+  },
+  "tagline": "Crowd-sourcing the cure while still arguing with the pharmacy.",
+  "paragraph": "I came here looking for people who actually understand what Ocrevus and Kesimpta do, and what CAR-T might do next. Someone in the thread works in pharma and walked us through helper T cells and B cells like we were in a seminar; somebody else's partner had an MRI 'lit up like a Christmas tree' three years in and still can't find anyone whose case sounds like his. That's why I keep scrolling. I'm not naive about it — I know CAR-T isn't a cure, that B-cell depleters already do a lot of what it does, and that chemo conditioning, three lumbar punctures, nine months off Kesimpta, and apheresis are not things I emotionally have in me right now. A trial site forty-five minutes away still means months of screening, and at sixty-six and a half I'm already aged out of most of them. Meanwhile I'm fighting my insurance over Ocrevus, learning I can get generic Tecfidera for $20 at CostPlus, and reading about the Ocrevus financial program that might cover up to 20K. I've had this disease twenty, thirty years; the DMTs promised to stop relapses but I'm going downhill anyway. So I weigh the placebo arm, the ICANS risk, the cancer risk, the side effects I've already lived with — and I still believe this bio-engineering is the answer. I just want to know what the long-term follow-up looks like before I sign anything.",
+  "patient_concerns": [
+    "Worry about getting the placebo arm and going off Kesimpta for nine months.",
+    "Frustrated that age cutoffs of 55 close most CAR-T trials to me.",
+    "Fighting insurance over Ocrevus while learning to negotiate self-pay rates.",
+    "Want to know exactly what long-term follow-up and monitoring will look like."
+  ],
+  "person_concerns": [
+    "Twenty years in, I'm still going downhill despite doing everything right.",
+    "Don't emotionally have more spinal taps, chemo, and apheresis in me right now.",
+    "Hard to find people whose lesion load and aggression match my own.",
+    "Believe this could be the answer, but fear becoming the cautionary case."
+  ],
+  "hero_quote_fragment_id": "fc-ms_reddit_2026q1-16-1-1_c"
+}

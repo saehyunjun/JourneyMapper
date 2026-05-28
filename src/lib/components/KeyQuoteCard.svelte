@@ -5,7 +5,7 @@
 	blockquote framed by sentiment-tinted quote marks, a clickable participant
 	chip, the source question, and an optional theme/score footer. Extracted
 	from KeyQuotesSection so the same card can be reused on the analysis page's
-	key-findings cards and the fingerprint / interview-words pages.
+	key-findings cards and the personas / community pages.
 
 	Two sizes via the `size` prop:
 	  - `sm` (default) — compact, for carousels and grids (3-up).

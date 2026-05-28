@@ -1,0 +1,471 @@
+{
+  "meta": {
+    "schema_version": "0.1",
+    "corpus_id": "wct_glp1_2025q4",
+    "persona_id": "glp1_cost_pressure_moments",
+    "persona_label": "GLP-1 cost-pressure moments",
+    "persona_color": "#f59e0b",
+    "journey_indication": "obesity",
+    "journey_schema_version": "1.0",
+    "generated_at": "2026-05-26T20:03:49.818Z",
+    "generator": "scripts/synthesize-journey-map.mjs",
+    "generator_version": "synthesize-journey-map@0.1",
+    "model": "claude-haiku-4-5-20251001",
+    "fragment_count_total": 50,
+    "stage_count": 4,
+    "decision_point_count": 1,
+    "notes": [
+      "Generative journey-map artifact. Stage observations + decision-point panels synthesized from corpus fragments via Claude with JSON-schema-constrained output.",
+      "external_observations[] slot reserved on each step for future world-knowledge integration (PubMed / NCT / disease-insights).",
+      "Re-run with: node scripts/synthesize-journey-map.mjs <corpus> <persona> --force"
+    ],
+    "external_observations_proposer": {
+      "generator": "scripts/propose-external-observations.mjs",
+      "generator_version": "propose-external-observations@0.1",
+      "model": "claude-haiku-4-5-20251001",
+      "generated_at": "2026-05-26T20:31:22.268Z",
+      "datasets_consumed": [
+        "obesity_treatment_searches_us",
+        "obesity_side_effects_searches_us",
+        "obesity_cost_access_searches_us",
+        "obesity_clinical_trials_searches_us",
+        "obesity_lifestyle_searches_us",
+        "obesity_community_engagement",
+        "obesity_clinicaltrials_normalized",
+        "obesity_clinicaltrials_sponsors_observed",
+        "obesity_clinicaltrials_interventions_observed"
+      ],
+      "count": 10
+    }
+  },
+  "stages": [
+    {
+      "stage_id": "glp1_initiation",
+      "label": "GLP-1 initiation",
+      "description": "Starting therapy. First doses, titration ladder, early side effects (nausea, fatigue), first changes in appetite/satiety.",
+      "fragment_count": 1,
+      "avg_sentiment": 1,
+      "emotion_label": "confusion",
+      "stage_summary": "Patient navigates a conditional-access program for GLP-1 initiation, where medication availability and affordability are tied to participation requirements rather than medical need alone.",
+      "drill_down": {
+        "text": "Cost barriers to GLP-1 access are embedded in the enrollment structure itself: the patient describes a first month of medication followed by a discount contingent on completing lessons, suggesting that affordability is not guaranteed upfront but conditional on engagement. This framing creates friction at the moment of initiation when patients are already managing injection learning and early side effects.",
+        "supporting_fragment_ids": [
+          "iv-participant_09_t31_s00"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "first_doses",
+          "label": "First doses",
+          "observations": [
+            {
+              "title": "Medication Access Tied to Program Participation",
+              "polarity": "negative",
+              "body": "The patient's first doses are embedded in a transactional model where discounted pricing in subsequent months requires completion of educational lessons, creating administrative burden at the moment of clinical initiation.",
+              "supporting_fragment_ids": [
+                "iv-participant_09_t31_s00"
+              ],
+              "confidence": 0.8
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "165K MONTHLY SEARCHES FOR 'OZEMPIC SIDE EFFECTS' SIGNAL EARLY SAFETY CONCERNS",
+              "body": "Even before titration, patients are already searching for adverse-effect profiles, reflecting the anxiety that accompanies first exposure and the desire to anticipate what lies ahead.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_side_effects_searches_us"
+              ],
+              "confidence": 0.82
+            }
+          ]
+        },
+        {
+          "step_id": "titration",
+          "label": "Titration",
+          "observations": [],
+          "external_observations": []
+        },
+        {
+          "step_id": "initial_side_effects",
+          "label": "Initial side effects",
+          "observations": [],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "weight_stabilization",
+      "label": "Weight stabilization",
+      "description": "The 'maintenance' plateau. Target weight reached or approached; dose may be held; daily routine has stabilized around the medication.",
+      "fragment_count": 4,
+      "avg_sentiment": -0.25,
+      "emotion_label": "apprehension",
+      "stage_summary": "As weight nears goal and medication becomes routine, cost and coverage pressures threaten the stability of maintenance therapy, forcing ongoing contingency planning.",
+      "drill_down": {
+        "text": "All four fragments in this stage reveal a persona actively strategizing around cost barriers rather than settling into stable maintenance. Even when medication is working and weight is stabilized, the patient is scanning for cheaper alternatives (Semaglutide, oral formulations, compounded versions) and bracing for potential insurance denial once weight-loss goals are met—a tension unique to the cost-pressure moment persona.",
+        "supporting_fragment_ids": [
+          "iv-participant_06_t07_s00",
+          "iv-participant_06_t07_s01",
+          "iv-participant_09_t07_s02"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "target_approached",
+          "label": "Target approached",
+          "observations": [],
+          "external_observations": []
+        },
+        {
+          "step_id": "dose_continuation_question",
+          "label": "Dose continuation question",
+          "observations": [
+            {
+              "title": "Insurance Coverage Threat After Goal Achievement",
+              "polarity": "negative",
+              "body": "Patient and prescriber acknowledge that successful weight loss paradoxically jeopardizes continued insurance coverage, as clinical criteria for GLP-1 maintenance may no longer be met once the patient exits the obesity range.",
+              "supporting_fragment_ids": [
+                "iv-participant_09_t07_s02"
+              ],
+              "confidence": 0.8
+            },
+            {
+              "title": "Cost-Contingent Formulation Preferences Reshape Maintenance Plans",
+              "polarity": "mixed",
+              "body": "Patients express openness to switching from preferred delivery methods (injectable) to cheaper alternatives (pills, compounded versions) if cost savings become significant enough to justify the trade-off.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t07_s01"
+              ],
+              "confidence": 0.75
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "88K MONTHLY SEARCHES FOR 'COMPOUNDED SEMAGLUTIDE' SIGNAL COST-MITIGATION PATHWAY AWARENESS",
+              "body": "As patients stabilize on therapy and face ongoing affordability questions, searches for compounded alternatives spike, indicating active contingency planning for potential insurance or cost barriers.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_cost_access_searches_us"
+              ],
+              "confidence": 0.83
+            }
+          ]
+        },
+        {
+          "step_id": "daily_normalization",
+          "label": "Daily normalization",
+          "observations": [
+            {
+              "title": "18-Month Stable Routine Shadowed By Affordability Contingencies",
+              "polarity": "mixed",
+              "body": "Despite 18 months on medication and clear stability, patient continues active surveillance for cheaper alternatives and has already sourced compounded versions as a backup plan, preventing true psychological normalization of the treatment.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t07_s00",
+                "iv-participant_06_t23_s00"
+              ],
+              "confidence": 0.85
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "14K MONTHLY SEARCHES FOR 'WEIGHT REGAIN AFTER OZEMPIC' FORESHADOW DISCONTINUATION ANXIETY",
+              "body": "Even during stable maintenance, patients are already researching the regain risk post-discontinuation, reflecting embedded worry about the fragility of their weight stability without pharmaceutical support.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_lifestyle_searches_us"
+              ],
+              "confidence": 0.78
+            }
+          ]
+        },
+        {
+          "step_id": null,
+          "label": null,
+          "observations": [],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "discontinuation_consideration",
+      "label": "Discontinuation consideration",
+      "description": "Active weighing of staying on vs. coming off. Cost, side-effect fatigue, supply issues, clinical guidance, and personal philosophy all in play.",
+      "fragment_count": 52,
+      "avg_sentiment": -0.40816326530612246,
+      "emotion_label": "apprehension",
+      "stage_summary": "Patients weigh ongoing treatment against mounting cost and access barriers, expressing deep anxiety about potential loss of insurance coverage or unaffordable out-of-pocket expenses that could force discontinuation.",
+      "drill_down": {
+        "text": "Cost emerges as the dominant discontinuation driver across this cohort—not hypothetical worry, but concrete monthly price tags ($1,000+) that many say they cannot sustain if insurance changes. Multiple patients report that their doctors cannot access pharmacy benefit managers for authorization, forcing them into the position of potential out-of-pocket payment. This creates a pervasive apprehension: patients on employer insurance acknowledge their coverage is fragile and could vanish at any job transition.",
+        "supporting_fragment_ids": [
+          "iv-participant_06_t03_s00",
+          "iv-participant_09_t03_s02",
+          "iv-participant_11_t05_s01"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "cost_pressure",
+          "label": "Cost pressure",
+          "observations": [
+            {
+              "title": "COST PROHIBITIVITY IS PRIMARY DISCONTINUATION TRIGGER",
+              "polarity": "negative",
+              "body": "Across nine patients, cost is explicitly named as the top reason they would stop GLP-1 treatment—either because branded pricing ($1,000+/month out-of-pocket) is unaffordable or because insurance coverage is fragile and could be withdrawn.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t03_s00",
+                "iv-participant_09_t03_s02",
+                "iv-participant_11_t05_s02",
+                "iv-participant_12_t05_s00"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "title": "INSURANCE COVERAGE UNCERTAINTY DRIVES PERSISTENT APPREHENSION",
+              "polarity": "negative",
+              "body": "Multiple patients on current employer or insurance coverage express ongoing worry that their plan could change, and several mention specific fears around job transitions, policy shifts, and pharmacy benefit manager barriers that could suddenly render the medication unaffordable.",
+              "supporting_fragment_ids": [
+                "iv-participant_11_t05_s01",
+                "iv-participant_12_t05_s01",
+                "iv-participant_12_t05_s02"
+              ],
+              "confidence": 0.93
+            },
+            {
+              "title": "COMPOUNDED MEDICATION SEEN AS AFFORDABLE BUT RISKY FALLBACK",
+              "polarity": "mixed",
+              "body": "Patients are willing to consider compounded alternatives to branded versions as a cost-mitigation strategy, but most express cautious vigilance around pharmacy quality, authenticity, and sourcing—balancing financial necessity against safety concerns.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t23_s02",
+                "iv-participant_07_t23_s00",
+                "iv-participant_11_t23_s00",
+                "iv-participant_12_t21_s01"
+              ],
+              "confidence": 0.88
+            },
+            {
+              "title": "SYSTEMIC ACCESS BARRIERS BEYOND INDIVIDUAL COST",
+              "polarity": "negative",
+              "body": "Beyond personal out-of-pocket expense, patients report fears of supply shortages, pharmacy benefit manager refusals to discuss coverage, and structural inequities in the US healthcare system that could force discontinuation regardless of personal preference or clinical need.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t09_s04",
+                "iv-participant_09_t03_s01",
+                "iv-participant_10_t05_s03"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "254.7K TOTAL MONTHLY COST/ACCESS SEARCHES DWARF TRIAL AWARENESS AT 10.6K",
+              "body": "Cost and access searches outnumber clinical-trial queries by 24×, underscoring that affordability pressure is the dominant discontinuation driver across the population—far exceeding trial interest as a pathway.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_cost_access_searches_us",
+                "obesity_clinical_trials_searches_us"
+              ],
+              "confidence": 0.9
+            },
+            {
+              "title": "27K MONTHLY SEARCHES FOR 'OZEMPIC WITHOUT INSURANCE' REFLECT COVERAGE GAP PANIC",
+              "body": "Searches for uninsured access pathways spike as cost-pressure moments arrive, revealing patients actively hunting for workarounds when insurance becomes unavailable or prohibitively expensive.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_cost_access_searches_us"
+              ],
+              "confidence": 0.84
+            }
+          ]
+        },
+        {
+          "step_id": "side_effect_fatigue",
+          "label": "Side-effect fatigue",
+          "observations": [
+            {
+              "title": "COST AND SIDE-EFFECT FATIGUE INTERTWINED",
+              "polarity": "negative",
+              "body": "One foundational fragment links both cost and side-effect burden as joint discontinuation drivers, with the patient noting that GLP-1 therapy would be stopped if it becomes prohibitively expensive or causes harm to family wellbeing—though side-effect-specific elaboration is minimal in this persona's fragments.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t03_s00"
+              ],
+              "confidence": 0.65
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "90K MONTHLY SEARCHES FOR 'MOUNJARO SIDE EFFECTS' PARALLEL COST-PRESSURE QUERIES",
+              "body": "Side-effect searches remain elevated throughout maintenance and into discontinuation windows, indicating that cumulative GI burden compounds with cost fatigue as joint rationales for stopping.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_side_effects_searches_us"
+              ],
+              "confidence": 0.79
+            }
+          ]
+        },
+        {
+          "step_id": "clinical_taper_discussion",
+          "label": "Clinical taper discussion",
+          "observations": [],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "trial_consideration",
+      "label": "Clinical-trial consideration",
+      "description": "Hearing about and weighing a clinical trial — in the WCT GLP-1 case, a maintenance trial for people who have discontinued and are at risk of regain. This stage is where the WCT corpus is densest.",
+      "fragment_count": 3,
+      "avg_sentiment": 0,
+      "emotion_label": "apprehension",
+      "stage_summary": "Cost anxiety looms large as patients weigh trial participation, viewing it partly as a pathway to continued access if their insurance fails them.",
+      "drill_down": {
+        "text": "For this cost-pressured persona, the trial's value proposition is fundamentally tied to access when commercial coverage falters. Patients frame participation not as a pure scientific opportunity but as a pragmatic safety net—a structured way to obtain medication if insurance denies it or costs become prohibitive. This frames the trial as a fallback rather than a first choice.",
+        "supporting_fragment_ids": [
+          "iv-participant_06_t47_s01",
+          "iv-participant_08_t25_s02"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "trial_awareness",
+          "label": "Trial awareness",
+          "observations": [],
+          "external_observations": [
+            {
+              "title": "4.4K MONTHLY SEARCHES FOR 'NEW WEIGHT LOSS DRUG 2026' SIGNAL PIPELINE CURIOSITY",
+              "body": "Trial-interested patients are actively searching for emerging pharmacotherapy options, reflecting a mindset of exploring next-generation alternatives when current commercial channels fail or cost becomes prohibitive.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_clinical_trials_searches_us"
+              ],
+              "confidence": 0.75
+            }
+          ]
+        },
+        {
+          "step_id": "eligibility_self_assessment",
+          "label": "Eligibility self-assessment",
+          "observations": [],
+          "external_observations": [
+            {
+              "title": "475 RECRUITING OR PRE-ENROLLMENT OBESITY TRIALS ON CLINICALTRIALS.GOV",
+              "body": "Active trial pipeline provides real pathways for cost-pressured patients to re-enter treatment; 317 actively recruiting trials offer affordable or free access as a counter-option to discontinuation.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "obesity_clinicaltrials_normalized"
+              ],
+              "confidence": 0.92
+            }
+          ]
+        },
+        {
+          "step_id": "logistics_assessment",
+          "label": "Logistics assessment",
+          "observations": [
+            {
+              "title": "Insurance Denial Would Be the Deal-Breaker",
+              "polarity": "negative",
+              "body": "One patient signals that insurance refusal to cover GLP-1 is the primary constraint that would prevent trial participation, framing insurance status as the dominant logistics consideration.",
+              "supporting_fragment_ids": [
+                "iv-participant_06_t47_s01"
+              ],
+              "confidence": 0.7
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "NOVO NORDISK + ELI LILLY SPONSOR 225 TRIALS; NIDDK COLLABORATES IN 192",
+              "body": "Trial landscape is dominated by GLP-1/tirzepatide manufacturers (Novo Nordisk 149, Eli Lilly 76) alongside NIH-affiliated studies (NIDDK 192), indicating both commercial and public funding for regain-prevention research.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "obesity_clinicaltrials_sponsors_observed"
+              ],
+              "confidence": 0.91
+            }
+          ]
+        },
+        {
+          "step_id": "consent_or_decline",
+          "label": "Consent or decline",
+          "observations": [
+            {
+              "title": "Trial as Affordable Access Fallback",
+              "polarity": "mixed",
+              "body": "Patients frame trial entry as an acceptable risk—even a welcome one—primarily because it offers reliable, affordable medication access when commercial channels become unavailable or unaffordable, positioning the trial as a pragmatic safety net rather than an ideological choice.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t23_s00",
+                "iv-participant_08_t25_s02"
+              ],
+              "confidence": 0.85
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "SEMAGLUTIDE, TIRZEPATIDE, LIRAGLUTIDE APPEAR IN 118, 114, 86 TRIALS RESPECTIVELY",
+              "body": "Familiar drug names dominate the trial intervention landscape, lowering barriers to trial entry for cost-pressured patients already experienced with these agents and seeking continued affordable access.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "obesity_clinicaltrials_interventions_observed"
+              ],
+              "confidence": 0.89
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "decision_panels": [
+    {
+      "stage_id": "trial_consideration",
+      "label": "Clinical-trial consideration",
+      "drivers": [
+        {
+          "title": "AFFORDABLE ACCESS PATHWAY AS TRIAL ENROLLMENT LEVER",
+          "body": "Patients recognize that trial participation could provide a route to obtain GLP-1 therapy at no or reduced cost, making enrollment attractive when standard insurance coverage is uncertain or unaffordable.",
+          "supporting_fragment_ids": [
+            "iv-participant_08_t25_s02"
+          ],
+          "confidence": 0.7
+        },
+        {
+          "title": "OPENNESS TO ALTERNATIVE FORMULATIONS",
+          "body": "Current users of GLP-1 alternatives like compounded tirzepatide show willingness to try other formulations or delivery modes, suggesting flexibility in treatment approach if a trial offers access.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t23_s00"
+          ],
+          "confidence": 0.65
+        }
+      ],
+      "barriers": [
+        {
+          "title": "INSURANCE DENIAL OR COVERAGE LOSS AS DISCONTINUATION TRIGGER",
+          "body": "Patients explicitly cite insurance refusal to cover GLP-1 as a primary reason they would stop or reconsider continuation, indicating cost / coverage uncertainty is a critical decision point.",
+          "supporting_fragment_ids": [
+            "iv-participant_06_t47_s01"
+          ],
+          "confidence": 0.75
+        },
+        {
+          "title": "IMPLICIT COST-OF-ACCESS BURDEN",
+          "body": "The framing of affordable access as a notable consideration suggests current pathways to GLP-1 are perceived as financially difficult or uncertain for this population.",
+          "supporting_fragment_ids": [
+            "iv-participant_08_t25_s02"
+          ],
+          "confidence": 0.65
+        }
+      ],
+      "mixed": [
+        {
+          "title": "UNCLEAR TRIAL COST / COVERAGE TERMS",
+          "body": "Fragments do not clarify whether patients understand trial participation as fully free, partially subsidized, or contingent on enrollment criteria—leaving awareness of trial financial terms as a potential gap.",
+          "supporting_fragment_ids": [
+            "iv-participant_06_t47_s01",
+            "iv-participant_08_t25_s02"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    }
+  ]
+}

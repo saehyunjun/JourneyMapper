@@ -1,0 +1,978 @@
+{
+  "meta": {
+    "schema_version": "0.1",
+    "corpus_id": "ln_reddit_2026q1",
+    "persona_id": "ln_trial_barrier_moments",
+    "persona_label": "LN trial-barrier moments",
+    "persona_color": "#dc2626",
+    "journey_indication": "lupus_nephritis",
+    "journey_schema_version": "1.0",
+    "generated_at": "2026-05-26T19:52:53.949Z",
+    "generator": "scripts/synthesize-journey-map.mjs",
+    "generator_version": "synthesize-journey-map@0.1",
+    "model": "claude-haiku-4-5-20251001",
+    "fragment_count_total": 47,
+    "stage_count": 6,
+    "decision_point_count": 1,
+    "notes": [
+      "Generative journey-map artifact. Stage observations + decision-point panels synthesized from corpus fragments via Claude with JSON-schema-constrained output.",
+      "external_observations[] slot reserved on each step for future world-knowledge integration (PubMed / NCT / disease-insights).",
+      "Re-run with: node scripts/synthesize-journey-map.mjs <corpus> <persona> --force"
+    ],
+    "external_observations_proposer": {
+      "generator": "scripts/propose-external-observations.mjs",
+      "generator_version": "propose-external-observations@0.1",
+      "model": "claude-haiku-4-5-20251001",
+      "generated_at": "2026-05-26T19:54:20.981Z",
+      "datasets_consumed": [
+        "lupus_nephritis_relative_search_volume",
+        "lupus_nephritis_treatment_searches_us",
+        "lupus_nephritis_symptoms_searches_us",
+        "lupus_nephritis_quality_of_life_searches_us",
+        "lupus_nephritis_diagnostics_monitoring_searches_us",
+        "lupus_nephritis_side_effects_searches_us",
+        "lupus_nephritis_comorbidities_searches_us",
+        "lupus_nephritis_clinical_trials_searches_us",
+        "lupus_nephritis_facebook_group_engagement",
+        "lupus_nephritis_clinicaltrials_normalized",
+        "lupus_nephritis_clinicaltrials_sponsors_observed",
+        "lupus_nephritis_clinicaltrials_interventions_observed"
+      ],
+      "count": 12
+    }
+  },
+  "stages": [
+    {
+      "stage_id": "diagnostic_odyssey",
+      "label": "Diagnostic odyssey",
+      "description": "Bouncing through PCP → rheumatology → nephrology. ANA / dsDNA labs, kidney workup, biopsy for classification (Class III, IV, V LN). The point where lupus becomes the named diagnosis.",
+      "fragment_count": 2,
+      "avg_sentiment": 0,
+      "emotion_label": "annoyance",
+      "stage_summary": "A three-year diagnostic gap leaves this patient frustrated after multiple rheumatologists overlook kidney involvement, only to be redirected by urology and finally connected with a nephrologist exploring trial options.",
+      "drill_down": {
+        "text": "Despite a lupus diagnosis three years prior and documented kidney concerns (infections, stones, low-normal function, ultrasound findings), none of three rheumatologists initiated nephrology evaluation—a gap that urology staff found shocking. This delay compounds trial eligibility uncertainty, as the speaker remains cautiously hopeful about CAR-T consideration but has not yet achieved clear LN classification.",
+        "supporting_fragment_ids": [
+          "fc-ln_reddit_2026q1-3-1-1_j",
+          "fc-ln_reddit_2026q1-3-1-1_j"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "specialist_bouncing",
+          "label": "Specialist bouncing",
+          "observations": [
+            {
+              "title": "Three Rheumatologists Miss Kidney Referral Despite Clinical Red Flags",
+              "polarity": "negative",
+              "body": "Over three years post-lupus diagnosis, multiple rheumatology visits failed to suggest nephrology evaluation despite documented kidney infections, stones, and borderline renal function visible on imaging—oversight that delayed appropriate workup and trial eligibility assessment.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_j"
+              ],
+              "confidence": 0.95
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "kidney_workup",
+          "label": "Kidney workup",
+          "observations": [
+            {
+              "title": "Urology Clinic Catalyzes Long-Overdue Nephrology Referral",
+              "polarity": "mixed",
+              "body": "A urology provider's surprise and concern about the absence of prior kidney evaluation prompted the speaker to finally connect with a nephrologist at an academic center; the positive outcome (access to a capable specialist and trial consideration) is shadowed by years of missed opportunity.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_j"
+              ],
+              "confidence": 0.92
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "1,480/MONTH SEARCHES FOR 'KIDNEY BIOPSY PROCEDURE'; 1,240 FOR 'KIDNEY FUNCTION TEST'",
+              "body": "Combined kidney-diagnostic searches (2,720/mo) comprise 57% of all diagnostic-monitoring queries, indicating that patients actively research the specifics of biopsy and lab interpretation as they navigate the workup phase.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "lupus_nephritis_diagnostics_monitoring_searches_us"
+              ],
+              "confidence": 0.78
+            }
+          ]
+        },
+        {
+          "step_id": null,
+          "label": null,
+          "observations": [
+            {
+              "title": "Trial Interest Emerges Amid Continued Diagnostic Uncertainty",
+              "polarity": "mixed",
+              "body": "The nephrologist's holistic assessment and trial screening process generate cautious interest ('intrigued with the option...maybe'), yet the speaker's hesitance reflects unresolved kidney classification and lingering doubt about treatment readiness after years of clinical oversight.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_j"
+              ],
+              "confidence": 0.85
+            }
+          ],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "stable_maintenance",
+      "label": "Stable maintenance",
+      "description": "Long-term immunosuppression to hold remission. Plaquenil + lower-dose immunosuppressant + tapered steroids. Lifestyle adapted around medication schedule and infection avoidance.",
+      "fragment_count": 1,
+      "avg_sentiment": 1,
+      "emotion_label": "hope",
+      "stage_summary": "Despite stable maintenance on current immunosuppression, this patient carries forward relapse history and contingency planning around advanced therapies—hope tempered by pragmatic backup scenarios.",
+      "drill_down": {
+        "text": "The speaker has achieved temporary stability on Gazyva post-relapse (started January), but frames this stage as a conditional holding pattern: 'My dream is to be cured and fully healed after Gazyva, but if that doesn't work, I'll be trying CAR-T cell therapy.' This reveals a persona for whom stable maintenance is not endpoint but waypoint—hope is active but shadowed by prior relapse experience and proactive research into next-step options (including international access).",
+        "supporting_fragment_ids": [
+          "fc-ln_reddit_2026q1-2-1-1_ak"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "long_term_immunosuppression",
+          "label": "Long-term immunosuppression",
+          "observations": [
+            {
+              "title": "DREAM OF CURE CONDITIONAL ON CURRENT REGIMEN SUCCESS",
+              "polarity": "mixed",
+              "body": "Patient on Gazyva (post-relapse restart in 2026) frames the current immunosuppressive regimen as a necessary but uncertain step toward healing, explicitly reserving CAR-T escalation as a fallback should this drug fail.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-2-1-1_ak"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "title": "RELAPSE HISTORY SHADOWS HOPE FOR SUSTAINED REMISSION",
+              "polarity": "mixed",
+              "body": "Prior cyclophosphamide (2020) followed by relapse in 2025–26 establishes a lived pattern of treatment–relapse cycles that informs current posture: patient is stable but not complacent.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-2-1-1_ak"
+              ],
+              "confidence": 0.8
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "lifestyle_adjustments",
+          "label": "Lifestyle adjustments",
+          "observations": [],
+          "external_observations": [
+            {
+              "title": "920/MONTH SEARCHES FOR 'LUPUS NEPHRITIS PROGNOSIS'; 540 FOR 'LIFE EXPECTANCY'",
+              "body": "Combined prognosis and life-expectancy searches (1,460/mo) represent a sustained minority interest (19% of QoL queries) among patients stabilized on maintenance therapy, revealing persistent existential uncertainty even during remission phases.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "lupus_nephritis_quality_of_life_searches_us"
+              ],
+              "confidence": 0.75
+            },
+            {
+              "title": "1,620/MONTH SEARCHES FOR 'LUPUS AND PREGNANCY' REFLECT REPRODUCTIVE LIFE-PLANNING BURDEN",
+              "body": "Pregnancy-related searches rank among the top QoL queries (1,620/mo), underscoring that reproductive implications of long-term immunosuppression shape daily decision-making for working-age patients in remission.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "lupus_nephritis_quality_of_life_searches_us"
+              ],
+              "confidence": 0.8
+            }
+          ]
+        },
+        {
+          "step_id": "monitoring_routine",
+          "label": "Monitoring routine",
+          "observations": [],
+          "external_observations": [
+            {
+              "title": "2,660/MONTH SEARCHES FOR 'LUPKYNIS' (VOCLOSPORIN); CAR-T SEARCHES ARE 9.8× LOWER",
+              "body": "Voclosporin search volume (2,660/mo) dwarfs CAR-T trial searches (320/mo), revealing that approved maintenance biologics remain the dominant patient research target even in populations aware of experimental alternatives.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "lupus_nephritis_treatment_searches_us",
+                "lupus_nephritis_clinical_trials_searches_us"
+              ],
+              "confidence": 0.83
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage_id": "flare_or_refractory_cycle",
+      "label": "Flare / refractory cycle",
+      "description": "Disease returns despite maintenance. New flare or recognition that current therapy is failing. Drug switching, retreatment with induction, accumulating treatment fatigue.",
+      "fragment_count": 7,
+      "avg_sentiment": 0.14285714285714285,
+      "emotion_label": "ambivalence",
+      "stage_summary": "Patients cycle through refractory disease and new drug trials with simultaneous hope for breakthrough therapies and deep frustration from years of failed treatments, eligibility barriers, and accumulated fatigue.",
+      "drill_down": {
+        "text": "For this persona, flare/refractory moments are entangled with trial consideration: multiple speakers voice preliminary hope around CAR-T or biologic switches, only to hit eligibility walls (too healthy, too many comorbidities) or medication failure. This tension—wanting access to trials while being systematically excluded or delayed—drives the ambivalence: hope for cure collides with structural barriers and the exhaustion of repeated drug attempts.",
+        "supporting_fragment_ids": [
+          "fc-ln_reddit_2026q1-4-1-1_a",
+          "fc-ln_reddit_2026q1-6-1-1_c",
+          "fc-ln_reddit_2026q1-2-1-1_ak"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "flare_recognition",
+          "label": "Flare recognition",
+          "observations": [],
+          "external_observations": []
+        },
+        {
+          "step_id": "drug_switching",
+          "label": "Drug switching",
+          "observations": [
+            {
+              "title": "SEQUENTIAL BIOLOGIC SWITCHES WITH UNCERTAIN EFFICACY",
+              "polarity": "mixed",
+              "body": "Multiple speakers report cycling through biologics (Gazyva, Benlysta, Saphnelo, Benlysta-to-Saphnelo) and CAR-T interest, with outcomes ranging from no effect to meaningful improvement, reflecting the unpredictability of finding effective therapy after refractory disease.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-2-1-1_ak",
+                "fc-ln_reddit_2026q1-6-1-1_b",
+                "fc-ln_reddit_2026q1-6-1-1_d",
+                "fc-ln_reddit_2026q1-4-1-1_a"
+              ],
+              "confidence": 0.9
+            },
+            {
+              "title": "TRIAL ELIGIBILITY AS HIDDEN BARRIER TO NEW DRUGS",
+              "polarity": "negative",
+              "body": "Despite meeting inclusion criteria on paper, patients face unexpected disqualification (comorbidities, 'not sick enough' thresholds) that prevent access to novel therapies; one speaker was rejected from CAR-T for overlapping autoimmune diagnoses despite years of failed treatments.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_a",
+                "fc-ln_reddit_2026q1-6-1-1_d"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "title": "PHYSICIAN REASSURANCE & HOPE AROUND BIOLOGIC ALTERNATIVES",
+              "polarity": "positive",
+              "body": "When trial pathways close, clinician guidance toward approved biologics (Benlysta, Saphnelo) with evidence of efficacy offers a pragmatic second channel and restores some confidence in treatment options.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-6-1-1_b",
+                "fc-ln_reddit_2026q1-6-1-1_d"
+              ],
+              "confidence": 0.75
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "580/MONTH SEARCHES FOR 'CAR-T' WITHIN LUPUS NEPHRITIS TREATMENT QUERIES",
+              "body": "CAR-T represents 8.1% of monthly treatment searches (580 of 7,140), indicating that patients in refractory or flare cycles increasingly treat novel immunotherapies—especially cell therapies—as part of the standard escalation landscape.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "lupus_nephritis_treatment_searches_us"
+              ],
+              "confidence": 0.68
+            },
+            {
+              "title": "VOCLOSPORIN, RITUXIMAB, BELIMUMAB REPRESENT BIOLOGIC ESCALATION PATHWAY",
+              "body": "Across 352 LN trials, rituximab (12 studies), tacrolimus (10), and voclosporin (6) appear as core escalation options; these same drugs dominate search volume, suggesting that when flare occurs, patients and clinicians converge on a recognizable sequence of drug switches.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "lupus_nephritis_treatment_searches_us",
+                "lupus_nephritis_clinicaltrials_interventions_observed"
+              ],
+              "confidence": 0.8
+            }
+          ]
+        },
+        {
+          "step_id": "treatment_fatigue",
+          "label": "Treatment fatigue",
+          "observations": [
+            {
+              "title": "YEARS OF FAILED TREATMENTS & MOUNTING PHYSICAL BURDEN",
+              "polarity": "negative",
+              "body": "Multiple speakers describe long stretches of ineffective therapy, progressive disease, and functional decline (e.g., inability to perform daily tasks); one reports struggling for years with only a 2-year window of success and ongoing disease progression despite multiple medication trials.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_a",
+                "fc-ln_reddit_2026q1-6-1-1_c"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "title": "PSYCHOLOGICAL EXHAUSTION FROM REPEATED WAITS & DISAPPOINTMENTS",
+              "polarity": "negative",
+              "body": "Speakers voice fatigue not just from medication side effects but from the waiting, hoping, and failing cycle: one explicitly states 'I'm so tired of waiting' and another admits 'some days can just be so hard with this disease,' capturing the cumulative emotional toll of refractory cycles.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_a",
+                "fc-ln_reddit_2026q1-6-1-1_c"
+              ],
+              "confidence": 0.9
+            },
+            {
+              "title": "RECALIBRATED ACCEPTANCE WHEN MAINTENANCE DRUGS WORK",
+              "polarity": "positive",
+              "body": "When a switch results in meaningful benefit (e.g., Saphnelo efficacy), speakers shift toward acceptance and trust in the current regimen, suggesting relief after the flare/switching gauntlet.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-6-1-1_d"
+              ],
+              "confidence": 0.7
+            },
+            {
+              "title": "TRADE-OFF BETWEEN OLDER, UNPLEASANT & NEWER, UNCERTAIN THERAPIES",
+              "polarity": "mixed",
+              "body": "Patients weigh cyclophosphamide (older, toxic but proven) against emerging trials (novel but unproven and access-limited), highlighting the bind: familiar toxicity versus hope and exclusion.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-2-1-1_z"
+              ],
+              "confidence": 0.75
+            }
+          ],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "trial_consideration",
+      "label": "Trial consideration",
+      "description": "Exploring CAR-T or other novel therapies. Reading the German study, searching ClinicalTrials.gov, talking to community, working out eligibility, weighing logistical / financial / personal cost.",
+      "fragment_count": 55,
+      "avg_sentiment": 0.07272727272727272,
+      "emotion_label": "hope",
+      "stage_summary": "This persona navigates trial consideration with cautious hope tempered by recurring disappointment—drawn to CAR-T's curative promise but repeatedly blocked by eligibility barriers (comorbidities, disease severity, geography) and logistical constraints (work, caregiver absence, cost).",
+      "drill_down": {
+        "text": "The stage reveals a cruel paradox: patients must be severely ill to qualify, yet severity itself often creates logistical impossibility. Multiple speakers describe being rejected for being \"not sick enough,\" while others accepted to trials face 6–8 weeks post-treatment driving restrictions without family support, or must travel hours for intensive follow-ups. This tension between medical necessity and life feasibility shapes most declinations.",
+        "supporting_fragment_ids": [
+          "fc-ln_reddit_2026q1-3-1-1_h",
+          "fc-ln_reddit_2026q1-3-1-1_t",
+          "fc-ln_reddit_2026q1-3-1-1_v"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "trial_awareness",
+          "label": "Trial awareness",
+          "observations": [
+            {
+              "title": "GERMAN ERLANGEN STUDY AS FOUNDATIONAL REFERENCE",
+              "polarity": "positive",
+              "body": "Speakers consistently cite the original German study as the primary evidence base and intellectual anchor for CAR-T-lupus trials, indicating strong peer-to-peer dissemination of credible trial data.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-2-1-1_g"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "title": "ACTIVE SEARCH & REGISTRY ENGAGEMENT DRIVES DISCOVERY",
+              "polarity": "positive",
+              "body": "Multiple speakers describe proactive ClinicalTrials.gov searches, direct study-coordinator outreach, and registry enrollment; some note that passive registration alone is insufficient and persistence is key.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-5-1-1_j",
+                "fc-ln_reddit_2026q1-6-1-1_a"
+              ],
+              "confidence": 0.8
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "550/MONTH SEARCHES FOR 'LUPUS NEPHRITIS CLINICAL TRIALS' IN US",
+              "body": "Search volume for trial-specific queries represents only 3.6% of total lupus nephritis treatment searches, yet absolute monthly volume of 550 suggests consistent population-level interest in trial pathways when standard therapies fail.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "lupus_nephritis_clinical_trials_searches_us"
+              ],
+              "confidence": 0.72
+            },
+            {
+              "title": "320/MONTH SEARCHES FOR 'CAR-T LUPUS TRIAL' SIGNAL STRONG PEER-TO-PEER AWARENESS",
+              "body": "CAR-T-specific search volume (320/mo) approaches 58% of all clinical-trial searches, indicating that the German Erlangen study and emerging CAR-T programs have saturated trial-curious patient discourse.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "lupus_nephritis_clinical_trials_searches_us"
+              ],
+              "confidence": 0.7
+            }
+          ]
+        },
+        {
+          "step_id": "eligibility_self_assessment",
+          "label": "Eligibility self-assessment",
+          "observations": [
+            {
+              "title": "OVERLAPPING DIAGNOSES CREATE SYSTEMATIC EXCLUSION",
+              "polarity": "negative",
+              "body": "Multiple speakers report rejection due to comorbidities (RA + SLE, connective-tissue disorders, hemiplegic migraines, MS family history, dermatomyositis); trial protocols explicitly exclude complexity to ensure clean causal attribution.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-2-1-1_j",
+                "fc-ln_reddit_2026q1-4-1-1_ah",
+                "fc-ln_reddit_2026q1-4-1-1_aj"
+              ],
+              "confidence": 0.92
+            },
+            {
+              "title": "DISEASE SEVERITY THRESHOLD CREATES A CATCH-22",
+              "polarity": "negative",
+              "body": "Speakers repeatedly describe being rejected for being \"not sick enough\" or told trials want \"the worst of the worst,\" while those who improved their health before screening inadvertently disqualified themselves; this creates an unstated penalty for self-care.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_v",
+                "fc-ln_reddit_2026q1-4-1-1_aa",
+                "fc-ln_reddit_2026q1-4-1-1_af"
+              ],
+              "confidence": 0.88
+            },
+            {
+              "title": "GEOGRAPHIC PROXIMITY IS A HARD REQUIREMENT",
+              "polarity": "negative",
+              "body": "Multiple sources confirm trials demand close proximity to study sites due to frequent post-infusion follow-ups (6–8 weeks of intensive visits); relocation or out-of-state moves eliminate eligibility.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_h",
+                "fc-ln_reddit_2026q1-3-1-1_v"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "title": "RIGOROUS MULTI-DISCIPLINARY SCREENING IS THOROUGH BUT OPAQUE",
+              "polarity": "mixed",
+              "body": "Speakers describe detailed eligibility assessments (rheumatology, cardiology, neuro, bloodwork, imaging) that feel comprehensive yet rarely explain rejection rationale; one speaker invested 3 months preparing, only to be denied post-screening.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_aa",
+                "fc-ln_reddit_2026q1-4-1-1_j"
+              ],
+              "confidence": 0.82
+            },
+            {
+              "title": "CAUTIOUS OPTIMISM ABOUT ELIGIBILITY BREADTH AT SOME SITES",
+              "polarity": "positive",
+              "body": "A few speakers report surprise approval from Emory and Columbia despite moderate disease or concerns about being \"not sick enough,\" suggesting eligibility criteria vary by site and persistence pays off.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_h",
+                "fc-ln_reddit_2026q1-6-1-1_a"
+              ],
+              "confidence": 0.7
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "352 TOTAL LN TRIALS ON CLINICALTRIALS.GOV; 80 ACTIVELY RECRUITING",
+              "body": "With 80 recruiting trials and only 112 recruiting-or-pre-recruitment studies across 352 total entries, the available trial landscape is sparse and fragmented, creating navigation burden and eligibility frustration for patients seeking access.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "lupus_nephritis_clinicaltrials_normalized"
+              ],
+              "confidence": 0.95
+            }
+          ]
+        },
+        {
+          "step_id": "logistical_assessment",
+          "label": "Logistical assessment",
+          "observations": [
+            {
+              "title": "POST-INFUSION DRIVING BAN CREATES WORK CONFLICT",
+              "polarity": "negative",
+              "body": "A patient accepted to trial cannot proceed because 6–8 weeks of driving restrictions conflict with full-time work and lack of family caregiver support; this hardship appears common enough to be a documented barrier.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_t"
+              ],
+              "confidence": 0.82
+            },
+            {
+              "title": "TRAVEL DISTANCE & INTENSIVE FOLLOW-UP DEMANDS ARE PROHIBITIVE",
+              "polarity": "negative",
+              "body": "Multiple speakers cite 4+ hour travel distances to sites combined with 6+ months of frequent clinic visits as insurmountable logistical obstacles, especially for those working full-time or parenting school-age children.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_aa",
+                "fc-ln_reddit_2026q1-4-1-1_af",
+                "fc-ln_reddit_2026q1-5-1-1_u"
+              ],
+              "confidence": 0.88
+            },
+            {
+              "title": "FERTILITY PRESERVATION NOT COVERED BY TRIAL COMPENSATION",
+              "polarity": "negative",
+              "body": "One speaker considering CAR-T wishes to preserve fertility before chemo conditioning but learns only meals, transportation, and lodging are covered—not reproductive preservation.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-7-1-1_m",
+                "fc-ln_reddit_2026q1-7-1-1_o"
+              ],
+              "confidence": 0.68
+            },
+            {
+              "title": "COMORBIDITY-DRIVEN TRIAL DEFERRAL OVER LOGISTICAL BARRIERS",
+              "polarity": "negative",
+              "body": "A patient with severe dermatomyositis was unable to handle travel or treatment when trial opportunity arose; comorbid flares can collapse logistical readiness unexpectedly.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-5-1-1_u"
+              ],
+              "confidence": 0.75
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "PRIVATE FB GROUPS POST 175 TIMES/MONTH VS PUBLIC GROUPS 45 TIMES/MONTH",
+              "body": "The 4× higher engagement in private patient communities reflects that trial barriers (cost, logistics, eligibility rejection) are discussed most intensely in spaces where vulnerability and specificity are normalized; public groups remain passive by comparison.",
+              "citation": "Facebook patient-community engagement",
+              "source_dataset_ids": [
+                "lupus_nephritis_facebook_group_engagement"
+              ],
+              "confidence": 0.88
+            },
+            {
+              "title": "INDUSTRY SPONSORS LEAD 137 OF 352 TRIALS; CONCENTRATED IN MAJOR ACADEMIC CENTERS",
+              "body": "Novartis (10 trials), Aurinia (7), Roche (7), and other pharma sponsors concentrate trial infrastructure in academic medical centers, compounding the geographic clustering that forces trial-eligible patients into logistical binds (travel, work loss, caregiver availability).",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "lupus_nephritis_clinicaltrials_sponsors_observed"
+              ],
+              "confidence": 0.92
+            }
+          ]
+        },
+        {
+          "step_id": "consent_or_decline",
+          "label": "Consent or decline",
+          "observations": [
+            {
+              "title": "HOPE TEMPERED BY INFORMED APPREHENSION ABOUT RISKS",
+              "polarity": "mixed",
+              "body": "Speakers express cautious optimism about CAR-T's curative potential yet acknowledge real neurological and infectious risks disclosed in consent forms; ambivalence is the norm, not exception.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_c",
+                "fc-ln_reddit_2026q1-5-1-1_d",
+                "fc-ln_reddit_2026q1-8-1-1_a"
+              ],
+              "confidence": 0.86
+            },
+            {
+              "title": "PRELIMINARY APPROVAL OFTEN COLLAPSES AT FINAL EVALUATION",
+              "polarity": "negative",
+              "body": "Multiple speakers describe receiving preliminary approval only to be rejected at final screening; hope is repeatedly dashed at the threshold, leaving emotional residue and decision fatigue.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_a",
+                "fc-ln_reddit_2026q1-4-1-1_aa"
+              ],
+              "confidence": 0.84
+            },
+            {
+              "title": "HONESTY IN SCREENING DRIVEN BY SAFETY & TRIAL INTEGRITY CONCERNS",
+              "polarity": "positive",
+              "body": "Speakers explicitly state commitment to honest disclosure during screening, motivated by desire not to corrupt the trial and by fear of personal harm from dishonesty; integrity appears normative.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-6-1-1_b",
+                "fc-ln_reddit_2026q1-6-1-1_c"
+              ],
+              "confidence": 0.8
+            },
+            {
+              "title": "FAMILY OBLIGATIONS RESHAPE TREATMENT CONSENT CALCULUS",
+              "polarity": "negative",
+              "body": "Working parents and sole caregivers recognize that even if medically eligible and accepted, extended recovery time and proximity requirements would create \"true hardship\" for family; this frames declination as rational, not defeatist.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_af"
+              ],
+              "confidence": 0.78
+            },
+            {
+              "title": "ALTERNATIVE BIOLOGIC THERAPIES OFFERED AS CONSOLATION",
+              "polarity": "positive",
+              "body": "When trial access is blocked, clinicians offer Benlysta, Saphnelo, or other biologics; some speakers report success with these alternatives, reducing trial-specific urgency.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-6-1-1_b",
+                "fc-ln_reddit_2026q1-6-1-1_d"
+              ],
+              "confidence": 0.75
+            },
+            {
+              "title": "ACCEPTANCE & FORWARD MOVEMENT AFTER REJECTION",
+              "polarity": "mixed",
+              "body": "Speakers denied access express relief at having a definitive answer, gratitude for honesty, and active pursuit of next-step treatments; disappointment is real but does not paralyze.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_aa",
+                "fc-ln_reddit_2026q1-4-1-1_af"
+              ],
+              "confidence": 0.8
+            }
+          ],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "in_trial_experience",
+      "label": "In-trial experience",
+      "description": "Active treatment phase. Apheresis / cell collection, lymphodepleting chemotherapy, infusion, hospitalization for acute monitoring (CRS, ICANS, infection).",
+      "fragment_count": 17,
+      "avg_sentiment": -0.11764705882352941,
+      "emotion_label": "ambivalence",
+      "stage_summary": "Participants navigate the in-trial treatment phase with cautious hope tempered by fear of intense side effects, strict logistical demands, and real or anticipated complications.",
+      "drill_down": {
+        "text": "The defining tension of this stage is hope-versus-dread: speakers articulate genuine optimism about CAR-T's curative potential while simultaneously grappling with the reality of intense conditioning chemotherapy, severe acute toxicities (CRS, ICANS), prolonged hospitalization, and mandatory 30-day proximity to treatment centers. The narrow FDA dosing windows and sequential patient enrollment add logistical uncertainty that compounds clinical anxiety.",
+        "supporting_fragment_ids": [
+          "fc-ln_reddit_2026q1-3-1-1_ab",
+          "fc-ln_reddit_2026q1-3-1-1_f",
+          "fc-ln_reddit_2026q1-8-1-1_a"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "cell_collection",
+          "label": "Cell collection",
+          "observations": [
+            {
+              "title": "WAITING AND UNCERTAINTY AFTER APHERESIS",
+              "polarity": "mixed",
+              "body": "Participants describe T-cell collection as a completed procedural hurdle, but the subsequent manufacturing window introduces a new source of anxiety: FDA-mandated sequential enrollment means unpredictable timing and extended waiting (one speaker delayed from May due to prior patient illness), intensifying nervousness as the infusion date approaches.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_ac",
+                "fc-ln_reddit_2026q1-8-1-1_a"
+              ],
+              "confidence": 0.75
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "lymphodepletion",
+          "label": "Lymphodepletion",
+          "observations": [
+            {
+              "title": "INTENSITY AND SCOPE OF CONDITIONING CHEMO DEBATED",
+              "polarity": "mixed",
+              "body": "Speakers cite divergent conditioning regimens: some characterize the chemo as more severe than standard induction therapy, while others note emerging low-dose protocols (Belgium trial) use substantially less. Knowledge gaps about side effects (hair loss, cumulative toxicity) drive reassurance-seeking and feed pre-treatment apprehension.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_f",
+                "fc-ln_reddit_2026q1-3-1-1_w",
+                "fc-ln_reddit_2026q1-8-1-1_h"
+              ],
+              "confidence": 0.82
+            },
+            {
+              "title": "PRECONDITIONING TRIGGERS FERTILITY AND LONG-TERM CONCERNS",
+              "polarity": "negative",
+              "body": "At least one participant identified the preconditioning phase as a major barrier, citing the need to consult a fertility specialist before proceeding, signaling that reproductive impacts are a material decision factor for younger patients.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-7-1-1_m"
+              ],
+              "confidence": 0.65
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "infusion_and_hospitalization",
+          "label": "Infusion and hospitalization",
+          "observations": [
+            {
+              "title": "RAPID INFUSION FOLLOWED BY UNPREDICTABLE COMPLICATIONS",
+              "polarity": "mixed",
+              "body": "The actual infusion is described as brief (10 minutes), but speakers emphasize the chaotic nature of the post-infusion window: rapid discharge followed by re-admission, repeat hospitalizations for CRS or ICANS, and mandatory 30-day proximity to the treatment center creating severe logistical and work constraints.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_ab",
+                "fc-ln_reddit_2026q1-4-1-1_ac"
+              ],
+              "confidence": 0.88
+            },
+            {
+              "title": "EXTENDED WORK LOSS AND CAREGIVER BURDEN",
+              "polarity": "negative",
+              "body": "One speaker documented four months of work absence and multiple re-admissions; another characterizes the overall enrollment process as exhausting and lengthy, underscoring the non-medical barriers (income loss, caregiver availability) embedded in the hospitalization phase.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_b",
+                "fc-ln_reddit_2026q1-8-1-1_g"
+              ],
+              "confidence": 0.7
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "acute_complications",
+          "label": "Acute complications",
+          "observations": [
+            {
+              "title": "CRS AND ICANS ARE REAL AND SEVERE",
+              "polarity": "negative",
+              "body": "Multiple accounts confirm that cytokine release syndrome and immune effector cell-associated neurotoxicity are not theoretical risks but immediate, life-threatening events requiring ICU-level re-admission and extended hospitalization; one caregiver was on day 11 of unplanned re-admission at time of posting.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_ab",
+                "fc-ln_reddit_2026q1-8-1-1_g"
+              ],
+              "confidence": 0.92
+            },
+            {
+              "title": "COGNITIVE AND EMOTIONAL SIDE EFFECTS DEMAND PEER SUPPORT",
+              "polarity": "negative",
+              "body": "Speakers reference brain fog, neurotoxicity concerns, and emotional shock at the severity of side effects; one participant explicitly noted that peer support groups and pre-treatment conversations with prior patients would have been invaluable for normalizing and preparing for the psychological weight of this phase.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-8-1-1_g"
+              ],
+              "confidence": 0.72
+            },
+            {
+              "title": "HOPE AND POTENTIAL FOR REMISSION COEXIST WITH STARK UNCERTAINTY",
+              "polarity": "mixed",
+              "body": "Despite the gravity of complications, speakers articulate belief in the curative potential of CAR-T while explicitly acknowledging no guarantees; one participant called it 'amazing' and worth the risk even after experiencing CRS and ICANS, but tempers optimism with realism about outcomes.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_ab",
+                "fc-ln_reddit_2026q1-3-1-1_b"
+              ],
+              "confidence": 0.8
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "CYCLOPHOSPHAMIDE, FLUDARABINE BACKBONE INTERVENTIONS IN 32-12 TRIALS RESPECTIVELY",
+              "body": "Lymphodepletion conditioning regimens anchored on cyclophosphamide (33 trials) and fludarabine (12) are the scaffolding for CAR-T and other cell-therapy trials; this reinforces patient apprehension that pre-CAR-T chemo is as intensive as classical induction therapy.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "lupus_nephritis_clinicaltrials_interventions_observed"
+              ],
+              "confidence": 0.9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage_id": "post_trial",
+      "label": "Post-trial",
+      "description": "After acute recovery. Off all immunosuppression (the headline outcome), slow return to baseline, long-term follow-up for safety + durability of remission. Re-integrating identity around 'in remission' or 'cured.'",
+      "fragment_count": 4,
+      "avg_sentiment": 0.25,
+      "emotion_label": "curiosity",
+      "stage_summary": "Trial participants emerging from acute treatment grapple with durability of remission, the reality of frequent monitoring, and the significance of achieving off-immunosuppression status, punctuated by curiosity about long-term outcomes and candid reflection on the trial's hidden logistical burdens.",
+      "drill_down": {
+        "text": "A key tension emerges between the headline victory—being off all immunosuppression—and the sobering reality of post-treatment demand: frequent visits, work disruption (4 months off reported), and unpredictable complications requiring intensive support. Participants express curiosity about durability but also acknowledge that the enrollment process itself was surprisingly exhausting, and monitoring duration extends well beyond hospital discharge.",
+        "supporting_fragment_ids": [
+          "fc-ln_reddit_2026q1-3-1-1_b",
+          "fc-ln_reddit_2026q1-8-1-1_g"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "short_term_recovery",
+          "label": "Short-term recovery",
+          "observations": [
+            {
+              "title": "INTENSIVE EARLY MONITORING AND WORK DISRUPTION",
+              "polarity": "negative",
+              "body": "Post-treatment follow-up demands frequent visits in the first 6 months due to high risk of complications, and participants report 4-month work absences during recovery, creating substantial logistical and economic burden even after hospital discharge.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_b",
+                "fc-ln_reddit_2026q1-8-1-1_g"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "title": "ENROLLMENT PROCESS EXHAUSTION UNDERESTIMATED",
+              "polarity": "negative",
+              "body": "Participants report surprise at how cognitively and administratively taxing the trial enrollment itself was, suggesting pre-treatment information may downplay the non-medical burden of participation.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-8-1-1_g"
+              ],
+              "confidence": 0.7
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "off_immunosuppression",
+          "label": "Off immunosuppression",
+          "observations": [
+            {
+              "title": "OFF ALL IMMUNOSUPPRESSION—SUSTAINED AT ONE YEAR",
+              "polarity": "positive",
+              "body": "At least one participant achieved and sustained off-immunosuppression status at the one-year post-CAR-T mark, representing the headline trial outcome, though attainment required severe relapse criteria and full chemotherapy conditioning.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-3-1-1_b"
+              ],
+              "confidence": 0.8
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "long_term_follow_up",
+          "label": "Long-term follow-up",
+          "observations": [
+            {
+              "title": "DURABILITY AND REMISSION LONGEVITY REMAIN OPEN QUESTIONS",
+              "polarity": "mixed",
+              "body": "Participants express curiosity about how long remissions will last, drawing analogies to cancer CAR-T data and questioning whether lupus CAR-T will become first-line therapy, signaling both hope and uncertainty about long-term durability.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-4-1-1_h",
+                "fc-ln_reddit_2026q1-2-1-1_x"
+              ],
+              "confidence": 0.82
+            },
+            {
+              "title": "PEER NARRATIVE SOUGHT TO NAVIGATE UNKNOWN RECOVERY",
+              "polarity": "positive",
+              "body": "Prospective and early post-trial patients actively seek detailed accounts from participants about side effects, complications, and monitoring duration, indicating that lived experience narratives fill critical knowledge gaps left by informed consent.",
+              "supporting_fragment_ids": [
+                "fc-ln_reddit_2026q1-2-1-1_x",
+                "fc-ln_reddit_2026q1-8-1-1_g"
+              ],
+              "confidence": 0.78
+            }
+          ],
+          "external_observations": []
+        }
+      ]
+    }
+  ],
+  "decision_panels": [
+    {
+      "stage_id": "trial_consideration",
+      "label": "Trial consideration",
+      "drivers": [
+        {
+          "title": "POTENTIAL CURE OR SUSTAINED REMISSION",
+          "body": "Multiple patients describe CAR-T as the closest thing to a cure and express hope for sustained remission off all immunosuppression, representing the strongest motivator for trial consideration despite significant barriers.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-2-1-1_z",
+            "fc-ln_reddit_2026q1-5-1-1_c",
+            "fc-ln_reddit_2026q1-3-1-1_b"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "title": "REFRACTORY DISEASE WITH LIMITED CONVENTIONAL OPTIONS",
+          "body": "Patients who have failed multiple standard treatments view the trial as a last viable option when conventional immunosuppressants (cyclophosphamide, Benlysta, biologics) have proven ineffective or intolerable.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-2-1-1_ak",
+            "fc-ln_reddit_2026q1-4-1-1_a",
+            "fc-ln_reddit_2026q1-3-1-1_t"
+          ],
+          "confidence": 0.92
+        },
+        {
+          "title": "PEER TESTIMONIAL AND COMMUNITY SUPPORT",
+          "body": "Patients who have completed or are enrolled in CAR-T trials provide encouragement and detailed information sharing, reducing uncertainty and increasing confidence among trial-considering peers.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_b",
+            "fc-ln_reddit_2026q1-5-1-1_l",
+            "fc-ln_reddit_2026q1-4-1-1_j"
+          ],
+          "confidence": 0.88
+        },
+        {
+          "title": "TRIALS AVAILABLE LOCALLY OR WITHIN TRAVEL RANGE",
+          "body": "Proximity to study sites dramatically increases trial feasibility; patients report willingness to pursue enrollment when trials are geographically accessible.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-6-1-1_a",
+            "fc-ln_reddit_2026q1-5-1-1_j"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "title": "INCLUSIVE SCREENING FOR VARYING SEVERITY LEVELS",
+          "body": "Study coordinators explicitly encourage enrollment across disease severity spectra, countering patient self-selection bias and expanding eligibility perception.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_h"
+          ],
+          "confidence": 0.8
+        }
+      ],
+      "barriers": [
+        {
+          "title": "STRICT ELIGIBILITY CRITERIA AND COMORBIDITY EXCLUSIONS",
+          "body": "Overlapping diagnoses (lupus + RA, lupus + connective tissue disease) and prior medical history (cancer, clotting disorders, neurological conditions) automatically disqualify otherwise interested candidates, blocking enrollment despite high motivation.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-2-1-1_j",
+            "fc-ln_reddit_2026q1-4-1-1_ah",
+            "fc-ln_reddit_2026q1-4-1-1_aj",
+            "fc-ln_reddit_2026q1-7-1-1_g",
+            "fc-ln_reddit_2026q1-4-1-1_a"
+          ],
+          "confidence": 0.98
+        },
+        {
+          "title": "INSUFFICIENT DISEASE SEVERITY FOR ENROLLMENT",
+          "body": "Patients with moderate lupus or well-controlled disease are deemed ineligible even if treatment-resistant, creating a paradox where only the sickest candidates qualify but many are not sick enough.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_v",
+            "fc-ln_reddit_2026q1-4-1-1_v",
+            "fc-ln_reddit_2026q1-4-1-1_aa",
+            "fc-ln_reddit_2026q1-4-1-1_af"
+          ],
+          "confidence": 0.96
+        },
+        {
+          "title": "EXTENDED TIME COMMITMENT AND WORK LOSS",
+          "body": "Trials require 4–8 weeks or more of lost work time post-infusion, intensive hospital admission, and frequent follow-up visits, creating financial and logistical hardship for working patients without robust caregiver support.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_b",
+            "fc-ln_reddit_2026q1-3-1-1_t",
+            "fc-ln_reddit_2026q1-4-1-1_af"
+          ],
+          "confidence": 0.94
+        },
+        {
+          "title": "GEOGRAPHIC DISTANCE AND TRAVEL BARRIERS",
+          "body": "Trials concentrated at few specialist centers require multi-state travel or relocation; inability to relocate or sustain repeated 4–8 hour trips disqualifies otherwise eligible candidates.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_h",
+            "fc-ln_reddit_2026q1-5-1-1_j",
+            "fc-ln_reddit_2026q1-5-1-1_u"
+          ],
+          "confidence": 0.92
+        },
+        {
+          "title": "UNCOMPENSATED FERTILITY AND FINANCIAL COSTS",
+          "body": "Fertility preservation (chemotherapy-related) is not covered; trials only compensate meals and transportation, leaving patients responsible for significant out-of-pocket medical and logistics costs.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-7-1-1_m",
+            "fc-ln_reddit_2026q1-7-1-1_o"
+          ],
+          "confidence": 0.82
+        },
+        {
+          "title": "INTENSE CONDITIONING REGIMEN AND POST-INFUSION TOXICITY",
+          "body": "Chemotherapy conditioning, potential seizures, cognitive fog, hair loss, and serious post-treatment complications create fear and uncertainty that can override trial motivation despite curative promise.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_f",
+            "fc-ln_reddit_2026q1-3-1-1_b",
+            "fc-ln_reddit_2026q1-8-1-1_g"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "title": "CAREGIVER UNAVAILABILITY DURING RECOVERY",
+          "body": "Single patients or those without family nearby cannot arrange required transportation and care during 6–8 week post-infusion period, making enrollment logistically impossible despite medical eligibility.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-3-1-1_t"
+          ],
+          "confidence": 0.85
+        }
+      ],
+      "mixed": [
+        {
+          "title": "UNCERTAINTY ABOUT ELIGIBILITY DUE TO BORDERLINE COMORBIDITIES",
+          "body": "Patients with mild neuro involvement (intracranial hypertension, hemiplegic migraines, MS family history) are unsure whether their conditions meet exclusion thresholds, creating anxiety and unpredictable screening outcomes.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-6-1-1_a",
+            "fc-ln_reddit_2026q1-4-1-1_aa"
+          ],
+          "confidence": 0.88
+        },
+        {
+          "title": "KNOWLEDGE GAP ON DURABILITY AND LONG-TERM OUTCOMES",
+          "body": "Patients lack clear evidence on how long CAR-T remission lasts in lupus compared to oncology populations, and whether multiple infusions or re-treatment is possible, limiting informed decision-making.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-4-1-1_h",
+            "fc-ln_reddit_2026q1-2-1-1_g"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "title": "AWARENESS GAP: NEED FOR ACTIVE OUTREACH VS. PASSIVE ENROLLMENT",
+          "body": "Passive registration on trial databases is insufficient; patients must actively contact study coordinators and persistently follow up, requiring health literacy and initiative that many lack.",
+          "supporting_fragment_ids": [
+            "fc-ln_reddit_2026q1-5-1-1_j"
+          ],
+          "confidence": 0.75
+        }
+      ]
+    }
+  ]
+}

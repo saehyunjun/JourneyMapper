@@ -11,7 +11,12 @@
  * iteration may re-introduce theme highlighting by drawing from the segment's
  * applied subtheme tags rather than a separate term list.
  */
-import { keywordRuns, type KeywordSpan, type InstanceKeywordTag } from './keywords';
+import {
+	keywordRuns as legacyKeywordRuns,
+	type KeywordMatcher,
+	type KeywordSpan,
+	type InstanceKeywordTag
+} from './keywords';
 
 export type ThemeSpan = { start: number; end: number; themeId: string; themeLabel: string };
 
@@ -28,13 +33,23 @@ export type QuoteRun = { text: string; keyword?: KeywordSpan; theme?: ThemeSpan 
  * `instanceTags` (optional, text-relative offsets) override variant matches at
  * their range so different occurrences of the same surface form can resolve to
  * different clusters.
+ *
+ * `matcher` (optional) plugs in an indication-scoped KeywordMatcher built by
+ * `buildKeywordMatcher(clusters, themes, drugs)`. When omitted, falls back to
+ * the static-lexicon path (legacy / interview side). Used by corpus pages so
+ * highlighting respects the active indication's slice.
  */
-export function quoteRuns(text: string, instanceTags: InstanceKeywordTag[] = []): QuoteRun[] {
+export function quoteRuns(
+	text: string,
+	instanceTags: InstanceKeywordTag[] = [],
+	matcher?: KeywordMatcher
+): QuoteRun[] {
 	if (!text) return [];
 
+	const runner = matcher ? matcher.keywordRuns : legacyKeywordRuns;
 	const kSpans: { start: number; end: number; span: KeywordSpan }[] = [];
 	let offset = 0;
-	for (const run of keywordRuns(text, instanceTags)) {
+	for (const run of runner(text, instanceTags)) {
 		if (run.span) kSpans.push({ start: offset, end: offset + run.text.length, span: run.span });
 		offset += run.text.length;
 	}

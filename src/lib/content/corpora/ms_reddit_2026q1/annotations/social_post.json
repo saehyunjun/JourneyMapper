@@ -1,0 +1,455 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "corpus_id": "ms_reddit_2026q1",
+    "content_source": "social_post",
+    "updated_at": "2026-05-27T04:22:36.586Z",
+    "dimensions": {
+      "segment_tags": {
+        "generator": "scripts/propose-fragment-sentiment.mjs",
+        "model": "claude-opus-4-7",
+        "codebook_schema_version": "2.0",
+        "last_generated_at": "2026-05-27T03:59:31.353Z",
+        "annotated_batches": [
+          "ms_reddit_2026q1-T10-C1",
+          "ms_reddit_2026q1-T11-C1",
+          "ms_reddit_2026q1-T12-C1",
+          "ms_reddit_2026q1-T13-C1",
+          "ms_reddit_2026q1-T14-C1",
+          "ms_reddit_2026q1-T15-C1",
+          "ms_reddit_2026q1-T16-C1",
+          "ms_reddit_2026q1-T17-C1",
+          "ms_reddit_2026q1-T18-C1"
+        ],
+        "fields_populated": [
+          "sentiment_score",
+          "emotions",
+          "confidence",
+          "note",
+          "themes",
+          "subthemes"
+        ],
+        "fields_unpopulated": [
+          "themes",
+          "subthemes",
+          "topics"
+        ],
+        "themes_generator": "scripts/propose-fragment-themes.mjs",
+        "themes_model": "claude-opus-4-7",
+        "themes_codebook_schema_version": "2.0",
+        "themes_last_generated_at": "2026-05-27T04:17:07.979Z",
+        "themes_annotated_batches": [
+          "ms_reddit_2026q1-T10-C1",
+          "ms_reddit_2026q1-T11-C1",
+          "ms_reddit_2026q1-T12-C1",
+          "ms_reddit_2026q1-T13-C1",
+          "ms_reddit_2026q1-T14-C1",
+          "ms_reddit_2026q1-T15-C1",
+          "ms_reddit_2026q1-T16-C1",
+          "ms_reddit_2026q1-T17-C1",
+          "ms_reddit_2026q1-T18-C1"
+        ]
+      },
+      "stages": {
+        "generator": "scripts/propose-fragment-stages.mjs",
+        "model": "claude-opus-4-7",
+        "indication": "multiple_sclerosis",
+        "journey_schema_version": "1.0",
+        "last_generated_at": "2026-05-27T04:22:36.586Z",
+        "annotated_batches": [
+          "ms_reddit_2026q1-T10-C1",
+          "ms_reddit_2026q1-T11-C1",
+          "ms_reddit_2026q1-T12-C1",
+          "ms_reddit_2026q1-T13-C1",
+          "ms_reddit_2026q1-T14-C1",
+          "ms_reddit_2026q1-T15-C1",
+          "ms_reddit_2026q1-T16-C1",
+          "ms_reddit_2026q1-T17-C1",
+          "ms_reddit_2026q1-T18-C1"
+        ]
+      }
+    },
+    "notes": [
+      "Multi-dimensional annotation file. Each fragment may carry multiple dimension keys (stages, segment_tags, ...).",
+      "stages dimension: AI-proposed journey-stage tags, multi-label per fragment. Enum-constrained at generation time.",
+      "Every stages entry is source: ai_proposed, review_status: pending.",
+      "Re-propose with: node scripts/propose-fragment-stages.mjs <corpus> [--source <name>] [--batch <id>] [--force]"
+    ]
+  },
+  "annotations": {
+    "fc-ms_reddit_2026q1-10-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_knowledge_gaps",
+          "treatment_negative_experiences",
+          "treatment_decision_factors"
+        ],
+        "emotions": [
+          "pensiveness",
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Informational tone with cautious note about side effects",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-27T03:57:09.476Z",
+        "themes_confidence": 0.7,
+        "themes_note": "Discusses Car-T as emerging MS treatment, weighing benefits vs neurological side effects; comparison to aHSCT and framing as not-a-cure."
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "acute_complications",
+            "confidence": 0.6
+          },
+          {
+            "stage_id": "post_trial",
+            "step_id": "off_dmt",
+            "confidence": 0.55
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "General framing of CAR-T for MS: awareness, potential off-DMT outcome, and neuro side effects.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-11-1-1_b": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_decision_factors"
+        ],
+        "emotions": [
+          "hope",
+          "optimism",
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-27T04:16:40.060Z",
+        "themes_confidence": 0.5,
+        "themes_note": "Expression of interest in emerging treatment (CAR-T); light on substance but indicates openness/hope about a specific therapy."
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-12-1-1_b": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "treatment"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness",
+          "trial_positive_experiences",
+          "trial_decision_factors",
+          "trial_motivators",
+          "treatment_decision_factors"
+        ],
+        "emotions": [
+          "hope",
+          "trust",
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "Supportive advice with cautious optimism, encouraging aggressive treatment based on positive anecdote.",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-27T04:16:44.636Z",
+        "themes_confidence": 0.8,
+        "themes_note": "Refers to CAR-T as experimental, cites secondhand positive trial experience, encourages enrollment given aggressive disease."
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_risk_benefit_weighing",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "Refers to hearing about a CAR-T trial participant and encourages pursuing it given aggressive disease.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-13-1-1_b": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "admiration",
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "Positive recommendation of podcast",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-27T04:16:48.342Z",
+        "themes_confidence": 0.6,
+        "themes_note": "Sharing a podcast link; no substantive content about treatment, trials, or condition."
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.5,
+        "note": "Podcast reference, likely about CAR-T / trial news given context; minimal substantive content",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-14-1-1_b": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_barriers",
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "annoyance",
+          "trust",
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Mixed: frustration with insurance process, but helpful/supportive tone sharing a money-saving tip.",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-27T04:16:52.125Z",
+        "themes_confidence": 0.9,
+        "themes_note": "Insurance frustration plus tip on affordable generic Tecfidera — barriers and negative experience navigating access."
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "dmt_decision",
+            "step_id": "dmt_initiation",
+            "confidence": 0.6
+          },
+          {
+            "stage_id": "stable_on_dmt",
+            "step_id": "scheduled_dosing",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "Discusses insurance hurdles to starting/accessing DMT and cost-saving options like generic Tecfidera.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-15-1-1_b": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope",
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-27T04:16:56.096Z",
+        "themes_confidence": 0.6,
+        "themes_note": "Bare affirmation/well-wish without substantive content."
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "bare affirmation/well-wishes, no substantive content",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-16-1-1_b": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "treatment_positive_experiences",
+          "treatment_negative_experiences",
+          "treatment_decision_factors",
+          "trial_motivators",
+          "trial_decision_factors",
+          "trial_barriers"
+        ],
+        "emotions": [
+          "interest",
+          "apprehension",
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Analytical weighing of risks/benefits with cautious openness.",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-27T04:17:00.419Z",
+        "themes_confidence": 0.8,
+        "themes_note": "Comparing CAR-T efficacy/safety vs Ocrevus; conditional reasoning about enrolling if free and with adequate follow-up."
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_risk_benefit_weighing",
+            "confidence": 0.9
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.55
+          },
+          {
+            "stage_id": "post_trial",
+            "step_id": "long_term_follow_up",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Discusses CAR-T safety/efficacy weighing and long-term follow-up concerns",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-17-1-1_b": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_barriers",
+          "trial_decision_factors"
+        ],
+        "emotions": [
+          "acceptance",
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.7,
+        "note": "Pragmatic cost-benefit reasoning; mild negative due to 'prohibitive' burden but resigned/accepting tone.",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-27T04:17:04.315Z",
+        "themes_confidence": 0.9,
+        "themes_note": "Time burden cited as prohibitive; conditional logic about when they would enroll (if cancer, not current MS state)."
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "logistical_assessment",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "consent_or_decline",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Declining intensive trial due to time/logistical burden weighed against current MS severity.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-18-1-1_b": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_decision_factors",
+          "treatment_knowledge_gaps"
+        ],
+        "emotions": [
+          "trust",
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Reasoned preference for HSCT due to proven track record; mild caution toward CAR-T.",
+        "source": "ai_proposed",
+        "review_status": "pending",
+        "themes_generator": "propose-fragment-themes@0.1",
+        "themes_generated_at": "2026-05-27T04:17:07.979Z",
+        "themes_confidence": 0.8,
+        "themes_note": "Comparing HSCT vs CAR-T on efficacy/safety; weighing proven track record against theoretical profile."
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_risk_benefit_weighing",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "Comparing HSCT vs CAR-T safety/efficacy — risk-benefit weighing for intensive program",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    }
+  }
+}

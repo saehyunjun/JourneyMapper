@@ -76,6 +76,21 @@
       "id": "ace_inhibitor_or_arb",
       "label": "ACE inhibitor / ARB (renin-angiotensin blocker)",
       "description": "Blocks renin-angiotensin signaling — ACE inhibitors block angiotensin II formation; ARBs block its receptor. Renoprotective via proteinuria reduction."
+    },
+    {
+      "id": "s1p_modulator",
+      "label": "Sphingosine-1-phosphate receptor modulator",
+      "description": "Sequesters lymphocytes in lymph nodes by modulating S1P receptors, preventing CNS infiltration. Includes fingolimod, siponimod, ozanimod, ponesimod."
+    },
+    {
+      "id": "alpha_4_integrin",
+      "label": "Alpha-4 integrin antagonist",
+      "description": "Blocks VLA-4 / alpha-4 integrin on lymphocytes, preventing migration across the blood-brain barrier. Includes natalizumab. Carries PML risk in JCV-positive patients."
+    },
+    {
+      "id": "car_t_autologous",
+      "label": "Autologous CAR T-cell therapy",
+      "description": "Patient-derived T cells engineered ex vivo to express a chimeric antigen receptor (typically anti-CD19 for autoimmune disease), then reinfused after lymphodepleting conditioning. Investigational in lupus, lupus nephritis, MS, myasthenia gravis, and other antibody-mediated autoimmune diseases. Includes KYV-101, CABA-201, Descartes-08."
     }
   ]
 }

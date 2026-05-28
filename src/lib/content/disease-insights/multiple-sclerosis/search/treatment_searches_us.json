@@ -1,0 +1,32 @@
+{
+	"id": "multiple_sclerosis_treatment_searches_us",
+	"type": "search_volume_topics",
+	"indication_id": "multiple_sclerosis",
+	"therapeutic_area_ids": ["neurology", "immunology"],
+	"title": "MS disease-modifying-therapy searches",
+	"subtitle": "Monthly estimated volume, US — DMT brand names + emerging classes",
+	"unit": "monthly_estimated_search_volume",
+	"geography": "US",
+	"time_period": null,
+	"topic_category": "treatments",
+	"source": {
+		"type": "manual_estimate",
+		"notes": "Hand-authored estimates. Ocrevus dominates the MS DMT search landscape post-2017 launch; the older injectable platforms (Copaxone, interferons) are declining but still searched by long-tenure patients."
+	},
+	"dimensions": ["topic"],
+	"measures": ["volume"],
+	"data": [
+		{ "topic": "Ocrevus", "volume": 74000 },
+		{ "topic": "Kesimpta", "volume": 33000 },
+		{ "topic": "Tysabri", "volume": 27000 },
+		{ "topic": "Tecfidera", "volume": 22000 },
+		{ "topic": "Gilenya", "volume": 18000 },
+		{ "topic": "Briumvi", "volume": 12000 },
+		{ "topic": "Aubagio", "volume": 9900 },
+		{ "topic": "Copaxone", "volume": 8100 },
+		{ "topic": "ocrelizumab", "volume": 6600 },
+		{ "topic": "BTK inhibitor MS", "volume": 4400 },
+		{ "topic": "interferon beta", "volume": 3600 },
+		{ "topic": "Mavenclad", "volume": 5400 }
+	]
+}

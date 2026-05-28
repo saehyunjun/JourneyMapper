@@ -7,7 +7,11 @@
  * circles rather than a gradient, so the picker and the transcript chips both
  * stay visually quiet while still conveying which emotion is which.
  */
-import { EMOTION_PICKER, PLUTCHIK_DYADS } from '$lib/journeymapper2/plutchikEmotionsConfig.js';
+import {
+	EMOTION_PICKER,
+	PLUTCHIK_DYADS,
+	PLUTCHIK_EMOTIONS
+} from '$lib/journeymapper2/plutchikEmotionsConfig.js';
 
 type Rgb = { r: number; g: number; b: number };
 
@@ -62,4 +66,97 @@ export function emotionDots(id: string): EmotionDots {
 	const c = intensityShade.get(id);
 	if (c) return { c1: c };
 	return { c1: '#94a3b8' };
+}
+
+const dyadConstituentsMap = new Map<string, { a: string; b: string }>();
+for (const group of Object.values(PLUTCHIK_DYADS) as {
+	label: string;
+	emotion_1: string;
+	emotion_2: string;
+}[][]) {
+	for (const d of group) dyadConstituentsMap.set(d.label, { a: d.emotion_1, b: d.emotion_2 });
+}
+
+/**
+ * For a dyad id, return the two primary-emotion ids it blends. Returns null
+ * for intensity-level ids (which have no constituents) or unknown ids.
+ */
+export function dyadConstituents(id: string): { a: string; b: string } | null {
+	return dyadConstituentsMap.get(id) ?? null;
+}
+
+/** Title-case display label for any emotion id (intensity or dyad). */
+export function emotionLabel(id: string): string {
+	if (!id) return '';
+	return id.charAt(0).toUpperCase() + id.slice(1);
+}
+
+// Intensity-level id → primary Plutchik emotion id (e.g. "apprehension" → "fear").
+// Built once at module load so callers can look up valence/color in O(1).
+type Valence = 'positive' | 'neutral' | 'negative';
+type PrimaryRow = {
+	id: string;
+	color: string;
+	valence: Valence;
+	level_1: string;
+	level_2: string;
+	level_3: string;
+};
+
+const intensityToPrimary = new Map<string, PrimaryRow>();
+for (const p of PLUTCHIK_EMOTIONS as PrimaryRow[]) {
+	intensityToPrimary.set(p.level_1, p);
+	intensityToPrimary.set(p.level_2, p);
+	intensityToPrimary.set(p.level_3, p);
+}
+
+const dyadValenceMap = new Map<string, Valence>();
+const primaryById = new Map(
+	(PLUTCHIK_EMOTIONS as PrimaryRow[]).map((p) => [p.id, p] as const)
+);
+for (const group of Object.values(PLUTCHIK_DYADS) as {
+	label: string;
+	emotion_1: string;
+	emotion_2: string;
+}[][]) {
+	for (const d of group) {
+		const a = primaryById.get(d.emotion_1)?.valence;
+		const b = primaryById.get(d.emotion_2)?.valence;
+		// A dyad inherits its valence from its constituents: matching ones win,
+		// any mismatch (positive+negative, positive+neutral, etc.) reads as
+		// neutral. Reasonable for a one-token chart label; consumers needing
+		// the underlying primaries can still call dyadConstituents().
+		let v: Valence = 'neutral';
+		if (a && b && a === b) v = a;
+		dyadValenceMap.set(d.label, v);
+	}
+}
+
+export type EmotionMeta = {
+	id: string;
+	label: string;
+	/** Solid display color; for dyads this is the first constituent's color. */
+	color: string;
+	valence: Valence;
+};
+
+/**
+ * Resolve any emotion id (primary, intensity level, or dyad) to a flat
+ * { label, color, valence } record suitable for chart legends and bars.
+ * Unknown ids fall back to a neutral slate so a chart never crashes on a
+ * future tag the lexicon hasn't caught up with.
+ */
+export function getEmotionMeta(id: string): EmotionMeta {
+	if (!id) return { id: '', label: '', color: '#94a3b8', valence: 'neutral' };
+	const dots = emotionDots(id);
+	const label = emotionLabel(id);
+	const primary = intensityToPrimary.get(id) ?? primaryById.get(id);
+	if (primary) {
+		return { id, label, color: dots.c1, valence: primary.valence };
+	}
+	const dyadValence = dyadValenceMap.get(id);
+	if (dyadValence) {
+		return { id, label, color: dots.c1, valence: dyadValence };
+	}
+	return { id, label, color: '#94a3b8', valence: 'neutral' };
 }

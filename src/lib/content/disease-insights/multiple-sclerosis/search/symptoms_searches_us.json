@@ -1,0 +1,32 @@
+{
+	"id": "multiple_sclerosis_symptoms_searches_us",
+	"type": "search_volume_topics",
+	"indication_id": "multiple_sclerosis",
+	"therapeutic_area_ids": ["neurology", "immunology"],
+	"title": "MS symptom searches",
+	"subtitle": "Monthly estimated volume, US",
+	"unit": "monthly_estimated_search_volume",
+	"geography": "US",
+	"time_period": null,
+	"topic_category": "symptoms",
+	"source": {
+		"type": "manual_estimate",
+		"notes": "Hand-authored estimates. MS fatigue dominates by an order of magnitude — it's the most disabling symptom for the majority of patients. Sensory complaints (numbness, vision) cluster at pre-diagnosis; spasticity, cognitive, and bladder issues cluster at established-disease."
+	},
+	"dimensions": ["topic"],
+	"measures": ["volume"],
+	"data": [
+		{ "topic": "MS fatigue", "volume": 14000 },
+		{ "topic": "MS numbness", "volume": 6600 },
+		{ "topic": "MS vision problems", "volume": 4400 },
+		{ "topic": "optic neuritis", "volume": 12000 },
+		{ "topic": "MS brain fog", "volume": 5400 },
+		{ "topic": "MS spasticity", "volume": 3600 },
+		{ "topic": "MS balance problems", "volume": 2900 },
+		{ "topic": "foot drop MS", "volume": 2400 },
+		{ "topic": "MS bladder issues", "volume": 3200 },
+		{ "topic": "MS heat sensitivity", "volume": 1800 },
+		{ "topic": "Lhermitte's sign", "volume": 1300 },
+		{ "topic": "MS hug", "volume": 2200 }
+	]
+}

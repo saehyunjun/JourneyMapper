@@ -1,0 +1,837 @@
+{
+  "meta": {
+    "schema_version": "0.1",
+    "corpus_id": "wct_glp1_2025q4",
+    "persona_id": "glp1_older_us_women",
+    "persona_label": "Older US women on GLP-1",
+    "persona_color": "#f43f5e",
+    "journey_indication": "obesity",
+    "journey_schema_version": "1.0",
+    "generated_at": "2026-05-26T20:00:06.404Z",
+    "generator": "scripts/synthesize-journey-map.mjs",
+    "generator_version": "synthesize-journey-map@0.1",
+    "model": "claude-haiku-4-5-20251001",
+    "fragment_count_total": 121,
+    "stage_count": 7,
+    "decision_point_count": 1,
+    "notes": [
+      "Generative journey-map artifact. Stage observations + decision-point panels synthesized from corpus fragments via Claude with JSON-schema-constrained output.",
+      "external_observations[] slot reserved on each step for future world-knowledge integration (PubMed / NCT / disease-insights).",
+      "Re-run with: node scripts/synthesize-journey-map.mjs <corpus> <persona> --force"
+    ],
+    "external_observations_proposer": {
+      "generator": "scripts/propose-external-observations.mjs",
+      "generator_version": "propose-external-observations@0.1",
+      "model": "claude-haiku-4-5-20251001",
+      "generated_at": "2026-05-26T20:30:45.974Z",
+      "datasets_consumed": [
+        "obesity_treatment_searches_us",
+        "obesity_side_effects_searches_us",
+        "obesity_cost_access_searches_us",
+        "obesity_clinical_trials_searches_us",
+        "obesity_lifestyle_searches_us",
+        "obesity_community_engagement",
+        "obesity_clinicaltrials_normalized",
+        "obesity_clinicaltrials_sponsors_observed",
+        "obesity_clinicaltrials_interventions_observed"
+      ],
+      "count": 12
+    }
+  },
+  "stages": [
+    {
+      "stage_id": "lifestyle_attempts",
+      "label": "Lifestyle attempts",
+      "description": "Pre-pharmacotherapy period. Diet cycles, exercise programs, commercial weight-loss programs; building knowledge of what does and doesn't work for the individual; accumulating frustration with weight regain.",
+      "fragment_count": 5,
+      "avg_sentiment": 0.2,
+      "emotion_label": "pensiveness",
+      "stage_summary": "This persona has pursued decades of varied lifestyle interventions—multiple diet cycles and exercise regimens—with initial wins tempered by a long arc of effort and eventual regain that signals the limits of willpower alone.",
+      "drill_down": {
+        "text": "The participant's pride in a 120-pound weight loss sits in tension with the acknowledgment of four decades spent cycling through low-carb, keto, and high-intensity training—a pattern that suggests initial success shadowed by cyclical regain and deepening resignation. This arc from pride-worthy achievement to pensive acceptance of lifestyle constraints sets up the subsequent turn to pharmacotherapy.",
+        "supporting_fragment_ids": [
+          "iv-participant_07_t65_s02",
+          "iv-participant_07_t65_s03",
+          "iv-participant_07_t65_s04"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "diet_cycles",
+          "label": "Diet cycles",
+          "observations": [
+            {
+              "title": "Repeated diet cycles over four decades",
+              "polarity": "mixed",
+              "body": "The participant has tried low-carb, keto, and calorie-based approaches multiple times across a 40-year span, with one instance yielding 120 pounds of weight loss—a success that contrasts with the cyclical pattern suggesting eventual regain.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t65_s02",
+                "iv-participant_07_t65_s03",
+                "iv-participant_07_t65_s04"
+              ],
+              "confidence": 0.95
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "4.5M+ MONTHLY SEARCHES FOR WEIGHT-LOSS TREATMENTS IN US",
+              "body": "This older woman's decades of diet cycling reflect a massive national search volume for treatments, with branded GLP-1s (Ozempic, Mounjaro, Wegovy) dominating, signaling that lifestyle-first approaches have saturated public awareness and pharmacotherapy is now the expected next step.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_treatment_searches_us"
+              ],
+              "confidence": 0.85
+            }
+          ]
+        },
+        {
+          "step_id": "exercise_attempts",
+          "label": "Exercise attempts",
+          "observations": [
+            {
+              "title": "High-intensity exercise paired with diet attempts",
+              "polarity": "negative",
+              "body": "High-intensity interval training was pursued as part of the broader lifestyle strategy, but appears embedded in a pattern of cumulative attempts that have not produced durable results.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t65_s03"
+              ],
+              "confidence": 0.65
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "plateau_acceptance",
+          "label": "Plateau acceptance",
+          "observations": [
+            {
+              "title": "Pride in past success shadows acceptance of limits",
+              "polarity": "mixed",
+              "body": "The participant recalls significant weight loss (120+ pounds) with evident pride, yet the broader narrative of 40 years of cycling through interventions implies internalized recognition that lifestyle alone has not sustained outcomes, marking readiness for medical intervention.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t65_s02",
+                "iv-participant_07_t65_s04"
+              ],
+              "confidence": 0.88
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "14,000/MO SEARCHES FOR 'WEIGHT REGAIN AFTER OZEMPIC'",
+              "body": "The participant's internalized recognition of eventual regain from lifestyle alone maps directly to a large population query about what happens when medication stops, suggesting this barrier to sustained self-maintenance is widely shared and actively informing readiness for pharmacotherapy.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_lifestyle_searches_us"
+              ],
+              "confidence": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage_id": "glp1_initiation",
+      "label": "GLP-1 initiation",
+      "description": "Starting therapy. First doses, titration ladder, early side effects (nausea, fatigue), first changes in appetite/satiety.",
+      "fragment_count": 2,
+      "avg_sentiment": 1,
+      "emotion_label": "trust",
+      "stage_summary": "This older woman enters GLP-1 therapy with low baseline anxiety about side effects, having navigated the initial phase without significant tolerability concerns.",
+      "drill_down": null,
+      "steps": [
+        {
+          "step_id": "first_doses",
+          "label": "First doses",
+          "observations": [],
+          "external_observations": []
+        },
+        {
+          "step_id": "titration",
+          "label": "Titration",
+          "observations": [],
+          "external_observations": []
+        },
+        {
+          "step_id": "initial_side_effects",
+          "label": "Initial side effects",
+          "observations": [
+            {
+              "title": "MINIMAL SIDE EFFECT BURDEN IN EARLY PHASE",
+              "polarity": "positive",
+              "body": "Both fragments reflect this participant's experience of negligible or low side effects during GLP-1 initiation, with expressed confidence that personal risk remains manageable throughout the experience.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t09_s00",
+                "iv-participant_07_t09_s01"
+              ],
+              "confidence": 0.95
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "409,900/MO TOTAL GLP-1 SIDE-EFFECT QUERIES ACROSS US",
+              "body": "This persona's reported minimal side-effect burden contrasts sharply with population-level search behavior; her tolerance suggests she may be at lower risk for titration dropout compared to the broader cohort actively searching for toxicity information.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_side_effects_searches_us"
+              ],
+              "confidence": 0.83
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage_id": "active_weight_loss",
+      "label": "Active weight loss",
+      "description": "Visible weight loss while on therapy. Reshaping of eating habits; social and identity changes; engagement with weight-loss community.",
+      "fragment_count": 5,
+      "avg_sentiment": 1.2,
+      "emotion_label": "joy",
+      "stage_summary": "Older women on GLP-1 experience a cascade of unexpected health improvements beyond weight loss—inflammation reduction, dramatic sleep gains, and physical changes noticed by others—generating surprise and delight in early-stage outcomes.",
+      "drill_down": {
+        "text": "What distinguishes this stage for this persona is the *collateral benefit* narrative: weight loss is the stated intent, but the participant attributes improvements in sleep apnea, inflammation, and even dental grinding to the medication's effects within just three months. This pattern reframes the experience from isolated weight reduction to whole-body restoration, amplifying emotional reward and potentially strengthening long-term adherence motivation.",
+        "supporting_fragment_ids": [
+          "iv-participant_07_t07_s00",
+          "iv-participant_07_t07_s01",
+          "iv-participant_07_t07_s02"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "visible_progress",
+          "label": "Visible progress",
+          "observations": [
+            {
+              "title": "Inflammation and Sleep Apnea Resolve Alongside Weight Loss",
+              "polarity": "positive",
+              "body": "Within three months, the participant reports marked improvements in inflammation and dramatic sleep quality gains, including resolution of sleep apnea symptoms, attributed directly to the medication.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t07_s00",
+                "iv-participant_07_t07_s01"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "title": "External Validation of Physical Changes",
+              "polarity": "positive",
+              "body": "A dentist independently notices visible changes and points out that teeth-grinding has stopped, suggesting the improvements are observable to healthcare providers and not merely subjective perception.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t07_s02",
+                "iv-participant_07_t07_s03"
+              ],
+              "confidence": 0.9
+            },
+            {
+              "title": "Early Wins Create Attribution to Medication",
+              "polarity": "positive",
+              "body": "The participant explicitly ties all improvements—weight, sleep, inflammation, dental changes—to only three months on medication, consolidating a narrative of rapid, multi-system benefit that exceeds initial weight-loss expectations.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t07_s04"
+              ],
+              "confidence": 0.85
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "lifestyle_integration",
+          "label": "Lifestyle integration",
+          "observations": [],
+          "external_observations": []
+        },
+        {
+          "step_id": "identity_shift",
+          "label": "Identity shift",
+          "observations": [],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "weight_stabilization",
+      "label": "Weight stabilization",
+      "description": "The 'maintenance' plateau. Target weight reached or approached; dose may be held; daily routine has stabilized around the medication.",
+      "fragment_count": 5,
+      "avg_sentiment": 0.6,
+      "emotion_label": "anticipation",
+      "stage_summary": "At weight stabilization, this older woman is forward-looking and pragmatic about medication continuity, viewing her current dose not as a final endpoint but as a stepping stone to future therapeutic options.",
+      "drill_down": {
+        "text": "This persona does not frame reaching goal weight as the natural end of treatment. Instead, she anticipates continuing some form of GLP-1 therapy indefinitely, and explicitly expects to evolve her medication choice as science advances—prioritizing injectables for their predictability and remaining alert to next-generation therapies on the horizon. The stabilization phase is thus experienced as a plateau in dose, not a conclusion.",
+        "supporting_fragment_ids": [
+          "iv-participant_07_t05_s00",
+          "iv-participant_07_t11_s01",
+          "iv-participant_07_t71_s00"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "target_approached",
+          "label": "Target approached",
+          "observations": [],
+          "external_observations": []
+        },
+        {
+          "step_id": "dose_continuation_question",
+          "label": "Dose continuation question",
+          "observations": [
+            {
+              "title": "Goal Weight Not Seen as True Endpoint",
+              "polarity": "mixed",
+              "body": "She acknowledges achieving a goal weight but questions whether that represents the right ending, citing additional benefits from GLP-1s that extend beyond weight loss and motivate her expectation of ongoing dosing.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t05_s00"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "title": "Anticipates Medication Evolution Over Time",
+              "polarity": "positive",
+              "body": "She expects to switch medications as science advances, viewing current therapy as temporary rather than permanent and remaining open to better-fitting options in the future.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t11_s01",
+                "iv-participant_07_t71_s00"
+              ],
+              "confidence": 0.9
+            },
+            {
+              "title": "Strong Preference for Injectable Over Oral Formulation",
+              "polarity": "positive",
+              "body": "She values the predictability of injections and would remain with injectables even if an oral option became available, citing concerns about absorption variability with oral medications.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t69_s02"
+              ],
+              "confidence": 0.9
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "daily_normalization",
+          "label": "Daily normalization",
+          "observations": [],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "discontinuation_consideration",
+      "label": "Discontinuation consideration",
+      "description": "Active weighing of staying on vs. coming off. Cost, side-effect fatigue, supply issues, clinical guidance, and personal philosophy all in play.",
+      "fragment_count": 13,
+      "avg_sentiment": -0.15384615384615385,
+      "emotion_label": "apprehension",
+      "stage_summary": "This persona faces a complex discontinuation crossroads: side effects alone are not a stopping reason, but access and cost fears loom large, while unspoken anxiety about what will be lost if treatment stops creates reluctance to exit even as affordability pressures mount.",
+      "drill_down": {
+        "text": "The core tension here is not between tolerability and benefit—side effects are manageable—but between genuine clinical attachment (anticipating lasting benefits beyond weight loss) and existential fear of treatment loss due to access/policy shifts. This older woman is strategically exploring alternatives like compounding, yet carries deep apprehension about variable pharmacy quality and her own vulnerability to coverage changes.",
+        "supporting_fragment_ids": [
+          "iv-participant_07_t05_s00",
+          "iv-participant_07_t09_s04",
+          "iv-participant_07_t23_s02"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "cost_pressure",
+          "label": "Cost pressure",
+          "observations": [
+            {
+              "title": "ACCESSIBILITY IS PRIMARY DISCONTINUATION PRESSURE, NOT CURRENT COST",
+              "polarity": "negative",
+              "body": "She articulates cost as a broad concern affecting many, and notes branded pricing excludes uninsured patients, yet her deeper fear is unpredictable loss of access due to industry/government shifts—a forward-looking anxiety that transcends her current ability to pay.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t09_s03",
+                "iv-participant_07_t09_s04",
+                "iv-participant_07_t25_s01"
+              ],
+              "confidence": 0.92
+            },
+            {
+              "title": "STRATEGIC EXPLORATION OF COMPOUNDING TEMPERED BY QUALITY CONCERNS",
+              "polarity": "mixed",
+              "body": "She is open to compounded tirzepatide as a cost-mitigation pathway and has educated herself on how compounding works, but remains anxious about variable pharmacy quality and sourcing transparency—a qualified acceptance rather than confident pivot.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t23_s00",
+                "iv-participant_07_t23_s01",
+                "iv-participant_07_t23_s02",
+                "iv-participant_07_t23_s03"
+              ],
+              "confidence": 0.88
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "74,000/MO SEARCHES FOR 'OZEMPIC COST' IN US",
+              "body": "This older woman's forward-looking anxiety about access and affordability mirrors a large population segment actively querying out-of-pocket burden; her exploration of compounding reflects a real cost-mitigation pathway that is itself a high-search-volume topic (18,000/mo for compounded semaglutide cost).",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_cost_access_searches_us"
+              ],
+              "confidence": 0.84
+            },
+            {
+              "title": "27,000/MO SEARCH 'OZEMPIC WITHOUT INSURANCE' IN US",
+              "body": "The uninsured pathway is a secondary concern for this insured woman, but the large query volume underscores that access barriers disproportionately affect those without coverage—a population-level inequity that may shape trial enrollment diversity and retention.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_cost_access_searches_us"
+              ],
+              "confidence": 0.78
+            }
+          ]
+        },
+        {
+          "step_id": "side_effect_fatigue",
+          "label": "Side-effect fatigue",
+          "observations": [
+            {
+              "title": "SIDE EFFECTS ALONE NOT A STOPPING REASON",
+              "polarity": "positive",
+              "body": "She explicitly states that side effects would not trigger discontinuation, suggesting either good tolerability or prioritization of benefits over burden.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t09_s02"
+              ],
+              "confidence": 0.75
+            }
+          ],
+          "external_observations": []
+        },
+        {
+          "step_id": "clinical_taper_discussion",
+          "label": "Clinical taper discussion",
+          "observations": [],
+          "external_observations": []
+        }
+      ]
+    },
+    {
+      "stage_id": "post_discontinuation",
+      "label": "Post-discontinuation",
+      "description": "Off therapy. Short-term stability vs. emerging regain; attempted self-maintenance; awareness of the body's drive to return to higher weight.",
+      "fragment_count": 1,
+      "avg_sentiment": -1,
+      "emotion_label": "apprehension",
+      "stage_summary": "Older women anticipate weight regain upon discontinuation despite having reached their goal weight, creating unease about the medication's necessity and their ability to maintain losses independently.",
+      "drill_down": {
+        "text": "A key tension emerges here: participants achieve their weight-loss goal on GLP-1 but recognize that stopping the medication will likely trigger regain, casting doubt on whether the loss is truly 'achieved' or merely drug-dependent. This concern shapes the discontinuation calculus, especially for cost-sensitive older women weighing long-term affordability against the psychological and physical reality of weight rebound.",
+        "supporting_fragment_ids": [
+          "iv-participant_07_t07_s05"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "regain_awareness",
+          "label": "Regain awareness",
+          "observations": [
+            {
+              "title": "Anticipated Weight Regain Despite Goal Achievement",
+              "polarity": "negative",
+              "body": "Even after reaching desired weight on GLP-1, participants expect appetite and weight to return if they discontinue, raising doubt about the sustainability of the loss without ongoing medication.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t07_s05"
+              ],
+              "confidence": 0.95
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "6,600/MO SEARCH 'STOPPING WEGOVY' IN US",
+              "body": "The participant's anticipated regain upon discontinuation is echoed in a distinct search cohort exploring cessation and its consequences; this population is actively seeking information about exit strategies and post-discontinuation outcomes.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_lifestyle_searches_us"
+              ],
+              "confidence": 0.75
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage_id": "trial_consideration",
+      "label": "Clinical-trial consideration",
+      "description": "Hearing about and weighing a clinical trial — in the WCT GLP-1 case, a maintenance trial for people who have discontinued and are at risk of regain. This stage is where the WCT corpus is densest.",
+      "fragment_count": 65,
+      "avg_sentiment": 0.2923076923076923,
+      "emotion_label": "acceptance",
+      "stage_summary": "These older women are thoughtfully open to trial participation, grounded in a civic belief in science, but persistently wrestled with scheduling and travel logistics as near-dealbreakers.",
+      "drill_down": {
+        "text": "The stage reveals a tension between principled openness and practical friction. Participants consistently affirm willingness to contribute to science and understand trial unknowns, yet the same cohort repeatedly surfaces travel, scheduling, and location-flexibility barriers as concrete obstacles. Monthly visits become acceptable once clarified; daily finger sticks or rigid hospital appointments do not. This suggests trial recruitment success hinges less on motivation and more on logistical design that respects this persona's high-travel, work-mobile lifestyle.",
+        "supporting_fragment_ids": [
+          "iv-participant_07_t15_s00",
+          "iv-participant_07_t19_s01",
+          "iv-participant_07_t31_s01",
+          "iv-participant_07_t37_s02",
+          "iv-participant_07_t55_s01"
+        ]
+      },
+      "steps": [
+        {
+          "step_id": "trial_awareness",
+          "label": "Trial awareness",
+          "observations": [
+            {
+              "title": "AWARENESS TIED TO PERSONAL NETWORKS AND MEDICATION EVOLUTION",
+              "polarity": "positive",
+              "body": "Participants learn about trials through friends already enrolled and by tracking generational advances in GLP-1 formulations; this natural exposure creates both familiarity and a forward-looking mindset about future treatment options.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t11_s00",
+                "iv-participant_07_t63_s00",
+                "iv-participant_07_t69_s01",
+                "iv-participant_07_t71_s00"
+              ],
+              "confidence": 0.88
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "10,550/MO TOTAL OBESITY TRIAL SEARCHES; 4,400/MO 'NEW WEIGHT LOSS DRUG 2026'",
+              "body": "This older woman's openness to trying maintenance trials maps to a smaller but active segment seeking novel treatments; the high volume on 'new weight loss drug 2026' suggests forward-looking patient interest in pipeline options, supporting her expectation of future medication evolution.",
+              "citation": "Search volume — US, monthly estimate",
+              "source_dataset_ids": [
+                "obesity_clinical_trials_searches_us"
+              ],
+              "confidence": 0.72
+            },
+            {
+              "title": "1,691 COMPLETED OBESITY TRIALS ON CLINICALTRIALS.GOV; 317 ACTIVELY RECRUITING",
+              "body": "The substantial completed trial portfolio reflects decades of obesity research; the current recruiting pool (317 trials) represents real opportunity for enrollment, with industry-sponsored trials (Novo Nordisk 149 total, Eli Lilly 76 total) dominating the landscape and likely including next-gen GLP-1 maintenance studies.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "obesity_clinicaltrials_normalized",
+                "obesity_clinicaltrials_sponsors_observed"
+              ],
+              "confidence": 0.88
+            },
+            {
+              "title": "118 SEMAGLUTIDE + 114 TIRZEPATIDE TRIALS INDEXED ON CLINICALTRIALS.GOV",
+              "body": "The two most searched and prescribed GLP-1 classes are heavily represented in active trial portfolios, suggesting that maintenance-focused follow-up studies for this persona's medication class are statistically likely to exist and be recruiting.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "obesity_clinicaltrials_interventions_observed"
+              ],
+              "confidence": 0.86
+            }
+          ]
+        },
+        {
+          "step_id": "eligibility_self_assessment",
+          "label": "Eligibility self-assessment",
+          "observations": [],
+          "external_observations": []
+        },
+        {
+          "step_id": "logistics_assessment",
+          "label": "Logistics assessment",
+          "observations": [
+            {
+              "title": "TRAVEL AND WORK COMMITMENTS CONSISTENTLY CITED AS PRIMARY BARRIER",
+              "polarity": "negative",
+              "body": "Multiple participants with active, mobile work lives (frequent travel, uncertain location one week ahead) identify scheduling as the core incompatibility with trial participation, even when they express openness in principle.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t19_s01",
+                "iv-participant_07_t19_s02",
+                "iv-participant_07_t31_s01",
+                "iv-participant_07_t37_s02",
+                "iv-participant_07_t53_s00"
+              ],
+              "confidence": 0.92
+            },
+            {
+              "title": "MONTHLY VISITS BECOME ACCEPTABLE ONCE CLARIFIED, SHIFTING DECISION CALCULUS",
+              "polarity": "mixed",
+              "body": "When participants mistakenly believed visits were weekly, they hesitated; upon learning monthly frequency, several reassess and state the commitment is manageable with one month's planning notice, suggesting clarity and realistic cadence significantly reduce friction.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t55_s00",
+                "iv-participant_07_t55_s01",
+                "iv-participant_07_t55_s02"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "title": "LOCATION PROXIMITY AND REMOTE OPTION PREFERENCES IMPLICIT IN FEEDBACK",
+              "polarity": "mixed",
+              "body": "Participants note that trial sites must be within one hour and weekend availability would increase feasibility; home-based visits or remote monitoring options are not explicitly requested but implied by discomfort with hospital-based administration.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t57_s01",
+                "iv-participant_07_t57_s02",
+                "iv-participant_07_t33_s00",
+                "iv-participant_07_t29_s01"
+              ],
+              "confidence": 0.75
+            },
+            {
+              "title": "NO COST PARTICIPATION CLARIFIED AS POSITIVE AND MOTIVATING",
+              "polarity": "positive",
+              "body": "Participants specifically ask about out-of-pocket cost and express relief and interest when informed that clinical trial medication and research procedures are provided at no cost.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t77_s02",
+                "iv-participant_07_t77_s03"
+              ],
+              "confidence": 0.7
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "185,000 AVG REDDIT MEMBERS + 38,000 AVG PRIVATE FB GROUP SIZE FOR GLP-1 COMMUNITIES",
+              "body": "The persona's integration into a civic-minded trial-discussion network reflects broader community consolidation; private Facebook groups (which skew toward cost pressure and side-effect fatigue) may be where real-world logistics concerns surface, implying trial recruitment should emphasize remote options or local site proximity.",
+              "citation": "Community engagement — Reddit + Facebook patient groups",
+              "source_dataset_ids": [
+                "obesity_community_engagement"
+              ],
+              "confidence": 0.76
+            }
+          ]
+        },
+        {
+          "step_id": "consent_or_decline",
+          "label": "Consent or decline",
+          "observations": [
+            {
+              "title": "PRINCIPLED OPENNESS TO TRIAL PARTICIPATION ROOTED IN SCIENCE BELIEF",
+              "polarity": "positive",
+              "body": "A large majority of participants affirm general willingness to enroll, framed around civic responsibility, belief in scientific progress, and the understanding that 'somebody has to do it'—reflecting mature, altruistic reasoning.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t13_s00",
+                "iv-participant_07_t15_s00",
+                "iv-participant_07_t15_s01",
+                "iv-participant_07_t17_s01",
+                "iv-participant_07_t17_s03",
+                "iv-participant_07_t21_s01",
+                "iv-participant_07_t39_s00",
+                "iv-participant_07_t49_s00"
+              ],
+              "confidence": 0.93
+            },
+            {
+              "title": "INFORMED AWARENESS OF TRIAL UNKNOWNS AND SIDE EFFECT RISKS",
+              "polarity": "positive",
+              "body": "Participants explicitly acknowledge and accept the reality that adverse effects are undefined in early-stage trials and demonstrate appreciation for the scientific rationale behind this uncertainty, though some note others may not grasp this fully.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t43_s00",
+                "iv-participant_07_t43_s02",
+                "iv-participant_07_t43_s04",
+                "iv-participant_07_t73_s01"
+              ],
+              "confidence": 0.81
+            },
+            {
+              "title": "HEALTH EDUCATION AND NUTRITIONAL SUPPORT VALUED MORE THAN VOUCHERS",
+              "polarity": "positive",
+              "body": "Participants prioritize access to nutritionists, meal-planning tools, food-logging apps, and structured health information as trial incentives over gift vouchers or gift cards, viewing education as addressing a real knowledge gap in managing weight and overall health.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t41_s01",
+                "iv-participant_07_t59_s00",
+                "iv-participant_07_t59_s02",
+                "iv-participant_07_t61_s01"
+              ],
+              "confidence": 0.84
+            },
+            {
+              "title": "CONTINUOUS GLUCOSE MONITOR MEASUREMENT ACCEPTED AND ENDORSED",
+              "polarity": "positive",
+              "body": "Participants view CGM devices positively as superior to traditional finger-stick testing and endorse their use in trials once familiarity increases; some note the technology is becoming normalized in the population.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t39_s00",
+                "iv-participant_07_t39_s01",
+                "iv-participant_07_t49_s02",
+                "iv-participant_07_t51_s02"
+              ],
+              "confidence": 0.82
+            },
+            {
+              "title": "TRUST IN CURRENT MEDICATIONS TEMPERS MOTIVATION FOR EARLY-STAGE ALTERNATIVES",
+              "polarity": "mixed",
+              "body": "Some participants express confidence in established injectables they currently use and prefer their predictability over novel oral formulations, meaning baseline medication satisfaction may compete with trial motivation for next-generation options.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t69_s02",
+                "iv-participant_07_t71_s00"
+              ],
+              "confidence": 0.74
+            },
+            {
+              "title": "MEDICAL LIABILITY AND ADVERSE EVENT PROTECTIONS NOT FULLY CLEAR",
+              "polarity": "negative",
+              "body": "At least one participant raises explicit concern about how adverse events discovered in trial (e.g., cardiac issues) would be managed and covered, suggesting liability clarity and medical-care commitments are a decision factor that may need proactive disclosure.",
+              "supporting_fragment_ids": [
+                "iv-participant_07_t73_s01",
+                "iv-participant_07_t75_s01"
+              ],
+              "confidence": 0.68
+            }
+          ],
+          "external_observations": [
+            {
+              "title": "PRIVATE FB GROUPS POST 4.7× MORE MONTHLY THAN PUBLIC REDDIT FOR GLP-1",
+              "body": "This persona's principled openness to trial participation and knowledge-seeking orientation is consistent with the mature discussion tone in smaller, moderated private groups (1,800 posts/mo) compared to larger Reddit communities (4,200 across five subs); private-group recruitment may yield higher-quality informed consent and lower dropout from miscommunication.",
+              "citation": "Community engagement — Reddit + Facebook patient groups",
+              "source_dataset_ids": [
+                "obesity_community_engagement"
+              ],
+              "confidence": 0.74
+            },
+            {
+              "title": "20 CAGRILINTIDE + MULTIPLE NEXT-GEN COMPOUND TRIALS RECRUITING",
+              "body": "The persona's trust in established injectables and openness to next-generation options is validated by the active recruiting landscape for dual-agonist trials; cagrilintide (a calcitonin agonist being paired with GLP-1s) represents the pharmacological evolution she anticipates, with active enrollment opportunity.",
+              "citation": "ClinicalTrials.gov, 2026",
+              "source_dataset_ids": [
+                "obesity_clinicaltrials_interventions_observed"
+              ],
+              "confidence": 0.79
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "decision_panels": [
+    {
+      "stage_id": "trial_consideration",
+      "label": "Clinical-trial consideration",
+      "drivers": [
+        {
+          "title": "BELIEF IN SCIENCE AND CONTRIBUTION TO MEDICAL PROGRESS",
+          "body": "Participant frames trial participation as an ethical responsibility to help advance knowledge, citing personal conviction that 'people have to contribute' and willingness to provide data that helps move things forward.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t15_s00",
+            "iv-participant_07_t15_s01",
+            "iv-participant_07_t17_s03",
+            "iv-participant_07_t17_s04"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "title": "EARLY ACCESS TO NEXT-GENERATION GLP-1 MEDICATIONS",
+          "body": "Participant expresses strong interest in upcoming injectable formulations on the horizon and expects to consider switching medications as science evolves, viewing trial participation as a pathway to access newer treatments.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t11_s00",
+            "iv-participant_07_t11_s01",
+            "iv-participant_07_t63_s00",
+            "iv-participant_07_t71_s00"
+          ],
+          "confidence": 0.92
+        },
+        {
+          "title": "NUTRITION EDUCATION AND HEALTH COACHING SUPPORT",
+          "body": "Participant identifies lack of accessible nutritionist guidance and food-tracking tools as a gap, viewing trial-provided nutrition plans and subscriptions as valuable benefits that empower sustained behavior change.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t41_s01",
+            "iv-participant_07_t41_s02",
+            "iv-participant_07_t59_s00",
+            "iv-participant_07_t59_s01",
+            "iv-participant_07_t59_s02",
+            "iv-participant_07_t61_s01"
+          ],
+          "confidence": 0.94
+        },
+        {
+          "title": "CONTINUOUS GLUCOSE MONITORS FOR OBJECTIVE HEALTH TRACKING",
+          "body": "Participant views CGM provision as 'one of the best tools for measuring what we're doing' and sees it as valuable for understanding medication efficacy and personal metabolic patterns.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t39_s00",
+            "iv-participant_07_t39_s01",
+            "iv-participant_07_t49_s02",
+            "iv-participant_07_t51_s01"
+          ],
+          "confidence": 0.91
+        },
+        {
+          "title": "NO OUT-OF-POCKET MEDICATION AND TRIAL COSTS",
+          "body": "Participant expresses interest in clarifying that clinical trial participation eliminates financial burden, suggesting cost-free access to investigational medication is a motivating factor for enrollment.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t77_s02",
+            "iv-participant_07_t77_s03"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "title": "FLEXIBLE VISIT SCHEDULING AND WEEKEND AVAILABILITY",
+          "body": "Participant indicates that scheduling trial visits on weekends or with advance notice (e.g., monthly visits with one-month planning window) makes participation substantially more feasible.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t33_s00",
+            "iv-participant_07_t55_s01",
+            "iv-participant_07_t55_s02"
+          ],
+          "confidence": 0.89
+        }
+      ],
+      "barriers": [
+        {
+          "title": "HIGH-TRAVEL LIFESTYLE INCOMPATIBLE WITH SITE VISIT REQUIREMENTS",
+          "body": "Participant travels extensively for work and cannot commit to fixed visit schedules or on-site appointments because geographic location is unpredictable, making location-based trial visits a dealbreaker.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t19_s01",
+            "iv-participant_07_t19_s02",
+            "iv-participant_07_t19_s03",
+            "iv-participant_07_t31_s00",
+            "iv-participant_07_t31_s01",
+            "iv-participant_07_t31_s02",
+            "iv-participant_07_t37_s00",
+            "iv-participant_07_t37_s01",
+            "iv-participant_07_t37_s02"
+          ],
+          "confidence": 0.97
+        },
+        {
+          "title": "UNKNOWN ADVERSE EVENTS AND EARLY-STAGE SAFETY PROFILE",
+          "body": "Participant acknowledges trial participation carries risk of undefined side effects and potential adverse reactions not yet documented, raising concern about unquantified safety exposure.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t17_s02",
+            "iv-participant_07_t43_s00",
+            "iv-participant_07_t43_s01",
+            "iv-participant_07_t43_s02",
+            "iv-participant_07_t43_s04",
+            "iv-participant_07_t43_s05",
+            "iv-participant_07_t73_s01"
+          ],
+          "confidence": 0.93
+        },
+        {
+          "title": "INADEQUATE SAFETY NET FOR TRIAL-RELATED ADVERSE EVENTS",
+          "body": "Participant expresses critical concern about medical liability and care if serious adverse reactions (e.g., heart-related issues) occur during trial, questioning how participant health will be managed.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t73_s01"
+          ],
+          "confidence": 0.82
+        },
+        {
+          "title": "INVASIVE BLOOD WORK AND FREQUENT FINGER-STICK BLOOD DRAWS",
+          "body": "Participant expresses strong aversion to repeated blood draws and finger sticks required for trial monitoring, describing the experience as something she 'hates doing' and finds off-putting.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t53_s00"
+          ],
+          "confidence": 0.87
+        },
+        {
+          "title": "INCONVENIENCE OF HOSPITAL OR FIXED-LOCATION VISITS",
+          "body": "Participant voices concern that moving from convenient home injections to hospital-based trial visits would be burdensome and inconvenient, especially given unpredictable travel schedule.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t19_s00",
+            "iv-participant_07_t19_s01"
+          ],
+          "confidence": 0.84
+        }
+      ],
+      "mixed": [
+        {
+          "title": "MUTED UNDERSTANDING OF TRIAL BENEFITS VS. RISKS AMONG POTENTIAL PARTICIPANTS",
+          "body": "Participant observes that others considering trial enrollment may not fully grasp that adverse events are unknown and trial participation carries downside risk, suggesting a knowledge gap in informed trial decision-making.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t43_s04",
+            "iv-participant_07_t43_s05"
+          ],
+          "confidence": 0.86
+        },
+        {
+          "title": "GROWING NORMALIZATION OF WEARABLE MONITORING DEVICES",
+          "body": "Participant notes that CGM acceptance has evolved as devices became commonplace; initial skepticism diminished once people understood function and purpose, suggesting awareness and education shift trial feasibility perceptions.",
+          "supporting_fragment_ids": [
+            "iv-participant_07_t51_s00",
+            "iv-participant_07_t51_s01",
+            "iv-participant_07_t51_s02"
+          ],
+          "confidence": 0.88
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "ln_caregivers_as_researchers",
+  "label": "Caregivers researching CAR-T for lupus",
+  "description": "Caregivers / loved-ones in lupus-CAR-T discussions. In this corpus they show up as community RESEARCHERS more than emotional supporters — surfacing specific trial sponsors (Fate Therapeutics, BMS), NCT registry links, outcome measures (fatigue scores, hospitalization length), comparing chemo regimens across studies. Also includes caregivers narrating their loved-one's lived CAR-T experience (CRS, ICANS, post-infusion proximity requirements). High signal-to-noise ratio for trial-design intel.",
+  "applicable_indications": ["lupus_nephritis"],
+  "filter": {
+    "content_source": ["social_post", "social_comment"],
+    "indications": ["lupus_nephritis"],
+    "speaker_attrs": {
+      "role": { "in": ["caregiver"] }
+    }
+  },
+  "weighting": { "type": "uniform" },
+  "color": "#14b8a6"
+}

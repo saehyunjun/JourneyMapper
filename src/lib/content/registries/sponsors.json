@@ -31,6 +31,36 @@
       "id": "roche",
       "label": "Roche / Genentech",
       "headquarters_country": "CH"
+    },
+    {
+      "id": "biogen",
+      "label": "Biogen",
+      "headquarters_country": "US"
+    },
+    {
+      "id": "novartis",
+      "label": "Novartis",
+      "headquarters_country": "CH"
+    },
+    {
+      "id": "tg_therapeutics",
+      "label": "TG Therapeutics",
+      "headquarters_country": "US"
+    },
+    {
+      "id": "kyverna",
+      "label": "Kyverna Therapeutics",
+      "headquarters_country": "US"
+    },
+    {
+      "id": "cabaletta_bio",
+      "label": "Cabaletta Bio",
+      "headquarters_country": "US"
+    },
+    {
+      "id": "cartesian_therapeutics",
+      "label": "Cartesian Therapeutics",
+      "headquarters_country": "US"
     }
   ]
 }

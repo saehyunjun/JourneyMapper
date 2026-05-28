@@ -1,0 +1,28 @@
+{
+  "id": "lupus_nephritis_side_effects_searches_us",
+  "type": "search_volume_topics",
+  "indication_id": "lupus_nephritis",
+  "therapeutic_area_ids": ["immunology", "nephrology"],
+  "title": "Lupus nephritis treatment side-effect searches",
+  "subtitle": "Monthly estimated volume, US — adverse effects, safety, infection risk",
+  "unit": "monthly_estimated_search_volume",
+  "geography": "US",
+  "time_period": null,
+  "topic_category": "side_effects_safety",
+  "source": {
+    "type": "manual_estimate",
+    "notes": "Hand-authored estimates for demo purposes. Side-effect search is by far the largest category for lupus treatment cohorts — prednisone-related searches in particular dwarf almost every other LN query."
+  },
+  "dimensions": ["topic"],
+  "measures": ["volume"],
+  "data": [
+    { "topic": "prednisone side effects", "volume": 12400 },
+    { "topic": "steroid weight gain", "volume": 3400 },
+    { "topic": "moon face prednisone", "volume": 1100 },
+    { "topic": "hydroxychloroquine side effects", "volume": 2200 },
+    { "topic": "mycophenolate side effects", "volume": 980 },
+    { "topic": "belimumab side effects", "volume": 320 },
+    { "topic": "lupkynis side effects", "volume": 510 },
+    { "topic": "immunosuppressant infection risk", "volume": 280 }
+  ]
+}

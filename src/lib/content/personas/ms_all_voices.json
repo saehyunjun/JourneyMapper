@@ -1,0 +1,12 @@
+{
+  "id": "ms_all_voices",
+  "label": "All MS voices",
+  "description": "Every fragment in MS-scoped corpora, no demographic filter. Baseline view — useful as a 'compared to everyone else' reference when looking at narrower personas. Today this surfaces the ms_reddit_2026q1 social_post + social_comment fragments; widens as interview / video / paper corpora for MS arrive.",
+  "applicable_indications": ["multiple_sclerosis"],
+  "filter": {
+    "content_source": ["social_post", "social_comment", "forum_post", "forum_comment", "interview"],
+    "indications": ["multiple_sclerosis"]
+  },
+  "weighting": { "type": "uniform" },
+  "color": "#64748b"
+}

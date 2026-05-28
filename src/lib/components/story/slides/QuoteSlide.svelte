@@ -3,7 +3,7 @@
 	QuoteSlide — patient-voice slide.
 
 	Wraps the shared KeyQuoteCard (size="lg") so the story deck speaks the
-	same visual language as the Lab Book's key-findings / fingerprint pages.
+	same visual language as the Lab Book's key-findings / personas pages.
 	Eyebrow + card animate in with a short stagger; reduced-motion users get
 	the static frame.
 -->

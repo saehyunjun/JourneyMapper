@@ -13,6 +13,9 @@ import type {
 } from '$lib/content/wctglpdemo-data/executive-summary';
 import type { ThemeFragment } from '$lib/content/wctglpdemo-data/analysis';
 import type { ParticipantProfile } from '$lib/types/participant-profile';
+import type { RadialFlowTheme } from '$lib/charts/glp/RadialImpactFlow.types';
+import type { SearchInterviewAlignment } from '$lib/content/wctglpdemo-data/search-interview-alignment';
+import type { TopicAlignment } from '$lib/content/wctglpdemo-data/topic-alignment';
 
 export type SlideTone = 'positive' | 'negative' | 'divisive' | 'neutral';
 
@@ -222,6 +225,99 @@ export type ClosingSlide = {
 	links: StoryExploreLink[];
 };
 
+/**
+ * Radial impact-flow slide — full-bleed hub-and-cluster map of every theme
+ * and subtheme in the corpus. The slide owns its own hover/select state; the
+ * deck does not open the side drawer from it.
+ */
+export type FlowSlide = {
+	kind: 'flow';
+	eyebrow: string;
+	headline: string;
+	total: number;
+	themes: RadialFlowTheme[];
+};
+
+/** One row in the per-theme sentiment-bar small-multiples. */
+export type ThemeSentimentRow = {
+	themeId: string;
+	themeLabel: string;
+	total: number;
+	counts: Record<SentimentBucket, number>;
+	posPct: number;
+	negPct: number;
+};
+
+/**
+ * Per-theme sentiment small-multiples slide. Surfaces the spread that the
+ * corpus-wide recolor hides — Treatment vs. Clinical Trials vs. Condition
+ * almost always skew differently. One mini stacked-bar per theme.
+ */
+export type ThemeSentimentSlide = {
+	kind: 'theme-sentiment';
+	eyebrow: string;
+	headline: string;
+	body: string;
+	bodyHighlight?: string;
+	rows: ThemeSentimentRow[];
+	detail?: SlideDetail;
+};
+
+/** One top-level burden category with rolled-up tag count. */
+export type BurdenSlice = {
+	id: string;
+	label: string;
+	count: number;
+	/** Share of tagged moments touching this burden (0..1). May sum >1 since one
+	 *  tag can touch multiple burden categories. */
+	share: number;
+};
+
+/**
+ * Burden-category split slide — surfaces the orthogonal axis the theme tree
+ * doesn't show. Horizontal bar list, top-level burden categories ranked.
+ */
+export type BurdenSlide = {
+	kind: 'burden-split';
+	eyebrow: string;
+	headline: string;
+	body: string;
+	bodyHighlight?: string;
+	totalTagged: number;
+	slices: BurdenSlice[];
+};
+
+/**
+ * Search-vs-interview 1:1 slide — treatment-name alignment between the
+ * search-volume signal and the interview-cluster signal. Renders the
+ * existing SearchInterviewAlignment component inside the StorySlide grid.
+ * Only emitted by the assembler when the host page passes alignment data.
+ */
+export type SearchAlignmentSlide = {
+	kind: 'search-alignment';
+	eyebrow: string;
+	headline: string;
+	body: string;
+	bodyHighlight?: string;
+	data: SearchInterviewAlignment;
+};
+
+/**
+ * Topic-level search-vs-interview slide — categorical mirror chart that
+ * rolls both signals up to the canonical topic categories (treatments,
+ * symptoms, side effects, etc.). Companion to SearchAlignmentSlide; the
+ * 1:1 view answers "do specific treatments match," this answers "do the
+ * conversation areas match."
+ */
+export type TopicAlignmentSlide = {
+	kind: 'topic-alignment';
+	eyebrow: string;
+	headline: string;
+	body: string;
+	bodyHighlight?: string;
+	data: TopicAlignment;
+};
+
 export type Slide =
 	| OpeningSlide
 	| ScopeSlide
@@ -229,6 +325,11 @@ export type Slide =
 	| LeanSlide
 	| HeroStatSlide
 	| QuoteSlide
+	| FlowSlide
+	| ThemeSentimentSlide
+	| BurdenSlide
+	| SearchAlignmentSlide
+	| TopicAlignmentSlide
 	| ClosingSlide;
 
 /** The minimal data shape the assembler needs from the host page. */
@@ -255,6 +356,25 @@ export type StoryInput = {
 	findings: Finding[];
 	explore: StoryExploreLink[];
 	profiles: Record<string, ParticipantProfile>;
+	/**
+	 * Optional patient-burden breakdown — top-level burden categories ranked
+	 * by count, rolled up from cluster occurrences via the burden taxonomy.
+	 * When absent or empty, the assembler skips the burden-split slide.
+	 */
+	burdens?: {
+		slices: BurdenSlice[];
+		totalMentions: number;
+	};
+	/**
+	 * Optional search-vs-interview alignment payload — one-to-one + categorical.
+	 * Indication-scoped (currently only lupus_nephritis has both sides wired up).
+	 * The host page populates this when the active indication has the data;
+	 * the assembler emits the two alignment slides if either field is present.
+	 */
+	alignment?: {
+		oneToOne?: SearchInterviewAlignment;
+		topical?: TopicAlignment;
+	};
 	/**
 	 * Optional indication identity — used to seed the generative poster on the
 	 * opening slide so the same indication always cuts the same composition,

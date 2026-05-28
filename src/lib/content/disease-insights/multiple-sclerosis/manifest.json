@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0",
+  "id": "multiple_sclerosis",
+  "slug": "multiple-sclerosis",
+  "label": "Multiple Sclerosis",
+  "abbreviation": "MS",
+  "therapeutic_area_ids": ["neurology", "immunology"],
+  "datasets": [
+    {
+      "id": "multiple_sclerosis_keyword_clusters",
+      "type": "keyword_clusters",
+      "label": "Multiple sclerosis keyword clusters (projected from main lexicon)",
+      "path": "lexicon/keyword_clusters.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    },
+    {
+      "id": "multiple_sclerosis_community_engagement",
+      "type": "community_engagement",
+      "label": "Public vs. private MS patient communities (Reddit + Facebook)",
+      "path": "communities/community_engagement.json",
+      "geography": null,
+      "unit": "count",
+      "source_id": null
+    },
+    {
+      "id": "multiple_sclerosis_treatment_searches_us",
+      "type": "search_volume_topics",
+      "label": "MS disease-modifying-therapy searches (US, monthly)",
+      "path": "search/treatment_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "multiple_sclerosis_symptoms_searches_us",
+      "type": "search_volume_topics",
+      "label": "MS symptom searches (US, monthly)",
+      "path": "search/symptoms_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "multiple_sclerosis_side_effects_searches_us",
+      "type": "search_volume_topics",
+      "label": "MS DMT side-effect searches (US, monthly)",
+      "path": "search/side_effects_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "multiple_sclerosis_clinical_trials_searches_us",
+      "type": "search_volume_topics",
+      "label": "MS clinical-trial searches (US, monthly)",
+      "path": "search/clinical_trials_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "multiple_sclerosis_quality_of_life_searches_us",
+      "type": "search_volume_topics",
+      "label": "MS quality-of-life searches (US, monthly)",
+      "path": "search/quality_of_life_searches_us.json",
+      "geography": "US",
+      "unit": "monthly_estimated_search_volume",
+      "source_id": null
+    },
+    {
+      "id": "multiple_sclerosis_clinicaltrials_raw",
+      "type": "clinical_trials_raw",
+      "label": "ClinicalTrials.gov studies (MS + progressive subtypes, all statuses)",
+      "path": "clinical_trials/raw_studies.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    },
+    {
+      "id": "multiple_sclerosis_clinicaltrials_normalized",
+      "type": "clinical_trials_normalized",
+      "label": "ClinicalTrials.gov normalized studies (MS)",
+      "path": "clinical_trials/studies_normalized.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    },
+    {
+      "id": "multiple_sclerosis_clinicaltrials_sponsors_observed",
+      "type": "clinical_trials_sponsors_observed",
+      "label": "Sponsors observed in MS clinical trials",
+      "path": "clinical_trials/sponsors_observed.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    },
+    {
+      "id": "multiple_sclerosis_clinicaltrials_interventions_observed",
+      "type": "clinical_trials_interventions_observed",
+      "label": "Interventions observed in MS clinical trials",
+      "path": "clinical_trials/interventions_observed.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    }
+  ]
+}
