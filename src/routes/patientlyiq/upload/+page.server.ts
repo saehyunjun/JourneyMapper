@@ -31,6 +31,19 @@ import { getJob, startAutotag, type AutotagJob } from '$lib/server/autotag';
 import { startCorpusAutotag } from '$lib/server/corpus-autotag';
 import { readProfile } from '$lib/server/participant-profiles';
 import { loadDoc, saveDoc } from '$lib/server/kv-store';
+import {
+	listCorpusIds,
+	loadCorpusManifest,
+	saveCorpusManifest,
+	loadCorpusFragments,
+	saveCorpusFragments,
+	loadCorpusAnnotations,
+	saveCorpusAnnotations,
+	loadCorpusIngestConfig,
+	loadJourneySchema,
+	loadFullCorpus,
+	loadCorpusKeywordTags
+} from '$lib/server/corpus-store';
 import type { Annotation } from '$lib/types/segment-tags';
 import type { ParticipantProfile } from '$lib/types/participant-profile';
 import type {
@@ -292,84 +305,32 @@ function readQuestionMap(interviewId: string): { turn_index: number; question_id
 
 type CorpusSummary = { id: string; label: string; indications: string[] };
 
-/** List every corpus by scanning every `corpora/<id>/manifest.json`. Returned to
- *  the page in both modes so the source-switcher can render the picker without
- *  an extra fetch. */
-function listCorpora(): CorpusSummary[] {
-	try {
-		const root = resolve(CORPORA_DIR);
-		if (!existsSync(root)) return [];
-		const out: CorpusSummary[] = [];
-		for (const entry of readdirSync(root)) {
-			const manifestPath = resolve(root, entry, 'manifest.json');
-			if (!existsSync(manifestPath)) continue;
-			try {
-				const m = JSON.parse(readFileSync(manifestPath, 'utf8')) as CorpusManifest;
-				out.push({ id: m.id, label: m.label, indications: m.indications });
-			} catch {
-				// Skip malformed manifests — the analyst can still load the other corpora.
-			}
-		}
-		return out.sort((a, b) => a.id.localeCompare(b.id));
-	} catch {
-		return [];
+/** List every corpus. Reads disk in dev, bundled seeds + KV index in prod —
+ *  see corpus-store.ts. */
+async function listCorpora(): Promise<CorpusSummary[]> {
+	const ids = await listCorpusIds();
+	const out: CorpusSummary[] = [];
+	for (const id of ids) {
+		const m = await loadCorpusManifest(id);
+		if (m) out.push({ id: m.id, label: m.label, indications: m.indications });
 	}
+	return out.sort((a, b) => a.id.localeCompare(b.id));
 }
 
 /** Read one corpus's manifest + every fragment/annotation partition. Returns
- *  null when the manifest is missing or unreadable. */
-function readCorpus(corpusId: string): {
+ *  null when the manifest is missing or unreadable. Thin wrapper over
+ *  corpus-store#loadFullCorpus to keep this file's call sites unchanged. */
+async function readCorpus(corpusId: string): Promise<{
 	manifest: CorpusManifest;
 	fragments: Fragment[];
 	annotations: Record<string, FragmentAnnotation>;
-} | null {
-	const dir = resolve(CORPORA_DIR, corpusId);
-	const manifestPath = resolve(dir, 'manifest.json');
-	if (!existsSync(manifestPath)) return null;
-	let manifest: CorpusManifest;
-	try {
-		manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as CorpusManifest;
-	} catch {
-		return null;
-	}
-
-	const fragments: Fragment[] = [];
-	const annotations: Record<string, FragmentAnnotation> = {};
-	for (const partition of manifest.partitions) {
-		const fragmentsPath = resolve(dir, 'fragments', `${partition.content_source}.json`);
-		if (existsSync(fragmentsPath)) {
-			try {
-				const file = JSON.parse(readFileSync(fragmentsPath, 'utf8')) as { fragments: Fragment[] };
-				fragments.push(...(file.fragments ?? []));
-			} catch {
-				// Skip — the analyst will see the missing-partition gap as fewer cards.
-			}
-		}
-		const annotationsPath = resolve(dir, 'annotations', `${partition.content_source}.json`);
-		if (existsSync(annotationsPath)) {
-			try {
-				const file = JSON.parse(readFileSync(annotationsPath, 'utf8')) as AnnotationFile;
-				for (const [id, ann] of Object.entries(file.annotations ?? {})) {
-					annotations[id] = ann;
-				}
-			} catch {
-				// Skip — fragments still render, just without annotations.
-			}
-		}
-	}
-	return { manifest, fragments, annotations };
+} | null> {
+	return loadFullCorpus(corpusId);
 }
 
-/** Look up the journey schema for an indication. Returns null when no schema
- *  exists yet — the Stages section will degrade to a disabled state. */
-function readJourneySchema(indicationId: string): JourneySchema | null {
-	const path = resolve(JOURNEYS_DIR, `${indicationId}.json`);
-	if (!existsSync(path)) return null;
-	try {
-		return JSON.parse(readFileSync(path, 'utf8')) as JourneySchema;
-	} catch {
-		return null;
-	}
+/** Look up the journey schema for an indication. */
+async function readJourneySchema(indicationId: string): Promise<JourneySchema | null> {
+	return loadJourneySchema(indicationId);
 }
 
 // === Forum-row → fragment projection ========================================
@@ -697,8 +658,11 @@ function projectForumRows({
 
 /** Locate which partition a fragment belongs to. Needed by the save action to
  *  know which annotations/<content_source>.json file to edit. */
-function findFragmentPartition(corpusId: string, fragmentId: string): string | null {
-	const corpus = readCorpus(corpusId);
+async function findFragmentPartition(
+	corpusId: string,
+	fragmentId: string
+): Promise<string | null> {
+	const corpus = await readCorpus(corpusId);
 	if (!corpus) return null;
 	const f = corpus.fragments.find((x) => x.id === fragmentId);
 	return f?.content_source ?? null;
@@ -719,7 +683,7 @@ function findFragmentPartition(corpusId: string, fragmentId: string): string | n
 export const load: PageServerLoad = async ({ url, parent }) => {
 	const { slice } = await parent();
 	const activeIndication = slice.active_indication;
-	const corpora = listCorpora().filter((c) => c.indications.includes(activeIndication));
+	const corpora = (await listCorpora()).filter((c) => c.indications.includes(activeIndication));
 	const sourceParam = url.searchParams.get('source');
 
 	if (sourceParam === 'corpus') {
@@ -733,32 +697,25 @@ export const load: PageServerLoad = async ({ url, parent }) => {
 		const view = (url.searchParams.get('view') === 'participant' ? 'participant' : 'thread') as
 			| 'thread'
 			| 'participant';
-		const loaded = corpusId ? readCorpus(corpusId) : null;
+		const loaded = corpusId ? await readCorpus(corpusId) : null;
 		const indication = loaded?.manifest.indications[0] ?? null;
-		const journey = indication ? readJourneySchema(indication) : null;
+		const journey = indication ? await readJourneySchema(indication) : null;
 		// `starredSegmentIds` and `interviewIds` are kept as empty arrays so the
 		// page.svelte init code can read them without guarding for `undefined`.
 		const { starredFragmentIds } = await readHighlights();
 
 		// Per-fragment keyword tags (corpus-side). Read once per partition; the
-		// page filters per-fragment on demand.
+		// page filters per-fragment on demand. Read via the corpus-store so
+		// staging gets the bundled seeds and dev keeps writing to disk via the
+		// existing fragment-keyword-tags helper.
 		const fragmentKeywordTags: ReturnType<typeof readFragmentKeywordTags> = [];
 		if (loaded) {
 			const partitions = new Set(loaded.fragments.map((f) => f.content_source));
 			for (const partition of partitions) {
-				const path = resolve(
-					CORPORA_DIR,
-					loaded.manifest.id,
-					'keyword_tags',
-					`${partition}.json`
-				);
-				if (!existsSync(path)) continue;
-				try {
-					const file = JSON.parse(readFileSync(path, 'utf8')) as { tags?: typeof fragmentKeywordTags };
-					for (const tag of file.tags ?? []) fragmentKeywordTags.push(tag);
-				} catch {
-					// Skip — bad file shouldn't kill the page load.
-				}
+				const file = (await loadCorpusKeywordTags(loaded.manifest.id, partition)) as
+					| { tags?: typeof fragmentKeywordTags }
+					| null;
+				if (file?.tags) for (const tag of file.tags) fragmentKeywordTags.push(tag);
 			}
 		}
 
@@ -1128,32 +1085,23 @@ export const actions: Actions = {
 			return fail(400, { error: 'payload must be an object.' });
 		}
 
-		const contentSource = findFragmentPartition(corpusId, fragmentId);
+		const contentSource = await findFragmentPartition(corpusId, fragmentId);
 		if (!contentSource) {
 			return fail(404, { error: `Fragment ${fragmentId} not found in corpus ${corpusId}.` });
 		}
 
-		const annPath = resolve(CORPORA_DIR, corpusId, 'annotations', `${contentSource}.json`);
-		if (!existsSync(annPath)) {
-			return fail(404, { error: `Annotations file for ${contentSource} does not exist.` });
-		}
-
-		// Dev-only writeback: corpus annotation files live in the source tree,
-		// which is read-only in prod. Matches the constraint on `parse` /
-		// `saveQuestions` for non-KV files.
-		if (!dev) {
-			return fail(503, {
-				error:
-					'Corpus annotation editing is dev-only — the function filesystem is read-only in prod.'
-			});
-		}
-
-		let file: AnnotationFile;
-		try {
-			file = JSON.parse(readFileSync(annPath, 'utf8')) as AnnotationFile;
-		} catch (err) {
-			return fail(500, { error: `Could not read annotations file: ${(err as Error).message}` });
-		}
+		// Reads via corpus-store (dev → disk, prod → KV with bundled seed
+		// fallback). A null result means the partition hasn't been seeded yet
+		// and Redis has no record — we stub one in below.
+		const file: AnnotationFile = (await loadCorpusAnnotations(corpusId, contentSource)) ?? {
+			meta: {
+				schema_version: '1.0',
+				corpus_id: corpusId,
+				content_source: contentSource as ContentSourceId,
+				updated_at: new Date().toISOString()
+			},
+			annotations: {}
+		};
 		file.annotations ??= {};
 		const record: FragmentAnnotation = file.annotations[fragmentId] ?? {};
 
@@ -1205,15 +1153,9 @@ export const actions: Actions = {
 				return fail(400, { error: 'stages.values must be an array.' });
 			}
 			// Validate against the journey schema for this corpus's primary indication.
-			const manifestPath = resolve(CORPORA_DIR, corpusId, 'manifest.json');
-			let primaryIndication: string | null = null;
-			try {
-				const m = JSON.parse(readFileSync(manifestPath, 'utf8')) as CorpusManifest;
-				primaryIndication = m.indications[0] ?? null;
-			} catch {
-				primaryIndication = null;
-			}
-			const journey = primaryIndication ? readJourneySchema(primaryIndication) : null;
+			const m = await loadCorpusManifest(corpusId);
+			const primaryIndication = m?.indications[0] ?? null;
+			const journey = primaryIndication ? await readJourneySchema(primaryIndication) : null;
 			if (!journey) {
 				return fail(400, { error: 'Journey schema unavailable; cannot validate stage ids.' });
 			}
@@ -1249,14 +1191,15 @@ export const actions: Actions = {
 
 		file.annotations[fragmentId] = record;
 		file.meta.updated_at = nowIso;
-		writeFileSync(annPath, JSON.stringify(file, null, 2) + '\n', 'utf8');
+		await saveCorpusAnnotations(corpusId, contentSource, file);
 
 		// Touch the corpus manifest's updated_at so the picker can show staleness.
 		try {
-			const manifestPath = resolve(CORPORA_DIR, corpusId, 'manifest.json');
-			const m = JSON.parse(readFileSync(manifestPath, 'utf8')) as CorpusManifest;
-			m.updated_at = nowIso;
-			writeFileSync(manifestPath, JSON.stringify(m, null, 2) + '\n', 'utf8');
+			const m = await loadCorpusManifest(corpusId);
+			if (m) {
+				m.updated_at = nowIso;
+				await saveCorpusManifest(corpusId, m);
+			}
 		} catch {
 			// Non-fatal — annotation is saved regardless.
 		}
@@ -1300,7 +1243,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const corpus = readCorpus(corpusId);
+		const corpus = await readCorpus(corpusId);
 		if (!corpus) return fail(404, { error: `Corpus ${corpusId} not found.` });
 
 		const sources = ids.map((id) => corpus.fragments.find((f) => f.id === id)).filter(
@@ -1533,7 +1476,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const corpus = readCorpus(corpusId);
+		const corpus = await readCorpus(corpusId);
 		if (!corpus) return fail(404, { error: `Corpus ${corpusId} not found.` });
 		const fragment = corpus.fragments.find((f) => f.id === fragmentId);
 		if (!fragment) return fail(404, { error: `Fragment ${fragmentId} not found.` });
@@ -1610,11 +1553,9 @@ export const actions: Actions = {
 		const runAutotag = String(fd.get('run_autotag') ?? '') === '1';
 		if (!corpusId) return fail(400, { error: 'Missing corpus_id.' });
 
-		if (!dev) {
-			return fail(503, {
-				error: 'Corpus ingestion is dev-only — the function filesystem is read-only in prod.'
-			});
-		}
+		// Read/write paths go through corpus-store: dev hits disk, prod hits
+		// Redis with bundled seeds as fallback. The action now runs in both
+		// environments — the prior dev-only gate is gone.
 
 		let inputRows: ForumRow[];
 		try {
@@ -1628,18 +1569,11 @@ export const actions: Actions = {
 			return fail(400, { error: 'No rows to add.' });
 		}
 
-		const corpusDir = resolve(CORPORA_DIR, corpusId);
-		const configPath = resolve(corpusDir, 'ingest.config.json');
-		if (!existsSync(configPath)) {
+		const config = await loadCorpusIngestConfig<ForumIngestConfig>(corpusId);
+		if (!config) {
 			return fail(404, {
 				error: `Corpus "${corpusId}" has no ingest.config.json — append-from-UI is only supported for corpora with an ingest config.`
 			});
-		}
-		let config: ForumIngestConfig;
-		try {
-			config = JSON.parse(readFileSync(configPath, 'utf8')) as ForumIngestConfig;
-		} catch (err) {
-			return fail(500, { error: `Could not read ingest.config.json: ${(err as Error).message}` });
 		}
 		if (config.corpus_id && config.corpus_id !== corpusId) {
 			return fail(400, {
@@ -1649,7 +1583,7 @@ export const actions: Actions = {
 
 		// Load the existing corpus so we can append onto its existing fragments
 		// rather than overwriting them.
-		const existing = readCorpus(corpusId);
+		const existing = await readCorpus(corpusId);
 		if (!existing) {
 			return fail(404, { error: `Corpus "${corpusId}" manifest not readable.` });
 		}
@@ -1733,56 +1667,41 @@ export const actions: Actions = {
 			};
 		}
 
-		// Persist per-partition. Upsert by id so a re-run with overlapping rows
-		// updates rather than duplicates.
+		// Persist per-partition via corpus-store. Upsert by id so a re-run with
+		// overlapping rows updates rather than duplicates.
 		const nowIso = new Date().toISOString();
 		const partitionCounts: Record<string, number> = {};
 		for (const [contentSource, fresh] of Object.entries(projection.fragmentsByContentSource)) {
 			if (fresh.length === 0) continue;
-			const partPath = resolve(corpusDir, 'fragments', `${contentSource}.json`);
-			let file: { meta: Record<string, unknown>; fragments: Fragment[] };
-			if (existsSync(partPath)) {
-				try {
-					file = JSON.parse(readFileSync(partPath, 'utf8'));
-				} catch (err) {
-					return fail(500, {
-						error: `Could not read ${contentSource}.json: ${(err as Error).message}`
-					});
-				}
-			} else {
-				mkdirSync(resolve(corpusDir, 'fragments'), { recursive: true });
-				file = {
-					meta: {
-						schema_version: '1.0',
-						corpus_id: corpusId,
-						content_source: contentSource,
-						platform: config.platform,
-						generated_at: nowIso,
-						generator: 'src/routes/patientlyiq/upload addToCorpus action',
-						ingester_version: FORUM_INGEST_INLINE_VERSION,
-						sources: ['ui-paste'],
-						fragment_count: 0,
-						notes: [
-							'Created by analyst paste in /patientlyiq/upload (corpus mode).'
-						]
-					},
-					fragments: []
-				};
-			}
+			const existingPart = await loadCorpusFragments(corpusId, contentSource);
+			const file: { meta: Record<string, unknown>; fragments: Fragment[] } = existingPart ?? {
+				meta: {
+					schema_version: '1.0',
+					corpus_id: corpusId,
+					content_source: contentSource,
+					platform: config.platform,
+					generated_at: nowIso,
+					generator: 'src/routes/patientlyiq/upload addToCorpus action',
+					ingester_version: FORUM_INGEST_INLINE_VERSION,
+					sources: ['ui-paste'],
+					fragment_count: 0,
+					notes: ['Created by analyst paste in /patientlyiq/upload (corpus mode).']
+				},
+				fragments: []
+			};
 			const byId = new Map(file.fragments.map((f) => [f.id, f] as const));
 			for (const f of fresh) byId.set(f.id, f);
 			file.fragments = [...byId.values()].sort((a, b) => a.id.localeCompare(b.id));
 			(file.meta as Record<string, unknown>).fragment_count = file.fragments.length;
 			(file.meta as Record<string, unknown>).updated_at = nowIso;
-			writeFileSync(partPath, JSON.stringify(file, null, 2) + '\n', 'utf8');
+			await saveCorpusFragments(corpusId, contentSource, file);
 			partitionCounts[contentSource] = file.fragments.length;
 
-			// Make sure an annotations file exists alongside the partition — the
-			// retag drawer assumes one is present even when empty.
-			const annPath = resolve(corpusDir, 'annotations', `${contentSource}.json`);
-			if (!existsSync(annPath)) {
-				mkdirSync(resolve(corpusDir, 'annotations'), { recursive: true });
-				const stub: AnnotationFile = {
+			// Make sure an annotations doc exists for the partition — the retag
+			// drawer assumes one is present even when empty.
+			const annExisting = await loadCorpusAnnotations(corpusId, contentSource);
+			if (!annExisting) {
+				await saveCorpusAnnotations(corpusId, contentSource, {
 					meta: {
 						schema_version: '1.0',
 						corpus_id: corpusId,
@@ -1790,21 +1709,13 @@ export const actions: Actions = {
 						updated_at: nowIso
 					},
 					annotations: {}
-				};
-				writeFileSync(annPath, JSON.stringify(stub, null, 2) + '\n', 'utf8');
+				});
 			}
 		}
 
 		// Refresh the manifest partition list — keep existing partition entries
-		// that weren't touched (e.g. a partition we didn't append to), update or
-		// add the ones we wrote.
-		const manifestPath = resolve(corpusDir, 'manifest.json');
-		let manifest: CorpusManifest;
-		try {
-			manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as CorpusManifest;
-		} catch (err) {
-			return fail(500, { error: `Could not read manifest.json: ${(err as Error).message}` });
-		}
+		// that weren't touched, update or add the ones we wrote.
+		const manifest = (await loadCorpusManifest(corpusId)) as CorpusManifest;
 		const partitionsById = new Map(manifest.partitions.map((p) => [p.content_source, p]));
 		for (const [contentSource, count] of Object.entries(partitionCounts)) {
 			partitionsById.set(contentSource as ContentSourceId, {
@@ -1816,18 +1727,24 @@ export const actions: Actions = {
 		}
 		manifest.partitions = [...partitionsById.values()];
 		manifest.updated_at = nowIso;
-		writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n', 'utf8');
+		await saveCorpusManifest(corpusId, manifest);
 
-		// Kick off the AI tagging chain in the background if the analyst
-		// opted in. The propose-fragment-* scripts self-target only batches
-		// whose fragments lack a *_generator marker, so they naturally tag
-		// only the new ones we just wrote.
+		// Kick off the AI tagging chain if the analyst opted in. The
+		// propose-fragment-* steps self-target only batches whose fragments
+		// lack a *_generator marker, so they naturally tag only the new ones
+		// we just wrote.
+		//
+		// In dev the chain runs as background spawns; we return immediately
+		// and the page polls /patientlyiq/autotag-corpus. In prod we await
+		// the chain so the serverless function instance stays alive until it
+		// finishes — same pattern as the interview `parse` action's autotag.
 		let autotagStarted = false;
 		let autotagError: string | null = null;
 		if (runAutotag) {
 			try {
-				const { started } = startCorpusAutotag(corpusId);
+				const { started, completion } = await startCorpusAutotag(corpusId);
 				autotagStarted = started;
+				if (!dev) await completion;
 			} catch (err) {
 				autotagError = (err as Error).message;
 			}
@@ -1875,7 +1792,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const corpus = readCorpus(corpusId);
+		const corpus = await readCorpus(corpusId);
 		if (!corpus) return fail(404, { error: `Corpus ${corpusId} not found.` });
 		const fragment = corpus.fragments.find((f) => f.id === fragmentId);
 		if (!fragment) return fail(404, { error: `Fragment ${fragmentId} not found.` });

@@ -1,24 +1,24 @@
 /**
- * Corpus autotag jobs — run the AI tagging pipeline (themes, sentiment,
- * stages) for fragments freshly added to a corpus via the UI.
+ * Corpus autotag jobs — themes / sentiment / stages over a corpus's
+ * fragments.
  *
- * Dev-only: spawns the standalone propose-fragment-*.mjs scripts as
- * background processes. The scripts self-target only batches whose
- * fragments lack a themes_generator / sentiment_generator marker, so
- * re-running over a corpus that already has tags only processes the new
- * fragments. Job state lives in an in-process map keyed by corpus id; the
- * upload page reads it via /patientlyiq/upload's load() to render a status
- * banner.
+ * Two execution paths, mirroring the interview-side autotag.ts:
+ *  - Dev: spawn the standalone propose-fragment-*.mjs scripts as background
+ *    processes. Job state lives in an in-process map; the upload page polls
+ *    /patientlyiq/autotag-corpus until done.
+ *  - Prod: call the inlined TypeScript pipeline directly (no child processes
+ *    — Vercel serverless can't spawn). Job state lives in Redis so different
+ *    function instances handling start / poll requests see the same state.
  *
- * Prod is not supported (the parallel inline TS pipeline for fragment
- * proposers doesn't exist yet, and `addToCorpus` itself is dev-only). A
- * future port to inline TS would mirror the autotag-pipeline.ts shape used
- * by the interview side.
- *
- * Requires ANTHROPIC_API_KEY (the scripts auto-load .env).
+ * Requires ANTHROPIC_API_KEY. In prod the API key comes from the Vercel
+ * project environment; REDIS_URL must also be set so job state persists
+ * across function instances.
  */
 import { spawn } from 'node:child_process';
 import { dev } from '$app/environment';
+import { createClient, type RedisClientType } from 'redis';
+import { env } from '$env/dynamic/private';
+import { runCorpusAutotagChain } from './corpus-autotag-pipeline';
 
 export type CorpusAutotagState = 'running' | 'done' | 'error';
 
@@ -31,14 +31,82 @@ export type CorpusAutotagJob = {
 	finishedAt?: number;
 };
 
-// One job per corpus at a time. Restarting while a job is running is a no-op
-// (the existing job is returned); the analyst should wait for the current
-// chain to finish before kicking off another.
-const jobs = new Map<string, CorpusAutotagJob>();
+// --- Job-state persistence ------------------------------------------------
 
-const STEPS: { script: string; label: string }[] = [
+const devJobs = new Map<string, CorpusAutotagJob>();
+
+let client: RedisClientType | null = null;
+let connecting: Promise<RedisClientType> | null = null;
+
+async function kv(): Promise<RedisClientType | null> {
+	const url = env.REDIS_URL;
+	if (!url) return null;
+	if (client?.isOpen) return client;
+	if (connecting) return connecting;
+	const c = createClient({ url }) as RedisClientType;
+	c.on('error', (err) => console.error('[corpus-autotag:redis] client error:', err));
+	connecting = c
+		.connect()
+		.then(() => {
+			client = c;
+			return c;
+		})
+		.catch((err) => {
+			connecting = null;
+			console.error('[corpus-autotag:redis] connect failed:', err);
+			throw err;
+		});
+	return connecting;
+}
+
+const jobKey = (corpusId: string) => `corpus:autotag:job:${corpusId}`;
+
+async function loadJob(corpusId: string): Promise<CorpusAutotagJob | null> {
+	if (dev) return devJobs.get(corpusId) ?? null;
+	let r: RedisClientType | null;
+	try {
+		r = await kv();
+	} catch {
+		return null;
+	}
+	if (!r) return null;
+	try {
+		const raw = await r.get(jobKey(corpusId));
+		return raw ? (JSON.parse(raw) as CorpusAutotagJob) : null;
+	} catch (e) {
+		console.error('[corpus-autotag] job read failed:', e);
+		return null;
+	}
+}
+
+async function saveJob(job: CorpusAutotagJob): Promise<void> {
+	if (dev) {
+		devJobs.set(job.corpusId, { ...job });
+		return;
+	}
+	let r: RedisClientType | null;
+	try {
+		r = await kv();
+	} catch {
+		return;
+	}
+	if (!r) return; // Without Redis the page-load fallback shows no progress.
+	try {
+		// Keep finished jobs for a day so a late page-load still sees the result.
+		await r.set(jobKey(job.corpusId), JSON.stringify(job), { EX: 60 * 60 * 24 });
+	} catch (e) {
+		console.error('[corpus-autotag] job write failed:', e);
+	}
+}
+
+// --- Dev: spawn the .mjs chain --------------------------------------------
+
+const DEV_STEPS: { script: string; label: string }[] = [
 	{ script: 'scripts/propose-fragment-themes.mjs', label: 'Proposing themes' },
-	{ script: 'scripts/propose-fragment-sentiment.mjs', label: 'Proposing sentiment + emotions' },
+	{
+		script: 'scripts/propose-fragment-sentiment.mjs',
+		label: 'Proposing sentiment + emotions'
+	},
 	{ script: 'scripts/propose-fragment-stages.mjs', label: 'Proposing journey stages' }
 ];
 
@@ -74,44 +142,60 @@ function withStepContext(label: string, err: unknown): string {
 	return `[${label}] Autotagging failed.`;
 }
 
-async function runChain(job: CorpusAutotagJob): Promise<void> {
-	for (const step of STEPS) {
+async function runDevChain(job: CorpusAutotagJob): Promise<void> {
+	for (const step of DEV_STEPS) {
 		job.step = step.label;
-		jobs.set(job.corpusId, { ...job });
+		await saveJob(job);
 		try {
 			await runScript(step.script, [job.corpusId]);
 		} catch (e) {
 			job.state = 'error';
 			job.error = withStepContext(step.label, e);
 			job.finishedAt = Date.now();
-			jobs.set(job.corpusId, { ...job });
+			await saveJob(job);
 			return;
 		}
 	}
 	job.state = 'done';
 	job.step = 'Done';
 	job.finishedAt = Date.now();
-	jobs.set(job.corpusId, { ...job });
+	await saveJob(job);
 }
 
-/**
- * Start (or restart) corpus autotagging. Returns the running job
- * immediately. If a job is already in flight for this corpus, the existing
- * job is returned without restarting — the analyst should wait. Fire-and-
- * forget; Node's event loop keeps the dev server alive.
- */
-export function startCorpusAutotag(corpusId: string): {
-	job: CorpusAutotagJob;
-	started: boolean;
-} {
-	if (!dev) {
-		throw new Error(
-			'Corpus autotagging is dev-only — the prod path has no inlined TS pipeline yet.'
-		);
+// --- Prod: inline TS chain via corpus-autotag-pipeline --------------------
+
+async function runProdChain(job: CorpusAutotagJob): Promise<void> {
+	try {
+		await runCorpusAutotagChain(job.corpusId, async (label) => {
+			job.step = label;
+			await saveJob(job);
+		});
+	} catch (e) {
+		job.state = 'error';
+		job.error = withStepContext(job.step, e);
+		job.finishedAt = Date.now();
+		await saveJob(job);
+		return;
 	}
-	const existing = jobs.get(corpusId);
+	job.state = 'done';
+	job.step = 'Done';
+	job.finishedAt = Date.now();
+	await saveJob(job);
+}
+
+/** Start (or restart) corpus autotagging.
+ *
+ * Returns the running job immediately, plus a `completion` promise the caller
+ * can await — in prod the POST handler awaits it so the serverless function
+ * instance stays alive until the chain finishes (matches the interview
+ * upload flow). If a job is already running, the existing job is returned
+ * and `completion` resolves immediately. */
+export async function startCorpusAutotag(
+	corpusId: string
+): Promise<{ job: CorpusAutotagJob; started: boolean; completion: Promise<void> }> {
+	const existing = await loadJob(corpusId);
 	if (existing && existing.state === 'running') {
-		return { job: existing, started: false };
+		return { job: existing, started: false, completion: Promise.resolve() };
 	}
 	const job: CorpusAutotagJob = {
 		corpusId,
@@ -119,11 +203,17 @@ export function startCorpusAutotag(corpusId: string): {
 		step: 'Starting…',
 		startedAt: Date.now()
 	};
-	jobs.set(corpusId, job);
-	void runChain(job).catch(() => {});
-	return { job, started: true };
+	await saveJob(job);
+	const completion = dev ? runDevChain(job) : runProdChain(job);
+	if (dev) {
+		// Fire-and-forget in dev — Node's event loop keeps the dev server alive.
+		void completion.catch(() => {});
+	}
+	return { job, started: true, completion };
 }
 
-export function getCorpusAutotagJob(corpusId: string): CorpusAutotagJob | null {
-	return jobs.get(corpusId) ?? null;
+export async function getCorpusAutotagJob(
+	corpusId: string
+): Promise<CorpusAutotagJob | null> {
+	return loadJob(corpusId);
 }
