@@ -222,19 +222,36 @@
 			.slice(0, 4);
 	});
 
-	// ---- Focused-country zoom -------------------------------------------
-	// When a country bubble is clicked, the map transforms to fit that country
-	// and switches from country-aggregate bubbles to per-site bubbles.
+	// ---- Focused-country / focused-cluster zoom -------------------------
+	// Three zoom levels:
+	//   - world view (no focus): country-aggregate bubbles
+	//   - country view (focusedCountryName): ~10km-clustered site bubbles
+	//   - cluster view (focusedClusterKey): re-cluster the parent cluster's
+	//     sites at ~1km so a dense metro splits into its individual sites.
+	// Drawer only opens at the deepest level (clicking a fine-grained site).
 	let focusedCountryName = $state<string | null>(null);
+	let focusedClusterKey = $state<string | null>(null);
 
 	function focusCountry(name: string) {
 		focusedCountryName = name;
+		focusedClusterKey = null;
 		hoverName = null;
 		hoverSiteKey = null;
 		selectedSiteKey = null;
 	}
 	function unfocus() {
 		focusedCountryName = null;
+		focusedClusterKey = null;
+		hoverSiteKey = null;
+		selectedSiteKey = null;
+	}
+	function focusCluster(key: string) {
+		focusedClusterKey = key;
+		hoverSiteKey = null;
+		selectedSiteKey = null;
+	}
+	function unfocusCluster() {
+		focusedClusterKey = null;
 		hoverSiteKey = null;
 		selectedSiteKey = null;
 	}
@@ -245,6 +262,34 @@
 	});
 
 	const mapView = $derived.by(() => {
+		// Cluster zoom: fit the fine sub-clusters in SVG space (computed below in
+		// fineSiteBubbles). A single point gets padded to a usable box so it still
+		// lands visibly on the map.
+		if (focusedClusterKey && fineSiteBubbles.length > 0) {
+			let x0 = Infinity,
+				y0 = Infinity,
+				x1 = -Infinity,
+				y1 = -Infinity;
+			for (const s of fineSiteBubbles) {
+				if (s.cx < x0) x0 = s.cx;
+				if (s.cy < y0) y0 = s.cy;
+				if (s.cx > x1) x1 = s.cx;
+				if (s.cy > y1) y1 = s.cy;
+			}
+			const w = Math.max(x1 - x0, 0);
+			const h = Math.max(y1 - y0, 0);
+			const pad = Math.max(w, h) * 0.5 + 14;
+			x0 -= pad;
+			y0 -= pad;
+			x1 += pad;
+			y1 += pad;
+			const bw = x1 - x0;
+			const bh = y1 - y0;
+			const scale = Math.min(VB_W / bw, VB_H / bh);
+			const cx = (x0 + x1) / 2;
+			const cy = (y0 + y1) / 2;
+			return { tx: VB_W / 2 - cx * scale, ty: VB_H / 2 - cy * scale, scale };
+		}
 		if (!focusedFeature) return { tx: 0, ty: 0, scale: 1 };
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const bounds = path.bounds(focusedFeature as any) as [[number, number], [number, number]];
@@ -310,8 +355,58 @@
 		return [...m.values()].sort((a, b) => b.trials - a.trials);
 	});
 
+	// Fine-grained sub-clusters: when a country-level cluster is focused, re-aggregate
+	// just that cluster's sites at ~1km precision so a dense metro splits into
+	// individual sites. Same shape as SiteAgg, so we can reuse hover/select logic.
+	const fineSiteBubbles = $derived.by<SiteAgg[]>(() => {
+		if (!focusedCountryName || !focusedClusterKey) return [];
+		const parentKey = focusedClusterKey;
+		const FINE = 100; // 0.01° ≈ 1km
+		const m = new Map<string, SiteAgg>();
+		const seenPerCluster = new Map<string, Set<string>>();
+		for (const t of filtered) {
+			if (!t.countries.includes(focusedCountryName)) continue;
+			for (const s of t.sites) {
+				if (s.country !== focusedCountryName) continue;
+				const parentSiteKey = `${Math.round(s.lat * 10) / 10},${Math.round(s.lon * 10) / 10}`;
+				if (parentSiteKey !== parentKey) continue;
+				const key = `${Math.round(s.lat * FINE) / FINE},${Math.round(s.lon * FINE) / FINE}`;
+				let agg = m.get(key);
+				if (!agg) {
+					const xy = projection([s.lon, s.lat]);
+					if (!xy) continue;
+					agg = { key, cx: xy[0], cy: xy[1], trials: 0, cities: [], facilities: [], trialIds: [] };
+					m.set(key, agg);
+					seenPerCluster.set(key, new Set());
+				}
+				const seen = seenPerCluster.get(key)!;
+				if (!seen.has(t.id)) {
+					seen.add(t.id);
+					agg.trials += 1;
+					agg.trialIds.push(t.id);
+				}
+				if (s.city && !agg.cities.includes(s.city) && agg.cities.length < 4) agg.cities.push(s.city);
+				if (s.facility && !agg.facilities.includes(s.facility) && agg.facilities.length < 4)
+					agg.facilities.push(s.facility);
+			}
+		}
+		return [...m.values()].sort((a, b) => b.trials - a.trials);
+	});
+
+	// The bubbles actually drawn at the current zoom level.
+	const visibleSiteBubbles = $derived(focusedClusterKey ? fineSiteBubbles : siteBubbles);
+
+	// If a filter change empties the focused cluster, fall back to country view
+	// so the user isn't stranded on a blank zoom.
+	$effect(() => {
+		if (focusedClusterKey && fineSiteBubbles.length === 0) {
+			focusedClusterKey = null;
+			selectedSiteKey = null;
+		}
+	});
+
 	const siteR = $derived.by(() => {
-		const max = siteBubbles[0]?.trials ?? 1;
+		const max = visibleSiteBubbles[0]?.trials ?? 1;
 		return scaleSqrt()
 			.domain([0, Math.max(max, 1)])
 			.range([0, 12]);
@@ -320,14 +415,14 @@
 	// Site hover state
 	let hoverSiteKey = $state<string | null>(null);
 	const hoveredSite = $derived(
-		hoverSiteKey ? siteBubbles.find((s) => s.key === hoverSiteKey) ?? null : null
+		hoverSiteKey ? visibleSiteBubbles.find((s) => s.key === hoverSiteKey) ?? null : null
 	);
 
 	// Site-click drawer state. Selecting a site shows a list of its trials in a
 	// right-side drawer that overlays the map. Cleared when unfocusing the country.
 	let selectedSiteKey = $state<string | null>(null);
 	const selectedSite = $derived(
-		selectedSiteKey ? siteBubbles.find((s) => s.key === selectedSiteKey) ?? null : null
+		selectedSiteKey ? visibleSiteBubbles.find((s) => s.key === selectedSiteKey) ?? null : null
 	);
 	const selectedSiteTrials = $derived.by<TrialRow[]>(() => {
 		if (!selectedSite) return [];
@@ -365,12 +460,14 @@
 		return (cy * mapView.scale + mapView.ty) / VB_H;
 	}
 
-	// Esc closes the drawer first; a second Esc unfocuses the country.
+	// Esc cascades up: drawer → cluster focus → country focus → world.
 	$effect(() => {
 		function onKey(e: KeyboardEvent) {
 			if (e.key !== 'Escape') return;
 			if (selectedSiteKey !== null) {
 				selectedSiteKey = null;
+			} else if (focusedClusterKey !== null) {
+				unfocusCluster();
 			} else if (focusedCountryName !== null) {
 				unfocus();
 			}
