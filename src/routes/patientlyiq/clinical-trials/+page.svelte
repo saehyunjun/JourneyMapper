@@ -355,6 +355,11 @@
 		return [...m.values()].sort((a, b) => b.trials - a.trials);
 	});
 
+	// The country-level cluster the user drilled into (used by the breadcrumb label).
+	const focusedCluster = $derived(
+		focusedClusterKey ? siteBubbles.find((s) => s.key === focusedClusterKey) ?? null : null
+	);
+
 	// Fine-grained sub-clusters: when a country-level cluster is focused, re-aggregate
 	// just that cluster's sites at ~1km precision so a dense metro splits into
 	// individual sites. Same shape as SiteAgg, so we can reuse hover/select logic.
@@ -748,10 +753,13 @@
 									{/each}
 								</g>
 							{:else}
-								<!-- Site bubbles (country view); radii inverse-scaled so they stay visually consistent. -->
+								<!-- Site bubbles. Country view = ~10km clusters (click zooms in).
+								     Cluster view = ~1km sub-clusters (click opens drawer).
+								     Radii inverse-scaled so they stay visually consistent across zoom. -->
 								<g class="sites">
-									{#each siteBubbles as s (s.key)}
+									{#each visibleSiteBubbles as s (s.key)}
 										{@const isSelected = selectedSiteKey === s.key}
+										{@const isClusterFocused = focusedClusterKey !== null}
 										<circle
 											cx={s.cx}
 											cy={s.cy}
@@ -767,21 +775,24 @@
 											class="cursor-pointer"
 											onmouseenter={() => (hoverSiteKey = s.key)}
 											onmouseleave={() => (hoverSiteKey = null)}
-											onclick={() => (selectedSiteKey = s.key)}
+											onclick={() =>
+												isClusterFocused ? (selectedSiteKey = s.key) : focusCluster(s.key)}
 											tabindex="0"
 											onfocus={() => (hoverSiteKey = s.key)}
 											onblur={() => (hoverSiteKey = null)}
 											onkeydown={(e) => {
 												if (e.key === 'Enter' || e.key === ' ') {
 													e.preventDefault();
-													selectedSiteKey = s.key;
+													if (isClusterFocused) selectedSiteKey = s.key;
+													else focusCluster(s.key);
 												}
 											}}
 										>
 											<title
-												>{s.cities[0] ?? s.facilities[0] ?? 'Site'}: {s.trials} trial{s.trials === 1
+												>{s.cities[0] ?? s.facilities[0] ?? 'Site'}: {s.trials} trial{s.trials ===
+												1
 													? ''
-													: 's'} — click for details</title
+													: 's'} — {isClusterFocused ? 'click for details' : 'click to zoom in'}</title
 											>
 										</circle>
 									{/each}
@@ -790,18 +801,42 @@
 						</g>
 					</svg>
 
-					<!-- Back-to-world button (visible when focused) -->
+					<!-- Breadcrumbs (visible when focused): World / Country / Cluster -->
 					{#if focusedCountryName}
-						<button
-							type="button"
-							onclick={unfocus}
-							class="absolute left-3 top-3 z-10 flex items-center gap-1 rounded-md border border-(--panel-mid) bg-(--paper) px-2.5 py-1 text-xs text-(--ink) shadow-sm hover:bg-(--panel)"
-							title="Back to world view (Esc)"
+						<div
+							class="absolute left-3 top-3 z-10 flex items-center gap-1 rounded-md border border-(--panel-mid) bg-(--paper) px-1.5 py-1 text-xs text-(--ink) shadow-sm"
 						>
-							<span aria-hidden="true">←</span>
-							<span class="font-medium">{focusedCountryName}</span>
-							<span class="ml-1 text-(--gray)">· {siteBubbles.length} sites</span>
-						</button>
+							<button
+								type="button"
+								onclick={unfocus}
+								class="flex items-center gap-1 rounded px-1.5 py-0.5 hover:bg-(--panel)"
+								title="Back to world view"
+							>
+								<span aria-hidden="true">←</span>
+								<span>World</span>
+							</button>
+							<span class="text-(--gray)" aria-hidden="true">/</span>
+							{#if focusedClusterKey}
+								<button
+									type="button"
+									onclick={unfocusCluster}
+									class="rounded px-1.5 py-0.5 font-medium hover:bg-(--panel)"
+									title="Back to country view"
+								>
+									{focusedCountryName}
+								</button>
+								<span class="text-(--gray)" aria-hidden="true">/</span>
+								<span class="px-1.5 py-0.5 font-medium">
+									{focusedCluster?.cities[0] ?? 'Cluster'}
+									<span class="ml-1 text-(--gray)">· {fineSiteBubbles.length} site{fineSiteBubbles.length === 1 ? '' : 's'}</span>
+								</span>
+							{:else}
+								<span class="px-1.5 py-0.5 font-medium">
+									{focusedCountryName}
+									<span class="ml-1 text-(--gray)">· {siteBubbles.length} cluster{siteBubbles.length === 1 ? '' : 's'}</span>
+								</span>
+							{/if}
+						</div>
 					{/if}
 
 					<!-- Site drawer (opens when a site bubble is clicked) -->
