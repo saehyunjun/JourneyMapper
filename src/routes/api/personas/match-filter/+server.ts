@@ -23,7 +23,7 @@
  *     cross-indication matches; that's a feature for cross-corpus personas.
  */
 import { json, error } from '@sveltejs/kit';
-import { listCorpora } from '$lib/server/corpora';
+import { loadCorpusBundle } from '$lib/server/corpus-store';
 import { matchesFilter } from '$lib/content/personas/derive.mjs';
 import type { PersonaFilter } from '$lib/content/personas/types';
 import type { RequestHandler } from './$types';
@@ -64,7 +64,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		Math.min(MAX_SAMPLE, Math.floor(body.sample_limit ?? DEFAULT_SAMPLE))
 	);
 
-	const corpus = listCorpora().find((c) => c.manifest.id === corpusId);
+	const corpus = await loadCorpusBundle(corpusId);
 	if (!corpus) throw error(404, `Corpus not found: ${corpusId}`);
 
 	let fragmentCount = 0;

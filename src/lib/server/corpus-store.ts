@@ -27,11 +27,34 @@ import type {
 	AnnotationFile,
 	CorpusManifest,
 	Fragment,
-	JourneySchema
+	FragmentAnnotation,
+	JourneySchema,
+	SpeakerAttrs
 } from '$lib/content/corpora/types';
+import type { JourneyMap } from '$lib/content/journeys/types';
 
 const CORPORA_DIR = 'src/lib/content/corpora';
 const JOURNEYS_DIR = 'src/lib/content/journeys';
+const PARTICIPANT_PROFILES_PATH = 'src/lib/content/wctglpdemo-data/participant_profiles.json';
+
+/** Per-corpus author-attribute overrides authored by analysts via the
+ *  FragmentTagDrawer. Analyst values WIN over per-fragment values. */
+export type AuthorAttrsFile = {
+	meta?: { schema_version?: string; updated_at?: string };
+	authors: Record<string, SpeakerAttrs>;
+};
+
+/** Full corpus bundle — manifest + flat fragment list across content_sources +
+ *  merged annotations. Mirrors the historical shape returned by corpora.ts so
+ *  callers can swap without restructuring. Author-attrs overrides are overlaid
+ *  onto each fragment's speaker_attrs before return. */
+export type CorpusBundle = {
+	manifest: CorpusManifest;
+	fragments: Fragment[];
+	annotations: Record<string, FragmentAnnotation>;
+};
+
+export type { FragmentAnnotation };
 
 // === Bundled seeds ==========================================================
 // Eager glob — these modules are inlined into the bundle so prod functions
@@ -107,6 +130,67 @@ const ingestConfigSeeds: IngestConfigSeedMap = (() => {
 		if (id) out[id] = doc;
 	}
 	return out;
+})();
+
+type AuthorAttrsSeedMap = Record<string, AuthorAttrsFile>;
+const authorAttrsSeeds: AuthorAttrsSeedMap = (() => {
+	const mods = import.meta.glob<AuthorAttrsFile>(
+		'/src/lib/content/corpora/*/author_attrs.json',
+		{ eager: true, import: 'default' }
+	);
+	const out: AuthorAttrsSeedMap = {};
+	for (const [path, doc] of Object.entries(mods)) {
+		const id = path.match(/corpora\/([^/]+)\/author_attrs\.json$/)?.[1];
+		if (id) out[id] = doc;
+	}
+	return out;
+})();
+
+/** All per-corpus artifacts under corpora/<id>/artifacts/<name>.json. Read-only
+ *  in prod; analysts regenerate via scripts and commit. Keyed by
+ *  `<corpusId>:<artifactName>`. */
+type ArtifactSeedMap = Record<string, unknown>;
+const artifactSeeds: ArtifactSeedMap = (() => {
+	const mods = import.meta.glob<unknown>(
+		'/src/lib/content/corpora/*/artifacts/*.json',
+		{ eager: true, import: 'default' }
+	);
+	const out: ArtifactSeedMap = {};
+	for (const [path, doc] of Object.entries(mods)) {
+		const m = path.match(/corpora\/([^/]+)\/artifacts\/([^/]+)\.json$/);
+		if (m) out[`${m[1]}:${m[2]}`] = doc;
+	}
+	return out;
+})();
+
+/** Journey maps keyed by `meta.indication` (matching the legacy corpora.ts
+ *  listJourneys() shape). The narrower `journeySeeds` map above keys by
+ *  filename and serves loadJourneySchema; this one drives full-list use. */
+type JourneyMapSeedMap = Record<string, JourneyMap>;
+const journeyMapSeeds: JourneyMapSeedMap = (() => {
+	const mods = import.meta.glob<JourneyMap>('/src/lib/content/journeys/*.json', {
+		eager: true,
+		import: 'default'
+	});
+	const out: JourneyMapSeedMap = {};
+	for (const [, doc] of Object.entries(mods)) {
+		if (doc?.meta?.indication) out[doc.meta.indication] = doc;
+	}
+	return out;
+})();
+
+/** Participant profiles — only the wct_glp1_2025q4 corpus has them today. The
+ *  file lives under wctglpdemo-data/, not under corpora/, so it's seeded
+ *  separately. */
+const participantProfilesSeed: Record<string, unknown> = (() => {
+	const mods = import.meta.glob<{ profiles?: Record<string, unknown> }>(
+		'/src/lib/content/wctglpdemo-data/participant_profiles.json',
+		{ eager: true, import: 'default' }
+	);
+	for (const doc of Object.values(mods)) {
+		return doc.profiles ?? {};
+	}
+	return {};
 })();
 
 // === Redis client (lazy, reused per warm instance) ==========================
@@ -371,4 +455,154 @@ export async function loadCorpusKeywordTags(
 		}
 	}
 	return kvGet<unknown>(kKey(corpusId, contentSource));
+}
+
+const aaKey = (id: string) => `corpus:${id}:author_attrs`;
+
+/** Per-corpus author-attribute overrides. KV-shadowed in prod; falls back to
+ *  the bundled seed when no overrides have been written. */
+export async function loadAuthorAttrs(corpusId: string): Promise<AuthorAttrsFile> {
+	if (dev) {
+		const path = resolve(CORPORA_DIR, corpusId, 'author_attrs.json');
+		if (!existsSync(path)) return { meta: {}, authors: {} };
+		try {
+			const doc = JSON.parse(readFileSync(path, 'utf8')) as AuthorAttrsFile;
+			return { meta: doc.meta ?? {}, authors: doc.authors ?? {} };
+		} catch {
+			return { meta: {}, authors: {} };
+		}
+	}
+	const fromKv = await kvGet<AuthorAttrsFile>(aaKey(corpusId));
+	if (fromKv) return { meta: fromKv.meta ?? {}, authors: fromKv.authors ?? {} };
+	const seed = authorAttrsSeeds[corpusId];
+	return seed ? { meta: seed.meta ?? {}, authors: seed.authors ?? {} } : { meta: {}, authors: {} };
+}
+
+export async function saveAuthorAttrs(corpusId: string, doc: AuthorAttrsFile): Promise<void> {
+	if (dev) {
+		const dir = resolve(CORPORA_DIR, corpusId);
+		mkdirSync(dir, { recursive: true });
+		writeFileSync(
+			resolve(dir, 'author_attrs.json'),
+			JSON.stringify(doc, null, 2) + '\n',
+			'utf8'
+		);
+		return;
+	}
+	await kvSet(aaKey(corpusId), doc);
+}
+
+/** Read one named artifact under corpora/<id>/artifacts/<name>.json. Artifacts
+ *  are generated by offline scripts and committed; in prod they come from the
+ *  bundled seed (no Redis hop) since the UI doesn't write them. */
+export async function loadCorpusArtifact<T = unknown>(
+	corpusId: string,
+	artifactName: string
+): Promise<T | null> {
+	if (dev) {
+		const path = resolve(CORPORA_DIR, corpusId, 'artifacts', `${artifactName}.json`);
+		if (!existsSync(path)) return null;
+		try {
+			return JSON.parse(readFileSync(path, 'utf8')) as T;
+		} catch {
+			return null;
+		}
+	}
+	return (artifactSeeds[`${corpusId}:${artifactName}`] as T) ?? null;
+}
+
+/** List all artifact names (without `.json`) for a corpus. Used by the
+ *  journey-map landing redirect to discover which (corpus, persona) pairs have
+ *  a generated journey-map. */
+export async function listCorpusArtifacts(corpusId: string): Promise<string[]> {
+	if (dev) {
+		const dir = resolve(CORPORA_DIR, corpusId, 'artifacts');
+		if (!existsSync(dir)) return [];
+		return readdirSync(dir)
+			.filter((f) => f.endsWith('.json'))
+			.map((f) => f.replace(/\.json$/, ''))
+			.sort();
+	}
+	const prefix = `${corpusId}:`;
+	return Object.keys(artifactSeeds)
+		.filter((k) => k.startsWith(prefix))
+		.map((k) => k.slice(prefix.length))
+		.sort();
+}
+
+/** All journey maps keyed by `meta.indication`. Read-only — analysts edit
+ *  these in git. */
+export async function listJourneys(): Promise<Record<string, JourneyMap>> {
+	if (dev) {
+		const out: Record<string, JourneyMap> = {};
+		if (!existsSync(JOURNEYS_DIR)) return out;
+		for (const f of readdirSync(JOURNEYS_DIR)) {
+			if (!f.endsWith('.json')) continue;
+			try {
+				const doc = JSON.parse(readFileSync(resolve(JOURNEYS_DIR, f), 'utf8')) as JourneyMap;
+				if (doc?.meta?.indication) out[doc.meta.indication] = doc;
+			} catch {
+				// skip unreadable files
+			}
+		}
+		return out;
+	}
+	return journeyMapSeeds;
+}
+
+/** Best-effort participant profile loader. Today only the wct_glp1_2025q4
+ *  corpus has profiles; new corpora author their own sidecars once the
+ *  convention generalizes. */
+export async function loadProfilesForCorpus(
+	corpusId: string
+): Promise<Record<string, unknown>> {
+	if (corpusId !== 'wct_glp1_2025q4') return {};
+	if (dev) {
+		const p = resolve(PARTICIPANT_PROFILES_PATH);
+		if (!existsSync(p)) return {};
+		try {
+			const doc = JSON.parse(readFileSync(p, 'utf8')) as {
+				profiles?: Record<string, unknown>;
+			};
+			return doc.profiles ?? {};
+		} catch {
+			return {};
+		}
+	}
+	return participantProfilesSeed;
+}
+
+/** A single corpus, manifest + flat fragment list across content_sources +
+ *  merged annotations, with author-attrs overrides overlaid onto each
+ *  fragment's speaker_attrs. Mirrors corpora.ts#listCorpora's per-corpus shape
+ *  so callers can swap without restructuring. */
+export async function loadCorpusBundle(corpusId: string): Promise<CorpusBundle | null> {
+	const base = await loadFullCorpus(corpusId);
+	if (!base) return null;
+	const attrs = await loadAuthorAttrs(corpusId);
+	const overrides = attrs.authors ?? {};
+	if (Object.keys(overrides).length === 0) {
+		return { manifest: base.manifest, fragments: base.fragments, annotations: base.annotations };
+	}
+	const fragments = base.fragments.map((f) => {
+		const h = (f.source_ref as { author_handle_hash?: string }).author_handle_hash;
+		if (!h) return f;
+		const override = overrides[h];
+		if (!override) return f;
+		return { ...f, speaker_attrs: { ...(f.speaker_attrs ?? {}), ...override } };
+	});
+	return { manifest: base.manifest, fragments, annotations: base.annotations };
+}
+
+/** All corpora as bundles, sorted by id. Drop-in replacement for the legacy
+ *  corpora.ts#listCorpora — async now because the prod path reads Redis. */
+export async function listCorpusBundles(): Promise<CorpusBundle[]> {
+	const ids = await listCorpusIds();
+	const out: CorpusBundle[] = [];
+	for (const id of ids) {
+		const bundle = await loadCorpusBundle(id);
+		if (bundle) out.push(bundle);
+	}
+	out.sort((a, b) => a.manifest.id.localeCompare(b.manifest.id));
+	return out;
 }

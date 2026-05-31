@@ -17,12 +17,12 @@ import type { Persona } from '$lib/content/personas/types';
 import type { Fragment } from '$lib/content/corpora/types';
 import type { JourneyMap } from '$lib/content/journeys/types';
 import {
-	listCorpora,
+	listCorpusBundles,
 	listJourneys,
 	loadProfilesForCorpus,
 	type CorpusBundle,
 	type FragmentAnnotation
-} from './corpora';
+} from './corpus-store';
 import { listPersonas } from './personas';
 
 /** Annotations keyed by fragment_id. Uses the fuller server/corpora shape
@@ -34,14 +34,22 @@ type AnnotationsMap = Record<string, FragmentAnnotation>;
 // ---------------------------------------------------------------------------
 
 export type WorkbenchContext = {
+	/** Primary indication — taxonomy + journey are tied to this one. */
 	indication: string;
+	/** All indications loaded into this context (primary first). For single-
+	 *  indication requests this is `[indication]`. */
+	indications: string[];
 	corpora: CorpusBundle[];
 	personas: Persona[];
 	journey: JourneyMap | null;
-	/** Flat fragment list across all visible corpora for the indication. */
+	/** Flat fragment list across all visible corpora for the indication(s). */
 	fragments: Fragment[];
 	/** fragment_id -> annotation (merged across corpora). */
 	annotations: AnnotationsMap;
+	/** fragment_id -> the indication that brought this fragment into the pool.
+	 *  Used to tag citations with their source indication when the context
+	 *  spans multiple. */
+	fragment_indications: Record<string, string>;
 	/** speaker_id -> { first_name?, last_initial?, ... } (best-effort, merged across corpora). */
 	profiles: Record<string, Record<string, unknown>>;
 	/** Codebook themes/subthemes index, derived from segment_tags presence. */
@@ -73,22 +81,48 @@ const SENTIMENT_LABELS: Record<number, string> = {
 	2: 'strongly positive'
 };
 
-export function loadWorkbenchContext(indication: string): WorkbenchContext {
-	const allCorpora = listCorpora();
+export async function loadWorkbenchContext(
+	indication: string,
+	additionalIndications: string[] = []
+): Promise<WorkbenchContext> {
+	// Primary first, then any additional indications (deduped, primary wins on
+	// overlap so fragment_indications attributes a fragment to whichever
+	// indication first pulled it in — matching read-order intuition).
+	const indications: string[] = [indication];
+	for (const extra of additionalIndications) {
+		if (extra && !indications.includes(extra)) indications.push(extra);
+	}
+
+	const allCorpora = await listCorpusBundles();
 	const personas = listPersonas().filter((p) =>
-		p.applicable_indications.includes(indication as never)
+		p.applicable_indications.some((id) => indications.includes(id as string))
 	);
-	const corpora = allCorpora.filter((c) => c.manifest.indications.includes(indication as never));
-	const journeys = listJourneys();
+	const journeys = await listJourneys();
 	const journey = journeys[indication] ?? null;
 
+	const corpora: CorpusBundle[] = [];
+	const seenCorpusIds = new Set<string>();
 	const fragments: Fragment[] = [];
 	const annotations: AnnotationsMap = {};
 	const profiles: Record<string, Record<string, unknown>> = {};
-	for (const c of corpora) {
-		fragments.push(...c.fragments);
-		Object.assign(annotations, c.annotations as Record<string, FragmentAnnotation>);
-		Object.assign(profiles, loadProfilesForCorpus(c.manifest.id));
+	const fragment_indications: Record<string, string> = {};
+
+	for (const ind of indications) {
+		const matching = allCorpora.filter((c) =>
+			c.manifest.indications.includes(ind as never)
+		);
+		for (const c of matching) {
+			if (seenCorpusIds.has(c.manifest.id)) continue;
+			seenCorpusIds.add(c.manifest.id);
+			corpora.push(c);
+			fragments.push(...c.fragments);
+			Object.assign(annotations, c.annotations as Record<string, FragmentAnnotation>);
+			const corpusProfiles = await loadProfilesForCorpus(c.manifest.id);
+			Object.assign(profiles, corpusProfiles);
+			for (const f of c.fragments) {
+				if (!fragment_indications[f.id]) fragment_indications[f.id] = ind;
+			}
+		}
 	}
 
 	const themes = new Set<string>();
@@ -126,7 +160,18 @@ export function loadWorkbenchContext(indication: string): WorkbenchContext {
 		sentiment_scale: SENTIMENT_LABELS
 	};
 
-	return { indication, corpora, personas, journey, fragments, annotations, profiles, taxonomy };
+	return {
+		indication,
+		indications,
+		corpora,
+		personas,
+		journey,
+		fragments,
+		annotations,
+		fragment_indications,
+		profiles,
+		taxonomy
+	};
 }
 
 // ---------------------------------------------------------------------------
@@ -692,9 +737,30 @@ export type ValidatedAnswer = {
 		/** Plutchik emotion tag ids (intensity or dyad). May be empty. */
 		emotions: string[];
 		stages: Array<{ stage_id: string; step_id: string | null }>;
+		/** Codebook codes attached to the cited quote. Used by the UI to
+		 *  drive topic / theme breakdown charts without re-deriving them
+		 *  client-side. May be empty if the source quote isn't coded. */
+		themes: string[];
+		subthemes: string[];
+		topics: string[];
+		/** Speaker role on the cited quote ("patient" | "caregiver" |
+		 *  "provider" | …). Null when the quote's speaker has no role
+		 *  attribute. Used by the UI to surface a who-is-talking breakdown. */
+		role: string | null;
+		/** The indication that brought this quote into the workbench pool.
+		 *  Lets the UI tag each citation when the context spans more than one. */
+		indication: string;
 	}>;
 	missing_citations: string[];
 	valid: boolean;
+	/** All indications loaded into the context (primary first). The UI uses
+	 *  this to decide whether to show the per-citation indication chip. */
+	indications: string[];
+	/** Primary indication's journey-stage labels keyed by stage_id (and
+	 *  step labels keyed by step_id). Lets the UI render readable stage
+	 *  names on cards and charts without bundling the whole journey. */
+	stage_labels: Record<string, string>;
+	step_labels: Record<string, string>;
 };
 
 export function validateCitations(answer: string, ctx: WorkbenchContext): ValidatedAnswer {
@@ -711,17 +777,24 @@ export function validateCitations(answer: string, ctx: WorkbenchContext): Valida
 		if (!seen.has(id)) {
 			seen.add(id);
 			const ann = ctx.annotations[f.id];
+			const tags = ann?.segment_tags;
+			const role = f.speaker_attrs?.role?.value;
 			citations.push({
 				id: f.id,
 				text: f.text,
 				speaker_id: speakerIdOf(f),
 				speaker_label: speakerLabel(f, ctx),
-				sentiment: ann?.segment_tags?.sentiment_score ?? null,
-				emotions: ann?.segment_tags?.emotions ?? [],
+				sentiment: tags?.sentiment_score ?? null,
+				emotions: tags?.emotions ?? [],
 				stages: (ann?.stages?.values ?? []).map((s) => ({
 					stage_id: s.stage_id,
 					step_id: s.step_id
-				}))
+				})),
+				themes: tags?.themes ?? [],
+				subthemes: tags?.subthemes ?? [],
+				topics: tags?.topics ?? [],
+				role: typeof role === 'string' && role.length > 0 ? role : null,
+				indication: ctx.fragment_indications[f.id] ?? ctx.indication
 			});
 		}
 		return match;
@@ -729,10 +802,20 @@ export function validateCitations(answer: string, ctx: WorkbenchContext): Valida
 
 	cleaned = cleaned.trim();
 
+	const stage_labels: Record<string, string> = {};
+	const step_labels: Record<string, string> = {};
+	for (const s of ctx.taxonomy.journey_stages) {
+		stage_labels[s.id] = s.label;
+		for (const st of s.steps) step_labels[st.id] = st.label;
+	}
+
 	return {
 		answer: cleaned,
 		citations,
 		missing_citations: missing,
-		valid: missing.length === 0
+		valid: missing.length === 0,
+		indications: ctx.indications,
+		stage_labels,
+		step_labels
 	};
 }

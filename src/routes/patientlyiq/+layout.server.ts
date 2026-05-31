@@ -20,9 +20,24 @@
  */
 import type { LayoutServerLoad } from './$types';
 import { getLexiconSlice } from '$lib/server/lexicon';
+import { listCorpusIds, loadCorpusManifest } from '$lib/server/corpus-store';
 
 export const load: LayoutServerLoad = async ({ url }) => {
 	const requested = url.searchParams.get('indication') ?? undefined;
 	const slice = await getLexiconSlice(requested);
-	return { slice };
+
+	// Set of indication ids that have at least one corpus. Drives the Ask
+	// drawer's "Compare with" picker so we never offer to compare against an
+	// indication the workbench has no fragments for. Only needs manifests, so
+	// skip the fragment/annotation hydration.
+	const ids = await listCorpusIds();
+	const indSet = new Set<string>();
+	for (const id of ids) {
+		const m = await loadCorpusManifest(id);
+		if (!m) continue;
+		for (const ind of m.indications as string[]) indSet.add(ind);
+	}
+	const indicationsWithCorpora = Array.from(indSet);
+
+	return { slice, indicationsWithCorpora };
 };

@@ -15,14 +15,13 @@
  * Both lists flow through the same `PersonaView` shape so the bento renders
  * uniformly. The page picks between them with a Suggestions / Saved tab.
  */
-import { readFileSync, existsSync } from 'node:fs';
-import { resolve } from 'node:path';
-import { listCorpora } from '$lib/server/corpora';
-import { listPersonas } from '$lib/server/personas';
+import { listCorpusBundles, loadCorpusArtifact } from '$lib/server/corpus-store';
+import { listPersonas, loadPersonaNarrative } from '$lib/server/personas';
 import { computePersonaStats } from '$lib/server/persona-stats';
+import { corpusParticipantAvatarUrl, generatedPersonaAvatarUrl } from '$lib/dicebear-avatars';
 import type { PersonaFilter } from '$lib/content/personas/types';
 import type { IndicationId } from '$lib/content/registries/types';
-import type { CorpusBundle } from '$lib/server/corpora';
+import type { CorpusBundle } from '$lib/server/corpus-store';
 import type { PageServerLoad } from './$types';
 
 const EVIDENCE_TEXT_CHARS = 480;
@@ -30,18 +29,46 @@ const EVIDENCE_TEXT_CHARS = 480;
 export type EvidenceFragment = {
 	id: string;
 	author_handle_hash: string | null;
+	author_avatar_url: string | null;
 	text: string;
 };
 
 /** Commonwealth-style narrative archetype, produced by
  *  scripts/propose-persona-narrative.mjs and written to
  *  src/lib/content/personas/<id>.narrative.json. Optional — saved personas
- *  without a sidecar render the cluster-stats bento instead. */
+ *  without a sidecar render the cluster-stats bento instead.
+ *
+ *  Two field families coexist during the framework transition:
+ *
+ *  - `patient_concerns` / `person_concerns` — the original Commonwealth
+ *    two-column split. Older narratives still ship these; UI renders them
+ *    as a fallback when no pillar fields are present.
+ *
+ *  - Four-pillar fields (`medical_self_efficacy`, `provider_trust`,
+ *    `logistical_capacity`, `emotional_valence`) — the shared vocabulary
+ *    used in the journeymap's sentiment tracker, so the persona card and
+ *    the journeymap can be read against each other. Each is a list of
+ *    short bullets in the persona's voice.
+ *
+ *  - Optional fact-list fields (`care_team_history`, `key_health_events`,
+ *    `treatment_history`, `trial_awareness`) — concrete extractions from
+ *    the evidence (drug names, specialists seen, sites tracked). Only
+ *    populated when the evidence supports them; the UI hides sections
+ *    that are empty.
+ */
 export type PersonaNarrative = {
 	tagline: string;
 	paragraph: string;
-	patient_concerns: string[];
-	person_concerns: string[];
+	patient_concerns?: string[];
+	person_concerns?: string[];
+	medical_self_efficacy?: string[];
+	provider_trust?: string[];
+	logistical_capacity?: string[];
+	emotional_valence?: string[];
+	care_team_history?: string[];
+	key_health_events?: string[];
+	treatment_history?: string[];
+	trial_awareness?: string[];
 	hero_quote_fragment_id: string;
 	/** Resolved at load time from the corpus so the page doesn't need to
 	 *  cross-reference fragment ids. */
@@ -85,6 +112,7 @@ export type PersonaView = {
 	overlaps_existing?: Array<{ persona_id: string; jaccard: number }>;
 	// Saved-only metadata
 	color?: string;
+	avatar_url?: string;
 	narrative?: PersonaNarrative;
 };
 
@@ -121,10 +149,14 @@ function suggestionToView(s: RawSuggestion, c: CorpusBundle): PersonaView {
 			const f = fragmentById.get(id);
 			if (!f) return null;
 			const t = f.text ?? '';
+			const authorHandle =
+				(f.source_ref as { author_handle_hash?: string }).author_handle_hash ?? null;
 			return {
 				id,
-				author_handle_hash:
-					(f.source_ref as { author_handle_hash?: string }).author_handle_hash ?? null,
+				author_handle_hash: authorHandle,
+				author_avatar_url: authorHandle
+					? corpusParticipantAvatarUrl(c.manifest.id, authorHandle)
+					: null,
 				text: t.length > EVIDENCE_TEXT_CHARS ? t.slice(0, EVIDENCE_TEXT_CHARS) + '…' : t
 			};
 		})
@@ -169,22 +201,34 @@ function loadNarrative(
 	personaId: string,
 	corpus: CorpusBundle
 ): PersonaNarrative | null {
-	const path = resolve(process.cwd(), `src/lib/content/personas/${personaId}.narrative.json`);
-	if (!existsSync(path)) return null;
-	const raw = JSON.parse(readFileSync(path, 'utf8')) as {
+	const raw = loadPersonaNarrative<{
 		tagline?: string;
 		paragraph?: string;
 		patient_concerns?: string[];
 		person_concerns?: string[];
+		medical_self_efficacy?: string[];
+		provider_trust?: string[];
+		logistical_capacity?: string[];
+		emotional_valence?: string[];
+		care_team_history?: string[];
+		key_health_events?: string[];
+		treatment_history?: string[];
+		trial_awareness?: string[];
 		hero_quote_fragment_id?: string;
 		meta?: { generated_at?: string; filter_hash?: string };
-	};
+	}>(personaId);
+	if (!raw) return null;
+	const hasLegacy = Array.isArray(raw.patient_concerns) && Array.isArray(raw.person_concerns);
+	const hasPillars =
+		Array.isArray(raw.medical_self_efficacy) ||
+		Array.isArray(raw.provider_trust) ||
+		Array.isArray(raw.logistical_capacity) ||
+		Array.isArray(raw.emotional_valence);
 	if (
 		typeof raw.tagline !== 'string' ||
 		typeof raw.paragraph !== 'string' ||
-		!Array.isArray(raw.patient_concerns) ||
-		!Array.isArray(raw.person_concerns) ||
-		typeof raw.hero_quote_fragment_id !== 'string'
+		typeof raw.hero_quote_fragment_id !== 'string' ||
+		(!hasLegacy && !hasPillars)
 	) {
 		console.warn(`[personas] narrative sidecar at ${path} is malformed; skipping`);
 		return null;
@@ -194,11 +238,23 @@ function loadNarrative(
 	const heroAuthor =
 		(heroFragment?.source_ref as { author_handle_hash?: string } | undefined)
 			?.author_handle_hash ?? null;
+	const optList = (v: unknown): string[] | undefined =>
+		Array.isArray(v) && v.every((x) => typeof x === 'string') && v.length > 0
+			? (v as string[])
+			: undefined;
 	return {
 		tagline: raw.tagline,
 		paragraph: raw.paragraph,
-		patient_concerns: raw.patient_concerns,
-		person_concerns: raw.person_concerns,
+		patient_concerns: optList(raw.patient_concerns),
+		person_concerns: optList(raw.person_concerns),
+		medical_self_efficacy: optList(raw.medical_self_efficacy),
+		provider_trust: optList(raw.provider_trust),
+		logistical_capacity: optList(raw.logistical_capacity),
+		emotional_valence: optList(raw.emotional_valence),
+		care_team_history: optList(raw.care_team_history),
+		key_health_events: optList(raw.key_health_events),
+		treatment_history: optList(raw.treatment_history),
+		trial_awareness: optList(raw.trial_awareness),
 		hero_quote_fragment_id: raw.hero_quote_fragment_id,
 		hero_quote_text: heroText,
 		hero_quote_author: heroAuthor,
@@ -228,6 +284,13 @@ function savedToView(
 	}
 	const stats = computePersonaStats(corpus, persona.filter);
 	const narrative = loadNarrative(persona.id, corpus);
+	const avatarUrl = narrative ? generatedPersonaAvatarUrl(persona) : persona.avatar_url;
+	const evidence = stats.evidence.map((ev) => ({
+		...ev,
+		author_avatar_url: ev.author_handle_hash
+			? corpusParticipantAvatarUrl(corpus.manifest.id, ev.author_handle_hash)
+			: null
+	}));
 	return {
 		kind: 'saved',
 		id: persona.id,
@@ -246,25 +309,25 @@ function savedToView(
 		top_steps: stats.top_steps,
 		top_emotions: stats.top_emotions,
 		sentiment: stats.sentiment,
-		evidence: stats.evidence,
+		evidence,
 		color: persona.color,
+		...(avatarUrl ? { avatar_url: avatarUrl } : {}),
 		...(narrative ? { narrative } : {})
 	};
 }
 
 export const load: PageServerLoad = async () => {
-	const corpora = listCorpora();
+	const corpora = await listCorpusBundles();
 
 	// === Suggestions ========================================================
 
 	const suggestions: PersonaView[] = [];
 	for (const c of corpora) {
-		const artifactPath = resolve(
-			process.cwd(),
-			`src/lib/content/corpora/${c.manifest.id}/artifacts/persona_suggestions.json`
+		const raw = await loadCorpusArtifact<{ suggestions: RawSuggestion[] }>(
+			c.manifest.id,
+			'persona_suggestions'
 		);
-		if (!existsSync(artifactPath)) continue;
-		const raw = JSON.parse(readFileSync(artifactPath, 'utf8')) as { suggestions: RawSuggestion[] };
+		if (!raw) continue;
 		for (const s of raw.suggestions) suggestions.push(suggestionToView(s, c));
 	}
 	suggestions.sort((a, b) => {

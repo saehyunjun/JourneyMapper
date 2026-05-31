@@ -16,7 +16,7 @@
  * Response: DeriveResponse (below).
  */
 import { json, error } from '@sveltejs/kit';
-import { listCorpora } from '$lib/server/corpora';
+import { loadCorpusBundle } from '$lib/server/corpus-store';
 import { listPersonas } from '$lib/server/personas';
 import {
 	buildAuthorProfile,
@@ -75,7 +75,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const shareThreshold = body.share_threshold ?? 0.4;
 	const roleThreshold = body.role_threshold ?? 0.6;
 
-	const corpus = listCorpora().find((c) => c.manifest.id === corpusId);
+	const corpus = await loadCorpusBundle(corpusId);
 	if (!corpus) throw error(404, `Corpus not found: ${corpusId}`);
 
 	const fragmentsByAuthor = new Map<string, Fragment[]>();

@@ -13,8 +13,13 @@
  * Any unresolved id is replaced with `[citation missing]` and `valid: false`
  * is set on the response so the UI can warn the user.
  *
- * Request:   { question: string, indication?: string }
- * Response:  { answer, citations, missing_citations, valid, trace }
+ * Request:   { question: string, indication?: string, additional_indications?: string[] }
+ * Response:  { answer, citations, missing_citations, valid, indications, trace }
+ *
+ * When `additional_indications` is provided, fragments + personas from those
+ * indications are merged into the same workbench pool so the model can
+ * compare/contrast across them. Citations carry an `indication` tag so the
+ * client can attribute each quote to its source indication.
  */
 
 import Anthropic from '@anthropic-ai/sdk';
@@ -35,27 +40,33 @@ const MODEL = 'claude-sonnet-4-6';
 const MAX_TOKENS = 4096;
 const MAX_TOOL_ROUNDS = 16;
 
-const SYSTEM_PROMPT = `You are the analyst-facing Q&A surface of the Journey Workbench, a tool that explores patient-voice fragments tagged with journey stages, codebook themes/subthemes, topics, emotions, and sentiment.
+const SYSTEM_PROMPT = `You are the answer surface of PatientlyIQ, a research tool that explores patient and caregiver voices across indications. The reader is a researcher, brand strategist, or clinical-team member preparing a strategy doc — write for them.
 
-You answer questions ONLY by composing the provided tools. You never invent fragment ids, theme ids, subtheme ids, stage ids, topics, or counts. Every numeric claim ("most discussed", "5 of 12 patients", "highest sentiment") must come from a tool result you just received in this conversation.
+Voice and word choice — MANDATORY:
+- Never use the words "fragment", "corpus", "annotation", "dataset", "pool", "slice", "the data", "the taxonomy", "tagged with". These are internal terms.
+- Use plain-language equivalents instead: "quote", "patient", "caregiver", "voice", "post", "comment", "what patients said about X".
+- Never narrate what you (the AI) are doing. Forbidden openers include "Excellent", "Great question", "Let me", "I now have", "I'll compile", "Here is", "Here's", "Based on the data". Start with the answer itself.
+- Never describe how many quotes you pulled in this kind of phrasing: "drawn from 71 LN fragments tagged with trial_barriers." Instead write naturally about people: "Across 71 Lupus Nephritis quotes and 24 MS quotes about clinical trials, ..."
+- Refer to people by what they are (patients, caregivers, partners, providers), never by their internal speaker_id or role string.
 
-Workflow for every question:
-1. Call get_taxonomy first to learn the exact ids available for this indication.
-2. Use filter_fragments to narrow the pool. You can call it multiple times to compare slices.
-3. Use rank_by_dimension or crosstab to compute the answer.
-4. Use get_fragments to pull the actual text of any fragment you plan to quote — only for ids returned by a prior tool. Never paraphrase a quote without having seen its text via get_fragments.
-5. Write a concise answer with inline citations of the form [frag:<id>] for every quoted or paraphrased fragment. Cite at least 2 fragments when making a "most/least discussed" claim. Keep citations adjacent to the claim they support.
+Answer structure — MANDATORY:
+1. Open with a 1–2 sentence high-level summary that answers the question directly, before any breakdown. The summary should be a takeaway a strategy doc could quote verbatim. No bullets, no citations, no caveats in the summary — just the headline finding.
+2. Then a short supporting body. Use **bold** sparingly to anchor the 3–6 most important sub-points. Cite quotes inline as [frag:<id>] adjacent to the claim they support. Keep total length under 240 words unless the question asks for depth.
+3. End with "Try next:" + 2–3 concrete follow-up questions, one per line. Skip this if the user explicitly asks a yes/no question.
 
-Sparse-data behavior — IMPORTANT:
-When the data is thin (total fragments < 15 for the relevant slice, top bucket has < 3 fragments, all fragments from one speaker / one thread, or zero matches), do NOT close with a generic "the dataset is too small" caveat. Instead, lean on the rest of the workbench to give the user a productive next step:
+Grounding rules:
+- You answer ONLY by composing the provided tools. You never invent quote ids, theme ids, subtheme ids, stage ids, topic ids, or counts. Every numeric claim ("most discussed", "5 of 12 patients", "highest sentiment") must come from a tool result you just received.
+- Workflow: get_taxonomy first → filter_fragments to narrow → rank_by_dimension or crosstab to compute → get_fragments before paraphrasing or quoting → write the answer. Cite at least 2 quotes when making a "most/least" claim. Cite quotes adjacent to the claim, not bunched at the end.
+- The UI displays each [frag:<id>] citation with its source indication chip automatically, so never write parentheticals like "(LN)" or "(indication: ms)".
 
-- Suggest 2–3 specific follow-up queries the user could try that would either broaden the pool or pivot to a related dimension actually present in get_taxonomy (e.g. "Try: 'How does sentiment shift across stages?' or 'What do caregivers say about trial logistics?'"). Phrase them as concrete questions the user can paste back in.
-- If a related subtheme, topic, or persona in get_taxonomy is adjacent to what they asked about, name it and tell them the workbench will highlight it as a clickable keyword in the answer. Example: "trial_barriers and trial_decision_factors are tagged on this indication — click those terms below to pivot."
-- If you genuinely have zero or near-zero hits, name the gap in concrete terms (e.g. "Only 6 fragments tagged in MS, all from one thread") so the user understands what content acquisition would close it — but ALWAYS pair the gap with the suggested next queries above. Never end on the caveat alone.
+Multi-indication answers:
+- When the question compares two or more indications, lead with a one-sentence summary that names the headline contrast ("Eligibility exclusions are the dominant barrier in both, but Lupus Nephritis voices skew far more toward comorbidity-driven exclusions while MS voices focus on prior-treatment washouts."), then organize the body by theme (NOT by indication), and within each theme cite at least one quote per indication you compare.
 
-If a question can't be answered AT ALL from any of the available indications, say so plainly. Do not speculate.
+Thin-data handling:
+- When the relevant slice is small (< 15 quotes total, top bucket < 3 quotes, single-thread, or zero matches), still lead with the summary, then name what's known and what's not in plain language ("Only 6 MS patients in this set spoke about trial logistics, all in one Reddit thread"), and finish with the "Try next:" suggestions. Never close on a bare "the data is too small" caveat.
+- If the question can't be answered from any available indication, say so plainly in the summary. Do not speculate.
 
-Format your final answer as plain text with inline [frag:<id>] citations and **bold** for emphasis where helpful. No markdown headings. Keep it under 220 words unless the question explicitly asks for more detail. When you include follow-up suggestions, end with a short "Try next:" line listing 2–3 concrete questions, one per line.`;
+Format: plain text. No markdown headings. **Bold** for emphasis. [frag:<id>] for citations. Numbered or bulleted sub-points are fine inside the body when comparing 3+ items. Never use single-asterisk *text* — that markdown renders as italic and is disallowed. If you want to set off an inline quote, surround it with straight double quotes "like this" and use **bold** if it needs additional emphasis.`;
 
 type ToolUseBlock = {
 	type: 'tool_use';
@@ -122,12 +133,18 @@ async function handle(request: Request): Promise<Response> {
 	const body = (await request.json().catch(() => ({}))) as {
 		question?: string;
 		indication?: string;
+		additional_indications?: unknown;
 	};
 	const question = body.question?.trim();
 	if (!question) throw error(400, '`question` is required');
 	const indication = body.indication?.trim() || 'obesity';
+	const additional = Array.isArray(body.additional_indications)
+		? body.additional_indications
+				.map((x) => (typeof x === 'string' ? x.trim() : ''))
+				.filter((x): x is string => x.length > 0 && x !== indication)
+		: [];
 
-	const ctx = loadWorkbenchContext(indication);
+	const ctx = await loadWorkbenchContext(indication, additional);
 	if (ctx.fragments.length === 0) {
 		throw error(404, `no fragments loaded for indication "${indication}"`);
 	}
@@ -225,6 +242,7 @@ async function handle(request: Request): Promise<Response> {
 	return json({
 		question,
 		indication,
+		additional_indications: additional,
 		...validated,
 		trace
 	});

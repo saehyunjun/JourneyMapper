@@ -10,10 +10,14 @@
  */
 
 import { listPersonas } from '$lib/server/personas';
-import { listCorpora, listJourneys, loadProfilesForCorpus } from '$lib/server/corpora';
+import {
+	listCorpusBundles,
+	listJourneys,
+	loadProfilesForCorpus
+} from '$lib/server/corpus-store';
 import type { PageServerLoad } from './$types';
 
-export type { StageTag, FragmentAnnotation } from '$lib/server/corpora';
+export type { FragmentAnnotation } from '$lib/server/corpus-store';
 
 export type ParticipantProfile = {
 	first_name?: string;
@@ -25,14 +29,12 @@ export type ParticipantProfile = {
 };
 
 export const load: PageServerLoad = async () => {
-	const corpora = listCorpora();
-	const journeys = listJourneys();
+	const corpora = await listCorpusBundles();
+	const journeys = await listJourneys();
 	const profilesByCorpus: Record<string, Record<string, ParticipantProfile>> = {};
 	for (const c of corpora) {
-		profilesByCorpus[c.manifest.id] = loadProfilesForCorpus(c.manifest.id) as Record<
-			string,
-			ParticipantProfile
-		>;
+		const profiles = await loadProfilesForCorpus(c.manifest.id);
+		profilesByCorpus[c.manifest.id] = profiles as Record<string, ParticipantProfile>;
 	}
 
 	return {
