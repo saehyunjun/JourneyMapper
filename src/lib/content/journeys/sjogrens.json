@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "indication": "sjogrens",
+    "label": "Sjögren's patient journey",
+    "notes": [
+      "Chronological arc for primary Sjögren's, anchored to the moments patients describe rather than the chapters clinicians use. Long pre-diagnostic phase (often years), heavy daily symptom-management burden, extraglandular escalations, and an emerging trial / advanced-therapy landscape.",
+      "Trial-related stages (7-8) reflect the active Ph3 / Ph2 pipeline (ianalumab, dazodalibep, nipocalimab, tibulizumab, iscalimab) rather than approved disease-modifying therapy, since the standard-of-care toolkit remains thin (HCQ + secretagogues + symptom palliation).",
+      "Self-directed exploration (stage 6) is its own stage because the Sjögren's corpus heavily features patient-led searching across diet, gut/microbiome theories, supplements, and peer community — a substantial part of the lived journey even when not clinically endorsed.",
+      "Replace with corpus-driven taxonomy (see feature_backlog 'Corpus-driven journey-stage taxonomy') when that pipeline lands."
+    ]
+  },
+  "stages": [
+    {
+      "id": "pre_diagnosis",
+      "order": 1,
+      "label": "Pre-diagnosis",
+      "description": "Before Sjögren's is named. Slowly accumulating sicca symptoms (dry eye, dry mouth), unexplained fatigue, joint and muscle aches, brain fog, often dismissed by clinicians for years or attributed to age, stress, or other autoimmune comorbidities.",
+      "steps": [
+        {
+          "id": "symptom_emergence",
+          "label": "Symptom emergence",
+          "description": "First noticing dryness, fatigue, recurrent dental issues, salivary gland swelling, or unexplained joint pain — easily attributed to other causes."
+        },
+        {
+          "id": "seeking_answers",
+          "label": "Seeking answers",
+          "description": "Repeated PCP, dentist, and ophthalmologist visits. Online research, peer communities, family advocacy to be taken seriously."
+        },
+        {
+          "id": "pre_diagnosis_uncertainty",
+          "label": "Pre-diagnosis uncertainty",
+          "description": "Living without a name for years. Dismissals and partial labels (anxiety, depression, fibromyalgia, perimenopause); questioning whether this is real."
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_odyssey",
+      "order": 2,
+      "label": "Diagnostic odyssey",
+      "description": "Bouncing through PCP → rheumatology → ophthalmology / dental. Schirmer test, salivary flow, anti-Ro/SSA + anti-La/SSB serology, and ultimately a lip biopsy with focus score for ACR/EULAR classification. The point where Sjögren's becomes the named diagnosis.",
+      "steps": [
+        {
+          "id": "specialist_bouncing",
+          "label": "Specialist bouncing",
+          "description": "Referral cascade between primary care, rheumatology, ophthalmology, and dentistry; often delayed by months to years."
+        },
+        {
+          "id": "serology_and_imaging",
+          "label": "Serology and imaging",
+          "description": "Bloodwork (ANA, anti-Ro/SSA, anti-La/SSB, RF, IgG), Schirmer / tear break-up tests, salivary flow, salivary gland ultrasound or sialography."
+        },
+        {
+          "id": "lip_biopsy_and_classification",
+          "label": "Lip biopsy and classification",
+          "description": "Minor salivary gland biopsy with focus score; the moment of receiving a formal Sjögren's classification (ACR/EULAR criteria)."
+        }
+      ]
+    },
+    {
+      "id": "naming_and_first_line",
+      "order": 3,
+      "label": "Naming and first-line management",
+      "description": "Diagnosis arrives; relief mixed with realization that the toolkit is thin. Starting HCQ (Plaquenil), secretagogues (pilocarpine, cevimeline), artificial tears, dental fluoride routines. Off-label DMARDs (methotrexate, leflunomide) for joint or systemic involvement.",
+      "steps": [
+        {
+          "id": "receiving_diagnosis",
+          "label": "Receiving the diagnosis",
+          "description": "Validation of years of symptoms; complicated emotions around finally having a name with limited treatments."
+        },
+        {
+          "id": "starting_first_line",
+          "label": "Starting first-line therapy",
+          "description": "Initiating HCQ + secretagogues + artificial tears; learning the dosing rhythm and tolerating early side effects (GI, ocular pigmentation monitoring)."
+        },
+        {
+          "id": "understanding_the_toolkit",
+          "label": "Understanding the toolkit",
+          "description": "Learning that nothing on the menu is curative; setting expectations for symptom management vs. disease modification."
+        }
+      ]
+    },
+    {
+      "id": "daily_symptom_burden",
+      "order": 4,
+      "label": "Daily symptom burden",
+      "description": "The chronic everyday weight of Sjögren's — sicca complex (eye, mouth, skin, vaginal), dental crises, fatigue, sleep disruption, brain fog. Lifestyle adapts around hydration, eye drops, dental visits, and energy budgeting.",
+      "steps": [
+        {
+          "id": "sicca_management",
+          "label": "Sicca management",
+          "description": "Artificial tears, punctal plugs, scleral lenses, oral moisturizers, humidifiers, vaginal moisturizers — the daily rituals of staying ahead of dryness."
+        },
+        {
+          "id": "dental_complications",
+          "label": "Dental complications",
+          "description": "Accelerated caries, periodontitis, candidiasis, tooth loss; expensive ongoing dental care; navigating dentists who don't understand the disease."
+        },
+        {
+          "id": "fatigue_and_brain_fog",
+          "label": "Fatigue and brain fog",
+          "description": "Pervasive fatigue beyond ordinary tiredness; cognitive slowing; pacing strategies, work accommodations, and emotional weight of being misunderstood."
+        },
+        {
+          "id": "burning_mucosal_pain",
+          "label": "Burning / mucosal pain",
+          "description": "Burning tongue / mouth syndrome, ocular surface pain, vulvar burning — under-recognized neuropathic symptoms of mucosal involvement."
+        }
+      ]
+    },
+    {
+      "id": "extraglandular_escalation",
+      "order": 5,
+      "label": "Extraglandular escalation",
+      "description": "Sjögren's revealing itself as systemic rather than 'just dryness.' Small-fiber, autonomic, or peripheral neuropathy; arthralgia / synovitis; interstitial lung disease; renal tubular acidosis; cryoglobulinemia, vasculitis; ongoing MALT lymphoma surveillance.",
+      "steps": [
+        {
+          "id": "neuropathy_emergence",
+          "label": "Neuropathy emergence",
+          "description": "Small-fiber, peripheral, or autonomic neuropathy diagnosed; POTS / dysautonomia recognized; the realization that nerve involvement is part of the disease."
+        },
+        {
+          "id": "systemic_complications",
+          "label": "Systemic complications",
+          "description": "Interstitial lung disease, renal tubular acidosis, cryoglobulinemia, vasculitis, parotid enlargement — escalating workup with rheum + pulm / nephro / heme."
+        },
+        {
+          "id": "lymphoma_surveillance",
+          "label": "Lymphoma surveillance",
+          "description": "Monitoring for MALT / B-cell lymphoma; persistent parotid enlargement, low C4, cryoglobulinemia as risk markers; the background fear of progression."
+        },
+        {
+          "id": "comorbidity_braid",
+          "label": "Comorbidity braid",
+          "description": "Tangled overlap with other autoimmune diseases (Hashimoto's, RA, SLE, MCTD/UCTD), MCAS, endometriosis, IBS — the 'what's actually causing what' problem."
+        }
+      ]
+    },
+    {
+      "id": "self_directed_exploration",
+      "order": 6,
+      "label": "Self-directed exploration",
+      "description": "When standard care plateaus, patients turn outward — gut microbiome theories, AIP / elimination diets, supplements (omega-3, vitamin D, hydroxytyrosol), functional / integrative medicine, fecal transplants, peer communities. A meaningful share of lived experience even when not clinically endorsed.",
+      "steps": [
+        {
+          "id": "diet_experimentation",
+          "label": "Diet experimentation",
+          "description": "Autoimmune Protocol, elimination diets, low-histamine, gluten-free, plant-based; observing what shifts symptoms (tongue burning, fatigue, joint pain)."
+        },
+        {
+          "id": "gut_and_microbiome_theories",
+          "label": "Gut and microbiome theories",
+          "description": "Engaging with research on dysbiosis, probiotics, fecal microbiota transplant; mendelian-randomization studies; the gut-as-driver hypothesis."
+        },
+        {
+          "id": "supplements_and_alt_routes",
+          "label": "Supplements and alternative routes",
+          "description": "LDN, B12, omega-3, vitamin D, hydroxytyrosol, NAC, herbal protocols; functional / integrative practitioners; navigating evidence quality."
+        },
+        {
+          "id": "peer_community",
+          "label": "Peer community",
+          "description": "Reddit, Facebook groups, Sjögren's Foundation, advocacy networks — sharing protocols, validating dismissals, exchanging clinician recommendations."
+        }
+      ]
+    },
+    {
+      "id": "trial_consideration",
+      "order": 7,
+      "label": "Trial / advanced-therapy consideration",
+      "description": "Exploring the active Ph3 / Ph2 pipeline (ianalumab, dazodalibep, nipocalimab, tibulizumab, iscalimab) or CAR-T programs for refractory autoimmunity. ClinicalTrials.gov searches, eligibility self-assessment, weighing logistical / financial / personal cost.",
+      "steps": [
+        {
+          "id": "trial_awareness",
+          "label": "Trial awareness",
+          "description": "Hearing about pipeline candidates (BAFF / APRIL inhibitors, FcRn blockers, anti-CD40, CAR-T) through community, clinicians, or research news; initial reading."
+        },
+        {
+          "id": "eligibility_self_assessment",
+          "label": "Eligibility self-assessment",
+          "description": "Working out whether one's ESSDAI score, serology, prior therapies, comorbidities, and geography qualify for a given trial."
+        },
+        {
+          "id": "logistical_assessment",
+          "label": "Logistical assessment",
+          "description": "Travel to site, time off work, caregiver availability, insurance / cost — the practical blockers."
+        },
+        {
+          "id": "consent_or_decline",
+          "label": "Consent or decline",
+          "description": "The decision moment — enroll, defer, or decline. Often shaped by family situation, severity, and degree of prior treatment fatigue."
+        }
+      ]
+    },
+    {
+      "id": "in_trial_and_post_trial",
+      "order": 8,
+      "label": "In-trial and post-trial",
+      "description": "Active treatment phase — infusion or subcutaneous dosing schedules, monitoring labs, ESSDAI / ESSPRI tracking, side effects. Post-trial, long-term follow-up for durability of response, B-cell repopulation, and continued lymphoma surveillance.",
+      "steps": [
+        {
+          "id": "active_dosing",
+          "label": "Active dosing",
+          "description": "Infusion or self-injection schedule; monitoring for infusion reactions, infection, hypogammaglobulinemia; integration with daily life."
+        },
+        {
+          "id": "response_signals",
+          "label": "Response signals",
+          "description": "Tracking ESSDAI / ESSPRI, salivary flow, fatigue, joint counts; early signs the therapy is shifting the disease (or not)."
+        },
+        {
+          "id": "long_term_follow_up",
+          "label": "Long-term follow-up",
+          "description": "Years-out monitoring for delayed effects, B-cell return, durability of response, lymphoma surveillance, reframing identity around partial vs. full remission."
+        }
+      ]
+    }
+  ]
+}

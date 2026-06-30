@@ -19,7 +19,26 @@ export default defineConfig({
 				'**/wctglpdemo-data/segment_tags.json',
 				'**/wctglpdemo-data/highlights.json',
 				'**/wctglpdemo-data/quote_reviews.json',
-				'**/wctglpdemo-data/uploads/**'
+				'**/wctglpdemo-data/uploads/**',
+				// 260 MB of raw + normalized ClinicalTrials.gov payloads and 12 MB
+				// of corpus fragment/annotation/artifact files. Any edit
+				// (typically scripted regenerations from the propose-* / autotag
+				// / fetch-clinicaltrials pipelines) otherwise flushes the full
+				// SSR module graph and stalls dev for tens of seconds. Manifests
+				// and small configs at the corpus root are still watched so
+				// hand-edits hot-reload normally; pages re-read the bulk files
+				// on demand, so a manual refresh after a pipeline run is fine.
+				'**/corpora/*/fragments/**',
+				'**/corpora/*/annotations/**',
+				'**/corpora/*/keyword_tags/**',
+				'**/corpora/*/artifacts/**',
+				'**/disease-insights/**/clinical_trials/raw_studies.json',
+				'**/disease-insights/**/clinical_trials/studies_normalized.json',
+				// Claude Code writes tool-permission decisions into this file
+				// during a session. Watching it triggers a full SSR module-graph
+				// flush mid-request, which can stretch the next page response
+				// from milliseconds into tens of seconds.
+				'**/.claude/**'
 			]
 		}
 	}

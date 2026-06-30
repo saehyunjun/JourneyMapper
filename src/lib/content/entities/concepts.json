@@ -1,0 +1,5 @@
+{
+  "schema_version": "entities-concept-0.1",
+  "description": "Concept entity registry per ENTITY_REGISTRY.md. Phase 1 starts empty. Concepts are clinical concepts with stable surface forms that are neither drugs/biomarkers/symptoms (e.g. flare, remission, biopsy, second opinion). Populated by analyst authoring + propose-entities.mjs.",
+  "items": []
+}

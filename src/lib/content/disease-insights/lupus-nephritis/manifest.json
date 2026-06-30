@@ -25,6 +25,15 @@
       "source_id": null
     },
     {
+      "id": "lupus_nephritis_treatment_trends_us",
+      "type": "search_volume_timeseries",
+      "label": "Lupus treatment-research search trends (US, weekly) + forum mention overlay",
+      "path": "search/treatment_trends_us.json",
+      "geography": "US",
+      "unit": "google_trends_index_0_100",
+      "source_id": null
+    },
+    {
       "id": "lupus_nephritis_treatment_searches_us",
       "type": "search_volume_topics",
       "label": "Lupus nephritis treatment searches (US, monthly)",

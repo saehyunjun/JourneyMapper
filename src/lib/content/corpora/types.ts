@@ -75,6 +75,13 @@ export type SpeakerRole =
 
 export type AgeBand = '<18' | '18-25' | '26-35' | '36-45' | '46-55' | '56-65' | '65+';
 
+export type SocioeconomicBand =
+	| 'low'
+	| 'lower_middle'
+	| 'middle'
+	| 'upper_middle'
+	| 'high';
+
 export type GenderValue = 'female' | 'male' | 'nonbinary' | 'other';
 
 export type DistanceToCoeBand = '<25mi' | '25-100mi' | '100-300mi' | '>300mi';
@@ -98,6 +105,12 @@ export type SpeakerAttrs = {
 	gender?: SpeakerAttr<GenderValue>;
 	/** ISO-3166 alpha-2. */
 	country?: SpeakerAttr<string>;
+	/** Sub-national location freetext — state/province/city/region. Kept open
+	 *  because the unit varies by corpus (US states vs UK cities vs metros). */
+	region?: SpeakerAttr<string>;
+	/** Analyst-estimated socioeconomic band. Always `inferred` in practice;
+	 *  the corpus rarely contains income data directly. */
+	ses?: SpeakerAttr<SocioeconomicBand>;
 	/** A journey-stage id from the per-indication stage registry (TBD). String
 	 *  for now; will narrow to an enum once the stage registry lands. */
 	condition_stage_at_speech?: SpeakerAttr<string>;
@@ -156,11 +169,27 @@ export type SourceRef =
 	  }
 	| {
 			kind: 'youtube_transcript' | 'podcast_transcript';
-			url: string;
+			/** Source URL when known (video/episode link). Optional because
+			 *  analyst-pasted transcripts may not carry one. */
+			url?: string;
+			/** Stable id for the media unit — for ingested-from-text uploads this
+			 *  is the slugified episode id; for proper audio pipelines it's the
+			 *  platform-native video/episode id. */
 			media_id: string;
-			start_ms: number;
-			end_ms: number;
-			captured_at: string;
+			/** Episode-level grouping id so per-segment fragments cluster together
+			 *  (analogous to forum_post's post_id). For pasted-text ingest this is
+			 *  derived from corpus + episode slug. */
+			post_id?: string;
+			/** Optional in/out timestamps. Populated by real audio-stamped
+			 *  pipelines; absent when the transcript was pasted as plain text. */
+			start_ms?: number;
+			end_ms?: number;
+			/** Character offsets relative to the parent transcript text. Used by
+			 *  the pasted-text ingest in place of audio timestamps so siblings can
+			 *  be re-ordered. */
+			char_start?: number;
+			char_end?: number;
+			captured_at?: string;
 	  }
 	| {
 			kind: 'search_query';

@@ -1,0 +1,797 @@
+{
+  "meta": {
+    "schema_version": "taxonomy_v2-1.0",
+    "supersedes": "2.0",
+    "status": "draft",
+    "description": "Full 4+1 codebook per CODEBOOK_TAXONOMY.md strawman v0.2. Four universal axes (hrqol / util / trial / life) plus a per-indication dx.* overlay (deferred). Themes carry id, axis, label, description, excludes, provenance, and optional subthemes. A span gets 0..N theme ids across any combination of axes.",
+    "changelog": [
+      "taxonomy_v2-1.0 — first cut. hrqol.* lifted from codebook.sf36v2.json with axis-prefixed ids; util.* / trial.* / life.* authored from the spec; dx.* overlay intentionally empty (analyst-authored per indication)."
+    ],
+    "sentiment_scale": {
+      "0": "neutral / mixed",
+      "1": "positive",
+      "2": "strongly positive",
+      "-2": "strongly negative",
+      "-1": "negative"
+    },
+    "notes": [
+      "Multi-tag contract: themes is an array; a fragment can carry theme ids from multiple axes.",
+      "Subtheme ids are scale-local (no axis prefix) for hrqol.*; util/trial/life have no subthemes in v1.",
+      "emotion_tags lifted verbatim from canonical codebook.json @ 2.0 — single source of truth still flows through there."
+    ]
+  },
+  "themes": [
+    {
+      "id": "hrqol.physical_functioning",
+      "axis": "hrqol",
+      "label": "Physical Functioning",
+      "description": "Extent to which health limits physical activities — from vigorous exertion through basic self-care. Applies whenever a participant describes what their body can or can't do.",
+      "provenance": {
+        "frame": "sf36v2",
+        "citation": "SF-36v2 Health Survey, Ware et al."
+      },
+      "sf36_abbreviation": "PF",
+      "sf36_component": "PCS",
+      "subthemes": [
+        {
+          "id": "pf_vigorous_activities",
+          "label": "Vigorous Activities",
+          "description": "Limitations in running, lifting heavy objects, strenuous sports, or other high-exertion activity.",
+          "clusters": []
+        },
+        {
+          "id": "pf_moderate_activities",
+          "label": "Moderate Activities",
+          "description": "Limitations in moving a table, vacuuming, bowling, golfing, or similar moderate-effort activity.",
+          "clusters": []
+        },
+        {
+          "id": "pf_lifting_carrying",
+          "label": "Lifting & Carrying",
+          "description": "Difficulty lifting or carrying groceries and similar everyday loads.",
+          "clusters": []
+        },
+        {
+          "id": "pf_climbing_stairs",
+          "label": "Climbing Stairs",
+          "description": "Difficulty climbing one or several flights of stairs.",
+          "clusters": []
+        },
+        {
+          "id": "pf_bending_kneeling",
+          "label": "Bending, Kneeling, Stooping",
+          "description": "Difficulty bending, kneeling, or stooping.",
+          "clusters": []
+        },
+        {
+          "id": "pf_walking",
+          "label": "Walking",
+          "description": "Limitations walking — more than a mile, several blocks, or even one block.",
+          "clusters": []
+        },
+        {
+          "id": "pf_self_care",
+          "label": "Bathing & Dressing",
+          "description": "Difficulty with bathing, dressing, and other basic self-care.",
+          "clusters": []
+        },
+        {
+          "id": "pf_mobility_aids",
+          "label": "Mobility Aids & Adaptations",
+          "description": "Use of canes, walkers, wheelchairs, grab bars, or other aids; home or environment adaptations made to compensate for physical limits. Not an SF-36 item, but commonly volunteered when PF limits are discussed in free text.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "hrqol.role_physical",
+      "axis": "hrqol",
+      "label": "Role-Physical",
+      "description": "Extent to which physical health interferes with work and other regular daily activities — productivity lost, effort required, kinds of tasks given up.",
+      "provenance": {
+        "frame": "sf36v2",
+        "citation": "SF-36v2 Health Survey, Ware et al."
+      },
+      "sf36_abbreviation": "RP",
+      "sf36_component": "PCS",
+      "subthemes": [
+        {
+          "id": "rp_reduced_time",
+          "label": "Cut Down Time",
+          "description": "Reducing the amount of time spent on work or other activities because of physical health.",
+          "clusters": []
+        },
+        {
+          "id": "rp_accomplished_less",
+          "label": "Accomplished Less",
+          "description": "Getting less done than wanted as a result of physical health.",
+          "clusters": []
+        },
+        {
+          "id": "rp_limited_kind",
+          "label": "Limited in Kind of Work",
+          "description": "Restricted in the kind of work or activities that can be done due to physical health (e.g. switching roles, dropping tasks).",
+          "clusters": []
+        },
+        {
+          "id": "rp_difficulty_performing",
+          "label": "Difficulty Performing",
+          "description": "Work or activities take extra effort, more time, or workarounds to complete due to physical health.",
+          "clusters": []
+        },
+        {
+          "id": "rp_career_impact",
+          "label": "Career & Income Impact",
+          "description": "Job loss, reduced hours, missed promotions, disability leave, or income loss attributed to physical health. Not an SF-36 item, but commonly volunteered around RP content in free text.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "hrqol.bodily_pain",
+      "axis": "hrqol",
+      "label": "Bodily Pain",
+      "description": "Intensity of pain and the extent to which pain interferes with normal work and daily activity.",
+      "provenance": {
+        "frame": "sf36v2",
+        "citation": "SF-36v2 Health Survey, Ware et al."
+      },
+      "sf36_abbreviation": "BP",
+      "sf36_component": "PCS",
+      "subthemes": [
+        {
+          "id": "bp_pain_intensity",
+          "label": "Pain Intensity",
+          "description": "How much bodily pain the participant has experienced — including severity, frequency, and pain that is described as constant or chronic.",
+          "clusters": []
+        },
+        {
+          "id": "bp_pain_interference",
+          "label": "Pain Interference",
+          "description": "How much pain interferes with normal work, household tasks, hobbies, or daily activities — inside and outside the home.",
+          "clusters": []
+        },
+        {
+          "id": "bp_pain_location_quality",
+          "label": "Pain Location & Quality",
+          "description": "Where the pain is felt (back, joints, head, abdominal, neuropathic, etc.) and how it is described (sharp, burning, throbbing, aching). Not a separate SF-36 item, but a common qualitative facet of BP language.",
+          "clusters": []
+        },
+        {
+          "id": "bp_pain_management",
+          "label": "Pain Management",
+          "description": "Strategies and treatments used to manage pain — medications, procedures, physical therapy, alternative approaches — and how well they work.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "hrqol.general_health",
+      "axis": "hrqol",
+      "label": "General Health",
+      "description": "Personal evaluation of overall health — self-rating, comparison to others, expectations about the future, and beliefs about one's own susceptibility to illness.",
+      "provenance": {
+        "frame": "sf36v2",
+        "citation": "SF-36v2 Health Survey, Ware et al."
+      },
+      "sf36_abbreviation": "GH",
+      "sf36_component": "PCS+MCS",
+      "subthemes": [
+        {
+          "id": "gh_self_rating",
+          "label": "Health Self-Rating",
+          "description": "How the participant rates their health overall (excellent / very good / good / fair / poor) and the language they use to summarize it in their own words.",
+          "clusters": []
+        },
+        {
+          "id": "gh_illness_susceptibility",
+          "label": "Illness Susceptibility",
+          "description": "Belief that they get sick more easily than other people, or claims that they are as healthy as anybody they know.",
+          "clusters": []
+        },
+        {
+          "id": "gh_health_outlook",
+          "label": "Health Outlook",
+          "description": "Expectation that health will get worse, stay the same, or improve over time.",
+          "clusters": []
+        },
+        {
+          "id": "gh_health_comparison",
+          "label": "Health Comparison",
+          "description": "Comparison of current health to a year ago, to peers, or to a prior baseline.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "hrqol.vitality",
+      "axis": "hrqol",
+      "label": "Vitality",
+      "description": "Energy level and fatigue — feeling full of life and pep at one end, worn out and tired at the other.",
+      "provenance": {
+        "frame": "sf36v2",
+        "citation": "SF-36v2 Health Survey, Ware et al."
+      },
+      "sf36_abbreviation": "VT",
+      "sf36_component": "MCS",
+      "subthemes": [
+        {
+          "id": "vt_full_of_life",
+          "label": "Full of Life",
+          "description": "Feeling lively, vital, full of life — the positive pole of the vitality scale.",
+          "clusters": []
+        },
+        {
+          "id": "vt_energy",
+          "label": "Energy",
+          "description": "Having a lot of energy; feeling able to do what one wants to do.",
+          "clusters": []
+        },
+        {
+          "id": "vt_worn_out",
+          "label": "Worn Out",
+          "description": "Feeling worn out, drained, depleted — beyond ordinary tiredness.",
+          "clusters": []
+        },
+        {
+          "id": "vt_tired",
+          "label": "Tired",
+          "description": "Feeling tired, sluggish, low-energy in a way the participant attributes to health or treatment.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "hrqol.social_functioning",
+      "axis": "hrqol",
+      "label": "Social Functioning",
+      "description": "Extent to which physical or emotional health interferes with normal social activities with family, friends, neighbors, or groups.",
+      "provenance": {
+        "frame": "sf36v2",
+        "citation": "SF-36v2 Health Survey, Ware et al."
+      },
+      "sf36_abbreviation": "SF",
+      "sf36_component": "MCS",
+      "subthemes": [
+        {
+          "id": "sf_extent_interference",
+          "label": "Extent of Interference",
+          "description": "How much physical or emotional problems have interfered with normal social activities with family, friends, neighbors, or groups (not at all → extremely).",
+          "clusters": []
+        },
+        {
+          "id": "sf_time_interference",
+          "label": "Frequency of Interference",
+          "description": "How much of the time physical or emotional health has interfered with social activities (none of the time → all of the time).",
+          "clusters": []
+        },
+        {
+          "id": "sf_relationship_strain",
+          "label": "Relationship Strain",
+          "description": "Strain on relationships with partners, family, friends, or caregivers attributed to health. Common qualitative facet of SF language in interviews.",
+          "clusters": []
+        },
+        {
+          "id": "sf_isolation_withdrawal",
+          "label": "Isolation & Withdrawal",
+          "description": "Withdrawing from social events, declining invitations, or feeling isolated as a consequence of health.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "hrqol.role_emotional",
+      "axis": "hrqol",
+      "label": "Role-Emotional",
+      "description": "Extent to which emotional problems (e.g. feeling depressed or anxious) interfere with work and other regular daily activities.",
+      "provenance": {
+        "frame": "sf36v2",
+        "citation": "SF-36v2 Health Survey, Ware et al."
+      },
+      "sf36_abbreviation": "RE",
+      "sf36_component": "MCS",
+      "subthemes": [
+        {
+          "id": "re_reduced_time_emotional",
+          "label": "Cut Down Time (Emotional)",
+          "description": "Reducing the amount of time spent on work or other activities because of emotional problems.",
+          "clusters": []
+        },
+        {
+          "id": "re_accomplished_less_emotional",
+          "label": "Accomplished Less (Emotional)",
+          "description": "Getting less done than wanted as a result of emotional problems.",
+          "clusters": []
+        },
+        {
+          "id": "re_reduced_carefulness",
+          "label": "Did Work Less Carefully",
+          "description": "Doing work or activities less carefully than usual because of emotional problems.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "hrqol.mental_health",
+      "axis": "hrqol",
+      "label": "Mental Health",
+      "description": "Psychological distress and well-being — anxiety, depression, behavioral and emotional control, and general positive affect.",
+      "provenance": {
+        "frame": "sf36v2",
+        "citation": "SF-36v2 Health Survey, Ware et al."
+      },
+      "sf36_abbreviation": "MH",
+      "sf36_component": "MCS",
+      "subthemes": [
+        {
+          "id": "mh_anxiety",
+          "label": "Anxiety & Nervousness",
+          "description": "Feeling very nervous, on edge, or anxious.",
+          "clusters": []
+        },
+        {
+          "id": "mh_depression",
+          "label": "Depression & Low Mood",
+          "description": "Feeling so down in the dumps that nothing could cheer one up; feeling downhearted, depressed, or hopeless.",
+          "clusters": []
+        },
+        {
+          "id": "mh_calm_peace",
+          "label": "Calm & Peaceful",
+          "description": "Feeling calm and peaceful — the positive pole of the affect-balance content.",
+          "clusters": []
+        },
+        {
+          "id": "mh_happiness",
+          "label": "Happiness",
+          "description": "Being a happy person — general positive emotional tone over the recall period.",
+          "clusters": []
+        },
+        {
+          "id": "mh_emotional_control",
+          "label": "Emotional Control",
+          "description": "Sense of being in control of (or losing control of) one's emotions or behavior; mood swings; reactivity.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "util.access",
+      "axis": "util",
+      "label": "Access to care",
+      "description": "Getting to care — geographic distance, appointment availability, finding a specialist, in-network gating.",
+      "excludes": "Does NOT include carrier behavior (use util.insurance) or formulary design (use util.coverage).",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "AHRQ National Healthcare Quality and Disparities framework (analyst-adapted)"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "util.coverage",
+      "axis": "util",
+      "label": "Coverage",
+      "description": "What the plan does/does not include — formulary, benefits design, covered vs. uncovered services.",
+      "excludes": "Distinct from util.insurance (carrier behavior). Multi-tag both when patient conflates \"not covered\" with \"they denied it\".",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "AHRQ National Healthcare Quality and Disparities framework (analyst-adapted)"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "util.insurance",
+      "axis": "util",
+      "label": "Insurance / carrier behavior",
+      "description": "Carrier behavior — denials, prior-auth battles, appeals, claim disputes.",
+      "excludes": "Distinct from util.coverage (plan design). Multi-tag both when the line is fuzzy.",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "AHRQ National Healthcare Quality and Disparities framework (analyst-adapted)"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "util.relationship",
+      "axis": "util",
+      "label": "Patient-provider relationship",
+      "description": "Patient-provider trust, communication, being heard vs. dismissed.",
+      "excludes": "Provider-side; pair with util.decision_support (patient-side) when both apply.",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "AHRQ National Healthcare Quality and Disparities framework (analyst-adapted)"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "util.coordination",
+      "axis": "util",
+      "label": "Care coordination",
+      "description": "Handoffs between providers, records continuity, conflicting medical advice across the care team.",
+      "excludes": "Use when the friction is between clinicians/systems, not between patient and one provider (use util.relationship for that).",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "AHRQ National Healthcare Quality and Disparities framework (analyst-adapted)"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "util.diagnostic_journey",
+      "axis": "util",
+      "label": "Diagnostic journey",
+      "description": "Time to diagnosis, misdiagnosis loops, specialist hunt, second opinions, the path from \"something is wrong\" to a confirmed diagnosis.",
+      "excludes": "Disease-specific dx narrative once diagnosis is named belongs in dx.* overlay or hrqol.general_health.",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "AHRQ National Healthcare Quality and Disparities framework (analyst-adapted)"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "util.decision_support",
+      "axis": "util",
+      "label": "Decision support",
+      "description": "Patient information adequacy, weighing options, self-research, shared-decision capacity, decision regret.",
+      "excludes": "Patient-side; pair with util.relationship (provider-side) when both apply.",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "AHRQ National Healthcare Quality and Disparities framework (analyst-adapted)"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "trial.awareness",
+      "axis": "trial",
+      "label": "Trial awareness",
+      "description": "Knowing trials exist; how patients hear about them — clinician mention, advocacy group, social media, search engines, ClinicalTrials.gov.",
+      "excludes": "Once the patient is evaluating fit, move to trial.eligibility.",
+      "provenance": {
+        "frame": "consort",
+        "citation": "CONSORT 2010 stages + analyst-adapted sponsor funnel taxonomy"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "trial.eligibility",
+      "axis": "trial",
+      "label": "Eligibility",
+      "description": "Criteria fit, exclusion frustration, age/biomarker/biopsy/prior-therapy gates, geographic restrictions.",
+      "excludes": "The pre-consent assessment. Once they have decided to join, move to trial.enrollment.",
+      "provenance": {
+        "frame": "consort",
+        "citation": "CONSORT 2010 stages + analyst-adapted sponsor funnel taxonomy"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "trial.enrollment",
+      "axis": "trial",
+      "label": "Enrollment",
+      "description": "Consent, decision-to-join, weighing pros/cons; the moment of agreeing to participate.",
+      "excludes": "Mechanics of being IN the trial belong to trial.logistics / trial.relationship / trial.retention.",
+      "provenance": {
+        "frame": "consort",
+        "citation": "CONSORT 2010 stages + analyst-adapted sponsor funnel taxonomy"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "trial.logistics",
+      "axis": "trial",
+      "label": "Trial logistics",
+      "description": "Washout, visit cadence, diary compliance, protocol burden, travel to site, scheduling demands during the trial.",
+      "excludes": "Trial-financial costs (stipends, hidden expenses) go to trial.financial.",
+      "provenance": {
+        "frame": "consort",
+        "citation": "CONSORT 2010 stages + analyst-adapted sponsor funnel taxonomy"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "trial.relationship",
+      "axis": "trial",
+      "label": "Trial relationship",
+      "description": "Coordinator, PI, site staff interactions; trust gaps; communication quality during the trial.",
+      "excludes": "Standard-care provider relationships are util.relationship.",
+      "provenance": {
+        "frame": "consort",
+        "citation": "CONSORT 2010 stages + analyst-adapted sponsor funnel taxonomy"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "trial.retention",
+      "axis": "trial",
+      "label": "Trial retention",
+      "description": "During-trial sentiment; what makes patients stay or drop; lived experience of being on (or possibly on) the drug.",
+      "excludes": "Initial decision-to-join is trial.enrollment.",
+      "provenance": {
+        "frame": "consort",
+        "citation": "CONSORT 2010 stages + analyst-adapted sponsor funnel taxonomy"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "trial.post_trial",
+      "axis": "trial",
+      "label": "Post-trial transition",
+      "description": "LTFU tail, access to the drug after trial closes, open-label-extension decisions, transition to standard of care.",
+      "excludes": "Standard-of-care navigation after trial belongs to util.* if the trial framing is no longer central.",
+      "provenance": {
+        "frame": "consort",
+        "citation": "CONSORT 2010 stages + analyst-adapted sponsor funnel taxonomy"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "trial.financial",
+      "axis": "trial",
+      "label": "Trial financial",
+      "description": "Stipends, hidden costs (travel, lodging, childcare), post-trial drug access economics.",
+      "excludes": "Standard-of-care financial burden is life.financial; insurance/coverage friction is util.coverage or util.insurance.",
+      "provenance": {
+        "frame": "consort",
+        "citation": "CONSORT 2010 stages + analyst-adapted sponsor funnel taxonomy"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "life.financial",
+      "axis": "life",
+      "label": "Life financial",
+      "description": "Household-level economic fallout — out-of-pocket costs, lost wages, debt, medicine-vs-groceries tradeoffs.",
+      "excludes": "Trial-specific financial burden is trial.financial; insurance/coverage friction is util.coverage or util.insurance.",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "Composite — economic-burden literature + caregiver-burden scales (Zarit, CRA)"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "life.occupation",
+      "axis": "life",
+      "label": "Occupation",
+      "description": "Job accommodations, school absenteeism, forced early retirement, career disruption, ability-to-work decisions.",
+      "excludes": "When the speaker frames it as a symptom limit (e.g., \"I am too tired to work\"), multi-tag hrqol.role_physical or hrqol.role_emotional.",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "Composite — economic-burden literature + caregiver-burden scales (Zarit, CRA)"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "life.caregiver",
+      "axis": "life",
+      "label": "Caregiver burden",
+      "description": "Spousal strain, family role reversals, caregiver burnout, child/partner impact, dependence on a caregiver.",
+      "excludes": "Use even when said from the patient perspective (\"my husband has to drive me everywhere\"); the burden lives in the household.",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "Composite — economic-burden literature + caregiver-burden scales (Zarit, CRA)"
+      },
+      "subthemes": []
+    },
+    {
+      "id": "life.identity",
+      "axis": "life",
+      "label": "Identity & existential",
+      "description": "Sense of self, future-self, hope, fear, faith, existential grief, \"who am I now\" framing.",
+      "excludes": "Discrete affect (sadness, anxiety) is hrqol.mental_health; identity is the longer-arc self-concept piece.",
+      "provenance": {
+        "frame": "inspired",
+        "citation": "Composite — economic-burden literature + caregiver-burden scales (Zarit, CRA)"
+      },
+      "subthemes": []
+    }
+  ],
+  "emotion_tags": [
+    {
+      "id": "serenity",
+      "description": "Mild joy — calm contentment or ease."
+    },
+    {
+      "id": "joy",
+      "description": "Joy — happiness or gladness."
+    },
+    {
+      "id": "ecstasy",
+      "description": "Intense joy — elation or overwhelming delight."
+    },
+    {
+      "id": "acceptance",
+      "description": "Mild trust — openness or willingness to go along."
+    },
+    {
+      "id": "trust",
+      "description": "Trust — confidence in a person, plan, or treatment."
+    },
+    {
+      "id": "admiration",
+      "description": "Intense trust — deep respect, reverence, or gratitude."
+    },
+    {
+      "id": "apprehension",
+      "description": "Mild fear — unease or wariness about what may come."
+    },
+    {
+      "id": "fear",
+      "description": "Fear — alarm at a perceived threat."
+    },
+    {
+      "id": "terror",
+      "description": "Intense fear — dread or panic."
+    },
+    {
+      "id": "distraction",
+      "description": "Mild surprise — being momentarily caught off guard."
+    },
+    {
+      "id": "surprise",
+      "description": "Surprise — reaction to something unexpected."
+    },
+    {
+      "id": "amazement",
+      "description": "Intense surprise — astonishment or being stunned."
+    },
+    {
+      "id": "pensiveness",
+      "description": "Mild sadness — wistfulness or low mood."
+    },
+    {
+      "id": "sadness",
+      "description": "Sadness — unhappiness or sorrow."
+    },
+    {
+      "id": "grief",
+      "description": "Intense sadness — deep sorrow or anguish."
+    },
+    {
+      "id": "boredom",
+      "description": "Mild disgust — disinterest or weariness."
+    },
+    {
+      "id": "disgust",
+      "description": "Disgust — aversion or distaste."
+    },
+    {
+      "id": "loathing",
+      "description": "Intense disgust — revulsion or contempt."
+    },
+    {
+      "id": "annoyance",
+      "description": "Mild anger — irritation or frustration."
+    },
+    {
+      "id": "anger",
+      "description": "Anger — displeasure or hostility."
+    },
+    {
+      "id": "rage",
+      "description": "Intense anger — fury or outrage."
+    },
+    {
+      "id": "interest",
+      "description": "Mild anticipation — curiosity or attentiveness toward what's ahead."
+    },
+    {
+      "id": "anticipation",
+      "description": "Anticipation — looking ahead to or expecting something."
+    },
+    {
+      "id": "vigilance",
+      "description": "Intense anticipation — keen focus, readiness, or resolve."
+    },
+    {
+      "id": "love",
+      "description": "Love — joy blended with trust."
+    },
+    {
+      "id": "submission",
+      "description": "Submission — trust blended with fear."
+    },
+    {
+      "id": "alarm",
+      "description": "Alarm — fear blended with surprise."
+    },
+    {
+      "id": "disappointment",
+      "description": "Disappointment — surprise blended with sadness."
+    },
+    {
+      "id": "remorse",
+      "description": "Remorse — sadness blended with disgust."
+    },
+    {
+      "id": "contempt",
+      "description": "Contempt — disgust blended with anger."
+    },
+    {
+      "id": "aggression",
+      "description": "Aggression — anger blended with anticipation."
+    },
+    {
+      "id": "optimism",
+      "description": "Optimism — anticipation blended with joy."
+    },
+    {
+      "id": "guilt",
+      "description": "Guilt — joy blended with fear."
+    },
+    {
+      "id": "curiosity",
+      "description": "Curiosity — trust blended with surprise."
+    },
+    {
+      "id": "despair",
+      "description": "Despair — fear blended with sadness."
+    },
+    {
+      "id": "unbelief",
+      "description": "Unbelief — surprise blended with disgust."
+    },
+    {
+      "id": "envy",
+      "description": "Envy — sadness blended with anger."
+    },
+    {
+      "id": "cynicism",
+      "description": "Cynicism — disgust blended with anticipation."
+    },
+    {
+      "id": "pride",
+      "description": "Pride — anger blended with joy."
+    },
+    {
+      "id": "hope",
+      "description": "Hope — anticipation blended with trust."
+    },
+    {
+      "id": "delight",
+      "description": "Delight — joy blended with surprise."
+    },
+    {
+      "id": "sentimentality",
+      "description": "Sentimentality — trust blended with sadness."
+    },
+    {
+      "id": "shame",
+      "description": "Shame — fear blended with disgust."
+    },
+    {
+      "id": "outrage",
+      "description": "Outrage — surprise blended with anger."
+    },
+    {
+      "id": "pessimism",
+      "description": "Pessimism — sadness blended with anticipation."
+    },
+    {
+      "id": "morbideness",
+      "description": "Morbidness — disgust blended with joy."
+    },
+    {
+      "id": "dominance",
+      "description": "Dominance — anger blended with trust."
+    },
+    {
+      "id": "anxiety",
+      "description": "Anxiety — anticipation blended with fear."
+    },
+    {
+      "id": "bittersweetness",
+      "description": "Bittersweetness — joy blended with sadness."
+    },
+    {
+      "id": "ambivalence",
+      "description": "Ambivalence — trust blended with disgust."
+    },
+    {
+      "id": "frozenness",
+      "description": "Frozenness — fear blended with anger."
+    },
+    {
+      "id": "confusion",
+      "description": "Confusion — surprise blended with anticipation."
+    }
+  ]
+}

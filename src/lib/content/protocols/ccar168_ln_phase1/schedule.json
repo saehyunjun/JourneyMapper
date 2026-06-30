@@ -1,0 +1,482 @@
+{
+	"protocol_id": "ccar168_ln_phase1",
+	"phases": [
+		{
+			"id": "screening",
+			"label": "Screening",
+			"timepoints": [{ "id": "screening", "label": "Screening", "window_days": "28" }]
+		},
+		{
+			"id": "leukapheresis",
+			"label": "Leukapheresis",
+			"timepoints": [{ "id": "leukapheresis", "label": "Leukapheresis", "window_days": null }]
+		},
+		{
+			"id": "baseline",
+			"label": "Baseline",
+			"timepoints": [{ "id": "d_minus_7", "label": "D-7", "window_days": "±1" }]
+		},
+		{
+			"id": "ld",
+			"label": "LD",
+			"timepoints": [
+				{ "id": "d_minus_5", "label": "D-5", "window_days": null },
+				{ "id": "d_minus_4", "label": "D-4", "window_days": null },
+				{ "id": "d_minus_3", "label": "D-3", "window_days": null }
+			]
+		},
+		{
+			"id": "infusion",
+			"label": "C-CAR168 Infusion",
+			"timepoints": [{ "id": "d0", "label": "D0", "window_days": null }]
+		},
+		{
+			"id": "follow_up",
+			"label": "Post-treatment Follow-up",
+			"timepoints": [
+				{ "id": "d1", "label": "D1", "window_days": null },
+				{ "id": "d4", "label": "D4", "window_days": "±1" },
+				{ "id": "d7", "label": "D7", "window_days": "±1" },
+				{ "id": "d10", "label": "D10", "window_days": "±1" },
+				{ "id": "d14", "label": "D14", "window_days": "±2" },
+				{ "id": "d21", "label": "D21", "window_days": "±3" },
+				{ "id": "d28", "label": "D28", "window_days": "±3" },
+				{ "id": "m2", "label": "M2", "window_days": "±5" },
+				{ "id": "m3", "label": "M3", "window_days": "±5" },
+				{ "id": "m6_24", "label": "M6-24 (Every 3M)", "window_days": "±14" }
+			]
+		},
+		{
+			"id": "early_term",
+			"label": "Early Termination / End of Follow-up",
+			"timepoints": [{ "id": "et", "label": "ET / EoFU", "window_days": "±14" }]
+		}
+	],
+	"procedure_groups": [
+		{
+			"id": "clinical_procedures",
+			"label": "Clinical Procedures",
+			"procedures": [
+				{ "id": "signed_consent", "label": "Signed informed consent/assent", "footnote_refs": ["a"], "burden_hint": { "setting": "admin", "duration_minutes": 45 } },
+				{ "id": "renal_biopsy", "label": "Renal biopsy", "footnote_refs": [], "burden_hint": { "setting": "biopsy", "duration_minutes": 240, "specialist_required": true, "caregiver_required": true } },
+				{ "id": "eligibility_review", "label": "Eligibility and/or continuation review", "footnote_refs": [], "burden_hint": { "setting": "admin", "duration_minutes": 60 } },
+				{ "id": "medication_washout", "label": "Medication washout", "footnote_refs": ["a"], "burden_hint": { "setting": "admin" } },
+				{ "id": "demographics", "label": "Demographics", "footnote_refs": ["c"], "burden_hint": { "setting": "admin", "duration_minutes": 15 } },
+				{ "id": "vaccination", "label": "Vaccination", "footnote_refs": ["e"], "burden_hint": { "setting": "outpatient", "duration_minutes": 30 } },
+				{ "id": "medical_history", "label": "Medical history", "footnote_refs": ["d"], "burden_hint": { "setting": "admin", "duration_minutes": 45 } },
+				{ "id": "vital_signs", "label": "Vital signs", "footnote_refs": ["f"], "burden_hint": { "setting": "outpatient", "duration_minutes": 20 } },
+				{ "id": "physical_exam", "label": "Physical exam / height / weight", "footnote_refs": ["g"], "burden_hint": { "setting": "outpatient", "duration_minutes": 45 } },
+				{ "id": "ecg", "label": "Electrocardiogram", "footnote_refs": [], "burden_hint": { "setting": "outpatient", "duration_minutes": 30 } },
+				{ "id": "echocardiogram", "label": "Echocardiogram", "footnote_refs": [], "burden_hint": { "setting": "imaging", "duration_minutes": 60, "specialist_required": true } },
+				{ "id": "ice_testing", "label": "ICE testing / score", "footnote_refs": ["i"], "burden_hint": { "setting": "self_report", "duration_minutes": 25 } },
+				{ "id": "leukocyte_collection", "label": "Peripheral blood leukocyte collection", "footnote_refs": ["j"], "burden_hint": { "setting": "outpatient", "duration_minutes": 240, "specialist_required": true, "caregiver_required": true } },
+				{ "id": "bridging_corticosteroid", "label": "Bridging corticosteroid therapy", "footnote_refs": ["a"], "burden_hint": { "setting": "admin" } },
+				{ "id": "ld_chemotherapy", "label": "LD chemotherapy", "footnote_refs": ["k"], "burden_hint": { "setting": "outpatient", "duration_minutes": 180, "caregiver_required": true } },
+				{ "id": "inpatient_hospitalization", "label": "Inpatient hospitalization", "footnote_refs": ["b"], "burden_hint": { "setting": "inpatient", "caregiver_required": true } },
+				{ "id": "c_car168_infusion", "label": "C-CAR168 infusion", "footnote_refs": [], "burden_hint": { "setting": "inpatient", "duration_minutes": 180, "specialist_required": true, "caregiver_required": true } },
+				{ "id": "aes_concomitant_meds", "label": "AEs / concomitant medications", "footnote_refs": ["q", "r"], "burden_hint": { "setting": "admin" } },
+				{ "id": "lupus_disease_assessments", "label": "Lupus disease assessments", "footnote_refs": [], "burden_hint": { "setting": "outpatient", "duration_minutes": 60, "specialist_required": true } },
+				{ "id": "pga", "label": "Physician Global Assessment (PGA)", "footnote_refs": [], "burden_hint": { "setting": "outpatient", "duration_minutes": 15 } },
+				{ "id": "pros", "label": "Patient-reported outcomes (PROs)", "footnote_refs": ["l"], "burden_hint": { "setting": "self_report", "duration_minutes": 25 } }
+			]
+		},
+		{
+			"id": "routine_labs",
+			"label": "Routine Laboratory Testing",
+			"procedures": [
+				{ "id": "hematology", "label": "Hematology", "footnote_refs": [], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "tbnk", "label": "TBNK", "footnote_refs": [], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "blood_chemistry", "label": "Blood chemistry", "footnote_refs": [], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15, "fasting_required": true } },
+				{ "id": "coagulation", "label": "Coagulation", "footnote_refs": [], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } }
+			]
+		},
+		{
+			"id": "safety_disease_labs",
+			"label": "Safety & Disease-Activity Labs",
+			"procedures": [
+				{ "id": "viral_pathogen_testing", "label": "Viral pathogen testing", "footnote_refs": [], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "inflammatory_markers", "label": "Inflammatory markers", "footnote_refs": [], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "serum_ig", "label": "Serum Ig", "footnote_refs": [], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "serum_complement", "label": "Serum complement", "footnote_refs": [], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "autoantibody_testing", "label": "Autoantibody testing", "footnote_refs": [], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "pregnancy_test", "label": "Pregnancy test", "footnote_refs": ["n"], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "urinalysis", "label": "Urinalysis", "footnote_refs": [], "burden_hint": { "setting": "lab_draw", "duration_minutes": 10 } },
+				{ "id": "twenty_four_hour_urine", "label": "24-hour urine test", "footnote_refs": [], "burden_hint": { "setting": "self_report", "duration_minutes": 1440 } }
+			]
+		},
+		{
+			"id": "pk_pd_exploratory",
+			"label": "PK, PD & Exploratory Endpoint Laboratory Assessments",
+			"procedures": [
+				{ "id": "car_t_dna_copy", "label": "Peripheral blood CAR-T DNA copy number", "footnote_refs": ["o"], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "car_t_flow", "label": "Peripheral blood CAR-T cell flow cytometry", "footnote_refs": ["o"], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "b_plasma_cells", "label": "Peripheral blood B and plasma cells", "footnote_refs": ["o"], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "soluble_bcma", "label": "Peripheral blood soluble BCMA", "footnote_refs": ["o"], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "cytokines", "label": "Cytokines", "footnote_refs": ["o"], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "immunogenicity", "label": "Immunogenicity", "footnote_refs": ["o", "p"], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "rcl", "label": "RCL", "footnote_refs": ["o"], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "whole_blood_rnaseq", "label": "Whole blood RNAseq", "footnote_refs": ["o", "p"], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } },
+				{ "id": "vaccine_related_antibodies", "label": "Vaccine-related antibodies", "footnote_refs": ["e"], "burden_hint": { "setting": "lab_draw", "duration_minutes": 15 } }
+			]
+		}
+	],
+	"cells": {
+		"signed_consent": { "screening": { "status": "required" } },
+		"renal_biopsy": { "screening": { "status": "required" } },
+		"eligibility_review": {
+			"screening": { "status": "required" },
+			"leukapheresis": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d0": { "status": "required" }
+		},
+		"medication_washout": { "screening": { "status": "required" } },
+		"demographics": { "screening": { "status": "required" } },
+		"vaccination": { "d_minus_7": { "status": "conditional", "note": "Post-leukapheresis, ≥2wk pre-LD" } },
+		"medical_history": { "screening": { "status": "required" } },
+		"vital_signs": {
+			"screening": { "status": "required" },
+			"leukapheresis": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d_minus_5": { "status": "required" },
+			"d_minus_4": { "status": "required" },
+			"d_minus_3": { "status": "required" },
+			"d0": { "status": "required" },
+			"d1": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"physical_exam": {
+			"screening": { "status": "required" },
+			"leukapheresis": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d_minus_5": { "status": "required" },
+			"d0": { "status": "required" },
+			"d1": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"ecg": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d0": { "status": "required" },
+			"d1": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"echocardiogram": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"ice_testing": {
+			"d_minus_7": { "status": "required" },
+			"d7": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "as_needed" },
+			"m3": { "status": "as_needed" }
+		},
+		"leukocyte_collection": { "leukapheresis": { "status": "required" } },
+		"bridging_corticosteroid": { "d_minus_7": { "status": "required" } },
+		"ld_chemotherapy": {
+			"d_minus_5": { "status": "required" },
+			"d_minus_4": { "status": "required" },
+			"d_minus_3": { "status": "required" }
+		},
+		"inpatient_hospitalization": {
+			"d0": { "status": "required" },
+			"d1": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "conditional", "note": "Hospitalized through D7 (per footnote b)" }
+		},
+		"c_car168_infusion": { "d0": { "status": "required" } },
+		"aes_concomitant_meds": {
+			"d1": { "status": "conditional", "note": "Per footnote 14 — typically continuous" }
+		},
+		"lupus_disease_assessments": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d14": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"pga": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d14": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"pros": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d14": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"hematology": {
+			"screening": { "status": "required" },
+			"leukapheresis": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d_minus_5": { "status": "required" },
+			"d_minus_4": { "status": "optional" },
+			"d0": { "status": "required" },
+			"d1": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"tbnk": {
+			"d_minus_7": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"blood_chemistry": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d_minus_5": { "status": "required" },
+			"d_minus_4": { "status": "optional" },
+			"d0": { "status": "required" },
+			"d1": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"coagulation": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"viral_pathogen_testing": { "screening": { "status": "required" } },
+		"inflammatory_markers": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d0": { "status": "required" },
+			"d1": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"serum_ig": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d0": { "status": "required" },
+			"d7": { "status": "required" },
+			"d14": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"serum_complement": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d0": { "status": "required" },
+			"d1": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"autoantibody_testing": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d7": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"pregnancy_test": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"urinalysis": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"twenty_four_hour_urine": {
+			"screening": { "status": "required" },
+			"d_minus_7": { "status": "required" },
+			"d14": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"car_t_dna_copy": {
+			"d_minus_7": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"car_t_flow": {
+			"d_minus_7": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"b_plasma_cells": {
+			"d_minus_7": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"soluble_bcma": {
+			"d_minus_7": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"cytokines": {
+			"d_minus_7": { "status": "required" },
+			"d0": { "status": "required" },
+			"d1": { "status": "required" },
+			"d4": { "status": "required" },
+			"d7": { "status": "required" },
+			"d10": { "status": "required" },
+			"d14": { "status": "required" },
+			"d21": { "status": "required" },
+			"d28": { "status": "required" },
+			"m2": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"immunogenicity": {
+			"d_minus_7": { "status": "required" },
+			"d28": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "conditional", "note": "M6, M12, M24 only" },
+			"et": { "status": "required" }
+		},
+		"rcl": {
+			"d_minus_7": { "status": "required" },
+			"d28": { "status": "required" },
+			"et": { "status": "required" }
+		},
+		"whole_blood_rnaseq": {
+			"d_minus_7": { "status": "required" },
+			"d28": { "status": "required" },
+			"m3": { "status": "required" },
+			"m6_24": { "status": "conditional", "note": "M6, M12 only" },
+			"et": { "status": "required" }
+		},
+		"vaccine_related_antibodies": {
+			"screening": { "status": "required" },
+			"d28": { "status": "required" },
+			"et": { "status": "required" }
+		}
+	}
+}

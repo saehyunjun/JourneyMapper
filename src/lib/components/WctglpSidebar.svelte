@@ -33,7 +33,9 @@
 		Route,
 		Database,
 		Lightbulb,
-		FlaskConical
+		FlaskConical,
+		Users,
+		Map
 	} from '@lucide/svelte';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 
@@ -56,6 +58,7 @@
 				{ title: 'Insight Builder', url: '/patientlyiq/key-findings', icon: LayoutDashboard },
 				{ title: 'Transcript Review', url: '/patientlyiq/upload', icon: NotebookPen },
 				{ title: 'Journey Workbench', url: '/patientlyiq/journey-workbench', icon: Route },
+				{ title: 'Persona Workbench', url: '/patientlyiq/persona-workbench', icon: Users },
 				{ title: 'Content Planner', url: '/patientlyiq/suggestor', icon: Lightbulb }
 			]
 		},
@@ -63,6 +66,7 @@
 			label: 'Audiences',
 			items: [
 				{ title: 'Personas', url: '/patientlyiq/personas', icon: FingerprintPattern },
+				{ title: 'Journey Map', url: '/patientlyiq/journey-map', icon: Map },
 				{ title: 'Community', url: '/patientlyiq/community', icon: MessageSquareText },
 				{ title: 'Digital Data', url: '/patientlyiq/digital-data', icon: Database },
 				{ title: 'Clinical Trials', url: '/patientlyiq/clinical-trials', icon: FlaskConical }

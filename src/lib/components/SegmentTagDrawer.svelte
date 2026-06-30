@@ -22,7 +22,7 @@
 	import codebook from '$lib/content/wctglpdemo-data/codebook.json';
 	import lexiconRaw from '$lib/content/wctglpdemo-data/keyword_lexicon.json';
 	import phraseLexRaw from '$lib/content/wctglpdemo-data/phrase_lexicon.json';
-	import { EMOTION_PICKER } from '$lib/journeymapper2/plutchikEmotionsConfig.js';
+	import { EMOTION_PICKER } from '$lib/content/emotions/plutchik';
 	import EmotionDyadChip from '$lib/components/EmotionDyadChip.svelte';
 	import { questionLabel } from '$lib/content/wctglpdemo-data/analysis';
 	import * as ContextMenu from '$lib/components/ui/context-menu/index.js';
@@ -2003,6 +2003,7 @@
 		bind:open={keywordDrawerOpen}
 		selection={tertiarySelection}
 		categories={lexicon.categories}
+		scopedSubthemes={themes}
 		currentKeyword={moveSourceKeyword}
 		busy={lexBusy}
 		{errorMsg}

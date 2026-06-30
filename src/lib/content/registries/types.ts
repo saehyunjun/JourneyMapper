@@ -17,7 +17,10 @@ export type IndicationId =
 	| 'lupus_nephritis'
 	| 'melanoma'
 	| 'obesity'
-	| 'multiple_sclerosis';
+	| 'multiple_sclerosis'
+	| 'pku'
+	| 'sjogrens'
+	| 'iga_nephropathy';
 
 export type DatasetTypeId =
 	| 'keyword_clusters'
@@ -35,9 +38,12 @@ export type SourceTypeId = 'manual_extract' | 'primary_research' | 'third_party_
 export type ContentSourceId =
 	| 'interview'
 	| 'social_post'
+	| 'social_comment'
 	| 'youtube_transcript'
 	| 'forum_post'
+	| 'forum_comment'
 	| 'blog_post'
+	| 'blog_comment'
 	| 'search_query'
 	| 'podcast_transcript';
 

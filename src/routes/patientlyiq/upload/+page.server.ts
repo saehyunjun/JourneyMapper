@@ -61,6 +61,16 @@ import {
 	removeFragmentKeywordTag,
 	readFragmentKeywordTags
 } from '$lib/server/fragment-keyword-tags';
+import {
+	rowFragmentId,
+	transcriptEpisodeSlug,
+	transcriptFragmentId,
+	transcriptPostId,
+	FORUM_KINDS,
+	BLOG_KINDS,
+	type RowKinds,
+	type TranscriptKind
+} from '$lib/ingest/conventions';
 
 // The parse action awaits the autotag chain in prod (two Claude calls +
 // validation), which usually takes 1–4 minutes. 300s is the Hobby ceiling;
@@ -94,6 +104,12 @@ const CODEBOOK_EMOTIONS = new Set(
 
 // Tolerates `**interviewer:**`, `Interviewer:`, `Participant:` and similar.
 const SPEAKER_RE = /^\s*\*{0,2}\s*(interviewer|participant)\s*:?\s*\*{0,2}\s*:?\s*/i;
+// Used by the podcast / youtube transcript path: any short Word or "Word Word"
+// label followed by a colon counts as a speaker. Capped at 32 chars and three
+// space-separated tokens so prose accidentally starting with a colon-like
+// fragment doesn't get treated as a turn (e.g. "Note: this is wrong").
+const GENERIC_SPEAKER_RE =
+	/^\s*\*{0,2}\s*([A-Za-z][A-Za-z0-9'’.\-]*(?:\s+[A-Za-z][A-Za-z0-9'’.\-]*){0,2})\s*\*{0,2}\s*:\s*/;
 const TITLE_PARTICIPANT_RE = /participant\s+(\d+)/i;
 
 // Words that take a trailing period without ending a sentence.
@@ -175,8 +191,15 @@ function splitSentences(text: string): { text: string; start: number; end: numbe
 	return segments;
 }
 
-/** Port of parseTranscript() from scripts/parse-transcripts.mjs. */
-function parseTranscript(text: string) {
+/** Port of parseTranscript() from scripts/parse-transcripts.mjs.
+ *
+ *  Pass `generic: true` for podcast/youtube transcripts where speaker labels
+ *  are arbitrary ("Host:", "Guest:", "Sarah:") rather than the interview
+ *  pipeline's fixed interviewer/participant pair. The generic regex is also
+ *  greedier, so don't use it for interview ingest — colon-led headers in the
+ *  preamble would become spurious turns. */
+function parseTranscript(text: string, opts: { generic?: boolean } = {}) {
+	const speakerRe = opts.generic ? GENERIC_SPEAKER_RE : SPEAKER_RE;
 	const lines = text.split('\n');
 	const offsets: number[] = [];
 	let cur = 0;
@@ -188,7 +211,7 @@ function parseTranscript(text: string) {
 	// A leading title line is optional for pasted text.
 	let startLine = 0;
 	let titleLine = '';
-	if (lines.length > 0 && lines[0].trim() !== '' && !SPEAKER_RE.test(lines[0])) {
+	if (lines.length > 0 && lines[0].trim() !== '' && !speakerRe.test(lines[0])) {
 		titleLine = lines[0];
 		startLine = 1;
 	}
@@ -203,7 +226,7 @@ function parseTranscript(text: string) {
 		const line = lines[i];
 		if (line.trim() === '') continue;
 
-		const speaker = line.match(SPEAKER_RE);
+		const speaker = line.match(speakerRe);
 		if (!speaker) {
 			if (!seenFirstSpeaker) demographicsLines.push(line.replace(/^[#\-*\s]+/, '').trim());
 			else warnings.push(`Line ${i + 1} skipped (not a speaker turn): "${line.trim().slice(0, 60)}"`);
@@ -374,12 +397,14 @@ const SPLIT_DEFAULTS = {
 	enabled: true,
 	min_chars: 400,
 	min_sentences: 4,
-	applies_to: ['social_post', 'social_comment']
+	applies_to: ['social_post', 'social_comment', 'blog_post', 'blog_comment']
 };
 
-const FORUM_WEIGHT_BASE: Record<string, number> = {
+const ROW_WEIGHT_BASE: Record<string, number> = {
 	social_post: 0.5,
-	social_comment: 0.3
+	social_comment: 0.3,
+	blog_post: 0.5,
+	blog_comment: 0.3
 };
 
 const HTML_ENTITIES: Record<string, string> = {
@@ -410,7 +435,7 @@ function normalizeForumText(s: string): string {
 }
 
 type ProjectionResult = {
-	fragmentsByContentSource: { social_post: Fragment[]; social_comment: Fragment[] };
+	fragmentsByContentSource: Partial<Record<ContentSourceId, Fragment[]>>;
 	errors: string[];
 	stats: {
 		inputRows: number;
@@ -428,12 +453,17 @@ function projectForumRows({
 	corpusId,
 	config,
 	rows,
-	seenThreadConv
+	seenThreadConv,
+	kinds = FORUM_KINDS
 }: {
 	corpusId: string;
 	config: ForumIngestConfig;
 	rows: ForumRow[];
 	seenThreadConv: Set<string>;
+	/** Which content_source ids the projected fragments carry. Defaults to
+	 *  social_post/social_comment so existing call sites stay unchanged; the
+	 *  unified upload dialog passes BLOG_KINDS for blog ingest. */
+	kinds?: RowKinds;
 }): ProjectionResult {
 	const splitCfg = { ...SPLIT_DEFAULTS, ...(config.split_long_fragments ?? {}) };
 	const splitApplies = new Set(splitCfg.applies_to);
@@ -481,11 +511,11 @@ function projectForumRows({
 		resolvedContextByUser.set(uid, best[0]);
 	}
 
-	function contentSourceOf(row: ForumRow): 'social_post' | 'social_comment' {
+	function contentSourceOf(row: ForumRow): ContentSourceId {
 		const postId = `${corpusId}-T${row.Thread ?? '?'}-C${row.Conversation ?? '?'}`;
-		if (seenThreadConv.has(postId)) return 'social_comment';
+		if (seenThreadConv.has(postId)) return kinds.comment;
 		seenThreadConv.add(postId);
-		return 'social_post';
+		return kinds.post;
 	}
 
 	function speakerAttrsFor(uid: string | undefined): Record<string, unknown> {
@@ -501,15 +531,6 @@ function projectForumRows({
 		return attrs;
 	}
 
-	function fragmentIdOf(row: ForumRow, rowIdx: number): string {
-		const t = String(row.Thread ?? '').trim().replace(/\s+/g, '');
-		const c = String(row.Conversation ?? '').trim().replace(/\s+/g, '');
-		const m = String(row.Comment ?? '').trim().replace(/\s+/g, '_').toLowerCase();
-		const base = [t, c, m].filter(Boolean).join('-');
-		if (base) return `fc-${corpusId}-${base}`;
-		return `fc-${corpusId}-row${String(rowIdx).padStart(5, '0')}`;
-	}
-
 	function shouldSplit(text: string, contentSource: string) {
 		if (!splitCfg.enabled) return null;
 		if (!splitApplies.has(contentSource)) return null;
@@ -520,10 +541,13 @@ function projectForumRows({
 	}
 
 	const errors: string[] = [];
-	const fragmentsByContentSource: { social_post: Fragment[]; social_comment: Fragment[] } = {
-		social_post: [],
-		social_comment: []
+	const fragmentsByContentSource: Partial<Record<ContentSourceId, Fragment[]>> = {
+		[kinds.post]: [],
+		[kinds.comment]: []
 	};
+	function pushFragment(cs: ContentSourceId, f: Fragment) {
+		(fragmentsByContentSource[cs] ??= []).push(f);
+	}
 	const seenIds = new Set<string>();
 	let skippedMetadataRows = 0;
 	let splitParentRows = 0;
@@ -556,7 +580,13 @@ function projectForumRows({
 
 		const uid = userIdOf(i, r);
 		const contentSource = contentSourceOf(r);
-		const rowFragmentId = fragmentIdOf(r, i);
+		const parentRowFragmentId = rowFragmentId({
+			corpusId,
+			thread: r.Thread,
+			conversation: r.Conversation,
+			comment: r.Comment,
+			rowIndex: i
+		});
 		const postId = `${corpusId}-T${r.Thread ?? '?'}-C${r.Conversation ?? '?'}`;
 		const commentId = String(r.Comment ?? '').trim();
 
@@ -576,7 +606,7 @@ function projectForumRows({
 			date_observed: String(r.Timestamp),
 			date_referenced: null,
 			speaker_attrs: speakerAttrsFor(uid),
-			weight_base: FORUM_WEIGHT_BASE[contentSource] ?? 0.5,
+			weight_base: ROW_WEIGHT_BASE[contentSource] ?? 0.5,
 			weight_signals: {},
 			license,
 			redistribute_verbatim: redistribute,
@@ -596,13 +626,13 @@ function projectForumRows({
 					errors.push(`row ${i} seg ${s}: split offsets do not round-trip against parent text`);
 					continue;
 				}
-				const childId = `${rowFragmentId}_s${pad(s)}`;
+				const childId = `${parentRowFragmentId}_s${pad(s)}`;
 				if (seenIds.has(childId)) {
 					errors.push(`row ${i}: duplicate fragment_id ${childId}`);
 					continue;
 				}
 				seenIds.add(childId);
-				fragmentsByContentSource[contentSource].push({
+				pushFragment(contentSource, {
 					id: childId,
 					...baseFragment,
 					source_ref: { ...baseSourceRef, char_start: part.start, char_end: part.end },
@@ -613,11 +643,11 @@ function projectForumRows({
 			continue;
 		}
 
-		if (seenIds.has(rowFragmentId)) {
-			errors.push(`row ${i}: duplicate fragment_id ${rowFragmentId}`);
+		if (seenIds.has(parentRowFragmentId)) {
+			errors.push(`row ${i}: duplicate fragment_id ${parentRowFragmentId}`);
 			continue;
 		}
-		seenIds.add(rowFragmentId);
+		seenIds.add(parentRowFragmentId);
 
 		const flags: string[] = [];
 		if (
@@ -629,8 +659,8 @@ function projectForumRows({
 			unsplittableLongRows += 1;
 		}
 
-		fragmentsByContentSource[contentSource].push({
-			id: rowFragmentId,
+		pushFragment(contentSource, {
+			id: parentRowFragmentId,
 			...baseFragment,
 			source_ref: baseSourceRef,
 			text: normalizedText,
@@ -638,14 +668,16 @@ function projectForumRows({
 		} as unknown as Fragment);
 	}
 
+	const emittedFragments = Object.values(fragmentsByContentSource).reduce(
+		(n, arr) => n + (arr?.length ?? 0),
+		0
+	);
 	return {
 		fragmentsByContentSource,
 		errors,
 		stats: {
 			inputRows: rows.length,
-			emittedFragments:
-				fragmentsByContentSource.social_post.length +
-				fragmentsByContentSource.social_comment.length,
+			emittedFragments,
 			skippedMetadataRows,
 			splitParentRows,
 			splitChildFragments,
@@ -1280,10 +1312,25 @@ export const actions: Actions = {
 		}
 		const [postId] = [...postIds];
 
-		// Chronological order so the merged text reads naturally.
-		const ordered = [...sources].sort(
-			(a, b) => new Date(a.date_observed).getTime() - new Date(b.date_observed).getTime()
-		);
+		// Chronological order so the merged text reads naturally. Two split
+		// children of the same forum post share `date_observed`, so we tie-break
+		// on `source_ref.char_start` (the offset of the child inside the parent's
+		// normalized text), then on `id` for a fully deterministic order. Without
+		// this, a post-title fragment could land BELOW a body-sentence fragment
+		// in the merged preview because the time stamps tie.
+		function orderKey(f: Fragment): [number, number, string] {
+			const ref = f.source_ref as { char_start?: number };
+			const t = new Date(f.date_observed).getTime();
+			const cs = typeof ref.char_start === 'number' ? ref.char_start : 0;
+			return [t, cs, f.id];
+		}
+		const ordered = [...sources].sort((a, b) => {
+			const [at, acs, aid] = orderKey(a);
+			const [bt, bcs, bid] = orderKey(b);
+			if (at !== bt) return at - bt;
+			if (acs !== bcs) return acs - bcs;
+			return aid.localeCompare(bid);
+		});
 
 		const mergedText = ordered.map((f) => f.text).join('\n\n');
 		// Stable id derived from the sorted source ids — same inputs always
@@ -1540,6 +1587,13 @@ export const actions: Actions = {
 		const fd = await request.formData();
 		const corpusId = String(fd.get('corpus_id') ?? '').trim();
 		const rowsRaw = String(fd.get('rows') ?? '');
+		// content_source_kind selects which (post, comment) content_source pair
+		// the projected fragments carry. 'forum' (default) → social_post/social_-
+		// comment for back-compat with the original add-rows dialog; 'blog' →
+		// blog_post/blog_comment for the unified TranscriptUploadDialog.
+		const sourceKindParam = String(fd.get('content_source_kind') ?? 'forum').trim();
+		const kinds: RowKinds =
+			sourceKindParam === 'blog' ? BLOG_KINDS : FORUM_KINDS;
 		// dry_run=1 returns the projection breakdown without touching disk. The
 		// dialog calls this first so the analyst sees how many fragments would
 		// be NEW vs OVERWRITE existing ids before committing — the original
@@ -1612,7 +1666,8 @@ export const actions: Actions = {
 			corpusId,
 			config,
 			rows: inputRows,
-			seenThreadConv
+			seenThreadConv,
+			kinds
 		});
 		if (projection.errors.length > 0) {
 			return fail(400, {
@@ -1621,10 +1676,7 @@ export const actions: Actions = {
 				}`
 			});
 		}
-		const allNew = [
-			...projection.fragmentsByContentSource.social_post,
-			...projection.fragmentsByContentSource.social_comment
-		];
+		const allNew = Object.values(projection.fragmentsByContentSource).flatMap((arr) => arr ?? []);
 		if (allNew.length === 0) {
 			return fail(400, { error: 'No fragments produced from the input rows.' });
 		}
@@ -1636,7 +1688,7 @@ export const actions: Actions = {
 		type PartitionPlan = { newIds: string[]; overwriteIds: string[] };
 		const plan: Record<string, PartitionPlan> = {};
 		for (const [contentSource, fresh] of Object.entries(projection.fragmentsByContentSource)) {
-			if (fresh.length === 0) continue;
+			if (!fresh || fresh.length === 0) continue;
 			plan[contentSource] = { newIds: [], overwriteIds: [] };
 			for (const f of fresh) {
 				if (existingIds.has(f.id)) plan[contentSource].overwriteIds.push(f.id);
@@ -1672,7 +1724,7 @@ export const actions: Actions = {
 		const nowIso = new Date().toISOString();
 		const partitionCounts: Record<string, number> = {};
 		for (const [contentSource, fresh] of Object.entries(projection.fragmentsByContentSource)) {
-			if (fresh.length === 0) continue;
+			if (!fresh || fresh.length === 0) continue;
 			const existingPart = await loadCorpusFragments(corpusId, contentSource);
 			const file: { meta: Record<string, unknown>; fragments: Fragment[] } = existingPart ?? {
 				meta: {
@@ -1758,6 +1810,237 @@ export const actions: Actions = {
 			summary,
 			partitions: partitionCounts,
 			stats: projection.stats,
+			autotagStarted,
+			autotagError
+		};
+	},
+
+	// --- Pasted podcast / YouTube transcript → corpus fragments ---
+	// Same destination shape as addToCorpus (writes per-partition fragments +
+	// manifest), but reads a speaker-prefixed raw transcript instead of CSV/JSON
+	// rows. Reuses parseTranscript() (the interview pipeline's speaker-turn
+	// detector) and splitSentences() for long-turn splitting. One fragment per
+	// turn for short turns; per-sentence sub-fragments when a turn would
+	// otherwise exceed the corpus's split threshold.
+	parseTranscriptToCorpus: async ({ request }) => {
+		const fd = await request.formData();
+		const corpusId = String(fd.get('corpus_id') ?? '').trim();
+		const kindParam = String(fd.get('kind') ?? '').trim();
+		const episodeIdRaw = String(fd.get('episode_id') ?? '').trim();
+		const episodeLabel = String(fd.get('episode_label') ?? '').trim() || null;
+		const episodeUrl = String(fd.get('episode_url') ?? '').trim() || undefined;
+		const rawTranscript = String(fd.get('transcript') ?? '');
+		const runAutotag = String(fd.get('run_autotag') ?? '') === '1';
+
+		if (!corpusId) return fail(400, { error: 'Missing corpus_id.' });
+		if (kindParam !== 'podcast_transcript' && kindParam !== 'youtube_transcript') {
+			return fail(400, { error: 'kind must be podcast_transcript or youtube_transcript.' });
+		}
+		const kind: TranscriptKind = kindParam;
+		const episodeSlug = transcriptEpisodeSlug(episodeIdRaw);
+		if (!episodeSlug) {
+			return fail(400, {
+				error:
+					'Episode id is required so per-segment fragment ids stay stable across re-uploads. Use a slug like "ep042" or a video id.'
+			});
+		}
+
+		const text = rawTranscript.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+		if (text.trim().length < 20) {
+			return fail(400, { error: 'Paste a transcript before submitting.' });
+		}
+
+		const config = await loadCorpusIngestConfig<ForumIngestConfig>(corpusId);
+		// Transcript corpora may not have a forum-style ingest.config.json yet;
+		// fall back to sensible defaults for license + indications inferred from
+		// the manifest. The point of requiring config for addToCorpus was speaker-
+		// attr context-mapping — irrelevant here since transcripts don't carry a
+		// Context column.
+		const manifestPre = await loadCorpusManifest(corpusId);
+		if (!manifestPre) return fail(404, { error: `Corpus "${corpusId}" manifest not readable.` });
+		const indications = (config?.indications ?? manifestPre.indications) as Fragment['indications'];
+		const license: Fragment['license'] = config?.license ?? 'research_fair_use';
+		const redistribute = config?.redistribute_verbatim ?? false;
+		const deidRulesVersion = config?.deid_rules_version ?? 'unspecified@v0';
+		const deidentifierVersion = config?.deidentifier_version ?? 'unspecified@v0';
+		const splitCfg = { ...SPLIT_DEFAULTS, ...(config?.split_long_fragments ?? {}) };
+
+		const { titleLine, turns, warnings } = parseTranscript(text, { generic: true });
+		if (turns.length === 0) {
+			return fail(400, {
+				error:
+					'No speaker turns found. Expected lines like "Host: …" / "Guest: …" / "Narrator: …".'
+			});
+		}
+
+		const nowIso = new Date().toISOString();
+		const mediaPostId = transcriptPostId({ corpusId, kind, episodeSlug });
+		const baseSourceRef = {
+			kind,
+			...(episodeUrl ? { url: episodeUrl } : {}),
+			media_id: episodeSlug,
+			post_id: mediaPostId,
+			captured_at: nowIso
+		} as const;
+		const baseFragment = {
+			corpus_id: corpusId,
+			indications,
+			content_source: kind as ContentSourceId,
+			lang: 'en',
+			date_observed: nowIso,
+			date_referenced: null,
+			speaker_attrs: {},
+			weight_base: 0.5,
+			weight_signals: {},
+			license,
+			redistribute_verbatim: redistribute,
+			deidentified_at: nowIso,
+			deidentifier_version: deidentifierVersion,
+			deid_rules_version: deidRulesVersion,
+			ingested_at: nowIso,
+			ingester_version: FORUM_INGEST_INLINE_VERSION
+		} as const;
+
+		const out: Fragment[] = [];
+		let segmentIndex = 0;
+		let splitParentTurns = 0;
+		let splitChildFragments = 0;
+		for (const turn of turns) {
+			const speakerLower = turn.speaker.toLowerCase();
+			const speakerAttrs = speakerLower
+				? { speaker_role: { value: speakerLower, evidence: 'stated', source_quote: '' } }
+				: {};
+			const turnText = turn.text;
+			const shouldSplitTurn =
+				splitCfg.enabled && turnText.length >= splitCfg.min_chars;
+			if (shouldSplitTurn) {
+				const sentences = splitSentences(turnText);
+				if (sentences.length >= splitCfg.min_sentences) {
+					splitParentTurns += 1;
+					for (const sent of sentences) {
+						const id = transcriptFragmentId({ corpusId, kind, episodeSlug, segmentIndex });
+						out.push({
+							id,
+							...baseFragment,
+							speaker_attrs: speakerAttrs,
+							source_ref: {
+								...baseSourceRef,
+								char_start: turn.char_start + sent.start,
+								char_end: turn.char_start + sent.end
+							},
+							text: sent.text
+						} as unknown as Fragment);
+						segmentIndex += 1;
+						splitChildFragments += 1;
+					}
+					continue;
+				}
+			}
+			const id = transcriptFragmentId({ corpusId, kind, episodeSlug, segmentIndex });
+			out.push({
+				id,
+				...baseFragment,
+				speaker_attrs: speakerAttrs,
+				source_ref: {
+					...baseSourceRef,
+					char_start: turn.char_start,
+					char_end: turn.char_end
+				},
+				text: turnText
+			} as unknown as Fragment);
+			segmentIndex += 1;
+		}
+
+		// Persist into the kind's partition (upsert by id so re-running on the
+		// same episode replaces in-place rather than duplicating).
+		const partition = kind;
+		const existingPart = await loadCorpusFragments(corpusId, partition);
+		const file: { meta: Record<string, unknown>; fragments: Fragment[] } = existingPart ?? {
+			meta: {
+				schema_version: '1.0',
+				corpus_id: corpusId,
+				content_source: partition,
+				platform: kind === 'podcast_transcript' ? 'podcast' : 'youtube',
+				generated_at: nowIso,
+				generator: 'src/routes/patientlyiq/upload parseTranscriptToCorpus action',
+				ingester_version: FORUM_INGEST_INLINE_VERSION,
+				sources: ['ui-paste'],
+				fragment_count: 0,
+				notes: [`Created by ${kind} paste in /patientlyiq/upload.`]
+			},
+			fragments: []
+		};
+		const existingIds = new Set(file.fragments.map((f) => f.id));
+		const overwriteIds: string[] = [];
+		const newIds: string[] = [];
+		for (const f of out) {
+			if (existingIds.has(f.id)) overwriteIds.push(f.id);
+			else newIds.push(f.id);
+		}
+		const byId = new Map(file.fragments.map((f) => [f.id, f] as const));
+		for (const f of out) byId.set(f.id, f);
+		file.fragments = [...byId.values()].sort((a, b) => a.id.localeCompare(b.id));
+		(file.meta as Record<string, unknown>).fragment_count = file.fragments.length;
+		(file.meta as Record<string, unknown>).updated_at = nowIso;
+		if (titleLine && !(file.meta as Record<string, unknown>).source_title) {
+			(file.meta as Record<string, unknown>).source_title = titleLine;
+		}
+		await saveCorpusFragments(corpusId, partition, file);
+
+		// Make sure an annotations doc exists so the retag drawer can read it.
+		const annExisting = await loadCorpusAnnotations(corpusId, partition);
+		if (!annExisting) {
+			await saveCorpusAnnotations(corpusId, partition, {
+				meta: {
+					schema_version: '1.0',
+					corpus_id: corpusId,
+					content_source: partition as ContentSourceId,
+					updated_at: nowIso
+				},
+				annotations: {}
+			});
+		}
+
+		// Refresh manifest partition list.
+		const manifest = manifestPre;
+		const partitionsById = new Map(manifest.partitions.map((p) => [p.content_source, p]));
+		partitionsById.set(partition as ContentSourceId, {
+			content_source: partition as ContentSourceId,
+			fragment_count: file.fragments.length,
+			ingester_version: FORUM_INGEST_INLINE_VERSION,
+			last_ingested_at: nowIso
+		});
+		manifest.partitions = [...partitionsById.values()];
+		manifest.updated_at = nowIso;
+		await saveCorpusManifest(corpusId, manifest);
+
+		let autotagStarted = false;
+		let autotagError: string | null = null;
+		if (runAutotag) {
+			try {
+				const { started, completion } = await startCorpusAutotag(corpusId);
+				autotagStarted = started;
+				if (!dev) await completion;
+			} catch (err) {
+				autotagError = (err as Error).message;
+			}
+		}
+
+		return {
+			stage: 'transcriptToCorpus' as const,
+			success: true,
+			corpusId,
+			kind,
+			episodeSlug,
+			episodeLabel,
+			added: out.length,
+			newCount: newIds.length,
+			overwriteCount: overwriteIds.length,
+			overwriteSample: overwriteIds.slice(0, 5),
+			turnCount: turns.length,
+			splitParentTurns,
+			splitChildFragments,
+			warnings,
 			autotagStarted,
 			autotagError
 		};

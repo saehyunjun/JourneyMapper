@@ -16,6 +16,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button';
+	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import BentoCard from '$lib/components/personas/BentoCard.svelte';
 	import { createCountUp, createReplayKeys } from '$lib/components/personas/bento-anim.svelte';
@@ -178,6 +179,11 @@
 		if (p.title) return p.title;
 		const top = p.top_subthemes[0]?.id ?? p.top_themes[0]?.id ?? null;
 		return top ? titleCase(top) : `Cluster #${p.rank ?? '?'}`;
+	}
+
+	function evidenceAuthorAvatar(author: string | null): string | null {
+		if (!selected || !author) return null;
+		return selected.evidence.find((ev) => ev.author_handle_hash === author)?.author_avatar_url ?? null;
 	}
 
 	// Filter prose — a one-sentence English render of the PersonaFilter, used
@@ -376,32 +382,61 @@
 				<span class="figcaption text-accent-mint">
 					{view === 'suggestions' ? 'Cluster Explorer' : 'Saved Personas'}
 				</span>
-				<div class="flex flex-wrap gap-2">
-					{#each gallery as p (p.id)}
-						{@const active = p.id === selectedId}
-						{@const dot = p.color ?? indicationColor(p.indication)}
-						<Button
-							variant="secondary"
-							class="flex items-center gap-2 rounded-full border py-1 pr-3.5 pl-2.5 text-sm transition-colors duration-350
-								{active
-								? 'border-(--orange) bg-(--orange) text-(--paper)'
-								: 'border-(-muted) bg-(-muted) text-foreground hover:bg-(--ink)/5'}"
-							aria-pressed={active}
-							onclick={() => selectPersona(p.id)}
-						>
-							<span
-								class="inline-block size-2.5 shrink-0 rounded-full"
-								style:background-color={dot}
-							></span>
-							<span class="flex flex-col items-start leading-tight">
-								<span class="text-sm font-medium">{personaTitle(p)}</span>
-								<span class="text-[10px] opacity-80">
-									{p.corpus_label} · {p.fragment_count} frags
-								</span>
-							</span>
-						</Button>
-					{/each}
-				</div>
+				<Tooltip.Provider delayDuration={200}>
+					<div class="flex flex-wrap gap-2">
+						{#each gallery as p (p.id)}
+							{@const active = p.id === selectedId}
+							{@const dot = p.color ?? indicationColor(p.indication)}
+							<Tooltip.Root>
+								<Tooltip.Trigger>
+									{#snippet child({ props })}
+										<Button
+											{...props}
+											variant="secondary"
+											class="flex items-center gap-2 rounded-full border py-1 pr-2 pl-2 text-sm transition-colors duration-350
+												{active
+												? 'border-(--orange) bg-(--orange) text-(--paper)'
+												: 'border-(-muted) bg-(-muted) text-foreground hover:bg-(--ink)/5'}"
+											aria-pressed={active}
+											onclick={() => selectPersona(p.id)}
+										>
+											{#if p.avatar_url}
+												<img
+													src={p.avatar_url}
+													alt=""
+													class="size-6 shrink-0 rounded-full border border-white/60 bg-white object-cover"
+												/>
+											{:else}
+												<span
+													class="ml-1 inline-block size-2 shrink-0 rounded-full"
+													style:background-color={dot}
+												></span>
+											{/if}
+											<span class="text-sm font-medium leading-tight">{personaTitle(p)}</span>
+											<span
+												class="ml-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-medium tabular-nums
+													{active ? 'bg-(--paper)/20 text-(--paper)' : 'bg-(--ink)/10 text-foreground/70'}"
+											>
+												{p.fragment_count}
+											</span>
+										</Button>
+									{/snippet}
+								</Tooltip.Trigger>
+								<Tooltip.Content sideOffset={6}>
+									<div class="flex flex-col gap-0.5">
+										<span class="text-[10px] font-medium uppercase tracking-wide opacity-70">
+											Source
+										</span>
+										<span class="font-medium">{p.corpus_label}</span>
+										<span class="text-[11px] opacity-70">
+											{p.fragment_count} fragments
+										</span>
+									</div>
+								</Tooltip.Content>
+							</Tooltip.Root>
+						{/each}
+					</div>
+				</Tooltip.Provider>
 			</div>
 
 			{#if selected}
@@ -436,78 +471,139 @@
 
 				{#if hasNarrative && archetypeView && selected.narrative}
 					{@const motif = selected.color ?? indicationColor(selected.indication)}
+					{@const n = selected.narrative}
+					{@const pillars = [
+						{ id: 'medical_self_efficacy', label: 'Medical self-efficacy', color: '#c7935d', items: n.medical_self_efficacy },
+						{ id: 'provider_trust', label: 'Provider trust', color: '#5e7bb5', items: n.provider_trust },
+						{ id: 'logistical_capacity', label: 'Logistical capacity', color: '#6da378', items: n.logistical_capacity },
+						{ id: 'emotional_valence', label: 'Emotional valence', color: '#9b8cc7', items: n.emotional_valence }
+					].filter((p) => p.items && p.items.length > 0)}
+					{@const factLists = [
+						{ id: 'care_team_history', label: 'Care team history', items: n.care_team_history },
+						{ id: 'key_health_events', label: 'Key health events', items: n.key_health_events },
+						{ id: 'treatment_history', label: 'Treatment history', items: n.treatment_history },
+						{ id: 'trial_awareness', label: 'Trial awareness', items: n.trial_awareness }
+					].filter((f) => f.items && f.items.length > 0)}
 					<!-- Archetype layout — Commonwealth-Fund-style: color band header
-					     + tagline, two-column Patient / Person concerns, then the
-					     first-person paragraph beside the hero pull-quote. -->
+					     + tagline, four-pillar concerns grid (or legacy Patient/Person
+					     two-column fallback), narrative paragraph beside the hero
+					     pull-quote, then optional "At a glance" fact lists. -->
 					<article class="overflow-hidden rounded-xl border border-(--ink)/10 bg-white shadow-sm">
 						<!-- Color band header -->
-						<header class="flex flex-col gap-2 px-8 py-7" style:background-color={motif}>
-							<span class="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">
-								{selected.kind === 'saved' ? 'Saved persona' : 'Suggested cluster'}
-								· {selected.corpus_label}
-								{#if selected.indication}
-									· {titleCase(selected.indication)}
-								{/if}
-							</span>
-							<h2 class="font-heading text-3xl font-light uppercase text-white md:text-4xl">
-								{personaTitle(selected)}
-							</h2>
-							<p class="max-w-3xl font-heading text-lg font-light italic text-white/90">
-								{selected.narrative.tagline}
-							</p>
+						<header
+							class="flex flex-col gap-5 px-8 py-7 md:flex-row md:items-center"
+							style:background-color={motif}
+						>
+							{#if selected.avatar_url}
+								<img
+									src={selected.avatar_url}
+									alt=""
+									class="size-24 shrink-0 rounded-full border-4 border-white/55 bg-white object-cover shadow-sm"
+								/>
+							{/if}
+							<div class="flex min-w-0 flex-col gap-2">
+								<span class="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">
+									{selected.kind === 'saved' ? 'Saved persona' : 'Suggested cluster'}
+									· {selected.corpus_label}
+									{#if selected.indication}
+										· {titleCase(selected.indication)}
+									{/if}
+								</span>
+								<h2 class="font-heading text-3xl font-light uppercase text-white md:text-4xl">
+									{personaTitle(selected)}
+								</h2>
+								<p class="max-w-3xl font-heading text-lg font-light text-white/90">
+									{n.tagline}
+								</p>
+							</div>
 						</header>
 
-						<!-- Patient / Person two-column bullets -->
-						<section class="grid grid-cols-1 gap-px bg-(--ink)/10 md:grid-cols-2">
-							<div class="flex flex-col gap-3 bg-(--paper) p-7">
-								<h3
-									class="font-heading text-base font-medium tracking-wide"
-									style:color={motif}
-								>
-									Patient
-								</h3>
-								<ul class="flex flex-col gap-3">
-									{#each selected.narrative.patient_concerns as concern, i (i)}
-										<li class="flex gap-2 text-sm leading-relaxed text-foreground">
+						{#if pillars.length > 0}
+							<!-- Four-pillar concerns grid — matches the journeymap sentiment
+							     tracker's vocabulary so the persona card and journeymap can
+							     be read against each other. Pillars with no data are hidden. -->
+							<section class="grid grid-cols-1 gap-px bg-(--ink)/10 md:grid-cols-2">
+								{#each pillars as pillar (pillar.id)}
+									<div class="flex flex-col gap-3 bg-(--paper) p-7">
+										<div class="flex items-center gap-2">
 											<span
-												class="mt-1.5 inline-block size-1.5 shrink-0 rounded-full"
-												style:background-color={motif}
+												class="inline-block size-2.5 shrink-0 rounded-sm"
+												style:background-color={pillar.color}
 											></span>
-											<span>{concern}</span>
-										</li>
-									{/each}
-								</ul>
-							</div>
-							<div class="flex flex-col gap-3 bg-(--paper) p-7">
-								<h3
-									class="font-heading text-base font-medium tracking-wide"
-									style:color={motif}
-								>
-									Person
-								</h3>
-								<ul class="flex flex-col gap-3">
-									{#each selected.narrative.person_concerns as concern, i (i)}
-										<li class="flex gap-2 text-sm leading-relaxed text-foreground">
-											<span
-												class="mt-1.5 inline-block size-1.5 shrink-0 rounded-full"
-												style:background-color={motif}
-											></span>
-											<span>{concern}</span>
-										</li>
-									{/each}
-								</ul>
-							</div>
-						</section>
+											<h3 class="font-heading text-base font-medium tracking-wide text-foreground">
+												{pillar.label}
+											</h3>
+										</div>
+										<ul class="flex flex-col gap-3">
+											{#each pillar.items ?? [] as concern, i (i)}
+												<li class="flex gap-2 text-sm leading-relaxed text-foreground">
+													<span
+														class="mt-1.5 inline-block size-1.5 shrink-0 rounded-full"
+														style:background-color={pillar.color}
+													></span>
+													<span>{concern}</span>
+												</li>
+											{/each}
+										</ul>
+									</div>
+								{/each}
+							</section>
+						{:else if n.patient_concerns && n.person_concerns}
+							<!-- Legacy Patient / Person two-column bullets — rendered for
+							     narratives generated before the four-pillar framework
+							     landed. Regenerate via propose-persona-narrative.mjs to
+							     migrate. -->
+							<section class="grid grid-cols-1 gap-px bg-(--ink)/10 md:grid-cols-2">
+								<div class="flex flex-col gap-3 bg-(--paper) p-7">
+									<h3
+										class="font-heading text-base font-medium tracking-wide"
+										style:color={motif}
+									>
+										Patient
+									</h3>
+									<ul class="flex flex-col gap-3">
+										{#each n.patient_concerns as concern, i (i)}
+											<li class="flex gap-2 text-sm leading-relaxed text-foreground">
+												<span
+													class="mt-1.5 inline-block size-1.5 shrink-0 rounded-full"
+													style:background-color={motif}
+												></span>
+												<span>{concern}</span>
+											</li>
+										{/each}
+									</ul>
+								</div>
+								<div class="flex flex-col gap-3 bg-(--paper) p-7">
+									<h3
+										class="font-heading text-base font-medium tracking-wide"
+										style:color={motif}
+									>
+										Person
+									</h3>
+									<ul class="flex flex-col gap-3">
+										{#each n.person_concerns as concern, i (i)}
+											<li class="flex gap-2 text-sm leading-relaxed text-foreground">
+												<span
+													class="mt-1.5 inline-block size-1.5 shrink-0 rounded-full"
+													style:background-color={motif}
+												></span>
+												<span>{concern}</span>
+											</li>
+										{/each}
+									</ul>
+								</div>
+							</section>
+						{/if}
 
 						<!-- Narrative paragraph + hero pull-quote -->
 						<section class="grid grid-cols-1 gap-8 px-8 py-8 md:grid-cols-5">
 							<div class="md:col-span-3">
 								<p class="text-[15px] leading-7 text-foreground first-letter:font-heading first-letter:text-3xl first-letter:font-light first-letter:leading-none first-letter:float-left first-letter:mr-1.5 first-letter:mt-1" style:--firstcolor={motif}>
-									{selected.narrative.paragraph}
+									{n.paragraph}
 								</p>
 							</div>
 							<aside class="md:col-span-2">
-								{#if selected.narrative.hero_quote_text}
+								{#if n.hero_quote_text}
 									<figure
 										class="flex flex-col gap-3 rounded-lg border-l-4 bg-(--ink)/3 px-5 py-5"
 										style:border-color={motif}
@@ -516,23 +612,69 @@
 											class="font-heading text-5xl font-light leading-none"
 											style:color={motif}>“</span
 										>
-										<blockquote class="text-base leading-relaxed italic text-foreground">
-											{selected.narrative.hero_quote_text}
+										<blockquote class="text-base leading-relaxed text-foreground">
+											{n.hero_quote_text}
 										</blockquote>
-										{#if selected.narrative.hero_quote_author}
-											<figcaption class="text-[10px] uppercase tracking-wide text-muted-foreground">
-												— {selected.narrative.hero_quote_author}
+										{#if n.hero_quote_author}
+											{@const heroAuthorAvatar = evidenceAuthorAvatar(n.hero_quote_author)}
+											<figcaption class="flex items-center gap-2 text-[10px] uppercase tracking-wide text-muted-foreground">
+												{#if heroAuthorAvatar}
+													<img
+														src={heroAuthorAvatar}
+														alt=""
+														class="size-6 rounded-full bg-white object-cover"
+													/>
+												{/if}
+												<span>— {n.hero_quote_author}</span>
 											</figcaption>
 										{/if}
 									</figure>
 								{:else}
-									<p class="text-xs italic text-muted-foreground">
-										Hero quote fragment <code class="font-mono">{selected.narrative.hero_quote_fragment_id}</code>
+									<p class="text-xs text-muted-foreground">
+										Hero quote fragment <code class="font-mono">{n.hero_quote_fragment_id}</code>
 										not found in corpus.
 									</p>
 								{/if}
 							</aside>
 						</section>
+
+						{#if factLists.length > 0}
+							<!-- "At a glance" — concrete extractions from the evidence
+							     (specialists, milestones, drugs tried, trials tracked).
+							     Each list is hidden when the persona has no signal for
+							     it, so the section grows organically with the evidence. -->
+							<section class="border-t border-(--ink)/10 bg-(--ink)/3 px-8 py-7">
+								<div class="mb-4 flex items-center gap-2">
+									<span class="text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+										At a glance
+									</span>
+									<span class="h-px flex-1 bg-(--ink)/10"></span>
+								</div>
+								<div class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-4">
+									{#each factLists as list (list.id)}
+										<div class="flex flex-col gap-2.5">
+											<h4
+												class="font-heading text-xs font-medium uppercase tracking-wider"
+												style:color={motif}
+											>
+												{list.label}
+											</h4>
+											<ul class="flex flex-col gap-1.5">
+												{#each list.items ?? [] as item, i (i)}
+													<li class="flex gap-2 text-[13px] leading-snug text-foreground">
+														<span
+															class="mt-1.5 inline-block size-1 shrink-0 rounded-full"
+															style:background-color={motif}
+														></span>
+														<span>{item}</span>
+													</li>
+												{/each}
+											</ul>
+										</div>
+									{/each}
+								</div>
+							</section>
+						{/if}
 
 						<footer class="flex flex-wrap items-center justify-between gap-2 border-t border-(--ink)/10 px-8 py-4 text-[11px] text-muted-foreground">
 							<span>
@@ -540,8 +682,8 @@
 							</span>
 							<span>
 								{selected.fragment_count} fragments · {selected.author_count} authors
-								{#if selected.narrative.generated_at}
-									· generated {new Date(selected.narrative.generated_at).toLocaleDateString()}
+								{#if n.generated_at}
+									· generated {new Date(n.generated_at).toLocaleDateString()}
 								{/if}
 							</span>
 						</footer>
@@ -1148,7 +1290,16 @@
 									<ul class="flex flex-col gap-2">
 										{#each selected.evidence.slice(0, 2) as ev (ev.id)}
 											<li class="rounded-md border border-(--ink)/10 bg-(--ink)/3 p-3">
-												<QuoteIcon class="size-3.5 text-muted-foreground" />
+												<div class="flex items-center justify-between gap-2">
+													<QuoteIcon class="size-3.5 text-muted-foreground" />
+													{#if ev.author_avatar_url}
+														<img
+															src={ev.author_avatar_url}
+															alt=""
+															class="size-6 rounded-full bg-white object-cover"
+														/>
+													{/if}
+												</div>
 												<blockquote class="mt-1 line-clamp-3 text-xs leading-relaxed text-foreground">
 													{ev.text}
 												</blockquote>
@@ -1180,7 +1331,16 @@
 								</p>
 								{#each selected.evidence as ev (ev.id)}
 									<figure class="rounded-md border border-(--ink)/10 bg-(--ink)/3 p-4">
-										<QuoteIcon class="size-4 text-muted-foreground" />
+										<div class="flex items-center justify-between gap-3">
+											<QuoteIcon class="size-4 text-muted-foreground" />
+											{#if ev.author_avatar_url}
+												<img
+													src={ev.author_avatar_url}
+													alt=""
+													class="size-8 rounded-full bg-white object-cover"
+												/>
+											{/if}
+										</div>
 										<blockquote class="mt-2 text-sm leading-relaxed text-foreground">
 											{ev.text}
 										</blockquote>

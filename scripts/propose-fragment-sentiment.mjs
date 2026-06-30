@@ -43,7 +43,12 @@ import Anthropic from '@anthropic-ai/sdk';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 
-const MODEL = 'claude-opus-4-7';
+// Model is overridable for cost/quality A-B: `TAG_MODEL=claude-sonnet-4-6 node …`
+// or `--model claude-sonnet-4-6`. Defaults to Opus.
+const MODEL =
+	process.env.TAG_MODEL ||
+	(process.argv.includes('--model') ? process.argv[process.argv.indexOf('--model') + 1] : null) ||
+	'claude-opus-4-7';
 const INGESTER_VERSION = 'propose-fragment-sentiment@0.1';
 
 if (existsSync(resolve(ROOT, '.env'))) process.loadEnvFile(resolve(ROOT, '.env'));
@@ -56,9 +61,19 @@ if (!process.env.ANTHROPIC_API_KEY) {
 // === CLI ====================================================================
 
 const args = process.argv.slice(2);
-const corpusId = args.find((a) => !a.startsWith('--'));
+const VALUE_FLAGS = new Set(['--source', '--batch', '--model']);
+const corpusId = (() => {
+	for (let i = 0; i < args.length; i++) {
+		if (args[i].startsWith('--')) {
+			if (VALUE_FLAGS.has(args[i])) i++; // skip its value
+			continue;
+		}
+		return args[i];
+	}
+	return null;
+})();
 if (!corpusId) {
-	console.error('x Usage: node scripts/propose-fragment-sentiment.mjs <corpus_id> [--source <name>] [--batch <id>] [--force]');
+	console.error('x Usage: node scripts/propose-fragment-sentiment.mjs <corpus_id> [--source <name>] [--batch <id>] [--model <id>] [--force]');
 	process.exit(1);
 }
 const force = args.includes('--force');
@@ -157,7 +172,7 @@ const SYSTEM_PROMPT = `You are a qualitative-research analyst tagging fragments 
 For every fragment you return:
 - sentiment_score: an integer on this scale:
 ${JSON.stringify(codebook.meta.sentiment_scale, null, 2)}
-- emotions: an array of emotion ids the speaker is expressing. 0 or more — DO NOT over-tag. A bare "good luck!" or "congrats" is best left empty, or with a single emotion like "hope" or "joy" at low confidence.
+- emotions: array with 0 OR 1 entry — pick the SINGLE best primary emotion (e.g. "joy", "fear", "sadness") OR a single Plutchik dyad (e.g. "hope" = anticipation+trust, "despair" = fear+sadness, "love" = joy+trust). Never more than one. If two feel close, pick the dyad that captures both, or the dominant one. A bare "good luck!" or "congrats" is best left empty, or one low-confidence entry.
 - confidence: overall confidence in the annotation, 0.0–1.0.
 - note: short reviewer note or "" if none. Use it for ambiguity or low-confidence calls.
 
@@ -178,6 +193,50 @@ const client = new Anthropic();
 for (const { content_source, fragments: partitionFragments } of partitions) {
 	const ANNOTATIONS_FILE = `${CORPUS_DIR}/annotations/${content_source}.json`;
 	console.log(`\n=== ${corpusId} / ${content_source} (${partitionFragments.length} fragments) ===`);
+
+	// Per-batch checkpoint helper. Same shape as the end-of-partition flush
+	// so an interrupted run leaves a consistent file.
+	function writePartitionAnnotations(annsObj, allBatchKeys, batchesMap, existingFile) {
+		const annotatedBatches = allBatchKeys.filter((k) =>
+			batchesMap.get(k).every((f) => annsObj[f.id]?.segment_tags?.sentiment_score != null)
+		);
+		const priorMeta = existingFile.meta && typeof existingFile.meta === 'object' ? existingFile.meta : {};
+		const priorDimensions =
+			priorMeta.dimensions && typeof priorMeta.dimensions === 'object' ? priorMeta.dimensions : {};
+		const nowIso = new Date().toISOString();
+		const doc = {
+			meta: {
+				schema_version: '1.0',
+				corpus_id: corpusId,
+				content_source,
+				updated_at: nowIso,
+				dimensions: {
+					...priorDimensions,
+					segment_tags: {
+						generator: 'scripts/propose-fragment-sentiment.mjs',
+						model: MODEL,
+						codebook_schema_version: codebook.meta?.schema_version ?? null,
+						last_generated_at: nowIso,
+						annotated_batches: annotatedBatches,
+						fields_populated: ['sentiment_score', 'emotions', 'confidence', 'note'],
+						fields_unpopulated: ['themes', 'subthemes', 'topics']
+					}
+				},
+				notes: (priorMeta.notes ?? []).filter(
+					(n) => !n.startsWith('segment_tags dimension:')
+				).concat([
+					'segment_tags dimension: AI-proposed sentiment + emotion. themes/subthemes/topics left empty (codebook is indication-specific; not in scope here).',
+					'Re-propose with: node scripts/propose-fragment-sentiment.mjs <corpus> [--source <name>] [--batch <id>] [--force]'
+				])
+			},
+			annotations: Object.fromEntries(
+				Object.keys(annsObj).sort().map((k) => [k, annsObj[k]])
+			)
+		};
+		const outPath = resolve(ROOT, ANNOTATIONS_FILE);
+		mkdirSync(dirname(outPath), { recursive: true });
+		writeFileSync(outPath, JSON.stringify(doc, null, 2) + '\n', 'utf8');
+	}
 
 	const batches = new Map();
 	for (const f of partitionFragments) {
@@ -287,10 +346,12 @@ for (const { content_source, fragments: partitionFragments } of partitions) {
 		const missing = expected.filter((id) => !got.has(id));
 		const extra = [...got.keys()].filter((id) => !expected.includes(id));
 		if (missing.length || extra.length || got.size !== parsed.annotations.length) {
-			console.error(`x ${key}: coverage mismatch — annotations not written.`);
+			// Skip rather than exit — paired with the per-batch checkpoint write
+			// below, an interrupted run preserves work on earlier batches.
+			console.error(`x ${key}: coverage mismatch — SKIPPING this batch.`);
 			if (missing.length) console.error(`    missing ${missing.length}: ${missing.slice(0, 6).join(', ')}`);
 			if (extra.length) console.error(`    extra ${extra.length}: ${extra.slice(0, 6).join(', ')}`);
-			process.exit(1);
+			continue;
 		}
 
 		for (const id of expected) {
@@ -303,7 +364,7 @@ for (const { content_source, fragments: partitionFragments } of partitions) {
 			annotations[id].segment_tags = {
 				themes: prior.themes ?? [],
 				subthemes: prior.subthemes ?? [],
-				emotions: a.emotions,
+				emotions: Array.isArray(a.emotions) ? a.emotions.slice(0, 1) : [],
 				topics: prior.topics ?? [],
 				sentiment_score: a.sentiment_score,
 				confidence: a.confidence,
@@ -313,6 +374,9 @@ for (const { content_source, fragments: partitionFragments } of partitions) {
 			};
 		}
 		console.log(`    ${key}: ${expected.length} fragments tagged.`);
+
+		// Per-batch checkpoint — see writePartitionAnnotations docstring above.
+		writePartitionAnnotations(annotations, allBatches, batches, existing);
 	}
 
 	const annotatedBatches = allBatches.filter((k) =>

@@ -22,13 +22,18 @@
 	let {
 		stats,
 		onclose,
-		level = 'top'
+		level = 'top',
+		scopeLabel = ''
 	}: {
 		stats: GroupStats | null;
 		onclose: () => void;
 		/** Stacking depth. 'top' (default) layers above two stacked drawers;
 		 *  use 'secondary' when the host page only has one drawer underneath. */
 		level?: 'secondary' | 'top';
+		/** Scope suffix for the eyebrow — usually the active indication's label.
+		 *  Empty (default) keeps the legacy 'study-wide' framing so callers that
+		 *  haven't migrated yet are unaffected. */
+		scopeLabel?: string;
 	} = $props();
 
 	const open = $derived(stats !== null);
@@ -39,6 +44,7 @@
 
 	const kindEyebrow = (kind: GroupStats['kind']) =>
 		kind === 'keyword' ? 'Keyword' : kind === 'subtheme' ? 'Subtheme' : 'Theme';
+	const scopeSuffix = $derived(scopeLabel.trim() ? scopeLabel.trim() : 'study-wide');
 </script>
 
 <TertiaryDrawer
@@ -47,7 +53,7 @@
 	ariaLabel="Keyword and theme stats"
 	{level}
 	width="wide"
-	eyebrow={stats ? `${kindEyebrow(stats.kind)} · study-wide` : undefined}
+	eyebrow={stats ? `${kindEyebrow(stats.kind)} · ${scopeSuffix}` : undefined}
 	title={stats?.label}
 	subtitle={stats?.context}
 >

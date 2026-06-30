@@ -1,0 +1,1163 @@
+{
+  "meta": {
+    "schema_version": "3.1",
+    "indication": "pku",
+    "description": "Phenylketonuria keyword clusters. Spans the BH4 / pegvaliase / sepiapterin pharmacotherapy axis, lifetime Phe-restricted diet + medical-food regimen, neurocognitive / mood impacts of high Phe in adults, maternal-PKU planning, and the lost-to-follow-up adult population. Parent_theme / parent_subtheme reference the codebook.json @ 2.0 taxonomy.",
+    "cluster_count": 63
+  },
+  "clusters": [
+    {
+      "id": "sapropterin_kuvan",
+      "label": "Sapropterin (Kuvan)",
+      "description": "Synthetic BH4 (tetrahydrobiopterin) cofactor for residual PAH activity — approved 2007, the first PKU pharmacotherapy. Effective only in BH4-responsive patients. BioMarin.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "sapropterin",
+        "kuvan",
+        "bh4",
+        "tetrahydrobiopterin",
+        "synthetic bh4",
+        "biomarin kuvan",
+        "javygtor"
+      ]
+    },
+    {
+      "id": "pegvaliase_palynziq",
+      "label": "Pegvaliase (Palynziq)",
+      "description": "Pegylated phenylalanine ammonia lyase enzyme substitution therapy — daily subcutaneous injection for adults with uncontrolled Phe. REMS for anaphylaxis. BioMarin.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "pegvaliase",
+        "palynziq",
+        "pal",
+        "phenylalanine ammonia lyase",
+        "enzyme substitution",
+        "daily injection",
+        "biomarin palynziq"
+      ]
+    },
+    {
+      "id": "sepiapterin_sephience",
+      "label": "Sepiapterin (Sephience)",
+      "description": "Synthetic precursor of BH4 — FDA-approved 2024 for PKU across the responsiveness spectrum. PTC Therapeutics.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "sepiapterin",
+        "sephience",
+        "ptc923",
+        "ptc-923",
+        "ptc therapeutics",
+        "next gen bh4"
+      ]
+    },
+    {
+      "id": "medical_food_formula",
+      "label": "Phe-free medical foods / formula",
+      "description": "Phe-free amino-acid mixes and glycomacropeptide (GMP) products that supply non-Phe protein — the daily backbone of PKU diet management.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "medical food",
+        "medical foods",
+        "phe free formula",
+        "phe-free formula",
+        "phenyl free",
+        "phenyl-free",
+        "amino acid formula",
+        "amino acid mix",
+        "glycomacropeptide",
+        "gmp",
+        "phenex",
+        "phenex-1",
+        "phenex-2",
+        "periflex",
+        "pku lophlex",
+        "lophlex",
+        "pku gmp",
+        "pku express",
+        "pku cooler",
+        "pku air",
+        "phenylade",
+        "shake",
+        "formula"
+      ]
+    },
+    {
+      "id": "phe_restricted_diet",
+      "label": "Phe-restricted diet (low-protein)",
+      "description": "Lifetime restriction of dietary phenylalanine — low-protein diet excluding meat, dairy, eggs, nuts, legumes, regular bread and pasta.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "phe restricted diet",
+        "phe-restricted diet",
+        "low phe diet",
+        "low-phe diet",
+        "low protein diet",
+        "pku diet",
+        "the diet",
+        "diet for life",
+        "phe restriction",
+        "protein restriction",
+        "modified low protein"
+      ]
+    },
+    {
+      "id": "low_protein_foods",
+      "label": "Low-protein medical foods (bread / pasta / rice)",
+      "description": "Modified low-protein staples — Loprofin bread, Cambrooke pasta, Promin rice — that carry minimal Phe.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "low protein bread",
+        "low-protein bread",
+        "low protein pasta",
+        "low-protein pasta",
+        "loprofin",
+        "cambrooke",
+        "promin",
+        "taranis",
+        "fate special foods",
+        "modified pasta",
+        "low protein flour",
+        "low protein cheese"
+      ]
+    },
+    {
+      "id": "large_neutral_amino_acids",
+      "label": "Large neutral amino acids (LNAAs)",
+      "description": "Branched / aromatic amino-acid supplements that compete with Phe for blood-brain-barrier transport — adult adjunct in some regimens.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "large neutral amino acids",
+        "lnaa",
+        "lnaas",
+        "neutral amino acids",
+        "branched chain amino acid",
+        "nutricia lnaa",
+        "phenylade essential",
+        "pku sphere"
+      ]
+    },
+    {
+      "id": "pku_gene_therapy_pipeline",
+      "label": "PKU gene therapy / gene editing pipeline",
+      "description": "Investigational gene therapy and gene editing programs — HMI-103 (Homology Medicines, integration), BBP-789 (BridgeBio / Generation Bio), VTX-803 (Voyager / others). Early Phase 1/2.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "gene therapy pku",
+        "gene editing pku",
+        "hmi-103",
+        "hmi 103",
+        "homology medicines",
+        "bbp-789",
+        "generation bio",
+        "voyager pku",
+        "pheedit",
+        "in vivo gene therapy"
+      ]
+    },
+    {
+      "id": "pku_phe_levels_improved",
+      "label": "Phe levels in target",
+      "description": "Getting blood Phe into recommended range (US 120-360 µmol/L lifetime; some EU guidelines tighter for kids and pregnancy) — the central measure of treatment working.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "phe in range",
+        "phes in range",
+        "in target range",
+        "in target",
+        "phe controlled",
+        "phe came down",
+        "low phe",
+        "blood phe improved",
+        "level dropped"
+      ]
+    },
+    {
+      "id": "dietary_liberalization",
+      "label": "Dietary liberalization on treatment",
+      "description": "Being able to eat foods previously off-limits — pizza, chicken, regular bread, ice cream — after BH4 response, pegvaliase, or sepiapterin.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "diet liberalization",
+        "liberalize diet",
+        "eat normal food",
+        "off diet",
+        "ate a burger",
+        "ate pizza",
+        "first time eating",
+        "more protein",
+        "food freedom",
+        "food liberation",
+        "off formula"
+      ]
+    },
+    {
+      "id": "brain_fog_clearing",
+      "label": "Brain fog clearing / cognitive lift",
+      "description": "Adults reporting clearer thinking, focus, energy after Phe drops — the felt cognitive payoff of pegvaliase or sepiapterin.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "brain fog cleared",
+        "fog lifted",
+        "thinking clearer",
+        "can focus",
+        "more focused",
+        "feel sharper",
+        "cognitive improvement",
+        "head clearer"
+      ]
+    },
+    {
+      "id": "injection_burden_palynziq",
+      "label": "Daily injection burden (Palynziq)",
+      "description": "The lived burden of daily subcutaneous Palynziq injections — needles, sites, timing, travel.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "daily injection",
+        "daily shot",
+        "sq injection",
+        "subcutaneous injection",
+        "needle every day",
+        "shots every day",
+        "injection routine",
+        "rotate sites",
+        "injection site rotation"
+      ]
+    },
+    {
+      "id": "palynziq_hypersensitivity",
+      "label": "Pegvaliase hypersensitivity / anaphylaxis",
+      "description": "Hypersensitivity reactions — including anaphylaxis — drive the Palynziq REMS, mandatory epinephrine carriage, and gradual induction.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "anaphylaxis",
+        "hypersensitivity reaction",
+        "allergic reaction palynziq",
+        "epi pen",
+        "epipen",
+        "carry epinephrine",
+        "rems palynziq",
+        "rems program",
+        "premedication",
+        "anti-drug antibodies"
+      ]
+    },
+    {
+      "id": "palynziq_induction_titration",
+      "label": "Pegvaliase induction / titration",
+      "description": "The months-long gradual dose-titration phase up to maintenance dosing — a known adherence challenge.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "induction phase",
+        "titration phase",
+        "dose escalation",
+        "ramp up palynziq",
+        "slow titration",
+        "weekly dose increase",
+        "induction protocol"
+      ]
+    },
+    {
+      "id": "injection_site_reactions_pku",
+      "label": "Injection-site reactions",
+      "description": "Local redness, bruising, lumps, itching at Palynziq injection sites — the most common adverse event.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "injection site reaction",
+        "isr",
+        "redness at site",
+        "bruising shots",
+        "lumps injection",
+        "itchy shot site",
+        "swelling at injection"
+      ]
+    },
+    {
+      "id": "arthralgia_palynziq",
+      "label": "Arthralgia (pegvaliase)",
+      "description": "Joint pain and arthralgia commonly reported on Palynziq, sometimes severe enough to drive dose reduction or discontinuation.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "joint pain palynziq",
+        "arthralgia",
+        "achy joints",
+        "stiff joints",
+        "joint aches",
+        "palynziq joint pain"
+      ]
+    },
+    {
+      "id": "medical_food_taste",
+      "label": "Medical food taste / texture",
+      "description": "Taste, smell, mouthfeel, and bitterness of phe-free amino-acid mixes — a chronic adherence pain point especially for teens and adults.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "formula tastes bad",
+        "tastes nasty",
+        "formula taste",
+        "bitter",
+        "metallic taste",
+        "gross",
+        "hate the formula",
+        "choke it down",
+        "chalky",
+        "smells bad",
+        "smelly"
+      ]
+    },
+    {
+      "id": "pku_pill_burden",
+      "label": "Pill / dose burden",
+      "description": "Number of Kuvan or Sephience tablets per day, plus formula doses, plus low-protein meal prep — daily regimen load.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "pill burden pku",
+        "so many pills",
+        "kuvan tablets",
+        "sephience tablets",
+        "dose schedule",
+        "multiple times a day",
+        "every meal"
+      ]
+    },
+    {
+      "id": "bh4_responsiveness_testing",
+      "label": "BH4-responsiveness testing",
+      "description": "Trial of sapropterin or genotype-based prediction to identify BH4-responsive patients — gates Kuvan and influences Sephience use.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_knowledge_gaps",
+      "variants": [
+        "bh4 responsive",
+        "bh4 responsiveness",
+        "bh4 trial",
+        "responsiveness test",
+        "kuvan trial",
+        "kuvan responder",
+        "non responder",
+        "non-responder"
+      ]
+    },
+    {
+      "id": "pah_genotype",
+      "label": "PAH genotype / mutation",
+      "description": "PAH-gene sequencing — informs disease severity (classical vs. mild vs. mHPA) and predicts BH4 responsiveness for some variants.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_knowledge_gaps",
+      "variants": [
+        "pah gene",
+        "pah mutation",
+        "pah variant",
+        "pah genotype",
+        "genetic testing pku",
+        "compound heterozygote",
+        "homozygous",
+        "r408w",
+        "ivs10"
+      ]
+    },
+    {
+      "id": "medical_food_insurance",
+      "label": "Medical food insurance / state coverage",
+      "description": "State-by-state insurance coverage variability for medical foods — Phe-free formula often not covered as medication. State medical-food laws.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "medical food coverage",
+        "formula coverage",
+        "insurance denied formula",
+        "state coverage",
+        "state law medical food",
+        "medical food law",
+        "wic pku",
+        "medicaid medical food",
+        "out of pocket formula"
+      ]
+    },
+    {
+      "id": "pku_specialty_clinic_access",
+      "label": "Metabolic / PKU specialty clinic access",
+      "description": "Distance to a PKU-experienced metabolic clinic — many adults travel hours to maintain care.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "metabolic clinic",
+        "pku clinic",
+        "metabolic center",
+        "specialty clinic far",
+        "no pku clinic nearby",
+        "drive to clinic",
+        "adult metabolic clinic",
+        "transition clinic"
+      ]
+    },
+    {
+      "id": "palynziq_rems_burden",
+      "label": "Palynziq REMS / prescriber bottleneck",
+      "description": "REMS-certified prescribers required, in-clinic first dose, epinephrine training — barriers to starting and continuing pegvaliase.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "rems burden",
+        "rems certified",
+        "rems prescriber",
+        "first dose in clinic",
+        "rems training",
+        "rems enrollment"
+      ]
+    },
+    {
+      "id": "medical_food_cost",
+      "label": "Cost of medical foods",
+      "description": "Out-of-pocket cost of Phe-free formula and modified low-protein staples — historically thousands of dollars per year per patient.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "cost of formula",
+        "expensive formula",
+        "expensive low protein",
+        "cost of medical food",
+        "low protein bread cost",
+        "thousands a year",
+        "cant afford formula"
+      ]
+    },
+    {
+      "id": "dietary_freedom_goal",
+      "label": "Dietary freedom as goal",
+      "description": "Wanting to eat normal foods / drop formula as the central pull of pegvaliase or sepiapterin.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "eat normal food",
+        "food freedom",
+        "food liberation",
+        "off the diet",
+        "off formula",
+        "no more formula",
+        "want to eat like everyone",
+        "wedding dinner",
+        "restaurant"
+      ]
+    },
+    {
+      "id": "cognitive_preservation_goal",
+      "label": "Cognitive preservation goal",
+      "description": "Preserving cognition, focus, and mental health as motivation for lifelong Phe control — the central modern argument for diet-for-life.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "protect my brain",
+        "cognitive decline",
+        "executive function",
+        "stay sharp",
+        "keep focused",
+        "iq",
+        "white matter",
+        "white matter changes"
+      ]
+    },
+    {
+      "id": "maternal_pku_planning",
+      "label": "Maternal PKU / pregnancy planning",
+      "description": "Tight Phe control before and during pregnancy to prevent maternal PKU syndrome — fetal microcephaly, intellectual disability, congenital heart defects.",
+      "indication": "pku",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "maternal pku",
+        "maternal phenylketonuria",
+        "pregnancy pku",
+        "pregnant with pku",
+        "trying to conceive pku",
+        "ttc pku",
+        "preconception phe",
+        "preconception control",
+        "microcephaly",
+        "congenital heart defect",
+        "fetal effects high phe",
+        "pku pregnancy diet"
+      ]
+    },
+    {
+      "id": "phe_blood_levels",
+      "label": "Blood Phe levels",
+      "description": "Phenylalanine blood concentration — the single most-mentioned biomarker in PKU patient and clinical conversation.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "phe level",
+        "phe levels",
+        "phenylalanine level",
+        "blood phe",
+        "phes",
+        "high phe",
+        "phe went up",
+        "phe is high",
+        "phe spike",
+        "phe came back",
+        "umol",
+        "µmol/l",
+        "mg/dl phe"
+      ]
+    },
+    {
+      "id": "brain_fog_executive_function",
+      "label": "Brain fog / executive function (high Phe)",
+      "description": "High-Phe cognitive symptoms in adults — brain fog, slow thinking, trouble focusing, word-finding, executive-function dips.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "brain fog",
+        "foggy",
+        "slow thinking",
+        "cant focus",
+        "lost focus",
+        "executive function",
+        "word finding",
+        "forgetful",
+        "spacey",
+        "scattered",
+        "adhd-like",
+        "feel dumb"
+      ]
+    },
+    {
+      "id": "mood_changes_phe",
+      "label": "Mood / irritability with high Phe",
+      "description": "Irritability, anxiety, depressive symptoms, mood swings tied to high Phe — among the most felt symptoms in adult PKU.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "irritable",
+        "snappy",
+        "mood swings high phe",
+        "low mood",
+        "depressed when phe high",
+        "anxiety high phe",
+        "agitated",
+        "rage",
+        "short fuse",
+        "moody"
+      ]
+    },
+    {
+      "id": "headache_phe",
+      "label": "Headache / migraine (high Phe)",
+      "description": "Headaches and migraines that track with elevated Phe.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "headache high phe",
+        "migraine pku",
+        "head hurts when phe is high",
+        "phe headache"
+      ]
+    },
+    {
+      "id": "eczema_skin_pku",
+      "label": "Eczema / skin issues",
+      "description": "Eczema, dry skin, and rashes more common in untreated or poorly controlled PKU.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "eczema",
+        "skin rash pku",
+        "dry skin",
+        "atopic dermatitis"
+      ]
+    },
+    {
+      "id": "mousy_odor",
+      "label": "Mousy odor (untreated)",
+      "description": "The classic mousy or musty body / urine odor of untreated severe PKU — rare today thanks to NBS.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "mousy odor",
+        "musty smell",
+        "mousy urine",
+        "phenylacetate smell",
+        "smell like a barn"
+      ]
+    },
+    {
+      "id": "anxiety_depression_pku",
+      "label": "Anxiety / depression (chronic)",
+      "description": "Clinical anxiety and depression — both Phe-mediated and reactive — at higher prevalence in adult PKU.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "anxiety",
+        "depression",
+        "depressed",
+        "ssri",
+        "antidepressant",
+        "therapy",
+        "mental health pku",
+        "panic"
+      ]
+    },
+    {
+      "id": "adhd_executive_pku",
+      "label": "ADHD / attention",
+      "description": "ADHD-spectrum and attention difficulties more frequent in PKU, including after years of poor control.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "adhd",
+        "attention deficit",
+        "attentional",
+        "stimulant",
+        "adderall",
+        "vyvanse",
+        "concerta"
+      ]
+    },
+    {
+      "id": "osteopenia_bone_pku",
+      "label": "Low bone density / osteopenia",
+      "description": "Reduced bone density on long-term low-protein diet, often complicated by formula calcium / vitamin D intake variation.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "osteopenia",
+        "osteoporosis",
+        "low bone density",
+        "dexa",
+        "dexa scan",
+        "bone scan",
+        "brittle bones",
+        "fractures"
+      ]
+    },
+    {
+      "id": "nutritional_deficiencies_pku",
+      "label": "Nutritional deficiencies",
+      "description": "B12, iron, zinc, calcium, omega-3, choline, and selenium gaps that crop up on Phe-restricted diet — especially when patients skip formula.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "b12 deficiency",
+        "vitamin b12",
+        "iron deficiency",
+        "anemia pku",
+        "zinc deficiency",
+        "calcium",
+        "vitamin d",
+        "omega 3 dha",
+        "selenium",
+        "choline"
+      ]
+    },
+    {
+      "id": "obesity_metabolic_pku",
+      "label": "Overweight / metabolic comorbidity",
+      "description": "High-carb low-protein-PKU diet drives weight gain and metabolic comorbidity in many adults.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "weight gain pku",
+        "overweight",
+        "obesity",
+        "high carb diet",
+        "metabolic syndrome",
+        "type 2 diabetes",
+        "prediabetes",
+        "high triglycerides"
+      ]
+    },
+    {
+      "id": "phe_target_range_knowledge",
+      "label": "Phe target range",
+      "description": "Recommended lifetime Phe target range — US 120-360 µmol/L per ACMG guidance; tighter for pediatrics and pregnancy; debated for adults.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "phe target",
+        "phe range",
+        "target range",
+        "120 to 360",
+        "treatment range",
+        "acmg guideline",
+        "european guideline pku",
+        "pregnancy target phe"
+      ]
+    },
+    {
+      "id": "diet_for_life",
+      "label": "Diet for life (lifetime management)",
+      "description": "Recognition that PKU is a lifetime condition requiring continuous treatment — the modern reversal of 1970s-80s 'off the diet' practice.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "diet for life",
+        "lifetime treatment",
+        "lifelong",
+        "forever on diet",
+        "never off treatment",
+        "lifetime management"
+      ]
+    },
+    {
+      "id": "classical_vs_mild_pku",
+      "label": "Classical / mild PKU / mHPA",
+      "description": "Severity gradient — classical PKU vs. mild PKU vs. mild hyperphenylalaninemia (mHPA / non-PKU HPA) — drives treatment intensity and BH4 responsiveness odds.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "classical pku",
+        "classic pku",
+        "mild pku",
+        "moderate pku",
+        "mhpa",
+        "mild hyperphenylalaninemia",
+        "non-pku hpa",
+        "hyperphenylalaninemia"
+      ]
+    },
+    {
+      "id": "newborn_screening_pku",
+      "label": "Newborn screening / heel-prick",
+      "description": "PKU was the original NBS condition — caught on the Guthrie test / heel-prick. The detection-at-birth story is central to PKU identity.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "newborn screening",
+        "heel prick",
+        "heel-prick",
+        "guthrie test",
+        "guthrie card",
+        "nbs",
+        "born with pku",
+        "diagnosed at birth",
+        "diagnosed at 2 weeks"
+      ]
+    },
+    {
+      "id": "phe_brain_biology",
+      "label": "How Phe affects the brain",
+      "description": "Mechanism — Phe crossing the blood-brain barrier, competing with LNAAs, depleting tyrosine / tryptophan, affecting dopamine and serotonin synthesis, white-matter changes.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "blood brain barrier",
+        "bbb",
+        "dopamine",
+        "serotonin",
+        "tyrosine",
+        "tryptophan",
+        "white matter",
+        "white matter changes",
+        "neurotransmitter pku",
+        "myelin"
+      ]
+    },
+    {
+      "id": "lost_to_followup_adult",
+      "label": "Lost-to-follow-up adults",
+      "description": "Adults who left clinic and diet in teens or 20s — often the historic 'off the diet' generation — returning to care, sometimes after symptoms or before pregnancy.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "diagnostic_odyssey",
+      "variants": [
+        "off the diet",
+        "went off diet",
+        "stopped diet at 18",
+        "returned to clinic",
+        "back on diet",
+        "back on treatment",
+        "lost to followup",
+        "lost to follow up",
+        "ltfu",
+        "haven't seen a metabolic",
+        "decades off diet"
+      ]
+    },
+    {
+      "id": "eating_socially_pku",
+      "label": "Eating socially / dining out",
+      "description": "Navigating restaurants, holidays, parties, travel, dating — the social side of a Phe-restricted diet.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "eating out pku",
+        "restaurants",
+        "dining out",
+        "holiday food",
+        "thanksgiving",
+        "potluck",
+        "wedding food",
+        "traveling with pku",
+        "airport food",
+        "dating with pku"
+      ]
+    },
+    {
+      "id": "food_envy_kid_pku",
+      "label": "Childhood food envy / school lunch",
+      "description": "Childhood and teen experiences — separate lunches, watching friends eat birthday cake, summer-camp food — that shape long-term PKU identity.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "kid pku",
+        "child with pku",
+        "school lunch",
+        "birthday cake",
+        "summer camp",
+        "watching friends eat",
+        "different food",
+        "school nurse",
+        "iep 504"
+      ]
+    },
+    {
+      "id": "disclosure_pku",
+      "label": "Disclosure / explaining PKU",
+      "description": "Decisions about telling employers, dates, friends, in-laws — and the constant explaining-PKU-to-people burden.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "tell my boss",
+        "tell my partner",
+        "explaining pku",
+        "people don't understand",
+        "people think i'm picky",
+        "i look healthy",
+        "disclosure",
+        "telling people"
+      ]
+    },
+    {
+      "id": "invisible_illness_pku",
+      "label": "Invisible illness (PKU)",
+      "description": "PKU as an invisible disease — adults look fine, leading to disbelief and minimization.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "invisible illness",
+        "you look fine",
+        "doesn't look sick",
+        "no one believes",
+        "but you can eat that right",
+        "you can have a little"
+      ]
+    },
+    {
+      "id": "national_pku_alliance",
+      "label": "National PKU Alliance (NPKUA)",
+      "description": "National PKU Alliance — US umbrella patient advocacy organization, conference, family advocates.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "national pku alliance",
+        "npkua",
+        "pku conference",
+        "pku alliance"
+      ]
+    },
+    {
+      "id": "national_pku_news",
+      "label": "National PKU News / NPKU Foundation",
+      "description": "National PKU News, the NPKU Foundation, Children's PKU Network, and local family chapters.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "national pku news",
+        "pku news",
+        "npku foundation",
+        "childrens pku network",
+        "pku family"
+      ]
+    },
+    {
+      "id": "pku_perspectives_community",
+      "label": "PKU Perspectives / online community",
+      "description": "PKU Perspectives, Facebook PKU groups, Reddit r/PKU, Discord servers — where adults share daily-management hacks and connect.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "pku perspectives",
+        "facebook pku group",
+        "reddit pku",
+        "r/pku",
+        "discord pku",
+        "online community",
+        "pku mama group"
+      ]
+    },
+    {
+      "id": "world_pku_day",
+      "label": "World PKU Day / events",
+      "description": "World PKU Day (June 28) and indication-specific awareness events.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "world pku day",
+        "june 28",
+        "pku day",
+        "pku awareness",
+        "rare disease day"
+      ]
+    },
+    {
+      "id": "metabolic_dietitian",
+      "label": "Metabolic dietitian relationship",
+      "description": "Close, multi-year relationship with a specialty metabolic dietitian — often the most-trusted point of contact in PKU care.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "metabolic dietitian",
+        "metabolic rd",
+        "pku dietitian",
+        "my dietitian",
+        "registered dietitian",
+        "pku nurse"
+      ]
+    },
+    {
+      "id": "phe_tracking_apps",
+      "label": "Phe-tracking apps (How Much Phe / Accugo)",
+      "description": "How Much Phe, Accugo, Cambrooke PKU Manager, and homemade spreadsheets used to log Phe intake and stay in range.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "how much phe",
+        "howmuchphe",
+        "accugo",
+        "pku manager",
+        "pku app",
+        "phe app",
+        "phe tracker",
+        "log my phe",
+        "spreadsheet",
+        "myfooddiary"
+      ]
+    },
+    {
+      "id": "home_phe_testing",
+      "label": "Home Phe testing / mail-in blood spot",
+      "description": "Home blood-spot collection mailed to lab — the dominant Phe-monitoring modality for adults outside clinic visits.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "home phe test",
+        "blood spot",
+        "blood spot card",
+        "filter paper card",
+        "mail in test",
+        "finger stick phe",
+        "labs in the mail",
+        "phe filter paper"
+      ]
+    },
+    {
+      "id": "exchange_counting",
+      "label": "Phe exchange counting",
+      "description": "Counting Phe in exchanges (1 exchange = 15 mg Phe in US, 50 mg in UK) — the core day-to-day arithmetic of the PKU diet.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "phe exchange",
+        "phe exchanges",
+        "exchange counting",
+        "exchanges",
+        "phe budget",
+        "phe allowance",
+        "phe milligrams",
+        "mg of phe"
+      ]
+    },
+    {
+      "id": "label_reading_phenylalanine",
+      "label": "Label reading / aspartame",
+      "description": "Label reading for hidden Phe — including aspartame in diet drinks and chewing gum (the 'phenylketonurics: contains phenylalanine' warning).",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "reading labels",
+        "label reading",
+        "aspartame",
+        "diet soda",
+        "phenylketonurics warning",
+        "contains phenylalanine",
+        "hidden phe",
+        "nutrasweet",
+        "equal sweetener"
+      ]
+    },
+    {
+      "id": "pediatric_to_adult_transition",
+      "label": "Transition pediatric → adult care",
+      "description": "Handoff from pediatric metabolic clinic to adult care — a known failure point that drives lost-to-follow-up.",
+      "indication": "pku",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "transition to adult care",
+        "adult metabolic clinic",
+        "aged out of pediatric",
+        "no adult clinic",
+        "transition program",
+        "graduated from peds"
+      ]
+    },
+    {
+      "id": "pku_trial_awareness",
+      "label": "PKU trial awareness",
+      "description": "Awareness of ongoing or upcoming PKU trials — sepiapterin extensions, pegvaliase next-gens, gene-therapy programs.",
+      "indication": "pku",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_awareness",
+      "variants": [
+        "pku trial",
+        "clinical trial pku",
+        "trial recruiting",
+        "phase 1 pku",
+        "phase 2 pku",
+        "gene therapy trial",
+        "sepiapterin trial",
+        "pegvaliase trial"
+      ]
+    },
+    {
+      "id": "pku_trial_travel_burden",
+      "label": "Trial travel burden",
+      "description": "PKU trials are concentrated at a handful of academic metabolic centers — travel, lodging, time off work as the recurring barrier.",
+      "indication": "pku",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "travel for trial",
+        "flying for trial",
+        "trial across the country",
+        "lodging trial",
+        "time off work for trial",
+        "academic center far"
+      ]
+    },
+    {
+      "id": "phe_washout_trial_protocol",
+      "label": "Diet protocols in trials",
+      "description": "Trial protocols requiring strict Phe loading, washout, or stabilization phases — challenging diet logistics that gate enrollment and retention.",
+      "indication": "pku",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "phe loading",
+        "washout phase",
+        "stabilization phase",
+        "trial diet protocol",
+        "diet diary trial",
+        "controlled feeding",
+        "metabolic feeding"
+      ]
+    },
+    {
+      "id": "gene_therapy_hope",
+      "label": "Gene therapy hope / cautious optimism",
+      "description": "Anticipation around in-vivo PKU gene therapy / editing — paired with caution about safety, durability, and immune response.",
+      "indication": "pku",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_motivators",
+      "variants": [
+        "cure for pku",
+        "gene therapy hope",
+        "gene editing hope",
+        "one and done",
+        "off diet forever",
+        "permanent fix",
+        "cautious optimism"
+      ]
+    },
+    {
+      "id": "phe_levels_trial_endpoint",
+      "label": "Phe reduction as trial endpoint",
+      "description": "Blood Phe reduction as the headline PKU-trial endpoint — sometimes paired with diet liberalization or neurocognitive secondaries.",
+      "indication": "pku",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "phe reduction",
+        "phe endpoint",
+        "phe drop",
+        "primary endpoint pku",
+        "responder",
+        "responder analysis",
+        "neurocognitive endpoint",
+        "diet liberalization endpoint"
+      ]
+    }
+  ]
+}

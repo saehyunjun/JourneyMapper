@@ -1,0 +1,502 @@
+{
+  "meta": {
+    "schema_version": "theme-tags-0.1",
+    "generator": "propose-theme-tags@0.1",
+    "model": "claude-opus-4-7",
+    "corpus_id": "igan_forum_2026q2",
+    "content_source": "social_comment",
+    "updated_at": "2026-06-02T05:50:09.959Z",
+    "themes_count": 27,
+    "tagged_fragment_count": 40,
+    "total_tag_count": 35
+  },
+  "theme_tags": {
+    "fc-igan_forum_2026q2-1-1-1_b": [
+      {
+        "span": {
+          "start": 0,
+          "end": 60,
+          "text": "I just hope the side effects are less impactful than tarpeyo"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "weighing side effect profiles between drugs",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_c": [
+      {
+        "span": {
+          "start": 71,
+          "end": 100,
+          "text": "Steroids are so unpredictable"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "reflecting on variability of treatment outcomes",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_d": [
+      {
+        "span": {
+          "start": 81,
+          "end": 128,
+          "text": "Only issue would be long term immunosuppression"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "information sharing about long-term side effect risks",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_e": [
+      {
+        "span": {
+          "start": 108,
+          "end": 134,
+          "text": "check the phase 2b reports"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "directing peers to clinical evidence for self-research",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_f_s00": [
+      {
+        "span": {
+          "start": 0,
+          "end": 36,
+          "text": "I am very optimistic about this drug"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.65,
+        "rationale": "hope about future treatment",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_f_s01": [
+      {
+        "span": {
+          "start": 159,
+          "end": 225,
+          "text": "pharmaceutical inventories for Tri-Care take years to get approved"
+        },
+        "theme_id": "util.coverage",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "formulary/plan coverage delay for new drug",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_f_s02": [
+      {
+        "span": {
+          "start": 9,
+          "end": 95,
+          "text": "how soon it will be made available for elite US medical providers like the Mayo Clinic"
+        },
+        "theme_id": "util.access",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "speculating on access through specialist centers",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_f_s03": [
+      {
+        "span": {
+          "start": 0,
+          "end": 45,
+          "text": "Hope they find a cure or a miracle drug soon!"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "hope/existential wish for cure",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_g": [
+      {
+        "span": {
+          "start": 17,
+          "end": 111,
+          "text": "available to people outside of the government healthcare system as soon as the BLA is approved"
+        },
+        "theme_id": "util.access",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "timing of drug availability/access",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_h": [],
+    "fc-igan_forum_2026q2-1-1-1_i": [],
+    "fc-igan_forum_2026q2-1-1-1_j": [
+      {
+        "span": {
+          "start": 0,
+          "end": 25,
+          "text": "Where to find it in India"
+        },
+        "theme_id": "util.access",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "geographic access question",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_k": [
+      {
+        "span": {
+          "start": 0,
+          "end": 50,
+          "text": "You won't be able to get this in India for a while"
+        },
+        "theme_id": "util.access",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "geographic access barrier",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      },
+      {
+        "span": {
+          "start": 160,
+          "end": 204,
+          "text": "many other countries require before approval"
+        },
+        "theme_id": "util.coverage",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "regulatory approval affecting availability",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_b": [
+      {
+        "span": {
+          "start": 11,
+          "end": 42,
+          "text": "how do I find out my igg levels"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "seeking information to understand own labs",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_c": [
+      {
+        "span": {
+          "start": 11,
+          "end": 42,
+          "text": "how do I find out my igg levels"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "seeking information to understand own labs",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_d": [
+      {
+        "span": {
+          "start": 61,
+          "end": 109,
+          "text": "your doctor will have to ask for it specifically"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "peer info about ordering tests",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_e": [],
+    "fc-igan_forum_2026q2-2-1-1_f": [
+      {
+        "span": {
+          "start": 0,
+          "end": 31,
+          "text": "Which trial was it going to be?"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "asking about specific trial",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_g": [
+      {
+        "span": {
+          "start": 0,
+          "end": 7,
+          "text": "Rainier"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "naming a trial",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_h": [
+      {
+        "span": {
+          "start": 49,
+          "end": 83,
+          "text": "this is another povetacicept trial"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "sharing trial info with peers",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_b": [
+      {
+        "span": {
+          "start": 57,
+          "end": 79,
+          "text": "she would quit working"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "work cessation to focus on health",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      },
+      {
+        "span": {
+          "start": 112,
+          "end": 136,
+          "text": "improve physical fitness"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "focus on physical conditioning",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      },
+      {
+        "span": {
+          "start": 138,
+          "end": 202,
+          "text": "physical fitness is one of the top considerations for transplant"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "information about transplant prep",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_c": [],
+    "fc-igan_forum_2026q2-3-1-1_d": [
+      {
+        "span": {
+          "start": 80,
+          "end": 134,
+          "text": "try to improve health so that you can go for trasplant"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "physical readiness for transplant",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_e": [],
+    "fc-igan_forum_2026q2-4-1-1_b": [],
+    "fc-igan_forum_2026q2-4-1-1_c": [
+      {
+        "span": {
+          "start": 12,
+          "end": 52,
+          "text": "any other visible symptoms such as edema"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "asking about physical symptoms",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_d": [
+      {
+        "span": {
+          "start": 99,
+          "end": 175,
+          "text": "I sleep way more often than I should, get winded easy and just feel sluggish"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "fatigue and low energy",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      },
+      {
+        "span": {
+          "start": 34,
+          "end": 59,
+          "text": "my appetite is on and off"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "general symptomatology",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      },
+      {
+        "span": {
+          "start": 64,
+          "end": 93,
+          "text": "my overall drive simply sucks"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "low motivation/mood",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      },
+      {
+        "span": {
+          "start": 180,
+          "end": 197,
+          "text": "randomly nauseous"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.5,
+        "rationale": "physical symptom",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_e": [],
+    "fc-igan_forum_2026q2-4-1-1_f": [],
+    "fc-igan_forum_2026q2-4-1-1_g_s00": [],
+    "fc-igan_forum_2026q2-4-1-1_g_s01": [],
+    "fc-igan_forum_2026q2-4-1-1_g_s02": [
+      {
+        "span": {
+          "start": 0,
+          "end": 67,
+          "text": "They will talk about the entire process, importance of a live donor"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "info about transplant decision process",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_g_s03": [],
+    "fc-igan_forum_2026q2-4-1-1_g_s04": [
+      {
+        "span": {
+          "start": 0,
+          "end": 13,
+          "text": "Info overload"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "difficulty processing transplant info",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_g_s05": [],
+    "fc-igan_forum_2026q2-4-1-1_h": [
+      {
+        "span": {
+          "start": 139,
+          "end": 178,
+          "text": "present you to the transplant committee"
+        },
+        "theme_id": "util.access",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "gating to transplant access",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      },
+      {
+        "span": {
+          "start": 224,
+          "end": 256,
+          "text": "dialysis forever or get a kidney"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "existential stakes of decision",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_i_s00": [],
+    "fc-igan_forum_2026q2-4-1-1_i_s01": [
+      {
+        "span": {
+          "start": 153,
+          "end": 207,
+          "text": "you change case managers based on what stage you're in"
+        },
+        "theme_id": "util.coordination",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "care coordination/handoffs in transplant process",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_i_s02": [
+      {
+        "span": {
+          "start": 12,
+          "end": 63,
+          "text": "evaluation of your health and your mental fortitude"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "mental resilience assessed for transplant",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_i_s03": [
+      {
+        "span": {
+          "start": 46,
+          "end": 83,
+          "text": "frequent communication with your team"
+        },
+        "theme_id": "util.relationship",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "ongoing patient-provider communication",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      },
+      {
+        "span": {
+          "start": 88,
+          "end": 139,
+          "text": "a lot of testing/medication changes post transplant"
+        },
+        "theme_id": "util.coordination",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "complex post-transplant care",
+        "created_at": "2026-06-02T05:50:09.957Z"
+      }
+    ]
+  }
+}

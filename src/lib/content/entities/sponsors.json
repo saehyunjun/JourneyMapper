@@ -1,0 +1,258 @@
+{
+  "schema_version": "entities-sponsor-0.1",
+  "description": "Sponsor entity registry per ENTITY_REGISTRY.md. Phase 1 seed migrated from src/lib/content/registries/sponsors.json. sponsor_type defaults to \"unknown\" pending analyst review (pharma vs. biotech vs. cro vs. academic).",
+  "items": [
+    {
+      "id": "entity.sponsor.novo_nordisk",
+      "kind": "sponsor",
+      "label": "Novo Nordisk",
+      "surface_forms": [
+        "Novo Nordisk"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "DK",
+        "original_id": "novo_nordisk"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.eli_lilly",
+      "kind": "sponsor",
+      "label": "Eli Lilly",
+      "surface_forms": [
+        "Eli Lilly"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "US",
+        "original_id": "eli_lilly"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.astrazeneca",
+      "kind": "sponsor",
+      "label": "AstraZeneca",
+      "surface_forms": [
+        "AstraZeneca"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "GB",
+        "original_id": "astrazeneca"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.gsk",
+      "kind": "sponsor",
+      "label": "GSK (GlaxoSmithKline)",
+      "surface_forms": [
+        "GSK (GlaxoSmithKline)"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "GB",
+        "original_id": "gsk"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.aurinia",
+      "kind": "sponsor",
+      "label": "Aurinia Pharmaceuticals",
+      "surface_forms": [
+        "Aurinia Pharmaceuticals"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "CA",
+        "original_id": "aurinia"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.roche",
+      "kind": "sponsor",
+      "label": "Roche / Genentech",
+      "surface_forms": [
+        "Roche / Genentech"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "CH",
+        "original_id": "roche"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.biogen",
+      "kind": "sponsor",
+      "label": "Biogen",
+      "surface_forms": [
+        "Biogen"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "US",
+        "original_id": "biogen"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.novartis",
+      "kind": "sponsor",
+      "label": "Novartis",
+      "surface_forms": [
+        "Novartis"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "CH",
+        "original_id": "novartis"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.tg_therapeutics",
+      "kind": "sponsor",
+      "label": "TG Therapeutics",
+      "surface_forms": [
+        "TG Therapeutics"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "US",
+        "original_id": "tg_therapeutics"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.kyverna",
+      "kind": "sponsor",
+      "label": "Kyverna Therapeutics",
+      "surface_forms": [
+        "Kyverna Therapeutics"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "US",
+        "original_id": "kyverna"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.cabaletta_bio",
+      "kind": "sponsor",
+      "label": "Cabaletta Bio",
+      "surface_forms": [
+        "Cabaletta Bio"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "US",
+        "original_id": "cabaletta_bio"
+      },
+      "provenance": "registry",
+      "status": "active"
+    },
+    {
+      "id": "entity.sponsor.cartesian_therapeutics",
+      "kind": "sponsor",
+      "label": "Cartesian Therapeutics",
+      "surface_forms": [
+        "Cartesian Therapeutics"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "trial.relationship",
+        "trial.awareness"
+      ],
+      "metadata": {
+        "sponsor_type": "unknown",
+        "headquarters_country": "US",
+        "original_id": "cartesian_therapeutics"
+      },
+      "provenance": "registry",
+      "status": "active"
+    }
+  ]
+}

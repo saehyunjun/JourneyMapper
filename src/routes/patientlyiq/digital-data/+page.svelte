@@ -36,6 +36,7 @@
 
 	function groupOf(type: DiseaseDatasetType | string): GroupKey {
 		if (type === 'search_volume_topics') return 'search';
+		if (type === 'search_volume_timeseries') return 'search';
 		if (type === 'community_engagement') return 'community';
 		if (type === 'ad_spend_timeseries') return 'ad_spend';
 		if (type === 'keyword_clusters') return 'lexicon';
@@ -102,6 +103,140 @@
 			})
 			.filter((r): r is TopicRow => r !== null)
 			.sort((a, b) => b.volume - a.volume);
+	}
+
+	type TrendSeries = {
+		query: string;
+		display_label: string;
+		cluster_id: string | null;
+		searchLine: string;
+		searchArea: string;
+		mentionBars: { x: number; y: number; h: number }[];
+		searchPeak: number;
+		searchPeakWeek: string;
+		mentionTotal: number;
+		mentionMax: number;
+	};
+	type TrendChart = {
+		weeks: string[];
+		weekCount: number;
+		yearTicks: { x: number; label: string }[];
+		mentionWindow: { startIso: string | null; endIso: string | null } | null;
+		series: TrendSeries[];
+	};
+
+	/**
+	 * Build small-multiples geometry for a search_volume_timeseries payload.
+	 * Coordinate system per row: viewBox `0 0 W 30`, where W = weekCount.
+	 *   y= 0..22 → search index (top), 100 at y=0, 0 at y=22
+	 *   y=22..24 → gap / baseline
+	 *   y=24..30 → mention bars (grow upward from y=30)
+	 * Mention bars are normalized per-row by the row's own max so sparse rows
+	 * still register; the rendered row label carries the absolute total.
+	 */
+	function asSearchTrendseries(payload: unknown): TrendChart | null {
+		const obj = payload as Record<string, unknown> | null;
+		if (!obj || !Array.isArray(obj.weeks) || !Array.isArray(obj.series)) return null;
+		const weeks = obj.weeks.filter((w): w is string => typeof w === 'string');
+		if (weeks.length === 0) return null;
+
+		const W = weeks.length;
+
+		// Year-boundary ticks — first week index whose iso >= "YYYY-01-01".
+		const yearTicks: { x: number; label: string }[] = [];
+		const firstYear = parseInt(weeks[0].slice(0, 4), 10);
+		const lastYear = parseInt(weeks[weeks.length - 1].slice(0, 4), 10);
+		if (Number.isFinite(firstYear) && Number.isFinite(lastYear)) {
+			for (let y = firstYear + 1; y <= lastYear; y++) {
+				const boundary = `${y}-01-01`;
+				const idx = weeks.findIndex((w) => w >= boundary);
+				if (idx >= 0) yearTicks.push({ x: idx, label: String(y) });
+			}
+		}
+
+		const series: TrendSeries[] = [];
+		for (const raw of obj.series) {
+			const s = raw as Record<string, unknown>;
+			const query = typeof s.query === 'string' ? s.query : '';
+			const display_label =
+				typeof s.display_label === 'string' && s.display_label.length > 0
+					? s.display_label
+					: query;
+			const cluster_id = typeof s.cluster_id === 'string' ? s.cluster_id : null;
+			const searchArr = Array.isArray(s.search_index)
+				? (s.search_index as unknown[]).map((v) => (typeof v === 'number' ? v : 0))
+				: [];
+			const mentionArr = Array.isArray(s.mention_count)
+				? (s.mention_count as unknown[]).map((v) => (typeof v === 'number' ? v : 0))
+				: [];
+			if (searchArr.length !== W || mentionArr.length !== W) continue;
+
+			// Search line + area
+			const lineCmds: string[] = [];
+			for (let i = 0; i < W; i++) {
+				const x = i + 0.5;
+				const y = 22 - (Math.max(0, Math.min(100, searchArr[i])) / 100) * 22;
+				lineCmds.push(`${i === 0 ? 'M' : 'L'}${x.toFixed(2)},${y.toFixed(2)}`);
+			}
+			const searchLine = lineCmds.join(' ');
+			const searchArea =
+				`M0.5,22 ` + lineCmds.slice(1).join(' ').replace(/^M/, 'L') + ` L${(W - 0.5).toFixed(2)},22 Z`;
+
+			// Mention bars (normalized per-row)
+			let mentionMax = 0;
+			let mentionTotal = 0;
+			for (const n of mentionArr) {
+				mentionTotal += n;
+				if (n > mentionMax) mentionMax = n;
+			}
+			const mentionBars: { x: number; y: number; h: number }[] = [];
+			if (mentionMax > 0) {
+				for (let i = 0; i < W; i++) {
+					if (mentionArr[i] <= 0) continue;
+					const h = (mentionArr[i] / mentionMax) * 6;
+					mentionBars.push({ x: i + 0.1, y: 30 - h, h });
+				}
+			}
+
+			// Search peak
+			let searchPeak = 0;
+			let searchPeakIdx = 0;
+			for (let i = 0; i < W; i++) {
+				if (searchArr[i] > searchPeak) {
+					searchPeak = searchArr[i];
+					searchPeakIdx = i;
+				}
+			}
+
+			series.push({
+				query,
+				display_label,
+				cluster_id,
+				searchLine,
+				searchArea,
+				mentionBars,
+				searchPeak,
+				searchPeakWeek: weeks[searchPeakIdx] ?? '',
+				mentionTotal,
+				mentionMax
+			});
+		}
+
+		const mentionsSource = (obj.source as Record<string, unknown> | undefined)?.mentions as
+			| Record<string, unknown>
+			| undefined;
+		const observed = mentionsSource?.corpus_observed_window as
+			| Record<string, unknown>
+			| undefined;
+		const mentionWindow =
+			observed && (typeof observed.start_iso === 'string' || typeof observed.end_iso === 'string')
+				? {
+						startIso: typeof observed.start_iso === 'string' ? observed.start_iso : null,
+						endIso: typeof observed.end_iso === 'string' ? observed.end_iso : null
+					}
+				: null;
+
+		return { weeks, weekCount: W, yearTicks, mentionWindow, series };
 	}
 
 	type CommunityRow = {
@@ -383,6 +518,100 @@
 											</li>
 										{/each}
 									</ul>
+								{/if}
+							{:else if item.ref.type === 'search_volume_timeseries'}
+								{@const trend = asSearchTrendseries(payload)}
+								{#if !trend}
+									<p class="text-xs text-(--gray)">Could not parse time series.</p>
+								{:else}
+									<div class="flex flex-col gap-2">
+										{#each trend.series as s (s.query)}
+											<div class="grid grid-cols-[8.5rem_1fr] items-center gap-3">
+												<div class="text-[11px] leading-tight">
+													<div class="truncate text-(--ink)" title={s.display_label}>
+														{s.display_label}
+													</div>
+													<div class="mt-0.5 font-mono text-[10px] text-(--gray)">
+														peak {s.searchPeak} · {s.mentionTotal} mention{s.mentionTotal === 1 ? '' : 's'}
+													</div>
+												</div>
+												<svg
+													viewBox="0 0 {trend.weekCount} 30"
+													preserveAspectRatio="none"
+													class="block h-16 w-full"
+													role="img"
+													aria-label="Weekly Google Trends index and forum mention overlay for {s.display_label}"
+												>
+													{#each trend.yearTicks as t, ti (ti)}
+														<line
+															x1={t.x}
+															x2={t.x}
+															y1="0"
+															y2="30"
+															stroke="var(--panel-mid)"
+															stroke-width="0.15"
+															vector-effect="non-scaling-stroke"
+														/>
+													{/each}
+													<line
+														x1="0"
+														x2={trend.weekCount}
+														y1="22"
+														y2="22"
+														stroke="var(--panel-mid)"
+														stroke-width="0.15"
+														vector-effect="non-scaling-stroke"
+													/>
+													<path d={s.searchArea} fill="var(--orange)" fill-opacity="0.16" />
+													<path
+														d={s.searchLine}
+														stroke="var(--orange)"
+														stroke-width="1"
+														fill="none"
+														vector-effect="non-scaling-stroke"
+													/>
+													{#each s.mentionBars as b, bi (bi)}
+														<rect
+															x={b.x}
+															y={b.y}
+															width="0.8"
+															height={b.h}
+															fill="var(--teal)"
+															fill-opacity="0.9"
+														/>
+													{/each}
+												</svg>
+											</div>
+										{/each}
+									</div>
+									<div
+										class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-(--panel-mid) pt-2 text-[10px] text-(--gray)"
+									>
+										<span class="grid grid-cols-[8.5rem_1fr] gap-3 w-full font-mono">
+											<span></span>
+											<span class="flex justify-between">
+												{#each trend.yearTicks as t, ti (ti)}
+													<span>{t.label}</span>
+												{/each}
+											</span>
+										</span>
+										<span class="inline-flex items-center gap-1.5">
+											<span class="block h-1.5 w-4 rounded-full bg-(--orange)/70"></span>
+											Google Trends index (0–100)
+										</span>
+										<span class="inline-flex items-center gap-1.5">
+											<span class="block h-2.5 w-1 bg-(--teal)"></span>
+											Forum mentions / week
+										</span>
+										{#if trend.mentionWindow && (trend.mentionWindow.startIso || trend.mentionWindow.endIso)}
+											<span>
+												mentions window:
+												<span class="font-mono">
+													{trend.mentionWindow.startIso ?? '?'} → {trend.mentionWindow.endIso ?? '?'}
+												</span>
+											</span>
+										{/if}
+									</div>
 								{/if}
 							{:else if item.ref.type === 'community_engagement'}
 								{@const rows = asCommunityRows(payload)}

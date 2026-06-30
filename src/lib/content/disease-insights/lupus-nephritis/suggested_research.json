@@ -1,0 +1,134 @@
+{
+  "schema_version": "0.1",
+  "id": "ln_suggested_research_v0",
+  "applies_to_indication": "lupus_nephritis",
+  "generated_at": "2026-05-29",
+  "provenance": "Authored against the sponsor's BDM scope (CAR-T for LN, CAR-T for MS, Long-Term Follow-Up). Calibrated to demonstrate value-add operational levers the sponsor's payor data plan cares about — completeness, retention, data purity — without inflating cost or speed-to-data on the main study.",
+  "section": {
+    "eyebrow": "Suggested for further research",
+    "headline": "Four LTFU questions that move payor-grade data, not just patient counts.",
+    "body": "Sponsor priorities sit at speed and cost to main-study readout. The award-defining differentiation likely sits in the LTFU tail. Each question below pairs evidence we could source from patients with a concrete operational intervention the BDM can frame as low-cost, high-completeness."
+  },
+  "questions": [
+    {
+      "id": "digital_tether",
+      "label": "What keeps patients tethered to LTFU when CAR-T feels like a cure?",
+      "frame": "Cost efficiency · Data completeness",
+      "summary": "By year 3, biology is stable and the rationale for trial-site visits fades. Retention requires a low-burden touch model that earns its keep year over year.",
+      "research": {
+        "headline": "Questions to ask or source from patients",
+        "items": [
+          "At year 3 vs year 8, what makes a phone or video LTFU check feel like care vs surveillance?",
+          "Which labs and PROs are patients willing to do quarterly from home for a decade, and which feel like overreach?",
+          "What digital touchpoint cadence (text, app, portal, telehealth) keeps patients engaged without feeling tracked?",
+          "What would make a local lab draw feel official enough to count, not like a shortcut?"
+        ]
+      },
+      "recommendations": {
+        "headline": "Operational interventions",
+        "items": [
+          {
+            "label": "The Digital Tether framework",
+            "frame": "Cost efficiency",
+            "body": "Years 3–12 do not require expensive site visits. Stand up a digital-first LTFU spine: telehealth check-ins, contracted local-lab blood draws, ePRO for fatigue / kidney symptoms / steroid-free flare days. Frames the BDM as ultra-low cost without trading away completeness."
+          },
+          {
+            "label": "Tiered visit ladder",
+            "frame": "Burden minimization",
+            "body": "Annual in-person window for years 1–2, then alternating telehealth + local-lab quarters from year 3 onward, with an in-person reset every 3 years. Lets sites flex staffing to acute-window patients."
+          }
+        ]
+      }
+    },
+    {
+      "id": "shared_care_blueprints",
+      "label": "Where do site-to-community handoffs break the 12-year horizon?",
+      "frame": "Provider trust · Retention",
+      "summary": "By year 5, original PI may have moved on and the LN patient's rheumatology / nephrology dyad is owned by community providers. Without them as protocol allies, retention bleeds.",
+      "research": {
+        "headline": "Questions to ask or source from patients",
+        "items": [
+          "Who is the patient's call-first provider at year 1, year 5, year 10? Does the trial site stay on that list?",
+          "What does a community rheumatologist / nephrologist need to feel ownership of LTFU data, not just an annual form?",
+          "What does the patient hear from their community team when a CAR-T history appears in the chart five years later?",
+          "When PI rotation happens, what would make the patient stay vs drop out?"
+        ]
+      },
+      "recommendations": {
+        "headline": "Operational interventions",
+        "items": [
+          {
+            "label": "Site-to-community transition bundles",
+            "frame": "Retention via local HCPs",
+            "body": "Position the team as authors of transition kits for community rheumatology and nephrology. Includes a one-pager on the 12-year data thesis, an LTFU visit checklist, a flare-management protocol that does not confound efficacy data, and a direct-line escalation contact."
+          },
+          {
+            "label": "PI-rotation continuity plan",
+            "frame": "Provider trust",
+            "body": "Pre-commit to a named continuity contact (study coordinator role, not the original PI) that the patient meets in year 1 and persists through PI churn. Removes the who-do-I-call-if-I-have-a-blip-in-2038 risk."
+          }
+        ]
+      }
+    },
+    {
+      "id": "prevent_dmt_creep",
+      "label": "How do we detect off-protocol immunosuppression before it confounds efficacy?",
+      "frame": "Data purity · Payor evidence",
+      "summary": "B-cell depleting therapies are the default for LN flare. Without an early-warning system, community providers will reach for them at the first symptom, contaminating the durability signal payors care about.",
+      "research": {
+        "headline": "Questions to ask or source from patients",
+        "items": [
+          "At first symptom that feels like a flare, who does the patient call first — trial site, community rheum, ER?",
+          "What rescue-therapy reasoning do community providers cite when bringing patients back onto B-cell depleters?",
+          "What patient-facing materials would the patient share with a community provider to pause the rescue conversation?",
+          "What does the patient consider an acceptable trade-off between symptom relief and trial-protocol fidelity?"
+        ]
+      },
+      "recommendations": {
+        "headline": "Operational interventions",
+        "items": [
+          {
+            "label": "Early-warning system for rescue immunosuppression",
+            "frame": "Protecting data purity",
+            "body": "Build LTFU tracking that flags any new immunosuppressive prescription within 30 days, with a structured ascertainment workflow. Catches the rescue-therapy decision before it becomes a year-of-data loss."
+          },
+          {
+            "label": "Patient-held rescue-decision protocol",
+            "frame": "Patient agency · Data purity",
+            "body": "Give patients a one-page rescue-decision card to bring to community-provider visits — when to call the site first, when a non-confounding bridge therapy is appropriate, when rescue is the right call. Aligns the patient as an active partner in protocol fidelity."
+          }
+        ]
+      }
+    },
+    {
+      "id": "payor_evidence_design",
+      "label": "Which payor-grade evidence matters in years 5–12, and how do we collect it without burning patients out?",
+      "frame": "Payor value · Sponsor BDM differentiator",
+      "summary": "Payors will price the durability of an autoimmune CAR-T against rituximab-cycle costs avoided, steroid-free interval, and work productivity recovered. None of those live in the main-study CRF.",
+      "research": {
+        "headline": "Questions to ask or source from patients",
+        "items": [
+          "What does work / school / caregiving look like for the patient at year 3, year 5, year 10 post-infusion?",
+          "What out-of-pocket costs continue (or end) once the patient is off immunosuppression?",
+          "What does a steroid-free year vs a steroid-touched year feel like in the patient's own framing?",
+          "Which life events (pregnancy attempt, surgery, infection, vaccine) would the patient flag as worth a longitudinal data point?"
+        ]
+      },
+      "recommendations": {
+        "headline": "Operational interventions",
+        "items": [
+          {
+            "label": "Payor-aligned ePRO bank",
+            "frame": "Sponsor BDM differentiator",
+            "body": "Curate a short ePRO bank — work-productivity, steroid-burden, healthcare-utilization avoidance — surfaced quarterly at near-zero patient burden. Generates exactly the cost-offset narrative payors will demand at launch."
+          },
+          {
+            "label": "Life-event capture micro-survey",
+            "frame": "Data completeness",
+            "body": "A 2-minute patient-initiated capture for the events that drive payor questions (pregnancy, surgery, infection, vaccine). Catches the longitudinal signal that quarterly visits miss."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -21,12 +21,11 @@
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import { fragmentMatchesPersona } from '$lib/content/personas/evaluate';
-	import { participantAvatarUrl } from '$lib/participant-avatars';
+	import { fragmentParticipantAvatarUrl } from '$lib/dicebear-avatars';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import RightDrawer from '$lib/components/RightDrawer.svelte';
 	import GroupStatsDrawer from '$lib/components/GroupStatsDrawer.svelte';
-	import AskPatientlyAI from '$lib/components/AskPatientlyAI.svelte';
 	import { countWords } from '$lib/content/wctglpdemo-data/word-tokenize';
 	import { SENTIMENT_LABELS, titleCase } from '$lib/content/wctglpdemo-data/analysis';
 	import type { Fragment } from '$lib/content/corpora/types';
@@ -232,8 +231,13 @@
 	// === Helpers =============================================================
 
 	function speakerIdOf(f: Fragment): string {
-		if (f.source_ref.kind === 'interview') return f.source_ref.interview_id;
-		return f.source_ref.author_handle_hash ?? '(unknown)';
+		const ref = f.source_ref;
+		if (ref.kind === 'interview') return ref.interview_id;
+		if (ref.kind === 'youtube_transcript' || ref.kind === 'podcast_transcript') {
+			return ref.media_id;
+		}
+		if (ref.kind === 'search_query') return ref.source_dataset;
+		return ref.author_handle_hash ?? '(unknown)';
 	}
 	function speakerLabel(f: Fragment): string {
 		return speakerLabelById(speakerIdOf(f));
@@ -830,20 +834,6 @@
 </script>
 
 <svelte:head><title>Journey Map</title></svelte:head>
-
-<!--
-	Sticky Ask-The-Workbench bar. Lives in its own component (AskPatientlyAI)
-	so the bar + answer pane + citations/visualizations toggle can be reused
-	or re-skinned independently of the workbench page. The page hands it the
-	active indication, the set of in-corpus fragment ids (so it can route
-	citation clicks to the page's fragment drawer), and the journey stage
-	definitions used to label the stages-cited mini-bars.
--->
-<AskPatientlyAI
-	indication={activeIndication}
-	activeFragmentIds={activeFragmentIdSet}
-	onopenfragment={openDrawer}
-/>
 
 <PageHeader
 	eyebrow="PatientlyIQ · Persona corpus"
@@ -1629,7 +1619,7 @@
 <!-- Hover tooltip (transient) -->
 {#if tooltip && tooltipDot && tooltipFragment}
 	{@const sid = tooltipDot.speakerId}
-	{@const avatar = participantAvatarUrl(sid)}
+	{@const avatar = fragmentParticipantAvatarUrl(tooltipFragment)}
 	{@const stage = stages.find((s) => s.id === tooltipDot.stageId)}
 	{@const stepLabel = tooltipDot.stepId
 		? stage?.steps.find((st) => st.id === tooltipDot.stepId)?.label
@@ -1701,7 +1691,7 @@
 	{#if drawerFragment}
 		{@const ann = drawerAnnotation}
 		{@const sid = drawerSpeakerId ?? '?'}
-		{@const avatar = participantAvatarUrl(sid)}
+		{@const avatar = fragmentParticipantAvatarUrl(drawerFragment)}
 		{@const stageTags = ann?.stages?.values ?? []}
 		{@const sentiment = ann?.segment_tags?.sentiment_score}
 		{@const emotions = ann?.segment_tags?.emotions ?? []}

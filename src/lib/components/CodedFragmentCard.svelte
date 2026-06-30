@@ -15,6 +15,7 @@
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
 	import StarIcon from '@lucide/svelte/icons/star';
 	import { Button } from '$lib/components/ui/button/index';
+	import { AppCard } from '$lib/components/ui/app-card';
 	import {
 		participantLabel,
 		questionLabel,
@@ -56,10 +57,7 @@
 	}
 </script>
 
-<div
-	class="border-2 p-3
-		{fragment.in_pull_quote ? 'border-accent-mint bg-accent-mint/5' : 'border-muted-foreground/40'}"
->
+<AppCard variant="fragment" selected={fragment.in_pull_quote}>
 	<!-- Participant — avatar + name (or interview id), with the star control -->
 	<div class="flex items-start justify-between gap-3">
 		<div class="flex min-w-0 items-center gap-2">
@@ -110,4 +108,4 @@
 			<span class="font-mono text-accent-mint">↑ in {fragment.quote_id}</span>
 		{/if}
 	</div>
-</div>
+</AppCard>

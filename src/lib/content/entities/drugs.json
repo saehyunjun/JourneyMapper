@@ -1,0 +1,1383 @@
+{
+  "schema_version": "entities-drug-0.1",
+  "description": "Drug entity registry per ENTITY_REGISTRY.md. Phase 1 seed migrated from src/lib/content/registries/drugs.json. theme_links default to [hrqol.general_health, util.coverage, util.insurance] pending analyst review per drug. surface_forms = [generic_name, ...brand_names]. iGAN-specific drugs (Dapagliflozin, Sibeprenlimab) are NOT here yet \u2014 they enter via the propose-entities.mjs script in Phase 4.",
+  "items": [
+    {
+      "id": "entity.drug.amlodipine",
+      "kind": "drug",
+      "label": "Amlodipine",
+      "surface_forms": [
+        "Amlodipine"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "Calcium channel blocker",
+        "mechanism": "Vasodilation, blood pressure reduction",
+        "brand_names": [
+          "Norvasc"
+        ],
+        "routes": [
+          "oral"
+        ],
+        "approval_status": "FDA approved"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "The other medicines she currently take is Losartan and Amlodipine for hypertension."
+    },
+    {
+      "id": "entity.drug.anifrolumab",
+      "kind": "drug",
+      "label": "Anifrolumab (Saphnelo)",
+      "surface_forms": [
+        "anifrolumab",
+        "Saphnelo"
+      ],
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "type_i_interferon_antagonist",
+        "approval_status": "approved",
+        "brand_names": [
+          "Saphnelo"
+        ],
+        "generic_name": "anifrolumab",
+        "original_id": "anifrolumab",
+        "sponsor_id": "entity.sponsor.astrazeneca"
+      },
+      "provenance": "registry",
+      "description": "Type-I interferon receptor antagonist approved for SLE; investigated in lupus nephritis.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.atacicept",
+      "kind": "drug",
+      "label": "Atacicept",
+      "surface_forms": [
+        "atacicept"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "BAFF/APRIL inhibitor",
+        "mechanism": "B-cell activation factor inhibitor",
+        "brand_names": [],
+        "routes": [
+          "subcutaneous"
+        ]
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "at least results from atacicept showing almost no decline in GFR over 1+ years"
+    },
+    {
+      "id": "entity.drug.atrasentan",
+      "kind": "drug",
+      "label": "Atrasentan",
+      "surface_forms": [
+        "atrasentan"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "trial.retention",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "endothelin receptor antagonist",
+        "mechanism": "ETA receptor antagonist",
+        "brand_names": [],
+        "routes": [
+          "oral"
+        ]
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "I'm on Vanrafia (atrasentan rather than sparsentan), and I've had zero noticeable side effects"
+    },
+    {
+      "id": "entity.drug.azathioprine",
+      "kind": "drug",
+      "label": "Azathioprine (Imuran)",
+      "surface_forms": [
+        "azathioprine",
+        "Imuran"
+      ],
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "antimetabolite",
+        "approval_status": "approved",
+        "brand_names": [
+          "Imuran"
+        ],
+        "generic_name": "azathioprine",
+        "original_id": "azathioprine"
+      },
+      "provenance": "registry",
+      "description": "Immunosuppressant used for lupus nephritis maintenance, including during pregnancy.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.belimumab",
+      "kind": "drug",
+      "label": "Belimumab (Benlysta)",
+      "surface_forms": [
+        "belimumab",
+        "Benlysta"
+      ],
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "anti_blys",
+        "approval_status": "approved",
+        "brand_names": [
+          "Benlysta"
+        ],
+        "generic_name": "belimumab",
+        "original_id": "belimumab",
+        "sponsor_id": "entity.sponsor.gsk"
+      },
+      "provenance": "registry",
+      "description": "Anti-BLyS/BAFF monoclonal antibody approved for SLE (2011) and lupus nephritis (2020); IV infusion or subcutaneous injection.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.bhv_1400",
+      "kind": "drug",
+      "label": "BHV-1400",
+      "surface_forms": [
+        "BHV-1400"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "class": "TRAP extracellular degrader",
+        "mechanism": "Selectively removes galactose-deficient IgA1",
+        "brand_names": [],
+        "routes": []
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "BHV-1400 was reported to reduce galactose-deficient IgA1 by more than 60% within 48 hours"
+    },
+    {
+      "id": "entity.drug.budesonide",
+      "kind": "drug",
+      "label": "Budesonide",
+      "surface_forms": [
+        "TRF-budesonide",
+        "budesonide"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "util.coverage",
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "class": "corticosteroid",
+        "mechanism": "targets IgA production in bowels",
+        "brand_names": [],
+        "routes": [
+          "oral"
+        ],
+        "approval_status": "approved in UK and EU"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "my doctor wrote budesonide in his letter so I assume that's what I will get"
+    },
+    {
+      "id": "entity.drug.caba_201",
+      "kind": "drug",
+      "label": "CABA-201 (anti-CD19 CAR-T)",
+      "surface_forms": [
+        "caba-201"
+      ],
+      "indications": [
+        "lupus_nephritis",
+        "multiple_sclerosis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology",
+        "neurology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "car_t_autologous",
+        "approval_status": "phase_2",
+        "generic_name": "caba-201",
+        "original_id": "caba_201",
+        "sponsor_id": "entity.sponsor.cabaletta_bio"
+      },
+      "provenance": "registry",
+      "description": "Investigational autologous anti-CD19 CAR-T in development for lupus nephritis, generalized myasthenia gravis, systemic sclerosis, idiopathic inflammatory myopathies, and MS.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.cagrilintide",
+      "kind": "drug",
+      "label": "Cagrilintide",
+      "surface_forms": [
+        "cagrilintide"
+      ],
+      "indications": [
+        "obesity"
+      ],
+      "therapeutic_areas": [
+        "endocrinology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "amylin_analog",
+        "approval_status": "phase_3",
+        "generic_name": "cagrilintide",
+        "original_id": "cagrilintide",
+        "sponsor_id": "entity.sponsor.novo_nordisk"
+      },
+      "provenance": "registry",
+      "description": "Long-acting amylin analog under investigation, often in combination with semaglutide (CagriSema).",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.corticosteroids",
+      "kind": "drug",
+      "label": "Corticosteroids (prednisone)",
+      "surface_forms": [
+        "prednisone"
+      ],
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "corticosteroid",
+        "approval_status": "approved",
+        "generic_name": "prednisone",
+        "original_id": "corticosteroids"
+      },
+      "provenance": "registry",
+      "description": "Glucocorticoids \u2014 prednisone, methylprednisolone pulses \u2014 the backbone of induction therapy, tapered over time. The cluster is a drug-class shorthand; this entity represents the family.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.cyclophosphamide",
+      "kind": "drug",
+      "label": "Cyclophosphamide (Cytoxan)",
+      "surface_forms": [
+        "cyclophosphamide",
+        "Cytoxan",
+        "Endoxan"
+      ],
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "alkylating_agent",
+        "approval_status": "approved",
+        "brand_names": [
+          "Cytoxan",
+          "Endoxan"
+        ],
+        "generic_name": "cyclophosphamide",
+        "original_id": "cyclophosphamide"
+      },
+      "provenance": "registry",
+      "description": "Alkylating immunosuppressant for induction in severe lupus nephritis; given IV (NIH or Euro-Lupus regimens) or orally.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.dapagliflozin",
+      "kind": "drug",
+      "label": "Dapagliflozin",
+      "surface_forms": [
+        "Dapagliflozin"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "SGLT2 inhibitor",
+        "mechanism": "sodium-glucose cotransporter 2 inhibitor",
+        "brand_names": [
+          "Farxiga"
+        ],
+        "routes": [
+          "oral"
+        ]
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "Dapagliflozin and empagliflozin look like they're available in Chile"
+    },
+    {
+      "id": "entity.drug.descartes_08",
+      "kind": "drug",
+      "label": "Descartes-08 (anti-BCMA CAR-T)",
+      "surface_forms": [
+        "descartes-08"
+      ],
+      "indications": [
+        "multiple_sclerosis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "neurology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "car_t_autologous",
+        "approval_status": "phase_2",
+        "generic_name": "descartes-08",
+        "original_id": "descartes_08",
+        "sponsor_id": "entity.sponsor.cartesian_therapeutics"
+      },
+      "provenance": "registry",
+      "description": "Investigational autologous mRNA-engineered anti-BCMA CAR-T; non-lentiviral, given outpatient without lymphodepletion. In trials for myasthenia gravis and being explored in MS.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.fabhalta",
+      "kind": "drug",
+      "label": "Fabhalta",
+      "surface_forms": [
+        "Fabhalta"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "Factor B inhibitor",
+        "mechanism": "Complement pathway inhibition",
+        "brand_names": [],
+        "routes": [
+          "oral"
+        ],
+        "approval_status": "FDA approved"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "Newer medications include Tarpeyo, Filspari, and Fabhalta."
+    },
+    {
+      "id": "entity.drug.farxiga",
+      "kind": "drug",
+      "label": "Farxiga",
+      "surface_forms": [
+        "Farxiga"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "SGLT2 Inhibitor",
+        "mechanism": "Glycosuria, proteinuria reduction, renal protective",
+        "brand_names": [
+          "Farxiga"
+        ],
+        "routes": [
+          "oral"
+        ],
+        "approval_status": "FDA approved"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "But mine progressed so fast, doc added farxiga and spironolactone in my regimen"
+    },
+    {
+      "id": "entity.drug.filspari",
+      "kind": "drug",
+      "label": "Filspari",
+      "surface_forms": [
+        "sparsentan",
+        "Filspari"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "hrqol.vitality",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "serine protease inhibitor",
+        "mechanism": "Factor D inhibitor",
+        "brand_names": [
+          "Filspari"
+        ],
+        "routes": [
+          "oral"
+        ],
+        "approval_status": "approved in UK and EU"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "I had to lower Filspari from 400 to 200 because blood pressure was too low and i was feeling extremely tired"
+    },
+    {
+      "id": "entity.drug.fingolimod",
+      "kind": "drug",
+      "label": "Fingolimod (Gilenya)",
+      "surface_forms": [
+        "fingolimod",
+        "Gilenya"
+      ],
+      "indications": [
+        "multiple_sclerosis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "neurology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "s1p_modulator",
+        "approval_status": "approved",
+        "brand_names": [
+          "Gilenya"
+        ],
+        "generic_name": "fingolimod",
+        "original_id": "fingolimod",
+        "sponsor_id": "entity.sponsor.novartis"
+      },
+      "provenance": "registry",
+      "description": "First oral DMT for relapsing MS; S1P receptor modulator. First-dose cardiac monitoring required; macular edema and infection risks.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.forxiga",
+      "kind": "drug",
+      "label": "Forxiga (dapagliflozin)",
+      "surface_forms": [
+        "Forxiga (dapa)",
+        "Forxiga",
+        "dapa"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "util.coverage",
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "class": "SGLT2 inhibitor",
+        "mechanism": "reduces pressure on kidneys",
+        "brand_names": [
+          "Forxiga"
+        ],
+        "routes": [
+          "oral"
+        ],
+        "approval_status": "approved"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "only lisinopril, simvastatin and forxiga for now. Forxiga is a SGLT2 inhibitor which helps"
+    },
+    {
+      "id": "entity.drug.hydroxychloroquine",
+      "kind": "drug",
+      "label": "Hydroxychloroquine (Plaquenil)",
+      "surface_forms": [
+        "hydroxychloroquine",
+        "Plaquenil"
+      ],
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "antimalarial",
+        "approval_status": "approved",
+        "brand_names": [
+          "Plaquenil"
+        ],
+        "generic_name": "hydroxychloroquine",
+        "original_id": "hydroxychloroquine"
+      },
+      "provenance": "registry",
+      "description": "Antimalarial background therapy recommended for nearly all lupus patients; reduces flares and renal damage.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.kyv_101",
+      "kind": "drug",
+      "label": "KYV-101 (anti-CD19 CAR-T)",
+      "surface_forms": [
+        "kyv-101"
+      ],
+      "indications": [
+        "lupus_nephritis",
+        "multiple_sclerosis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology",
+        "neurology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "car_t_autologous",
+        "approval_status": "phase_2",
+        "generic_name": "kyv-101",
+        "original_id": "kyv_101",
+        "sponsor_id": "entity.sponsor.kyverna"
+      },
+      "provenance": "registry",
+      "description": "Investigational autologous anti-CD19 CAR-T (fully human binder) in clinical development for lupus nephritis, progressive MS, myasthenia gravis, and other antibody-mediated autoimmune diseases.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.labetalol",
+      "kind": "drug",
+      "label": "Labetalol",
+      "surface_forms": [
+        "Labetalol"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "Mixed alpha-beta adrenergic blocker",
+        "mechanism": "Blood pressure reduction",
+        "brand_names": [
+          "Trandate"
+        ],
+        "routes": [
+          "oral",
+          "IV"
+        ],
+        "approval_status": "FDA approved"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "Got pregnant actually 2 months after the diagnosis so I stopped losartan and only take the labetalol to stable the bp while pregnant."
+    },
+    {
+      "id": "entity.drug.losartan",
+      "kind": "drug",
+      "label": "Losartan",
+      "surface_forms": [
+        "Losartan"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "angiotensin II receptor blocker",
+        "mechanism": "AT1 receptor antagonist",
+        "brand_names": [
+          "Cozaar"
+        ],
+        "routes": [
+          "oral"
+        ]
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "Losartan isn't doing anything to prevent more deposition and scarring"
+    },
+    {
+      "id": "entity.drug.metformin",
+      "kind": "drug",
+      "label": "Metformin",
+      "surface_forms": [
+        "metformin",
+        "Glucophage",
+        "Glumetza",
+        "Fortamet"
+      ],
+      "indications": [
+        "obesity"
+      ],
+      "therapeutic_areas": [
+        "endocrinology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "biguanide",
+        "approval_status": "approved",
+        "brand_names": [
+          "Glucophage",
+          "Glumetza",
+          "Fortamet"
+        ],
+        "generic_name": "metformin",
+        "original_id": "metformin"
+      },
+      "provenance": "registry",
+      "description": "First-line biguanide for type-2 diabetes; used off-label for prediabetes and weight management.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.mycophenolate",
+      "kind": "drug",
+      "label": "Mycophenolate (CellCept / Myfortic)",
+      "surface_forms": [
+        "mycophenolate",
+        "CellCept",
+        "Myfortic"
+      ],
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "antimetabolite",
+        "approval_status": "approved",
+        "brand_names": [
+          "CellCept",
+          "Myfortic"
+        ],
+        "generic_name": "mycophenolate",
+        "original_id": "mycophenolate",
+        "sponsor_id": "entity.sponsor.roche"
+      },
+      "provenance": "registry",
+      "description": "First-line immunosuppressant for lupus nephritis induction and maintenance; also widely used in transplant.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.natalizumab",
+      "kind": "drug",
+      "label": "Natalizumab (Tysabri)",
+      "surface_forms": [
+        "natalizumab",
+        "Tysabri"
+      ],
+      "indications": [
+        "multiple_sclerosis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "neurology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "alpha_4_integrin",
+        "approval_status": "approved",
+        "brand_names": [
+          "Tysabri"
+        ],
+        "generic_name": "natalizumab",
+        "original_id": "natalizumab",
+        "sponsor_id": "entity.sponsor.biogen"
+      },
+      "provenance": "registry",
+      "description": "Alpha-4 integrin antagonist for relapsing MS; IV every 4 weeks via TOUCH program. High efficacy offset by PML risk in JCV-antibody-positive patients.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.obinutuzumab",
+      "kind": "drug",
+      "label": "Obinutuzumab (Gazyva)",
+      "surface_forms": [
+        "obinutuzumab",
+        "Gazyva"
+      ],
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "anti_cd20",
+        "approval_status": "phase_3",
+        "brand_names": [
+          "Gazyva"
+        ],
+        "generic_name": "obinutuzumab",
+        "original_id": "obinutuzumab",
+        "sponsor_id": "entity.sponsor.roche"
+      },
+      "provenance": "registry",
+      "description": "Glycoengineered anti-CD20 antibody investigated for lupus nephritis (REGENCY trial); approved for CLL and follicular lymphoma.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.ocrelizumab",
+      "kind": "drug",
+      "label": "Ocrelizumab (Ocrevus)",
+      "surface_forms": [
+        "ocrelizumab",
+        "Ocrevus"
+      ],
+      "indications": [
+        "multiple_sclerosis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "neurology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "anti_cd20",
+        "approval_status": "approved",
+        "brand_names": [
+          "Ocrevus"
+        ],
+        "generic_name": "ocrelizumab",
+        "original_id": "ocrelizumab",
+        "sponsor_id": "entity.sponsor.roche"
+      },
+      "provenance": "registry",
+      "description": "Anti-CD20 B-cell-depleting antibody approved for relapsing and primary progressive MS; 600 mg IV every 6 months.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.ofatumumab",
+      "kind": "drug",
+      "label": "Ofatumumab (Kesimpta)",
+      "surface_forms": [
+        "ofatumumab",
+        "Kesimpta"
+      ],
+      "indications": [
+        "multiple_sclerosis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "neurology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "anti_cd20",
+        "approval_status": "approved",
+        "brand_names": [
+          "Kesimpta"
+        ],
+        "generic_name": "ofatumumab",
+        "original_id": "ofatumumab",
+        "sponsor_id": "entity.sponsor.novartis"
+      },
+      "provenance": "registry",
+      "description": "Anti-CD20 B-cell-depleting antibody for relapsing MS; subcutaneous self-injection monthly. Same class as ocrelizumab but home-administered.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.orforglipron",
+      "kind": "drug",
+      "label": "Orforglipron",
+      "surface_forms": [
+        "orforglipron"
+      ],
+      "indications": [
+        "obesity"
+      ],
+      "therapeutic_areas": [
+        "endocrinology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "glp1_agonist",
+        "approval_status": "phase_3",
+        "generic_name": "orforglipron",
+        "original_id": "orforglipron",
+        "sponsor_id": "entity.sponsor.eli_lilly"
+      },
+      "provenance": "registry",
+      "description": "Oral small-molecule GLP-1 receptor agonist; investigational for obesity and type-2 diabetes.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.phentermine",
+      "kind": "drug",
+      "label": "Phentermine",
+      "surface_forms": [
+        "phentermine",
+        "Adipex-P",
+        "Lomaira"
+      ],
+      "indications": [
+        "obesity"
+      ],
+      "therapeutic_areas": [
+        "endocrinology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "sympathomimetic",
+        "approval_status": "approved",
+        "brand_names": [
+          "Adipex-P",
+          "Lomaira"
+        ],
+        "generic_name": "phentermine",
+        "original_id": "phentermine"
+      },
+      "provenance": "registry",
+      "description": "Short-term sympathomimetic appetite suppressant for obesity.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.povetacicept",
+      "kind": "drug",
+      "label": "Povetacicept",
+      "surface_forms": [
+        "povetacicept"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "trial.enrollment",
+        "trial.eligibility",
+        "hrqol.general_health",
+        "util.coverage",
+        "trial.retention"
+      ],
+      "metadata": {
+        "class": "anti-APRIL/anti-BAFF",
+        "mechanism": "dual APRIL/BAFF inhibition",
+        "brand_names": [],
+        "routes": []
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "I'm not sure what is available in your area, but this is another povetacicept trial"
+    },
+    {
+      "id": "entity.drug.retatrutide",
+      "kind": "drug",
+      "label": "Retatrutide",
+      "surface_forms": [
+        "retatrutide"
+      ],
+      "indications": [
+        "obesity"
+      ],
+      "therapeutic_areas": [
+        "endocrinology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "triple_agonist",
+        "approval_status": "phase_3",
+        "generic_name": "retatrutide",
+        "original_id": "retatrutide",
+        "sponsor_id": "entity.sponsor.eli_lilly"
+      },
+      "provenance": "registry",
+      "description": "Triple GLP-1 / GIP / glucagon receptor agonist; investigational for obesity and type-2 diabetes.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.rituximab",
+      "kind": "drug",
+      "label": "Rituximab (Rituxan)",
+      "surface_forms": [
+        "rituximab",
+        "Rituxan",
+        "MabThera"
+      ],
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "anti_cd20",
+        "approval_status": "approved",
+        "brand_names": [
+          "Rituxan",
+          "MabThera"
+        ],
+        "generic_name": "rituximab",
+        "original_id": "rituximab",
+        "sponsor_id": "entity.sponsor.roche"
+      },
+      "provenance": "registry",
+      "description": "Anti-CD20 B-cell-depleting antibody. Used off-label for refractory lupus nephritis; on-label for non-Hodgkin lymphoma and rheumatoid arthritis.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.semaglutide",
+      "kind": "drug",
+      "label": "Semaglutide (Wegovy / Ozempic / Rybelsus)",
+      "surface_forms": [
+        "semaglutide",
+        "Wegovy",
+        "Ozempic",
+        "Rybelsus"
+      ],
+      "indications": [
+        "obesity"
+      ],
+      "therapeutic_areas": [
+        "endocrinology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "glp1_agonist",
+        "approval_status": "approved",
+        "brand_names": [
+          "Wegovy",
+          "Ozempic",
+          "Rybelsus"
+        ],
+        "generic_name": "semaglutide",
+        "original_id": "semaglutide",
+        "sponsor_id": "entity.sponsor.novo_nordisk"
+      },
+      "provenance": "registry",
+      "description": "GLP-1 receptor agonist; approved for type-2 diabetes (Ozempic, Rybelsus) and chronic weight management (Wegovy).",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.sibeprenlimab",
+      "kind": "drug",
+      "label": "Sibeprenlimab",
+      "surface_forms": [
+        "Silbeprenlimab",
+        "sibeprenlimab"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.access"
+      ],
+      "metadata": {
+        "class": "monoclonal antibody",
+        "mechanism": "IgA-specific serine endopeptidase inhibitor",
+        "brand_names": [],
+        "routes": [
+          "intravenous"
+        ]
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "using TRF-budesonide or sibeprenlimab to reduce IgA and Gd-IgA1 production"
+    },
+    {
+      "id": "entity.drug.spironolactone",
+      "kind": "drug",
+      "label": "Spironolactone",
+      "surface_forms": [
+        "Spironolactone"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "Potassium-sparing diuretic / mineralocorticoid receptor antagonist",
+        "mechanism": "Aldosterone antagonism, proteinuria reduction",
+        "brand_names": [
+          "Aldactone"
+        ],
+        "routes": [
+          "oral"
+        ],
+        "approval_status": "FDA approved"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "But mine progressed so fast, doc added farxiga and spironolactone in my regimen"
+    },
+    {
+      "id": "entity.drug.tarpeyo",
+      "kind": "drug",
+      "label": "Tarpeyo",
+      "surface_forms": [
+        "tarpeyo"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage"
+      ],
+      "metadata": {
+        "class": "immunosuppressant",
+        "mechanism": "unknown from context",
+        "brand_names": [
+          "Tarpeyo"
+        ],
+        "routes": [
+          "oral"
+        ],
+        "approval_status": "approved"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "I just hope the side effects are less impactful than tarpeyo"
+    },
+    {
+      "id": "entity.drug.tirzepatide",
+      "kind": "drug",
+      "label": "Tirzepatide (Mounjaro / Zepbound)",
+      "surface_forms": [
+        "tirzepatide",
+        "Mounjaro",
+        "Zepbound"
+      ],
+      "indications": [
+        "obesity"
+      ],
+      "therapeutic_areas": [
+        "endocrinology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "dual_glp1_gip_agonist",
+        "approval_status": "approved",
+        "brand_names": [
+          "Mounjaro",
+          "Zepbound"
+        ],
+        "generic_name": "tirzepatide",
+        "original_id": "tirzepatide",
+        "sponsor_id": "entity.sponsor.eli_lilly"
+      },
+      "provenance": "registry",
+      "description": "Dual GLP-1 / GIP receptor agonist; approved for type-2 diabetes (Mounjaro) and chronic weight management (Zepbound).",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.ublituximab",
+      "kind": "drug",
+      "label": "Ublituximab (Briumvi)",
+      "surface_forms": [
+        "ublituximab",
+        "Briumvi"
+      ],
+      "indications": [
+        "multiple_sclerosis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "neurology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "anti_cd20",
+        "approval_status": "approved",
+        "brand_names": [
+          "Briumvi"
+        ],
+        "generic_name": "ublituximab",
+        "original_id": "ublituximab",
+        "sponsor_id": "entity.sponsor.tg_therapeutics"
+      },
+      "provenance": "registry",
+      "description": "Glycoengineered anti-CD20 antibody for relapsing MS; shorter (~1 hour) infusion than ocrelizumab.",
+      "status": "active"
+    },
+    {
+      "id": "entity.drug.vanrafia",
+      "kind": "drug",
+      "label": "Vanrafia (atrasentan branded formulation)",
+      "surface_forms": [
+        "Vanrafia"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "class": "endothelin receptor antagonist",
+        "mechanism": "ETA receptor antagonist",
+        "brand_names": [
+          "Vanrafia"
+        ],
+        "routes": [
+          "oral"
+        ],
+        "generic_name": "atrasentan"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "I'm on Vanrafia (atrasentan rather than sparsentan), and I've had zero noticeable side effects"
+    },
+    {
+      "id": "entity.drug.voclosporin",
+      "kind": "drug",
+      "label": "Voclosporin (Lupkynis)",
+      "surface_forms": [
+        "voclosporin",
+        "Lupkynis"
+      ],
+      "indications": [
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health",
+        "util.coverage",
+        "util.insurance"
+      ],
+      "metadata": {
+        "class": "calcineurin_inhibitor",
+        "approval_status": "approved",
+        "brand_names": [
+          "Lupkynis"
+        ],
+        "generic_name": "voclosporin",
+        "original_id": "voclosporin",
+        "sponsor_id": "entity.sponsor.aurinia"
+      },
+      "provenance": "registry",
+      "description": "Calcineurin inhibitor approved 2021 for active lupus nephritis, added on top of mycophenolate and steroids.",
+      "status": "active"
+    }
+  ]
+}

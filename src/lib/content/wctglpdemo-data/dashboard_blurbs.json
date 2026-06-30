@@ -147,6 +147,82 @@
           ]
         }
       }
+    },
+    "multiple_sclerosis": {
+      "generated_at": "2026-05-28T22:57:10.510Z",
+      "model": "claude-haiku-4-5",
+      "corpus_kind": "real",
+      "overview": "Across 78 annotated community posts and comments from 51 MS authors, sentiment is mixed: 24% positive, 28% negative, 47% neutral. The negative pull centers on [treatment barriers](ref:subtheme:treatment_barriers)—invasive procedures, chemotherapy, immunosuppression risk, and the concern that newer therapies merely replicate existing B-cell depletion mechanisms. The positive pull is narrow but genuine: authors excited about CAR-T's promise as a one-time intervention and impressed by the scientific rationale for immune system reset. Authors weigh trial participation against real logistical friction—washout periods, hospital proximity, and intensive screening—rather than categorical rejection.",
+      "findings": {
+        "negative-trial": {
+          "lede": "Trial barriers turn away eligible authors unless disease trajectory worsens or access improves.",
+          "analysis": "[Trial barriers](ref:subtheme:trial_barriers) dominate the negative sentiment (9 of 23 coded fragments). Time investment, mandatory washout from current disease-modifying therapy, and procedural density (lumbar punctures, aphaeresis, chemotherapy) are cited as showstoppers. [Trial decision factors](ref:subtheme:trial_decision_factors) reveal a conditional calculation: authors express willingness if their current treatment fails or if trial logistics shift—proximity to site, reduced washout duration, or lower procedural burden. Placebo-control design appears as a discrete friction point. One author notes the screening process alone spans 1–2 months, with 9-month Kesimpta washout required; another explicitly states time investment feels prohibitive 'at this point in my MS' but would reconsider if disease escalated.",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "Trial participation is postponed, not refused—authors delay enrollment until current therapy fails or trial burdens drop."
+            },
+            {
+              "kind": "tension",
+              "text": "Stable patients on [effective treatment](ref:subtheme:treatment_positive_experiences) view trial risk as unwarranted; only disease progression or treatment failure shifts the calculation."
+            },
+            {
+              "kind": "implication",
+              "text": "Recruitment messaging should clarify washout duration, site-visit frequency, and procedural requirements upfront to filter for logistically compatible cohorts."
+            }
+          ]
+        },
+        "negative-treatment": {
+          "lede": "Skepticism about mechanism novelty and immunosuppression risk dampens enthusiasm for advanced therapies.",
+          "analysis": "[Treatment knowledge gaps](ref:subtheme:treatment_knowledge_gaps) and [treatment decision factors](ref:subtheme:treatment_decision_factors) fuel negative sentiment (7 and 10 fragments respectively). Authors with immunology expertise express doubt that CAR-T offers mechanistic advantage over existing B-cell depleters (Ocrevus, Kesimpta); one post states CAR-T is 'still, essentially, a B-cell depleter, but with a different mechanism' and emphasizes persistent immunosuppression. Cost-access tensions emerge—one author notes insurance refuses to pay €60,000+ for autologous hematopoietic stem-cell transplant while covering monthly Kesimpta. Comments also surface concern that 'we still don't fully understand the mechanism by which b-cells acquire autoimmunity,' raising doubts about whether aggressive chemotherapy adds real value. Long-term progression despite current DMTs compounds skepticism.",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "MS authors with scientific background question whether novel mechanisms justify chemotherapy exposure when existing B-cell depleters already work."
+            },
+            {
+              "kind": "tension",
+              "text": "Enthusiasm for CAR-T as a 'cure' conflicts with recognition that it provides symptomatic control (no relapse) without addressing root autoimmune cause."
+            },
+            {
+              "kind": "implication",
+              "text": "Clinical communication should distinguish CAR-T's durable immune-system reset from standard DMT dosing cycles, not frame it as another B-cell depleter."
+            }
+          ]
+        },
+        "positive-treatment": {
+          "lede": "Hope centers on the promise of a one-time intervention and sustained immune-system reset.",
+          "analysis": "Positive sentiment (3 fragments, all from [treatment knowledge gaps](ref:subtheme:treatment_knowledge_gaps)) clusters around two ideas: the appeal of one-dose finality ('never have to worry about treating them again') and the scientific elegance of reprogramming autoreactive cells rather than simply suppressing them. One detailed post explains CAR-T as 'teaching your own body to produce ocrevus effects' and frames immune reset as 'close to a cure.' Notably, this enthusiasm coexists with the recognition that CAR-T is not a cure—authors distinguish between symptomatic control and root-cause cure. The positive sentiment is technically informed and cautious.",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "MS authors recognize CAR-T as a mechanism innovation (active, durable cell killing) not just a delivery innovation."
+            },
+            {
+              "kind": "implication",
+              "text": "Recruitment should emphasize durable T-cell persistence and reduced re-dosing burden to resonate with desire to move away from lifelong infusion cycles."
+            }
+          ]
+        },
+        "trial-non-barriers": {
+          "lede": "Conditional interest in [clinical trials](ref:theme:clinical_trials) persists despite procedural burdens—disease progression and mechanism novelty can unlock recruitment.",
+          "analysis": "[Clinical trial interest](ref:subtheme:clinical_trial_interest) (8 positive, 3 negative) and [clinical trial awareness](ref:subtheme:clinical_trial_awareness) (5 positive, 1 negative) show net openness to participation. Authors explicitly state excitement ('This is the treatment I am most excited about!!', 'Where do I put my name down'), suggesting novelty of mechanism and potential for immune reset overcome default trial friction. [Trial motivators](ref:subtheme:trial_motivators) remain underexplored in the corpus, but optimism about CAR-T's distinctness from standard B-cell depletion appears to lower the barrier to considering enrollment. The fact that 15 of 44 trial-related fragments lean positive, despite heavy [trial barriers](ref:subtheme:trial_barriers) commentary, indicates motivation can outweigh logistical concern if the scientific promise feels sufficiently novel.",
+          "considerations": [
+            {
+              "kind": "insight",
+              "text": "Disease progression and treatment-failure status are unstated eligibility filters that authors assume; trials targeting stable patients face recruitment headwind."
+            },
+            {
+              "kind": "implication",
+              "text": "Identify and prioritize authors whose current DMT has failed or who report progressive disability; they express higher trial willingness."
+            },
+            {
+              "kind": "implication",
+              "text": "Emphasize mechanism distinction—active, durable T-cell killing—in early recruitment messaging to activate the subset of scientifically informed, trial-curious authors."
+            }
+          ]
+        }
+      }
     }
   }
 }

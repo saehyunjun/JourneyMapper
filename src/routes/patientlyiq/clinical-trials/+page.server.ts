@@ -17,7 +17,7 @@ import {
 	getDiseaseInsightManifestById,
 	type DiseaseInsightManifest
 } from '$lib/content/disease-insights';
-import { getDatasetPayload } from '$lib/content/disease-insights/datasets';
+import { readDatasetFromDisk } from '$lib/content/disease-insights/datasets';
 import type { PageServerLoad } from './$types';
 
 export type TrialSite = {
@@ -333,7 +333,9 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return payload;
 	}
 
-	const file = getDatasetPayload(manifest.slug, normalizedRef.path) as NormalizedFile | undefined;
+	const file = (await readDatasetFromDisk(manifest.slug, normalizedRef.path)) as
+		| NormalizedFile
+		| undefined;
 	if (!file?.studies) {
 		const payload: ClinicalTrialsPayload = {
 			indication: { id: manifest.id, label: manifest.label },

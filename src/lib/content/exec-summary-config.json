@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "notes": [
+    "Per-indication config for the patientlyiq executive-summary dashboard.",
+    "Authored by hand. The page reads this to decide what to anchor and what to compare.",
+    "",
+    "anchor_subtheme: drives the 'Top three quotes' widget — only fragments tagged with this subtheme are eligible. Pick the subtheme that best represents the headline story for the indication.",
+    "sentiment_axes: drives the sentiment widgets (hero + bubble). Each axis is a subset of the corpus to compute pos/neg lean over. When empty, the widgets fall back to corpus-wide overall sentiment. Axis kinds:",
+    "  - 'keyword': fragments whose text matches the cluster's variants (regex match, same as KeywordText). id = cluster id in keyword_lexicon.json.",
+    "  - 'theme' / 'subtheme': fragments whose segment_tags include the id.",
+    "  - 'complement': everything NOT covered by any earlier axis on the list. Use this as a final 'Other' bucket.",
+    "drug_callouts and clinical_trials_blurb are reserved for analyst-authored content — leave empty until you have copy for them."
+  ],
+  "indications": {
+    "obesity": {
+      "anchor_subtheme": {
+        "id": "treatment_decision_factors",
+        "label": "Treatment decision factors"
+      },
+      "sentiment_axes": [],
+      "drug_callouts": [],
+      "clinical_trials_blurb": ""
+    },
+    "lupus_nephritis": {
+      "anchor_subtheme": {
+        "id": "treatment_decision_factors",
+        "label": "Treatment decision factors"
+      },
+      "sentiment_axes": [
+        { "label": "CAR T-cell therapy", "kind": "keyword", "id": "car_t_therapy" },
+        { "label": "Other", "kind": "complement" }
+      ],
+      "drug_callouts": [],
+      "clinical_trials_blurb": ""
+    },
+    "multiple_sclerosis": {
+      "anchor_subtheme": {
+        "id": "treatment_decision_factors",
+        "label": "Treatment decision factors"
+      },
+      "sentiment_axes": [
+        { "label": "CAR T-cell therapy", "kind": "keyword", "id": "car_t_therapy" },
+        { "label": "Other", "kind": "complement" }
+      ],
+      "drug_callouts": [],
+      "clinical_trials_blurb": ""
+    }
+  }
+}

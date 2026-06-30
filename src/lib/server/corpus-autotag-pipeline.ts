@@ -446,7 +446,7 @@ const sentimentSchema = {
 				properties: {
 					fragment_id: { type: 'string' },
 					sentiment_score: { type: 'integer', enum: [-2, -1, 0, 1, 2] },
-					emotions: { type: 'array', items: { type: 'string', enum: emotionIds } },
+					emotions: { type: 'array', items: { type: 'string', enum: emotionIds }, maxItems: 1 },
 					confidence: { type: 'number' },
 					note: { type: 'string' }
 				},
@@ -462,7 +462,7 @@ const SENTIMENT_SYSTEM_PROMPT = `You are a qualitative-research analyst tagging 
 For every fragment you return:
 - sentiment_score: an integer on this scale:
 ${JSON.stringify(codebook.meta?.sentiment_scale, null, 2)}
-- emotions: an array of emotion ids the speaker is expressing. 0 or more — DO NOT over-tag. A bare "good luck!" or "congrats" is best left empty, or with a single emotion like "hope" or "joy" at low confidence.
+- emotions: array with 0 OR 1 entry — pick the SINGLE best primary emotion (e.g. "joy", "fear", "sadness") OR a single Plutchik dyad (e.g. "hope" = anticipation+trust, "despair" = fear+sadness, "love" = joy+trust). Never more than one. If two feel close, pick the dyad that captures both, or the dominant one. A bare "good luck!" or "congrats" is best left empty, or one low-confidence entry.
 - confidence: overall confidence in the annotation, 0.0–1.0.
 - note: short reviewer note or "" if none. Use it for ambiguity or low-confidence calls.
 

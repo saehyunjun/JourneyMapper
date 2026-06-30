@@ -11,5 +11,19 @@
     }
   },
   "weighting": { "type": "uniform" },
-  "color": "#ec4899"
+  "color": "#ec4899",
+  "demo_profile": {
+    "demo_only": true,
+    "provenance": "Hand-asserted from recurring patterns in the LN CAR-T community thread (2026-05-28). Aggregation over the persona's filtered fragment pool is the production path; see PROTOCOL_PERSONA_DEMO_PLAN.md §5.",
+    "attrs": {
+      "distance_to_coe_band": { "kind": "band", "band": ">200mi" },
+      "caregiver_availability": { "kind": "enum", "value": "limited" },
+      "work_flexibility": { "kind": "enum", "value": "low" },
+      "sex_assigned_at_birth": { "kind": "enum", "value": "female" },
+      "childbearing_potential": { "kind": "bool", "value": true },
+      "prior_treatment_failures": { "kind": "num", "value": 3 },
+      "psych_burden_self_reported": { "kind": "enum", "value": "high" },
+      "urban_or_rural": { "kind": "enum", "value": "rural_or_suburban" }
+    }
+  }
 }

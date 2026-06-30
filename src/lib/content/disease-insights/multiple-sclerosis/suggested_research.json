@@ -1,0 +1,134 @@
+{
+  "schema_version": "0.1",
+  "id": "ms_suggested_research_v0",
+  "applies_to_indication": "multiple_sclerosis",
+  "generated_at": "2026-05-29",
+  "provenance": "Authored against the sponsor's BDM scope (CAR-T for LN, CAR-T for MS, Long-Term Follow-Up). The MS questions are reframed from the LN set to land MS-specific friction: DMT identity, relapse anxiety, neurologist-of-record continuity, and disability progression measurement at home.",
+  "section": {
+    "eyebrow": "Suggested for further research",
+    "headline": "Four LTFU questions tuned to MS-specific retention risk.",
+    "body": "MS patients carry a different LTFU profile than LN: a stronger DMT identity, sharper relapse anxiety, and a community neurologist who often outranks the trial site as the trusted voice. The questions below frame LTFU operational levers that hold up under those conditions."
+  },
+  "questions": [
+    {
+      "id": "dmt_discontinuation_safety",
+      "label": "What would make a CAR-T MS patient feel safe enough to stay off their DMT for 12 years?",
+      "frame": "Data purity · DMT identity",
+      "summary": "MS DMT identity is durable — patients have spent years optimizing their DMT regimen. Even an MRI-quiet, relapse-free year does not by itself dislodge the anxiety. Without active reassurance work, DMT restart at the first MRI surprise will be the default.",
+      "research": {
+        "headline": "Questions to ask or source from patients",
+        "items": [
+          "What would the patient need to see at year 1, year 3, year 5 to feel safe staying off DMT?",
+          "Whose voice is most persuasive when a stable MRI shows up — trial PI, community neurologist, online cohort, family?",
+          "What does the patient consider an acceptable rescue threshold (new lesion, clinical symptom, MRI activity) before restarting DMT?",
+          "What language does the patient use to describe being off-DMT — cured, in remission, between regimens?"
+        ]
+      },
+      "recommendations": {
+        "headline": "Operational interventions",
+        "items": [
+          {
+            "label": "DMT-restart guardrail protocol",
+            "frame": "Protecting data purity",
+            "body": "Equivalent to the LN rescue-immunosuppression flag, but tuned to MS DMT classes. Triggers a structured ascertainment workflow on any new DMT prescription, with a community-neurologist outreach loop that pre-empts confounding restarts."
+          },
+          {
+            "label": "Cohort-anchored reassurance dashboard",
+            "frame": "Retention",
+            "body": "Patient-facing cohort-level view of stable MRI, relapse-free intervals, and disability scores across the trial population at each year mark. Earns the patient's confidence that staying off DMT is not an outlier choice."
+          }
+        ]
+      }
+    },
+    {
+      "id": "relapse_anxiety_engagement",
+      "label": "How does relapse anxiety reshape LTFU engagement year over year?",
+      "frame": "Engagement design · Completeness",
+      "summary": "MS engagement curves do not decay smoothly. Spikes track to symptom episodes, MRI dates, and DMT-renewal anniversaries. A flat LTFU cadence misses the moments when patients most want to be heard — and the moments when they most want to disappear.",
+      "research": {
+        "headline": "Questions to ask or source from patients",
+        "items": [
+          "What new symptom would make the patient reach out vs hide from the trial site?",
+          "What does the patient want the trial site to do if an MRI shows a quiet new lesion that they did not feel?",
+          "When does the LTFU contact feel like reassurance vs intrusion?",
+          "Which channels does the patient prefer at calm vs anxious moments — text, portal, video, written letter?"
+        ]
+      },
+      "recommendations": {
+        "headline": "Operational interventions",
+        "items": [
+          {
+            "label": "Anxiety-aware contact cadence",
+            "frame": "Engagement design",
+            "body": "Vary outreach cadence around expected anxiety peaks (annual MRI weeks, DMT-restart-anniversary windows). Uses ePRO sentiment trigger to surface a check-in when patient-reported anxiety jumps."
+          },
+          {
+            "label": "Two-way symptom-report channel",
+            "frame": "Data completeness",
+            "body": "Patient-initiated symptom report with a same-business-day response SLA. Captures the in-between-visit episodes that drive payor questions about durability of disease control, and removes the silent-dropout risk."
+          }
+        ]
+      }
+    },
+    {
+      "id": "community_neurologist_handoff",
+      "label": "What community-neurologist handoffs preserve protocol fidelity for 12 years?",
+      "frame": "Provider trust · Retention",
+      "summary": "MS patients tend to anchor more on their community MS-specialist neurologist than on the trial site, especially after year 2. If the community provider does not see themselves as a partner in the LTFU thesis, retention will bleed through provider-driven decisions (DMT restart, referral attrition, off-protocol MRI cadence).",
+      "research": {
+        "headline": "Questions to ask or source from patients",
+        "items": [
+          "Who is the patient's call-first MS provider at year 1, year 5, year 10? Where does the trial site sit in that hierarchy?",
+          "What does the community neurologist need to take ownership of CAR-T LTFU data, not just sign annual forms?",
+          "What language does the trial team need to use with the community provider to align rather than threaten ownership?",
+          "What happens at the first community-side provider rotation (group practice churn, retirement)?"
+        ]
+      },
+      "recommendations": {
+        "headline": "Operational interventions",
+        "items": [
+          {
+            "label": "Community-neurologist transition bundle",
+            "frame": "Retention via local HCPs",
+            "body": "Author a transition kit specifically for community MS specialists: 12-year data thesis, MRI cadence protocol that preserves study comparability, relapse-management decision tree that does not confound efficacy data, and a named coordinator contact."
+          },
+          {
+            "label": "Joint LTFU progress notes",
+            "frame": "Provider trust",
+            "body": "Quarterly joint progress note signed by trial coordinator and community neurologist. Builds a shared record that survives PI rotation on the trial side and provider churn on the community side."
+          }
+        ]
+      }
+    },
+    {
+      "id": "low_burden_disability_pros",
+      "label": "Which PROs capture MS disability progression at home with low burden?",
+      "frame": "Cost efficiency · Payor evidence",
+      "summary": "Payors will price MS CAR-T against years-of-disability-progression avoided and DMT-cycle costs offset. EDSS in clinic does not survive a digital-first LTFU framework. The instrument bank needs to be re-engineered for home capture without losing payor-grade signal.",
+      "research": {
+        "headline": "Questions to ask or source from patients",
+        "items": [
+          "Which daily-function measures would the patient agree to capture quarterly from home for 12 years?",
+          "What does the patient consider a real change vs a bad-day artifact in fatigue, mobility, or cognition?",
+          "What burden ceiling (minutes per quarter) keeps PROs from being skipped or rushed?",
+          "Which life-event triggers (new job, pregnancy attempt, infection, surgery) does the patient see as worth a longitudinal data point?"
+        ]
+      },
+      "recommendations": {
+        "headline": "Operational interventions",
+        "items": [
+          {
+            "label": "Payor-aligned home ePRO bank",
+            "frame": "Sponsor BDM differentiator",
+            "body": "Curate a short MS-tuned ePRO bank — patient-reported MSIS-29 subscales, work-productivity, walking confidence, cognitive function — surfaced quarterly under a 5-minute burden ceiling. Generates the disability-progression-avoided narrative payors will demand."
+          },
+          {
+            "label": "Passive-signal validation study",
+            "frame": "Cost efficiency",
+            "body": "Run a sub-study validating phone-passive signals (gait, typing cadence, sleep) against in-clinic disability scores. If passive signals hold up, years 5–12 can rely on near-zero patient effort while keeping the LTFU dataset payor-grade."
+          }
+        ]
+      }
+    }
+  ]
+}

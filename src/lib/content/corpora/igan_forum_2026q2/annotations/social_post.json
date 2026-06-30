@@ -1,0 +1,3516 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "corpus_id": "igan_forum_2026q2",
+    "content_source": "social_post",
+    "updated_at": "2026-06-01T19:25:40.797Z",
+    "dimensions": {
+      "segment_tags": {
+        "generator": "scripts/propose-fragment-sentiment.mjs",
+        "model": "claude-opus-4-7",
+        "codebook_schema_version": "2.0",
+        "last_generated_at": "2026-06-01T19:05:18.868Z",
+        "annotated_batches": [
+          "igan_forum_2026q2-T1-C1",
+          "igan_forum_2026q2-T10-C1",
+          "igan_forum_2026q2-T11-C1",
+          "igan_forum_2026q2-T12-C1",
+          "igan_forum_2026q2-T13-C1",
+          "igan_forum_2026q2-T14-C1",
+          "igan_forum_2026q2-T15-C1",
+          "igan_forum_2026q2-T16-C1",
+          "igan_forum_2026q2-T17-C1",
+          "igan_forum_2026q2-T2-C1",
+          "igan_forum_2026q2-T3-C1",
+          "igan_forum_2026q2-T4-C1",
+          "igan_forum_2026q2-T5-C1",
+          "igan_forum_2026q2-T6-C1",
+          "igan_forum_2026q2-T7-C1",
+          "igan_forum_2026q2-T8-C1",
+          "igan_forum_2026q2-T9-C1"
+        ],
+        "fields_populated": [
+          "sentiment_score",
+          "emotions",
+          "confidence",
+          "note"
+        ],
+        "fields_unpopulated": [
+          "themes",
+          "subthemes",
+          "topics"
+        ]
+      },
+      "stages": {
+        "generator": "scripts/propose-fragment-stages.mjs",
+        "model": "claude-opus-4-7",
+        "indication": "iga_nephropathy",
+        "journey_schema_version": "1.0",
+        "last_generated_at": "2026-06-01T19:25:40.797Z",
+        "annotated_batches": [
+          "igan_forum_2026q2-T1-C1",
+          "igan_forum_2026q2-T10-C1",
+          "igan_forum_2026q2-T11-C1",
+          "igan_forum_2026q2-T12-C1",
+          "igan_forum_2026q2-T13-C1",
+          "igan_forum_2026q2-T14-C1",
+          "igan_forum_2026q2-T15-C1",
+          "igan_forum_2026q2-T16-C1",
+          "igan_forum_2026q2-T17-C1",
+          "igan_forum_2026q2-T2-C1",
+          "igan_forum_2026q2-T3-C1",
+          "igan_forum_2026q2-T4-C1",
+          "igan_forum_2026q2-T5-C1",
+          "igan_forum_2026q2-T6-C1",
+          "igan_forum_2026q2-T7-C1",
+          "igan_forum_2026q2-T8-C1",
+          "igan_forum_2026q2-T9-C1"
+        ]
+      }
+    },
+    "notes": [
+      "Multi-dimensional annotation file. Each fragment may carry multiple dimension keys (stages, segment_tags, ...).",
+      "stages dimension: AI-proposed journey-stage tags, multi-label per fragment. Enum-constrained at generation time.",
+      "Every stages entry is source: ai_proposed, review_status: pending.",
+      "Re-propose with: node scripts/propose-fragment-stages.mjs <corpus> [--source <name>] [--batch <id>] [--force]"
+    ]
+  },
+  "annotations": {
+    "fc-igan_forum_2026q2-1-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "reporting positive trial result",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.9
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "VISIONARY interim readout summary",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-1-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "mechanistic description",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Mechanism of action background for sibeprenlimab",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-1-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.65,
+        "note": "positive efficacy data",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "Interim efficacy data",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-1-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "biomarker reduction",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "Biomarker data from interim",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-1-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "trust"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "reassuring safety profile",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "side_effects_and_safety",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Safety profile from trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-1-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.55,
+        "note": "awaiting endpoint",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Pending secondary endpoint",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-1-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.65,
+        "note": "FDA review pending",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "post_trial",
+            "step_id": "transition_to_commercial",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "FDA review/approval anticipation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-1-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "link only",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "Bare link, no substantive content",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-10-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_barriers",
+          "treatment_decision_factors",
+          "treatment_knowledge_gaps",
+          "medical_self_efficacy"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "Caregiver seeking treatment access; underlying worry about wife's diagnosis mixed with hope in a promising drug.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "diagnosis_named",
+            "confidence": 0.6
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "logistical_assessment",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Recent diagnosis plus seeking access to sibeprenlimab across geography — awareness and logistical/access framing.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-11-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "trial_motivators",
+          "trial_decision_factors",
+          "treatment_decision_factors",
+          "treatment_positive_experiences",
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Mixed: disappointment about biopsy but hopeful/optimistic about trial drug",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.9
+          },
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "biopsy_and_grading",
+            "confidence": 0.5
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.4
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "First dose in RAINIER (povetacicept) with biopsy reference and seeking peer experience",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-12-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "clinical_trial_interest",
+          "clinical_trial_knowledge_gaps",
+          "trial_barriers",
+          "comorbidities"
+        ],
+        "emotions": [
+          "confusion"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Seeking trial eligibility info; mild frustration with unclear answer from scheduler.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.9
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "logistical_assessment",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.88,
+        "note": "RAINIER (povetacicept) eligibility question re: concurrent biologic; also flags travel logistics",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-13-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "news headline framing",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Headline framing of BHV-1400 Phase 1b readout",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-13-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "descriptive MoA",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Mechanism description of pipeline drug",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-13-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "positive biomarker result",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Interim biomarker readout from active trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-13-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pride"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.55,
+        "note": "competitor-positioning claim",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "Comparative positioning vs other pipeline classes",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-13-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.65,
+        "note": "favorable clinical observations",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Clinical observation readout",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-13-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "selectivity reported as positive",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "side_effects_and_safety",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Safety/selectivity observation from trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-13-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "bare link",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "Bare link, no substantive content",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-14-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "trial_motivators",
+          "symptoms"
+        ],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Seeking information about clinical trial experiences; neutral inquiry with interest.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Asking about trial experiences and self-assessing eligibility based on eGFR/proteinuria.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-15-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.5,
+        "note": "bare greeting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.95,
+        "note": "bare greeting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-15-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "milestone announcement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "transplant date scheduled",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-15-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific",
+          "treatment"
+        ],
+        "subthemes": [
+          "symptoms",
+          "treatment_health_history"
+        ],
+        "emotions": [
+          "ambivalence"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "excited and nervous",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "stable_management",
+            "step_id": "identity_with_chronic_disease",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "reflecting on 20+ year journey ahead of transplant",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-15-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "worry about side effects",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "likely about post-transplant immunosuppressant side effects",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-15-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_knowledge_gaps",
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "seeking peer info",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "asking about side effect prevalence in transplant meds",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-15-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "treatment_decision_factors"
+        ],
+        "emotions": [
+          "trust"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "self-reassurance about tolerance",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.55
+          }
+        ],
+        "overall_confidence": 0.55,
+        "note": "self-assessment of drug tolerance in context of upcoming transplant",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-16-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "diagnostic_odyssey"
+        ],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "Diagnosis disclosure, factual but negative event",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "diagnosis_named",
+            "confidence": 0.9
+          },
+          {
+            "stage_id": "supportive_baseline",
+            "step_id": null,
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Just diagnosed via biopsy; already on RAASi+SGLT2i baseline",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-16-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms",
+          "medical_self_efficacy"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "Clinical facts",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "response_monitoring",
+            "confidence": 0.6
+          },
+          {
+            "stage_id": "supportive_baseline",
+            "step_id": null,
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "Lab values and 3-month recheck — monitoring on supportive baseline",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-16-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_knowledge_gaps",
+          "treatment_decision_factors"
+        ],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Wondering about long-term meds",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "stable_management",
+            "step_id": "long_term_regimen",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Question about lifelong medication",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-16-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "stable_management",
+            "step_id": "identity_with_chronic_disease",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Emotional adjustment to medication dependence",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-16-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_barriers"
+        ],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Worry about travel logistics",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "stable_management",
+            "step_id": "identity_with_chronic_disease",
+            "confidence": 0.75
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "Travel/life adjustment around chronic regimen",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-16-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_barriers"
+        ],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Worry about supply disruption",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "stable_management",
+            "step_id": "identity_with_chronic_disease",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "Worry about drug supply continuity",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-16-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_knowledge_gaps",
+          "treatment_decision_factors"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Seeking reassurance",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "stable_management",
+            "step_id": "long_term_regimen",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Asking if others stopped meds after stabilization",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-17-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Seeking peers on same trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Seeking other sibeprenlimab trial participants; implies active trial participation.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-2-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_barriers",
+          "treatment_negative_experiences",
+          "symptoms",
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.85,
+        "note": "Young patient expresses depression and dashed hope after IgG disqualification",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "stable_management",
+            "step_id": "identity_with_chronic_disease",
+            "confidence": 0.55
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Disqualified from a trial due to low IgG; emotional impact and desire for normal life at age 19.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-3-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "opening plea for advice",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "intro/preamble, no substantive content",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-3-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "symptoms"
+        ],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.7,
+        "note": "factual but heavy medical context",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "advancing_ckd_stage",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "progression",
+            "step_id": "dialysis_preparation",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Stage 5 CKD on PD",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-3-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "treatment_barriers"
+        ],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "donors disqualified",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-3-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_decision_factors"
+        ],
+        "emotions": [
+          "ambivalence"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "conflict between urgency and wife's wishes",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "finding a donor vs waiting on list",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-3-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "social_stigma"
+        ],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.85,
+        "note": "fear of loss combined with conflict",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "emotional reaction tied to transplant decision",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-3-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms",
+          "social_stigma"
+        ],
+        "emotions": [
+          "admiration"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.85,
+        "note": "praise for wife's strength",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "advancing_ckd_stage",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "living with advanced CKD/dialysis fatigue while working",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-3-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "social_stigma"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.5,
+        "note": "reported speech, neutral",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "advancing_ckd_stage",
+            "confidence": 0.4
+          }
+        ],
+        "overall_confidence": 0.4,
+        "note": "contextual to coping with advanced disease",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-3-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "financial context, mildly positive",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.7,
+        "note": "personal context, not stage-specific",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-3-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.5,
+        "note": "bare thanks",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.95,
+        "note": "sign-off",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-4-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "factual self-introduction",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "advancing_ckd_stage",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "self-intro: stage 4-5 IgAN",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-4-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms",
+          "comorbidities"
+        ],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.75,
+        "note": "grim clinical description",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "advancing_ckd_stage",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-4-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "reporting low GFR numbers",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "egfr_decline",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "tracking low eGFR",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-4-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "exhaustion from treatment",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "drug_switching",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "drained from cycling through meds/steroids",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-4-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history"
+        ],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "pre-eval at NYU transplant",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-4-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_knowledge_gaps"
+        ],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "feels unprepared",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-4-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "bittersweetness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "contrast between past health and diagnosis",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "diagnosis_named",
+            "confidence": 0.75
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "recounting diagnosis context",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-4-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "reality setting in",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "diagnosis_named",
+            "confidence": 0.5
+          },
+          {
+            "stage_id": "progression",
+            "step_id": "egfr_decline",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.65,
+        "note": "reflection from diagnosis to realization of progression",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-4-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "request for advice",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "transplant_evaluation",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "seeking advice for transplant pre-eval",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "factual update",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "RAINIER (povetacicept) active dosing, week 16",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "waiting on labs during active dosing",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "trial_decision_factors"
+        ],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "Q4W dosing cadence",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_negative_experiences",
+          "trial_decision_factors"
+        ],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.7,
+        "note": "dislike of long gaps",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "comparing prior ALIGN/atrasentan trial visit cadence",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "trial_motivators"
+        ],
+        "emotions": [
+          "trust"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "protocol monitoring (EKG, 24-hr urine)",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "treatment"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "serenity"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "relief from pill pressure",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "comparing injection vs daily pill burden",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.75
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "adherence anxiety with prior oral trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.65,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "in-clinic injection ensures compliance",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "admiration"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "general appreciation of staff, no substantive stage content",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "trial_motivators",
+          "trial_barriers"
+        ],
+        "emotions": [
+          "admiration"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "logistical_assessment",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "travel/overnight logistics and site reimbursement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-5-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "advocacy_peer_groups"
+        ],
+        "emotions": [
+          "love"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "helpful offer to connect",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "offering connection to trial site",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-6-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.8,
+        "note": "positive trial results announcement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "ORIGIN phase 3 topline readout",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-6-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.85,
+        "note": "factual mechanism description",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "Mechanism background for atacicept; trial awareness context",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-6-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.8,
+        "note": "strong efficacy result",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "UPCR primary endpoint result",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-6-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.75,
+        "note": "positive biomarker result",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "Gd-IgA1 biomarker readout",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-6-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "symptoms"
+        ],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.75,
+        "note": "clinical improvement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "Hematuria resolution outcome",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-6-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "trust"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.75,
+        "note": "favorable safety profile",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "side_effects_and_safety",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Safety summary from readout",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-6-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.75,
+        "note": "regulatory milestone",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "post_trial",
+            "step_id": "transition_to_commercial",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "BLA submission for accelerated approval",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-6-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "factual update on ongoing data",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "post_trial",
+            "step_id": "long_term_follow_up",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Ongoing 2-year eGFR follow-up",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-6-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "source link",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "Bare source link, no content",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "factual history",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "supportive_baseline",
+            "step_id": "raasi_titration",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "supportive_baseline",
+            "step_id": "sglt2_started",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "3 years on ACEi/ARB + SGLT2 baseline",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "treatment_decision_factors"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "factual",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "starting_targeted_therapy",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_decision_factors",
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "hesitation about side effects of Filspari",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_positive_experiences"
+        ],
+        "emotions": [
+          "serenity"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "relief at no side effects",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "serenity"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "continuation of tolerability",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "side effects emerged",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences",
+          "symptoms"
+        ],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.7,
+        "note": "symptom report",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "edema is a known Filspari AE",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences"
+        ],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.7,
+        "note": "weight gain concern",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "weight gain likely fluid",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "medical_self_efficacy"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "factual",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "medical_self_efficacy"
+        ],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "second-guessing",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [
+          "confusion"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s12": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_decision_factors",
+          "medical_self_efficacy"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "plan to act",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "drug_switching",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "considering dose reduction",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-7-1-1_a_s13": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "advocacy_peer_groups"
+        ],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "seeking peer input",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "side_effects_and_tolerability",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "asking community about shared experience",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "bare greeting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.95,
+        "note": "bare greeting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "informational intro",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "intro to update on RAINIER trial experience",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "treatment"
+        ],
+        "subthemes": [
+          "trial_negative_experiences",
+          "treatment_health_history"
+        ],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.7,
+        "note": "unsuccessful prior trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "treatment_escalation",
+            "step_id": "drug_switching",
+            "confidence": 0.6
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "prior trial (ALIGN/atrasentan) unsuccessful, moved to RAINIER",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_negative_experiences",
+          "trial_decision_factors",
+          "symptoms"
+        ],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "factual but worrying labs",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "progression",
+            "step_id": "egfr_decline",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "ended trial due to declining labs",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_knowledge_gaps",
+          "trial_decision_factors"
+        ],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "speculation/reflection",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "progression",
+            "step_id": "egfr_decline",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "speculating placebo vs disease progression",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "treatment"
+        ],
+        "subthemes": [
+          "trial_decision_factors",
+          "trial_motivators",
+          "treatment_decision_factors"
+        ],
+        "emotions": [
+          "alarm"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "'spooked us all'",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "clinician suggested RUBY/povetacicept trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "factual",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "week 48 labs in current trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "lab data; improvement implied",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "current trial UPCR lab value",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "symptoms"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.85,
+        "note": "'encouraging'",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "active_dosing",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "stable UPCR over months on trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "trust"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.75,
+        "note": "no side effects",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "side_effects_and_safety",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "no injection side effects",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "sharing resource",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "in_trial_experience",
+            "step_id": "interim_readouts",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.65,
+        "note": "sharing povetacicept trial info",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness",
+          "advocacy_peer_groups"
+        ],
+        "emotions": [
+          "admiration"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "appreciation for doctor's openness",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "offering nephrologist contact for trial seekers",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s12": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness",
+          "trial_barriers"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.65,
+        "note": "helpful info",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "logistical_assessment",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "geography/connections for trial access",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-8-1-1_a_s13": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "trust"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.65,
+        "note": "sharing contact info, welcoming tone",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "contact info for povetacicept trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-9-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "bare greeting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.95,
+        "note": "bare greeting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-9-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "diagnostic_odyssey"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "factual context",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "biopsy_and_grading",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "supportive_baseline",
+            "step_id": null,
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "post-biopsy visit to define treatment",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-9-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_health_history",
+          "symptoms"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "reporting reassuring clinical findings",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "biopsy_and_grading",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "supportive_baseline",
+            "step_id": "raasi_titration",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "supportive_baseline",
+            "step_id": "lifestyle_adjustments",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-9-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "treatment_decision_factors",
+          "treatment_knowledge_gaps",
+          "symptoms"
+        ],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "doubt about treatment path",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "biopsy_and_grading",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "supportive_baseline",
+            "step_id": null,
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "questioning whether supportive-only is sufficient given active disease markers",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-9-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific",
+          "treatment"
+        ],
+        "subthemes": [
+          "diagnostic_odyssey"
+        ],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "diagnosis_named",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "asking community about early-stage diagnosis",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-igan_forum_2026q2-9-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_health_history"
+        ],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "supportive_baseline",
+            "step_id": null,
+            "confidence": 0.75
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "asking about early prescriptions",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    }
+  }
+}

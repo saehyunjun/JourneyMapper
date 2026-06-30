@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "id": "sjogrens",
+  "slug": "sjogrens",
+  "label": "Sjögren's Syndrome",
+  "abbreviation": "pSS",
+  "therapeutic_area_ids": ["immunology"],
+  "datasets": [
+    {
+      "id": "sjogrens_keyword_clusters",
+      "type": "keyword_clusters",
+      "label": "Sjögren's syndrome keyword clusters",
+      "path": "lexicon/keyword_clusters.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    }
+  ]
+}

@@ -82,6 +82,25 @@ export type WeightingStrategy =
 	| { type: 'source_default' }
 	| { type: 'custom_multipliers'; multipliers: Partial<Record<ContentSourceId, number>> };
 
+/** Hand-asserted attribute value used by Phase B protocol-friction scoring.
+ *  Production path is to derive attributes by aggregating over the persona's
+ *  filtered fragment pool — this shape stays compatible. */
+export type AttrValue =
+	| { kind: 'band'; band: string }
+	| { kind: 'enum'; value: string }
+	| { kind: 'num'; value: number }
+	| { kind: 'bool'; value: boolean };
+
+/** Optional demo-only shim attached to a persona JSON. Carries asserted
+ *  attribute values for friction rules to read. The `demo_only: true` marker
+ *  is required so consumers can distinguish shimmed values from derived ones
+ *  once aggregation lands. See PROTOCOL_PERSONA_DEMO_PLAN.md §5. */
+export type PersonaDemoProfile = {
+	demo_only: true;
+	provenance?: string;
+	attrs: Record<string, AttrValue>;
+};
+
 export type Persona = {
 	id: PersonaId;
 	label: string;
@@ -94,4 +113,8 @@ export type Persona = {
 	/** Signature color (hex) used in visualizations when "color by persona"
 	 *  is selected. Optional — the UI falls back to a slate gray default. */
 	color?: string;
+	/** Generated or uploaded avatar URL. Narrative-backed personas default to
+	 *  a deterministic DiceBear Micah avatar when this is absent. */
+	avatar_url?: string;
+	demo_profile?: PersonaDemoProfile;
 };

@@ -1,0 +1,331 @@
+{
+  "meta": {
+    "schema_version": "theme-tags-0.1",
+    "generator": "propose-theme-tags@0.2",
+    "model": "claude-haiku-4-5",
+    "corpus_id": "sjogrens_reddit_2026q1",
+    "content_source": "social_post",
+    "updated_at": "2026-06-02T16:22:31.969Z",
+    "themes_count": 27,
+    "tagged_fragment_count": 40,
+    "total_tag_count": 22
+  },
+  "theme_tags": {
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s00": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s01": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s02": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s03": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s04": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s05": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s06": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s07": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s08": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s09": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s10": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s11": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s12": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s13": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s14": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s15": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s16": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s17": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s18": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s19": [
+      {
+        "span": {
+          "start": 19,
+          "end": 33,
+          "text": "one tiny trial"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "mentioning existence of a human trial in the context of fecal transplant for SS",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      },
+      {
+        "span": {
+          "start": 36,
+          "end": 94,
+          "text": "ten SS patients, two transplants each from a healthy donor"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.72,
+        "rationale": "describes trial enrollment and patient participation in a small human trial",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s20": [
+      {
+        "span": {
+          "start": 0,
+          "end": 56,
+          "text": "It was safe, and half reported improved dry eye symptoms"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "describes trial outcomes and patient-reported benefit during trial participation",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s21": [],
+    "fc-sjogrens_reddit_2026q1-10-1-1_a": [
+      {
+        "span": {
+          "start": 81,
+          "end": 142,
+          "text": "new drugs (ianalumab, nipocalimab, dazodalibep, telitacicept)"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "seeking awareness of clinical trials for new drugs",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      },
+      {
+        "span": {
+          "start": 197,
+          "end": 209,
+          "text": "We need hope"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.78,
+        "rationale": "expressing existential need for hope in the context of living with SS",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-11-1-1_a": [
+      {
+        "span": {
+          "start": 0,
+          "end": 163,
+          "text": "I follow the clinical trials like a fly on 💩. Always want to spread the news far and wide so I present to you - initial info on Telitacicept global phase 3 trials"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "actively tracking and sharing awareness of clinical trial information",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-2-1-1_a_s00": [],
+    "fc-sjogrens_reddit_2026q1-2-1-1_a_s01": [],
+    "fc-sjogrens_reddit_2026q1-2-1-1_a_s02": [
+      {
+        "span": {
+          "start": 0,
+          "end": 22,
+          "text": "Cant pee or poop right"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "inability to perform basic bodily functions is a physical functioning limitation",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-2-1-1_a_s03": [
+      {
+        "span": {
+          "start": 0,
+          "end": 43,
+          "text": "Cant have sex because I feel too disgusting"
+        },
+        "theme_id": "hrqol.social_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "health-related impairment in sexual/social functioning",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      },
+      {
+        "span": {
+          "start": 22,
+          "end": 43,
+          "text": "I feel too disgusting"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "self-perception and emotional state affected by illness",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      },
+      {
+        "span": {
+          "start": 125,
+          "end": 236,
+          "text": "Has anyone here achieved significant relief of their symptoms where they had a normal, happy, comfortable life?"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "existential questioning about hope for normalcy and quality of life",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-2-1-1_a_s04": [],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s00": [],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s01": [],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s02": [],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s03": [],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s04": [
+      {
+        "span": {
+          "start": 0,
+          "end": 23,
+          "text": "I HAVE SO MUCH SPIT!!!!"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "enthusiastic report of trial-related symptom improvement",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      },
+      {
+        "span": {
+          "start": 0,
+          "end": 23,
+          "text": "I HAVE SO MUCH SPIT!!!!"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "improvement in hallmark SS symptom (xerostomia)",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s05": [
+      {
+        "span": {
+          "start": 0,
+          "end": 38,
+          "text": "My schirmer test went from 1 to 27!!!!"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "dramatic objective improvement in trial outcome measure",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      },
+      {
+        "span": {
+          "start": 0,
+          "end": 38,
+          "text": "My schirmer test went from 1 to 27!!!!"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "major improvement in key SS biomarker indicating disease reversal",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s06": [],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s07": [
+      {
+        "span": {
+          "start": 0,
+          "end": 38,
+          "text": "I have discharge in my underwear again"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "restoration of normal bodily moisture/function as health improvement",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      },
+      {
+        "span": {
+          "start": 0,
+          "end": 38,
+          "text": "I have discharge in my underwear again"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.78,
+        "rationale": "positive trial outcome leading to symptom recovery",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s08": [
+      {
+        "span": {
+          "start": 0,
+          "end": 24,
+          "text": "I choke on my spit a lot"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "difficulty with basic physical function related to salivation",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      },
+      {
+        "span": {
+          "start": 0,
+          "end": 24,
+          "text": "I choke on my spit a lot"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "unintended consequence of increased salivation from trial treatment",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s09": [
+      {
+        "span": {
+          "start": 0,
+          "end": 66,
+          "text": "I drool all the time and leaned over to my friend during the movie"
+        },
+        "theme_id": "hrqol.social_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "health symptom (drooling) manifesting in social contexts",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      },
+      {
+        "span": {
+          "start": 0,
+          "end": 102,
+          "text": "I drool all the time and leaned over to my friend during the movie Sinners and was like THIS IS ME!!!!"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "positive sentiment about trial-induced symptom change despite social awkwardness",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s10": [
+      {
+        "span": {
+          "start": 0,
+          "end": 101,
+          "text": "I was sexting with a man all day a few months ago, and my mouth was legit WATERING thinking about it!"
+        },
+        "theme_id": "hrqol.social_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "restoration of sexual/social functioning and normal physiologic response",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      },
+      {
+        "span": {
+          "start": 0,
+          "end": 101,
+          "text": "I was sexting with a man all day a few months ago, and my mouth was legit WATERING thinking about it!"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "positive outcome showing return of social/sexual engagement and salivary function post-trial intervention",
+        "created_at": "2026-06-02T16:22:31.968Z"
+      }
+    ]
+  }
+}

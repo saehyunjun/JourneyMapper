@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "schema_version": "theme-tags-0.1",
+    "generator": "propose-theme-tags@0.2",
+    "model": "claude-haiku-4-5",
+    "corpus_id": "sjogrens_reddit_2026q1",
+    "content_source": "social_comment",
+    "updated_at": "2026-06-02T16:22:13.018Z",
+    "themes_count": 27,
+    "tagged_fragment_count": 39,
+    "total_tag_count": 16
+  },
+  "theme_tags": {
+    "fc-sjogrens_reddit_2026q1-1-1-1_aa": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ab": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ac": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ad": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ae": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_af_s00": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_af_s01": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_af_s02": [
+      {
+        "span": {
+          "start": 37,
+          "end": 63,
+          "text": "early Macular Degeneration"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "Vision impairment affecting physical functioning",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_af_s03": [
+      {
+        "span": {
+          "start": 252,
+          "end": 273,
+          "text": "signs of degeneration"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "Retinal degeneration impacting visual capacity and functioning",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_af_s04": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_af_s05": [
+      {
+        "span": {
+          "start": 0,
+          "end": 64,
+          "text": "I wish I had known the risk vs. rewards vs. actual effectiveness"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Patient expressing regret over lack of adequate information for informed decision-making",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ag": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ah": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ai": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_aj": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ak": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_al": [
+      {
+        "span": {
+          "start": 32,
+          "end": 77,
+          "text": "Still practicing and very rich while I suffer"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "Sense of injustice and existential distress about provider accountability",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_an": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ao": [
+      {
+        "span": {
+          "start": 28,
+          "end": 50,
+          "text": "severe eating disorder"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Eating disorder represents mental health/behavioral disturbance",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s00": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s01": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s02": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s03": [
+      {
+        "span": {
+          "start": 19,
+          "end": 60,
+          "text": "lifelong PTSD from early childhood trauma"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "PTSD is a mental health condition with lasting emotional consequences",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s04": [
+      {
+        "span": {
+          "start": 3,
+          "end": 30,
+          "text": "stomach was always in knots"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "Physical manifestation of anxiety/emotional stress",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s05": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s06": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s07": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s08": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s09": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s10": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s11": [
+      {
+        "span": {
+          "start": 42,
+          "end": 70,
+          "text": "reduce my stress and anxiety"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Actively managing anxiety through therapeutic practices",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s12": [
+      {
+        "span": {
+          "start": 29,
+          "end": 35,
+          "text": "eczema"
+        },
+        "theme_id": "hrqol.role_physical",
+        "tagger": "llm-proposed",
+        "confidence": 0.72,
+        "rationale": "Skin condition that can limit activities",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s13": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s14": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s15": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s16": [],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s17": [
+      {
+        "span": {
+          "start": 4,
+          "end": 15,
+          "text": "skin issues"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.72,
+        "rationale": "Skin condition affecting appearance and functioning",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      },
+      {
+        "span": {
+          "start": 45,
+          "end": 58,
+          "text": "thinning hair"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "Physical change affecting appearance and self-image",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      },
+      {
+        "span": {
+          "start": 60,
+          "end": 76,
+          "text": "digestive issues"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.78,
+        "rationale": "GI dysfunction affecting ability to eat and absorb nutrition",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      },
+      {
+        "span": {
+          "start": 133,
+          "end": 145,
+          "text": "joint issues"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Joint pain/dysfunction limiting mobility and activities",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      },
+      {
+        "span": {
+          "start": 147,
+          "end": 154,
+          "text": "fatigue"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Loss of energy and exhaustion affecting daily capacity",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s18": [
+      {
+        "span": {
+          "start": 4,
+          "end": 34,
+          "text": "stress of being her care giver"
+        },
+        "theme_id": "life.caregiver",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "Caregiver burden and emotional strain from caring for dying parent",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      },
+      {
+        "span": {
+          "start": 96,
+          "end": 125,
+          "text": "overwhelming and debilitating"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "Existential/emotional impact of loss and caregiver grief",
+        "created_at": "2026-06-02T16:22:13.017Z"
+      }
+    ],
+    "fc-sjogrens_reddit_2026q1-1-1-1_ap_s19": []
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "indication": "iga_nephropathy",
+    "label": "IgA nephropathy patient journey",
+    "notes": [
+      "Chronological clinical arc for primary IgA nephropathy (IgAN), anchored to moments patients describe rather than the chapters clinicians use.",
+      "Reflects the 2021-25 landscape shift: RAASi + SGLT2i as supportive backbone, with targeted-release budesonide (Tarpeyo), sparsentan (Filspari), iptacopan (Fabhalta), and atrasentan (Vanrafia) added as escalation lanes.",
+      "Trial-consideration / in-trial stages weighted toward the active APRIL / BLyS / complement-pathway pipeline (sibeprenlimab VISIONARY, atacicept ORIGIN, povetacicept RAINIER, BHV-1400, etc.) — that is the corpus we have.",
+      "Adapted from the lupus_nephritis journey; the two share a nephrology spine but the IgAN treatment ladder and trial landscape are distinct."
+    ]
+  },
+  "stages": [
+    {
+      "id": "pre_diagnosis",
+      "order": 1,
+      "label": "Pre-diagnosis",
+      "description": "Before IgAN is named. Often an incidental finding — visible hematuria during a URI, foamy urine, edema, high blood pressure on a routine visit, or microscopic hematuria + proteinuria flagged on an exam urinalysis.",
+      "steps": [
+        {
+          "id": "symptom_onset",
+          "label": "Symptom onset",
+          "description": "First noticing something is wrong: synpharyngitic gross hematuria, foamy urine, swelling, fatigue, or high blood pressure."
+        },
+        {
+          "id": "incidental_finding",
+          "label": "Incidental finding",
+          "description": "Hematuria or proteinuria caught on a routine / pre-employment / military / pregnancy urinalysis with no symptoms reported."
+        },
+        {
+          "id": "pre_diagnosis_uncertainty",
+          "label": "Pre-diagnosis uncertainty",
+          "description": "Waiting on referral and repeat labs, not knowing whether this is transient, infectious, or something kidney-specific."
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_odyssey",
+      "order": 2,
+      "label": "Diagnostic odyssey",
+      "description": "PCP → nephrology referral, repeat urinalysis + UPCR / 24-hr protein + serum creatinine + eGFR; ANA/dsDNA / complement to rule out lupus; ultimately kidney biopsy with Oxford MEST-C grading to confirm IgAN and stage it.",
+      "steps": [
+        {
+          "id": "nephrology_referral",
+          "label": "Nephrology referral",
+          "description": "First nephrologist visit; the workup conversation about repeat protein quantification, kidney imaging, and the biopsy threshold."
+        },
+        {
+          "id": "biopsy_and_grading",
+          "label": "Biopsy and MEST-C grading",
+          "description": "Native kidney biopsy and the moment of receiving the Oxford MEST-C score (M, E, S, T, C) that anchors prognosis and treatment intensity."
+        },
+        {
+          "id": "diagnosis_named",
+          "label": "Diagnosis named",
+          "description": "The moment IgA nephropathy is confirmed as the diagnosis; first conversations about prognosis, life-expectancy framing, and the long progression curve."
+        }
+      ]
+    },
+    {
+      "id": "supportive_baseline",
+      "order": 3,
+      "label": "Supportive baseline",
+      "description": "Baseline disease-modifying regimen: maximally-tolerated ACEi/ARB (RAASi) plus SGLT2 inhibitor (dapagliflozin / empagliflozin), low-salt diet, blood-pressure control, and dietary protein adjustment. The foundation every IgAN patient stays on.",
+      "steps": [
+        {
+          "id": "raasi_titration",
+          "label": "RAASi titration",
+          "description": "Starting and titrating ACEi or ARB to maximum tolerated dose; learning to track home BP and serum creatinine after dose changes."
+        },
+        {
+          "id": "sglt2_started",
+          "label": "SGLT2i started",
+          "description": "Adding an SGLT2 inhibitor (Farxiga / Jardiance); navigating glucosuria, UTI risk, and the off-label-to-on-label shift in payer coverage."
+        },
+        {
+          "id": "lifestyle_adjustments",
+          "label": "Lifestyle adjustments",
+          "description": "Salt, protein, and fluid changes; hypertension self-management; weight, alcohol, and exercise tuning around eGFR."
+        }
+      ]
+    },
+    {
+      "id": "treatment_escalation",
+      "order": 4,
+      "label": "Treatment escalation",
+      "description": "Persistent proteinuria above goal despite supportive care triggers escalation: targeted-release budesonide (Tarpeyo / Nefecon), sparsentan (Filspari), atrasentan (Vanrafia), or iptacopan (Fabhalta). Often layered, often switched.",
+      "steps": [
+        {
+          "id": "starting_targeted_therapy",
+          "label": "Starting targeted therapy",
+          "description": "First weeks on Tarpeyo / Filspari / Vanrafia / Fabhalta; the prior-auth / specialty-pharmacy / cost-of-therapy onboarding."
+        },
+        {
+          "id": "side_effects_and_tolerability",
+          "label": "Side effects and tolerability",
+          "description": "Steroid-like effects from budesonide-ER, edema and LFT monitoring from endothelin antagonists, vaccination requirements for complement inhibitors."
+        },
+        {
+          "id": "response_monitoring",
+          "label": "Response monitoring",
+          "description": "Watching UPCR / 24-hr proteinuria, eGFR slope, and BP at 3 / 6 / 9-month checkpoints; deciding whether to continue, layer, or switch."
+        },
+        {
+          "id": "drug_switching",
+          "label": "Drug switching",
+          "description": "Cycling between targeted therapies after partial response or intolerance; the hope-then-disappointment loop that defines this stage."
+        }
+      ]
+    },
+    {
+      "id": "stable_management",
+      "order": 5,
+      "label": "Stable management",
+      "description": "Proteinuria suppressed at or near target with the current regimen; eGFR holding. Long-term follow-up cadence, infection precautions for those on immunosuppression, life adjusted around the regimen.",
+      "steps": [
+        {
+          "id": "long_term_regimen",
+          "label": "Long-term regimen",
+          "description": "Daily medication routine settled; quarterly labs; nephrology visits every 3-6 months."
+        },
+        {
+          "id": "infection_and_vaccine_routine",
+          "label": "Infection and vaccine routine",
+          "description": "Annual flu, COVID, pneumococcal, and meningococcal vaccination (especially for complement-inhibitor patients); avoidance practices."
+        },
+        {
+          "id": "identity_with_chronic_disease",
+          "label": "Identity with chronic disease",
+          "description": "Adjusting to a chronic-but-managed framing; navigating career, family planning, and life choices around CKD stage."
+        }
+      ]
+    },
+    {
+      "id": "progression",
+      "order": 6,
+      "label": "Progression",
+      "description": "Despite treatment, eGFR continues to decline and CKD stage advances. Conversations shift to slowing the slope, dialysis planning, transplant evaluation, and the emotional cost of a progressive disease.",
+      "steps": [
+        {
+          "id": "egfr_decline",
+          "label": "eGFR decline",
+          "description": "Recognising a sustained downward slope on eGFR despite max-tolerated therapy; the conversation about what stops working when."
+        },
+        {
+          "id": "advancing_ckd_stage",
+          "label": "Advancing CKD stage",
+          "description": "Crossing into Stage 3b, 4, or 5; the symptom changes (fatigue, anemia, mineral-bone, appetite) and lab additions that mark each step."
+        },
+        {
+          "id": "transplant_evaluation",
+          "label": "Transplant evaluation",
+          "description": "Referral to transplant clinic, donor conversations with family, financial and insurance workup, getting onto the deceased-donor list."
+        },
+        {
+          "id": "dialysis_preparation",
+          "label": "Dialysis preparation",
+          "description": "Vascular access (fistula), modality choice (HD vs PD), training, and the lived adjustment to a dialysis schedule."
+        }
+      ]
+    },
+    {
+      "id": "trial_consideration",
+      "order": 7,
+      "label": "Trial consideration",
+      "description": "Exploring the APRIL / BLyS / complement-pathway pipeline — sibeprenlimab (VISIONARY), atacicept (ORIGIN), povetacicept (RAINIER), BHV-1400, zigakibart, and others. Reading the late-phase data, talking to community, working out eligibility, weighing logistical / financial / personal cost.",
+      "steps": [
+        {
+          "id": "trial_awareness",
+          "label": "Trial awareness",
+          "description": "Hearing about a late-phase IgAN trial (sibeprenlimab, atacicept, povetacicept, BHV-1400, etc.) through community, advocacy, ClinicalTrials.gov, or clinician; initial reading of the readouts."
+        },
+        {
+          "id": "eligibility_self_assessment",
+          "label": "Eligibility self-assessment",
+          "description": "Working out whether eGFR, proteinuria, prior therapies, biopsy timing, and geography qualify for a given trial; trial-by-trial matrix-building."
+        },
+        {
+          "id": "logistical_assessment",
+          "label": "Logistical assessment",
+          "description": "Travel to site, time off work, caregiver availability, copay / insurance / drug-cost while in trial, and the every-4-weeks infusion / injection cadence."
+        },
+        {
+          "id": "consent_or_decline",
+          "label": "Consent or decline",
+          "description": "The decision moment — sign on, defer, or decline. Often shaped by family situation, payer coverage of standard-of-care during the trial, and risk tolerance for placebo arms."
+        }
+      ]
+    },
+    {
+      "id": "in_trial_experience",
+      "order": 8,
+      "label": "In-trial experience",
+      "description": "Active trial participation. The dosing visits (every 4 weeks for most APRIL / BLyS biologics), the protocol labs, the open-label-extension question, and the cycle of week-by-week proteinuria / UPCR updates that becomes the rhythm of life.",
+      "steps": [
+        {
+          "id": "screening_and_consent",
+          "label": "Screening and consent",
+          "description": "Site visit, screening labs and biopsy review, informed consent, and the wait between screening and randomization."
+        },
+        {
+          "id": "active_dosing",
+          "label": "Active dosing",
+          "description": "On-trial dosing rhythm (often Q4W); the lived experience of being on what may be drug or placebo and tracking symptoms / labs against trial expectations."
+        },
+        {
+          "id": "side_effects_and_safety",
+          "label": "Side effects and safety",
+          "description": "Trial-related adverse events, infections, immunoglobulin / complement monitoring, and infusion / injection reactions."
+        },
+        {
+          "id": "interim_readouts",
+          "label": "Interim readouts",
+          "description": "Public interim or topline announcements (e.g. VISIONARY interim, ORIGIN-3 readout) and the community / personal interpretation of what it means for one's own trial arm."
+        }
+      ]
+    },
+    {
+      "id": "post_trial",
+      "order": 9,
+      "label": "Post-trial",
+      "description": "After the active treatment phase. Open-label extension, transition back to standard of care, FDA approval and commercial access, or — when the drug fails to show benefit — adjusting expectations and moving to the next option.",
+      "steps": [
+        {
+          "id": "open_label_extension",
+          "label": "Open-label extension",
+          "description": "Rolling into the OLE arm to ensure access to active drug; the new schedule and the longer-term safety conversation."
+        },
+        {
+          "id": "transition_to_commercial",
+          "label": "Transition to commercial",
+          "description": "FDA approval, payer / formulary navigation, and moving from free trial supply to insured access — copay, prior-auth, and bridge programs."
+        },
+        {
+          "id": "long_term_follow_up",
+          "label": "Long-term follow-up",
+          "description": "Years-out monitoring for durability, delayed adverse effects, immunoglobulin / vaccine response, and the question of whether disease has been quieted or merely deferred."
+        }
+      ]
+    }
+  ]
+}

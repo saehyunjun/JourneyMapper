@@ -28,6 +28,7 @@
 <script lang="ts">
 	import type { Step, Pull } from '$lib/content/wctglpdemo-data/journey';
 	import { TrendingUp, TrendingDown, Check, X } from '@lucide/svelte';
+	import { AppCard } from '$lib/components/ui/app-card';
 
 	type Tone = { badge: string; label: string; rail: string; soft: string };
 
@@ -88,7 +89,7 @@
 	};
 </script>
 
-<article class="rounded-xl border border-slate-200 bg-white shadow-sm">
+<AppCard variant="finding" tag="article">
 	<header class="flex items-start gap-3 border-b border-slate-100 p-4">
 		<span
 			class="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg text-xs font-semibold {tone.badge}"
@@ -227,4 +228,4 @@
 			</footer>
 		</div>
 	{/if}
-</article>
+</AppCard>

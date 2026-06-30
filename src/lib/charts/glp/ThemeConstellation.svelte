@@ -26,9 +26,9 @@
 		quotes,
 		themedQuestionIds,
 		questionLabel,
-		titleCase,
-		keywordBySegment
+		titleCase
 	} from '$lib/content/wctglpdemo-data/analysis';
+	import { keywordBySegment } from '$lib/content/wctglpdemo-data/analysis-keywords';
 	import ParticipantAvatar from '$lib/components/ParticipantAvatar.svelte';
 
 	let {
@@ -104,7 +104,7 @@
 	const SCATTER_MS = 1700; // loose-drift beat before each sort
 	const HOLD_MS = 6300; // how long a sorted question is held
 	const SPOT_MS = 5200; // how long each key quote is spotlit (auto mode)
-	const ALPHA_FLOOR = 0.18; // simulation never fully cools — keeps drift alive
+	const REHEAT_ALPHA = 0.05; // brief warm-up to drive focus/glow lerps after a transition
 	const ACTIVE_PULL = 0.16; // force toward a theme cluster
 	const DRIFT_PULL = 0.006; // force toward the loose cloud
 	const JITTER = 0.55; // brownian nudge on drifting circles
@@ -319,15 +319,20 @@
 		);
 		spotIdx = 0;
 		spotNode = spotList[0] ?? null;
+		reheat();
 	}
 
 	function advanceSpot() {
 		if (!spotList.length) {
-			spotNode = null;
+			if (spotNode) {
+				spotNode = null;
+				reheat();
+			}
 			return;
 		}
 		spotIdx = (spotIdx + 1) % spotList.length;
 		spotNode = spotList[spotIdx];
+		reheat();
 	}
 
 	function startSpotlight() {
@@ -390,7 +395,11 @@
 	function onPointer(e: PointerEvent) {
 		if (mode !== 'manual' || !wrap) return;
 		const rect = wrap.getBoundingClientRect();
-		hovered = hitTest(e.clientX - rect.left, e.clientY - rect.top);
+		const hit = hitTest(e.clientX - rect.left, e.clientY - rect.top);
+		if (hit !== hovered) {
+			hovered = hit;
+			reheat();
+		}
 	}
 
 	/** Click a circle to open the theme drawer for its first coded theme. */
@@ -414,9 +423,15 @@
 			if (n.y < R) ((n.y = R), (n.vy = Math.abs(n.vy) * 0.5));
 			else if (n.y > H - R) ((n.y = H - R), (n.vy = -Math.abs(n.vy) * 0.5));
 		}
-		// pin alpha above its floor so the simulation never stops ticking
-		if (sim.alpha() < ALPHA_FLOOR) sim.alpha(ALPHA_FLOOR);
 		draw();
+	}
+
+	/** Briefly warm the sim so the next few ticks animate a focus/glow transition,
+	 *  then let it decay to alphaMin and stop. Used on hover/spotlight changes. */
+	function reheat() {
+		if (!sim) return;
+		if (sim.alpha() < REHEAT_ALPHA) sim.alpha(REHEAT_ALPHA);
+		sim.restart();
 	}
 
 	function draw() {
@@ -615,7 +630,12 @@
 		class:cursor-pointer={onThemeSelect && mode === 'auto'}
 		onpointermove={onPointer}
 		onpointerdown={onPointer}
-		onpointerleave={() => (hovered = null)}
+		onpointerleave={() => {
+			if (hovered) {
+				hovered = null;
+				reheat();
+			}
+		}}
 		onclick={onClick}
 	>
 		<canvas bind:this={canvas} class="absolute inset-0 h-full w-full"></canvas>

@@ -1,0 +1,341 @@
+{
+  "schema_version": "entities-biomarker-0.1",
+  "description": "Biomarker entity registry per ENTITY_REGISTRY.md. Phase 1 seed of 7 entities (eGFR, UPCR, proteinuria, serum_creatinine, BUN, hemoglobin, BNP) covering nephrology-adjacent indications. Hemoglobin and BNP are cross-cutting (empty indications). Additional biomarkers enter via propose-entities.mjs in Phase 4.",
+  "items": [
+    {
+      "id": "entity.biomarker.bnp",
+      "kind": "biomarker",
+      "label": "BNP",
+      "surface_forms": [
+        "BNP",
+        "B-type natriuretic peptide",
+        "NT-proBNP"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "numeric",
+        "normal_range": "<100 pg/mL",
+        "clinical_use": "cardiac stress; relevant in nephrology for fluid overload status"
+      },
+      "provenance": "registry",
+      "description": "B-type natriuretic peptide \u2014 cardiac stress and fluid overload marker",
+      "status": "active"
+    },
+    {
+      "id": "entity.biomarker.bun",
+      "kind": "biomarker",
+      "label": "BUN",
+      "surface_forms": [
+        "BUN",
+        "blood urea nitrogen",
+        "urea nitrogen"
+      ],
+      "indications": [
+        "iga_nephropathy",
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "numeric",
+        "normal_range": "7-20 mg/dL",
+        "clinical_use": "kidney function and hydration status"
+      },
+      "provenance": "registry",
+      "description": "Blood urea nitrogen \u2014 kidney function and hydration marker",
+      "status": "active"
+    },
+    {
+      "id": "entity.biomarker.egfr",
+      "kind": "biomarker",
+      "label": "eGFR",
+      "surface_forms": [
+        "eGFR",
+        "GFR",
+        "estimated GFR",
+        "glomerular filtration rate",
+        "kidney function"
+      ],
+      "indications": [
+        "iga_nephropathy",
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "numeric",
+        "normal_range": ">=90 mL/min/1.73m^2",
+        "clinical_use": "kidney function staging (CKD stages 1-5)"
+      },
+      "provenance": "registry",
+      "description": "Estimated glomerular filtration rate \u2014 primary kidney function biomarker",
+      "status": "active"
+    },
+    {
+      "id": "entity.biomarker.galactose_deficient_iga1",
+      "kind": "biomarker",
+      "label": "Galactose-deficient IgA1",
+      "surface_forms": [
+        "galactose-deficient IgA1",
+        "Gd-IgA1"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "numeric",
+        "normal_range": "varies",
+        "clinical_use": "Biomarker for IgA nephropathy pathophysiology; target for BHV-1400 therapy"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "BHV-1400 was reported to reduce galactose-deficient IgA1 by more than 60% within 48 hours"
+    },
+    {
+      "id": "entity.biomarker.hemoglobin",
+      "kind": "biomarker",
+      "label": "Hemoglobin",
+      "surface_forms": [
+        "hemoglobin",
+        "Hgb",
+        "Hb",
+        "haemoglobin"
+      ],
+      "indications": [],
+      "therapeutic_areas": [],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "numeric",
+        "normal_range": "12-16 g/dL (female) / 14-18 g/dL (male)",
+        "clinical_use": "anemia screening, often relevant in chronic kidney disease and immunology"
+      },
+      "provenance": "registry",
+      "description": "Hemoglobin \u2014 oxygen-carrying protein; anemia marker",
+      "status": "active"
+    },
+    {
+      "id": "entity.biomarker.iga_staining",
+      "kind": "biomarker",
+      "label": "IgA staining",
+      "surface_forms": [
+        "IgA staining",
+        "IgG levels",
+        "IgG",
+        "IgA",
+        "IgM"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "categorical (immunofluorescence staining)",
+        "normal_range": "absent/negative",
+        "clinical_use": "Kidney biopsy interpretation, IgAN diagnosis"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "IgA: 3+ granular staining in mesangium IgM: trace"
+    },
+    {
+      "id": "entity.biomarker.kappa_lambda_staining",
+      "kind": "biomarker",
+      "label": "Kappa/Lambda staining",
+      "surface_forms": [
+        "light chain",
+        "Lambda",
+        "Kappa"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "categorical (immunofluorescence staining)",
+        "normal_range": "absent/balanced",
+        "clinical_use": "Kidney biopsy interpretation"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "Kappa: 1+ granular staining in mesangium Lambda: 2+ granular staining in mesangium"
+    },
+    {
+      "id": "entity.biomarker.proteinuria",
+      "kind": "biomarker",
+      "label": "Proteinuria",
+      "surface_forms": [
+        "proteinuria",
+        "protein in urine",
+        "protein in my urine",
+        "foamy urine"
+      ],
+      "indications": [
+        "iga_nephropathy",
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "categorical",
+        "clinical_use": "kidney damage marker; gross presentation often described as foamy urine"
+      },
+      "provenance": "registry",
+      "description": "Protein loss in urine \u2014 kidney glomerular damage marker",
+      "status": "active"
+    },
+    {
+      "id": "entity.biomarker.serum_creatinine",
+      "kind": "biomarker",
+      "label": "Serum creatinine",
+      "surface_forms": [
+        "serum creatinine",
+        "creatinine",
+        "sCr"
+      ],
+      "indications": [
+        "iga_nephropathy",
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "numeric",
+        "normal_range": "0.6-1.2 mg/dL (sex-dependent)",
+        "clinical_use": "kidney function; input to eGFR calculation"
+      },
+      "provenance": "registry",
+      "description": "Serum creatinine \u2014 direct kidney filtration marker",
+      "status": "active"
+    },
+    {
+      "id": "entity.biomarker.uacr",
+      "kind": "biomarker",
+      "label": "uACR",
+      "surface_forms": [
+        "urine albumin-to-creatinine ratio",
+        "uACR"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "numeric",
+        "normal_range": "<30 mg/g",
+        "clinical_use": "Proteinuria assessment, renal disease progression tracking"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "And my uACR that time was like 12.5 and I was also having high bp."
+    },
+    {
+      "id": "entity.biomarker.upcr",
+      "kind": "biomarker",
+      "label": "UPCR",
+      "surface_forms": [
+        "UPCR",
+        "urine protein/creatinine ratio",
+        "urine protein creatinine",
+        "protein-creatinine ratio"
+      ],
+      "indications": [
+        "iga_nephropathy",
+        "lupus_nephritis"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "numeric",
+        "normal_range": "<0.2 g/g",
+        "clinical_use": "proteinuria quantification on a spot urine sample"
+      },
+      "provenance": "registry",
+      "description": "Urine protein-to-creatinine ratio \u2014 spot-urine proteinuria measure",
+      "status": "active"
+    },
+    {
+      "id": "entity.biomarker.urine_protein_24_hour",
+      "kind": "biomarker",
+      "label": "Urine protein 24-hour",
+      "surface_forms": [
+        "urine protein in 24 hours",
+        "24-hour urine protein",
+        "24hr urine"
+      ],
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "therapeutic_areas": [
+        "immunology",
+        "nephrology"
+      ],
+      "theme_links": [
+        "hrqol.general_health"
+      ],
+      "metadata": {
+        "measurement_type": "numeric",
+        "normal_range": "<150 mg/24hr",
+        "clinical_use": "Proteinuria quantification, disease progression tracking"
+      },
+      "provenance": "extracted",
+      "status": "active",
+      "description": "Urine protein in 24 hours is 733.5 mg."
+    }
+  ]
+}

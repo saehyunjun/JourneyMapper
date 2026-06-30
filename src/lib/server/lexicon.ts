@@ -12,9 +12,7 @@
  *
  * Backed by the local source files in dev and the KV store in prod.
  */
-import bundledLexicon from '$lib/content/wctglpdemo-data/keyword_lexicon.json';
-import bundledCodebook from '$lib/content/wctglpdemo-data/codebook.json';
-import { loadDoc, saveDoc } from './kv-store';
+import { loadDoc, saveDoc, lazySeed } from './kv-store';
 import {
 	indications as registryIndications,
 	therapeuticAreas as registryTherapeuticAreas,
@@ -26,6 +24,8 @@ import {
 	indicationsFromDb,
 	therapeuticAreasFromDb
 } from './db/queries';
+import { getEntitiesForIndication } from './entities';
+import type { Entity } from '$lib/content/entities/types';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const LEXICON_PATH = `${DATA_DIR}/keyword_lexicon.json`;
@@ -80,10 +80,23 @@ export type Theme = {
 };
 type CodebookFile = { themes: Theme[]; [k: string]: unknown };
 
-const readLexicon = () =>
-	loadDoc<LexiconFile>(LEXICON_KEY, LEXICON_PATH, bundledLexicon as unknown as LexiconFile);
-const readCodebook = () =>
-	loadDoc<CodebookFile>(CODEBOOK_KEY, CODEBOOK_PATH, bundledCodebook as unknown as CodebookFile);
+// Lazy seeds — the 141 KB keyword_lexicon.json and 14 KB codebook.json are
+// only loaded if the fallback path actually fires (Redis empty in prod, or the
+// local file is missing in dev). Lexicon.ts sits on the patientlyiq layout's
+// critical path, so eager loading here was paid on every request.
+const seedLexicon = lazySeed(() =>
+	import('$lib/content/wctglpdemo-data/keyword_lexicon.json').then(
+		(m) => m.default as unknown as LexiconFile
+	)
+);
+const seedCodebook = lazySeed(() =>
+	import('$lib/content/wctglpdemo-data/codebook.json').then(
+		(m) => m.default as unknown as CodebookFile
+	)
+);
+
+const readLexicon = () => loadDoc<LexiconFile>(LEXICON_KEY, LEXICON_PATH, seedLexicon);
+const readCodebook = () => loadDoc<CodebookFile>(CODEBOOK_KEY, CODEBOOK_PATH, seedCodebook);
 
 /** The lists the drawer renders — returned after every edit so it can refresh. */
 export type LexiconState = { clusters: Cluster[]; themes: Theme[] };
@@ -139,7 +152,14 @@ async function snapshot(): Promise<LexiconState> {
  *  active indication — buildKeywordMatcher uses it to inline brand_names
  *  + generic_name into per-cluster match regexes. Codebook themes are
  *  bundled so consumers can resolve parent_subtheme → display label without
- *  a second fetch. */
+ *  a second fetch.
+ *
+ *  `entities` (Phase 2 of the codebook migration) is the new Entity slice —
+ *  drugs, biomarkers, sponsors, symptoms, concepts, trials, conditions
+ *  scoped to the active indication. Empty `indications[]` entities surface
+ *  for every active indication (cross-cutting). The matcher's entitySpans()
+ *  reads this slice; the legacy cluster matching path is unchanged.
+ *  See ENTITY_REGISTRY.md and CODEBOOK_MIGRATION_PLAN.md for the contract. */
 export type LexiconSlice = {
 	active_indication: string;
 	therapeutic_areas: TherapeuticArea[];
@@ -147,6 +167,7 @@ export type LexiconSlice = {
 	clusters: Cluster[];
 	themes: Theme[];
 	drugs: Drug[];
+	entities: Entity[];
 };
 
 /** Normalize a cluster's indications field across 3.1 and 3.2 shapes.
@@ -171,15 +192,26 @@ function clusterIndications(c: Cluster & { indication?: string }): string[] {
 export async function getLexiconSlice(requested?: string): Promise<LexiconSlice> {
 	const [lex, codebook] = await Promise.all([readLexicon(), readCodebook()]);
 
-	// Indications + therapeutic areas: prefer DB, fall back to bundled JSON
-	// using the same pattern as drugs below. Empty DB result with non-empty
-	// JSON triggers fallback (signals an unseeded DB).
+	// Indications + therapeutic areas: prefer DB, fall back to bundled JSON.
+	// Union DB + JSON when JSON has entries the DB lacks (signals a stale-DB
+	// situation — iGAN and Sjögren's were added to registries/indications.json
+	// after the DB seed). Without this union, `?indication=iga_nephropathy`
+	// silently falls back to the first DB-known indication (lupus_nephritis),
+	// which silently breaks the entity layer's indication scoping.
 	let indications: Indication[];
 	let therapeutic_areas: TherapeuticArea[];
 	try {
 		const [dbInds, dbTas] = await Promise.all([indicationsFromDb(), therapeuticAreasFromDb()]);
-		indications = dbInds.length > 0 ? dbInds : registryIndications;
-		therapeutic_areas = dbTas.length > 0 ? dbTas : registryTherapeuticAreas;
+		const dbIndIds = new Set(dbInds.map((i) => i.id));
+		const dbTaIds = new Set(dbTas.map((t) => t.id));
+		indications =
+			dbInds.length === 0
+				? registryIndications
+				: [...dbInds, ...registryIndications.filter((i) => !dbIndIds.has(i.id))];
+		therapeutic_areas =
+			dbTas.length === 0
+				? registryTherapeuticAreas
+				: [...dbTas, ...registryTherapeuticAreas.filter((t) => !dbTaIds.has(t.id))];
 	} catch {
 		indications = registryIndications;
 		therapeutic_areas = registryTherapeuticAreas;
@@ -219,13 +251,21 @@ export async function getLexiconSlice(requested?: string): Promise<LexiconSlice>
 		);
 	}
 
+	// Phase 2: entity slice scoped to the active indication. Reads the
+	// bundled entities/*.json files (drugs.json, biomarkers.json, etc.) and
+	// filters by indications[]. Empty indications[] = cross-cutting. The
+	// matcher's entitySpans() reads this; legacy cluster matching is
+	// unchanged.
+	const entities = getEntitiesForIndication(active);
+
 	return {
 		active_indication: active,
 		therapeutic_areas,
 		indications,
 		clusters,
 		themes: codebook.themes,
-		drugs
+		drugs,
+		entities
 	};
 }
 

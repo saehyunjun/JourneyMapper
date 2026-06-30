@@ -1,0 +1,605 @@
+{
+  "meta": {
+    "schema_version": "persona-pillars-0.1",
+    "generator": "propose-persona-pillars@0.1",
+    "model": "llama-3.3-70b-versatile",
+    "base_url": "https://api.groq.com/openai/v1",
+    "corpus_id": "igan_forum_2026q2",
+    "content_source": "social_comment",
+    "updated_at": "2026-06-02T19:26:08.529Z",
+    "pillar_count": 4,
+    "tagged_fragment_count": 40,
+    "total_tag_count": 39,
+    "usage_total": {
+      "prompt_tokens": 3032,
+      "completion_tokens": 3455,
+      "total_tokens": 6487
+    }
+  },
+  "persona_pillars": {
+    "fc-igan_forum_2026q2-1-1-1_b": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "high",
+        "span": {
+          "start": 7,
+          "end": 11,
+          "text": "hope"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker expresses hope for fewer side effects.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_c": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 47,
+          "end": 69,
+          "text": "no side effects at all"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker shares their personal experience with a medication.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_d": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 101,
+          "end": 128,
+          "text": "long term immunosuppression"
+        },
+        "confidence": 0.9,
+        "rationale": "The speaker demonstrates knowledge of potential long-term effects.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_e": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 108,
+          "end": 134,
+          "text": "check the phase 2b reports"
+        },
+        "confidence": 0.9,
+        "rationale": "The speaker suggests checking specific clinical trial data.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_f_s00": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "high",
+        "span": {
+          "start": 5,
+          "end": 20,
+          "text": "very optimistic"
+        },
+        "confidence": 0.9,
+        "rationale": "The speaker expresses optimism about a drug.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_f_s01": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "low",
+        "span": {
+          "start": 204,
+          "end": 225,
+          "text": "years to get approved"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker mentions a long wait time for access to a drug.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      },
+      {
+        "pillar": "provider_trust",
+        "signal": "low",
+        "span": {
+          "start": 88,
+          "end": 118,
+          "text": "he said I wouldn’t have access"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker's provider does not offer a desired treatment option.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_f_s02": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "high",
+        "span": {
+          "start": 48,
+          "end": 74,
+          "text": "elite US medical providers"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker mentions access to top medical providers.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_f_s03": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 21,
+          "text": "Hope they find a cure"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker expresses hope for a cure.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_g": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "high",
+        "span": {
+          "start": 159,
+          "end": 175,
+          "text": "private practice"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker mentions access to a private practice provider.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_h": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "low",
+        "span": {
+          "start": 25,
+          "end": 52,
+          "text": "how much it’s going to cost"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker is concerned about the cost of a drug.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_i": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 243,
+          "end": 258,
+          "text": "FDA regulations"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker demonstrates knowledge of FDA regulations.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_j": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "low",
+        "span": {
+          "start": 0,
+          "end": 25,
+          "text": "Where to find it in India"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker is unsure about accessing a drug in their location.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_k": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "low",
+        "span": {
+          "start": 4,
+          "end": 38,
+          "text": "won't be able to get this in India"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker mentions a drug is not available in their location.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_b": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "low",
+        "span": {
+          "start": 44,
+          "end": 103,
+          "text": "I see my routine labs there is no component there named igg"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker is unsure about a specific lab test.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_c": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "low",
+        "span": {
+          "start": 44,
+          "end": 103,
+          "text": "I see my routine labs there is no component there named igg"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker is unsure about a specific lab test.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_d": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 18,
+          "text": "It is a blood test"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker provides information about a lab test.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_e": [],
+    "fc-igan_forum_2026q2-2-1-1_f": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "low",
+        "span": {
+          "start": 0,
+          "end": 30,
+          "text": "Which trial was it going to be"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker is unsure about a specific trial.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_g": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 7,
+          "text": "Rainier"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker provides information about a trial.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_h": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 84,
+          "end": 132,
+          "text": "https://www.clinicaltrials.gov/study/NCT05732402"
+        },
+        "confidence": 0.9,
+        "rationale": "The speaker provides a link to a clinical trial.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_b": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 112,
+          "end": 136,
+          "text": "improve physical fitness"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker suggests a specific action for health improvement.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_c": [],
+    "fc-igan_forum_2026q2-3-1-1_d": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 51,
+          "end": 79,
+          "text": "I am planning for transplant"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker is taking proactive steps for their health.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_e": [],
+    "fc-igan_forum_2026q2-4-1-1_b": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 23,
+          "text": "Fingers crossed for you"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker expresses support and well-wishes.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_c": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 38,
+          "text": "Do you have any other visible symptoms"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker asks about specific symptoms.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_d": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "low",
+        "span": {
+          "start": 64,
+          "end": 93,
+          "text": "my overall drive simply sucks"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker expresses feelings of low motivation and energy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_e": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 46,
+          "text": "Hope all of that drive and appetite comes back"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker expresses hope for improvement.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_f": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "high",
+        "span": {
+          "start": 48,
+          "end": 66,
+          "text": "I wish you success"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker expresses well-wishes and support.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_g_s00": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "low",
+        "span": {
+          "start": 0,
+          "end": 16,
+          "text": "Sorry to hear it"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker expresses sympathy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_g_s01": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 44,
+          "end": 77,
+          "text": "presentation on kidney transplant"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker provides information about a medical topic.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_g_s02": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 41,
+          "end": 67,
+          "text": "importance of a live donor"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker provides information about a medical topic.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_g_s03": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 27,
+          "end": 49,
+          "text": "types of donor kidneys"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker provides information about a medical topic.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_g_s04": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "low",
+        "span": {
+          "start": 0,
+          "end": 13,
+          "text": "Info overload"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker expresses feeling overwhelmed.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_g_s05": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 22,
+          "end": 59,
+          "text": "lab work, scans and maybe stress test"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker provides information about medical tests.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_h": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "low",
+        "span": {
+          "start": 39,
+          "end": 71,
+          "text": "sitting around waiting on people"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker describes a frustrating experience with a medical evaluation process.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      },
+      {
+        "pillar": "emotional_valence",
+        "signal": "high",
+        "span": {
+          "start": 271,
+          "end": 298,
+          "text": "crossing my fingers for you"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker expresses support and well-wishes.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_i_s00": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 28,
+          "text": "My evaluation was intresting"
+        },
+        "confidence": 0.7,
+        "rationale": "The speaker shares their experience with a medical evaluation.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_i_s01": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 8,
+          "end": 51,
+          "text": "hr and a half appt with the transplant team"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker provides information about their medical evaluation process.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_i_s02": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 12,
+          "end": 63,
+          "text": "evaluation of your health and your mental fortitude"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker provides information about a medical evaluation process.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_i_s03": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 46,
+          "end": 83,
+          "text": "frequent communication with your team"
+        },
+        "confidence": 0.8,
+        "rationale": "The speaker provides information about post-transplant care.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:26:08.527Z"
+      }
+    ]
+  }
+}

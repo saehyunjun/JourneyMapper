@@ -11,7 +11,7 @@ import {
 	EMOTION_PICKER,
 	PLUTCHIK_DYADS,
 	PLUTCHIK_EMOTIONS
-} from '$lib/journeymapper2/plutchikEmotionsConfig.js';
+} from '$lib/content/emotions/plutchik';
 
 type Rgb = { r: number; g: number; b: number };
 

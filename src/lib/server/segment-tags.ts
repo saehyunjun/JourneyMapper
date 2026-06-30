@@ -8,11 +8,8 @@
  *
  * Backed by the local source files in dev and the KV store in prod.
  */
-import bundledSegments from '$lib/content/wctglpdemo-data/segments.json';
-import bundledTags from '$lib/content/wctglpdemo-data/segment_tags.json';
-import bundledCodebook from '$lib/content/wctglpdemo-data/codebook.json';
 import type { Annotation } from '$lib/types/segment-tags';
-import { loadDoc, saveDoc } from './kv-store';
+import { loadDoc, saveDoc, lazySeed } from './kv-store';
 
 const DATA_DIR = 'src/lib/content/wctglpdemo-data';
 const SEGMENTS_PATH = `${DATA_DIR}/segments.json`;
@@ -43,11 +40,27 @@ type CodebookFile = {
 	[k: string]: unknown;
 };
 
-const readSegments = () =>
-	loadDoc<SegmentsFile>(SEGMENTS_KEY, SEGMENTS_PATH, bundledSegments as SegmentsFile);
-const readTags = () => loadDoc<TagsFile>(TAGS_KEY, TAGS_PATH, bundledTags as TagsFile);
-const readCodebook = () =>
-	loadDoc<CodebookFile>(CODEBOOK_KEY, CODEBOOK_PATH, bundledCodebook as CodebookFile);
+// Lazy seeds — segments.json (275 KB) and segment_tags.json (290 KB) are the
+// two heaviest bundles in this module. Only paid on the fallback path.
+const seedSegments = lazySeed(() =>
+	import('$lib/content/wctglpdemo-data/segments.json').then(
+		(m) => m.default as SegmentsFile
+	)
+);
+const seedTags = lazySeed(() =>
+	import('$lib/content/wctglpdemo-data/segment_tags.json').then(
+		(m) => m.default as TagsFile
+	)
+);
+const seedCodebook = lazySeed(() =>
+	import('$lib/content/wctglpdemo-data/codebook.json').then(
+		(m) => m.default as CodebookFile
+	)
+);
+
+const readSegments = () => loadDoc<SegmentsFile>(SEGMENTS_KEY, SEGMENTS_PATH, seedSegments);
+const readTags = () => loadDoc<TagsFile>(TAGS_KEY, TAGS_PATH, seedTags);
+const readCodebook = () => loadDoc<CodebookFile>(CODEBOOK_KEY, CODEBOOK_PATH, seedCodebook);
 
 type CodebookTheme = { id: string; subthemes?: { id: string }[] };
 

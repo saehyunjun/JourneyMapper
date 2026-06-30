@@ -1,0 +1,247 @@
+{
+	"protocol_id": "ccar168_ln_phase1",
+	"rules": [
+		{
+			"id": "distant_routine_followup",
+			"label": "Distant in-person follow-up",
+			"description": "Routine outpatient/lab visits in the Follow-up phase add travel burden for patients far from a Center of Excellence.",
+			"applies_to": {
+				"phase_ids": ["follow_up"],
+				"burden_hint": { "setting": "outpatient" }
+			},
+			"persona_predicate": {
+				"kind": "attr_in",
+				"attr": "distance_to_coe_band",
+				"values": ["50-200mi", ">200mi"]
+			},
+			"weight": 0.2,
+			"consequence": "retention",
+			"suggested_mods": [
+				{
+					"id": "home_health_draw",
+					"label": "Permit home-health draw for routine labs at this visit",
+					"rationale": "Removes a round-trip to the CoE for a routine assessment with no procedure-specific staffing requirement."
+				},
+				{
+					"id": "telehealth_eligible",
+					"label": "Mark this visit telehealth-eligible where clinically safe",
+					"rationale": "Vital-signs + PROs + symptom check can be handled by video; only labs need a local draw."
+				}
+			],
+			"evidence_fragment_ids": []
+		},
+		{
+			"id": "tight_window_consecutive",
+			"label": "Tight window with low travel slack",
+			"description": "Adjacent timepoints with ±1-day windows leave no recovery space for patients with low work/caregiving flexibility.",
+			"applies_to": {
+				"timepoint_ids": ["d4", "d7", "d10"]
+			},
+			"persona_predicate": {
+				"kind": "attr_eq",
+				"attr": "work_flexibility",
+				"value": "low"
+			},
+			"weight": 0.15,
+			"consequence": "schedule_compliance",
+			"suggested_mods": [
+				{
+					"id": "widen_window_to_3d",
+					"label": "Widen the visit window to ±3 days",
+					"rationale": "Lets the visit shift onto a non-workday without protocol deviation."
+				}
+			],
+			"evidence_fragment_ids": []
+		},
+		{
+			"id": "inpatient_caregiver_required",
+			"label": "Inpatient stay without reliable caregiver",
+			"description": "Multi-day inpatient hospitalization assumes a discharge partner who can stay nearby and manage logistics.",
+			"applies_to": {
+				"burden_hint": { "setting": "inpatient" }
+			},
+			"persona_predicate": {
+				"kind": "attr_eq",
+				"attr": "caregiver_availability",
+				"value": "limited"
+			},
+			"weight": 0.35,
+			"consequence": "recruitment",
+			"suggested_mods": [
+				{
+					"id": "caregiver_stipend",
+					"label": "Offer a documented caregiver-travel + lodging stipend",
+					"rationale": "Recruits a partner who otherwise can't take time off; commonly cited blocker in the LN community thread."
+				},
+				{
+					"id": "extend_inpatient_for_solo",
+					"label": "Permit extended inpatient stay for patients without home support",
+					"rationale": "Removes the silent eligibility filter where 'no caregiver' equals 'not eligible'."
+				}
+			],
+			"evidence_fragment_ids": []
+		},
+		{
+			"id": "specialist_imaging_far",
+			"label": "Specialist imaging when patient is far from site",
+			"description": "Imaging that requires the trial site's equipment/reader is hard to substitute when the patient lives a long distance away.",
+			"applies_to": {
+				"burden_hint": { "setting": "imaging", "specialist_required": true }
+			},
+			"persona_predicate": {
+				"kind": "attr_in",
+				"attr": "distance_to_coe_band",
+				"values": ["50-200mi", ">200mi"]
+			},
+			"weight": 0.2,
+			"consequence": "schedule_compliance",
+			"suggested_mods": [
+				{
+					"id": "local_imaging_central_read",
+					"label": "Allow local imaging acquisition with central read",
+					"rationale": "Echocardiograms are highly standardizable; central read preserves data quality while removing travel."
+				}
+			],
+			"evidence_fragment_ids": []
+		},
+		{
+			"id": "twenty_four_hour_urine_at_home",
+			"label": "24-hour urine collection conflicts with work schedule",
+			"description": "A 24-hour collection requires a continuous at-home window; patients with low work flexibility either skip days or burn PTO.",
+			"applies_to": {
+				"procedure_ids": ["twenty_four_hour_urine"]
+			},
+			"persona_predicate": {
+				"kind": "attr_eq",
+				"attr": "work_flexibility",
+				"value": "low"
+			},
+			"weight": 0.15,
+			"consequence": "data_integrity",
+			"suggested_mods": [
+				{
+					"id": "weekend_collection_window",
+					"label": "Document weekend-collection as the default option",
+					"rationale": "Lets the collection fall on non-working days for the majority of US patients."
+				}
+			],
+			"evidence_fragment_ids": []
+		},
+		{
+			"id": "fasting_lab_morning_slot",
+			"label": "Fasting blood chemistry forced into morning slot",
+			"description": "Fasting requirements push the visit into an early-morning slot that's hardest for low-flexibility patients.",
+			"applies_to": {
+				"burden_hint": { "fasting_required": true }
+			},
+			"persona_predicate": {
+				"kind": "attr_eq",
+				"attr": "work_flexibility",
+				"value": "low"
+			},
+			"weight": 0.1,
+			"consequence": "schedule_compliance",
+			"suggested_mods": [
+				{
+					"id": "allow_afternoon_fasting",
+					"label": "Permit afternoon fasting draws (8-hour fast, evening cut-off)",
+					"rationale": "Removes the dawn-arrival expectation that drives missed visits."
+				}
+			],
+			"evidence_fragment_ids": []
+		},
+		{
+			"id": "caregiver_required_procedure",
+			"label": "Procedure requires caregiver and persona lacks one",
+			"description": "Procedures flagged caregiver_required exclude patients without a reliable discharge partner.",
+			"applies_to": {
+				"burden_hint": { "caregiver_required": true }
+			},
+			"persona_predicate": {
+				"kind": "attr_eq",
+				"attr": "caregiver_availability",
+				"value": "limited"
+			},
+			"weight": 0.25,
+			"consequence": "recruitment",
+			"suggested_mods": [
+				{
+					"id": "site_arranged_companion",
+					"label": "Offer a site-arranged non-medical companion for these visits",
+					"rationale": "Several sponsors now contract trained patient-companion services for sedation discharge; standard at oncology CoEs."
+				}
+			],
+			"evidence_fragment_ids": []
+		},
+		{
+			"id": "ice_repeated_cognitive_burden",
+			"label": "Repeated ICE testing on top of cognitive fatigue",
+			"description": "ICE assessments at D7/D21/D28 plus daily during hospitalization compound for patients already self-reporting cognitive burden.",
+			"applies_to": {
+				"procedure_ids": ["ice_testing"]
+			},
+			"persona_predicate": {
+				"kind": "attr_eq",
+				"attr": "psych_burden_self_reported",
+				"value": "high"
+			},
+			"weight": 0.1,
+			"consequence": "retention",
+			"suggested_mods": [
+				{
+					"id": "ice_screen_threshold",
+					"label": "Use a brief screening ICE; reserve full assessment for symptomatic patients",
+					"rationale": "Footnote i already gates ICE on CRS/ICANS symptoms during hospitalization — extend that gate to follow-up timepoints."
+				}
+			],
+			"evidence_fragment_ids": []
+		},
+		{
+			"id": "pregnancy_test_follow_up_cadence",
+			"label": "Monthly pregnancy testing during long-tail follow-up",
+			"description": "Repeat in-clinic serum pregnancy tests through M3 and the M6-24 sweeps add visits for patients who otherwise wouldn't be at the site.",
+			"applies_to": {
+				"procedure_ids": ["pregnancy_test"],
+				"phase_ids": ["follow_up"]
+			},
+			"persona_predicate": {
+				"kind": "attr_eq",
+				"attr": "childbearing_potential",
+				"value": true
+			},
+			"weight": 0.1,
+			"consequence": "retention",
+			"suggested_mods": [
+				{
+					"id": "home_urine_pregnancy",
+					"label": "Permit home urine hCG testing for the M6-M24 sweeps where the regulator allows",
+					"rationale": "Serum confirms only if positive; saves the in-clinic visit for the negative majority."
+				}
+			],
+			"evidence_fragment_ids": []
+		},
+		{
+			"id": "renal_biopsy_invasiveness",
+			"label": "Renal biopsy on top of prior treatment burden",
+			"description": "Screening renal biopsy is invasive and adds risk for patients who've already cycled through multiple therapies.",
+			"applies_to": {
+				"procedure_ids": ["renal_biopsy"]
+			},
+			"persona_predicate": {
+				"kind": "attr_gte",
+				"attr": "prior_treatment_failures",
+				"value": 2
+			},
+			"weight": 0.2,
+			"consequence": "recruitment",
+			"suggested_mods": [
+				{
+					"id": "use_recent_biopsy",
+					"label": "Accept biopsy performed within the past 6 months",
+					"rationale": "Reduces invasive screening burden for refractory patients who likely have a recent biopsy on file."
+				}
+			],
+			"evidence_fragment_ids": []
+		}
+	]
+}

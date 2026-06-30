@@ -1,0 +1,480 @@
+{
+  "meta": {
+    "schema_version": "persona-pillars-0.1",
+    "generator": "propose-persona-pillars@0.1",
+    "model": "llama-3.3-70b-versatile",
+    "base_url": "https://api.groq.com/openai/v1",
+    "corpus_id": "igan_forum_2026q2",
+    "content_source": "social_post",
+    "updated_at": "2026-06-02T19:28:00.000Z",
+    "pillar_count": 4,
+    "tagged_fragment_count": 39,
+    "total_tag_count": 30,
+    "usage_total": {
+      "prompt_tokens": 3304,
+      "completion_tokens": 4299,
+      "total_tokens": 7603
+    }
+  },
+  "persona_pillars": {
+    "fc-igan_forum_2026q2-1-1-1_a_s00": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 3,
+          "end": 50,
+          "text": "interim analysis of the VISIONARY phase 3 trial"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is discussing a clinical trial, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_a_s01": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 27,
+          "text": "Sibeprenlimab targets APRIL"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is discussing the mechanism of a medication, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_a_s02": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 71,
+          "end": 108,
+          "text": "24-hour UPCR fell 50.2% from baseline"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is discussing clinical trial results, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_a_s03": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 12,
+          "end": 34,
+          "text": "serum APRIL fell 95.8%"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is discussing biomarker results, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_a_s04": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 35,
+          "end": 74,
+          "text": "serious adverse events occurred in 3.5%"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is discussing safety data, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_a_s05": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 28,
+          "end": 64,
+          "text": "annualized eGFR slope over 24 months"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is discussing a clinical endpoint, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_a_s06": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 39,
+          "text": "Sibeprenlimab is currently under review"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is discussing regulatory status, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-1-1-1_a_s07": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 57,
+          "text": "More here: https://www.nejm.org/doi/10.1056/NEJMoa2512133"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is sharing a scientific reference, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-2-1-1_a": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "low",
+        "span": {
+          "start": 60,
+          "end": 83,
+          "text": "Im really deppresed now"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is expressing feelings of depression, indicating a low emotional valence.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s00": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "low",
+        "span": {
+          "start": 45,
+          "end": 63,
+          "text": "I need some advice"
+        },
+        "confidence": 0.7,
+        "rationale": "The patient is seeking advice, indicating a sense of uncertainty or concern, which may be related to a low emotional valence.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s01": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "low",
+        "span": {
+          "start": 40,
+          "end": 61,
+          "text": "stage 5 renal failure"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient's wife has a serious medical condition, which may impact their logistical capacity.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s02": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "low",
+        "span": {
+          "start": 58,
+          "end": 106,
+          "text": "has had a few potential live donors disqualified"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient's wife is having difficulty finding a donor, which may impact their logistical capacity.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s03": [],
+    "fc-igan_forum_2026q2-3-1-1_a_s04": [],
+    "fc-igan_forum_2026q2-3-1-1_a_s05": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "high",
+        "span": {
+          "start": 85,
+          "end": 112,
+          "text": "still works 40 hours a week"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient's wife is able to work full-time, indicating a high logistical capacity.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s06": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "high",
+        "span": {
+          "start": 13,
+          "end": 31,
+          "text": "it keeps her going"
+        },
+        "confidence": 0.7,
+        "rationale": "The patient is expressing a sense of purpose or motivation, which may be related to a high emotional valence.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s07": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 43,
+          "text": "I have a decent job with a decent pay check"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient has a stable job and income, indicating a high logistical capacity.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_a_s00": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "low",
+        "span": {
+          "start": 16,
+          "end": 40,
+          "text": "borderline stage4-5 igan"
+        },
+        "confidence": 0.7,
+        "rationale": "The patient is discussing their diagnosis, but may not fully understand the implications, indicating a low level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_a_s01": [],
+    "fc-igan_forum_2026q2-4-1-1_a_s02": [],
+    "fc-igan_forum_2026q2-4-1-1_a_s03": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "low",
+        "span": {
+          "start": 43,
+          "end": 89,
+          "text": "getting kind of drained from the whole process"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient is expressing feelings of exhaustion or frustration, indicating a low emotional valence.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_a_s04": [],
+    "fc-igan_forum_2026q2-4-1-1_a_s05": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "low",
+        "span": {
+          "start": 105,
+          "end": 133,
+          "text": "I feel incredibly unprepared"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient is expressing a sense of unpreparedness or uncertainty, which may be related to a low logistical capacity.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_a_s06": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "low",
+        "span": {
+          "start": 98,
+          "end": 166,
+          "text": "I was diagnosed and told the vax was more than likely what caused it"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient is expressing a sense of blame or regret, indicating a low emotional valence.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_a_s07": [],
+    "fc-igan_forum_2026q2-4-1-1_a_s08": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "low",
+        "span": {
+          "start": 0,
+          "end": 22,
+          "text": "Any advice and or help"
+        },
+        "confidence": 0.7,
+        "rationale": "The patient is seeking advice or support, indicating a sense of uncertainty or concern, which may be related to a low emotional valence.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s00": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 21,
+          "end": 59,
+          "text": "this is my 16th week and 4th injection"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient is discussing their treatment schedule, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s01": [
+      {
+        "pillar": "emotional_valence",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 34,
+          "text": "I'm eagerly waiting for my results"
+        },
+        "confidence": 0.7,
+        "rationale": "The patient is expressing anticipation or hope, indicating a high emotional valence.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s02": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 37,
+          "end": 58,
+          "text": "the 4 week increments"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient is discussing their treatment schedule, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s03": [],
+    "fc-igan_forum_2026q2-5-1-1_a_s04": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 7,
+          "end": 50,
+          "text": "regular EKG's and 24 hour urine collections"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient is discussing their monitoring schedule, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s05": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 13,
+          "end": 59,
+          "text": "not having the pressure of taking a daily pill"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient is discussing the benefits of their treatment, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s06": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 75,
+          "end": 120,
+          "text": "I was always anxious that I had missed a dose"
+        },
+        "confidence": 0.7,
+        "rationale": "The patient is discussing their previous treatment experience, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s07": [],
+    "fc-igan_forum_2026q2-5-1-1_a_s08": [
+      {
+        "pillar": "provider_trust",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 57,
+          "text": "Everyone at the facility is so welcoming and professional"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is expressing trust and satisfaction with their care team, indicating a high level of provider trust.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s09": [
+      {
+        "pillar": "logistical_capacity",
+        "signal": "high",
+        "span": {
+          "start": 55,
+          "end": 96,
+          "text": "they have always made each visit seamless"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient is expressing satisfaction with the logistical aspects of their care, indicating a high logistical capacity.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s10": [
+      {
+        "pillar": "provider_trust",
+        "signal": "high",
+        "span": {
+          "start": 57,
+          "end": 102,
+          "text": "I'd be happy to connect you with the facility"
+        },
+        "confidence": 0.8,
+        "rationale": "The patient is expressing trust and confidence in their care team, indicating a high level of provider trust.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-6-1-1_a_s00": [
+      {
+        "pillar": "medical_self_efficacy",
+        "signal": "high",
+        "span": {
+          "start": 0,
+          "end": 83,
+          "text": "Vera Therapeutics reports that atacicept achieved the prespecified primary endpoint"
+        },
+        "confidence": 0.9,
+        "rationale": "The patient is discussing clinical trial results, indicating a high level of medical self-efficacy.",
+        "tagger": "llm-proposed",
+        "created_at": "2026-06-02T19:27:59.999Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-6-1-1_a_s01": []
+  }
+}

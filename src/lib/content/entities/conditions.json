@@ -1,0 +1,5 @@
+{
+  "schema_version": "entities-condition-0.1",
+  "description": "Condition entity registry per ENTITY_REGISTRY.md. Phase 1 starts empty. Conditions are diseases / comorbidities (with is_primary_indication=true for the 7 indications in registries/indications.json, false for comorbid conditions like comorbid diabetes). Populated by the cluster-theme-map migration of subtheme=comorbidities clusters (18 items pending) + primary-indication import.",
+  "items": []
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "id": "pku",
+  "slug": "pku",
+  "label": "Phenylketonuria",
+  "abbreviation": "PKU",
+  "therapeutic_area_ids": ["endocrinology", "neurology"],
+  "datasets": [
+    {
+      "id": "pku_keyword_clusters",
+      "type": "keyword_clusters",
+      "label": "Phenylketonuria keyword clusters",
+      "path": "lexicon/keyword_clusters.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    }
+  ]
+}

@@ -8,10 +8,21 @@
  *
  *   - tagline:    ~10 words, archetype subtitle
  *   - paragraph:  200–300 word first-person voice synthesis
- *   - patient_concerns:  4 bullets — clinical / system facing (cost,
- *                        coverage, eligibility, side effects, logistics)
- *   - person_concerns:   4 bullets — lived-experience facing (identity,
- *                        family, fear, hope, isolation)
+ *
+ *   Four pillars (each 3–4 bullets, shared vocabulary with the journeymap
+ *   sentiment tracker):
+ *     - medical_self_efficacy: clinical knowledge, agency, treatment understanding
+ *     - provider_trust:        care team relationships, gaps, info substitutes
+ *     - logistical_capacity:   what they can actually pull off in real life
+ *     - emotional_valence:     affect, fears, hopes, identity
+ *
+ *   Four optional fact lists (only emitted when the evidence supports them —
+ *   the model returns [] when nothing concrete is in the evidence):
+ *     - care_team_history:   specialists in/out of the picture
+ *     - key_health_events:   clinical milestones the speaker cites
+ *     - treatment_history:   drugs and modalities tried, with outcome notes
+ *     - trial_awareness:     specific studies, sites, or comparators mentioned
+ *
  *   - hero_quote_fragment_id: id of the most representative matched
  *                        fragment (must be in the evidence set we passed in)
  *
@@ -41,8 +52,8 @@ const CORPORA_DIR = 'src/lib/content/corpora';
 const CODEBOOK_FILE = 'src/lib/content/wctglpdemo-data/codebook.json';
 
 const MODEL = 'claude-opus-4-7';
-const SCRIPT_VERSION = 'propose-persona-narrative@0.1';
-const SCHEMA_VERSION = '1.0';
+const SCRIPT_VERSION = 'propose-persona-narrative@0.2';
+const SCHEMA_VERSION = '1.1';
 const EVIDENCE_FRAGMENTS_MAX = 20;
 const EVIDENCE_TEXT_CHARS = 1200;
 
@@ -198,23 +209,42 @@ for (const t of codebook.themes) {
 }
 
 function buildSchema(evidenceIds) {
+	const stringList = { type: 'array', items: { type: 'string' } };
 	return {
 		type: 'object',
 		additionalProperties: false,
 		properties: {
 			tagline: { type: 'string' },
 			paragraph: { type: 'string' },
-			patient_concerns: { type: 'array', items: { type: 'string' } },
-			person_concerns: { type: 'array', items: { type: 'string' } },
+			medical_self_efficacy: stringList,
+			provider_trust: stringList,
+			logistical_capacity: stringList,
+			emotional_valence: stringList,
+			care_team_history: stringList,
+			key_health_events: stringList,
+			treatment_history: stringList,
+			trial_awareness: stringList,
 			hero_quote_fragment_id: { type: 'string', enum: evidenceIds }
 		},
-		required: ['tagline', 'paragraph', 'patient_concerns', 'person_concerns', 'hero_quote_fragment_id']
+		required: [
+			'tagline',
+			'paragraph',
+			'medical_self_efficacy',
+			'provider_trust',
+			'logistical_capacity',
+			'emotional_valence',
+			'care_team_history',
+			'key_health_events',
+			'treatment_history',
+			'trial_awareness',
+			'hero_quote_fragment_id'
+		]
 	};
 }
 
 // === System prompt — cached prefix =========================================
 
-const SYSTEM_PROMPT = `You are a qualitative-research analyst writing a Commonwealth-Fund-style persona archetype. The reference style is the "Frail Elderly Personas" series — each archetype has a memorable name, a short tagline, two columns of concerns split by lens (Patient vs Person), a 200–300 word first-person narrative paragraph that synthesizes the cluster's voice, and a single hero pull-quote.
+const SYSTEM_PROMPT = `You are a qualitative-research analyst writing a Commonwealth-Fund-style persona archetype using Patiently Studio's four-pillar framework. Each archetype has a memorable name, a short tagline, four pillars of concerns (the same pillars the journeymap sentiment tracker uses), a 200–300 word first-person narrative paragraph that synthesizes the cluster's voice, optional concrete fact lists extracted from the evidence, and a single hero pull-quote.
 
 You will receive:
   - Persona metadata: id, label, description, and a one-sentence filter prose describing the predicates that define this persona.
@@ -227,16 +257,33 @@ Return ONE narrative object. Constraints:
 
 2. paragraph — 200–300 words, first person ("I"), grounded in the evidence fragments' actual phrasing and details (specific drug names, dollar amounts, family members, places, treatments mentioned). Do NOT invent specifics that aren't in the evidence. The paragraph should feel like a composite monologue from the cluster's median voice — neither one literal speaker nor an analyst's summary. Capture the dominant emotional register from the sentiment + emotion tags. Mention concrete situations from the fragments (e.g. "my doctor said semaglutide", "$1,200 a month", "drove three hours to Mass General") rather than abstractions ("medication cost", "long distances"). Avoid clinical jargon the patients themselves wouldn't use.
 
-3. patient_concerns — exactly 4 bullets. Each bullet is one sentence, 8–18 words, written from the patient's own perspective in plain English. These cover the CLINICAL / SYSTEM facing concerns: cost, coverage, insurance, eligibility, treatment access, side effects, doctor/clinic communication, medication logistics, trial mechanics. Examples: "Worry the trial cost will exceed what insurance covers." / "Confused about which doctor manages which medication."
+THE FOUR PILLARS (items 3–6). Each is 3–4 bullets, each bullet one sentence of 8–18 words, written from the patient's own perspective in plain English. Each pillar covers a distinct lens — keep concerns in their proper bucket; do not mix.
 
-4. person_concerns — exactly 4 bullets. Each bullet is one sentence, 8–18 words, written from the patient's own perspective. These cover the LIVED EXPERIENCE / PERSON facing concerns: identity, family roles, hope/fear, isolation, body image, plans for the future, what feels lost, what feels possible, social stigma. Examples: "Miss the version of myself that didn't have to plan around medications." / "Worry my kids see me as fragile, not as their mom."
+3. medical_self_efficacy — what the patient KNOWS and how they NAVIGATE care. Clinical literacy, treatment understanding, agency, how they make sense of their own labs / staging / eligibility, what they can and can't articulate about the protocol. Examples: "Refractory enough to know what real remission would mean." / "Confused whether the new conditioning is heavier than chemo she already did."
 
-5. hero_quote_fragment_id — pick ONE evidence fragment id whose verbatim text best captures the cluster's distinctive emotional center. Prefer a fragment with strong voice, a memorable phrase, or a small concrete detail that crystallizes the persona. Avoid fragments that are too short (under ~25 words) or too long (over ~80 words) to be a quote.
+4. provider_trust — care team RELATIONSHIPS and GAPS. Who they see, who they don't see, where their doctors fall short, what substitutes they rely on (Reddit, advocacy orgs, other patients), how much they trust the recommendation they're being given. Cost belongs in logistical_capacity unless it's specifically about a billing/communication failure with a provider. Examples: "Rheumatologist barely mentions the trial; subreddit fills the gap." / "Never referred to a nephrologist despite kidney signals."
+
+5. logistical_capacity — what they can actually PULL OFF in real life. Caregivers, transportation, time off work, distance to site, money, childcare, the practical scaffolding (or its absence) around treatment. Cost, coverage, insurance, financial strain all live here. Examples: "Six to eight weeks of no driving with no caregiver and a job to keep." / "Cannot stop working through recovery; thread suggests a personal loan."
+
+6. emotional_valence — AFFECT, FEARS, HOPES, IDENTITY. Lived experience, what feels lost, what feels possible, isolation, dread, comparison, body image, family roles. Examples: "Afraid to hope again after the last trial rejection knocked me flat." / "Tired of cycling through drugs and waiting for each to fail."
+
+OPTIONAL FACT LISTS (items 7–10). These are CONCRETE extractions from the evidence — names, milestones, dates, specialists, sites. Return them only when the evidence supports them. Each item is 4–14 words, terser than a pillar bullet, and may include parenthetical clarifications. If the evidence contains nothing concrete for a given list, return [] for that field — do not invent details. Aim for 3–6 items per list when populated.
+
+7. care_team_history — specialists IN or NOTABLY OUT of the picture. Format each item as "<specialty> — <one-clause status note>" or "No <specialty> referral despite <reason>". Examples: "Rheumatology — primary disease manager throughout" / "No nephrology referral despite stones and infections"
+
+8. key_health_events — clinical MILESTONES the speakers cite (procedures completed, biomarker states, hospitalizations, prior rejections, diagnoses). Order roughly chronologically when possible. Examples: "Long course of cyclophosphamide induction completed" / "Borderline kidney function — refractory but not end-stage"
+
+9. treatment_history — DRUGS and MODALITIES tried with outcome notes. Format as "<drug> — <outcome>" or "<modality> — <duration / status>". Use brand + generic when both are in the evidence. Examples: "Benlysta (belimumab) — worked for a while, then stopped" / "Steroids — ongoing background therapy"
+
+10. trial_awareness — specific STUDIES, SITES, OR COMPARATORS mentioned by name. Include short context for each. Examples: "Emory CAR-T-for-lupus enrollees — primary US site she monitors" / "Historical comparator: 30-year-old oncology CAR-T outcomes she's wary of"
+
+11. hero_quote_fragment_id — pick ONE evidence fragment id whose verbatim text best captures the cluster's distinctive emotional center. Prefer a fragment with strong voice, a memorable phrase, or a small concrete detail that crystallizes the persona. Avoid fragments that are too short (under ~25 words) or too long (over ~80 words) to be a quote.
 
 Avoid:
-  - Generic phrases ("seeks support", "lacks information", "faces barriers"). Replace with specific specifics from the evidence.
+  - Generic phrases ("seeks support", "lacks information", "faces barriers"). Replace with specifics from the evidence.
   - Restating the filter predicates ("This persona discusses trial barriers"). The reader can see the filter; the narrative should be IN VOICE.
-  - Mixing patient and person concerns into the same column. Keep clinical/system in patient_concerns, lived/identity in person_concerns. Cost goes in patient. Loss of independence goes in person.
+  - Mixing pillars: cost is logistical, not patient; loss of independence is emotional, not medical; bad doctor communication is provider_trust, not logistical.
+  - Inventing fact-list entries to fill out the lists. Empty array is the correct answer when the evidence is silent.
   - Generic optimism or pessimism not grounded in the evidence.
 
 Codebook subtheme ids and labels (for context — you don't need to cite these):
@@ -323,17 +370,43 @@ async function proposeNarrative(persona, corpus, evidence) {
 		throw new Error(`${persona.id}: response was not valid JSON — ${e.message}`);
 	}
 
-	// Trim to expected counts; warn if too few.
-	for (const kind of ['patient_concerns', 'person_concerns']) {
+	// Pillars: expect 3–4 bullets each; warn at extremes, trim past 4 so the
+	// card layout stays predictable.
+	const pillarFields = [
+		'medical_self_efficacy',
+		'provider_trust',
+		'logistical_capacity',
+		'emotional_valence'
+	];
+	for (const kind of pillarFields) {
 		if (!Array.isArray(parsed[kind])) {
 			throw new Error(`${persona.id}: ${kind} missing from response.`);
 		}
-		if (parsed[kind].length < 4) {
-			console.warn(`  ! ${persona.id}: ${kind} has only ${parsed[kind].length} (expected 4).`);
+		if (parsed[kind].length < 3) {
+			console.warn(`  ! ${persona.id}: ${kind} has only ${parsed[kind].length} (expected 3–4).`);
 		}
 		if (parsed[kind].length > 4) {
 			console.log(`  trimmed ${kind} from ${parsed[kind].length} to 4.`);
 			parsed[kind] = parsed[kind].slice(0, 4);
+		}
+	}
+
+	// Fact lists are optional in spirit (model returns [] when evidence is
+	// silent) — we just check shape and cap at 6 to keep the "At a glance"
+	// strip readable.
+	const factFields = [
+		'care_team_history',
+		'key_health_events',
+		'treatment_history',
+		'trial_awareness'
+	];
+	for (const kind of factFields) {
+		if (!Array.isArray(parsed[kind])) {
+			throw new Error(`${persona.id}: ${kind} missing from response.`);
+		}
+		if (parsed[kind].length > 6) {
+			console.log(`  trimmed ${kind} from ${parsed[kind].length} to 6.`);
+			parsed[kind] = parsed[kind].slice(0, 6);
 		}
 	}
 

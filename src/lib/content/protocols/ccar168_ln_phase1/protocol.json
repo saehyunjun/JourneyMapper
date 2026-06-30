@@ -1,0 +1,11 @@
+{
+	"id": "ccar168_ln_phase1",
+	"label": "C-CAR168 in Refractory / Relapsed Lupus Nephritis — Phase 1",
+	"short_label": "C-CAR168 LN Phase 1",
+	"indication": "lupus_nephritis",
+	"phase": "phase_1",
+	"intervention": "C-CAR168 autologous CAR-T",
+	"sponsor": null,
+	"nct_id": null,
+	"demo_note": "Schedule of Activities hand-transcribed from a reference protocol image (2026-05-28). Sponsor/NCT redacted for demo. Footnote text pending paste."
+}

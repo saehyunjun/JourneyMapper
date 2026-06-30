@@ -13,6 +13,11 @@
       "description": "Topic-by-volume table (typically estimated monthly or aggregate query volume). Dimensions: topic. Measures: volume."
     },
     {
+      "id": "search_volume_timeseries",
+      "label": "Search-volume time series",
+      "description": "Weekly search-interest index per query (typically Google Trends 0–100), optionally paired with a corpus-derived patient-mention overlay on the same week axis. Envelope: { weeks[], series[{ query, display_label, cluster_id, match_variants[], search_index[], mention_count[] }] }. Dimensions: query, week. Measures: search_index, mention_count."
+    },
+    {
       "id": "community_engagement",
       "label": "Patient community engagement",
       "description": "Engagement metrics for patient communities (e.g. Facebook groups), grouped by community type. Dimensions: group_type. Measures: avg_membership, avg_monthly_posts."

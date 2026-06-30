@@ -1,0 +1,3516 @@
+{
+  "meta": {
+    "schema_version": "cluster-theme-map-0.2",
+    "generated_at": "2026-06-01T20:28:25",
+    "source_lexicon": "src/lib/content/wctglpdemo-data/keyword_lexicon.json",
+    "total_clusters": 247,
+    "notes": [
+      "STARTER MAPPING. Generated mechanically by (subtheme default) + (label-keyword refinement). NOT authoritative \u2014 needs analyst review per CODEBOOK_MIGRATION_PLAN.",
+      "v0.2: util.decision_support added as 7th util theme (resolving the v0.1 review-confidence gap). condition_knowledge_gaps + treatment_decision_factors + treatment_knowledge_gaps subtheme defaults now route there.",
+      "Drug-bound clusters \u2192 migrate_to=entity.drug, theme_ids=null.",
+      "Biomarker-language clusters \u2192 migrate_to=entity.biomarker, theme_ids=null.",
+      "Symptom clusters \u2192 migrate_to=entity.symptom; comorbidity clusters \u2192 migrate_to=entity.condition.",
+      "Confidence: high=subtheme+keyword agree, medium=subtheme only or partial keyword match, review=needs human decision (should be near-zero now)."
+    ],
+    "summary_by_confidence": {
+      "high": 154,
+      "medium": 93
+    },
+    "summary_by_target": {
+      "theme": 174,
+      "entity.biomarker": 14,
+      "entity.condition": 18,
+      "entity.symptom": 19,
+      "entity.drug": 22
+    },
+    "theme_usage_count": {
+      "hrqol.general_health": 29,
+      "hrqol.mental_health": 29,
+      "trial.enrollment": 21,
+      "util.decision_support": 21,
+      "hrqol.bodily_pain": 19,
+      "util.coverage": 16,
+      "trial.eligibility": 10,
+      "trial.post_trial": 7,
+      "life.identity": 6,
+      "trial.awareness": 4,
+      "trial.logistics": 4,
+      "hrqol.vitality": 4,
+      "life.caregiver": 4,
+      "util.insurance": 4,
+      "hrqol.social_functioning": 3,
+      "util.relationship": 2,
+      "trial.relationship": 1,
+      "life.financial": 1,
+      "trial.retention": 1
+    }
+  },
+  "mappings": {
+    "ltfu_post_trial_identity": {
+      "label": "Post-trial identity",
+      "theme_ids": [
+        "trial.post_trial"
+      ],
+      "confidence": "high",
+      "rationale": "post-trial language",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "clinical_trial_interest",
+        "indications": []
+      }
+    },
+    "clinical_trial": {
+      "label": "Clinical trial",
+      "theme_ids": [
+        "trial.awareness"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "clinical_trial_knowledge_gaps",
+        "indications": []
+      }
+    },
+    "placebo": {
+      "label": "Placebo",
+      "theme_ids": [
+        "trial.awareness"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "clinical_trial_knowledge_gaps",
+        "indications": []
+      }
+    },
+    "randomized": {
+      "label": "Randomized",
+      "theme_ids": [
+        "trial.awareness"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "clinical_trial_knowledge_gaps",
+        "indications": []
+      }
+    },
+    "blood_work": {
+      "label": "Blood work / draws",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "dosing_schedule": {
+      "label": "Dosing schedule",
+      "theme_ids": [
+        "trial.eligibility"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "fasting_blood": {
+      "label": "Fasting blood",
+      "theme_ids": [
+        "trial.eligibility"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "follow_up": {
+      "label": "Follow-up",
+      "theme_ids": [
+        "trial.eligibility"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "length": {
+      "label": "Length",
+      "theme_ids": [
+        "trial.eligibility"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "ltfu_ae_reporting_fatigue": {
+      "label": "Adverse-event reporting fatigue",
+      "theme_ids": [
+        "hrqol.general_health",
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "side-effect language",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "ltfu_caregiver_evolution": {
+      "label": "Caregiver evolution over years",
+      "theme_ids": [
+        "trial.post_trial"
+      ],
+      "confidence": "high",
+      "rationale": "post-trial language",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "ltfu_feeling_done": {
+      "label": "\"Feeling done\" with the trial",
+      "theme_ids": [
+        "trial.eligibility"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "ltfu_insurance_life_transitions": {
+      "label": "Insurance / life transitions",
+      "theme_ids": [
+        "trial.logistics"
+      ],
+      "confidence": "high",
+      "rationale": "travel/distance language",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "ltfu_long_horizon": {
+      "label": "Long follow-up horizon (5\u201315 years)",
+      "theme_ids": [
+        "trial.eligibility"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "ltfu_visit_burden_over_time": {
+      "label": "Visit burden over time",
+      "theme_ids": [
+        "trial.post_trial"
+      ],
+      "confidence": "high",
+      "rationale": "post-trial language",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "travel_burden": {
+      "label": "Travel burden",
+      "theme_ids": [
+        "trial.logistics"
+      ],
+      "confidence": "high",
+      "rationale": "travel/distance language",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "trial_site": {
+      "label": "Trial site / clinic",
+      "theme_ids": [
+        "trial.eligibility"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "visit_frequency": {
+      "label": "Visit frequency",
+      "theme_ids": [
+        "trial.eligibility"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": []
+      }
+    },
+    "ltfu_data_sharing_preferences": {
+      "label": "Data-sharing preferences",
+      "theme_ids": [
+        "hrqol.vitality"
+      ],
+      "confidence": "high",
+      "rationale": "fatigue/energy language",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_decision_factors",
+        "indications": []
+      }
+    },
+    "apple_watch": {
+      "label": "Apple Watch",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "classes": {
+      "label": "Classes",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "convenience": {
+      "label": "Convenience",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "counseling": {
+      "label": "Counseling",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "education": {
+      "label": "Education / teaching",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "financial_compensation": {
+      "label": "Financial compensation",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "fitbit": {
+      "label": "Fitbit",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "handouts": {
+      "label": "Handouts",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "home_visits": {
+      "label": "Home visits",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "in_person_advice": {
+      "label": "In-person advice",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "learning_modules": {
+      "label": "Online learning modules",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "ltfu_altruism_motivator": {
+      "label": "Altruism / next-patient motivator",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "ltfu_data_return_to_patient": {
+      "label": "Data return to patient",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "ltfu_remote_decentralized_visits": {
+      "label": "Remote / decentralized LTFU visits",
+      "theme_ids": [
+        "trial.post_trial"
+      ],
+      "confidence": "high",
+      "rationale": "post-trial language",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "ltfu_site_relationship": {
+      "label": "Site / coordinator relationship",
+      "theme_ids": [
+        "trial.relationship"
+      ],
+      "confidence": "high",
+      "rationale": "trial-relationship language",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "nurse": {
+      "label": "Nurse",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "study_doctor": {
+      "label": "Study doctor / provider",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "telehealth": {
+      "label": "Telehealth",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "transparency": {
+      "label": "Provider transparency",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "travel_concierge": {
+      "label": "Travel concierge",
+      "theme_ids": [
+        "trial.logistics"
+      ],
+      "confidence": "high",
+      "rationale": "travel/distance language",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "videos": {
+      "label": "Videos",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "vouchers": {
+      "label": "Vouchers",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "webinars": {
+      "label": "Webinars",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": []
+      }
+    },
+    "support": {
+      "label": "Support",
+      "theme_ids": [
+        "life.caregiver"
+      ],
+      "confidence": "high",
+      "rationale": "caregiver/family language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "advocacy_peer_groups",
+        "indications": []
+      }
+    },
+    "affordability": {
+      "label": "Affordability",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "benefit_manager": {
+      "label": "Pharmacy benefit manager",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "car_t_caregiver_required": {
+      "label": "Required caregiver / 24-hour support",
+      "theme_ids": [
+        "life.caregiver"
+      ],
+      "confidence": "high",
+      "rationale": "caregiver/family language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "car_t_inpatient_monitoring": {
+      "label": "Inpatient monitoring window",
+      "theme_ids": [
+        "life.caregiver"
+      ],
+      "confidence": "high",
+      "rationale": "caregiver/family language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "cheaper": {
+      "label": "Cheaper",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "cost": {
+      "label": "Cost",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "cost_prohibitive": {
+      "label": "Cost prohibitive",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "coverage": {
+      "label": "Coverage",
+      "theme_ids": [
+        "util.insurance"
+      ],
+      "confidence": "high",
+      "rationale": "carrier-behavior language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "discount": {
+      "label": "Discount",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "expensive": {
+      "label": "Expensive",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "healthcare_benefits": {
+      "label": "Healthcare / employer benefits",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "high",
+      "rationale": "plan-design language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "insurance": {
+      "label": "Insurance",
+      "theme_ids": [
+        "util.insurance"
+      ],
+      "confidence": "high",
+      "rationale": "carrier-behavior language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "lawsuits": {
+      "label": "Lawsuits",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "needle_phobia": {
+      "label": "Needle phobia",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "out_of_pocket": {
+      "label": "Out of pocket",
+      "theme_ids": [
+        "life.financial"
+      ],
+      "confidence": "high",
+      "rationale": "household-finance language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "price": {
+      "label": "Price",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "prior_authorization": {
+      "label": "Prior authorization",
+      "theme_ids": [
+        "util.insurance"
+      ],
+      "confidence": "high",
+      "rationale": "carrier-behavior language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "shortages": {
+      "label": "Shortages",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "side_effects_2": {
+      "label": "Side effects (as barrier)",
+      "theme_ids": [
+        "hrqol.general_health",
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "side-effect language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "specialty_pharmacy_navigation": {
+      "label": "Specialty pharmacy / authorization navigation",
+      "theme_ids": [
+        "util.insurance"
+      ],
+      "confidence": "high",
+      "rationale": "carrier-behavior language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": []
+      }
+    },
+    "concern": {
+      "label": "Concern (explicit)",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": []
+      }
+    },
+    "guinea_pig": {
+      "label": "Guinea pig",
+      "theme_ids": [
+        "life.identity",
+        "trial.post_trial"
+      ],
+      "confidence": "high",
+      "rationale": "post-trial identity language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": []
+      }
+    },
+    "harm": {
+      "label": "Harm",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": []
+      }
+    },
+    "long_term_use": {
+      "label": "Long-term use",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": []
+      }
+    },
+    "one_and_done_appeal": {
+      "label": "\"One-and-done\" framing",
+      "theme_ids": [
+        "trial.post_trial"
+      ],
+      "confidence": "high",
+      "rationale": "post-trial language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": []
+      }
+    },
+    "research_self": {
+      "label": "Self-research",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": []
+      }
+    },
+    "risk": {
+      "label": "Risk",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "decision-support language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": []
+      }
+    },
+    "scary": {
+      "label": "Scary / scared",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": []
+      }
+    },
+    "secondary_malignancy_concern": {
+      "label": "Secondary malignancy / black-box concern",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": []
+      }
+    },
+    "apheresis": {
+      "label": "Apheresis / cell collection",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": []
+      }
+    },
+    "bridging_therapy": {
+      "label": "Bridging therapy",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": []
+      }
+    },
+    "car_t_infusion_day": {
+      "label": "CAR-T infusion day",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": []
+      }
+    },
+    "car_t_therapy": {
+      "label": "CAR T-cell therapy (modality)",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": []
+      }
+    },
+    "implant": {
+      "label": "Implant",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": []
+      }
+    },
+    "injection": {
+      "label": "Injection / shot",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": []
+      }
+    },
+    "name_brand": {
+      "label": "Name-brand drug",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": []
+      }
+    },
+    "oral_medication": {
+      "label": "Oral medication / pill",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": []
+      }
+    },
+    "car_t_long_term_unknowns": {
+      "label": "Long-term unknowns (CAR-T)",
+      "theme_ids": [
+        "trial.post_trial"
+      ],
+      "confidence": "high",
+      "rationale": "post-trial language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_knowledge_gaps",
+        "indications": []
+      }
+    },
+    "fda_approval": {
+      "label": "FDA approval",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_knowledge_gaps",
+        "indications": []
+      }
+    },
+    "safety": {
+      "label": "Safety",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_knowledge_gaps",
+        "indications": []
+      }
+    },
+    "b_cell_aplasia_infections": {
+      "label": "B-cell aplasia / infection vigilance",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": []
+      }
+    },
+    "complication": {
+      "label": "Health complication",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": []
+      }
+    },
+    "cytokine_release_syndrome": {
+      "label": "Cytokine release syndrome (CRS)",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": []
+      }
+    },
+    "icans_neurotoxicity": {
+      "label": "ICANS / neurotoxicity",
+      "theme_ids": [
+        "util.decision_support",
+        "util.relationship"
+      ],
+      "confidence": "medium",
+      "rationale": "info-gap language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": []
+      }
+    },
+    "lymphodepletion": {
+      "label": "Lymphodepletion conditioning",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": []
+      }
+    },
+    "side_effects": {
+      "label": "Side effects",
+      "theme_ids": [
+        "hrqol.general_health",
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "side-effect language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": []
+      }
+    },
+    "renal_response_endpoint": {
+      "label": "Renal response endpoint",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "clinical_trial_knowledge_gaps",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "lupus_support": {
+      "label": "Lupus support / advocacy",
+      "theme_ids": [
+        "life.identity"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "advocacy_peer_groups",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "anemia": {
+      "label": "Anemia / cytopenias",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "antiphospholipid": {
+      "label": "Antiphospholipid syndrome",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "cardiovascular": {
+      "label": "Cardiovascular disease",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "chronic_kidney_disease": {
+      "label": "Chronic kidney disease (CKD)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "dialysis": {
+      "label": "Dialysis",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "kidney_failure": {
+      "label": "Kidney failure / ESRD",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "kidney_transplant": {
+      "label": "Kidney transplant",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "osteoporosis": {
+      "label": "Osteoporosis / bone loss",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "autoantibodies": {
+      "label": "Autoantibodies (ANA / anti-dsDNA)",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "complement_levels": {
+      "label": "Complement levels (C3 / C4)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "creatinine": {
+      "label": "Creatinine",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "egfr": {
+      "label": "eGFR / kidney function",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "kidney_biopsy": {
+      "label": "Kidney biopsy / ISN class",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "urine_protein_test": {
+      "label": "Urine protein (UPCR / 24-hour)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "bp_monitoring": {
+      "label": "Blood pressure monitoring",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "lab_tracking": {
+      "label": "Symptom / lab tracking",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "medication_adherence": {
+      "label": "Medication adherence",
+      "theme_ids": [
+        "hrqol.mental_health",
+        "util.relationship"
+      ],
+      "confidence": "medium",
+      "rationale": "self-management language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "renal_diet": {
+      "label": "Low-sodium / renal diet",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "sun_protection": {
+      "label": "Sun protection",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "appearance_stigma": {
+      "label": "Appearance changes / stigma",
+      "theme_ids": [
+        "hrqol.social_functioning",
+        "life.identity"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "social_stigma",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "invisible_illness": {
+      "label": "Invisible illness",
+      "theme_ids": [
+        "hrqol.social_functioning",
+        "life.identity"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "social_stigma",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "constitutional_symptoms": {
+      "label": "Fever / constitutional symptoms",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "decreased_urine": {
+      "label": "Reduced / changed urine output",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "edema": {
+      "label": "Edema / swelling",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "fatigue": {
+      "label": "Fatigue",
+      "theme_ids": [
+        "hrqol.vitality"
+      ],
+      "confidence": "high",
+      "rationale": "fatigue/energy language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "hair_loss": {
+      "label": "Hair loss / alopecia",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "hematuria": {
+      "label": "Hematuria / blood in urine",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "joint_pain": {
+      "label": "Joint pain / arthralgia",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "high",
+      "rationale": "pain language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "ln_hypertension": {
+      "label": "High blood pressure (renal)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "lupus_flare": {
+      "label": "Lupus flare / renal flare",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "lupus_nephritis_dx": {
+      "label": "Lupus nephritis (diagnosis)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "malar_rash": {
+      "label": "Malar / butterfly rash",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "nephrotic_syndrome": {
+      "label": "Nephrotic syndrome",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "oral_ulcers": {
+      "label": "Mouth ulcers / sores",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "high",
+      "rationale": "pain language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "photosensitivity": {
+      "label": "Photosensitivity / sun sensitivity",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "proteinuria": {
+      "label": "Proteinuria / foamy urine",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "raynauds": {
+      "label": "Raynaud's phenomenon",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "fertility_concerns": {
+      "label": "Fertility concerns",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "pill_burden": {
+      "label": "Pill burden / regimen complexity",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "avoid_dialysis": {
+      "label": "Avoiding dialysis / kidney failure",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "steroid_sparing": {
+      "label": "Steroid-sparing goal",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "ace_arb": {
+      "label": "ACE inhibitor / ARB (renoprotective)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "anifrolumab": {
+      "label": "Anifrolumab (Saphnelo)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=anifrolumab \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "azathioprine": {
+      "label": "Azathioprine (Imuran)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=azathioprine \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "belimumab": {
+      "label": "Belimumab (Benlysta)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=belimumab \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "calcineurin_inhibitors": {
+      "label": "Calcineurin inhibitors (tacrolimus / cyclosporine)",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "corticosteroids": {
+      "label": "Corticosteroids (prednisone)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=corticosteroids \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "cyclophosphamide": {
+      "label": "Cyclophosphamide (Cytoxan)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=cyclophosphamide \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "hydroxychloroquine": {
+      "label": "Hydroxychloroquine (Plaquenil)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=hydroxychloroquine \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "iv_infusion": {
+      "label": "IV infusion",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "multitarget_therapy": {
+      "label": "Multi-target / combination therapy",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "mycophenolate": {
+      "label": "Mycophenolate (CellCept / Myfortic)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=mycophenolate \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "obinutuzumab": {
+      "label": "Obinutuzumab (Gazyva)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=obinutuzumab \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "rituximab": {
+      "label": "Rituximab (Rituxan)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=rituximab \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "voclosporin": {
+      "label": "Voclosporin (Lupkynis)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=voclosporin \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "cyclophosphamide_toxicity": {
+      "label": "Cyclophosphamide toxicity",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "immunosuppression_infections": {
+      "label": "Infections (immunosuppression)",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "mmf_gi_effects": {
+      "label": "Nausea / GI effects (mycophenolate)",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "steroid_side_effects": {
+      "label": "Steroid side effects",
+      "theme_ids": [
+        "hrqol.general_health",
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "side-effect language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "ln_quality_of_life": {
+      "label": "Quality of life (lupus)",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_positive_experiences",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      }
+    },
+    "renal_remission": {
+      "label": "Renal remission / response",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_positive_experiences",
+        "indications": [
+          "lupus_nephritis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "glucose_monitoring": {
+      "label": "Continuous glucose monitoring",
+      "theme_ids": [
+        "trial.eligibility"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_barriers",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "meal_replacement": {
+      "label": "Meal replacement",
+      "theme_ids": [
+        "trial.enrollment"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "trial_motivators",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "a1c": {
+      "label": "A1C / HbA1c",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "blood_pressure": {
+      "label": "Blood pressure",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "blood_sugar": {
+      "label": "Blood sugar",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "bmi": {
+      "label": "BMI",
+      "theme_ids": [
+        "trial.eligibility"
+      ],
+      "confidence": "high",
+      "rationale": "eligibility/criteria language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "cholesterol": {
+      "label": "Cholesterol",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "diabetes": {
+      "label": "Diabetes",
+      "theme_ids": [
+        "life.caregiver"
+      ],
+      "confidence": "high",
+      "rationale": "caregiver/family language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "heartburn": {
+      "label": "Heartburn / reflux",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "insulin_resistance": {
+      "label": "Insulin resistance",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "pcos": {
+      "label": "PCOS",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "pre_diabetic": {
+      "label": "Pre-diabetic",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "sleep_apnea": {
+      "label": "Sleep apnea",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "thyroid": {
+      "label": "Thyroid",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "genetics": {
+      "label": "Genetics",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "atkins": {
+      "label": "Atkins diet",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "better": {
+      "label": "Better",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "diet": {
+      "label": "Diet",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "diet_exercise": {
+      "label": "Diet and exercise (paired)",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "exercise": {
+      "label": "Exercise",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "food_noise": {
+      "label": "Food noise",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "gym": {
+      "label": "Gym",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "journaling": {
+      "label": "Journaling / self-tracking",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "lifestyle_change": {
+      "label": "Lifestyle change",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "low_carb": {
+      "label": "Low-carb / carbs",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "meal_planning": {
+      "label": "Meal planning",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "nutrition": {
+      "label": "Nutrition",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "paleo": {
+      "label": "Paleo diet",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "physical_fitness": {
+      "label": "Physical fitness",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "previous_weight_loss": {
+      "label": "Previous weight loss attempts",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "recipes": {
+      "label": "Recipes",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "south_beach": {
+      "label": "South Beach Diet",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "steps": {
+      "label": "Steps",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "vegan": {
+      "label": "Vegan diet",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "walking": {
+      "label": "Walking",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "weight_watchers": {
+      "label": "Weight Watchers",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "stigma": {
+      "label": "Stigma",
+      "theme_ids": [
+        "hrqol.social_functioning",
+        "life.identity"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "social_stigma",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "obesity": {
+      "label": "Obesity / overweight",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "weight_regain": {
+      "label": "Weight regain",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "cagrilintide": {
+      "label": "Cagrilintide",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=cagrilintide \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "compounded_medication": {
+      "label": "Compounded medication",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "glp_1": {
+      "label": "GLP-1",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "metformin": {
+      "label": "Metformin",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=metformin \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "orforglipron": {
+      "label": "Orforglipron",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=orforglipron \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "phentermine": {
+      "label": "Phentermine",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=phentermine \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "retatrutide": {
+      "label": "Retatrutide",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=retatrutide \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "semaglutide": {
+      "label": "Semaglutide (Wegovy / Ozempic / Rybelsus)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=semaglutide \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "tirzepatide": {
+      "label": "Tirzepatide (Mounjaro / Zepbound)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=tirzepatide \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "obesity"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "gastric_effects": {
+      "label": "Gastric effects",
+      "theme_ids": [
+        "hrqol.general_health",
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "side-effect language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "stall": {
+      "label": "Stall / plateau",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "hunger": {
+      "label": "Hunger / appetite / satiety",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_positive_experiences",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "quality_of_life": {
+      "label": "Quality of life",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_positive_experiences",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "weight_loss": {
+      "label": "Weight loss",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_positive_experiences",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "weight_maintenance": {
+      "label": "Weight maintenance",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_positive_experiences",
+        "indications": [
+          "obesity"
+        ]
+      }
+    },
+    "ms_trial_endpoints": {
+      "label": "MS trial endpoints (EDSS / ARR / MRI)",
+      "theme_ids": [
+        "trial.awareness"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "clinical_trials",
+        "parent_subtheme": "clinical_trial_knowledge_gaps",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_society_advocacy": {
+      "label": "MS Society / advocacy",
+      "theme_ids": [
+        "life.identity"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "advocacy_peer_groups",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_depression_anxiety": {
+      "label": "Depression / anxiety (MS)",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "high",
+      "rationale": "mental-health language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_pml_history": {
+      "label": "PML / opportunistic CNS infection",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=comorbidities \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "comorbidities",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.condition"
+    },
+    "edss_score": {
+      "label": "EDSS / disability score",
+      "theme_ids": [
+        "trial.logistics"
+      ],
+      "confidence": "high",
+      "rationale": "travel/distance language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "jcv_antibody_status": {
+      "label": "JC virus antibody status",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_mri_lesions": {
+      "label": "MRI / lesions",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_relapse_rate": {
+      "label": "Annualized relapse rate (ARR)",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "condition_knowledge_gaps",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_cooling_strategies": {
+      "label": "Cooling strategies",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_pt_ot": {
+      "label": "Physical / occupational therapy",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_symptom_journal": {
+      "label": "MS symptom / relapse journal",
+      "theme_ids": [
+        "hrqol.mental_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "medical_self_efficacy",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_invisible_disability": {
+      "label": "Invisible disability (MS)",
+      "theme_ids": [
+        "hrqol.vitality"
+      ],
+      "confidence": "high",
+      "rationale": "fatigue/energy language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "social_stigma",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_bladder_bowel": {
+      "label": "Bladder / bowel dysfunction",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "ms_cognitive_dysfunction": {
+      "label": "Cog fog / cognitive dysfunction",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "ms_fatigue": {
+      "label": "MS fatigue (lassitude)",
+      "theme_ids": [
+        "hrqol.vitality"
+      ],
+      "confidence": "high",
+      "rationale": "fatigue/energy language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_heat_sensitivity": {
+      "label": "Heat sensitivity (Uhthoff's)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "ms_numbness_tingling": {
+      "label": "Numbness / tingling (paresthesia)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "ms_optic_neuritis": {
+      "label": "Optic neuritis / vision changes",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "high",
+      "rationale": "pain language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_pain": {
+      "label": "MS pain (neuropathic, MS hug)",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "high",
+      "rationale": "pain language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_progression": {
+      "label": "Disability progression",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "ms_relapse": {
+      "label": "MS relapse / attack",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "ms_spasticity": {
+      "label": "Spasticity / muscle stiffness",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "ms_walking_difficulty": {
+      "label": "Walking difficulty / gait",
+      "theme_ids": [
+        "trial.retention"
+      ],
+      "confidence": "high",
+      "rationale": "retention language",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "multiple_sclerosis_dx": {
+      "label": "Multiple sclerosis (diagnosis)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "subtheme=symptoms \u2014 migrate to entity layer",
+      "original": {
+        "parent_theme": "condition_specific",
+        "parent_subtheme": "symptoms",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.symptom"
+    },
+    "ms_refractory": {
+      "label": "Refractory / failed-everything framing",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "pml_jcv_concerns": {
+      "label": "PML / JCV risk concerns",
+      "theme_ids": [
+        "util.coverage"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_barriers",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "dmt_discontinuation_risk": {
+      "label": "DMT discontinuation risk",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "high_efficacy_first": {
+      "label": "High-efficacy first vs escalation",
+      "theme_ids": [
+        "util.decision_support"
+      ],
+      "confidence": "high",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_decision_factors",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "fingolimod": {
+      "label": "Fingolimod (Gilenya)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=fingolimod \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "ms_anti_cd20_class": {
+      "label": "Anti-CD20 DMTs (class)",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_dmt_switching": {
+      "label": "DMT switching / cycling",
+      "theme_ids": [
+        "hrqol.general_health",
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "side-effect language",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_injectable_dmt": {
+      "label": "Injectable DMTs (interferons / glatiramer)",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_oral_dmt": {
+      "label": "Oral DMTs (fumarates / teriflunomide / cladribine)",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_s1p_class": {
+      "label": "S1P modulators (class)",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "natalizumab": {
+      "label": "Natalizumab (Tysabri)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=natalizumab \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "ocrelizumab": {
+      "label": "Ocrelizumab (Ocrevus)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=ocrelizumab \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "ofatumumab": {
+      "label": "Ofatumumab (Kesimpta)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=ofatumumab \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "ublituximab": {
+      "label": "Ublituximab (Briumvi)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "drug_id=ublituximab \u2014 migrate to Drug entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_health_history",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.drug"
+    },
+    "ms_dmt_side_effects": {
+      "label": "DMT side effects (injection / flushing / labs)",
+      "theme_ids": null,
+      "confidence": "high",
+      "rationale": "biomarker/lab language \u2014 migrate to Biomarker entity",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      },
+      "migrate_to": "entity.biomarker"
+    },
+    "ms_infusion_reactions": {
+      "label": "Infusion reactions",
+      "theme_ids": [
+        "hrqol.bodily_pain"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_negative_experiences",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    },
+    "ms_quality_of_life": {
+      "label": "Quality of life (MS)",
+      "theme_ids": [
+        "hrqol.general_health"
+      ],
+      "confidence": "medium",
+      "rationale": "subtheme default",
+      "original": {
+        "parent_theme": "treatment",
+        "parent_subtheme": "treatment_positive_experiences",
+        "indications": [
+          "multiple_sclerosis"
+        ]
+      }
+    }
+  }
+}

@@ -186,6 +186,8 @@ Each row links to the source indications' actual data so the planner can audit t
 
 ### Sentiment & volume over time — period-on-period comparison
 
+**Status (2026-06-02).** Promoted to an active build in the new PatientlyIQ environment as the time axis of the comparison-view family. Build plan: `PatientlyIQ/COMPARISON_BUILD_PLAN.md` (Phase C1). Prerequisite verified ready: the date field is `date_observed` (not `observed_at` as guessed below), populated on every fragment.
+
 **User need.** Patient and HCP discourse about a treatment, mechanism, or trial concept doesn't stand still. CAR-T in 2022 (early enthusiasm, novel toxicity discourse) reads very differently from CAR-T in 2026 (more therapies launched, long-term data accumulating, off-the-shelf variants emerging). The same is true for any GLP-1 cluster across the obesity-uptake curve, or for trial-design language before vs after a notable amendment. Teams want to answer "is this shifting?" and "how fast?" — currently they can only read the *current* dashboard and rely on memory for the prior baseline.
 
 **Sketch.** A period-comparison view that takes the existing topic/theme/subtheme axis and adds a time dimension:
@@ -212,6 +214,8 @@ This feature is the time-axis sibling of the Idea Graph Explorer's adjacency-axi
 ---
 
 ### Sentiment & volume across indications — cross-indication comparison
+
+**Status (2026-06-02).** Promoted to an active build in the new PatientlyIQ environment as the lead axis of the comparison-view family. Build plan: `PatientlyIQ/COMPARISON_BUILD_PLAN.md` (Phase C0). Prerequisites verified: topic-axis normalization is mostly wired — the FK convention is `moa_id` (not `mechanism_id`); `drugs.json` already maps every drug → `moa_id`, and CAR-T is scoped to both LN and MS, so the headline example works against real data. Remaining: add a `Cluster.moa_id` field + backfill drug-class clusters. Multi-select stays a local `/compare` control rather than a shell change.
 
 **User need.** Treatment mechanisms increasingly cross therapeutic-area boundaries. CAR-T is mature in oncology, novel and emotionally charged in lupus nephritis, and freshly arriving in MS. A team taking a mechanism into a new indication needs to understand how patients in the *new* community are relating to a treatment whose discourse has been shaped by a different community. The same problem shows up for GLP-1s (obesity vs T2D), anti-CD20s (MS vs lupus vs RA), and biologics generally — the question "what does this audience think of this mechanism?" is constantly being answered the slow way, by reading two corpora side by side.
 
@@ -349,6 +353,8 @@ Mechanism (rough):
 
 ### HCP-to-patient information gaps
 
+**Status (2026-06-02).** Third axis of the comparison-view family; deferred (Phase C3 in `PatientlyIQ/COMPARISON_BUILD_PLAN.md`) behind the HCP ingest path, which does not exist yet. Build the indication and time axes first; this lands when the first HCP corpus arrives via an `audience: hcp` flag on the transcript pipeline.
+
 **User need.** A persistent strategic question across therapeutic-area work: where do HCPs and patients describe the same disease, treatment, or trial in mismatched terms? Mismatches show up as patient information gaps, HCP misperceptions about what patients understand, and treatment-decision points where the two parties are optimizing for different outcomes. Surfacing these is currently a manual side-by-side reading exercise across two separate corpora.
 
 **Sketch.** A two-corpus comparison surface that joins HCP-side and patient-side data on a shared topic axis:
@@ -364,6 +370,49 @@ Mechanism (rough):
 - HCP ingest path doesn't exist yet — this depends on either (a) the existing transcript pipeline accepting HCP transcripts with an `audience: hcp` flag, or (b) a parallel pipeline. (a) seems strictly better.
 - Codebook implication: do we need separate HCP/patient lexicons, or one with audience-scoped clusters? (Decision likely deferred until we have the first HCP corpus to look at.)
 - Cross-audience sentiment isn't straightforward — an HCP saying "low concern" about a side effect isn't the inverse of a patient saying "high concern". Need a richer joining model than just sign-of-sentiment.
+
+---
+
+### Content planner — wireframe preview pane
+
+**User need.** The content-suggestions surface (above) produces one-line briefs: target audience, the question the piece answers, two or three quoted patient phrases that should shape the voice. The brief tells you what to write but doesn't make the artifact feel real — analysts and content leads have to imagine what the page actually looks like before they can sanity-check tone, length, IA, and CTA placement. A wireframe preview alongside each brief closes that gap and turns the planner from a list view into a layout-aware review surface.
+
+**Sketch.** Two-pane layout on the content-planner route. Left pane keeps the brief list. Right pane renders a wireframe mockup of the suggested piece inside a browser-chrome frame — header / hero / one or two body sections / sidebar or CTA region. The mockup is data-driven from the brief: the H1 pulls from the brief's question, the hero pulls from the strongest patient phrase, body section headers come from the supporting subthemes, the CTA reflects the brief's recommended action (registry signup vs trial screener vs "talk to your rheumatologist"). Switching selected brief on the left re-renders the right.
+
+Page archetype is part of the brief, not the renderer — symptom-cluster landing, trial-eligibility explainer, registry signup, "what to expect" walkthrough, mechanism-of-action explainer all have distinct skeletons. Renderer picks the matching template.
+
+**Open questions.**
+- Fidelity. Lo-fi (rectangles + lorem) vs. styled HTML close to what would actually ship. Lo-fi probably better — keeps focus on structure and copy hierarchy, not visual design, and avoids implying the wireframe is a delivered asset.
+- Where this lives — extends the "Content suggestions from patient/caregiver-mentioned information gaps" surface above, or a sibling route. Probably extends the same surface; brief and preview are the same artifact at two fidelities.
+- Does the wireframe accept author edits in place (drag a quote in, swap a CTA), or is it read-only? Read-only for v1 — the brief is the authoring surface, the wireframe is the preview.
+- SEM/SEO landing pages specifically have a different skeleton than informational content (above-the-fold conversion CTA, no nav, focused scan path). Worth a dedicated archetype if the planner ends up serving recruitment-trial work, not just commercialization.
+
+**Serves positioning:** commercialization prep (the most direct fit — content planning before launch). Also study rescue when the rescue action is "produce X piece of content"; seeing the wireframe accelerates brief-to-shipped.
+
+---
+
+### Search-journey layer on persona journeymaps
+
+**User need.** Persona journeymaps today show clinical/emotional stages (flare → diagnosis → first-line → trial consideration). Missing from the stack: what the patient is actually typing into search at each stage. A recent Otsuka SEM proposal for the PKU / Sjögren's / IgAN programs lays out the structure concretely — a PKU patient at "diet fatigue" stage searches differently from a PKU patient evaluating PheORD at trial-eval stage, and the SEM/SEO architecture is driven by that stage-by-stage query register. Today that lives in standalone proposal MDs (see attached working doc); it should live on the journey-map itself, where the stage context already is.
+
+**Sketch.** Add a "search behavior" block to the per-stage content of every journey-map artifact. Per stage, three sub-blocks mirroring the attached SEM proposal MD structure:
+
+1. **Representative queries** — 5–8 queries patients in this stage are likely to type, grouped by intent (symptom-search vs treatment-seeking vs trial-evaluation vs caregiver). Sourced from the existing search-query ingest pipeline ([scripts/ingest-search-queries.mjs](scripts/ingest-search-queries.mjs)) where data exists; proposed by Haiku from the stage's tagged fragments where it doesn't (labelled "proposed" so the reader knows it's not observed traffic).
+2. **Information need** — the gap the query is trying to fill (validation, mechanism explanation, logistics, reassurance).
+3. **Conversion / channel implication** — SEO content vs aggressive SEM vs registry capture vs trial-screener landing. Maps stage intent to the SEM/SEO category architecture so a SEM team or agency can read straight from the journey-map.
+
+Visually, lives as a collapsible "Search behavior" block within each existing stage card. Caregiver track (where applicable) gets a parallel sub-block, not its own stage row — matching how the SEM proposal MD handles it.
+
+A flat "search journey" export view (the attached MD format) makes the same data legible to sponsors and SEM agencies who want a recruitment-oriented read without the full journey-map artifact.
+
+**Open questions.**
+- Data source per indication. Search-query ingest exists for some; for those without it, Haiku-proposed queries grounded in stage fragments are the fallback. Confidence treatment matters — observed queries should look different from proposed ones in the UI.
+- Caregiver parallel — the SEM proposal handles caregivers as a parallel track within each indication's stage breakdown. Our journey-maps are persona-scoped, so a caregiver search-journey is its own persona artifact, with cross-links to the patient persona at each stage.
+- Competitive context (the SEM proposal's "share of voice" sections — BioMarin / PTC for PKU, Novartis for Sjögren's, the five-drug IgAN landscape) is out of scope for the journey-map itself, but the same source data could feed an adjacent "competitive landscape" view per indication. Note as adjacent; don't bundle.
+- Stage granularity match. The SEM proposal MD uses 3–4 funnel stages per indication (e.g. PKU: "living with → treatment seeking → trial evaluation"); our journey-map taxonomies are usually finer-grained. Either the search-behavior block rolls up across multiple finer stages, or fine stages share a search-behavior block. Probably the latter — annotate which stages share a SEM register.
+- Compliance / regulatory review boundary on representative queries — generated queries that mention specific drug names or competitor brands need review before they ship in any sponsor-facing export.
+
+**Serves positioning:** commercialization prep (the most direct fit — SEM/SEO architecture for launch); study protocol optimization (recruitment site IA derives from trial-seeking query patterns); study rescue (mismatched recruitment messaging is often visible as a query-vs-content gap that this surface makes obvious).
 
 ---
 

@@ -1,0 +1,5 @@
+{
+  "schema_version": "entities-trial-0.1",
+  "description": "Trial entity registry per ENTITY_REGISTRY.md. Phase 1 starts empty. Trial entities are pointers (label + NCT_id + phase + sponsor_id); rich trial data continues to live in the clinical-trials registry. Populated as trials are surfaced in corpora.",
+  "items": []
+}

@@ -1,0 +1,484 @@
+{
+  "meta": {
+    "schema_version": "theme-tags-0.1",
+    "generator": "propose-theme-tags@0.2",
+    "model": "claude-haiku-4-5",
+    "corpus_id": "ms_reddit_2026q1",
+    "content_source": "social_comment",
+    "updated_at": "2026-06-02T14:43:29.010Z",
+    "themes_count": 27,
+    "tagged_fragment_count": 39,
+    "total_tag_count": 34
+  },
+  "theme_tags": {
+    "fc-ms_reddit_2026q1-10-1-1_c": [],
+    "fc-ms_reddit_2026q1-10-1-1_d": [
+      {
+        "span": {
+          "start": 9,
+          "end": 67,
+          "text": "stem cell transplants it's really really onerous treatment"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Speaker characterizes a treatment's protocol burden as onerous, directly referencing trial/treatment logistics difficulty",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 78,
+          "end": 160,
+          "text": "enormous potential but it's a long way from being anywhere near as straightforward"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "Discussing complexity and feasibility as factors in weighing a treatment option",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-10-1-1_e": [],
+    "fc-ms_reddit_2026q1-10-1-1_f": [
+      {
+        "span": {
+          "start": 11,
+          "end": 76,
+          "text": "huge wave of progress happening with research on the use of CAR-T"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.86,
+        "rationale": "Speaker is communicating knowledge that trials/research exist in this space",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 429,
+          "end": 488,
+          "text": "outcome measures take more time and tend to be more complex"
+        },
+        "theme_id": "trial.eligibility",
+        "tagger": "llm-proposed",
+        "confidence": 0.79,
+        "rationale": "Noting complexity as a reason MS trials lag behind other indications, implying stricter criteria/delays",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 756,
+          "end": 804,
+          "text": "potential is there for some really good outcomes"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Speaker expresses hopeful outlook about future therapeutic possibilities",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-10-1-1_g": [],
+    "fc-ms_reddit_2026q1-11-1-1_c": [],
+    "fc-ms_reddit_2026q1-11-1-1_d": [
+      {
+        "span": {
+          "start": 180,
+          "end": 229,
+          "text": "This is not a cure. I repeat, this is not a cure."
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "Speaker is providing patient education about realistic expectations and correcting misconceptions about treatment outcomes",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_e": [
+      {
+        "span": {
+          "start": 157,
+          "end": 276,
+          "text": "CAR‑T therapy, on the other hand, reprograms your own T‑cells to actively recognize and destroy those B‑cells over time"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.83,
+        "rationale": "Speaker is explaining mechanism of action to clarify distinctions for informed decision-making",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_f": [
+      {
+        "span": {
+          "start": 143,
+          "end": 221,
+          "text": "We just don't have data showing CAR-T is more meaningful for the MS indication"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.86,
+        "rationale": "Speaker highlights evidence gaps relevant to evaluating treatment options",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_g": [
+      {
+        "span": {
+          "start": 134,
+          "end": 188,
+          "text": "health insurers won't pay the cost for it with 60000+€"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.89,
+        "rationale": "Speaker identifies insurance cost barriers and out-of-pocket financial burden preventing access to aggressive treatment",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 134,
+          "end": 175,
+          "text": "health insurers won't pay the cost for it"
+        },
+        "theme_id": "util.coverage",
+        "tagger": "llm-proposed",
+        "confidence": 0.87,
+        "rationale": "Plan design decision excluding coverage for costly transplant procedure",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_h": [
+      {
+        "span": {
+          "start": 85,
+          "end": 126,
+          "text": "complete reset isn't automatically a cure"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "Speaker provides realistic information about what aggressive immune reset can and cannot achieve",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_i": [
+      {
+        "span": {
+          "start": 0,
+          "end": 85,
+          "text": "My doses of Kesimpta are priced at just under $10,000 if paid out of pocket per month"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.91,
+        "rationale": "Speaker identifies substantial out-of-pocket medication cost burden",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_j": [],
+    "fc-ms_reddit_2026q1-11-1-1_k": [],
+    "fc-ms_reddit_2026q1-11-1-1_l": [],
+    "fc-ms_reddit_2026q1-11-1-1_m": [
+      {
+        "span": {
+          "start": 0,
+          "end": 47,
+          "text": "This is the treatment I am most excited about!!"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.84,
+        "rationale": "Speaker expresses strong positive sentiment driving decision-to-join intention",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_n": [],
+    "fc-ms_reddit_2026q1-11-1-1_o": [
+      {
+        "span": {
+          "start": 46,
+          "end": 60,
+          "text": "Can you work ?"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "Asking about work disruption during treatment protocol",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 46,
+          "end": 60,
+          "text": "Can you work ?"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Inquiring about ability to maintain work during treatment",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_p": [
+      {
+        "span": {
+          "start": 283,
+          "end": 312,
+          "text": "You can work during this time"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "Describing work feasibility during apheresis/modification phase of trial",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 405,
+          "end": 500,
+          "text": "admitted to the hospital for the CAR-T infusion and close monitoring for about a week or longer"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Detailing hospitalization and monitoring protocol burden",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 697,
+          "end": 746,
+          "text": "you would generally be out of work around a month"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.89,
+        "rationale": "Specifying work loss duration due to treatment",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 555,
+          "end": 606,
+          "text": "recovery and watch period at home for several weeks"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.83,
+        "rationale": "Describing post-infusion monitoring and recovery timeline as protocol requirement",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_q": [
+      {
+        "span": {
+          "start": 0,
+          "end": 27,
+          "text": "Where do I put my name down"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.86,
+        "rationale": "Speaker is expressing intent to enroll/join the trial",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_r": [],
+    "fc-ms_reddit_2026q1-11-1-1_s": [
+      {
+        "span": {
+          "start": 130,
+          "end": 194,
+          "text": "what is actually in trials, and what is ready for real-world use"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.87,
+        "rationale": "Speaker emphasizes distinguishing hype from reality for informed decision-making",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 273,
+          "end": 355,
+          "text": "pin down trial status, eligibility, and what outcome people are actually measuring"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "Speaker advises determining what trials actually exist and their specifics",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_t": [
+      {
+        "span": {
+          "start": 107,
+          "end": 189,
+          "text": "i was offered the possibility to be the 6th patient to ever recieve this treatment"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Speaker describes trial enrollment opportunity",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 242,
+          "end": 363,
+          "text": "i had to decline based on personal reasons and a fear of the side effects, which include cancer and other immune diseases"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.89,
+        "rationale": "Speaker weighs risk/benefit in declining trial participation",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 291,
+          "end": 315,
+          "text": "fear of the side effects"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.81,
+        "rationale": "Speaker expresses anxiety about severe potential harms",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_u": [],
+    "fc-ms_reddit_2026q1-12-1-1_c": [],
+    "fc-ms_reddit_2026q1-12-1-1_d": [
+      {
+        "span": {
+          "start": 0,
+          "end": 71,
+          "text": "CAR-T is the newest study I am most excited about. What an opportunity!"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.87,
+        "rationale": "Speaker expresses enthusiasm and positive sentiment driving trial enrollment interest",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-12-1-1_e": [],
+    "fc-ms_reddit_2026q1-12-1-1_f": [
+      {
+        "span": {
+          "start": 178,
+          "end": 259,
+          "text": "I have had so many issues with DMT'S and side effects that it is always a concern"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.83,
+        "rationale": "Prior negative experience with existing therapies factors into weighing trial enrollment",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      },
+      {
+        "span": {
+          "start": 261,
+          "end": 335,
+          "text": "But I truly think this will change the landscape of MS! I would go for it!"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.87,
+        "rationale": "Speaker expresses optimism and intent to enroll despite reservations",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-12-1-1_g": [],
+    "fc-ms_reddit_2026q1-12-1-1_h": [
+      {
+        "span": {
+          "start": 67,
+          "end": 135,
+          "text": "1/3 chance of full dose, 1/3 of half dose, 1/3 placebo. No thank you"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.89,
+        "rationale": "Speaker declines trial enrollment due to unacceptable placebo design",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-12-1-1_i": [],
+    "fc-ms_reddit_2026q1-12-1-1_j": [
+      {
+        "span": {
+          "start": 17,
+          "end": 100,
+          "text": "you can (and should) stay on your DMT while enrolled in the PIPE-307 clinical trial"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.86,
+        "rationale": "Speaker clarifies trial logistics regarding concurrent DMT use during protocol",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-12-1-1_k": [
+      {
+        "span": {
+          "start": 48,
+          "end": 135,
+          "text": "I had to be off Ocrevus for over six months, and I wasn't able to meet that requirement"
+        },
+        "theme_id": "trial.eligibility",
+        "tagger": "llm-proposed",
+        "confidence": 0.89,
+        "rationale": "Speaker was excluded from trial due to failing washout/timing eligibility criterion",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-12-1-1_l": [
+      {
+        "span": {
+          "start": 36,
+          "end": 106,
+          "text": "requires you to have been on a high efficacy DMT for the past 6 months"
+        },
+        "theme_id": "trial.eligibility",
+        "tagger": "llm-proposed",
+        "confidence": 0.87,
+        "rationale": "Describing trial eligibility criterion based on prior treatment history",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-12-1-1_m": [],
+    "fc-ms_reddit_2026q1-12-1-1_n": [],
+    "fc-ms_reddit_2026q1-12-1-1_o": [],
+    "fc-ms_reddit_2026q1-12-1-1_p": [
+      {
+        "span": {
+          "start": 71,
+          "end": 142,
+          "text": "it sounds pretty intense and the chance of a reaction is a little scary"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "Speaker characterizes trial protocol as burdensome and concerning regarding side effects",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-13-1-1_c": [
+      {
+        "span": {
+          "start": 14,
+          "end": 106,
+          "text": "this is just another anti b-cell therapy but with dangerous chemotherapy thrown into the mix"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "Speaker questions comparative benefit for informed evaluation",
+        "created_at": "2026-06-02T14:43:29.008Z"
+      }
+    ]
+  }
+}

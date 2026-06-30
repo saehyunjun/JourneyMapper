@@ -57,141 +57,146 @@ export type CorpusBundle = {
 export type { FragmentAnnotation };
 
 // === Bundled seeds ==========================================================
-// Eager glob — these modules are inlined into the bundle so prod functions
-// have a usable starting state even when Redis is empty. New corpus = new
-// folder in git; rebuild ships it as a seed.
+// Lazy glob — these modules are split into their own chunks so a prod cold
+// start only parses what the first request actually touches. New corpus = new
+// folder in git; rebuild ships it as a seed. Each seed is memoized after first
+// load so repeat reads within the same warm instance are zero-cost.
+//
+// Why lazy: eager globs forced every corpus's fragments + annotations to be
+// parsed at module-init for any route that imported corpus-store — a 308 KB
+// chunk on the critical path of the patientlyiq layout loader. Lazy keeps the
+// keys (path → loader) available for listing/discovery without parsing the
+// payloads.
 
-type ManifestSeedMap = Record<string, CorpusManifest>;
-type FragmentsSeedMap = Record<string, { meta: Record<string, unknown>; fragments: Fragment[] }>;
-type AnnotationsSeedMap = Record<string, AnnotationFile>;
-type JourneySeedMap = Record<string, JourneySchema>;
+type SeedLoader<T> = () => Promise<T>;
 
-const manifestSeeds: ManifestSeedMap = (() => {
-	const mods = import.meta.glob<CorpusManifest>('/src/lib/content/corpora/*/manifest.json', {
-		eager: true,
-		import: 'default'
-	});
-	const out: ManifestSeedMap = {};
-	for (const [path, m] of Object.entries(mods)) {
-		const corpusId = path.match(/corpora\/([^/]+)\/manifest\.json$/)?.[1];
-		if (corpusId) out[corpusId] = m;
+function memoizeLoader<T>(loader: SeedLoader<T>): SeedLoader<T> {
+	let cached: Promise<T> | null = null;
+	return () => (cached ??= loader());
+}
+
+/** Build a key→memoized-loader map from a Vite lazy-glob result. The key is
+ *  derived from the file path; loaders are memoized so the same seed is parsed
+ *  at most once per warm instance. */
+function buildSeedLoaders<T>(
+	glob: Record<string, SeedLoader<T>>,
+	keyFromPath: (path: string) => string | null
+): Map<string, SeedLoader<T>> {
+	const out = new Map<string, SeedLoader<T>>();
+	for (const [path, loader] of Object.entries(glob)) {
+		const key = keyFromPath(path);
+		if (key) out.set(key, memoizeLoader(loader));
 	}
 	return out;
-})();
+}
 
-const fragmentSeeds: FragmentsSeedMap = (() => {
-	const mods = import.meta.glob<{ meta: Record<string, unknown>; fragments: Fragment[] }>(
+const manifestSeedLoaders = buildSeedLoaders<CorpusManifest>(
+	import.meta.glob<CorpusManifest>('/src/lib/content/corpora/*/manifest.json', {
+		import: 'default'
+	}),
+	(p) => p.match(/corpora\/([^/]+)\/manifest\.json$/)?.[1] ?? null
+);
+
+const fragmentSeedLoaders = buildSeedLoaders<{
+	meta: Record<string, unknown>;
+	fragments: Fragment[];
+}>(
+	import.meta.glob<{ meta: Record<string, unknown>; fragments: Fragment[] }>(
 		'/src/lib/content/corpora/*/fragments/*.json',
-		{ eager: true, import: 'default' }
-	);
-	const out: FragmentsSeedMap = {};
-	for (const [path, doc] of Object.entries(mods)) {
-		const m = path.match(/corpora\/([^/]+)\/fragments\/([^/]+)\.json$/);
-		if (m) out[`${m[1]}:${m[2]}`] = doc;
+		{ import: 'default' }
+	),
+	(p) => {
+		const m = p.match(/corpora\/([^/]+)\/fragments\/([^/]+)\.json$/);
+		return m ? `${m[1]}:${m[2]}` : null;
 	}
-	return out;
-})();
+);
 
-const annotationSeeds: AnnotationsSeedMap = (() => {
-	const mods = import.meta.glob<AnnotationFile>(
-		'/src/lib/content/corpora/*/annotations/*.json',
-		{ eager: true, import: 'default' }
-	);
-	const out: AnnotationsSeedMap = {};
-	for (const [path, doc] of Object.entries(mods)) {
-		const m = path.match(/corpora\/([^/]+)\/annotations\/([^/]+)\.json$/);
-		if (m) out[`${m[1]}:${m[2]}`] = doc;
-	}
-	return out;
-})();
-
-const journeySeeds: JourneySeedMap = (() => {
-	const mods = import.meta.glob<JourneySchema>('/src/lib/content/journeys/*.json', {
-		eager: true,
+const annotationSeedLoaders = buildSeedLoaders<AnnotationFile>(
+	import.meta.glob<AnnotationFile>('/src/lib/content/corpora/*/annotations/*.json', {
 		import: 'default'
-	});
-	const out: JourneySeedMap = {};
-	for (const [path, doc] of Object.entries(mods)) {
-		const indication = path.match(/journeys\/([^/]+)\.json$/)?.[1];
-		if (indication) out[indication] = doc;
+	}),
+	(p) => {
+		const m = p.match(/corpora\/([^/]+)\/annotations\/([^/]+)\.json$/);
+		return m ? `${m[1]}:${m[2]}` : null;
 	}
-	return out;
-})();
+);
 
-type IngestConfigSeedMap = Record<string, unknown>;
-const ingestConfigSeeds: IngestConfigSeedMap = (() => {
-	const mods = import.meta.glob<unknown>(
-		'/src/lib/content/corpora/*/ingest.config.json',
-		{ eager: true, import: 'default' }
-	);
-	const out: IngestConfigSeedMap = {};
-	for (const [path, doc] of Object.entries(mods)) {
-		const id = path.match(/corpora\/([^/]+)\/ingest\.config\.json$/)?.[1];
-		if (id) out[id] = doc;
-	}
-	return out;
-})();
+const journeySchemaSeedLoaders = buildSeedLoaders<JourneySchema>(
+	import.meta.glob<JourneySchema>('/src/lib/content/journeys/*.json', { import: 'default' }),
+	(p) => p.match(/journeys\/([^/]+)\.json$/)?.[1] ?? null
+);
 
-type AuthorAttrsSeedMap = Record<string, AuthorAttrsFile>;
-const authorAttrsSeeds: AuthorAttrsSeedMap = (() => {
-	const mods = import.meta.glob<AuthorAttrsFile>(
-		'/src/lib/content/corpora/*/author_attrs.json',
-		{ eager: true, import: 'default' }
-	);
-	const out: AuthorAttrsSeedMap = {};
-	for (const [path, doc] of Object.entries(mods)) {
-		const id = path.match(/corpora\/([^/]+)\/author_attrs\.json$/)?.[1];
-		if (id) out[id] = doc;
-	}
-	return out;
-})();
+const ingestConfigSeedLoaders = buildSeedLoaders<unknown>(
+	import.meta.glob<unknown>('/src/lib/content/corpora/*/ingest.config.json', {
+		import: 'default'
+	}),
+	(p) => p.match(/corpora\/([^/]+)\/ingest\.config\.json$/)?.[1] ?? null
+);
+
+const authorAttrsSeedLoaders = buildSeedLoaders<AuthorAttrsFile>(
+	import.meta.glob<AuthorAttrsFile>('/src/lib/content/corpora/*/author_attrs.json', {
+		import: 'default'
+	}),
+	(p) => p.match(/corpora\/([^/]+)\/author_attrs\.json$/)?.[1] ?? null
+);
 
 /** All per-corpus artifacts under corpora/<id>/artifacts/<name>.json. Read-only
  *  in prod; analysts regenerate via scripts and commit. Keyed by
  *  `<corpusId>:<artifactName>`. */
-type ArtifactSeedMap = Record<string, unknown>;
-const artifactSeeds: ArtifactSeedMap = (() => {
-	const mods = import.meta.glob<unknown>(
-		'/src/lib/content/corpora/*/artifacts/*.json',
-		{ eager: true, import: 'default' }
-	);
-	const out: ArtifactSeedMap = {};
-	for (const [path, doc] of Object.entries(mods)) {
-		const m = path.match(/corpora\/([^/]+)\/artifacts\/([^/]+)\.json$/);
-		if (m) out[`${m[1]}:${m[2]}`] = doc;
-	}
-	return out;
-})();
-
-/** Journey maps keyed by `meta.indication` (matching the legacy corpora.ts
- *  listJourneys() shape). The narrower `journeySeeds` map above keys by
- *  filename and serves loadJourneySchema; this one drives full-list use. */
-type JourneyMapSeedMap = Record<string, JourneyMap>;
-const journeyMapSeeds: JourneyMapSeedMap = (() => {
-	const mods = import.meta.glob<JourneyMap>('/src/lib/content/journeys/*.json', {
-		eager: true,
+const artifactSeedLoaders = buildSeedLoaders<unknown>(
+	import.meta.glob<unknown>('/src/lib/content/corpora/*/artifacts/*.json', {
 		import: 'default'
-	});
-	const out: JourneyMapSeedMap = {};
-	for (const [, doc] of Object.entries(mods)) {
-		if (doc?.meta?.indication) out[doc.meta.indication] = doc;
+	}),
+	(p) => {
+		const m = p.match(/corpora\/([^/]+)\/artifacts\/([^/]+)\.json$/);
+		return m ? `${m[1]}:${m[2]}` : null;
 	}
-	return out;
-})();
+);
+
+/** Journey maps keyed by `meta.indication`. Only realized when listJourneys()
+ *  is actually called, since the indication key has to be read out of each
+ *  file's body. Memoized after first build. */
+const journeyMapSeedFiles = import.meta.glob<JourneyMap>('/src/lib/content/journeys/*.json', {
+	import: 'default'
+});
+let journeyMapsByIndication: Promise<Record<string, JourneyMap>> | null = null;
+function getJourneyMapsByIndication(): Promise<Record<string, JourneyMap>> {
+	return (journeyMapsByIndication ??= (async () => {
+		const out: Record<string, JourneyMap> = {};
+		for (const loader of Object.values(journeyMapSeedFiles)) {
+			const doc = await loader();
+			if (doc?.meta?.indication) out[doc.meta.indication] = doc;
+		}
+		return out;
+	})());
+}
 
 /** Participant profiles — only the wct_glp1_2025q4 corpus has them today. The
  *  file lives under wctglpdemo-data/, not under corpora/, so it's seeded
- *  separately. */
-const participantProfilesSeed: Record<string, unknown> = (() => {
-	const mods = import.meta.glob<{ profiles?: Record<string, unknown> }>(
-		'/src/lib/content/wctglpdemo-data/participant_profiles.json',
-		{ eager: true, import: 'default' }
-	);
-	for (const doc of Object.values(mods)) {
-		return doc.profiles ?? {};
-	}
-	return {};
-})();
+ *  separately. Lazy + memoized; only realized when loadProfilesForCorpus is
+ *  called for the wct corpus. */
+const participantProfilesFiles = import.meta.glob<{ profiles?: Record<string, unknown> }>(
+	'/src/lib/content/wctglpdemo-data/participant_profiles.json',
+	{ import: 'default' }
+);
+let participantProfilesPromise: Promise<Record<string, unknown>> | null = null;
+function getParticipantProfilesSeed(): Promise<Record<string, unknown>> {
+	return (participantProfilesPromise ??= (async () => {
+		for (const loader of Object.values(participantProfilesFiles)) {
+			const doc = await loader();
+			return doc.profiles ?? {};
+		}
+		return {};
+	})());
+}
+
+async function loadSeed<T>(
+	loaders: Map<string, SeedLoader<T>>,
+	key: string
+): Promise<T | null> {
+	const loader = loaders.get(key);
+	return loader ? await loader() : null;
+}
 
 // === Redis client (lazy, reused per warm instance) ==========================
 
@@ -266,7 +271,7 @@ export async function listCorpusIds(): Promise<string[]> {
 	// Prod: union of seeded corpora and any KV-written manifests under an
 	// index key. We maintain the index lazily — addToCorpus updates it on
 	// each write. Seeds alone are enough for the read-only browse case.
-	const fromSeeds = Object.keys(manifestSeeds);
+	const fromSeeds = [...manifestSeedLoaders.keys()];
 	const fromIndex = await kvGet<string[]>('corpus:index');
 	const merged = new Set([...fromSeeds, ...(fromIndex ?? [])]);
 	return [...merged].sort();
@@ -285,7 +290,7 @@ export async function loadCorpusManifest(corpusId: string): Promise<CorpusManife
 	}
 	const fromKv = await kvGet<CorpusManifest>(mKey(corpusId));
 	if (fromKv) return fromKv;
-	return manifestSeeds[corpusId] ?? null;
+	return await loadSeed(manifestSeedLoaders, corpusId);
 }
 
 export async function saveCorpusManifest(corpusId: string, manifest: CorpusManifest): Promise<void> {
@@ -325,7 +330,7 @@ export async function loadCorpusFragments(
 	}
 	const fromKv = await kvGet<FragmentsFile>(fKey(corpusId, contentSource));
 	if (fromKv) return fromKv;
-	return fragmentSeeds[`${corpusId}:${contentSource}`] ?? null;
+	return await loadSeed(fragmentSeedLoaders, `${corpusId}:${contentSource}`);
 }
 
 export async function saveCorpusFragments(
@@ -361,7 +366,7 @@ export async function loadCorpusAnnotations(
 	}
 	const fromKv = await kvGet<AnnotationFile>(aKey(corpusId, contentSource));
 	if (fromKv) return fromKv;
-	return annotationSeeds[`${corpusId}:${contentSource}`] ?? null;
+	return await loadSeed(annotationSeedLoaders, `${corpusId}:${contentSource}`);
 }
 
 export async function saveCorpusAnnotations(
@@ -393,7 +398,7 @@ export async function loadJourneySchema(indication: string): Promise<JourneySche
 			return null;
 		}
 	}
-	return journeySeeds[indication] ?? null;
+	return await loadSeed(journeySchemaSeedLoaders, indication);
 }
 
 /** Convenience: a corpus's full manifest + partition data. Used by the upload
@@ -436,7 +441,7 @@ export async function loadCorpusIngestConfig<T = unknown>(
 			return null;
 		}
 	}
-	return (ingestConfigSeeds[corpusId] as T) ?? null;
+	return ((await loadSeed(ingestConfigSeedLoaders, corpusId)) as T) ?? null;
 }
 
 /** Per-partition keyword tags. The upload page uses these to highlight
@@ -474,7 +479,7 @@ export async function loadAuthorAttrs(corpusId: string): Promise<AuthorAttrsFile
 	}
 	const fromKv = await kvGet<AuthorAttrsFile>(aaKey(corpusId));
 	if (fromKv) return { meta: fromKv.meta ?? {}, authors: fromKv.authors ?? {} };
-	const seed = authorAttrsSeeds[corpusId];
+	const seed = await loadSeed(authorAttrsSeedLoaders, corpusId);
 	return seed ? { meta: seed.meta ?? {}, authors: seed.authors ?? {} } : { meta: {}, authors: {} };
 }
 
@@ -508,7 +513,7 @@ export async function loadCorpusArtifact<T = unknown>(
 			return null;
 		}
 	}
-	return (artifactSeeds[`${corpusId}:${artifactName}`] as T) ?? null;
+	return ((await loadSeed(artifactSeedLoaders, `${corpusId}:${artifactName}`)) as T) ?? null;
 }
 
 /** List all artifact names (without `.json`) for a corpus. Used by the
@@ -524,7 +529,7 @@ export async function listCorpusArtifacts(corpusId: string): Promise<string[]> {
 			.sort();
 	}
 	const prefix = `${corpusId}:`;
-	return Object.keys(artifactSeeds)
+	return [...artifactSeedLoaders.keys()]
 		.filter((k) => k.startsWith(prefix))
 		.map((k) => k.slice(prefix.length))
 		.sort();
@@ -547,7 +552,7 @@ export async function listJourneys(): Promise<Record<string, JourneyMap>> {
 		}
 		return out;
 	}
-	return journeyMapSeeds;
+	return await getJourneyMapsByIndication();
 }
 
 /** Best-effort participant profile loader. Today only the wct_glp1_2025q4
@@ -569,7 +574,7 @@ export async function loadProfilesForCorpus(
 			return {};
 		}
 	}
-	return participantProfilesSeed;
+	return await getParticipantProfilesSeed();
 }
 
 /** A single corpus, manifest + flat fragment list across content_sources +

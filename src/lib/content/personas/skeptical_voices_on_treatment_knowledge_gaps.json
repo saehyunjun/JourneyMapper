@@ -1,0 +1,25 @@
+{
+  "id": "skeptical_voices_on_treatment_knowledge_gaps",
+  "label": "Skeptical voices on treatment knowledge gaps",
+  "description": "Lupus nephritis voices expressing negative sentiment, discussing treatment knowledge gaps.",
+  "applicable_indications": [
+    "lupus_nephritis"
+  ],
+  "filter": {
+    "indications": [
+      "lupus_nephritis"
+    ],
+    "annotations": {
+      "has_subtheme": [
+        "treatment_knowledge_gaps"
+      ],
+      "sentiment": {
+        "min": -2,
+        "max": -1
+      }
+    }
+  },
+  "weighting": {
+    "type": "uniform"
+  }
+}

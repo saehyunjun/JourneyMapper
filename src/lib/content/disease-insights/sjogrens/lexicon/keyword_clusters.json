@@ -1,0 +1,1377 @@
+{
+  "meta": {
+    "schema_version": "3.1",
+    "indication": "sjogrens",
+    "description": "Primary Sjögren's syndrome keyword clusters, full systemic scope. Spans sicca-complex management (secretagogues, ocular surface care), HCQ + off-label immunosuppression, the active Ph3 / Ph2 pipeline (ianalumab, dazodalibep, nipocalimab, tibulizumab, iscalimab), extraglandular involvement (ILD, peripheral / small-fiber / autonomic neuropathy, RTA, cryoglobulinemia, vasculitis, MALT lymphoma risk), and the diagnostic workup anchored on anti-Ro/SSA + anti-La/SSB serology and lip biopsy focus score. Parent_theme / parent_subtheme reference codebook.json @ 2.0.",
+    "cluster_count": 81
+  },
+  "clusters": [
+    {
+      "id": "hydroxychloroquine_ss",
+      "label": "Hydroxychloroquine (Plaquenil)",
+      "description": "Antimalarial used as background therapy for fatigue, arthralgia, and mild systemic involvement in primary Sjögren's — modest evidence but widely prescribed.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "hydroxychloroquine",
+        "plaquenil",
+        "hcq",
+        "antimalarial",
+        "antimalarials"
+      ]
+    },
+    {
+      "id": "pilocarpine_ss",
+      "label": "Pilocarpine (Salagen)",
+      "description": "Oral muscarinic agonist secretagogue for dry mouth — stimulates residual salivary and lacrimal gland function.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "pilocarpine",
+        "salagen",
+        "muscarinic agonist",
+        "secretagogue"
+      ]
+    },
+    {
+      "id": "cevimeline_ss",
+      "label": "Cevimeline (Evoxac)",
+      "description": "Oral M3-selective muscarinic agonist secretagogue — second oral option alongside pilocarpine.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "cevimeline",
+        "evoxac",
+        "m3 agonist",
+        "snrx-3"
+      ]
+    },
+    {
+      "id": "cyclosporine_eye_drops",
+      "label": "Cyclosporine eye drops (Restasis / Cequa)",
+      "description": "Topical cyclosporine for chronic dry eye in Sjögren's — Restasis 0.05% and Cequa 0.09%.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "cyclosporine eye drops",
+        "restasis",
+        "cequa",
+        "topical cyclosporine",
+        "ciclosporin drops"
+      ]
+    },
+    {
+      "id": "lifitegrast_ss",
+      "label": "Lifitegrast (Xiidra)",
+      "description": "LFA-1 antagonist eye drop for chronic dry eye disease.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "lifitegrast",
+        "xiidra",
+        "lfa-1 antagonist"
+      ]
+    },
+    {
+      "id": "varenicline_tyrvaya",
+      "label": "Varenicline nasal spray (Tyrvaya)",
+      "description": "Nasal-spray nicotinic agonist stimulating trigeminal parasympathetic outflow to the lacrimal glands — approved for dry-eye signs / symptoms.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "varenicline nasal",
+        "tyrvaya",
+        "nicotinic agonist",
+        "nasal spray for dry eye"
+      ]
+    },
+    {
+      "id": "tear_substitutes",
+      "label": "Artificial tears / lubricating drops",
+      "description": "Preservative-free artificial tears, gels, and ointments — the daily floor of ocular-surface management.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "artificial tears",
+        "lubricating drops",
+        "preservative free",
+        "preservative-free",
+        "systane",
+        "refresh",
+        "thera tears",
+        "thera-tears",
+        "blink tears",
+        "celluvisc",
+        "lacrigel",
+        "ointment eye",
+        "lacri-lube"
+      ]
+    },
+    {
+      "id": "saliva_substitutes",
+      "label": "Saliva substitutes / xylitol products",
+      "description": "Artificial saliva, oral gels, lozenges, xylitol sprays / lozenges, Xylimelts — daily symptomatic relief for xerostomia.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "artificial saliva",
+        "saliva substitute",
+        "biotene",
+        "biotène",
+        "xylimelts",
+        "xylitol",
+        "salivary spray",
+        "oral gel",
+        "mouthwash for dry mouth",
+        "act dry mouth",
+        "oasis"
+      ]
+    },
+    {
+      "id": "punctal_plugs",
+      "label": "Punctal plugs / occlusion",
+      "description": "Silicone or dissolvable plugs in lacrimal puncta to retain tears — common second-line ophthalmology procedure.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "punctal plug",
+        "punctal plugs",
+        "tear duct plug",
+        "punctal occlusion",
+        "silicone plug",
+        "permanent plug"
+      ]
+    },
+    {
+      "id": "autologous_serum_drops",
+      "label": "Autologous serum eye drops",
+      "description": "Custom serum-based eye drops compounded from the patient's blood — used for severe refractory keratoconjunctivitis sicca.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "autologous serum",
+        "serum drops",
+        "serum tears",
+        "blood drops",
+        "100% autologous"
+      ]
+    },
+    {
+      "id": "scleral_lenses",
+      "label": "Scleral lenses / PROSE",
+      "description": "Specialty scleral contact lenses (PROSE devices) creating a saline reservoir over the cornea — used for severe ocular Sjögren's.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "scleral lens",
+        "scleral lenses",
+        "prose lens",
+        "boston prose",
+        "specialty contact",
+        "saline reservoir"
+      ]
+    },
+    {
+      "id": "corticosteroids_ss",
+      "label": "Corticosteroids (systemic)",
+      "description": "Oral prednisone or IV methylprednisolone for systemic flares, ILD, vasculitis, or neurological involvement — short-term bridges rather than maintenance.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "prednisone",
+        "prednisolone",
+        "methylprednisolone",
+        "corticosteroid",
+        "corticosteroids",
+        "systemic steroids",
+        "iv steroids",
+        "solu-medrol",
+        "pulse steroids"
+      ]
+    },
+    {
+      "id": "methotrexate_ss",
+      "label": "Methotrexate",
+      "description": "Methotrexate used off-label for arthralgia and inflammatory arthritis in Sjögren's.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "methotrexate",
+        "mtx",
+        "trexall",
+        "rasuvo",
+        "otrexup"
+      ]
+    },
+    {
+      "id": "mycophenolate_ss",
+      "label": "Mycophenolate (off-label)",
+      "description": "Mycophenolate used off-label for ILD, CNS involvement, or steroid-sparing in systemic Sjögren's.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "mycophenolate",
+        "mycophenolate mofetil",
+        "mmf",
+        "cellcept",
+        "myfortic"
+      ]
+    },
+    {
+      "id": "azathioprine_ss",
+      "label": "Azathioprine (off-label)",
+      "description": "Azathioprine used off-label as a steroid-sparing immunosuppressant.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "azathioprine",
+        "imuran",
+        "aza"
+      ]
+    },
+    {
+      "id": "rituximab_ss",
+      "label": "Rituximab (off-label)",
+      "description": "Anti-CD20 B-cell depletion used off-label for severe extraglandular Sjögren's — cryoglobulinemia, vasculitis, neurological involvement.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "rituximab",
+        "rituxan",
+        "anti-cd20",
+        "anti cd20",
+        "b cell depletion",
+        "b-cell depletion",
+        "truxima",
+        "ruxience"
+      ]
+    },
+    {
+      "id": "cyclophosphamide_ss",
+      "label": "Cyclophosphamide (rescue)",
+      "description": "Cyclophosphamide reserved for severe vasculitis, CNS disease, or rapidly progressive ILD.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "cyclophosphamide",
+        "cytoxan",
+        "endoxan"
+      ]
+    },
+    {
+      "id": "ivig_ss",
+      "label": "IVIG (severe extraglandular)",
+      "description": "Intravenous immunoglobulin for severe neuropathy or refractory extraglandular Sjögren's.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "ivig",
+        "iv immunoglobulin",
+        "gammagard",
+        "privigen",
+        "octagam"
+      ]
+    },
+    {
+      "id": "low_dose_naltrexone",
+      "label": "Low-dose naltrexone (LDN)",
+      "description": "Low-dose naltrexone — off-label adjunct popular in patient communities for fatigue / pain in Sjögren's; limited trial evidence.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "low dose naltrexone",
+        "low-dose naltrexone",
+        "ldn",
+        "naltrexone fatigue"
+      ]
+    },
+    {
+      "id": "ianalumab_ss",
+      "label": "Ianalumab (anti-BAFF-R, Ph3)",
+      "description": "Anti-BAFF receptor monoclonal antibody depleting B cells via BAFF-R. Phase 3 NEPTUNUS for primary Sjögren's. Novartis.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "ianalumab",
+        "vay736",
+        "vay-736",
+        "anti-baff-r",
+        "baff receptor",
+        "neptunus trial",
+        "novartis sjogren"
+      ]
+    },
+    {
+      "id": "dazodalibep_ss",
+      "label": "Dazodalibep (anti-CD40L, Ph2/3)",
+      "description": "Anti-CD40 ligand fusion protein blocking T-cell co-stimulation. Late-Ph2 / Ph3 for primary Sjögren's. Amgen (Horizon-acquired).",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "dazodalibep",
+        "anti-cd40l",
+        "anti-cd40 ligand",
+        "horizon sjogrens",
+        "amgen sjogrens",
+        "hzn-4920"
+      ]
+    },
+    {
+      "id": "nipocalimab_ss",
+      "label": "Nipocalimab (anti-FcRn, Ph2)",
+      "description": "Anti-FcRn monoclonal accelerating IgG clearance, including pathogenic autoantibodies. Phase 2 DAHLIAS for Sjögren's. Johnson & Johnson.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "nipocalimab",
+        "anti-fcrn",
+        "fcrn inhibitor",
+        "dahlias trial",
+        "j&j sjogrens",
+        "janssen sjogren"
+      ]
+    },
+    {
+      "id": "tibulizumab_ss",
+      "label": "Tibulizumab (IL-17/BAFF, Ph2)",
+      "description": "Bispecific antibody targeting IL-17A and BAFF. Phase 2 for primary Sjögren's. Eli Lilly.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "tibulizumab",
+        "ly3361237",
+        "il-17 baff bispecific",
+        "lilly sjogrens"
+      ]
+    },
+    {
+      "id": "iscalimab_ss",
+      "label": "Iscalimab (anti-CD40, Ph2)",
+      "description": "Anti-CD40 monoclonal antibody blocking germinal-center co-stimulation. Phase 2 in primary Sjögren's. Novartis.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "iscalimab",
+        "cfz533",
+        "anti-cd40",
+        "cd40 inhibitor"
+      ]
+    },
+    {
+      "id": "rslv132_ss",
+      "label": "RSLV-132 (Fc-RNase, Ph2)",
+      "description": "Fc-RNase fusion targeting circulating immunostimulatory RNA. Phase 2 for fatigue endpoint in Sjögren's. Resolve Therapeutics.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "rslv-132",
+        "rslv132",
+        "fc-rnase",
+        "resolve therapeutics",
+        "rnase fusion"
+      ]
+    },
+    {
+      "id": "telitacicept_ss",
+      "label": "Telitacicept (BLyS/APRIL, Ph2)",
+      "description": "BLyS/APRIL fusion explored in Sjögren's; further along in IgAN and SLE. RemeGen.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "telitacicept sjogren",
+        "remegen sjogren",
+        "blys april sjogren",
+        "tai ai sjogren"
+      ]
+    },
+    {
+      "id": "abatacept_ss",
+      "label": "Abatacept (off-label, mixed evidence)",
+      "description": "CTLA-4-Ig fusion blocking T-cell co-stimulation; ASAP-III trial in pSS missed primary endpoint but is used off-label in some practices.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "abatacept",
+        "orencia",
+        "ctla-4 ig",
+        "ctla4-ig",
+        "asap iii"
+      ]
+    },
+    {
+      "id": "belimumab_ss",
+      "label": "Belimumab (off-label)",
+      "description": "Anti-BLyS / BAFF monoclonal — sometimes tried off-label in Sjögren's overlap with SLE.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "belimumab",
+        "benlysta",
+        "blys inhibitor",
+        "baff inhibitor"
+      ]
+    },
+    {
+      "id": "dry_mouth_xerostomia",
+      "label": "Dry mouth / xerostomia",
+      "description": "The cardinal oral symptom — sticky mouth, thick saliva, food sticking to roof of mouth, water at the bedside, sipping all day.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "dry mouth",
+        "xerostomia",
+        "cotton mouth",
+        "sticky mouth",
+        "thick saliva",
+        "no saliva",
+        "sipping water",
+        "water at bedside",
+        "trouble swallowing dry food",
+        "food sticks"
+      ]
+    },
+    {
+      "id": "dry_eyes_kcs",
+      "label": "Dry eyes / keratoconjunctivitis sicca",
+      "description": "Burning, gritty, foreign-body sensation; blurred vision late in the day; need for tears every hour.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "dry eyes",
+        "dry eye",
+        "kcs",
+        "keratoconjunctivitis sicca",
+        "gritty eyes",
+        "burning eyes",
+        "sandy eyes",
+        "feels like sand",
+        "foreign body sensation",
+        "blurry late in day",
+        "computer makes it worse",
+        "screen worse"
+      ]
+    },
+    {
+      "id": "fatigue_ss",
+      "label": "Fatigue (defining symptom)",
+      "description": "Disabling fatigue — frequently rated by patients as more disruptive than sicca. Not proportional to disease activity by standard measures.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "fatigue",
+        "fatigued",
+        "exhausted",
+        "exhaustion",
+        "tiredness",
+        "wiped out",
+        "crushing fatigue",
+        "no energy",
+        "have to nap",
+        "afternoon crash"
+      ]
+    },
+    {
+      "id": "arthralgia_ss",
+      "label": "Arthralgia / inflammatory arthritis",
+      "description": "Joint pain — predominantly hands, wrists, knees — sometimes inflammatory, sometimes overlap with RA.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "arthralgia",
+        "joint pain",
+        "joint pains",
+        "achy joints",
+        "stiff joints",
+        "morning stiffness",
+        "swollen joints",
+        "hand pain",
+        "finger pain"
+      ]
+    },
+    {
+      "id": "parotid_swelling",
+      "label": "Parotid / salivary gland swelling",
+      "description": "Recurrent salivary gland enlargement — parotid or submandibular. Persistent unilateral swelling warrants lymphoma workup.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "parotid swelling",
+        "swollen parotid",
+        "salivary gland swelling",
+        "swollen gland",
+        "swollen face",
+        "submandibular swelling",
+        "chipmunk cheeks",
+        "puffy cheeks",
+        "lump in face"
+      ]
+    },
+    {
+      "id": "dental_decay_ss",
+      "label": "Dental decay / cavities",
+      "description": "Accelerated dental caries from reduced salivary protection — root caries, cracking teeth, frequent fillings, crowns, extractions.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "cavities",
+        "caries",
+        "dental decay",
+        "root caries",
+        "fillings",
+        "crowns",
+        "lost teeth",
+        "teeth cracking",
+        "broken teeth",
+        "tooth extraction",
+        "dental work",
+        "dentures"
+      ]
+    },
+    {
+      "id": "burning_mouth_tongue",
+      "label": "Burning mouth / tongue",
+      "description": "Burning tongue or mouth — chronic and miserable, sometimes persists for months / years.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "burning mouth",
+        "burning tongue",
+        "tongue burns",
+        "mouth burning",
+        "mouth pain",
+        "sore mouth",
+        "raw mouth"
+      ]
+    },
+    {
+      "id": "taste_loss_dysgeusia",
+      "label": "Taste loss / dysgeusia",
+      "description": "Loss of taste or distorted taste — food tasting different, metallic taste, less interest in eating.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "taste loss",
+        "loss of taste",
+        "dysgeusia",
+        "metallic taste",
+        "food tastes different",
+        "food tastes bad",
+        "no taste"
+      ]
+    },
+    {
+      "id": "dysphagia_ss",
+      "label": "Dysphagia / swallowing difficulty",
+      "description": "Trouble swallowing dry foods — bread, pills, dry meat — sometimes choking sensation.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "trouble swallowing",
+        "dysphagia",
+        "choking on food",
+        "pills stuck",
+        "cant swallow pills",
+        "bread sticks",
+        "swallowing problems"
+      ]
+    },
+    {
+      "id": "dry_nose_throat",
+      "label": "Dry nose / throat / sinuses",
+      "description": "Nasal crusting, nosebleeds, dry throat, hoarseness, post-nasal drip — often missed as part of Sjögren's.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "dry nose",
+        "nasal crusting",
+        "nosebleeds",
+        "dry throat",
+        "scratchy throat",
+        "hoarseness",
+        "lost voice",
+        "post nasal drip",
+        "sinus dryness"
+      ]
+    },
+    {
+      "id": "dry_cough_ss",
+      "label": "Chronic dry cough",
+      "description": "Persistent dry cough from airway dryness or early interstitial lung involvement.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "dry cough",
+        "chronic cough",
+        "tickle in throat",
+        "wont stop coughing"
+      ]
+    },
+    {
+      "id": "vaginal_dryness_ss",
+      "label": "Vaginal dryness / dyspareunia",
+      "description": "Vaginal dryness and painful intercourse — common and under-discussed sicca manifestation.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "vaginal dryness",
+        "dyspareunia",
+        "painful intercourse",
+        "painful sex",
+        "dry down there",
+        "vulvar dryness"
+      ]
+    },
+    {
+      "id": "dry_skin_ss",
+      "label": "Dry / itchy skin",
+      "description": "Dry, itchy skin; sometimes annular erythema; cutaneous involvement in primary Sjögren's.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "dry skin",
+        "itchy skin",
+        "xerosis",
+        "annular erythema",
+        "rash sjogren"
+      ]
+    },
+    {
+      "id": "interstitial_lung_disease_ss",
+      "label": "Interstitial lung disease (ILD)",
+      "description": "Sjögren's-associated ILD — most often NSIP, sometimes LIP. Cough, dyspnea, HRCT findings.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "interstitial lung disease",
+        "ild",
+        "sjogren ild",
+        "nsip",
+        "lip",
+        "lymphocytic interstitial pneumonia",
+        "lung involvement",
+        "hrct",
+        "shortness of breath",
+        "dyspnea",
+        "pulmonary fibrosis"
+      ]
+    },
+    {
+      "id": "peripheral_neuropathy_ss",
+      "label": "Peripheral neuropathy",
+      "description": "Sensory or sensorimotor neuropathy — numbness, tingling, burning, in stocking-glove distribution.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "peripheral neuropathy",
+        "numbness",
+        "tingling",
+        "burning feet",
+        "burning hands",
+        "stocking glove",
+        "neuropathy",
+        "pins and needles"
+      ]
+    },
+    {
+      "id": "small_fiber_neuropathy_ss",
+      "label": "Small-fiber neuropathy",
+      "description": "Painful small-fiber neuropathy — burning, autonomic features, sometimes confirmed on skin biopsy intraepidermal nerve fiber density.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "small fiber neuropathy",
+        "small-fiber neuropathy",
+        "sfn",
+        "skin biopsy",
+        "iendf",
+        "epidermal nerve fiber",
+        "burning pain neuropathy"
+      ]
+    },
+    {
+      "id": "autonomic_dysfunction_ss",
+      "label": "Autonomic dysfunction / POTS",
+      "description": "Postural tachycardia, orthostatic intolerance, GI dysmotility, sweating changes — autonomic component of Sjögren's.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "autonomic dysfunction",
+        "dysautonomia",
+        "pots",
+        "postural tachycardia",
+        "orthostatic",
+        "tilt table",
+        "gi dysmotility",
+        "gastroparesis"
+      ]
+    },
+    {
+      "id": "raynauds_ss",
+      "label": "Raynaud's phenomenon",
+      "description": "Color change and numbness of fingers / toes with cold or stress — common Sjögren's feature.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "raynaud",
+        "raynauds",
+        "raynaud's",
+        "raynaud's phenomenon",
+        "white fingers",
+        "blue fingers",
+        "cold fingers"
+      ]
+    },
+    {
+      "id": "renal_tubular_acidosis_ss",
+      "label": "Renal tubular acidosis (RTA)",
+      "description": "Distal renal tubular acidosis from tubulointerstitial nephritis — hypokalemia, kidney stones, sometimes hypokalemic periodic paralysis.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "renal tubular acidosis",
+        "rta",
+        "distal rta",
+        "tubulointerstitial nephritis",
+        "low potassium",
+        "hypokalemia",
+        "kidney stones",
+        "stones",
+        "periodic paralysis"
+      ]
+    },
+    {
+      "id": "cryoglobulinemia_ss",
+      "label": "Cryoglobulinemia",
+      "description": "Cryoglobulin-driven vasculitis — palpable purpura, peripheral neuropathy, glomerulonephritis. A red flag for lymphoma risk.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "cryoglobulin",
+        "cryoglobulinemia",
+        "cryoglobulinaemia",
+        "cryos",
+        "type ii cryo",
+        "monoclonal cryo"
+      ]
+    },
+    {
+      "id": "vasculitis_ss",
+      "label": "Sjögren's vasculitis",
+      "description": "Cutaneous or systemic vasculitis — palpable purpura, urticarial vasculitis, sometimes mononeuritis multiplex.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "vasculitis",
+        "palpable purpura",
+        "urticarial vasculitis",
+        "leukocytoclastic vasculitis",
+        "mononeuritis multiplex",
+        "skin vasculitis"
+      ]
+    },
+    {
+      "id": "malt_lymphoma_risk_ss",
+      "label": "Lymphoma risk (MALT)",
+      "description": "5-10% lifetime risk of B-cell lymphoma — most often MALT lymphoma of parotid. Persistent gland swelling, low C4, cryoglobulins, palpable purpura, lymphadenopathy are risk markers.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "lymphoma risk",
+        "malt lymphoma",
+        "b cell lymphoma",
+        "non hodgkin lymphoma",
+        "nhl",
+        "parotid lymphoma",
+        "lymphoma watch",
+        "low c4",
+        "rheumatoid factor high"
+      ]
+    },
+    {
+      "id": "hashimotos_ss_overlap",
+      "label": "Hashimoto's / autoimmune thyroid",
+      "description": "Autoimmune thyroid disease — Hashimoto's hypothyroidism most often — frequent comorbidity.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "hashimoto",
+        "hashimoto's",
+        "hashimotos",
+        "hypothyroidism",
+        "autoimmune thyroid",
+        "low thyroid",
+        "levothyroxine",
+        "synthroid"
+      ]
+    },
+    {
+      "id": "fibromyalgia_overlap_ss",
+      "label": "Fibromyalgia overlap",
+      "description": "Fibromyalgia-like widespread pain frequently coexists; complicates the fatigue / pain attribution conversation.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "fibromyalgia",
+        "fibro",
+        "widespread pain",
+        "fibro flare",
+        "tender points"
+      ]
+    },
+    {
+      "id": "anti_ro_ssa",
+      "label": "Anti-Ro / SSA",
+      "description": "Anti-Ro / SSA autoantibody — present in ~70% of pSS; central diagnostic and classification criterion.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "anti ro",
+        "anti-ro",
+        "anti ssa",
+        "anti-ssa",
+        "ssa antibody",
+        "ro52",
+        "ro60",
+        "ro positive",
+        "ssa positive"
+      ]
+    },
+    {
+      "id": "anti_la_ssb",
+      "label": "Anti-La / SSB",
+      "description": "Anti-La / SSB autoantibody — present in ~40%; helpful but no longer required in 2016 ACR/EULAR classification.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "anti la",
+        "anti-la",
+        "anti ssb",
+        "anti-ssb",
+        "ssb antibody",
+        "la positive",
+        "ssb positive"
+      ]
+    },
+    {
+      "id": "ana_serology_ss",
+      "label": "ANA / rheumatoid factor",
+      "description": "Antinuclear antibody and rheumatoid factor — typically positive in pSS; sometimes the entry into the workup.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "ana",
+        "antinuclear antibody",
+        "rheumatoid factor",
+        "rf",
+        "high rf",
+        "high titer ana"
+      ]
+    },
+    {
+      "id": "lip_biopsy_focus_score",
+      "label": "Lip biopsy / focus score",
+      "description": "Minor salivary gland biopsy with focus score ≥ 1 — one of the two key 2016 ACR/EULAR classification anchors.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "lip biopsy",
+        "labial salivary gland biopsy",
+        "minor salivary gland biopsy",
+        "focus score",
+        "fs greater than 1",
+        "lymphocytic focus",
+        "biopsy in lip"
+      ]
+    },
+    {
+      "id": "schirmer_test",
+      "label": "Schirmer test / ocular staining",
+      "description": "Schirmer strip (< 5 mm / 5 min) and ocular surface staining (OSS / van Bijsterveld) — objective dry-eye measures in classification.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "schirmer test",
+        "schirmer's test",
+        "schirmer strip",
+        "schirmer score",
+        "ocular staining score",
+        "oss",
+        "van bijsterveld",
+        "lissamine green",
+        "fluorescein staining",
+        "tear break up time",
+        "tbut"
+      ]
+    },
+    {
+      "id": "salivary_flow_test",
+      "label": "Salivary flow / sialometry",
+      "description": "Unstimulated whole salivary flow rate (< 0.1 mL/min) — objective oral dryness measure.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "salivary flow",
+        "sialometry",
+        "unstimulated salivary flow",
+        "uwsf",
+        "spit test",
+        "drool test",
+        "sialography"
+      ]
+    },
+    {
+      "id": "essdai_esspri",
+      "label": "ESSDAI / ESSPRI",
+      "description": "EULAR Sjögren's Syndrome Disease Activity Index (physician) and Patient-Reported Index (patient) — the trial outcome instruments.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "essdai",
+        "esspri",
+        "eular sjogren",
+        "disease activity index",
+        "patient reported index"
+      ]
+    },
+    {
+      "id": "salivary_ultrasound_mri",
+      "label": "Salivary ultrasound / MRI",
+      "description": "Salivary ultrasound or MR sialography — increasingly used as non-invasive adjunct to biopsy.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "salivary ultrasound",
+        "salivary us",
+        "parotid ultrasound",
+        "submandibular ultrasound",
+        "mr sialography",
+        "salivary mri"
+      ]
+    },
+    {
+      "id": "diagnostic_delay_ss",
+      "label": "Diagnostic delay (5-7 years)",
+      "description": "Average 4-7 years to diagnosis — symptoms dismissed, misattributed to aging, allergies, dehydration, menopause, or anxiety.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "diagnostic_odyssey",
+      "variants": [
+        "diagnostic delay",
+        "took years to diagnose",
+        "years to be diagnosed",
+        "five years to diagnose",
+        "seven years to diagnose",
+        "told it was allergies",
+        "told it was menopause",
+        "told it was anxiety",
+        "told it was dehydration",
+        "told i was getting older",
+        "dismissed by doctor",
+        "doctor dismissed",
+        "misdiagnosed"
+      ]
+    },
+    {
+      "id": "post_viral_onset_ss",
+      "label": "Post-viral onset",
+      "description": "Symptom onset described as following a viral illness — COVID, EBV, mono, prolonged URI.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "diagnostic_odyssey",
+      "variants": [
+        "after covid",
+        "after a virus",
+        "after mono",
+        "after ebv",
+        "post viral",
+        "post-viral onset",
+        "started after illness",
+        "long covid",
+        "covid trigger"
+      ]
+    },
+    {
+      "id": "sicca_relief_ss",
+      "label": "Sicca relief on treatment",
+      "description": "Felt improvement in dryness, eating dryness, eye comfort — usually on combinations of secretagogues + drops + saliva substitutes.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "less dry",
+        "more saliva",
+        "eyes feel better",
+        "drops are helping",
+        "mouth feels better",
+        "can eat again",
+        "sleeping through night"
+      ]
+    },
+    {
+      "id": "fatigue_relief_ss",
+      "label": "Fatigue improvement on treatment",
+      "description": "Improvement in fatigue — the patient-priority outcome — on HCQ, LDN, or trial biologics; harder to achieve than sicca relief.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "less tired",
+        "more energy",
+        "energy back",
+        "fatigue improved",
+        "no more naps",
+        "feel human again",
+        "back to normal"
+      ]
+    },
+    {
+      "id": "plaquenil_retinopathy",
+      "label": "Plaquenil eye screening / retinopathy",
+      "description": "Annual ophthalmology screening for HCQ retinopathy — anxiety about long-term Plaquenil use.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "plaquenil eye exam",
+        "plaquenil retinopathy",
+        "plaquenil toxicity",
+        "annual eye screening",
+        "oct screening",
+        "visual field plaquenil"
+      ]
+    },
+    {
+      "id": "immunosuppression_infections_ss",
+      "label": "Immunosuppression / infections",
+      "description": "Frequent or serious infections on systemic immunosuppression — shingles, pneumonia, opportunistic.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "frequent infections",
+        "immunosuppressed",
+        "immunocompromised",
+        "shingles",
+        "pneumonia",
+        "got sick",
+        "keep getting sick"
+      ]
+    },
+    {
+      "id": "limited_approved_therapies_ss",
+      "label": "Few approved therapies",
+      "description": "Frustration that no disease-modifying therapy is yet approved for systemic Sjögren's — most treatment is off-label, borrowed from SLE / RA playbooks.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "no approved treatment",
+        "no fda approved",
+        "off label only",
+        "borrowed treatment",
+        "nothing approved",
+        "no real treatment",
+        "feel forgotten"
+      ]
+    },
+    {
+      "id": "rheumatology_access_ss",
+      "label": "Rheumatology access / wait times",
+      "description": "Long waits for rheumatology, dismissal by general practice, and the burden of advocating for the Sjögren's workup.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "rheumatology wait",
+        "months for rheum",
+        "no rheumatologist nearby",
+        "switching rheumatologist",
+        "dismissed by pcp",
+        "had to advocate"
+      ]
+    },
+    {
+      "id": "dental_cost_burden_ss",
+      "label": "Dental cost burden",
+      "description": "Out-of-pocket dental costs from accelerated caries — crowns, root canals, extractions, implants, dentures — uncovered by most medical insurance.",
+      "indication": "sjogrens",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "dental cost",
+        "expensive dental",
+        "dental bills",
+        "crowns cost",
+        "root canal cost",
+        "implant cost",
+        "no dental coverage"
+      ]
+    },
+    {
+      "id": "lymphoma_anxiety_ss",
+      "label": "Lymphoma anxiety",
+      "description": "Living with the elevated lifetime lymphoma risk — every persistent gland swelling, every lump, every CBC checked.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "lymphoma worry",
+        "lymphoma anxiety",
+        "scared of lymphoma",
+        "fear of lymphoma",
+        "every lump",
+        "watching for lymphoma"
+      ]
+    },
+    {
+      "id": "invisible_illness_ss",
+      "label": "Invisible illness (Sjögren's)",
+      "description": "Looking healthy with disabling symptoms — fatigue, dryness, pain — that family, friends, and employers minimize.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "invisible illness",
+        "you don't look sick",
+        "you look fine",
+        "no one believes",
+        "just drink water",
+        "everyone has dry eyes"
+      ]
+    },
+    {
+      "id": "work_disruption_ss",
+      "label": "Work / school disruption",
+      "description": "Impact of fatigue, brain fog, dental work, eye symptoms on employment — including reduced hours, FMLA, disability claims.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "missed work",
+        "time off work",
+        "reduced hours",
+        "fmla",
+        "disability leave",
+        "ssdi",
+        "lost my job",
+        "work from home accommodation"
+      ]
+    },
+    {
+      "id": "dental_appearance_stigma",
+      "label": "Dental appearance / self-consciousness",
+      "description": "Self-consciousness about tooth loss, broken teeth, parotid swelling, or speech-impacted dryness.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "embarrassed teeth",
+        "self conscious smile",
+        "smile changed",
+        "dentures young",
+        "hide my mouth",
+        "speech affected"
+      ]
+    },
+    {
+      "id": "sjogrens_foundation_org",
+      "label": "Sjögren's Foundation",
+      "description": "Sjögren's Foundation (US) — patient advocacy, clinical practice guidelines, awareness campaigns, patient education materials.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "sjogrens foundation",
+        "sjögren's foundation",
+        "ssf",
+        "patient summit",
+        "walkabout for sjogrens",
+        "moisture seekers",
+        "conquering sjogrens"
+      ]
+    },
+    {
+      "id": "sjogrens_online_community",
+      "label": "Sjögren's online community",
+      "description": "Facebook Sjögren's groups, Reddit r/Sjogrens, online patient forums — peer support and management hacks.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "reddit sjogrens",
+        "r/sjogrens",
+        "facebook sjogrens",
+        "online sjogrens group",
+        "patient forum",
+        "warrior",
+        "spoonie"
+      ]
+    },
+    {
+      "id": "oral_care_regimen_ss",
+      "label": "Oral care regimen (fluoride trays / xylitol)",
+      "description": "Daily oral care — fluoride trays, prescription toothpaste, xylitol, frequent dental visits — preserving teeth.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "fluoride tray",
+        "fluoride trays",
+        "prevident",
+        "prescription toothpaste",
+        "xylitol",
+        "every three months dental",
+        "dental hygienist",
+        "frequent cleanings"
+      ]
+    },
+    {
+      "id": "humidifier_environmental_ss",
+      "label": "Humidifier / environmental control",
+      "description": "Bedroom humidifier, avoiding ceiling fans / dry-air HVAC, wraparound sunglasses, moisture-chamber eyewear.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "humidifier",
+        "bedroom humidifier",
+        "moisture chamber glasses",
+        "wraparound sunglasses",
+        "avoid fan",
+        "avoid air conditioning",
+        "dry air"
+      ]
+    },
+    {
+      "id": "rheum_eye_dental_coordination",
+      "label": "Rheum / ophthalmology / dental coordination",
+      "description": "Coordinating care across rheumatology, ophthalmology, dental, and (when systemic) pulmonology / neurology.",
+      "indication": "sjogrens",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "rheumatologist",
+        "ophthalmologist",
+        "dentist",
+        "pulmonologist",
+        "neurologist",
+        "multiple specialists",
+        "team of doctors",
+        "doctors don't talk",
+        "coordinating care"
+      ]
+    },
+    {
+      "id": "ss_trial_endpoint_essdai_esspri",
+      "label": "Trial endpoints (ESSDAI / ESSPRI)",
+      "description": "ESSDAI and ESSPRI as the dominant primary and secondary endpoints in Sjögren's trials — and the patient-experience gap they have struggled to capture (fatigue, brain fog).",
+      "indication": "sjogrens",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "primary endpoint",
+        "essdai endpoint",
+        "esspri endpoint",
+        "trial endpoint",
+        "fatigue endpoint",
+        "patient reported outcome",
+        "pro"
+      ]
+    },
+    {
+      "id": "ss_pipeline_awareness",
+      "label": "Pipeline awareness",
+      "description": "Patient awareness of the active pipeline — ianalumab, dazodalibep, nipocalimab, iscalimab, tibulizumab — and the hope of a first disease-modifying approval.",
+      "indication": "sjogrens",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_awareness",
+      "variants": [
+        "sjogrens pipeline",
+        "new sjogrens drug",
+        "ianalumab news",
+        "dazodalibep news",
+        "novartis sjogrens",
+        "ph3 sjogrens",
+        "phase 3 sjogrens",
+        "trial readout sjogrens"
+      ]
+    },
+    {
+      "id": "ss_trial_eligibility",
+      "label": "Trial eligibility (ESSDAI ≥ / seropositive)",
+      "description": "Most pSS trials require objective disease activity (ESSDAI threshold) and seropositivity (anti-Ro/SSA) — seronegative patients often screen out.",
+      "indication": "sjogrens",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "didnt qualify",
+        "seronegative",
+        "essdai too low",
+        "below threshold",
+        "anti-ro required",
+        "screen failed",
+        "screen failure"
+      ]
+    }
+  ]
+}

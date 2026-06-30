@@ -5,6 +5,7 @@
 		type LegendItem,
 		type TooltipContent
 	} from './ChartFrame.svelte';
+	import { truncate } from './label';
 
 	type Props = {
 		figure: string | number;
@@ -62,7 +63,7 @@
 		'var(--green)',
 		'var(--orange)',
 		'var(--midgrayblue)',
-		'var(--midgreen)'
+		'var(--teal)'
 	];
 	const colorFor = (g: string, i: number) =>
 		colorBy ? colorBy(g) : fallbackPalette[i % fallbackPalette.length];
@@ -106,10 +107,12 @@
 		{/each}
 
 		<!-- axis spokes + tick labels on top axis -->
+		{@const labelBudget = Math.max(40, Math.min(margin.left, margin.right) - 16)}
 		{#each categories as cat, i (cat)}
 			{@const a = axisAngle(i, n)}
 			{@const ex = cx + radius * Math.cos(a)}
 			{@const ey = cy + radius * Math.sin(a)}
+			{@const fit = truncate(cat, labelBudget, 11)}
 			<line x1={cx} y1={cy} x2={ex} y2={ey} stroke="var(--ink)" stroke-opacity="0.15" />
 			<text
 				x={cx + (radius + 12) * Math.cos(a)}
@@ -118,7 +121,7 @@
 				dominant-baseline="middle"
 				class="col-label"
 			>
-				{cat}
+				{fit.text}{#if fit.truncated}<title>{cat}</title>{/if}
 			</text>
 		{/each}
 

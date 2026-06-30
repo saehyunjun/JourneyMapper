@@ -45,6 +45,8 @@ const QUOTES_FILE = 'src/lib/content/wctglpdemo-data/quote_bank.json';
 const CODEBOOK_FILE = 'src/lib/content/wctglpdemo-data/codebook.json';
 const OUTPUT_FILE = 'src/lib/content/wctglpdemo-data/dashboard_blurbs.json';
 
+const MS_CORPUS = 'src/lib/content/corpora/ms_reddit_2026q1';
+
 const MODEL = 'claude-haiku-4-5';
 
 if (existsSync(resolve(ROOT, '.env'))) process.loadEnvFile(resolve(ROOT, '.env'));
@@ -59,7 +61,7 @@ const args = process.argv.slice(2);
 const force = args.includes('--force');
 const argIndications = args.filter((a) => !a.startsWith('-'));
 
-const KNOWN_INDICATIONS = ['obesity', 'lupus_nephritis'];
+const KNOWN_INDICATIONS = ['obesity', 'lupus_nephritis', 'multiple_sclerosis'];
 for (const id of argIndications) {
 	if (!KNOWN_INDICATIONS.includes(id)) {
 		console.error(`x Unknown indication "${id}". Known: ${KNOWN_INDICATIONS.join(', ')}`);
@@ -257,6 +259,239 @@ function buildObesityInput() {
 	return {
 		indication_label: 'GLP-1 obesity treatment',
 		corpus_kind: 'real',
+		overview_stats: overviewStats,
+		linkable_targets,
+		findings
+	};
+}
+
+// --- MS input (real corpus, fragment-based) --------------------------------
+// Derives from the ms_reddit_2026q1 corpus (167 posts + 3,115 comments).
+// Subthemes from segment_tags annotations stand in for keyword clusters —
+// MS doesn't have a cluster→fragment match index yet, but the codebook
+// taxonomy is study-agnostic so subtheme ids are the natural cluster axis.
+
+function buildMultipleSclerosisInput() {
+	const annPost = JSON.parse(
+		readFileSync(resolve(ROOT, MS_CORPUS, 'annotations/social_post.json'), 'utf8')
+	).annotations;
+	const annComment = JSON.parse(
+		readFileSync(resolve(ROOT, MS_CORPUS, 'annotations/social_comment.json'), 'utf8')
+	).annotations;
+	const fragsPost = JSON.parse(
+		readFileSync(resolve(ROOT, MS_CORPUS, 'fragments/social_post.json'), 'utf8')
+	).fragments;
+	const fragsComment = JSON.parse(
+		readFileSync(resolve(ROOT, MS_CORPUS, 'fragments/social_comment.json'), 'utf8')
+	).fragments;
+	const codebook = JSON.parse(readFileSync(resolve(ROOT, CODEBOOK_FILE), 'utf8'));
+
+	const allAnn = { ...annPost, ...annComment };
+	const fragById = new Map();
+	for (const f of fragsPost) fragById.set(f.id, f);
+	for (const f of fragsComment) fragById.set(f.id, f);
+
+	// Restrict to fragments that have themed sentiment annotations (the unit
+	// the obesity build counts over — keeps the comparison apples-to-apples).
+	const themed = [];
+	for (const [fragId, dims] of Object.entries(allAnn)) {
+		const seg = dims.segment_tags;
+		if (!seg) continue;
+		const themes = seg.themes ?? [];
+		const subthemes = seg.subthemes ?? [];
+		const sentiment = seg.sentiment_score;
+		if (sentiment === null || sentiment === undefined) continue;
+		if (!themes.length) continue;
+		const frag = fragById.get(fragId);
+		if (!frag) continue;
+		themed.push({ fragId, sentiment, themes, subthemes, frag });
+	}
+
+	const authors = new Set(themed.map((t) => t.frag.source_ref?.author_handle_hash).filter(Boolean));
+	const posts = themed.filter((t) => t.frag.content_source === 'social_post').length;
+	const comments = themed.filter((t) => t.frag.content_source === 'social_comment').length;
+	const themesSet = new Set(themed.flatMap((t) => t.themes));
+	const pos = themed.filter((t) => t.sentiment > 0).length;
+	const neg = themed.filter((t) => t.sentiment < 0).length;
+	const neu = themed.length - pos - neg;
+	const pct = (n) => (themed.length ? Math.round((n / themed.length) * 100) : 0);
+
+	const overviewStats = {
+		annotated_fragments: themed.length,
+		posts,
+		comments,
+		distinct_authors: authors.size,
+		themes: themesSet.size,
+		posPct: pct(pos),
+		negPct: pct(neg),
+		neutralPct: pct(neu),
+		lean: pos > neg * 1.2 ? 'positive' : neg > pos * 1.2 ? 'negative' : 'mixed'
+	};
+
+	// Subtheme label lookup from codebook (study-agnostic taxonomy).
+	const subLabel = new Map();
+	const subParent = new Map();
+	for (const t of codebook.themes ?? []) {
+		for (const s of t.subthemes ?? []) {
+			subLabel.set(s.id, s.label);
+			subParent.set(s.id, t.id);
+		}
+	}
+
+	// Per-subtheme row scoped by a fragment predicate. Same shape as the
+	// obesity buildObesityInput().clusterRows so describeFinding works as-is.
+	function subthemeRows(pred) {
+		const bySub = new Map();
+		for (const t of themed) {
+			if (!pred(t)) continue;
+			for (const sub of t.subthemes) {
+				const list = bySub.get(sub) ?? [];
+				list.push({
+					segment_id: t.fragId,
+					sentiment: t.sentiment,
+					interview_id: t.frag.source_ref?.post_id ?? null,
+					text: t.frag.text
+				});
+				bySub.set(sub, list);
+			}
+		}
+		const rows = [];
+		for (const [subId, segs] of bySub.entries()) {
+			rows.push({
+				cluster: {
+					id: subId,
+					label: subLabel.get(subId) ?? subId,
+					parent_subtheme: subId,
+					parent_theme: subParent.get(subId) ?? null
+				},
+				segments: segs,
+				positive: segs.filter((s) => s.sentiment > 0).length,
+				negative: segs.filter((s) => s.sentiment < 0).length,
+				neutral: segs.filter((s) => s.sentiment === 0).length
+			});
+		}
+		return rows;
+	}
+
+	const negRank = (a, b) =>
+		b.negative - a.negative ||
+		b.negative / b.segments.length - a.negative / a.segments.length ||
+		b.segments.length - a.segments.length;
+	const posRank = (a, b) =>
+		b.positive - a.positive ||
+		b.positive / b.segments.length - a.positive / a.segments.length ||
+		b.segments.length - a.segments.length;
+
+	const trialRows = subthemeRows((t) => t.themes.includes('clinical_trials'));
+	const tx = subthemeRows((t) => t.themes.includes('treatment'));
+
+	const negTrial = trialRows
+		.filter((r) => r.negative >= 2 && r.segments.length >= MIN_CLUSTER_N)
+		.sort(negRank)
+		.slice(0, TOP_K);
+	const negTx = tx
+		.filter((r) => r.negative >= 2 && r.segments.length >= MIN_CLUSTER_N)
+		.sort(negRank)
+		.slice(0, TOP_K);
+	const posTx = tx
+		.filter((r) => r.positive >= 3 && r.segments.length >= MIN_CLUSTER_N)
+		.sort(posRank)
+		.slice(0, TOP_K);
+	// "Non-barriers" for MS: trial-themed subthemes (excluding the literal
+	// trial_barriers / trial_negative_experiences subthemes, which would be
+	// tautological) that did NOT skew negative when they came up.
+	const TRIAL_NEGATIVE_SUBS = new Set(['trial_barriers', 'trial_negative_experiences']);
+	const nonBarriers = trialRows
+		.filter(
+			(r) =>
+				!TRIAL_NEGATIVE_SUBS.has(r.cluster.id) &&
+				r.positive >= r.negative &&
+				r.segments.length >= MIN_CLUSTER_N
+		)
+		.sort((a, b) => b.segments.length - a.segments.length)
+		.slice(0, TOP_K);
+
+	// Sample quotes: prefer strong-sentiment fragments in the requested tone,
+	// take their raw text directly (no quote_bank for MS).
+	function sampleQuotes(rows, tone, k = 6) {
+		const seen = new Set();
+		const pool = [];
+		for (const r of rows) {
+			for (const s of r.segments) {
+				if (seen.has(s.segment_id)) continue;
+				seen.add(s.segment_id);
+				pool.push(s);
+			}
+		}
+		const directed =
+			tone === 'positive'
+				? pool.filter((p) => p.sentiment > 0)
+				: tone === 'negative'
+					? pool.filter((p) => p.sentiment < 0)
+					: pool;
+		return (directed.length ? directed : pool)
+			.sort((a, b) => Math.abs(b.sentiment) - Math.abs(a.sentiment))
+			.slice(0, k)
+			.map((s) => ({
+				text: s.text,
+				interview_id: s.interview_id,
+				sentiment: s.sentiment
+			}));
+	}
+
+	function describeFinding(id, eyebrow, tone, rows) {
+		const dist = { positive: 0, neutral: 0, negative: 0 };
+		const seen = new Set();
+		for (const r of rows) {
+			for (const s of r.segments) {
+				if (seen.has(s.segment_id)) continue;
+				seen.add(s.segment_id);
+				if (s.sentiment > 0) dist.positive++;
+				else if (s.sentiment < 0) dist.negative++;
+				else dist.neutral++;
+			}
+		}
+		return {
+			id,
+			eyebrow,
+			tone,
+			distribution: dist,
+			clusters: rows.map((r) => ({
+				label: r.cluster.label,
+				count: r.segments.length,
+				positive: r.positive,
+				neutral: r.neutral,
+				negative: r.negative
+			})),
+			sample_quotes: sampleQuotes(rows, tone, 6)
+		};
+	}
+
+	const findings = [
+		describeFinding('negative-trial', 'Drivers of negative trial sentiment', 'negative', negTrial),
+		describeFinding('negative-treatment', 'Drivers of negative treatment sentiment', 'negative', negTx),
+		describeFinding('positive-treatment', 'Drivers of positive treatment sentiment', 'positive', posTx),
+		describeFinding('trial-non-barriers', 'Non-issues for trial participation', 'neutral', nonBarriers)
+	].filter((f) => f.clusters.length > 0);
+
+	const linkable_targets = {
+		themes: (codebook.themes ?? []).map((t) => ({ id: t.id, label: t.label })),
+		subthemes: (codebook.themes ?? []).flatMap((t) =>
+			(t.subthemes ?? []).map((s) => ({ id: s.id, label: s.label, parent_theme: t.id }))
+		),
+		findings: findings.map((f) => ({ id: f.id, label: f.eyebrow })),
+		// Reddit threads aren't interviews; drop interview-kind refs entirely.
+		interviews: []
+	};
+
+	return {
+		indication_label: 'multiple sclerosis',
+		corpus_kind: 'real',
+		// Steers the model away from "interviews" / "participants" wording
+		// without touching the cached system prompt. Lands in the user message
+		// via the JSON.stringify of payload.
+		voice_guidance:
+			'This corpus is Reddit MS community discussion (forum posts and comments), not interviews. Refer to it as community posts, comments, threads, or authors — not interviews, participants, or patients-who-sat-for-interviews. Authors are MS patients and caregivers writing on a public forum.',
 		overview_stats: overviewStats,
 		linkable_targets,
 		findings
@@ -548,7 +783,16 @@ console.log(`Generating dashboard blurbs for: ${targets.join(', ')}\n`);
 
 for (const id of targets) {
 	console.log(`${id}...`);
-	const input = id === 'obesity' ? buildObesityInput() : buildLupusNephritisInput();
+	const input =
+		id === 'obesity'
+			? buildObesityInput()
+			: id === 'multiple_sclerosis'
+				? buildMultipleSclerosisInput()
+				: buildLupusNephritisInput();
+	console.log(`  input: ${input.findings.length} findings, overview_stats=${JSON.stringify(input.overview_stats)}`);
+	for (const f of input.findings) {
+		console.log(`    ${f.id}: ${f.clusters.length} clusters, dist=${JSON.stringify(f.distribution)}`);
+	}
 	const blurbs = await generateFor(id, input);
 	indications[id] = {
 		generated_at: new Date().toISOString(),

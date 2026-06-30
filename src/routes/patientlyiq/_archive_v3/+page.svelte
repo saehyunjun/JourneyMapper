@@ -25,11 +25,11 @@
 		type ClusterBar
 	} from '$lib/content/wctglpdemo-data/executive-summary';
 	import {
-		buildRadialTree,
 		quotes as allQuotes,
 		type Quote,
 		type RadialNode
 	} from '$lib/content/wctglpdemo-data/analysis';
+	import { buildRadialTree } from '$lib/content/wctglpdemo-data/analysis-keywords';
 	import ParticipantDrawer from '$lib/components/ParticipantDrawer.svelte';
 	import ExecutiveSummaryStory from '$lib/components/story/ExecutiveSummaryStory.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
@@ -39,6 +39,7 @@
 	} from '$lib/components/exec-summary/InteractiveCorpusGrid.svelte';
 	import { vizSize } from '$lib/story/responsiveSize.svelte';
 	import InsightOverview from '$lib/components/exec-summary/InsightOverview.svelte';
+	import SummaryBento from '$lib/components/exec-summary/SummaryBento.svelte';
 	import FindingDetail from '$lib/components/exec-summary/FindingDetail.svelte';
 	import ThemeDetail from '$lib/components/exec-summary/ThemeDetail.svelte';
 	import QuoteDetail from '$lib/components/exec-summary/QuoteDetail.svelte';
@@ -98,7 +99,7 @@
 	}
 
 	const LN_SUMMARY_TEXT =
-		'Twenty-four lupus nephritis patients sat for in-depth interviews, producing 187 tagged quotes across eleven themes. Sentiment ran mixed: 41% of coded moments registered positive against 38% negative. Negative reactions clustered around immunosuppressive side effects and renal monitoring burden; warmest mentions were of disease remission and long-term renal protection.';
+		'Twenty-four lupus nephritis patients sat for in-depth interviews, producing 187 tagged quotes across eleven themes. Sentiment ran mixed: 41% of tagged comments registered positive against 38% negative. Negative reactions clustered around immunosuppressive side effects and renal monitoring burden; warmest mentions were of disease remission and long-term renal protection.';
 
 	const LN_STATS = [
 		{ value: 24, label: 'interviews' },
@@ -672,22 +673,39 @@
 		 viewport without losing the lens/grid context. Below md the layout
 		 stacks (sticky disengages on flex-row alignment). -->
 	<div class="dashboard-grid grid grid-cols-1 gap-6 px-6 py-6 md:grid-cols-[9rem_minmax(0,1fr)_30rem] md:items-start md:gap-8 md:px-8 xl:grid-cols-[9rem_minmax(0,1fr)_34rem]">
-		<!-- Left rail: stat tiles act as lens toggles. -->
+		<!-- Left rail: stat tiles act as lens toggles, plus a "Brief" tile that
+			 swaps the right pane for the SummaryBento narrative/list view. The
+			 Brief tile takes the spot the per-interview lens tile used to hold —
+			 individual-interview drilldown lives in the dot-grid lens regroup,
+			 not the rail. -->
 		<aside class="sticky-col flex flex-row flex-wrap gap-2 md:flex-col md:gap-2">
+			<button
+				type="button"
+				class="lens-tile brief-tile"
+				class:is-active={selection.kind === 'summary'}
+				onclick={() => (selection = selection.kind === 'summary' ? { kind: 'overview' } : { kind: 'summary' })}
+				aria-pressed={selection.kind === 'summary'}
+				title="Open the executive brief"
+			>
+				<span class="lens-tile-value font-heading">Brief</span>
+				<span class="lens-tile-label">summary</span>
+			</button>
 			{#each displayStats as stat (stat.label)}
-				{@const targetLens = lensForLabel(stat.label)}
-				{@const active = targetLens !== 'none' && lens === targetLens}
-				<button
-					type="button"
-					class="lens-tile"
-					class:is-active={active}
-					onclick={() => toggleLens(targetLens)}
-					aria-pressed={active}
-					title="Regroup by {stat.label}"
-				>
-					<span class="lens-tile-value font-heading tabular-nums">{stat.value}</span>
-					<span class="lens-tile-label">{stat.label}</span>
-				</button>
+				{#if stat.label.toLowerCase() !== 'interviews'}
+					{@const targetLens = lensForLabel(stat.label)}
+					{@const active = targetLens !== 'none' && lens === targetLens}
+					<button
+						type="button"
+						class="lens-tile"
+						class:is-active={active}
+						onclick={() => toggleLens(targetLens)}
+						aria-pressed={active}
+						title="Regroup by {stat.label}"
+					>
+						<span class="lens-tile-value font-heading tabular-nums">{stat.value}</span>
+						<span class="lens-tile-label">{stat.label}</span>
+					</button>
+				{/if}
 			{/each}
 
 			<div class="legend mt-4 hidden md:flex">
@@ -727,13 +745,22 @@
 				<span class="findings-picker-label font-mono">Jump to a finding</span>
 				<select
 					class="findings-picker-select"
-					value={selection.kind === 'finding' ? selection.id : ''}
+					value={selection.kind === 'finding'
+						? selection.id
+						: selection.kind === 'summary'
+							? '__brief__'
+							: ''}
 					onchange={(e) => {
 						const id = (e.currentTarget as HTMLSelectElement).value;
-						selection = id ? { kind: 'finding', id } : { kind: 'overview' };
+						selection = id === '__brief__'
+							? { kind: 'summary' }
+							: id
+								? { kind: 'finding', id }
+								: { kind: 'overview' };
 					}}
 				>
 					<option value="">— Overview —</option>
+					<option value="__brief__">Executive brief</option>
 					{#each displayFindings as f (f.id)}
 						<option value={f.id}>{f.eyebrow}</option>
 					{/each}
@@ -748,6 +775,17 @@
 						{explore}
 						onref={navigateTo}
 						{knownRefs}
+					/>
+				{:else if selection.kind === 'summary'}
+					<SummaryBento
+						summaryText={displaySummaryText}
+						overviewBlurb={displayOverviewBlurb}
+						stats={displayStats}
+						sentimentLean={displaySentimentLean}
+						findings={displayFindings}
+						onref={navigateTo}
+						{knownRefs}
+						onselectFinding={(id) => (selection = { kind: 'finding', id })}
 					/>
 				{:else if selectedFinding}
 					{#key selectedFinding.id}
@@ -835,6 +873,16 @@
 	}
 	.lens-tile.is-active .lens-tile-label {
 		opacity: 0.85;
+	}
+	/* Brief tile sits in the position the Interviews tile used to occupy,
+	   but behaves differently (selects a right-pane view rather than toggling
+	   the grid lens). Subtle accent border + serif label disambiguate it. */
+	.lens-tile.brief-tile {
+		border-color: rgba(48, 47, 40, 0.25);
+		background: rgba(48, 47, 40, 0.04);
+	}
+	.lens-tile.brief-tile .lens-tile-value {
+		font-style: italic;
 	}
 
 	.legend {

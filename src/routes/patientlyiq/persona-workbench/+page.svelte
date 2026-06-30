@@ -17,6 +17,8 @@
 -->
 <script lang="ts">
 	import { untrack } from 'svelte';
+	import { invalidateAll } from '$app/navigation';
+	import { toasts } from '$lib/stores/toasts.svelte';
 	import type { PageProps } from './$types';
 	import type { DeriveResponse } from '../../api/personas/derive/+server';
 	import type { MatchFilterResponse } from '../../api/personas/match-filter/+server';
@@ -25,12 +27,15 @@
 	let { data }: PageProps = $props();
 
 	// === Mode ================================================================
-	// Two paths into a persona:
+	// Three tabs:
+	//   - 'filter' (default): build the filter directly with attitudinal
+	//     pickers, no derivation step
 	//   - 'authors': pick a suggestion or hand-pick authors, derive the filter
-	//   - 'filter': build the filter directly with attitudinal pickers, no
-	//     derivation step
+	//   - 'personas': list of saved personas scoped to the current corpus's
+	//     indication — each row links into the personas page and can spawn a
+	//     narrative-chart generation job
 	// Save form is shared; the persona it writes uses whichever filter is current.
-	let mode = $state<'authors' | 'filter'>('authors');
+	let mode = $state<'authors' | 'filter' | 'personas'>('filter');
 
 	// === Corpus selection ====================================================
 	// Only corpora with author_handle_hash–style provenance work for manual
@@ -134,11 +139,15 @@
 
 	// Debounced live preview. Re-fires whenever any clause changes or the
 	// analyst picks a different corpus. 300ms feels snappy for chip clicks.
-	let matchDebounce = $state<ReturnType<typeof setTimeout> | null>(null);
+	// matchDebounce is intentionally a plain let, not $state — reading and
+	// writing a $state inside the same effect causes Svelte to re-run the
+	// effect on every write, which here would loop forever and silently bail
+	// out, leaving the preview blank and later chip clicks inert.
+	let matchDebounce: ReturnType<typeof setTimeout> | null = null;
 	$effect(() => {
 		// Take a snapshot of dependencies so the effect re-runs.
 		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-		[corpusId, customFilter, mode];
+		[corpusId, customFilter, mode, filterIsEmpty];
 		if (matchDebounce) clearTimeout(matchDebounce);
 		if (mode !== 'filter' || !corpusId || filterIsEmpty) {
 			filterMatchResult = null;
@@ -196,10 +205,11 @@
 		untrack(clearFilter);
 		filterMatchResult = null;
 		filterError = null;
-		personaId = '';
-		personaLabel = '';
+		personaName = '';
 		personaDescription = '';
 		personaColor = '';
+		lastAutoName = '';
+		lastAutoDescription = '';
 		saveResult = null;
 		saveError = null;
 	});
@@ -290,27 +300,42 @@
 	}
 
 	// === Save form ===========================================================
+	// The analyst types one human name ("Trial skeptics") and we derive the
+	// on-disk id slug ("trial_skeptics") from it. Description is editable; we
+	// still auto-suggest it but the analyst can rewrite.
 
-	let personaId = $state('');
-	let personaLabel = $state('');
+	let personaName = $state('');
 	let personaDescription = $state('');
 	let personaColor = $state('');
 	let saving = $state(false);
-	let saveResult = $state<{ ok: true; path: string } | null>(null);
+	let saveResult = $state<{ ok: true; path: string; id: string } | null>(null);
 	let saveError = $state<string | null>(null);
 
+	function nameToSlug(name: string): string {
+		return name
+			.toLowerCase()
+			.normalize('NFKD')
+			.replace(/[̀-ͯ]/g, '')
+			.replace(/[^a-z0-9]+/g, '_')
+			.replace(/^_+|_+$/g, '')
+			.slice(0, 64);
+	}
+
+	const personaId = $derived(nameToSlug(personaName));
 	const idLooksValid = $derived(/^[a-z0-9][a-z0-9_-]{1,63}$/.test(personaId));
 	// "Ready to save" — derive path needs a deriveResult, filter path needs a
 	// non-empty filter that successfully matched at least one fragment.
 	const hasSavablePayload = $derived(
 		mode === 'authors'
 			? !!deriveResult
-			: !filterIsEmpty && !!filterMatchResult && filterMatchResult.fragment_count > 0
+			: mode === 'filter'
+				? !filterIsEmpty && !!filterMatchResult && filterMatchResult.fragment_count > 0
+				: false
 	);
 	const canSave = $derived(
 		hasSavablePayload &&
 			idLooksValid &&
-			personaLabel.trim().length > 0 &&
+			personaName.trim().length > 0 &&
 			personaDescription.trim().length > 0 &&
 			!saving
 	);
@@ -318,24 +343,128 @@
 		data.existing_personas.some((p) => p.id === personaId)
 	);
 
+	// === Personas tab =======================================================
+	// Saved personas scoped to the current corpus's indications. Each row can
+	// link out to the persona page or spawn a narrative-chart generation job.
+	const scopedPersonas = $derived(
+		data.existing_personas.filter((p) =>
+			corpus?.indications.some((i) => p.applicable_indications.includes(i))
+		)
+	);
+
+	// Per-persona narrative-job state, keyed by persona id. We track the toast
+	// id so the in-flight progress toast can be upgraded to success when the
+	// /api/personas/generate-narrative call resolves.
+	let narrativeJobs = $state<Record<string, { toastId: number; running: boolean }>>({});
+
+	// Per-persona journey-map-job state. Same shape; sibling endpoint
+	// (/api/personas/generate-journey-map) spawns synthesize-journey-map.mjs
+	// for the active corpus. Takes 5–15min vs. narrative's ~1min.
+	let journeyMapJobs = $state<Record<string, { toastId: number; running: boolean }>>({});
+
+	async function runJourneyMap(personaIdToGenerate: string, label: string) {
+		if (journeyMapJobs[personaIdToGenerate]?.running) return;
+		if (!corpusId) return;
+		const toastId = toasts.push({
+			message: `Generating journey-map table for "${label}"…`,
+			variant: 'progress',
+			progressLabel: 'Calling Claude per stage — 5–15min. Safe to leave this tab.',
+			duration: 0
+		});
+		journeyMapJobs = { ...journeyMapJobs, [personaIdToGenerate]: { toastId, running: true } };
+		try {
+			const res = await fetch('/api/personas/generate-journey-map', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					persona_id: personaIdToGenerate,
+					corpus_id: corpusId,
+					force: true
+				})
+			});
+			const body = await res.json().catch(() => ({}));
+			if (!res.ok) throw new Error(body.message ?? body.error ?? `HTTP ${res.status}`);
+			toasts.update(toastId, {
+				message: `Journey-map table ready for "${label}".`,
+				variant: 'success',
+				progress: 1
+			});
+			setTimeout(() => toasts.dismiss(toastId), 5000);
+			await invalidateAll();
+		} catch (e) {
+			const msg = e instanceof Error ? e.message : String(e);
+			toasts.update(toastId, {
+				message: `Journey-map generation failed: ${msg}`,
+				variant: 'error'
+			});
+			setTimeout(() => toasts.dismiss(toastId), 7000);
+		} finally {
+			journeyMapJobs = {
+				...journeyMapJobs,
+				[personaIdToGenerate]: { toastId, running: false }
+			};
+		}
+	}
+
+	async function runNarrative(personaIdToGenerate: string, label: string) {
+		if (narrativeJobs[personaIdToGenerate]?.running) return;
+		const toastId = toasts.push({
+			message: `Generating narrative for "${label}"…`,
+			variant: 'progress',
+			progressLabel: 'Calling Claude — this can take 30s–2min.',
+			duration: 0
+		});
+		narrativeJobs = { ...narrativeJobs, [personaIdToGenerate]: { toastId, running: true } };
+		try {
+			const res = await fetch('/api/personas/generate-narrative', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({ persona_id: personaIdToGenerate, force: true })
+			});
+			const body = await res.json().catch(() => ({}));
+			if (!res.ok) throw new Error(body.message ?? body.error ?? `HTTP ${res.status}`);
+			toasts.update(toastId, {
+				message: `Narrative ready for "${label}".`,
+				variant: 'success',
+				progress: 1
+			});
+			// Auto-dismiss the upgraded success toast after the standard window.
+			setTimeout(() => toasts.dismiss(toastId), 5000);
+			await invalidateAll();
+		} catch (e) {
+			const msg = e instanceof Error ? e.message : String(e);
+			toasts.update(toastId, {
+				message: `Narrative generation failed: ${msg}`,
+				variant: 'error'
+			});
+			setTimeout(() => toasts.dismiss(toastId), 7000);
+		} finally {
+			narrativeJobs = {
+				...narrativeJobs,
+				[personaIdToGenerate]: { toastId, running: false }
+			};
+		}
+	}
+
 	async function runSave() {
 		if (!canSave) return;
 		saving = true;
 		saveError = null;
 		try {
 			let persona;
+			const label = personaName.trim();
 			if (mode === 'authors' && deriveResult) {
 				persona = {
 					...deriveResult.persona,
 					id: personaId,
-					label: personaLabel.trim(),
+					label,
 					description: personaDescription.trim(),
 					...(personaColor.trim() ? { color: personaColor.trim() } : {})
 				};
 			} else if (mode === 'filter') {
 				persona = {
 					id: personaId,
-					label: personaLabel.trim(),
+					label,
 					description: personaDescription.trim(),
 					applicable_indications: corpus?.indications ?? [],
 					filter: customFilter,
@@ -352,9 +481,24 @@
 			});
 			const body = await res.json().catch(() => ({}));
 			if (!res.ok) throw new Error(body.message ?? body.error ?? `HTTP ${res.status}`);
-			saveResult = body as { ok: true; path: string };
+			saveResult = { ok: true, path: body.path, id: personaId };
+			// Surface success globally + refresh existing_personas so the new
+			// row appears under the Personas tab without a hard reload.
+			toasts.push({
+				message: `Saved persona "${label}".`,
+				href: `/patientlyiq/personas?view=saved&persona=${personaId}`,
+				linkLabel: 'View persona →',
+				variant: 'success'
+			});
+			await invalidateAll();
+			mode = 'personas';
 		} catch (e) {
 			saveError = e instanceof Error ? e.message : String(e);
+			toasts.push({
+				message: `Save failed: ${saveError}`,
+				variant: 'error',
+				duration: 7000
+			});
 		} finally {
 			saving = false;
 		}
@@ -418,6 +562,149 @@
 		const span = sentimentRange.max - sentimentRange.min + 1;
 		return span > selectedSentiments.size;
 	});
+
+	// === Auto-fill save form from filter ====================================
+	// Generate a human-friendly name + description from the current filter,
+	// so the analyst doesn't stare at empty fields. We don't trample what the
+	// user types: each field is auto-written only when its current value
+	// still matches the previous auto-fill. Clearing a field re-enables
+	// auto-fill for it.
+
+	const INDICATION_META: Record<string, { short: string; long: string }> = {
+		lupus_nephritis: { short: 'LN', long: 'Lupus nephritis' },
+		obesity: { short: 'Obesity', long: 'Obesity' },
+		multiple_sclerosis: { short: 'MS', long: 'Multiple sclerosis' }
+	};
+
+	function indicationMeta(ind: string | undefined) {
+		if (!ind) return { short: 'Patient', long: 'Patient' };
+		return INDICATION_META[ind] ?? { short: titleCase(ind), long: titleCase(ind) };
+	}
+
+	function sentimentWord(r: { min: number; max: number } | null): string | null {
+		if (!r) return null;
+		if (r.max <= -2) return 'very_negative';
+		if (r.max < 0) return 'negative';
+		if (r.min >= 2) return 'very_positive';
+		if (r.min > 0) return 'positive';
+		if (r.min === 0 && r.max === 0) return 'neutral';
+		if (r.min < 0 && r.max > 0) return 'mixed';
+		return null;
+	}
+
+	// Pithy archetype nouns per stage — what kind of patient lives in that
+	// stage. Used in the suggested name so "Trial Consideration" reads as
+	// "trial considerers" rather than the bare stage id.
+	const STAGE_PERSONA: Record<string, string> = {
+		pre_diagnosis: 'pre-diagnosis voices',
+		diagnostic_odyssey: 'diagnosis seekers',
+		induction_treatment: 'induction patients',
+		stable_maintenance: 'maintenance patients',
+		flare_or_refractory_cycle: 'flare-cycle patients',
+		trial_consideration: 'trial considerers',
+		in_trial_experience: 'trial participants',
+		post_trial: 'post-trial voices'
+	};
+
+	// Override archetypes for known (sentiment, stage) combos that have a
+	// snappier idiomatic name than the formulaic "negative trial considerers".
+	const ARCHETYPE_OVERRIDES: Record<string, string> = {
+		'negative|trial_consideration': 'Trial skeptics',
+		'very_negative|trial_consideration': 'Trial skeptics',
+		'positive|trial_consideration': 'Trial advocates',
+		'very_positive|trial_consideration': 'Trial advocates',
+		'negative|diagnostic_odyssey': 'Stalled diagnosis seekers',
+		'positive|induction_treatment': 'Hopeful induction patients',
+		'negative|induction_treatment': 'Struggling induction patients',
+		'negative|flare_or_refractory_cycle': 'Flare-burdened patients',
+		'positive|in_trial_experience': 'Trial enthusiasts',
+		'negative|in_trial_experience': 'Discouraged trial participants',
+		'negative|post_trial': 'Post-trial drop-offs'
+	};
+
+	function suggestedName(
+		indShort: string,
+		sw: string | null,
+		stages: string[],
+		subs: string[]
+	): string {
+		// 1. Archetype override for a single (sentiment, stage) combo.
+		if (sw && stages.length === 1) {
+			const hit = ARCHETYPE_OVERRIDES[`${sw}|${stages[0]}`];
+			if (hit) return hit;
+		}
+		// 2. Sentiment-qualified stage persona.
+		const sentimentAdj = sw
+			? { very_negative: 'Embattled', negative: 'Skeptical', neutral: 'Cautious', positive: 'Hopeful', very_positive: 'Enthusiastic', mixed: 'Conflicted' }[sw]
+			: null;
+		if (stages.length === 1) {
+			const base = STAGE_PERSONA[stages[0]] ?? titleCase(stages[0]).toLowerCase() + ' patients';
+			return sentimentAdj ? `${sentimentAdj} ${base}` : titleCase(base);
+		}
+		if (stages.length > 1) {
+			return sentimentAdj
+				? `${sentimentAdj} voices across ${stages.length} stages`
+				: `Voices across ${stages.length} stages`;
+		}
+		// 3. Subtheme-led when no stage selected.
+		if (subs.length === 1) {
+			const sub = titleCase(subs[0]).toLowerCase();
+			return sentimentAdj ? `${sentimentAdj} voices on ${sub}` : `${indShort} ${sub} voices`;
+		}
+		if (subs.length > 1) {
+			return sentimentAdj
+				? `${sentimentAdj} voices across ${subs.length} subthemes`
+				: `Voices across ${subs.length} subthemes`;
+		}
+		// 4. Sentiment only.
+		if (sw) return `${sentimentAdj} ${indShort} voices`;
+		return `${indShort} cohort`;
+	}
+
+	const autoFill = $derived.by(() => {
+		const meta = indicationMeta(corpus?.indications?.[0]);
+		const sw = sentimentWord(sentimentRange);
+		const stages = [...selectedStages];
+		const subs = [...selectedSubthemes];
+
+		const name = suggestedName(meta.short, sw, stages, subs);
+
+		// Description: a complete sentence built from the filter.
+		const descBits: string[] = [];
+		if (sw) descBits.push(`expressing ${sw.replace(/_/g, ' ')} sentiment`);
+		if (stages.length > 0)
+			descBits.push(`during ${stages.map((s) => titleCase(s).toLowerCase()).join(' / ')}`);
+		if (subs.length > 0)
+			descBits.push(`discussing ${subs.map((s) => titleCase(s).toLowerCase()).join(' / ')}`);
+		const description =
+			descBits.length === 0
+				? `${meta.long} voices in this corpus.`
+				: `${meta.long} voices ${descBits.join(', ')}.`;
+
+		return { name, description };
+	});
+
+	// Track the last auto-filled value per field so we can tell whether the
+	// analyst has manually edited it. If current === lastAuto (or empty), we
+	// keep refreshing it from the filter. If they typed something else, we
+	// stop touching that field until they clear it.
+	let lastAutoName = $state('');
+	let lastAutoDescription = $state('');
+
+	$effect(() => {
+		if (mode !== 'filter' || filterIsEmpty) return;
+		const auto = autoFill;
+		untrack(() => {
+			if (personaName === lastAutoName || personaName.trim() === '') {
+				personaName = auto.name;
+				lastAutoName = auto.name;
+			}
+			if (personaDescription === lastAutoDescription || personaDescription.trim() === '') {
+				personaDescription = auto.description;
+				lastAutoDescription = auto.description;
+			}
+		});
+	});
 </script>
 
 <svelte:head><title>Persona Workbench</title></svelte:head>
@@ -426,10 +713,10 @@
 	<header class="mb-6">
 		<h1 class="text-xl font-medium text-primary">Persona Workbench</h1>
 		<p class="mt-1 text-sm text-gray-600">
-			Two paths to a persona: by <strong>authors</strong> (pick a cluster suggestion or hand-tick
-			authors, derive the filter from their shared profile) or by <strong>filter</strong>
-			(build attitudinal predicates directly — sentiment, emotion, subtheme, stage). Either way,
-			the filter is what gets saved.
+			Build a persona <strong>by filter</strong> (attitudinal predicates: sentiment, emotion,
+			subtheme, stage) or <strong>by authors</strong> (pick a cluster, derive the filter from their
+			shared profile). Save it, then jump to <strong>Personas</strong> to generate a narrative
+			chart that ships to the personas page.
 		</p>
 	</header>
 
@@ -461,12 +748,26 @@
 
 	<!-- Mode tabs — pick which entry point the analyst is using. The suggestion
 	     picker and author list belong to the "authors" path; the filter builder
-	     is its own path. The Save form below works for either. -->
-	<section class="mb-6">
+	     is its own path; the "personas" tab lists already-saved personas for
+	     this corpus's indication. The Save button sits at the right of the row
+	     so the primary CTA is in eyeshot as soon as a filter resolves. -->
+	<section class="mb-6 flex items-center justify-between gap-3">
 		<div
 			class="inline-flex rounded-md border border-muted bg-white p-0.5 text-sm"
 			role="tablist"
 		>
+			<button
+				type="button"
+				role="tab"
+				aria-selected={mode === 'filter'}
+				onclick={() => (mode = 'filter')}
+				class="rounded px-3 py-1.5 transition-colors
+					{mode === 'filter'
+					? 'bg-indigo-600 text-white'
+					: 'text-gray-700 hover:bg-gray-50'}"
+			>
+				By filter
+			</button>
 			<button
 				type="button"
 				role="tab"
@@ -482,16 +783,40 @@
 			<button
 				type="button"
 				role="tab"
-				aria-selected={mode === 'filter'}
-				onclick={() => (mode = 'filter')}
+				aria-selected={mode === 'personas'}
+				onclick={() => (mode = 'personas')}
 				class="rounded px-3 py-1.5 transition-colors
-					{mode === 'filter'
+					{mode === 'personas'
 					? 'bg-indigo-600 text-white'
 					: 'text-gray-700 hover:bg-gray-50'}"
 			>
-				By filter
+				Personas
+				<span
+					class="ml-1 rounded-full bg-(--ink)/10 px-1.5 py-0.5 text-[10px] font-medium"
+				>
+					{scopedPersonas.length}
+				</span>
 			</button>
 		</div>
+		{#if mode !== 'personas'}
+			<button
+				type="button"
+				onclick={runSave}
+				disabled={!canSave}
+				class="inline-flex items-center gap-1.5 rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-50"
+				title={canSave
+					? idConflicts
+						? 'Overwrite the existing persona of the same name'
+						: 'Save this filter as a new persona'
+					: hasSavablePayload
+						? 'Fill in a name and description'
+						: mode === 'filter'
+							? 'Pick at least one predicate that matches fragments'
+							: 'Pick authors and derive the filter first'}
+			>
+				{saving ? 'Saving…' : idConflicts ? 'Save persona (overwrite)' : 'Save persona'}
+			</button>
+		{/if}
 	</section>
 
 	{#if mode === 'authors'}
@@ -601,6 +926,11 @@
 								class="mt-0.5 cursor-pointer"
 								onclick={(e) => e.stopPropagation()}
 								onchange={() => toggleAuthor(a.author_handle_hash)}
+							/>
+							<img
+								src={a.avatar_url}
+								alt=""
+								class="size-9 shrink-0 rounded-full bg-white object-cover"
 							/>
 							<div class="min-w-0 flex-1">
 								<div class="flex items-baseline justify-between gap-2">
@@ -800,11 +1130,14 @@
 		<!-- Filter builder — pick attitudinal predicates directly. Each chip group
 		     OR-combines internally; groups AND-combine. Live count + samples
 		     update on every toggle (300ms debounce). The current customFilter is
-		     what gets saved. -->
+		     what gets saved. Two-column on lg+: builder on the left, live match
+		     preview pinned on the right so the analyst can watch counts/samples
+		     change as they toggle chips. -->
+		<div class="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:items-start">
 		<!-- Sentence-driven filter builder. Three inline dropdowns
 		     (sentiment / stage / subtheme) carry the main predicates; the
 		     fourth and fifth (emotion / step) live under "More filters". -->
-		<section class="mb-6 flex flex-col gap-4 rounded-lg border border-muted bg-white p-5">
+		<section class="flex flex-col gap-4 rounded-lg border border-muted bg-white p-5">
 			{#if !availability}
 				<p class="rounded border border-dashed border-muted bg-gray-50 p-3 text-xs text-gray-500">
 					Pick a corpus to see its available tags.
@@ -1152,8 +1485,9 @@
 			{/if}
 		</section>
 
-		<!-- Live match preview -->
-		<section class="mb-6 rounded-lg border border-muted bg-white p-5">
+		<!-- Live match preview — sticky on the right so it stays in view while
+		     the analyst scrolls through the chip groups. -->
+		<section class="rounded-lg border border-muted bg-white p-5 lg:sticky lg:top-6">
 			<div class="flex items-center justify-between gap-4">
 				<div>
 					<h2 class="text-sm font-medium text-primary">Match preview</h2>
@@ -1221,44 +1555,151 @@
 				{/if}
 			{/if}
 		</section>
+		</div>
+	{/if}
+
+	{#if mode === 'personas'}
+		<!-- Personas tab — list of saved PersonaFilter JSONs scoped to the
+		     current corpus's indication. Each row links to the personas page
+		     and offers a one-click button to generate (or regenerate) the
+		     narrative-chart sidecar via /api/personas/generate-narrative. -->
+		<section class="mb-10 rounded-lg border border-muted bg-white">
+			<div class="flex items-center justify-between gap-3 border-b border-muted px-5 py-3">
+				<div>
+					<h2 class="text-sm font-medium text-primary">Saved personas</h2>
+					<p class="text-xs text-gray-500">
+						{scopedPersonas.length} persona{scopedPersonas.length === 1 ? '' : 's'} for
+						<strong>{corpus?.indications.map(titleCase).join(', ') ?? 'this corpus'}</strong>.
+						Generate a narrative chart to render a Commonwealth-style archetype on the
+						<a
+							href="/patientlyiq/personas?view=saved"
+							class="text-indigo-700 hover:underline"
+						>
+							personas page
+						</a>.
+					</p>
+				</div>
+			</div>
+			{#if scopedPersonas.length === 0}
+				<p class="px-5 py-6 text-center text-xs text-gray-500">
+					No saved personas yet for this corpus. Build one with the <strong>By filter</strong> or
+					<strong>By authors</strong> tab.
+				</p>
+			{:else}
+				<ul class="divide-y divide-muted">
+					{#each scopedPersonas as p (p.id)}
+						{@const job = narrativeJobs[p.id]}
+						{@const jmJob = journeyMapJobs[p.id]}
+						{@const hasJourneyMap = p.journey_map_corpora?.includes(corpusId) ?? false}
+						<li class="flex items-start justify-between gap-3 px-5 py-3">
+							<div class="min-w-0 flex-1">
+								<div class="flex items-center gap-2">
+									{#if p.avatar_url}
+										<img
+											src={p.avatar_url}
+											alt=""
+											class="size-8 shrink-0 rounded-full bg-white object-cover"
+										/>
+									{:else if p.color}
+										<span
+											class="inline-block size-2.5 shrink-0 rounded-full"
+											style:background-color={p.color}
+										></span>
+									{/if}
+									<a
+										href={`/patientlyiq/personas?view=saved&persona=${p.id}`}
+										class="truncate text-sm font-medium text-primary hover:text-indigo-700 hover:underline"
+									>
+										{p.label}
+									</a>
+									{#if p.has_narrative}
+										<span
+											class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-800"
+										>
+											Narrative ✓
+										</span>
+									{/if}
+									{#if hasJourneyMap}
+										<a
+											href={`/patientlyiq/journey-map/${corpusId}/${p.id}?view=table`}
+											class="rounded-full bg-sky-100 px-1.5 py-0.5 text-[10px] font-medium text-sky-800 hover:bg-sky-200"
+											title="Open the journey-map table for this persona"
+										>
+											Journey map ✓
+										</a>
+									{/if}
+								</div>
+								<p class="mt-1 line-clamp-2 text-xs text-gray-600">{p.description}</p>
+								<p class="mt-1 font-mono text-[10px] text-gray-400">{p.id}</p>
+							</div>
+							<div class="flex shrink-0 flex-col gap-1.5">
+								<button
+									type="button"
+									onclick={() => runNarrative(p.id, p.label)}
+									disabled={job?.running}
+									class="rounded-md border border-muted bg-white px-2.5 py-1 text-xs text-gray-700 shadow-sm hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+									title={p.has_narrative
+										? 'Regenerate the narrative chart sidecar from the latest corpus annotations'
+										: 'Generate a Commonwealth-style archetype narrative for this persona'}
+								>
+									{job?.running
+										? 'Generating…'
+										: p.has_narrative
+											? 'Regenerate narrative'
+											: 'Create narrative chart'}
+								</button>
+								<button
+									type="button"
+									onclick={() => runJourneyMap(p.id, p.label)}
+									disabled={jmJob?.running || !corpusId}
+									class="rounded-md border border-muted bg-white px-2.5 py-1 text-xs text-gray-700 shadow-sm hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+									title={hasJourneyMap
+										? `Regenerate the journey-map artifact for ${corpusId} (5–15min)`
+										: `Synthesize a journey-map artifact for this persona against ${corpusId} (5–15min)`}
+								>
+									{jmJob?.running
+										? 'Generating…'
+										: hasJourneyMap
+											? 'Regenerate journey map'
+											: 'Create journey-map table'}
+								</button>
+							</div>
+						</li>
+					{/each}
+				</ul>
+			{/if}
+		</section>
 	{/if}
 
 	<!-- Save form — shared by both modes. Renders once the current path has a
 	     savable payload (a derive result OR a non-empty filter that matched
 	     at least one fragment). -->
-	{#if hasSavablePayload}
+	{#if mode !== 'personas' && hasSavablePayload}
 		<section class="mb-10 rounded-lg border border-muted bg-white p-5">
 			<h2 class="text-sm font-medium text-primary">Save as persona</h2>
 			<p class="text-xs text-gray-500">
 				Filter source: <strong>{mode === 'authors' ? 'derived from authors' : 'attitudinal builder'}</strong>.
 			</p>
 			<div class="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
-				<label class="block">
-					<span class="text-[10px] uppercase tracking-wider text-gray-500">id (slug)</span>
+				<label class="block lg:col-span-2">
+					<span class="text-[10px] uppercase tracking-wider text-gray-500">Name</span>
 					<input
 						type="text"
-						bind:value={personaId}
-						placeholder="ln_carT_self_advocates"
+						bind:value={personaName}
+						placeholder="Trial skeptics"
 						class="mt-0.5 block w-full rounded-md border border-muted px-2 py-1 text-sm"
 					/>
-					{#if personaId.length > 0 && !idLooksValid}
+					{#if personaName.length > 0 && !idLooksValid}
 						<span class="text-[11px] text-red-700">
-							Must be lowercase a–z, digits, hyphens, underscores; start with letter/digit.
+							Name must contain at least one letter or digit.
 						</span>
-					{:else if idConflicts}
-						<span class="text-[11px] text-amber-700">
-							A persona with this id exists — save will overwrite.
+					{:else if personaId}
+						<span class="text-[11px] text-gray-500">
+							Saved as <code class="font-mono">{personaId}.json</code>{idConflicts
+								? ' — will overwrite an existing persona.'
+								: ''}
 						</span>
 					{/if}
-				</label>
-				<label class="block">
-					<span class="text-[10px] uppercase tracking-wider text-gray-500">Label</span>
-					<input
-						type="text"
-						bind:value={personaLabel}
-						placeholder="LN CAR-T self-advocates"
-						class="mt-0.5 block w-full rounded-md border border-muted px-2 py-1 text-sm"
-					/>
 				</label>
 				<label class="block lg:col-span-2">
 					<span class="text-[10px] uppercase tracking-wider text-gray-500">Description</span>
@@ -1282,24 +1723,13 @@
 				</label>
 			</div>
 
-			<button
-				type="button"
-				onclick={runSave}
-				disabled={!canSave}
-				class="mt-4 rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-50"
-			>
-				{saving ? 'Saving…' : idConflicts ? 'Save (overwrite)' : 'Save'}
-			</button>
-
+			<!-- Inline error banner. The primary "Save persona" CTA lives in the
+			     tabs row above and success is announced via the global toast —
+			     this is here so a failure stays visible next to the form fields
+			     the analyst needs to fix. -->
 			{#if saveError}
-				<p class="mt-3 rounded border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+				<p class="mt-4 rounded border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
 					{saveError}
-				</p>
-			{/if}
-			{#if saveResult}
-				<p class="mt-3 rounded border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs text-emerald-800">
-					Saved <code class="font-mono">{saveResult.path}</code>. The persona is now available to
-					other views.
 				</p>
 			{/if}
 		</section>

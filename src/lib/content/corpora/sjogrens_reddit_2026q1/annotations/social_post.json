@@ -1,0 +1,3072 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "corpus_id": "sjogrens_reddit_2026q1",
+    "content_source": "social_post",
+    "updated_at": "2026-06-01T20:12:26.042Z",
+    "dimensions": {
+      "segment_tags": {
+        "generator": "scripts/propose-fragment-sentiment.mjs",
+        "model": "claude-opus-4-7",
+        "codebook_schema_version": "2.0",
+        "last_generated_at": "2026-06-01T19:43:27.117Z",
+        "annotated_batches": [
+          "sjogrens_reddit_2026q1-T1-C1",
+          "sjogrens_reddit_2026q1-T10-C1",
+          "sjogrens_reddit_2026q1-T11-C1",
+          "sjogrens_reddit_2026q1-T2-C1",
+          "sjogrens_reddit_2026q1-T3-C1",
+          "sjogrens_reddit_2026q1-T4-C1",
+          "sjogrens_reddit_2026q1-T5-C1",
+          "sjogrens_reddit_2026q1-T6-C1",
+          "sjogrens_reddit_2026q1-T7-C1",
+          "sjogrens_reddit_2026q1-T8-C1",
+          "sjogrens_reddit_2026q1-T9-C1"
+        ],
+        "fields_populated": [
+          "sentiment_score",
+          "emotions",
+          "confidence",
+          "note"
+        ],
+        "fields_unpopulated": [
+          "themes",
+          "subthemes",
+          "topics"
+        ]
+      },
+      "stages": {
+        "generator": "scripts/propose-fragment-stages.mjs",
+        "model": "claude-opus-4-7",
+        "indication": "sjogrens",
+        "journey_schema_version": "1.0",
+        "last_generated_at": "2026-06-01T20:12:26.042Z",
+        "annotated_batches": [
+          "sjogrens_reddit_2026q1-T1-C1",
+          "sjogrens_reddit_2026q1-T10-C1",
+          "sjogrens_reddit_2026q1-T11-C1",
+          "sjogrens_reddit_2026q1-T2-C1",
+          "sjogrens_reddit_2026q1-T3-C1",
+          "sjogrens_reddit_2026q1-T4-C1",
+          "sjogrens_reddit_2026q1-T5-C1",
+          "sjogrens_reddit_2026q1-T6-C1",
+          "sjogrens_reddit_2026q1-T7-C1",
+          "sjogrens_reddit_2026q1-T8-C1",
+          "sjogrens_reddit_2026q1-T9-C1"
+        ]
+      }
+    },
+    "notes": [
+      "Multi-dimensional annotation file. Each fragment may carry multiple dimension keys (stages, segment_tags, ...).",
+      "stages dimension: AI-proposed journey-stage tags, multi-label per fragment. Enum-constrained at generation time.",
+      "Every stages entry is source: ai_proposed, review_status: pending.",
+      "Re-propose with: node scripts/propose-fragment-stages.mjs <corpus> [--source <name>] [--batch <id>] [--force]"
+    ]
+  },
+  "annotations": {
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "factual disclaimer",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "disclaimer framing for a microbiome research post",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "list marker",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "bare list numeral, no content",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.5,
+        "note": "factual study finding",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_positive_experiences"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "positive reversal finding",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "citation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.85,
+        "note": "citation/list marker",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.5,
+        "note": "factual but negative outcome",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_positive_experiences"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "citation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.85,
+        "note": "citation marker",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms",
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.5,
+        "note": "negative finding stated factually",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.5,
+        "note": "factual",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "citation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.85,
+        "note": "citation marker",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.5,
+        "note": "negative experimental result",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s12": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.5,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s13": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "citation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.85,
+        "note": "citation marker",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s14": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "factual finding",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s15": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "speculative observation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s16": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.9,
+        "note": "citation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.85,
+        "note": "citation marker",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s17": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s18": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific",
+          "treatment"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps",
+          "treatment_positive_experiences"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "every study saw improvement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s19": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.5,
+        "note": "caveat about small study",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s20": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "treatment"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "treatment_positive_experiences"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.65,
+        "note": "mixed but positive",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-1-1-1_a_s21": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "condition_knowledge_gaps"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "ongoing research",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "gut_and_microbiome_theories",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-10-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "treatment"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "trial_motivators",
+          "treatment_knowledge_gaps"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.85,
+        "note": "Explicit plea for hope; seeking positive trial experiences",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Seeking firsthand response/QoL signals from trial participants.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-11-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness",
+          "clinical_trial_interest",
+          "advocacy_peer_groups"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "Enthusiastic info-sharing about clinical trials; eager engagement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "Sharing news about a Ph3 trial candidate and inviting peer discussion on enrollment.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-2-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.85,
+        "note": "stark statement of loss/inability",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "daily_symptom_burden",
+            "step_id": null,
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.5,
+        "note": "Brief; likely sicca/mucosal-related inability to eat but unspecified",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-2-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms",
+          "comorbidities",
+          "social_stigma"
+        ],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.88,
+        "note": "cascading list of can'ts conveys hopelessness",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "extraglandular_escalation",
+            "step_id": "neuropathy_emergence",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "daily_symptom_burden",
+            "step_id": "fatigue_and_brain_fog",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Dysautonomia + functional limitations",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-2-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [
+          "distraction"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.7,
+        "note": "distress about bodily dysfunction",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "extraglandular_escalation",
+            "step_id": "neuropathy_emergence",
+            "confidence": 0.75
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Autonomic GI/urinary dysfunction",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-2-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "symptoms",
+          "social_stigma",
+          "trial_barriers"
+        ],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.9,
+        "note": "self-disgust, isolation, desperate plea for hope",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "daily_symptom_burden",
+            "step_id": "sicca_management",
+            "confidence": 0.55
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "peer_community",
+            "confidence": 0.55
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Seronegative excludes from trials; asking community for hope",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-2-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.95,
+        "note": "explicit hopelessness/cry of unbearability",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "daily_symptom_burden",
+            "step_id": null,
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.55,
+        "note": "Emotional weight of chronic burden",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.5,
+        "note": "bare greeting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.95,
+        "note": "bare greeting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "informational",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "active_dosing",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "meta reference to trial post history",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "factual",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "active_dosing",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "on trial drug (dazodalibep/HZN-1116)",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "amazement"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.8,
+        "note": "excited exclamation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "bare exclamation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "symptoms"
+        ],
+        "emotions": [
+          "ecstasy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.9,
+        "note": "dramatic improvement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "symptoms"
+        ],
+        "emotions": [
+          "delight"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "mucosal sicca improvement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "reported positively as sign of improvement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "side effect of restored saliva",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "celebrating drooling",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "delight"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "symptoms",
+          "comorbidities",
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "mostly improvement, some uncertainty",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.75
+          },
+          {
+            "stage_id": "extraglandular_escalation",
+            "step_id": "comorbidity_braid",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "dysautonomia improvement, hashimotos overlap",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s12": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "symptoms",
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s13": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "informational",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "active_dosing",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "sponsor reference",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s14": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.65
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "general enthusiasm about pipeline",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s15": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_negative_experiences",
+          "trial_barriers"
+        ],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.9,
+        "note": "devastated about trial ending",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "long_term_follow_up",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "trial ending, can't continue",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s16": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "treatment_positive_experiences",
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "trust"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "gratitude for masks/protection",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "active_dosing",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "immunosuppression management during trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s17": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "reflection on trial decision",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-3-1-1_a_s18": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_decision_factors",
+          "advocacy_peer_groups"
+        ],
+        "emotions": [
+          "love"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "gratitude to community",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "consent_or_decline",
+            "confidence": 0.75
+          },
+          {
+            "stage_id": "self_directed_exploration",
+            "step_id": "peer_community",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "recalling enrollment decision and peer support",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.5,
+        "note": "bare greeting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.95,
+        "note": "bare greeting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness",
+          "trial_barriers"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "context-setting about trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "active_dosing",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.4
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "recapping trial enrollment and immunosuppression risk",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "factual",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "active_dosing",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "identifying trial drug",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "symptoms"
+        ],
+        "emotions": [
+          "ecstasy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.9,
+        "note": "excited about symptom improvement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "symptoms"
+        ],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "positive symptom relief",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "symptoms",
+          "social_stigma",
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "mixed - choking but pleased about saliva; annoyance at travelers",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "saliva return as response signal",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.7,
+        "note": "emotional reaction, no substantive content alone",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "symptoms"
+        ],
+        "emotions": [
+          "delight"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "positive symptom change",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.95
+          }
+        ],
+        "overall_confidence": 0.95,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "amazement"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "sensory return",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.5,
+        "note": "vague but in context refers to symptom improvement",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific",
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "symptoms",
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "listing improvements",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "multiple symptom improvements",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "uncertain assessment",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "fatigue assessment uncertainty",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms",
+          "medical_self_efficacy"
+        ],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "coping with heat",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.5,
+        "note": "travel/heat coping, off-topic for taxonomy",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s12": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "imperative/suggestion",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "directing peers to the trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s13": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "factual",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s14": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "clinical_trial_knowledge_gaps"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "excited belief",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s15": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_positive_experiences",
+          "trial_barriers",
+          "symptoms"
+        ],
+        "emotions": [
+          "bittersweetness"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "joyful now but dreading losing access",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "long_term_follow_up",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "anticipating end of trial access",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-4-1-1_a_s16": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_positive_experiences"
+        ],
+        "emotions": [
+          "pride"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.75,
+        "note": "relief and pride at staying well",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "active_dosing",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "infection risk during dosing",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "treatment"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "press release announcement of positive trial results",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "Phase III trial results announcement for ianalumab",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "positive trial efficacy reporting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "clinical improvement data",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.7
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "ESSDAI response data",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [
+          "symptoms"
+        ],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "describing disease burden seriously",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "daily_symptom_burden",
+            "step_id": null,
+            "confidence": 0.6
+          },
+          {
+            "stage_id": "extraglandular_escalation",
+            "step_id": "lymphoma_surveillance",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "Disease overview quote",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.75,
+        "note": "expert highlighting breakthrough",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "mechanistic description",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Mechanism of action",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [
+          "condition_specific"
+        ],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "factual mechanism",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.6,
+        "note": "general disease pathology, not a stage",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.8,
+        "note": "executive expressing confidence",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "looking forward to approval",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.65,
+        "note": "trial results reporting",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.6,
+        "note": "positive trial finding",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness",
+          "symptoms"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.65,
+        "note": "listing improvements",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Secondary outcome measures",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s12": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.55,
+        "note": "nominal significance",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s13": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "failed to reach statistical significance",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "response_signals",
+            "confidence": 0.8
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s14": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "trust"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.65,
+        "note": "favorable safety profile",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "active_dosing",
+            "confidence": 0.75
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "Safety data",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s15": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "factual trial description",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s16": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.55,
+        "note": "trial purpose",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "extraglandular_escalation",
+            "step_id": null,
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.75,
+        "note": "Trial design targeting extraglandular disease",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s17": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.75,
+        "note": "methods description",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s18": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.75,
+        "note": "methods description",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s19": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "factual continuation info",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "in_trial_and_post_trial",
+            "step_id": "long_term_follow_up",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s20": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.55,
+        "note": "broader pipeline",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.7,
+        "note": "About ianalumab in other indications, not Sjögren's journey",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-5-1-1_a_s21": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "corporate background",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.8,
+        "note": "corporate history, off-topic",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-6-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness",
+          "clinical_trial_interest",
+          "trial_motivators"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "Enthusiastic call to action for trial participation",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Sharing trial signup link and own enrollment/screening step",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-7-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "treatment",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "diagnostic_odyssey",
+          "treatment_barriers",
+          "treatment_health_history",
+          "medical_self_efficacy",
+          "symptoms"
+        ],
+        "emotions": [
+          "frozenness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.7,
+        "note": "Patient frustrated by seronegative status and repeated rheumatology declines; seeking treatment access.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "lip_biopsy_and_classification",
+            "confidence": 0.8
+          },
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "specialist_bouncing",
+            "confidence": 0.75
+          },
+          {
+            "stage_id": "naming_and_first_line",
+            "step_id": "starting_first_line",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Seronegative/biopsy-negative seeking Plaquenil trial; spans odyssey and first-line access",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-8-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "comorbidities"
+        ],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "opening question with self-introduction",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Asking community about trial participation; mentions RA/Sjogren's comorbidity context",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-8-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [
+          "treatment"
+        ],
+        "subthemes": [
+          "treatment_negative_experiences",
+          "treatment_health_history"
+        ],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "naming_and_first_line",
+            "step_id": "understanding_the_toolkit",
+            "confidence": 0.6
+          }
+        ],
+        "overall_confidence": 0.6,
+        "note": "Failure of standard meds motivating trial interest",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-8-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_interest",
+          "trial_motivators"
+        ],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "expresses desire to try trials",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.85
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-8-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "trial_barriers"
+        ],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.65,
+        "note": "frustration with doctor's reluctance",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.7
+          }
+        ],
+        "overall_confidence": 0.7,
+        "note": "Doctor gatekeeping referral to trials",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-8-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials",
+          "condition_specific"
+        ],
+        "subthemes": [
+          "trial_decision_factors",
+          "symptoms"
+        ],
+        "emotions": [
+          "ambivalence"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "worsening bloodwork but possible qualification",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "eligibility_self_assessment",
+            "confidence": 0.85
+          },
+          {
+            "stage_id": "diagnostic_odyssey",
+            "step_id": "serology_and_imaging",
+            "confidence": 0.5
+          }
+        ],
+        "overall_confidence": 0.8,
+        "note": "Ultrasound being done to qualify for trial",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-8-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "request for experiences",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [],
+        "overall_confidence": 0.9,
+        "note": "bare request for experiences, no substantive content",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-sjogrens_reddit_2026q1-9-1-1_a": {
+      "segment_tags": {
+        "themes": [
+          "clinical_trials"
+        ],
+        "subthemes": [
+          "clinical_trial_awareness"
+        ],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.9,
+        "note": "",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      },
+      "stages": {
+        "values": [
+          {
+            "stage_id": "trial_consideration",
+            "step_id": "trial_awareness",
+            "confidence": 0.9
+          }
+        ],
+        "overall_confidence": 0.85,
+        "note": "Sharing a trial news article with community, signaling trial awareness",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    }
+  }
+}

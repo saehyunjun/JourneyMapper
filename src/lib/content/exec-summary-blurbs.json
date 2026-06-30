@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "generator": "scripts/propose-exec-summary.mjs",
+  "model": "claude-haiku-4-5",
+  "notes": [
+    "Analyst-voice copy for the bento-shape patientlyiq executive summary.",
+    "Sister to dashboard_blurbs.json (which still owns per-finding copy for obesity).",
+    "Re-generate one indication with: node scripts/propose-exec-summary.mjs <indication> --force"
+  ],
+  "indications": {
+    "lupus_nephritis": {
+      "generated_at": "2026-05-29T18:33:27.233Z",
+      "model": "claude-haiku-4-5",
+      "corpus_kind": "real_online forum",
+      "anchor_subtheme_id": "treatment_decision_factors",
+      "overview": "Across 2,235 online forum posts and comments on lupus nephritis, sentiment leans negative: 37% negative vs 25% positive. The negativity clusters around treatment burden—corticosteroid side effects (weight gain, diabetes risk, psychological effects), mycophenolate's fertility constraints, and the unpredictability of flares despite ongoing therapy. Positive sentiment emerges narrowly around remission outcomes and emerging modalities like CAR-T. The core tension is between disease severity that demands aggressive treatment and treatment toxicity that degrades the very quality of life patients seek to preserve.",
+      "sentiment_lean": {
+        "headline": "CAR-T sentiment towers above the rest.",
+        "caption": "CAR-T threads run 56% positive vs 24% positive in other discussions, but remain a small pocket within a larger negative corpus."
+      },
+      "anchor_subtheme": {
+        "headline": "Where treatment choice collides with life planning.",
+        "caption": "These three posts anchor the corpus because they show how treatment decisions—transplant acceptance, medication selection, fertility timing—force a stark trade-off between organ survival and personal autonomy."
+      },
+      "bridge_narrative": {
+        "eyebrow": "The throughline.",
+        "headline": "Treatment prevents kidney failure but extracts a steep quality-of-life cost.",
+        "caption": "Community authors accept that therapy works to slow disease; what rankles is living on the side effects.",
+        "body": "Across the corpus, authors acknowledge treatment efficacy—flare prevention, remission possibility, organ preservation—yet frame it as a narrowing of acceptable life. Prednisone, mycophenolate, and monitoring regimens buy time at the cost of weight, fertility, energy, and autonomy. The most acute frustration surfaces when authors feel trapped: forced to choose between stopping medication (disease risk) and continuing it (side effect burden).",
+        "points": [
+          {
+            "value": "176",
+            "label": "LN diagnosis posts"
+          },
+          {
+            "value": "Prednisone, mycophenolate, flare risk",
+            "label": "Treatment burden"
+          }
+        ],
+        "tone": "negative"
+      },
+      "lead_finding": {
+        "eyebrow": "What fuels negative treatment talk.",
+        "headline": "Diagnosis-related posts and corticosteroid side effects drive 114 of 149 negative treatment comments.",
+        "lede": "Authors dwelling on lupus nephritis diagnosis or prednisone toxicity account for the bulk of negative treatment sentiment in the corpus.",
+        "analysis": "The underlying pattern is that active disease (diagnosis posts often describe acute flares, hospitalization, or multi-system involvement) and the first-line steroid regimen create parallel complaint channels. Authors report prednisone-induced diabetes risk, psychological side effects, and weight gain—problems that feel iatrogenic and controllable in a way the disease itself does not. This suggests trial design should anticipate that steroid-sparing approaches will resonate sharply in recruitment and retention messaging."
+      },
+      "second_finding": {
+        "eyebrow": "Where positive sentiment clusters.",
+        "headline": "Renal remission and CAR-T therapy generate 34 of 69 positive treatment comments.",
+        "lede": "Authors discussing remission outcomes or CAR-T breakthroughs are the primary source of optimism in treatment-focused threads.",
+        "analysis": "Remission—especially multi-year remission off all lupus drugs—reframes the entire treatment calculus. CAR-T, though discussed in only 24 total posts, carries 56% positive sentiment, suggesting that authors view it as a genuine escape route from chronic medication burden rather than another treatment trade-off. This indicates that messaging around disease remission and minimal-maintenance outcomes will anchor positive trial engagement."
+      }
+    },
+    "multiple_sclerosis": {
+      "generated_at": "2026-05-29T18:33:14.150Z",
+      "model": "claude-haiku-4-5",
+      "corpus_kind": "real_online forum",
+      "anchor_subtheme_id": "treatment_decision_factors",
+      "overview": "Across 78 online forum posts and comments, sentiment splits mixed: 24% positive, 28% negative, 47% neutral. CAR T-cell therapy surfaces as notably more optimistic (33% positive vs. 20% for other treatments), driven by community enthusiasm about single-dose intervention and mechanism of action. Other modalities—Ocrevus, Kesimpta, cyclophosphamide—track more negative, anchored in skepticism about cure claims and unresolved toxicity tradeoffs. The corpus reveals a therapeutic-area audience less interested in hype than in honest accounting of what these drugs actually do.",
+      "sentiment_lean": {
+        "headline": "CAR T runs hotter than conventional B-cell depleters.",
+        "caption": "Community posts on CAR T-cell therapy trend optimistic; sentiment on Ocrevus and Kesimpta skews skeptical about durability and cure mythology."
+      },
+      "anchor_subtheme": {
+        "headline": "What treatment choice actually hinges on.",
+        "caption": "These three posts ground the decision around durability claims, long-term progression risk, and whether one-time intervention justifies the mechanism shift from continuous dosing."
+      },
+      "bridge_narrative": {
+        "eyebrow": "The throughline.",
+        "headline": "Cure language obscures what these therapies actually accomplish in MS.",
+        "caption": "The community understands that B-cell depletion—whether continuous or one-time—controls relapses but does not halt progression.",
+        "body": "online forum commenters with clinical or immunology backgrounds systematically deconstruct the CAR T marketing around single-dose cure potential, reframing it as a more efficient form of B-cell depletion rather than a disease reset. The tension is not between CAR T and other DMTs, but between community expectations of cure and the biological reality of managing an autoimmune condition with imperfectly understood root cause.",
+        "points": [
+          {
+            "value": "9",
+            "label": "Cyclophosphamide toxicity posts"
+          },
+          {
+            "value": "18",
+            "label": "CAR T modality discussions"
+          },
+          {
+            "value": "B-cell depletion parity",
+            "label": "Shared mechanism"
+          }
+        ],
+        "tone": "negative"
+      },
+      "lead_finding": {
+        "eyebrow": "What drove treatment skepticism.",
+        "headline": "Cyclophosphamide toxicity and mechanism-of-action conflation pushed negative framing of B-cell depleters.",
+        "lede": "Community posts on conventional treatments emphasize unresolved toxicity concerns and overstate cure potential, undercutting confidence in treatment durability.",
+        "analysis": "Nine posts flagged cyclophosphamide cost and safety burden; separate clusters around Ocrevus and Kesimpta reveal concern that monthly or biannual dosing implies chronic immunosuppression without endpoint. The negative tone consolidates around a single observation: if these drugs do not address the root cause of MS, labeling them cures or near-cures overstates their clinical contribution and invites disappointment when progression continues."
+      },
+      "second_finding": {
+        "eyebrow": "What shaped trial-design talk.",
+        "headline": "MS diagnosis complexity and CAR T mechanism drove separate but entangled discussion threads.",
+        "lede": "Posts about clinical trials center on whether single-dose intervention suits an incurable, progressive disease, and whether B-cell depletion parity undermines CAR T advantage.",
+        "analysis": "Twenty posts invoking MS diagnosis stressed unknown etiology; 21 posts on CAR T modality split between optimism (8 positive) and skepticism (3 negative), with 10 neutral. The second finding is that community willingness to embrace CAR T hinges not on efficacy alone but on whether dosing convenience and mechanistic novelty offset unproven long-term durability in a disease with 20–30 year horizons."
+      }
+    }
+  }
+}

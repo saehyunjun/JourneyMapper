@@ -1,24 +1,47 @@
 /**
- * analysis.ts
+ * analysis.ts — STUBBED 2026-05-31
  *
- * Typed loader + join helpers over the interview-analysis pipeline outputs.
- * Backs the review interface at /wctglpdemo/analysis.
+ * The 8 top-level JSON imports (~940 KB) were dragging every importer of
+ * `quotes` / `annotations` / `titleCase` / etc. into a single SSR module
+ * graph. On dev that caused Vite SSR-fetch timeouts on /patientlyiq because
+ * any HMR invalidation re-parsed the entire chain.
  *
- * Codebook 2.0: three top-level themes (treatment, clinical_trials,
- * condition_specific), each with subthemes. Annotations carry both axes:
- * a.themes (broad, max 3) and a.subthemes (specific, the actual tag detail).
- * The frequency/breakdown helpers iterate themes as the outer axis and
- * subthemes as the inner axis — same shape as before, finer-grained inside.
+ * Until the per-indication data layer lands (see PERFORMANCE_REFACTOR.md
+ * "next architecture"), this module is intentionally stubbed: all exported
+ * data is empty, all helper functions still work (they operate on the empty
+ * data and naturally return empty results), all types are preserved. Pages
+ * that import from here will render with empty cells/lists but will LOAD.
+ *
+ * Per-indication data should be loaded inside +page.server.ts via fragment
+ * corpora (the fragment-corpus path already supports this for LN + MS) and
+ * passed to the page via data props — NOT re-imported at the module top
+ * level. Re-introducing eager imports here will resurrect the same hang.
+ *
+ * To restore real data temporarily for development, uncomment the imports
+ * below and the original const initializers (each marked STUB).
  */
-import interviewsRaw from './interviews_structured.json';
-import wordUsageRaw from './word_usage.json';
-import questionsRaw from './questions.json';
-import segmentsRaw from './segments.json';
-import segmentTagsRaw from './segment_tags.json';
-import codebookRaw from './codebook.json';
-import quoteBankRaw from './quote_bank.json';
-import keywordUsageRaw from './keyword_usage.json';
-import personaGoalsBarriersRaw from './persona_goals_barriers.json';
+
+// import interviewsRaw from './interviews_structured.json';
+// import wordUsageRaw from './word_usage.json';
+// import questionsRaw from './questions.json';
+// import segmentsRaw from './segments.json';
+// import segmentTagsRaw from './segment_tags.json';
+// import codebookRaw from './codebook.json';
+// import quoteBankRaw from './quote_bank.json';
+// import personaGoalsBarriersRaw from './persona_goals_barriers.json';
+
+// Type-only re-exports for back-compat. The runtime lives in
+// analysis-keywords.ts (which imports keyword_usage.json — 730 KB). Importers
+// that only need the type continue to work without paying for the payload.
+// Routes that need the runtime (buildRadialTree, keywordBreakdown,
+// segmentsForKeyword, keywordBySegment) import directly from './analysis-keywords'.
+export type {
+	KeywordMatchContext,
+	KeywordBreakdownRow,
+	SegmentKeyword,
+	RadialNode,
+	RadialBlock
+} from './analysis-keywords';
 
 export type WordCount = { word: string; count: number };
 
@@ -96,16 +119,17 @@ export type ThemeTag = {
 
 type Interview = { interview_id: string; turn_count: number };
 
-export const quotes = (quoteBankRaw as { quotes: Quote[] }).quotes;
+// STUB: was `(quoteBankRaw as { quotes: Quote[] }).quotes`
+export const quotes: Quote[] = [];
 
-const segmentTags = segmentTagsRaw as {
-	meta: { tagged_interviews?: string[]; pending_interviews?: string[] };
-	annotations: Annotation[];
-};
-export const annotations = segmentTags.annotations;
+// STUB: segment_tags.json was the heaviest single import here (290 KB).
+export const annotations: Annotation[] = [];
 
-export const pendingInterviews: string[] = segmentTags.meta.pending_interviews ?? [];
-export const questions = (questionsRaw as { questions: Question[] }).questions;
+// STUB: derived from segment_tags meta.
+export const pendingInterviews: string[] = [];
+
+// STUB: was `(questionsRaw as { questions: Question[] }).questions`.
+export const questions: Question[] = [];
 
 /**
  * AI-generated goals (what the participant is reaching for) and barriers
@@ -123,11 +147,9 @@ export type PersonaGoalsBarriers = {
 	goals: PersonaGoalBarrier[];
 	barriers: PersonaGoalBarrier[];
 };
-const personaGoalsBarriersData = personaGoalsBarriersRaw as {
-	meta: Record<string, unknown>;
-	personas: Record<string, PersonaGoalsBarriers>;
-};
-export const personaGoalsBarriers = personaGoalsBarriersData.personas;
+// STUB: was personaGoalsBarriersRaw.personas. Empty record keeps callers
+// safe — goalsBarriersFor() simply returns null for every interview id.
+export const personaGoalsBarriers: Record<string, PersonaGoalsBarriers> = {};
 
 /** Goals + barriers for one participant, or null if the script hasn't run for them. */
 export function goalsBarriersFor(interviewId: string): PersonaGoalsBarriers | null {
@@ -135,7 +157,9 @@ export function goalsBarriersFor(interviewId: string): PersonaGoalsBarriers | nu
 }
 
 /** The three top-level themes from codebook 2.0, each carrying its subthemes. */
-export const themeTags = (codebookRaw as { themes: ThemeTag[] }).themes;
+// STUB: was `(codebookRaw as { themes: ThemeTag[] }).themes`. Empty array
+// is safe — every downstream join over themeTags becomes a no-op.
+export const themeTags: ThemeTag[] = [];
 
 /** Flat list of every subtheme, with its parent theme id attached as `group`. */
 export const subthemeTags: (Subtheme & { group: string })[] = themeTags.flatMap((t) =>
@@ -156,68 +180,15 @@ export const tagGroups: TagGroup[] = themeTags.map((t) => ({
 	description: t.description ?? ''
 }));
 
-export const interviews = (interviewsRaw as { interviews: Interview[] }).interviews;
-export const segments = (segmentsRaw as { segments: Segment[] }).segments;
-export const wordUsage = wordUsageRaw as {
+// STUB: was `(interviewsRaw as { interviews: Interview[] }).interviews`.
+export const interviews: Interview[] = [];
+// STUB: was `(segmentsRaw as { segments: Segment[] }).segments` (275 KB).
+export const segments: Segment[] = [];
+// STUB: was `wordUsageRaw` (156 KB). Empty shape is structurally valid.
+export const wordUsage: {
 	overall_word_usage: WordCount[];
 	by_participant: Record<string, { total_words: number; unique_words: number; word_usage: WordCount[] }>;
-};
-
-type KeywordUsageMatch = {
-	segment_id: string;
-	interview_id: string;
-	question_id: string | null;
-	text?: string;
-	char_start?: number;
-	char_end?: number;
-};
-type KeywordUsageCluster = {
-	id: string;
-	label: string;
-	parent_theme?: string;
-	parent_subtheme?: string;
-	count: number;
-	matches: KeywordUsageMatch[];
-};
-type KeywordUsage = { clusters: KeywordUsageCluster[] };
-
-const keywordUsage = keywordUsageRaw as unknown as KeywordUsage;
-
-/** Match context handed to keyword predicates — what every cluster match
- *  carries that callers can filter on. */
-export type KeywordMatchContext = {
-	segment_id: string;
-	interview_id: string;
-	question_id: string | null;
-};
-
-export type KeywordBreakdownRow = {
-	id: string;
-	label: string;
-	count: number;
-	parent_subtheme: string;
-	parent_theme: string;
-	blocks: ThemeBlock[];
-};
-
-/** A keyword a segment matched, plus the literal surface form spoken in it. */
-export type SegmentKeyword = { id: string; label: string; surface: string };
-
-/**
- * segment_id -> the single strongest keyword it matched in keyword_usage.json,
- * where "strongest" is the cluster with the highest corpus-wide mention count.
- * `surface` is the verbatim form spoken in that segment. Segments matching no
- * lexicon cluster are simply absent from the map.
- */
-export const keywordBySegment: Map<string, SegmentKeyword> = (() => {
-	const map = new Map<string, SegmentKeyword>();
-	const ranked = (keywordUsage.clusters ?? []).slice().sort((a, b) => b.count - a.count);
-	for (const kw of ranked)
-		for (const m of kw.matches)
-			if (!map.has(m.segment_id))
-				map.set(m.segment_id, { id: kw.id, label: kw.label, surface: m.text ?? '' });
-	return map;
-})();
+} = { overall_word_usage: [], by_participant: {} };
 
 const questionById = new Map(questions.map((q) => [q.question_id, q]));
 
@@ -346,11 +317,13 @@ export function emotionBreakdown(
 		.sort((a, b) => b.count - a.count);
 }
 
-const quoteBySegment = new Map<string, string>();
+// Exported because analysis-keywords.ts joins keyword matches against these
+// same lookup tables. Keep them as the single source of truth.
+export const quoteBySegment = new Map<string, string>();
 for (const q of quotes) for (const sid of q.segment_ids) quoteBySegment.set(sid, q.quote_id);
 
-const segmentById = new Map(segments.map((s) => [s.segment_id, s]));
-const annotationBySegment = new Map(annotations.map((a) => [a.segment_id, a]));
+export const segmentById = new Map(segments.map((s) => [s.segment_id, s]));
+export const annotationBySegment = new Map(annotations.map((a) => [a.segment_id, a]));
 
 export type KeyQuote = {
 	id: string;
@@ -451,140 +424,9 @@ export function segmentsForSubtheme(
 	return fragmentsMatching((a) => a.subthemes.includes(subthemeId) && predicate(a));
 }
 
-/** Every coded segment whose text matched the given keyword cluster, joined
- *  against the codebook annotations so each fragment carries sentiment +
- *  emotions for visual treatment. `predicate` filters the underlying match
- *  contexts (e.g. by participant or question). */
-export function segmentsForKeyword(
-	clusterId: string,
-	predicate: (m: KeywordMatchContext) => boolean = () => true
-): ThemeFragment[] {
-	const cluster = keywordUsage.clusters.find((c) => c.id === clusterId);
-	if (!cluster) return [];
-	const seen = new Set<string>();
-	const out: ThemeFragment[] = [];
-	for (const m of cluster.matches) {
-		if (!predicate(m)) continue;
-		if (seen.has(m.segment_id)) continue;
-		seen.add(m.segment_id);
-		const seg = segmentById.get(m.segment_id);
-		if (!seg) continue;
-		const ann = annotationBySegment.get(m.segment_id);
-		out.push({
-			segment_id: m.segment_id,
-			text: seg.text,
-			char_start: seg.char_start,
-			char_end: seg.char_end,
-			interview_id: m.interview_id,
-			question_id: m.question_id ?? ann?.question_id ?? '',
-			sentiment: ann?.sentiment ?? 0,
-			emotions: ann?.emotions ?? [],
-			flags: seg.flags ?? [],
-			in_pull_quote: quoteBySegment.has(m.segment_id),
-			quote_id: quoteBySegment.get(m.segment_id) ?? null
-		});
-	}
-	return out;
-}
-
-/** Per-cluster breakdown from the live keyword lexicon. Each row's `blocks`
- *  are one per matched segment (deduped), carrying the segment's annotation
- *  sentiment (or 0 if the segment isn't annotated). `predicate` narrows by
- *  participant, question, etc. */
-export function keywordBreakdown(
-	predicate: (m: KeywordMatchContext) => boolean = () => true
-): KeywordBreakdownRow[] {
-	const out: KeywordBreakdownRow[] = [];
-	for (const cluster of keywordUsage.clusters) {
-		const seen = new Set<string>();
-		const blocks: ThemeBlock[] = [];
-		for (const m of cluster.matches) {
-			if (!predicate(m)) continue;
-			if (seen.has(m.segment_id)) continue;
-			seen.add(m.segment_id);
-			const ann = annotationBySegment.get(m.segment_id);
-			blocks.push({ sentiment: ann?.sentiment ?? 0, interview_id: m.interview_id });
-		}
-		if (!blocks.length) continue;
-		out.push({
-			id: cluster.id,
-			label: cluster.label,
-			count: blocks.length,
-			parent_subtheme: cluster.parent_subtheme ?? '',
-			parent_theme: cluster.parent_theme ?? '',
-			blocks
-		});
-	}
-	return out.sort((a, b) => b.count - a.count);
-}
-
 /** Pretty label for a subtheme id, or title-cased fallback. */
 export function subthemeLabel(id: string): string {
 	return subthemeTags.find((s) => s.id === id)?.label ?? titleCase(id);
-}
-
-// === Three-level radial tree (theme -> subtheme -> keyword) ==================
-
-export type RadialBlock = { sentiment: number; interview_id: string };
-export type RadialNode = {
-	id: string;
-	label: string;
-	count: number;
-	blocks: RadialBlock[];
-	kind: 'theme' | 'subtheme' | 'keyword';
-	description?: string;
-	children?: RadialNode[];
-};
-
-/** A complete three-level hierarchy filtered by the given predicates, suitable
- *  for the zoomable RadialThemeChart. `annPred` filters the codebook
- *  annotations that drive theme + subtheme counts; `matchPred` filters the
- *  live keyword-lexicon matches that drive each subtheme's keyword children.
- *  Subthemes/themes with zero counts under the filter are dropped. */
-export function buildRadialTree(
-	annPred: (a: Annotation) => boolean = () => true,
-	matchPred: (m: KeywordMatchContext) => boolean = () => true
-): RadialNode[] {
-	const themes = themeBreakdown(annPred);
-
-	const keywordsBySubtheme = new Map<string, RadialNode[]>();
-	for (const kw of keywordBreakdown(matchPred)) {
-		const list = keywordsBySubtheme.get(kw.parent_subtheme) ?? [];
-		list.push({
-			id: kw.id,
-			label: kw.label,
-			count: kw.count,
-			blocks: kw.blocks,
-			kind: 'keyword'
-		});
-		keywordsBySubtheme.set(kw.parent_subtheme, list);
-	}
-
-	const themeMeta = new Map(themeTags.map((t) => [t.id, t] as const));
-
-	return themes.map((t) => {
-		const meta = themeMeta.get(t.id);
-		return {
-			id: t.id,
-			label: meta?.label ?? titleCase(t.id),
-			count: t.count,
-			blocks: t.blocks,
-			kind: 'theme',
-			description: meta?.description,
-			children: t.subthemes.map((s) => {
-				const sMeta = (meta?.subthemes ?? []).find((x) => x.id === s.id);
-				return {
-					id: s.id,
-					label: sMeta?.label ?? subthemeLabel(s.id),
-					count: s.count,
-					blocks: s.blocks,
-					kind: 'subtheme',
-					description: sMeta?.description,
-					children: (keywordsBySubtheme.get(s.id) ?? []).sort((a, b) => b.count - a.count)
-				};
-			})
-		};
-	});
 }
 
 const questionOrder = new Map(questions.map((q) => [q.question_id, q.order]));

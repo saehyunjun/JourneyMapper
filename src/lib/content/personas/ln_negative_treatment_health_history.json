@@ -1,0 +1,25 @@
+{
+  "id": "ln_negative_treatment_health_history",
+  "label": "LN — Negative sentiment, discussing Treatment Health History",
+  "description": "Lupus nephritis voices expressing negative sentiment, discussing treatment health history.",
+  "applicable_indications": [
+    "lupus_nephritis"
+  ],
+  "filter": {
+    "indications": [
+      "lupus_nephritis"
+    ],
+    "annotations": {
+      "has_subtheme": [
+        "treatment_health_history"
+      ],
+      "sentiment": {
+        "min": -2,
+        "max": -1
+      }
+    }
+  },
+  "weighting": {
+    "type": "uniform"
+  }
+}

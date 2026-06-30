@@ -1,0 +1,206 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "updated_at": "2026-06-01T18:35:43.841122Z",
+    "inference_method": "heuristic_regex@v1",
+    "notes": [
+      "Roles inferred from per-author concatenated text via keyword/phrase patterns; not analyst-reviewed.",
+      "Authors with no matching signal omitted (missing-key semantics).",
+      "speaker_attrs on each fragment is also populated with evidence: inferred so downstream can filter."
+    ]
+  },
+  "authors": {
+    "User-Ember-Palisade-3688": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+      },
+      "evidence_scores": {
+        "patient": 2,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Frost-Stone-9302": {
+      "role": {
+        "value": "caregiver",
+        "evidence": "inferred",
+        "source_quote": "I need some advice. My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025. She has been on th"
+      },
+      "evidence_scores": {
+        "patient": 0,
+        "caregiver": 1,
+        "clinician": 0
+      }
+    },
+    "User-Juniper-Palisade-9913": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "r the COVID vaccine I was diagnosed and told the vax was more than likely what caused it. When"
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Copper-Ridge-3697": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+      },
+      "evidence_scores": {
+        "patient": 2,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Crimson-Signal-3598": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+      },
+      "evidence_scores": {
+        "patient": 2,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Lunar-Beacon-3843": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "F here, went to see my nephrologist today to check on the biopsy results and define a treatment"
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Silver-Harbor-1494": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "e a clinical trial? My egfr is 90 with a good amount of protein in the urine. At my sta"
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Quartz-Stone-6064": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": ", I mentioned it to my nephrologist at Walter Reed/ Bethesda Naval hospital, and he said I woul"
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Summit-Meridian-5962": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "been able to reduce my proteinuria and accordingly it seems an ineffective medicine so far."
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Vale-Palisade-9493": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "I am on 400mg. I have had some fatigue but I thought that was just"
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Jade-Thicket-1136": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "nds very similar to my diagnosis last December, efgr 42, scarring 5% and active inflammation"
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-River-Haven-6684": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "about it. Only why my kidney leaks protein when I get a cold Same. I take 50mg Losartan"
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Brisk-Vista-3639": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "I was diagnosed as early as you. It was 2 years ago. i was also prescribed"
+      },
+      "evidence_scores": {
+        "patient": 2,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Zephyr-Basin-1928": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "know your egfr now? I was diagnosed 2 years ago, been stable for 125-128 egfr since even though"
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Saffron-Comet-5855": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "I hope my kidneys can handle the several-year wait to finally get this approv"
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    },
+    "User-Silver-Terrace-2492": {
+      "role": {
+        "value": "patient",
+        "evidence": "inferred",
+        "source_quote": "ist will recommend. My proteinuria rose steadily till it was over 1 gram/ liter when my nephro"
+      },
+      "evidence_scores": {
+        "patient": 1,
+        "caregiver": 0,
+        "clinician": 0
+      }
+    }
+  }
+}

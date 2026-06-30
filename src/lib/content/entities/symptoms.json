@@ -1,0 +1,5 @@
+{
+  "schema_version": "entities-symptom-0.1",
+  "description": "Symptom entity registry per ENTITY_REGISTRY.md. Phase 1 starts empty. Symptoms are patient-experienced (fatigue, brain fog, joint pain) and their theme_links mirror the relevant hrqol scale (e.g. fatigue \u2192 hrqol.vitality, pain \u2192 hrqol.bodily_pain). Populated by the cluster-theme-map migration of subtheme=symptoms clusters (19 items pending) + propose-entities.mjs.",
+  "items": []
+}

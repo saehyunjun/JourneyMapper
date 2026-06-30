@@ -1,0 +1,521 @@
+{
+  "meta": {
+    "schema_version": "theme-tags-0.1",
+    "generator": "propose-theme-tags@0.1",
+    "model": "claude-opus-4-7",
+    "corpus_id": "igan_forum_2026q2",
+    "content_source": "social_post",
+    "updated_at": "2026-06-02T05:50:56.488Z",
+    "themes_count": 27,
+    "tagged_fragment_count": 40,
+    "total_tag_count": 37
+  },
+  "theme_tags": {
+    "fc-igan_forum_2026q2-1-1-1_a_s00": [],
+    "fc-igan_forum_2026q2-1-1-1_a_s01": [],
+    "fc-igan_forum_2026q2-1-1-1_a_s02": [],
+    "fc-igan_forum_2026q2-1-1-1_a_s03": [],
+    "fc-igan_forum_2026q2-1-1-1_a_s04": [],
+    "fc-igan_forum_2026q2-1-1-1_a_s05": [],
+    "fc-igan_forum_2026q2-1-1-1_a_s06": [],
+    "fc-igan_forum_2026q2-1-1-1_a_s07": [],
+    "fc-igan_forum_2026q2-2-1-1_a": [
+      {
+        "span": {
+          "start": 0,
+          "end": 58,
+          "text": "My igg level was to low mine was 470 they wanted it at 700"
+        },
+        "theme_id": "trial.eligibility",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "biomarker threshold appears to have gated trial eligibility",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 60,
+          "end": 83,
+          "text": "Im really deppresed now"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.95,
+        "rationale": "explicit depressive mood",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 84,
+          "end": 105,
+          "text": "finally had some hope"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "loss of hope, existential dimension",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 119,
+          "end": 156,
+          "text": "im 19 just want to live a normal life"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "young patient grieving normal future-self",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s00": [],
+    "fc-igan_forum_2026q2-3-1-1_a_s01": [
+      {
+        "span": {
+          "start": 37,
+          "end": 87,
+          "text": "in stage 5 renal failure and on PD since June 2025"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "disease status / dialysis",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 0,
+          "end": 7,
+          "text": "My wife"
+        },
+        "theme_id": "life.caregiver",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "speaker is spouse-caregiver describing wife's condition",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s02": [
+      {
+        "span": {
+          "start": 62,
+          "end": 133,
+          "text": "had a few potential live donors disqualified because of health concerns"
+        },
+        "theme_id": "util.access",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "barriers to obtaining transplant access",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s03": [
+      {
+        "span": {
+          "start": 0,
+          "end": 74,
+          "text": "I want to spread the word on social media in hopes of finding her a kidney"
+        },
+        "theme_id": "life.caregiver",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "caregiver advocacy effort",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s04": [],
+    "fc-igan_forum_2026q2-3-1-1_a_s05": [
+      {
+        "span": {
+          "start": 25,
+          "end": 47,
+          "text": "visibly weak and tired"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "fatigue / weakness",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 52,
+          "end": 112,
+          "text": "refuses to get on disability and still works 40 hours a week"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.95,
+        "rationale": "work decision despite illness",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 52,
+          "end": 112,
+          "text": "refuses to get on disability and still works 40 hours a week"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "work as identity / meaning",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s06": [
+      {
+        "span": {
+          "start": 13,
+          "end": 31,
+          "text": "it keeps her going"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "work as source of meaning",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s07": [
+      {
+        "span": {
+          "start": 0,
+          "end": 43,
+          "text": "I have a decent job with a decent pay check"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "household economic situation context",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 0,
+          "end": 19,
+          "text": "I have a decent job"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "caregiver's work context",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-3-1-1_a_s08": [],
+    "fc-igan_forum_2026q2-4-1-1_a_s00": [],
+    "fc-igan_forum_2026q2-4-1-1_a_s01": [
+      {
+        "span": {
+          "start": 146,
+          "end": 215,
+          "text": "my other kidney is primarily scar tissue at about give or take 20 gfr"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "self-described disease severity",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_a_s02": [],
+    "fc-igan_forum_2026q2-4-1-1_a_s03": [
+      {
+        "span": {
+          "start": 43,
+          "end": 89,
+          "text": "getting kind of drained from the whole process"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "treatment fatigue / exhaustion",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 43,
+          "end": 89,
+          "text": "getting kind of drained from the whole process"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "emotional wearing-down from treatment burden",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_a_s04": [
+      {
+        "span": {
+          "start": 10,
+          "end": 60,
+          "text": "getting my pre evaluation tomrw at NYU in the city"
+        },
+        "theme_id": "util.access",
+        "tagger": "llm-proposed",
+        "confidence": 0.5,
+        "rationale": "travel to specialist center",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_a_s05": [],
+    "fc-igan_forum_2026q2-4-1-1_a_s06": [
+      {
+        "span": {
+          "start": 0,
+          "end": 34,
+          "text": "I was in the best shape of my life"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "prior self / loss of former identity",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 35,
+          "end": 59,
+          "text": "working as a steamfitter"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "prior occupation context, implied disruption",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-4-1-1_a_s07": [],
+    "fc-igan_forum_2026q2-4-1-1_a_s08": [],
+    "fc-igan_forum_2026q2-5-1-1_a_s00": [
+      {
+        "span": {
+          "start": 21,
+          "end": 80,
+          "text": "this is my 16th week and 4th injection in the RAINIER trial"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "trial visit/injection cadence",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s01": [
+      {
+        "span": {
+          "start": 0,
+          "end": 34,
+          "text": "I'm eagerly waiting for my results"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "during-trial positive engagement",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s02": [
+      {
+        "span": {
+          "start": 37,
+          "end": 58,
+          "text": "the 4 week increments"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "visit cadence preference",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 0,
+          "end": 33,
+          "text": "One thing I like about this trial"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "positive trial sentiment driver",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s03": [
+      {
+        "span": {
+          "start": 41,
+          "end": 73,
+          "text": "waiting 6 months for every visit"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "prior trial visit cadence burden",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 78,
+          "end": 122,
+          "text": "I wasn't a fan of the space between meetings"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "dissatisfaction driver in prior trial",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s04": [
+      {
+        "span": {
+          "start": 7,
+          "end": 50,
+          "text": "regular EKG's and 24 hour urine collections"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "protocol monitoring procedures",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 51,
+          "end": 87,
+          "text": "makes me feel more closely monitored"
+        },
+        "theme_id": "trial.relationship",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "sense of being attended to by site",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s05": [
+      {
+        "span": {
+          "start": 13,
+          "end": 101,
+          "text": "not having the pressure of taking a daily pill and using the app to record my daily dose"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "diary/compliance burden contrast",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s06": [
+      {
+        "span": {
+          "start": 75,
+          "end": 120,
+          "text": "I was always anxious that I had missed a dose"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "compliance burden anxiety",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 75,
+          "end": 95,
+          "text": "I was always anxious"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "trial-related anxiety",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s07": [
+      {
+        "span": {
+          "start": 46,
+          "end": 83,
+          "text": "the injection is done at the facility"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "protocol administration mode aids compliance",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s08": [
+      {
+        "span": {
+          "start": 0,
+          "end": 57,
+          "text": "Everyone at the facility is so welcoming and professional"
+        },
+        "theme_id": "trial.relationship",
+        "tagger": "llm-proposed",
+        "confidence": 0.95,
+        "rationale": "positive site-staff relationship",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s09": [
+      {
+        "span": {
+          "start": 0,
+          "end": 50,
+          "text": "I have to travel and stay overnight for each visit"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "travel burden",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 72,
+          "end": 120,
+          "text": "made each visit seamless with hotel reservations"
+        },
+        "theme_id": "trial.relationship",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "site support quality",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      },
+      {
+        "span": {
+          "start": 125,
+          "end": 157,
+          "text": "plenty of financial compensation"
+        },
+        "theme_id": "trial.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.95,
+        "rationale": "trial stipend",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-5-1-1_a_s10": [
+      {
+        "span": {
+          "start": 42,
+          "end": 102,
+          "text": "message me and I'd be happy to connect you with the facility"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "peer-mediated trial awareness",
+        "created_at": "2026-06-02T05:50:56.486Z"
+      }
+    ],
+    "fc-igan_forum_2026q2-6-1-1_a_s00": [],
+    "fc-igan_forum_2026q2-6-1-1_a_s01": []
+  }
+}

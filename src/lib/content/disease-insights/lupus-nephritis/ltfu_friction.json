@@ -1,0 +1,98 @@
+{
+  "schema_version": "0.1",
+  "id": "ln_ltfu_friction_v0",
+  "applies_to_persona_id": "ln_sle_carT_curious_patients",
+  "applies_to_indication": "lupus_nephritis",
+  "generated_at": "2026-05-29",
+  "provenance": "Hand-authored memo + matrix synthesizing the CAR-T curious LN persona's post_trial stage (corpus-evidenced at 6mo and 1yr) with structural projections for the 12-year LTFU tail. Corpus citations point to fragment-corpus 2026Q1 LN/CAR-T community thread.",
+  "memo": {
+    "eyebrow": "LTFU — Long-term follow-up",
+    "headline": "Friction compounds where life does, not where biology fails.",
+    "body": "Retention through the ~12-year LTFU tail for autoimmune CAR-T won't be lost to the drug. It will be lost where the four pillars erode at different rates: emotional valence bifurcates as cohort outcomes diverge, logistical capacity compounds as caregivers and employers churn, provider trust erodes through handoffs and PI rotation, and the medical rationale for sustained visits fades as patients feel cured. The wise question is not what the friction is — it is which proxy population (oncology CAR-T survivors, hemophilia gene-therapy cohorts) the client accepts as evidence for year 8 and beyond.",
+    "kicker": {
+      "value": "12y",
+      "label": "Regulatory tail"
+    }
+  },
+  "horizons": [
+    { "id": "y0_1", "label": "Year 0–1", "sublabel": "Acute window" },
+    { "id": "y2_4", "label": "Year 2–4", "sublabel": "Stabilization" },
+    { "id": "y5_8", "label": "Year 5–8", "sublabel": "Identity drift" },
+    { "id": "y9_12", "label": "Year 9–12", "sublabel": "Regulatory tail" }
+  ],
+  "pillars": [
+    {
+      "id": "logistical_capacity",
+      "label": "Logistical capacity",
+      "trend": "Compounds",
+      "cells": {
+        "y0_1": { "summary": "Six-to-eight week no-driving window collides with limited caregiver coverage and >200mi site distance.", "evidence": "corpus" },
+        "y2_4": { "summary": "Visit cadence shifts to quarterly just as work re-entry and household income recovery begin.", "evidence": "projected" },
+        "y5_8": { "summary": "Caregiver attrition, insurance churn, and travel cost become the dominant sustained burden.", "evidence": "projected" },
+        "y9_12": { "summary": "Site closure or PI rotation: did I outlive my site?", "evidence": "projected" }
+      }
+    },
+    {
+      "id": "emotional_valence",
+      "label": "Emotional valence",
+      "trend": "Bifurcates",
+      "cells": {
+        "y0_1": { "summary": "Hope-fear bifurcation; the 30-year sibling-CAR-T trauma surfaces in family decision calculus.", "evidence": "corpus" },
+        "y2_4": { "summary": "Survivor identity forms; relief at off-immunosuppression carries the cohort.", "evidence": "corpus" },
+        "y5_8": { "summary": "Cohort outcomes diverge — survivor's guilt by proxy as enrollees lose remission.", "evidence": "projected" },
+        "y9_12": { "summary": "Identity drift away from trial-patient self-concept; LTFU feels like surveillance.", "evidence": "projected" }
+      }
+    },
+    {
+      "id": "provider_trust",
+      "label": "Provider trust",
+      "trend": "Erodes",
+      "cells": {
+        "y0_1": { "summary": "Trial site is the primary anchor; home rheumatology gap is openly acknowledged.", "evidence": "corpus" },
+        "y2_4": { "summary": "Trial-site to home-rheum handoff strains continuity; nephrology loop often missing.", "evidence": "projected" },
+        "y5_8": { "summary": "Original PI may have moved on; LTFU staff turnover dilutes the relationship.", "evidence": "projected" },
+        "y9_12": { "summary": "Who do I call if I have an autoimmune blip in 2038?", "evidence": "projected" }
+      }
+    },
+    {
+      "id": "medical_self_efficacy",
+      "label": "Medical self-efficacy",
+      "trend": "Inverts at year 5",
+      "cells": {
+        "y0_1": { "summary": "Reads enrollee threads for chemo doses and B-cell biology to fill care-team gaps.", "evidence": "corpus" },
+        "y2_4": { "summary": "Tracks own labs against trial-protocol cadence; private spreadsheets emerge.", "evidence": "projected" },
+        "y5_8": { "summary": "Rationale fade: why am I still being measured if I'm cured?", "evidence": "projected" },
+        "y9_12": { "summary": "Becomes the cohort's institutional memory — peer mentor pattern visible at 6mo extrapolates.", "evidence": "projected" }
+      }
+    }
+  ],
+  "evidence_legend": {
+    "corpus": "Grounded in 2026Q1 LN / CAR-T community fragments",
+    "projected": "Extrapolated from corpus + analogous CAR-T LTFU cohorts"
+  },
+  "what_would_strengthen_this": [
+    "Ingest a CAR-T oncology long-survivor content_source (5+ years post-infusion) into the fragment corpus and rebuild the matrix with year-5+ direct evidence.",
+    "Pull hemophilia gene-therapy LTFU cohort threads as a second proxy population.",
+    "Layer the persona's logistical_capacity attrs (distance, caregiver, work flexibility) against an actual LTFU visit cadence from a normalized ClinicalTrials.gov LTFU sub-study record."
+  ],
+  "possible_interventions": [
+    {
+      "id": "digital_tether",
+      "label": "The \"Digital Tether\" approach",
+      "frame": "Cost efficiency",
+      "body": "Years 3–12 do not require expensive site visits. Propose a highly automated, digital-first LTFU framework — telehealth, local lab blood draws, ePRO (electronic Patient-Reported Outcomes) for fatigue and mobility metrics. Frame this as a way to keep costs ultra-low while keeping data completeness ultra-high."
+    },
+    {
+      "id": "shared_care_blueprints",
+      "label": "Site-to-community shared care blueprints",
+      "frame": "Retention via local HCPs",
+      "body": "Position the team as experts who provide \"transition bundles\" for the patients' community neurologists. If the local doctor understands the value of the 12-year data, they will ensure the patient stays in the protocol."
+    },
+    {
+      "id": "prevent_dmt_creep",
+      "label": "Preventing \"DMT Creep\"",
+      "frame": "Protecting data purity",
+      "body": "Propose an early-warning system within the LTFU tracking to catch patients who are considering jumping back onto standard B-cell depleting therapies at the first sign of a minor symptom, protecting the purity of the CAR-T efficacy data."
+    }
+  ]
+}

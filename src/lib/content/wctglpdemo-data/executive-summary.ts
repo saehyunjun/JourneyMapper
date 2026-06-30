@@ -237,15 +237,64 @@ const positiveRank = (a: ClusterRow, b: ClusterRow) =>
 	b.positive / b.segments.length - a.positive / a.segments.length ||
 	b.segments.length - a.segments.length;
 
+/** Theme-anchor cluster labels — clusters whose label IS the theme name
+ *  rather than a sub-topic. These are filtered out of self-driver lists:
+ *  a cluster can't be a "driver" of the theme it IS (see
+ *  [[no-tautological-drivers]] feedback). Keyed by theme id; values are
+ *  lowercased label forms the lexicon happens to use. */
+const SELF_DRIVER_TAUTOLOGIES: Record<string, string[]> = {
+	clinical_trials: ['clinical trial', 'clinical trials'],
+	treatment: ['treatment'],
+	condition_specific: ['condition specific', 'condition-specific']
+};
+
+/** Cluster ids that name a SPEAKER STANCE rather than a domain entity —
+ *  pure affect ("Concern (explicit)") or generic evaluation ("Harm",
+ *  "Better"). Surfacing them as drivers produces near-tautologies like
+ *  "people expressing concern drove the sentiment of concern." Same
+ *  principle as SELF_DRIVER_TAUTOLOGIES, just scope-independent: a
+ *  stance-only cluster is never a useful driver in any scope.
+ *
+ *  Watch list (intentionally NOT filtered for now): `risk` — clinicians
+ *  use "risk-benefit profile" as a real clinical referent, so it can
+ *  legitimately drive sentiment in some contexts. Revisit if it starts
+ *  dominating driver lists without adding signal. */
+const STANCE_ONLY_DRIVER_IDS = new Set<string>([
+	'concern',
+	'harm',
+	'better',
+	'guinea_pig',
+	'lawsuits'
+]);
+
+/** Drop rows whose cluster is either a theme-anchor tautology for the
+ *  scope theme OR a globally stance-only cluster. Apply at every site
+ *  that builds a driver list — keeps the principle enforced app-wide via
+ *  one helper instead of duplicating filters. */
+function dropSelfDrivers(rows: ClusterRow[], scopeTheme: string): ClusterRow[] {
+	const anchors = new Set(SELF_DRIVER_TAUTOLOGIES[scopeTheme] ?? []);
+	return rows.filter((r) => {
+		if (STANCE_ONLY_DRIVER_IDS.has(r.cluster.id)) return false;
+		if (anchors.size && anchors.has(r.cluster.label.toLowerCase().trim())) return false;
+		return true;
+	});
+}
+
 // 1. Negative drivers of clinical-trial sentiment.
-const trialScopeRows = clusterRows((a) => a.themes.includes('clinical_trials'));
+const trialScopeRows = dropSelfDrivers(
+	clusterRows((a) => a.themes.includes('clinical_trials')),
+	'clinical_trials'
+);
 const negTrialDrivers = trialScopeRows
 	.filter((r) => r.negative >= 2 && r.segments.length >= MIN_CLUSTER_N)
 	.sort(negativeRank)
 	.slice(0, TOP_K);
 
 // 2. Negative drivers of treatment sentiment.
-const treatmentScopeRows = clusterRows((a) => a.themes.includes('treatment'));
+const treatmentScopeRows = dropSelfDrivers(
+	clusterRows((a) => a.themes.includes('treatment')),
+	'treatment'
+);
 const negTreatmentDrivers = treatmentScopeRows
 	.filter((r) => r.negative >= 2 && r.segments.length >= MIN_CLUSTER_N)
 	.sort(negativeRank)

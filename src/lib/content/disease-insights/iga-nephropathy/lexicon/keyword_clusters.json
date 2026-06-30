@@ -1,0 +1,1272 @@
+{
+  "meta": {
+    "schema_version": "3.1",
+    "indication": "iga_nephropathy",
+    "description": "IgA nephropathy keyword clusters. Spans the post-2021 drug landscape (Tarpeyo / Filspari / Fabhalta / Vanrafia plus Ph3 APRIL-pathway pipeline), Oxford MEST-C biopsy classification, the synpharyngitic-hematuria presenting pattern, RASi + SGLT2i supportive-care backbone, and the proteinuria-surrogate-endpoint debate that shaped recent accelerated approvals. Parent_theme / parent_subtheme reference the codebook.json @ 2.0 taxonomy.",
+    "cluster_count": 71
+  },
+  "clusters": [
+    {
+      "id": "ace_arb_iga",
+      "label": "ACE inhibitor / ARB (RAS blockade)",
+      "description": "Renin-angiotensin system blockers — lisinopril, losartan, ramipril, irbesartan — the supportive-care backbone for IgAN, used to lower proteinuria and blood pressure.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "ace inhibitor",
+        "ace inhibitors",
+        "ace-i",
+        "arb",
+        "angiotensin receptor blocker",
+        "rasi",
+        "ras blockade",
+        "lisinopril",
+        "losartan",
+        "ramipril",
+        "enalapril",
+        "irbesartan",
+        "valsartan",
+        "telmisartan",
+        "candesartan",
+        "olmesartan",
+        "benazepril"
+      ]
+    },
+    {
+      "id": "sglt2_inhibitors_iga",
+      "label": "SGLT2 inhibitors (dapagliflozin / empagliflozin)",
+      "description": "SGLT2 inhibitors added on top of RAS blockade for kidney protection in IgAN — dapagliflozin (Farxiga) carries a CKD label, empagliflozin (Jardiance) follows via EMPA-KIDNEY.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "sglt2",
+        "sglt2 inhibitor",
+        "sglt2 inhibitors",
+        "sglt-2",
+        "dapagliflozin",
+        "farxiga",
+        "forxiga",
+        "empagliflozin",
+        "jardiance",
+        "canagliflozin",
+        "invokana",
+        "ertugliflozin"
+      ]
+    },
+    {
+      "id": "budesonide_er_iga",
+      "label": "Budesonide ER (Tarpeyo / Kinpeygo)",
+      "description": "Targeted-release budesonide acting on Peyer's patches of the distal ileum — the first IgAN-specific approval (US Tarpeyo 2021/full 2023, EU Kinpeygo). 9 mg daily x 9 months.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "budesonide er",
+        "budesonide ER",
+        "budesonide modified release",
+        "targeted release budesonide",
+        "tarpeyo",
+        "kinpeygo",
+        "nefecon",
+        "trf-budesonide"
+      ]
+    },
+    {
+      "id": "sparsentan_iga",
+      "label": "Sparsentan (Filspari)",
+      "description": "Dual endothelin-A and angiotensin II receptor antagonist for IgAN; accelerated approval 2023, full approval 2024 on the PROTECT trial. Travere Therapeutics.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "sparsentan",
+        "filspari",
+        "dual endothelin angiotensin",
+        "dual endothelin angiotensin receptor antagonist",
+        "deara",
+        "rey-401"
+      ]
+    },
+    {
+      "id": "iptacopan_iga",
+      "label": "Iptacopan (Fabhalta)",
+      "description": "Oral factor B inhibitor of the complement alternative pathway, approved for IgAN in late 2024 on APPLAUSE-IgAN. Novartis.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "iptacopan",
+        "fabhalta",
+        "factor b inhibitor",
+        "factor b",
+        "lnp023",
+        "alternative complement"
+      ]
+    },
+    {
+      "id": "atrasentan_iga",
+      "label": "Atrasentan (Vanrafia)",
+      "description": "Selective endothelin-A receptor antagonist approved for IgAN in 2025 on ALIGN. Novartis (originated by Chinook Therapeutics).",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "atrasentan",
+        "vanrafia",
+        "endothelin a antagonist",
+        "eta antagonist",
+        "selective era",
+        "chk-01"
+      ]
+    },
+    {
+      "id": "sibeprenlimab_iga",
+      "label": "Sibeprenlimab (APRIL inhibitor, Ph3)",
+      "description": "Anti-APRIL monoclonal antibody in Phase 3 (VISIONARY) — targets the BAFF-family cytokine driving galactose-deficient IgA1 production. Otsuka (Visterra).",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "sibeprenlimab",
+        "visionary",
+        "april inhibitor",
+        "anti-april",
+        "visterra",
+        "vis649"
+      ]
+    },
+    {
+      "id": "atacicept_iga",
+      "label": "Atacicept (APRIL/BLyS inhibitor, Ph3)",
+      "description": "Recombinant TACI-Fc fusion neutralizing APRIL and BLyS. Phase 3 ORIGIN. Vera Therapeutics.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "atacicept",
+        "origin trial",
+        "april blys inhibitor",
+        "taci-fc",
+        "vera therapeutics"
+      ]
+    },
+    {
+      "id": "zigakibart_iga",
+      "label": "Zigakibart (BION-1301, Ph3)",
+      "description": "Anti-APRIL monoclonal antibody, Phase 3 BEYOND. Novartis (originated by Chinook).",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "zigakibart",
+        "bion-1301",
+        "bion 1301",
+        "beyond trial",
+        "anti april chinook"
+      ]
+    },
+    {
+      "id": "povetacicept_iga",
+      "label": "Povetacicept (APRIL/BLyS, Ph3)",
+      "description": "Dual APRIL/BLyS inhibitor (Fc-fusion). Phase 3 RAINIER. Alpine Immune Sciences (Vertex).",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "povetacicept",
+        "alpn-303",
+        "rainier trial",
+        "alpine immune",
+        "povetacicept iga"
+      ]
+    },
+    {
+      "id": "telitacicept_iga",
+      "label": "Telitacicept (China-approved)",
+      "description": "BLyS/APRIL fusion protein approved in China for IgAN; not yet US/EU approved. RemeGen.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "telitacicept",
+        "remegen",
+        "rc18",
+        "tai ai"
+      ]
+    },
+    {
+      "id": "narsoplimab_iga",
+      "label": "Narsoplimab (MASP-2 inhibitor)",
+      "description": "Anti-MASP-2 monoclonal targeting the lectin complement pathway. Phase 3 ARTEMIS-IGAN. Omeros.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "narsoplimab",
+        "masp-2",
+        "masp2",
+        "lectin pathway",
+        "omeros",
+        "artemis-igan",
+        "oms721"
+      ]
+    },
+    {
+      "id": "felzartamab_iga",
+      "label": "Felzartamab (anti-CD38, Ph2)",
+      "description": "Anti-CD38 monoclonal targeting plasma cells producing pathogenic IgA. Phase 2 IGNAZ. Human Immunology Biosciences (HIBio) / MorphoSys originated.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "felzartamab",
+        "anti-cd38",
+        "anti cd38",
+        "mor202",
+        "hibio",
+        "ignaz trial"
+      ]
+    },
+    {
+      "id": "cemdisiran_iga",
+      "label": "Cemdisiran (C5 siRNA, Ph2)",
+      "description": "Investigational siRNA suppressing hepatic complement C5. Phase 2 in IgAN. Alnylam.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "cemdisiran",
+        "alnylam c5",
+        "c5 sirna",
+        "aln-cc5"
+      ]
+    },
+    {
+      "id": "systemic_corticosteroids_iga",
+      "label": "Systemic corticosteroids (prednisone)",
+      "description": "Oral or IV systemic glucocorticoids — methylprednisolone pulses, oral prednisone (the TESTING / STOP-IgAN regimens). Distinct from gut-targeted budesonide-ER.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "corticosteroid",
+        "corticosteroids",
+        "systemic steroids",
+        "oral prednisone",
+        "iv steroids",
+        "prednisone",
+        "prednisolone",
+        "methylprednisolone",
+        "solu-medrol",
+        "pulse steroids"
+      ]
+    },
+    {
+      "id": "mycophenolate_iga",
+      "label": "Mycophenolate (off-label)",
+      "description": "Mycophenolate mofetil used off-label for crescentic or progressive IgAN — controversial in Western trials, more accepted in Asian cohorts.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "mycophenolate",
+        "mycophenolate mofetil",
+        "mmf",
+        "cellcept",
+        "myfortic",
+        "mycophenolic acid"
+      ]
+    },
+    {
+      "id": "cyclophosphamide_iga",
+      "label": "Cyclophosphamide (crescentic IgAN)",
+      "description": "Alkylating immunosuppressant reserved for rapidly progressive / crescentic IgAN, usually with steroids.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "cyclophosphamide",
+        "cytoxan",
+        "crescentic regimen",
+        "rapidly progressive"
+      ]
+    },
+    {
+      "id": "rituximab_iga",
+      "label": "Rituximab (off-label)",
+      "description": "Anti-CD20 B-cell depletion tried off-label in refractory IgAN; mixed evidence.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "rituximab",
+        "rituxan",
+        "anti-cd20",
+        "b cell depletion",
+        "b-cell depletion"
+      ]
+    },
+    {
+      "id": "fish_oil_omega3_iga",
+      "label": "Fish oil / omega-3",
+      "description": "High-dose fish oil for IgAN — historical, low-cost adjunct mentioned in KDIGO; effect size debated.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "fish oil",
+        "omega 3",
+        "omega-3",
+        "epa dha",
+        "high dose fish oil",
+        "n-3 fatty acids"
+      ]
+    },
+    {
+      "id": "tonsillectomy_iga",
+      "label": "Tonsillectomy",
+      "description": "Tonsillectomy + steroid pulses — historically used in Japan and parts of Europe; rare in US practice.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "tonsillectomy",
+        "tonsils removed",
+        "tonsillectomy steroid pulse",
+        "pozzi protocol"
+      ]
+    },
+    {
+      "id": "spironolactone_iga",
+      "label": "Spironolactone / MRA",
+      "description": "Mineralocorticoid receptor antagonists added for resistant hypertension or residual proteinuria.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_health_history",
+      "variants": [
+        "spironolactone",
+        "mineralocorticoid antagonist",
+        "mra",
+        "finerenone",
+        "kerendia",
+        "eplerenone"
+      ]
+    },
+    {
+      "id": "iga_diagnosis",
+      "label": "IgA nephropathy (diagnosis)",
+      "description": "Identification with IgA nephropathy / Berger's disease as the kidney diagnosis being lived with.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "iga nephropathy",
+        "iga nephropathy diagnosis",
+        "iga n",
+        "igan",
+        "iga kidney disease",
+        "berger's disease",
+        "bergers disease",
+        "berger disease",
+        "primary glomerulonephritis",
+        "iga gn"
+      ]
+    },
+    {
+      "id": "gross_hematuria_iga",
+      "label": "Gross / synpharyngitic hematuria",
+      "description": "Visible blood in the urine, classically synpharyngitic — appearing within 1-3 days of an upper respiratory infection.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "gross hematuria",
+        "gross haematuria",
+        "visible blood in urine",
+        "visible hematuria",
+        "synpharyngitic",
+        "synpharyngitic hematuria",
+        "blood in urine after cold",
+        "urine after sore throat",
+        "macroscopic hematuria"
+      ]
+    },
+    {
+      "id": "microscopic_hematuria_iga",
+      "label": "Microscopic hematuria",
+      "description": "Blood detected on urinalysis or microscopy but not visible to the eye — often the first sign of IgAN.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "microscopic hematuria",
+        "microscopic haematuria",
+        "blood on urinalysis",
+        "trace blood",
+        "rbcs in urine",
+        "red blood cells in urine",
+        "asymptomatic hematuria"
+      ]
+    },
+    {
+      "id": "cola_tea_urine",
+      "label": "Cola / tea / coke-colored urine",
+      "description": "Surface descriptions of gross hematuria as cola, tea, coke, or rust-colored urine.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "cola urine",
+        "coca cola urine",
+        "tea colored urine",
+        "tea coloured urine",
+        "tea-colored urine",
+        "coke colored urine",
+        "rust colored urine",
+        "dark urine",
+        "brown urine",
+        "red urine"
+      ]
+    },
+    {
+      "id": "proteinuria_iga",
+      "label": "Proteinuria / foamy urine",
+      "description": "Protein leak in IgAN — sub-nephrotic to nephrotic-range; foamy urine is the surface description.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "proteinuria",
+        "protein in urine",
+        "protein in my urine",
+        "foamy urine",
+        "frothy urine",
+        "bubbly urine",
+        "albuminuria",
+        "high urine protein",
+        "protein leak"
+      ]
+    },
+    {
+      "id": "flank_pain_iga",
+      "label": "Flank / loin pain",
+      "description": "Loin or flank pain accompanying gross hematuria episodes — can be sharp or dull.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "flank pain",
+        "loin pain",
+        "kidney pain",
+        "back pain kidney",
+        "side pain",
+        "costovertebral angle pain"
+      ]
+    },
+    {
+      "id": "edema_iga",
+      "label": "Edema / swelling",
+      "description": "Lower-extremity, periorbital, or whole-body swelling from heavy proteinuria.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "edema",
+        "oedema",
+        "swelling",
+        "swollen ankles",
+        "swollen legs",
+        "puffy",
+        "periorbital",
+        "fluid retention"
+      ]
+    },
+    {
+      "id": "hypertension_iga",
+      "label": "Hypertension (renal)",
+      "description": "Elevated blood pressure driven by kidney involvement — usually the first dial of treatment.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "high blood pressure",
+        "hypertension",
+        "elevated bp",
+        "renal hypertension",
+        "blood pressure went up",
+        "high bp"
+      ]
+    },
+    {
+      "id": "fatigue_iga",
+      "label": "Fatigue",
+      "description": "Persistent fatigue — both from CKD progression and from treatment.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "symptoms",
+      "variants": [
+        "fatigue",
+        "fatigued",
+        "exhausted",
+        "exhaustion",
+        "tiredness",
+        "no energy",
+        "wiped out"
+      ]
+    },
+    {
+      "id": "ckd_iga",
+      "label": "Chronic kidney disease (CKD)",
+      "description": "Progressive loss of kidney function from IgAN, staged by eGFR.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "chronic kidney disease",
+        "ckd",
+        "kidney disease",
+        "renal insufficiency",
+        "stage 3 ckd",
+        "stage 4 ckd",
+        "stage 5 ckd",
+        "ckd stage 3",
+        "ckd stage 4"
+      ]
+    },
+    {
+      "id": "esrd_dialysis_iga",
+      "label": "Kidney failure / dialysis",
+      "description": "End-stage kidney disease requiring renal replacement therapy — the outcome IgAN treatment is fighting to prevent.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "kidney failure",
+        "renal failure",
+        "end stage renal disease",
+        "end-stage renal disease",
+        "esrd",
+        "eskd",
+        "dialysis",
+        "hemodialysis",
+        "peritoneal dialysis",
+        "on dialysis",
+        "fistula",
+        "av fistula"
+      ]
+    },
+    {
+      "id": "kidney_transplant_iga",
+      "label": "Kidney transplant / recurrence",
+      "description": "Transplantation as endpoint of IgAN — and recurrence of IgA deposits in the allograft (~30% by 10 years).",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "kidney transplant",
+        "renal transplant",
+        "transplant list",
+        "donor kidney",
+        "living donor",
+        "recurrence in transplant",
+        "iga recurrence",
+        "allograft recurrence"
+      ]
+    },
+    {
+      "id": "iga_vasculitis_hsp",
+      "label": "IgA vasculitis / Henoch-Schönlein",
+      "description": "IgA vasculitis (formerly Henoch-Schönlein purpura) — the systemic vasculitic cousin of IgAN; same gd-IgA1 biology with skin / GI / joint involvement.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "iga vasculitis",
+        "igav",
+        "henoch schonlein",
+        "henoch-schonlein",
+        "henoch schoenlein",
+        "henoch-schoenlein",
+        "hsp",
+        "henoch schönlein",
+        "purpura",
+        "palpable purpura"
+      ]
+    },
+    {
+      "id": "anemia_ckd_iga",
+      "label": "Anemia of CKD",
+      "description": "Anemia from declining erythropoietin production in advanced IgAN-CKD.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "anemia",
+        "anaemia",
+        "low hemoglobin",
+        "low hgb",
+        "epogen",
+        "procrit",
+        "aranesp",
+        "iron infusion",
+        "ferritin low"
+      ]
+    },
+    {
+      "id": "cardiovascular_ckd_iga",
+      "label": "Cardiovascular risk (CKD)",
+      "description": "Elevated cardiovascular disease and stroke risk that travels with CKD from IgAN.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "cardiovascular",
+        "heart disease",
+        "stroke risk",
+        "atherosclerosis",
+        "lvh",
+        "left ventricular hypertrophy",
+        "high cholesterol"
+      ]
+    },
+    {
+      "id": "secondary_iga_liver_uc",
+      "label": "Secondary IgAN (cirrhosis / IBD / HIV)",
+      "description": "Secondary IgA deposition associated with cirrhosis, inflammatory bowel disease (especially ulcerative colitis), HIV, celiac, or psoriasis.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "comorbidities",
+      "variants": [
+        "secondary iga nephropathy",
+        "cirrhotic glomerulopathy",
+        "ulcerative colitis iga",
+        "ibd iga",
+        "celiac iga",
+        "psoriasis iga",
+        "hiv iga"
+      ]
+    },
+    {
+      "id": "gd_iga1_pathogenesis",
+      "label": "Galactose-deficient IgA1 (pathogenesis)",
+      "description": "The four-hit pathogenesis model: gd-IgA1 production → autoantibodies against gd-IgA1 → immune complexes → mesangial deposition and complement activation.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "galactose deficient iga",
+        "galactose-deficient iga1",
+        "gd-iga1",
+        "gd iga1",
+        "four hit model",
+        "four-hit hypothesis",
+        "mucosal iga",
+        "mesangial deposits",
+        "immune complex deposition",
+        "april baff",
+        "april axis"
+      ]
+    },
+    {
+      "id": "kidney_biopsy_oxford_mest",
+      "label": "Kidney biopsy / Oxford MEST-C",
+      "description": "Renal biopsy that confirms IgAN and grades it by the Oxford MEST-C score (Mesangial, Endocapillary, Segmental sclerosis, Tubular atrophy / interstitial fibrosis, Crescents).",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "kidney biopsy",
+        "renal biopsy",
+        "biopsy",
+        "oxford classification",
+        "mest-c",
+        "mest c score",
+        "mestc",
+        "mesangial hypercellularity",
+        "endocapillary",
+        "segmental sclerosis",
+        "tubular atrophy",
+        "interstitial fibrosis",
+        "crescentic iga",
+        "crescents",
+        "ifta",
+        "biopsy results",
+        "biopsy class"
+      ]
+    },
+    {
+      "id": "egfr_iga",
+      "label": "eGFR / kidney function",
+      "description": "Estimated glomerular filtration rate — the headline kidney-function measure tracked through IgAN.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "egfr",
+        "gfr",
+        "glomerular filtration rate",
+        "kidney function",
+        "renal function",
+        "egfr slope",
+        "egfr decline",
+        "stable egfr"
+      ]
+    },
+    {
+      "id": "creatinine_iga",
+      "label": "Creatinine",
+      "description": "Serum creatinine — derived input to eGFR, what bloodwork reports first.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "creatinine",
+        "serum creatinine",
+        "creat",
+        "creatinine level",
+        "creatinine clearance"
+      ]
+    },
+    {
+      "id": "upcr_uacr_iga",
+      "label": "UPCR / UACR / 24-hour urine",
+      "description": "Urine protein-to-creatinine and albumin-to-creatinine ratios, plus 24-hour urine collections — the quantitative measure of proteinuria response.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "upcr",
+        "uacr",
+        "protein creatinine ratio",
+        "protein-to-creatinine",
+        "albumin creatinine ratio",
+        "albumin-to-creatinine",
+        "24 hour urine",
+        "24-hour urine",
+        "spot urine protein",
+        "urinalysis",
+        "ua",
+        "dipstick"
+      ]
+    },
+    {
+      "id": "serum_iga_levels",
+      "label": "Serum IgA / gd-IgA1 levels",
+      "description": "Serum IgA elevation (~50% of patients) and emerging gd-IgA1 / anti-gd-IgA1 assays used in research / risk stratification.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "serum iga",
+        "iga level",
+        "elevated iga",
+        "high iga",
+        "anti-gd-iga1",
+        "gd-iga1 assay"
+      ]
+    },
+    {
+      "id": "complement_c3_c4_iga",
+      "label": "Complement (C3 / C4)",
+      "description": "Complement levels — usually normal in IgAN but tracked, with low C3 sometimes seen in active disease and informing complement-targeted therapy choice.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "complement",
+        "c3",
+        "c4",
+        "ch50",
+        "low complement",
+        "complement activation",
+        "alternative pathway",
+        "lectin pathway"
+      ]
+    },
+    {
+      "id": "iiprt_risk_calculator",
+      "label": "International IgAN Prediction Tool",
+      "description": "The Barbour / IIgANPT risk calculator combining clinical and biopsy variables to predict 5-year ESRD risk — informs treatment intensity.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "condition_knowledge_gaps",
+      "variants": [
+        "international iga prediction",
+        "iiganpt",
+        "iga prediction tool",
+        "barbour calculator",
+        "risk calculator",
+        "5 year risk",
+        "esrd risk score"
+      ]
+    },
+    {
+      "id": "diagnostic_delay_iga",
+      "label": "Diagnostic delay / incidental finding",
+      "description": "IgAN often found incidentally on a routine physical, school sports physical, military medical, or pregnancy urinalysis — sometimes after years of microscopic hematuria dismissed as benign.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "diagnostic_odyssey",
+      "variants": [
+        "found on physical",
+        "found on routine labs",
+        "found incidentally",
+        "school physical",
+        "military physical",
+        "pregnancy urinalysis",
+        "years of microscopic blood",
+        "dismissed for years",
+        "told it was nothing",
+        "incidental finding"
+      ]
+    },
+    {
+      "id": "iga_after_uri",
+      "label": "Diagnosis after URI",
+      "description": "Story arc of diagnosis triggered by visible hematuria during or shortly after a respiratory or GI infection.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "diagnostic_odyssey",
+      "variants": [
+        "after a cold",
+        "after the flu",
+        "after strep",
+        "after covid",
+        "after sore throat",
+        "after stomach bug",
+        "url infection",
+        "upper respiratory infection"
+      ]
+    },
+    {
+      "id": "proteinuria_improved_iga",
+      "label": "Proteinuria response",
+      "description": "Falling UPCR / UACR as the primary felt sign that treatment is working in IgAN.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "proteinuria reduced",
+        "proteinuria improved",
+        "upcr dropped",
+        "uacr dropped",
+        "protein went down",
+        "less protein",
+        "responding to treatment",
+        "labs improved"
+      ]
+    },
+    {
+      "id": "egfr_stable_iga",
+      "label": "eGFR stabilization",
+      "description": "Stabilized or improved kidney function on treatment — the goal beyond proteinuria reduction.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "egfr stable",
+        "egfr stabilized",
+        "egfr improved",
+        "kidney function stable",
+        "function holding",
+        "slope flattened"
+      ]
+    },
+    {
+      "id": "iga_qol",
+      "label": "Quality of life (IgAN)",
+      "description": "Felt impact of stable disease — getting back to running, work, normal energy.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_positive_experiences",
+      "variants": [
+        "quality of life",
+        "back to running",
+        "back to normal",
+        "feel like myself",
+        "energy back",
+        "functioning again"
+      ]
+    },
+    {
+      "id": "budesonide_er_side_effects",
+      "label": "Budesonide ER side effects",
+      "description": "Targeted-release-budesonide side effects: weight gain, moon face, acne, mood changes, blood-sugar elevation — milder than systemic prednisone but not absent.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "tarpeyo side effects",
+        "budesonide side effects",
+        "moon face",
+        "weight gain on tarpeyo",
+        "acne tarpeyo",
+        "high blood sugar tarpeyo",
+        "mood changes",
+        "puffy face"
+      ]
+    },
+    {
+      "id": "sparsentan_hypotension",
+      "label": "Sparsentan: hypotension / edema",
+      "description": "Sparsentan-specific side-effect signal — low blood pressure, dizziness, fluid retention; REMS for hepatotoxicity / teratogenicity.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "low blood pressure filspari",
+        "hypotension sparsentan",
+        "dizzy on filspari",
+        "lightheaded",
+        "fluid retention filspari",
+        "rems filspari",
+        "liver enzymes filspari",
+        "teratogenic"
+      ]
+    },
+    {
+      "id": "iptacopan_infection_risk",
+      "label": "Iptacopan: infection / vaccination",
+      "description": "Required meningococcal / pneumococcal / Hib vaccination before iptacopan because complement inhibition raises encapsulated-organism infection risk.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "meningococcal vaccine",
+        "meningitis vaccine",
+        "menb",
+        "menacwy",
+        "pneumococcal vaccine",
+        "hib vaccine",
+        "iptacopan infection",
+        "encapsulated bacteria",
+        "fabhalta rems"
+      ]
+    },
+    {
+      "id": "systemic_steroid_burden_iga",
+      "label": "Systemic steroid burden",
+      "description": "Side effects of systemic prednisone courses — weight gain, mood, blood sugar, infection — the burden Tarpeyo and the newer agents were designed to escape.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_negative_experiences",
+      "variants": [
+        "steroid side effects",
+        "prednisone side effects",
+        "moon face",
+        "weight gain prednisone",
+        "steroid mood",
+        "roid rage",
+        "insomnia",
+        "high blood sugar",
+        "steroid acne"
+      ]
+    },
+    {
+      "id": "iga_drug_cost",
+      "label": "Drug cost / specialty pharmacy",
+      "description": "The post-2021 wave of IgAN drugs are expensive specialty agents — prior authorization, copay assistance, and specialty pharmacy logistics come up.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "specialty pharmacy",
+        "prior auth",
+        "prior authorization",
+        "pa denied",
+        "tarpeyo cost",
+        "filspari cost",
+        "fabhalta cost",
+        "copay assistance",
+        "patient assistance program",
+        "insurance denied",
+        "out of pocket"
+      ]
+    },
+    {
+      "id": "iga_access_to_nephrology",
+      "label": "Access to nephrology / specialty center",
+      "description": "Distance to a nephrologist or to a center comfortable with the new IgAN agents — geography drives who gets sparsentan vs. who stays on RASi.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_barriers",
+      "variants": [
+        "drive to nephrologist",
+        "nephrologist far away",
+        "academic center",
+        "specialty center",
+        "rural nephrology",
+        "no nephrology nearby"
+      ]
+    },
+    {
+      "id": "avoid_dialysis_iga",
+      "label": "Avoiding dialysis goal",
+      "description": "Preventing progression to dialysis or transplant as the central motivation behind IgAN treatment decisions.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "avoid dialysis",
+        "stay off dialysis",
+        "keep my kidneys",
+        "save my kidneys",
+        "preserve kidney function",
+        "delay dialysis"
+      ]
+    },
+    {
+      "id": "add_on_to_rasi_decision",
+      "label": "Add-on to RASi / SGLT2i decision",
+      "description": "The decision of when to add a second / third agent on top of optimized RASi + SGLT2i — and which: targeted budesonide, sparsentan, atrasentan, iptacopan, or a trial drug.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "add on therapy",
+        "second agent",
+        "switch from rasi",
+        "switch to sparsentan",
+        "switch to tarpeyo",
+        "add iptacopan",
+        "stack therapies",
+        "sequencing"
+      ]
+    },
+    {
+      "id": "pregnancy_iga",
+      "label": "Pregnancy planning with IgAN",
+      "description": "Switching off RASi / sparsentan / iptacopan and planning around pregnancy — preeclampsia risk and proteinuria flares can worsen in pregnancy.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "treatment",
+      "parent_subtheme": "treatment_decision_factors",
+      "variants": [
+        "pregnancy iga",
+        "pregnant with iga",
+        "stop ace inhibitor pregnancy",
+        "stop arb pregnancy",
+        "filspari pregnancy",
+        "preeclampsia risk",
+        "high risk pregnancy",
+        "maternal fetal medicine"
+      ]
+    },
+    {
+      "id": "bp_self_monitoring_iga",
+      "label": "Home BP monitoring",
+      "description": "Home blood-pressure tracking — strict targets (often <125/75) are central to slowing IgAN.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "home blood pressure",
+        "bp cuff",
+        "monitoring blood pressure",
+        "bp log",
+        "bp target",
+        "125 over 75",
+        "checking my bp"
+      ]
+    },
+    {
+      "id": "renal_diet_iga",
+      "label": "Low-sodium / renal diet",
+      "description": "Sodium restriction (and sometimes protein modulation) — practical lever patients control between visits.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "low sodium",
+        "low salt",
+        "renal diet",
+        "kidney diet",
+        "low protein",
+        "watching sodium",
+        "dash diet",
+        "plant based renal"
+      ]
+    },
+    {
+      "id": "urine_self_tracking_iga",
+      "label": "Self-tracking urine / labs",
+      "description": "At-home dipsticks, tracking labs in a spreadsheet, watching for foam in the toilet — high engagement with monitoring is common in IgAN.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "medical_self_efficacy",
+      "variants": [
+        "home dipstick",
+        "urine dipstick",
+        "checking my urine",
+        "watching foam",
+        "tracking labs",
+        "lab spreadsheet",
+        "mychart",
+        "patient portal"
+      ]
+    },
+    {
+      "id": "young_adult_diagnosis_iga",
+      "label": "Young adult diagnosis",
+      "description": "Most patients are diagnosed in their 20s-40s and look healthy — the gap between feeling fine and being told you have a progressive kidney disease.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "diagnosed in my 20s",
+        "diagnosed in my 30s",
+        "young diagnosis",
+        "20 year old kidney disease",
+        "i look healthy",
+        "no symptoms but sick",
+        "athletes kidney disease"
+      ]
+    },
+    {
+      "id": "invisible_kidney_disease_iga",
+      "label": "Invisible kidney disease",
+      "description": "The challenge of a slow, mostly silent disease — feeling fine while labs trend the wrong way, or feeling sick while labs look stable.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "invisible illness",
+        "you don't look sick",
+        "no one believes",
+        "silent disease",
+        "feel fine but labs",
+        "look healthy"
+      ]
+    },
+    {
+      "id": "fear_progression_iga",
+      "label": "Fear of progression",
+      "description": "The chronic anxiety of watching eGFR trend down or waiting for the next biopsy / lab.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "scared of dialysis",
+        "fear of progression",
+        "worry about kidneys",
+        "egfr anxiety",
+        "lab anxiety",
+        "what if i lose my kidneys",
+        "transplant anxiety"
+      ]
+    },
+    {
+      "id": "iga_work_disruption",
+      "label": "Work / school disruption",
+      "description": "Specialist visits, labs, fatigue, and (in advanced disease) dialysis logistics interfering with work or school.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "social_stigma",
+      "variants": [
+        "missed work",
+        "time off for labs",
+        "dialysis and work",
+        "fmla",
+        "disability leave",
+        "reduced hours",
+        "school absences"
+      ]
+    },
+    {
+      "id": "iga_advocacy_orgs",
+      "label": "IgAN / kidney advocacy",
+      "description": "NephCure, IgA Nephropathy Foundation of America, National Kidney Foundation, American Kidney Fund — patient-community and advocacy presence.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "condition_specific",
+      "parent_subtheme": "advocacy_peer_groups",
+      "variants": [
+        "nephcure",
+        "iga nephropathy foundation",
+        "iga foundation",
+        "iganf",
+        "national kidney foundation",
+        "nkf",
+        "american kidney fund",
+        "akf",
+        "kidney walk",
+        "patient summit",
+        "facebook iga group",
+        "reddit iga"
+      ]
+    },
+    {
+      "id": "proteinuria_surrogate_endpoint",
+      "label": "Proteinuria as surrogate endpoint",
+      "description": "The accelerated-approval pathway built on UPCR reduction as a reasonably-likely-to-predict-benefit surrogate — the regulatory frame behind Tarpeyo / Filspari / Vanrafia accelerated approvals and the confirmatory eGFR-slope readouts.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "proteinuria surrogate",
+        "surrogate endpoint",
+        "accelerated approval",
+        "reasonably likely to predict",
+        "upcr endpoint",
+        "uacr endpoint",
+        "primary endpoint proteinuria",
+        "9 month endpoint",
+        "confirmatory endpoint"
+      ]
+    },
+    {
+      "id": "egfr_slope_endpoint",
+      "label": "eGFR slope endpoint",
+      "description": "Annualized eGFR-slope decline as the confirmatory / hard endpoint in IgAN trials — what regulators want to see after the proteinuria readout.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_knowledge_gaps",
+      "variants": [
+        "egfr slope",
+        "slope endpoint",
+        "annualized egfr",
+        "two year egfr",
+        "egfr decline",
+        "hard endpoint",
+        "kidney function endpoint"
+      ]
+    },
+    {
+      "id": "iga_trial_biopsy_entry",
+      "label": "Biopsy required for trial entry",
+      "description": "Most IgAN trials require recent biopsy-confirmed disease (often within 5-10 years) and minimum proteinuria (UPCR ≥ 0.7-1.0 g/g) — common eligibility-screen sticking points.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "trial_barriers",
+      "variants": [
+        "biopsy required for trial",
+        "biopsy too old",
+        "repeat biopsy",
+        "trial biopsy",
+        "screening biopsy",
+        "minimum proteinuria",
+        "upcr threshold",
+        "eligibility upcr"
+      ]
+    },
+    {
+      "id": "iga_pipeline_awareness",
+      "label": "Pipeline awareness",
+      "description": "Patient-side awareness of the wave of post-2021 approvals and ongoing Ph3 readouts — Tarpeyo, Filspari, Fabhalta, Vanrafia, plus sibeprenlimab / atacicept / zigakibart / povetacicept.",
+      "indication": "iga_nephropathy",
+      "parent_theme": "clinical_trials",
+      "parent_subtheme": "clinical_trial_awareness",
+      "variants": [
+        "new iga drug",
+        "iga pipeline",
+        "drug approval",
+        "trial readout",
+        "phase 3 results",
+        "april inhibitor news",
+        "iga news",
+        "kidney week",
+        "asn kidney week"
+      ]
+    }
+  ]
+}

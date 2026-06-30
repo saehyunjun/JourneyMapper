@@ -1,0 +1,701 @@
+{
+  "meta": {
+    "schema_version": "sf36v2-1.0",
+    "supersedes": null,
+    "status": "draft",
+    "description": "Starter keyword-cluster catalog for the SF-36v2 codebook (codebook.sf36v2.json). One cluster per subtheme (37 total), seeded with surface-form variants drawn from SF-36v2 item language and common free-text equivalents patients use in interviews / Reddit posts. Variants are SUGGESTION FUEL ONLY — they rank cluster suggestions in the segment tag drawer; they do NOT auto-tag any occurrence. Per-instance tag rows still live in keyword_tags.json keyed by (cluster_id, segment_id, char_start, char_end), same as the live lexicon. Indications and burden_category_ids are intentionally left empty — populate per study as needed.",
+    "changelog": [
+      "sf36v2-1.0 — initial starter lexicon. 37 clusters, one per SF-36v2 subtheme. parent_theme = SF-36v2 scale id (physical_functioning, role_physical, …, mental_health); parent_subtheme = subtheme id from codebook.sf36v2.json. Cluster ids namespaced with `sf36_` prefix to avoid collision with the live lexicon if a downstream loader ever merges the two."
+    ],
+    "notes": [
+      "Cluster ids are namespaced `sf36_<subtheme_id>` so the SF-36 starter and live lexicons can coexist without id collisions.",
+      "Variants lean toward the language an SF-36v2 respondent or a patient on a forum would naturally use, not the formal scale name. E.g. PF vigorous-activity variants are 'running' / 'lifting heavy' / 'strenuous sports', not 'vigorous activities'.",
+      "One cluster per subtheme is a starter. Split into multiple clusters under the same subtheme when a facet earns its own grouping (e.g. mh_depression could split into 'depressed mood' vs 'hopelessness/suicidality').",
+      "indications: [] is study-agnostic by default; add indication ids when a cluster only fires within a specific cohort.",
+      "burden_category_ids: [] left blank pending review against the burden-category registry."
+    ]
+  },
+  "clusters": [
+    {
+      "id": "sf36_pf_vigorous_activities",
+      "label": "Vigorous activities",
+      "description": "Limitations in running, lifting heavy objects, or strenuous sports (SF-36v2 PF item 1).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "physical_functioning",
+      "parent_subtheme": "pf_vigorous_activities",
+      "variants": [
+        "running",
+        "jogging",
+        "lifting heavy",
+        "heavy lifting",
+        "strenuous sports",
+        "intense exercise",
+        "high-impact workout",
+        "can't run anymore",
+        "used to run"
+      ]
+    },
+    {
+      "id": "sf36_pf_moderate_activities",
+      "label": "Moderate activities",
+      "description": "Limitations in moderate activities like moving a table, vacuuming, bowling, or golfing (SF-36v2 PF item 2).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "physical_functioning",
+      "parent_subtheme": "pf_moderate_activities",
+      "variants": [
+        "vacuuming",
+        "moving furniture",
+        "bowling",
+        "golfing",
+        "light housework",
+        "gardening",
+        "raking leaves",
+        "moderate exercise"
+      ]
+    },
+    {
+      "id": "sf36_pf_lifting_carrying",
+      "label": "Lifting & carrying groceries",
+      "description": "Difficulty lifting or carrying groceries and similar everyday loads (SF-36v2 PF item 3).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "physical_functioning",
+      "parent_subtheme": "pf_lifting_carrying",
+      "variants": [
+        "lifting groceries",
+        "carrying groceries",
+        "grocery bags",
+        "heavy bags",
+        "carrying packages",
+        "can't lift",
+        "too heavy to carry"
+      ]
+    },
+    {
+      "id": "sf36_pf_climbing_stairs",
+      "label": "Climbing stairs",
+      "description": "Difficulty climbing one or several flights of stairs (SF-36v2 PF items 4–5).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "physical_functioning",
+      "parent_subtheme": "pf_climbing_stairs",
+      "variants": [
+        "stairs",
+        "climbing stairs",
+        "flights of stairs",
+        "walking up stairs",
+        "one flight",
+        "several flights",
+        "out of breath on stairs",
+        "can't do stairs"
+      ]
+    },
+    {
+      "id": "sf36_pf_bending_kneeling",
+      "label": "Bending, kneeling, stooping",
+      "description": "Difficulty bending, kneeling, or stooping (SF-36v2 PF item 6).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "physical_functioning",
+      "parent_subtheme": "pf_bending_kneeling",
+      "variants": [
+        "bending",
+        "bending over",
+        "kneeling",
+        "stooping",
+        "crouching",
+        "getting down on the floor",
+        "tying my shoes"
+      ]
+    },
+    {
+      "id": "sf36_pf_walking",
+      "label": "Walking distances",
+      "description": "Limitations walking — more than a mile, several blocks, or even one block (SF-36v2 PF items 7–9).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "physical_functioning",
+      "parent_subtheme": "pf_walking",
+      "variants": [
+        "walking a mile",
+        "walking several blocks",
+        "walking one block",
+        "walking around the block",
+        "hard to walk",
+        "can't walk far",
+        "have to stop and rest",
+        "winded after walking"
+      ]
+    },
+    {
+      "id": "sf36_pf_self_care",
+      "label": "Bathing & dressing",
+      "description": "Difficulty with bathing, dressing, or basic self-care (SF-36v2 PF item 10).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "physical_functioning",
+      "parent_subtheme": "pf_self_care",
+      "variants": [
+        "bathing",
+        "showering",
+        "taking a shower",
+        "dressing myself",
+        "getting dressed",
+        "putting on clothes",
+        "buttoning",
+        "need help dressing"
+      ]
+    },
+    {
+      "id": "sf36_pf_mobility_aids",
+      "label": "Mobility aids & adaptations",
+      "description": "Use of canes, walkers, wheelchairs, grab bars, or other physical aids; home or environment adaptations to compensate for PF limits.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "physical_functioning",
+      "parent_subtheme": "pf_mobility_aids",
+      "variants": [
+        "cane",
+        "walker",
+        "wheelchair",
+        "mobility scooter",
+        "grab bars",
+        "shower chair",
+        "ramp",
+        "walking stick"
+      ]
+    },
+    {
+      "id": "sf36_rp_reduced_time",
+      "label": "Cut down time at work",
+      "description": "Reducing the amount of time spent on work or other activities because of physical health (SF-36v2 RP item 1).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "role_physical",
+      "parent_subtheme": "rp_reduced_time",
+      "variants": [
+        "cut down time",
+        "less time at work",
+        "missed work",
+        "sick days",
+        "had to leave early",
+        "couldn't put in the hours",
+        "shorter shifts"
+      ]
+    },
+    {
+      "id": "sf36_rp_accomplished_less",
+      "label": "Accomplished less (physical)",
+      "description": "Getting less done than wanted as a result of physical health (SF-36v2 RP item 2).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "role_physical",
+      "parent_subtheme": "rp_accomplished_less",
+      "variants": [
+        "got less done",
+        "accomplished less",
+        "fell behind",
+        "productivity dropped",
+        "less productive",
+        "couldn't keep up"
+      ]
+    },
+    {
+      "id": "sf36_rp_limited_kind",
+      "label": "Limited in kind of work",
+      "description": "Restricted in the kind of work or activities that can be done due to physical health (SF-36v2 RP item 3).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "role_physical",
+      "parent_subtheme": "rp_limited_kind",
+      "variants": [
+        "kind of work I can do",
+        "type of work",
+        "had to switch jobs",
+        "change roles",
+        "can't do what I used to",
+        "had to give up"
+      ]
+    },
+    {
+      "id": "sf36_rp_difficulty_performing",
+      "label": "Difficulty performing work",
+      "description": "Work or activities take extra effort, longer, or workarounds due to physical health (SF-36v2 RP item 4).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "role_physical",
+      "parent_subtheme": "rp_difficulty_performing",
+      "variants": [
+        "takes extra effort",
+        "takes longer",
+        "harder to do",
+        "had to work harder",
+        "with extra effort",
+        "had to push through"
+      ]
+    },
+    {
+      "id": "sf36_rp_career_impact",
+      "label": "Career & income impact",
+      "description": "Job loss, reduced hours, missed promotions, disability leave, or income loss attributed to physical health.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "role_physical",
+      "parent_subtheme": "rp_career_impact",
+      "variants": [
+        "lost my job",
+        "had to quit",
+        "disability leave",
+        "took disability",
+        "reduced hours",
+        "demoted",
+        "missed promotion",
+        "income loss",
+        "FMLA"
+      ]
+    },
+    {
+      "id": "sf36_bp_pain_intensity",
+      "label": "Pain intensity",
+      "description": "How much bodily pain — severity, frequency, and pain described as constant or chronic (SF-36v2 BP item 1).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "bodily_pain",
+      "parent_subtheme": "bp_pain_intensity",
+      "variants": [
+        "severe pain",
+        "mild pain",
+        "chronic pain",
+        "constant pain",
+        "throbbing",
+        "terrible pain",
+        "excruciating",
+        "10 out of 10",
+        "agony"
+      ]
+    },
+    {
+      "id": "sf36_bp_pain_interference",
+      "label": "Pain interference",
+      "description": "How much pain interferes with normal work, household tasks, hobbies, or daily activities (SF-36v2 BP item 2).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "bodily_pain",
+      "parent_subtheme": "bp_pain_interference",
+      "variants": [
+        "pain stops me",
+        "pain prevents",
+        "can't do because of pain",
+        "pain interferes",
+        "can't work because of pain",
+        "pain keeps me from",
+        "pain in the way"
+      ]
+    },
+    {
+      "id": "sf36_bp_pain_location_quality",
+      "label": "Pain location & quality",
+      "description": "Where the pain is felt (back, joints, head, abdomen, neuropathic) and how it is described (sharp, burning, throbbing, aching).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "bodily_pain",
+      "parent_subtheme": "bp_pain_location_quality",
+      "variants": [
+        "back pain",
+        "joint pain",
+        "neck pain",
+        "headache",
+        "abdominal pain",
+        "burning pain",
+        "sharp pain",
+        "dull ache",
+        "nerve pain",
+        "pins and needles"
+      ]
+    },
+    {
+      "id": "sf36_bp_pain_management",
+      "label": "Pain management",
+      "description": "Strategies and treatments used to manage pain — medications, procedures, physical therapy, alternative approaches.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "bodily_pain",
+      "parent_subtheme": "bp_pain_management",
+      "variants": [
+        "pain medication",
+        "painkillers",
+        "opioids",
+        "ibuprofen",
+        "tylenol",
+        "physical therapy",
+        "pain clinic",
+        "nerve block",
+        "heating pad",
+        "tens unit"
+      ]
+    },
+    {
+      "id": "sf36_gh_self_rating",
+      "label": "Health self-rating",
+      "description": "Personal evaluation of overall health (excellent / very good / good / fair / poor) (SF-36v2 GH item 1).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "general_health",
+      "parent_subtheme": "gh_self_rating",
+      "variants": [
+        "my health is excellent",
+        "health is poor",
+        "health is good",
+        "fair health",
+        "doing okay",
+        "doing well overall",
+        "in bad shape"
+      ]
+    },
+    {
+      "id": "sf36_gh_illness_susceptibility",
+      "label": "Illness susceptibility",
+      "description": "Belief that they get sick more easily than others, or that they are as healthy as anybody (SF-36v2 GH items 2 & 3).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "general_health",
+      "parent_subtheme": "gh_illness_susceptibility",
+      "variants": [
+        "get sick easily",
+        "catch everything",
+        "immune system",
+        "healthy as anybody",
+        "prone to illness",
+        "always catching something",
+        "weak immune"
+      ]
+    },
+    {
+      "id": "sf36_gh_health_outlook",
+      "label": "Health outlook",
+      "description": "Expectation that health will get worse, stay the same, or improve (SF-36v2 GH item 4).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "general_health",
+      "parent_subtheme": "gh_health_outlook",
+      "variants": [
+        "getting worse",
+        "going downhill",
+        "expect to decline",
+        "will get better",
+        "health is improving",
+        "downhill from here",
+        "only going to get worse"
+      ]
+    },
+    {
+      "id": "sf36_gh_health_comparison",
+      "label": "Health comparison",
+      "description": "Comparison of current health to a year ago, to peers, or to a prior baseline.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "general_health",
+      "parent_subtheme": "gh_health_comparison",
+      "variants": [
+        "compared to last year",
+        "since last year",
+        "since I was younger",
+        "compared to others my age",
+        "used to be",
+        "a year ago I was",
+        "not what I used to be"
+      ]
+    },
+    {
+      "id": "sf36_vt_full_of_life",
+      "label": "Full of life",
+      "description": "Feeling lively, vital, full of life — the positive pole of the vitality scale (SF-36v2 VT item 1).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "vitality",
+      "parent_subtheme": "vt_full_of_life",
+      "variants": [
+        "full of life",
+        "alive",
+        "vital",
+        "vibrant",
+        "lively",
+        "lots of pep",
+        "feeling alive again"
+      ]
+    },
+    {
+      "id": "sf36_vt_energy",
+      "label": "Energy",
+      "description": "Having a lot of energy; feeling able to do what one wants to do (SF-36v2 VT item 2).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "vitality",
+      "parent_subtheme": "vt_energy",
+      "variants": [
+        "lots of energy",
+        "plenty of energy",
+        "energy to spare",
+        "can do what I want",
+        "energetic"
+      ]
+    },
+    {
+      "id": "sf36_vt_worn_out",
+      "label": "Worn out",
+      "description": "Feeling worn out, drained, or depleted beyond ordinary tiredness (SF-36v2 VT item 3).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "vitality",
+      "parent_subtheme": "vt_worn_out",
+      "variants": [
+        "worn out",
+        "drained",
+        "depleted",
+        "completely exhausted",
+        "beat",
+        "spent",
+        "wiped out",
+        "running on empty"
+      ]
+    },
+    {
+      "id": "sf36_vt_tired",
+      "label": "Tired",
+      "description": "Feeling tired, sluggish, or low-energy in a way attributed to health or treatment (SF-36v2 VT item 4).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "vitality",
+      "parent_subtheme": "vt_tired",
+      "variants": [
+        "tired",
+        "sluggish",
+        "low energy",
+        "no energy",
+        "fatigue",
+        "fatigued",
+        "run down",
+        "sleepy all the time"
+      ]
+    },
+    {
+      "id": "sf36_sf_extent_interference",
+      "label": "Extent of social interference",
+      "description": "How much physical or emotional problems interfere with social activities (not at all → extremely) (SF-36v2 SF item 1).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "social_functioning",
+      "parent_subtheme": "sf_extent_interference",
+      "variants": [
+        "extremely interfered",
+        "slightly interfered",
+        "not at all",
+        "quite a bit",
+        "somewhat",
+        "interferes with social",
+        "gets in the way of seeing people"
+      ]
+    },
+    {
+      "id": "sf36_sf_time_interference",
+      "label": "Frequency of social interference",
+      "description": "How much of the time physical or emotional health has interfered with social activities (SF-36v2 SF item 2).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "social_functioning",
+      "parent_subtheme": "sf_time_interference",
+      "variants": [
+        "all the time",
+        "most of the time",
+        "some of the time",
+        "none of the time",
+        "often",
+        "rarely",
+        "every weekend"
+      ]
+    },
+    {
+      "id": "sf36_sf_relationship_strain",
+      "label": "Relationship strain",
+      "description": "Strain on relationships with partners, family, friends, or caregivers attributed to health.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "social_functioning",
+      "parent_subtheme": "sf_relationship_strain",
+      "variants": [
+        "strain on my relationship",
+        "hurt my marriage",
+        "fights with family",
+        "my partner is frustrated",
+        "lost friends",
+        "caregiver burnout",
+        "burden on my family"
+      ]
+    },
+    {
+      "id": "sf36_sf_isolation_withdrawal",
+      "label": "Isolation & withdrawal",
+      "description": "Withdrawing from social events, declining invitations, or feeling isolated as a consequence of health.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "social_functioning",
+      "parent_subtheme": "sf_isolation_withdrawal",
+      "variants": [
+        "stay home",
+        "isolated",
+        "don't go out",
+        "avoid people",
+        "declined invitations",
+        "lonely",
+        "can't see friends",
+        "stopped going out"
+      ]
+    },
+    {
+      "id": "sf36_re_reduced_time_emotional",
+      "label": "Cut down time (emotional)",
+      "description": "Reducing the amount of time spent on work or other activities because of emotional problems (SF-36v2 RE item 1).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "role_emotional",
+      "parent_subtheme": "re_reduced_time_emotional",
+      "variants": [
+        "missed work because of depression",
+        "missed work because of anxiety",
+        "cut down time because of mood",
+        "took mental health day",
+        "couldn't get out of bed for work"
+      ]
+    },
+    {
+      "id": "sf36_re_accomplished_less_emotional",
+      "label": "Accomplished less (emotional)",
+      "description": "Getting less done than wanted as a result of emotional problems (SF-36v2 RE item 2).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "role_emotional",
+      "parent_subtheme": "re_accomplished_less_emotional",
+      "variants": [
+        "accomplished less because of mood",
+        "fell behind because of anxiety",
+        "depressed and couldn't get things done",
+        "too anxious to focus",
+        "brain wouldn't work"
+      ]
+    },
+    {
+      "id": "sf36_re_reduced_carefulness",
+      "label": "Did work less carefully",
+      "description": "Doing work or activities less carefully than usual because of emotional problems (SF-36v2 RE item 3).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "role_emotional",
+      "parent_subtheme": "re_reduced_carefulness",
+      "variants": [
+        "didn't do it carefully",
+        "made mistakes",
+        "couldn't concentrate",
+        "sloppy work",
+        "couldn't focus",
+        "phoning it in"
+      ]
+    },
+    {
+      "id": "sf36_mh_anxiety",
+      "label": "Anxiety & nervousness",
+      "description": "Feeling very nervous, on edge, or anxious (SF-36v2 MH item 1).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "mental_health",
+      "parent_subtheme": "mh_anxiety",
+      "variants": [
+        "nervous",
+        "anxious",
+        "on edge",
+        "panic",
+        "panic attack",
+        "anxiety attack",
+        "jittery",
+        "restless",
+        "worried sick"
+      ]
+    },
+    {
+      "id": "sf36_mh_depression",
+      "label": "Depression & low mood",
+      "description": "Feeling so down nothing could cheer one up; feeling downhearted, depressed, or hopeless (SF-36v2 MH items 2 & 4).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "mental_health",
+      "parent_subtheme": "mh_depression",
+      "variants": [
+        "down in the dumps",
+        "depressed",
+        "hopeless",
+        "low mood",
+        "can't get out of bed",
+        "no point",
+        "downhearted",
+        "blue"
+      ]
+    },
+    {
+      "id": "sf36_mh_calm_peace",
+      "label": "Calm & peaceful",
+      "description": "Feeling calm and peaceful — the positive pole of affect balance (SF-36v2 MH item 3).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "mental_health",
+      "parent_subtheme": "mh_calm_peace",
+      "variants": [
+        "calm",
+        "peaceful",
+        "at peace",
+        "serene",
+        "relaxed",
+        "settled",
+        "centered"
+      ]
+    },
+    {
+      "id": "sf36_mh_happiness",
+      "label": "Happiness",
+      "description": "Being a happy person — general positive emotional tone over the recall period (SF-36v2 MH item 5).",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "mental_health",
+      "parent_subtheme": "mh_happiness",
+      "variants": [
+        "happy",
+        "content",
+        "joyful",
+        "in good spirits",
+        "cheerful",
+        "smiling more",
+        "glad"
+      ]
+    },
+    {
+      "id": "sf36_mh_emotional_control",
+      "label": "Emotional control",
+      "description": "Sense of being in (or losing) control of one's emotions or behavior; mood swings; reactivity.",
+      "indications": [],
+      "burden_category_ids": [],
+      "parent_theme": "mental_health",
+      "parent_subtheme": "mh_emotional_control",
+      "variants": [
+        "lose it",
+        "lost it",
+        "snap",
+        "snapped",
+        "mood swings",
+        "can't control my emotions",
+        "blew up",
+        "melted down",
+        "irritable"
+      ]
+    }
+  ]
+}

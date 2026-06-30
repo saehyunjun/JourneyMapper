@@ -36,6 +36,7 @@ import lexiconRaw from './keyword_lexicon.json';
 import codebookRaw from './codebook.json';
 import drugsRaw from '$lib/content/registries/drugs.json';
 import type { Drug as DrugEntity } from '$lib/content/registries/types';
+import type { Entity, EntityKind } from '$lib/content/entities/types';
 
 type DrugsRegistryFile = { items: DrugEntity[] };
 
@@ -115,6 +116,22 @@ export type KeywordBlocks = {
 	blocks: { sentiment: number }[];
 };
 
+/** A single matched entity in some text. Phase 2 of the codebook migration:
+ *  entities are matched in parallel with clusters, but the existing render
+ *  layer routes only `keywordId` clicks (to GroupStatsDrawer). Entity spans
+ *  are visible to callers that opt in via the new `entitySpans` method;
+ *  Phase 3 will wire them to EntityDetailDrawer in the render layer. */
+export type EntityMatch = {
+	start: number;
+	end: number;
+	text: string;
+	entityId: string;
+	entityKind: EntityKind;
+	entityLabel: string;
+	/** Which surface_forms[] string actually matched. */
+	matchedSurfaceForm: string;
+};
+
 /** The full matcher API. Returned by `buildKeywordMatcher`; the module-level
  *  exports are this same shape, built from the bundled lexicon. */
 export type KeywordMatcher = {
@@ -124,6 +141,14 @@ export type KeywordMatcher = {
 	keywordTags(text: string): KeywordTags;
 	keywordCounts(texts: string[]): KeywordCount[];
 	keywordBlocks(fragments: { text: string; sentiment: number }[]): KeywordBlocks[];
+	/** Phase 2 (codebook migration): every entity surface-form hit in `text`,
+	 *  possibly overlapping with cluster matches. Render-layer integration
+	 *  lands in Phase 3 — for now this is read by smoke tests and any opt-in
+	 *  consumer. Returns empty when the matcher was built without entities. */
+	entitySpans(text: string): EntityMatch[];
+	/** The entity list this matcher was built with. Empty on the legacy
+	 *  default matcher (which doesn't carry an entity slice). */
+	entities: Entity[];
 };
 
 // --- Internal helpers (pure, no module-level state) -------------------------
@@ -163,6 +188,32 @@ function clusterRegex(c: Cluster, drug?: DrugEntity): RegExp {
 	return new RegExp(`(?<![A-Za-z0-9])(?:${alts.join('|')})(?![A-Za-z0-9])`, 'gi');
 }
 
+/** Same construction shape as clusterRegex but sourced from an entity's
+ *  surface_forms[]. Case-insensitive, longest-first alternation, word-
+ *  boundary lookarounds, flexible whitespace/hyphen runs. Entities with
+ *  zero surface forms compile to a regex that matches nothing (kept for
+ *  uniformity — the caller iterates entities unconditionally). */
+function entityRegex(e: Entity): RegExp {
+	const seen = new Set<string>();
+	const sources: string[] = [];
+	for (const sf of e.surface_forms ?? []) {
+		const n = normalize(sf);
+		const key = n.toLowerCase().trim();
+		if (!key || seen.has(key)) continue;
+		seen.add(key);
+		sources.push(n);
+	}
+	if (sources.length === 0) {
+		// Compile to a regex that can't match anything — keeps the iteration
+		// uniform and avoids a per-entity presence check in the hot path.
+		return /(?!)/;
+	}
+	const alts = sources
+		.sort((a, b) => b.length - a.length)
+		.map((v) => escapeRegex(v).replace(/[\s-]+/g, '[\\s-]+'));
+	return new RegExp(`(?<![A-Za-z0-9])(?:${alts.join('|')})(?![A-Za-z0-9])`, 'gi');
+}
+
 function subthemeLabelMap(themes: CodebookTheme[]): Map<string, string> {
 	const m = new Map<string, string>();
 	for (const t of themes ?? []) {
@@ -184,11 +235,19 @@ function subthemeLabelMap(themes: CodebookTheme[]): Map<string, string> {
  * a cluster carries `drug_id`, the drug's generic_name and brand_names[] are
  * merged into that cluster's match regex. Pass `slice.drugs` from
  * /api/lexicon; matchers without drug awareness can omit it.
+ *
+ * `entities` (optional, Phase 2 of the codebook migration) is the new
+ * Entity slice — drugs, biomarkers, sponsors, symptoms, concepts, trials,
+ * conditions. When provided, the returned matcher exposes `entitySpans(text)`
+ * which matches entity surface forms in parallel with cluster matching.
+ * The legacy cluster path is unchanged. See ENTITY_REGISTRY.md and
+ * CODEBOOK_MIGRATION_PLAN.md for the migration contract.
  */
 export function buildKeywordMatcher(
 	clusters: Cluster[],
 	themes: CodebookTheme[],
-	drugs: DrugEntity[] = []
+	drugs: DrugEntity[] = [],
+	entities: Entity[] = []
 ): KeywordMatcher {
 	const subLabel = subthemeLabelMap(themes);
 	const drugById = new Map<string, DrugEntity>(drugs.map((d) => [d.id, d]));
@@ -198,6 +257,14 @@ export function buildKeywordMatcher(
 		parentSubthemeLabel: subLabel.get(cluster.parent_subtheme) ?? cluster.parent_subtheme
 	}));
 	const clusterById = new Map(clusters.map((c) => [c.id, c]));
+
+	// Phase 2: entity regexes compiled in parallel. Skipped entirely when the
+	// caller omits entities, so the default-matcher path (which today does
+	// not load entity registries) pays nothing.
+	const compiledEntities = entities.map((entity) => ({
+		entity,
+		regex: entityRegex(entity)
+	}));
 
 	/** Codebook 2.0 transitional shim — group flat clusters under their
 	 *  parent_subtheme so consumers expecting the old `categories[].keywords[]`
@@ -375,7 +442,45 @@ export function buildKeywordMatcher(
 		);
 	}
 
-	return { clusters, categories, keywordRuns, keywordTags, keywordCounts, keywordBlocks };
+	/** Phase 2 of the codebook migration: every entity surface-form hit in
+	 *  `text`, possibly overlapping with cluster matches. Returns empty when
+	 *  the matcher was built without entities. Result is sorted by start
+	 *  ascending, then by end descending (longest-match preference at the
+	 *  same start). Overlaps between entity matches are NOT deduplicated
+	 *  here — a span can carry multiple entity tags (multi-tag contract). */
+	function entitySpans(text: string): EntityMatch[] {
+		if (compiledEntities.length === 0) return [];
+		const norm = normalize(text);
+		const out: EntityMatch[] = [];
+		for (const { entity, regex } of compiledEntities) {
+			regex.lastIndex = 0;
+			for (const m of norm.matchAll(regex)) {
+				const start = m.index ?? 0;
+				const end = start + m[0].length;
+				out.push({
+					start,
+					end,
+					text: text.slice(start, end),
+					entityId: entity.id,
+					entityKind: entity.kind,
+					entityLabel: entity.label,
+					matchedSurfaceForm: m[0]
+				});
+			}
+		}
+		return out.sort((a, b) => a.start - b.start || b.end - a.end);
+	}
+
+	return {
+		clusters,
+		categories,
+		keywordRuns,
+		keywordTags,
+		keywordCounts,
+		keywordBlocks,
+		entitySpans,
+		entities
+	};
 }
 
 // --- Legacy default matcher (deprecated — full-bundle path) -----------------

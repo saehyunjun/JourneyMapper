@@ -1,0 +1,3833 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "corpus_id": "igan_forum_2026q2",
+    "content_source": "social_post",
+    "platform": "reddit",
+    "generated_at": "2026-06-01T18:30:05.288Z",
+    "generator": "scripts/import-forum-as-fragments.mjs",
+    "ingester_version": "import-forum-as-fragments@0.3",
+    "sources": [
+      "src/lib/content/corpora/igan_forum_2026q2/source/comments.json"
+    ],
+    "fragment_count": 106,
+    "notes": [
+      "Long rows (>=400 chars, >=4 sentences) sentence-split into child fragments; short rows emit one fragment per row.",
+      "Thread-starting row per (Thread, Conversation) → social_post; subsequent rows → social_comment.",
+      "Per-user Context resolved to one value per anonymized id; 0 user(s) had conflicting Context values (most-frequent used).",
+      "8 [deleted] row(s) replaced with fresh per-row anonymous ids.",
+      "0 anonymized id(s) map to >1 raw username (logged; not auto-fixed).",
+      "Split children share source_ref.post_id + comment_id with their siblings; offsets are relative to the parent post's normalized text."
+    ]
+  },
+  "fragments": [
+    {
+      "id": "fc-igan_forum_2026q2-1-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-08T18:02:38.895000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-08T18:02:38.895000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.279Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T1-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 0,
+        "char_end": 291
+      },
+      "text": "An interim analysis of the VISIONARY phase 3 trial (containing adults with biopsy-confirmed IgA nephropathy who were assigned 1:1 to sibeprenlimab 400 mg every 4 weeks or placebo, for 100 weeks) shows significant reduction of proteinuria in those patients given the trial drug sibeprenlimab."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-1-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-08T18:02:38.895000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-08T18:02:38.895000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.279Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T1-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 292,
+        "char_end": 453
+      },
+      "text": "Sibeprenlimab targets APRIL, a B-cell–activating cytokine that promotes class switching and overproduction of Gd-IgA1 implicated in IgA nephropathy pathogenesis."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-1-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-08T18:02:38.895000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-08T18:02:38.895000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.279Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T1-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 454,
+        "char_end": 747
+      },
+      "text": "Sibeprenlimab is currently under review by the US FDA for At 9 months, 24-hour UPCR fell 50.2% from baseline with sibeprenlimab and rose 2.1% with placebo; the adjusted geometric least-squares mean 24-hour UPCR was 51.2% lower with sibeprenlimab than placebo (96.5% CI, 42.9 to 58.2; P<0.001)."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-1-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-08T18:02:38.895000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-08T18:02:38.895000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.279Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T1-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 748,
+        "char_end": 875
+      },
+      "text": "At week 48, serum APRIL fell 95.8% and pathogenic galactose-deficient IgA1 fell 67.1% from baseline in the sibeprenlimab group."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-1-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-08T18:02:38.895000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-08T18:02:38.895000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.279Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T1-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 876,
+        "char_end": 1031
+      },
+      "text": "Safety was similar between groups; serious adverse events occurred in 3.5% of sibeprenlimab patients and 4.4% of placebo patients; no deaths were reported."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-1-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-08T18:02:38.895000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-08T18:02:38.895000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.279Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T1-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 1032,
+        "char_end": 1135
+      },
+      "text": "The key secondary endpoint, annualized eGFR slope over 24 months, will be reported at trial completion."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-1-1-1_a_s06",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-08T18:02:38.895000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-08T18:02:38.895000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.279Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T1-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 1136,
+        "char_end": 1252
+      },
+      "text": "Sibeprenlimab is currently under review by the US FDA, and an approval decision is anticipated on November 28, 2025."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-1-1-1_a_s07",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-08T18:02:38.895000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-08T18:02:38.895000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.279Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T1-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 1253,
+        "char_end": 1310
+      },
+      "text": "More here: https://www.nejm.org/doi/10.1056/NEJMoa2512133"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-2-1-1_a",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-14T09:16:43.876000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-14T09:16:43.876000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T2-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "Anon_igan_forum_2026q2_0000"
+      },
+      "text": "My igg level was to low mine was 470 they wanted it at 700. Im really deppresed now finally had some hope my gfr is 72 im 19 just want to live a normal life. Here is my test results"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-3-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T13:22:28.973000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "caregiver",
+          "evidence": "inferred",
+          "source_quote": "I need some advice. My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025. She has been on th"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T13:22:28.973000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T3-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Frost-Stone-9302",
+        "char_start": 0,
+        "char_end": 64
+      },
+      "text": "Good morning, i hope this isn’t too long but I need some advice."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-3-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T13:22:28.973000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "caregiver",
+          "evidence": "inferred",
+          "source_quote": "I need some advice. My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025. She has been on th"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T13:22:28.973000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T3-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Frost-Stone-9302",
+        "char_start": 65,
+        "char_end": 153
+      },
+      "text": "My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-3-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T13:22:28.973000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "caregiver",
+          "evidence": "inferred",
+          "source_quote": "I need some advice. My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025. She has been on th"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T13:22:28.973000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T3-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Frost-Stone-9302",
+        "char_start": 154,
+        "char_end": 288
+      },
+      "text": "She has been on the transplant list for several years and has had a few potential live donors disqualified because of health concerns."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-3-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T13:22:28.973000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "caregiver",
+          "evidence": "inferred",
+          "source_quote": "I need some advice. My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025. She has been on th"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T13:22:28.973000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T3-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Frost-Stone-9302",
+        "char_start": 289,
+        "char_end": 454
+      },
+      "text": "I want to spread the word on social media in hopes of finding her a kidney before it’s too late but she asks me not to, says she would rather wait( transplant list)."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-3-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T13:22:28.973000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "caregiver",
+          "evidence": "inferred",
+          "source_quote": "I need some advice. My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025. She has been on th"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T13:22:28.973000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T3-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Frost-Stone-9302",
+        "char_start": 455,
+        "char_end": 529
+      },
+      "text": "I don’t want to lose her but I don’t want to go against her wishes either."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-3-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T13:22:28.973000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "caregiver",
+          "evidence": "inferred",
+          "source_quote": "I need some advice. My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025. She has been on th"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T13:22:28.973000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T3-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Frost-Stone-9302",
+        "char_start": 530,
+        "char_end": 658
+      },
+      "text": "She is so strong, she is visibly weak and tired but refuses to get on disability and still works 40 hours a week, amazing to me."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-3-1-1_a_s06",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T13:22:28.973000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "caregiver",
+          "evidence": "inferred",
+          "source_quote": "I need some advice. My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025. She has been on th"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T13:22:28.973000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T3-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Frost-Stone-9302",
+        "char_start": 659,
+        "char_end": 691
+      },
+      "text": "Her dad says it keeps her going."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-3-1-1_a_s07",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T13:22:28.973000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "caregiver",
+          "evidence": "inferred",
+          "source_quote": "I need some advice. My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025. She has been on th"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T13:22:28.973000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T3-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Frost-Stone-9302",
+        "char_start": 692,
+        "char_end": 764
+      },
+      "text": "I have a decent job with a decent pay check and all the overtime I want."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-3-1-1_a_s08",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T13:22:28.973000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "caregiver",
+          "evidence": "inferred",
+          "source_quote": "I need some advice. My wife is 48 years old and has been in stage 5 renal failure and on PD since June 2025. She has been on th"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T13:22:28.973000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T3-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Frost-Stone-9302",
+        "char_start": 765,
+        "char_end": 783
+      },
+      "text": "Thanks for reading"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-4-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-31T20:12:36.282000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "r the COVID vaccine I was diagnosed and told the vax was more than likely what caused it. When"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-31T20:12:36.282000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Juniper-Palisade-9913",
+        "char_start": 0,
+        "char_end": 41
+      },
+      "text": "35 yr old male, borderline stage4-5 igan."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-4-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-31T20:12:36.282000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "r the COVID vaccine I was diagnosed and told the vax was more than likely what caused it. When"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-31T20:12:36.282000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Juniper-Palisade-9913",
+        "char_start": 42,
+        "char_end": 258
+      },
+      "text": "Unfortunately 1 kidney is completely cystic and Dr words were it’s basically a dried plum with no activity and may have been that way from birth, my other kidney is primarily scar tissue at about give or take 20 gfr."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-4-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-31T20:12:36.282000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "r the COVID vaccine I was diagnosed and told the vax was more than likely what caused it. When"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-31T20:12:36.282000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Juniper-Palisade-9913",
+        "char_start": 259,
+        "char_end": 321
+      },
+      "text": "It’s been at 15 18 and 22 and last bloodwork was I believe 19."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-4-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-31T20:12:36.282000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "r the COVID vaccine I was diagnosed and told the vax was more than likely what caused it. When"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-31T20:12:36.282000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Juniper-Palisade-9913",
+        "char_start": 322,
+        "char_end": 412
+      },
+      "text": "Been on all sorts of meds and steroids and getting kind of drained from the whole process."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-4-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-31T20:12:36.282000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "r the COVID vaccine I was diagnosed and told the vax was more than likely what caused it. When"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-31T20:12:36.282000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Juniper-Palisade-9913",
+        "char_start": 413,
+        "char_end": 516
+      },
+      "text": "I will be getting my pre evaluation tomrw at NYU in the city and I’m a little nervous to say the least."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-4-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-31T20:12:36.282000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "r the COVID vaccine I was diagnosed and told the vax was more than likely what caused it. When"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-31T20:12:36.282000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Juniper-Palisade-9913",
+        "char_start": 517,
+        "char_end": 686
+      },
+      "text": "I was told it would take about 5 hours to bring lunch and maybe a notebook to take notes other than that I feel incredibly unprepared and not sure what I’m walking into."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-4-1-1_a_s06",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-31T20:12:36.282000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "r the COVID vaccine I was diagnosed and told the vax was more than likely what caused it. When"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-31T20:12:36.282000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Juniper-Palisade-9913",
+        "char_start": 687,
+        "char_end": 854
+      },
+      "text": "I was in the best shape of my life working as a steamfitter and two years after the COVID vaccine I was diagnosed and told the vax was more than likely what caused it."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-4-1-1_a_s07",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-31T20:12:36.282000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "r the COVID vaccine I was diagnosed and told the vax was more than likely what caused it. When"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-31T20:12:36.282000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Juniper-Palisade-9913",
+        "char_start": 855,
+        "char_end": 1064
+      },
+      "text": "When I was first diagnosed I kind of brushed it off and figured this wouldn’t happen for many years to come cause it wasn’t progressing to fast but now it seems all to real and I’m not sure what to make of it."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-4-1-1_a_s08",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-31T20:12:36.282000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "r the COVID vaccine I was diagnosed and told the vax was more than likely what caused it. When"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-31T20:12:36.282000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.282Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T4-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Juniper-Palisade-9913",
+        "char_start": 1065,
+        "char_end": 1170
+      },
+      "text": "Any advice and or help or just a heads up as to what’s going to happen tomrw will be greatly appreciated."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 0,
+        "char_end": 81
+      },
+      "text": "As the title states, this is my 16th week and 4th injection in the RAINIER trial."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 82,
+        "char_end": 117
+      },
+      "text": "I'm eagerly waiting for my results."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 118,
+        "char_end": 177
+      },
+      "text": "One thing I like about this trial is the 4 week increments."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 178,
+        "char_end": 301
+      },
+      "text": "My last trial (ALIGN: Atrasentan) had me waiting 6 months for every visit and I wasn't a fan of the space between meetings."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 302,
+        "char_end": 390
+      },
+      "text": "Having regular EKG's and 24 hour urine collections makes me feel more closely monitored."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 391,
+        "char_end": 493
+      },
+      "text": "I also enjoy not having the pressure of taking a daily pill and using the app to record my daily dose."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s06",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 494,
+        "char_end": 615
+      },
+      "text": "It wasn't difficult or time consuming but as someone who can be forgetful, I was always anxious that I had missed a dose."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s07",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 616,
+        "char_end": 700
+      },
+      "text": "It's hard to have patient non-compliance when the injection is done at the facility."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s08",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 701,
+        "char_end": 759
+      },
+      "text": "Everyone at the facility is so welcoming and professional."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s09",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 760,
+        "char_end": 924
+      },
+      "text": "I have to travel and stay overnight for each visit and they have always made each visit seamless with hotel reservations and plenty of financial compensation (imo)."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-5-1-1_a_s10",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-03-03T21:33:10.328000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-03-03T21:33:10.328000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.283Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T5-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 925,
+        "char_end": 1028
+      },
+      "text": "If you are in the Southeast near Atlanta, message me and I'd be happy to connect you with the facility."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-6-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-06T15:09:49.873000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-06T15:09:49.873000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 0,
+        "char_end": 240
+      },
+      "text": "Vera Therapeutics reports that atacicept achieved the prespecified primary endpoint in the global, randomized, placebo-controlled phase 3 ORIGIN trial in adults with IgA nephropathy, with additional supportive biomarker and safety findings."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-6-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-06T15:09:49.873000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-06T15:09:49.873000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 241,
+        "char_end": 372
+      },
+      "text": "Atacicept is a dual APRIL and BAFF inhibitor; these cytokines are believed to be central to the pathophysiology of IgA nephropathy."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-6-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-06T15:09:49.873000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-06T15:09:49.873000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 373,
+        "char_end": 501
+      },
+      "text": "Atacicept reduced urine protein-to-creatinine ratio (UPCR) by 46% from baseline and by 42% versus placebo at week 36 (p<0.0001)."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-6-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-06T15:09:49.873000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-06T15:09:49.873000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 502,
+        "char_end": 579
+      },
+      "text": "The treatment produced a 68% reduction in galactose-deficient IgA1 (Gd-IgA1)."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-6-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-06T15:09:49.873000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-06T15:09:49.873000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 580,
+        "char_end": 652
+      },
+      "text": "Hematuria resolved in 81% of participants who had hematuria at baseline."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-6-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-06T15:09:49.873000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-06T15:09:49.873000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 653,
+        "char_end": 784
+      },
+      "text": "Overall adverse events were comparable to placebo, with fewer serious adverse events in the atacicept group and no deaths reported."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-6-1-1_a_s06",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-06T15:09:49.873000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-06T15:09:49.873000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 785,
+        "char_end": 930
+      },
+      "text": "UPDATE: Vera has submitted a Biologics License Application (BLA) through the Accelerated Approval Program to the U.S. FDA based on ORIGIN 3 data."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-6-1-1_a_s07",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-06T15:09:49.873000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-06T15:09:49.873000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 931,
+        "char_end": 997
+      },
+      "text": "The ongoing trial will continue to track 2-year eGFR data in 2027."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-6-1-1_a_s08",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-11-06T15:09:49.873000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-11-06T15:09:49.873000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T6-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 998,
+        "char_end": 1119
+      },
+      "text": "Source: https://ir.veratx.com/news-releases/news-release-details/vera-therapeutics-announces-positive-origin-phase-3-data"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 0,
+        "char_end": 64
+      },
+      "text": "Quick run down: I was on Losartan and Farxiga for about 3 years."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 65,
+        "char_end": 151
+      },
+      "text": "My nephrologist decided switching to the Filspari was going to be the most beneficial."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 152,
+        "char_end": 217
+      },
+      "text": "I was already hesitant due to reading the possible side effects.."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 218,
+        "char_end": 257
+      },
+      "text": "200mg didn’t cause anything noticeable."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 258,
+        "char_end": 269
+      },
+      "text": "I was fine."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 270,
+        "char_end": 356
+      },
+      "text": "400mg increase; I immediately noticed fatigue and just over all being much more tired."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s06",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 357,
+        "char_end": 408
+      },
+      "text": "My ankles have slight edema I can see sock indents."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s07",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 409,
+        "char_end": 445
+      },
+      "text": "I’ve also noticed I’ve been bloated."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s08",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 446,
+        "char_end": 494
+      },
+      "text": "It’s been about two weeks and I’ve gained 4 lbs."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s09",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 495,
+        "char_end": 551
+      },
+      "text": "I did notify my team about the fatigue and slight edema."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s10",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 552,
+        "char_end": 645
+      },
+      "text": "I never mentioned the bloating , I thought maybe it was a change in diet or it would go away."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s11",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 646,
+        "char_end": 713
+      },
+      "text": "I do sometimes experience random bloat episodes, not this long tho."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s12",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 714,
+        "char_end": 792
+      },
+      "text": "Tomorrow im going to update my neph and ask about lowering back down to 200mg."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-7-1-1_a_s13",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T02:16:07.355000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "Quick run down: I was on Losartan and Farxiga for about 3 years. My nephrologist dec"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T02:16:07.355000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T7-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Crimson-Signal-3598",
+        "char_start": 793,
+        "char_end": 826
+      },
+      "text": "Has anyone else experienced this?"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 0,
+        "char_end": 13
+      },
+      "text": "Hey everyone."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 14,
+        "char_end": 142
+      },
+      "text": "I've posted a few times concerning my experience with the RAINIER trial but it has been a while so I figured I'd give an update."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 143,
+        "char_end": 246
+      },
+      "text": "Very long story short: I went into this study after having an unsuccessful run with atrasentan (ALIGN)."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 247,
+        "char_end": 360
+      },
+      "text": "At the advice of the nephrologist, I ended the trial as my labs had me at GFR - 23, Urine Protein/Cr ratio: 3782."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 361,
+        "char_end": 517
+      },
+      "text": "It could have been that I was getting a placebo or that the progression of my disease was overpowering the mechanism of the study drug (as I understand it)."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 518,
+        "char_end": 655
+      },
+      "text": "This spike spooked us all and he talked to me about shifting gears as the RUBY trial for povetacicept had been showing promising results."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s06",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 656,
+        "char_end": 734
+      },
+      "text": "The latest labs I currently have access to are from my 48th week (last month)."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s07",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 735,
+        "char_end": 787
+      },
+      "text": "They show my current Urine Protein/CR ratio at 1270."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s08",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 788,
+        "char_end": 899
+      },
+      "text": "The encouraging part is that my ratio has been stable around the 1260 mark for the last 5 or so monthly visits."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s09",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 900,
+        "char_end": 1030
+      },
+      "text": "I haven't experienced any side effects from the injections so far and from what I have read, very few people ever experience them."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s10",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 1031,
+        "char_end": 1192
+      },
+      "text": "A link was shared a few days ago with my nephrologist explaining the implications of the povetacicept trials and I'll have it linked here if you haven't seen it."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s11",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 1193,
+        "char_end": 1328
+      },
+      "text": "I told him about this community and he consented to me giving out his number to anyone who is in search of a trial for IgA Nephropathy."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s12",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 1329,
+        "char_end": 1424
+      },
+      "text": "Even if you are not in the Southeast USA, he has connections and colleagues all over the world."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-8-1-1_a_s13",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-12-01T23:48:24.470000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-12-01T23:48:24.470000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T8-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697",
+        "char_start": 1425,
+        "char_end": 1558
+      },
+      "text": "Dr. James Tumlin on Povetacicept +1 770-490-9203 (EST time zone) https://nephronet.org/ RAINIER Trial Website Feel free to reach out!"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-9-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T03:36:12.310000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "F here, went to see my nephrologist today to check on the biopsy results and define a treatment"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T03:36:12.310000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T9-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Lunar-Beacon-3843",
+        "char_start": 0,
+        "char_end": 3
+      },
+      "text": "Hi!"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-9-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T03:36:12.310000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "F here, went to see my nephrologist today to check on the biopsy results and define a treatment"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T03:36:12.310000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T9-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Lunar-Beacon-3843",
+        "char_start": 4,
+        "char_end": 102
+      },
+      "text": "28F here, went to see my nephrologist today to check on the biopsy results and define a treatment."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-9-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T03:36:12.310000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "F here, went to see my nephrologist today to check on the biopsy results and define a treatment"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T03:36:12.310000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T9-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Lunar-Beacon-3843",
+        "char_start": 103,
+        "char_end": 284
+      },
+      "text": "He said that since my MEST-C is 0, only 3% of my glomeruli are not functional, i got stable eGFR and my proteinuria is <1g i only have to take losartan and keep a healthy lifestyle."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-9-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T03:36:12.310000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "F here, went to see my nephrologist today to check on the biopsy results and define a treatment"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T03:36:12.310000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T9-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Lunar-Beacon-3843",
+        "char_start": 285,
+        "char_end": 435
+      },
+      "text": "The thing is that i have permanent hematuria and C3 deposits shown on the biopsy, indicating an active IgAN, so i'm not so sure that's the right path."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-9-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T03:36:12.310000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "F here, went to see my nephrologist today to check on the biopsy results and define a treatment"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T03:36:12.310000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T9-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Lunar-Beacon-3843",
+        "char_start": 436,
+        "char_end": 491
+      },
+      "text": "Did any of you receive the diagnosis at an early stage?"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-9-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T03:36:12.310000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "F here, went to see my nephrologist today to check on the biopsy results and define a treatment"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T03:36:12.310000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.284Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T9-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Lunar-Beacon-3843",
+        "char_start": 492,
+        "char_end": 522
+      },
+      "text": "What were you prescribed then?"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-10-1-1_a",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-06-01T08:14:14.646000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-06-01T08:14:14.646000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.285Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T10-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Zephyr-Stone-3017"
+      },
+      "text": "Hello, My wife was diagnosed with IgAN recently. After some research we found Sibeprenlimab likely to be one of the best medicine for this. Unfortunately we live in a country that this medicine currently not available yet. So we would like to know which countries currently have this available so see if it is one of a viable option for us. TIA."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-11-1-1_a",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-12-11T17:35:41.960000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "over ~6 months now. I am on lisinopril as part of standard care. I appreciate the insig"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-12-11T17:35:41.960000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.285Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T11-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Copper-Ridge-3697"
+      },
+      "text": "I got my first injection of Povetacicept (could be placebo) on Monday. I'm participating in the RAINIER study, and I'm trying to stay positive with the knowledge that there is a 2/3 chance of getting the real thing. Kidney biopsy results were not what I was hoping, but I'm impressed with the data coming out about Povetacicept. We'll see. Has anyone here tried Povetacicept? Any insight?"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-12-1-1_a",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2025-05-28T16:01:46.699000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2025-05-28T16:01:46.699000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.286Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T12-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Summit-Canyon-2140"
+      },
+      "text": "Hey everyone first time posting. Wanting to know if I qualify to do the Rainer study if I’m taking humira for my Ankylosing spondylitis. I have labs and I couple weeks to see if I qualify but don’t want to make a 2 hour trip if I don’t. I asked this question but the person scheduling the appointment didn’t seem to know."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-13-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-28T02:12:59.929000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-28T02:12:59.929000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.286Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T13-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 0,
+        "char_end": 222
+      },
+      "text": "Biohaven reports preliminary Phase 1b clinical biomarker and patient data for BHV-1400 in IgA nephropathy, including rapid galactose-deficient IgA1 reduction, early clinical observations, and competitor-positioning claims."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-13-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-28T02:12:59.929000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-28T02:12:59.929000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.286Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T13-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 223,
+        "char_end": 386
+      },
+      "text": "BHV-1400 is a lead TRAP extracellular degrader designed to rapidly and selectively remove galactose-deficient IgA1, a theorized upstream driver of IgA nephropathy."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-13-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-28T02:12:59.929000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-28T02:12:59.929000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.286Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T13-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 387,
+        "char_end": 566
+      },
+      "text": "BHV-1400 was reported to reduce galactose-deficient IgA1 by more than 60% within 48 hours in patients with IgA nephropathy, with reduction reaching 70% within one month of dosing."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-13-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-28T02:12:59.929000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-28T02:12:59.929000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.286Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T13-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 567,
+        "char_end": 762
+      },
+      "text": "Biohaven stated that BHV-1400 produced deeper early galactose-deficient IgA1 reductions than those reported with BAFF/APRIL inhibitors, APRIL inhibitors, and CD38 inhibitors at early time points."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-13-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-28T02:12:59.929000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-28T02:12:59.929000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.286Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T13-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 763,
+        "char_end": 915
+      },
+      "text": "The company reported associated observations during the one-month dosing period, including increased eGFR, decreased spot UPCR, and decreased hematuria."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-13-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-28T02:12:59.929000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-28T02:12:59.929000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.286Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T13-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 916,
+        "char_end": 1119
+      },
+      "text": "Biohaven reported no clinically significant reductions in total IgA, IgG, IgE, or IgM, and described BHV-1400 as selectively removing galactose-deficient IgA1 while sparing broader immunoglobulin levels."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-13-1-1_a_s06",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-28T02:12:59.929000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "wn was right before I was diagnosed. UPCR was 3.2 g/g, and the next month it was 1.678 g/g - ab"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-28T02:12:59.929000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.286Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T13-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Ember-Palisade-3688",
+        "char_start": 1120,
+        "char_end": 1251
+      },
+      "text": "More here: https://ir.biohaven.com/news-releases/news-release-details/biohaven-reports-positive-clinical-biomarker-and-patient-data"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-14-1-1_a",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2024-07-23T21:46:03.541000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {
+        "role": {
+          "value": "patient",
+          "evidence": "inferred",
+          "source_quote": "e a clinical trial? My egfr is 90 with a good amount of protein in the urine. At my sta"
+        }
+      },
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2024-07-23T21:46:03.541000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T14-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Silver-Harbor-1494"
+      },
+      "text": "Has anyone done a clinical trial? My egfr is 90 with a good amount of protein in the urine. At my stage I think I’d be approved for trials. I want to hear your experiences."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-15-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T13:14:12.786000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T13:14:12.786000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T15-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Umber-Anchor-3026",
+        "char_start": 0,
+        "char_end": 9
+      },
+      "text": "Hey gang!"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-15-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T13:14:12.786000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T13:14:12.786000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T15-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Umber-Anchor-3026",
+        "char_start": 10,
+        "char_end": 60
+      },
+      "text": "Finally got a date for 19 June for the Transplant."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-15-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T13:14:12.786000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T13:14:12.786000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T15-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Umber-Anchor-3026",
+        "char_start": 61,
+        "char_end": 147
+      },
+      "text": "Been living with this for 20+ years so excited and of course nervous at the same time."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-15-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T13:14:12.786000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T13:14:12.786000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T15-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Umber-Anchor-3026",
+        "char_start": 148,
+        "char_end": 214
+      },
+      "text": "But holy moly… Diarrhea is implicated three of these drugs, alone!"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-15-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T13:14:12.786000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T13:14:12.786000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T15-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Umber-Anchor-3026",
+        "char_start": 215,
+        "char_end": 278
+      },
+      "text": "Anyone with experience who can attest how truly common is this?"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-15-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-29T13:14:12.786000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-29T13:14:12.786000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T15-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Umber-Anchor-3026",
+        "char_start": 279,
+        "char_end": 430
+      },
+      "text": "Of course everybody is different and I will say that I tolerate drugs pretty well and don’t experience side effects typically (at least not extremely)."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-16-1-1_a_s00",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T21:40:22.097000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T21:40:22.097000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T16-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Mica-Comet-3134",
+        "char_start": 0,
+        "char_end": 115
+      },
+      "text": "I 39F got confirmation today that I have IgAN after a biopsy, I was already on lisinopril, simvastatin and forxiga."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-16-1-1_a_s01",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T21:40:22.097000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T21:40:22.097000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T16-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Mica-Comet-3134",
+        "char_start": 116,
+        "char_end": 223
+      },
+      "text": "In my last test I had proteinuria of around 1.2 g/l and eGFR of 63, and I will be tested again in 3 months."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-16-1-1_a_s02",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T21:40:22.097000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T21:40:22.097000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T16-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Mica-Comet-3134",
+        "char_start": 224,
+        "char_end": 380
+      },
+      "text": "I’m wondering now if I can eventually stop taking medication when I’m at normal levels again or will I have to take them the rest of my life to stay stable."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-16-1-1_a_s03",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T21:40:22.097000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T21:40:22.097000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T16-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Mica-Comet-3134",
+        "char_start": 381,
+        "char_end": 444
+      },
+      "text": "I feel pretty anxious and vulnerable depending so much on meds."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-16-1-1_a_s04",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T21:40:22.097000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T21:40:22.097000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T16-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Mica-Comet-3134",
+        "char_start": 445,
+        "char_end": 539
+      },
+      "text": "I like to travel a lot and am already thinking what to do if I lose the pills while traveling."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-16-1-1_a_s05",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T21:40:22.097000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T21:40:22.097000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T16-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Mica-Comet-3134",
+        "char_start": 540,
+        "char_end": 594
+      },
+      "text": "Or what if the production of the pills gets disrupted."
+    },
+    {
+      "id": "fc-igan_forum_2026q2-16-1-1_a_s06",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2026-05-27T21:40:22.097000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2026-05-27T21:40:22.097000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.287Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T16-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Mica-Comet-3134",
+        "char_start": 595,
+        "char_end": 660
+      },
+      "text": "Did anyone take meds at first but not need them anymore later on?"
+    },
+    {
+      "id": "fc-igan_forum_2026q2-17-1-1_a",
+      "corpus_id": "igan_forum_2026q2",
+      "indications": [
+        "iga_nephropathy"
+      ],
+      "content_source": "social_post",
+      "lang": "en",
+      "date_observed": "2023-05-17T22:07:41.495000+0000",
+      "date_referenced": null,
+      "speaker_attrs": {},
+      "weight_base": 0.5,
+      "weight_signals": {},
+      "license": "research_fair_use",
+      "redistribute_verbatim": false,
+      "deidentified_at": "2023-05-17T22:07:41.495000+0000",
+      "deidentifier_version": "analyst-anonymization@v1",
+      "deid_rules_version": "igan_forum@v1",
+      "ingested_at": "2026-06-01T18:30:05.288Z",
+      "ingester_version": "import-forum-as-fragments@0.3",
+      "source_ref": {
+        "kind": "social_post",
+        "platform": "reddit",
+        "post_id": "igan_forum_2026q2-T17-C1",
+        "comment_id": "1 a",
+        "author_handle_hash": "User-Lunar-Signal-7735"
+      },
+      "text": "Anyone here also on the trial if Sibeprenlimab? Diagnosed with IGAN - 30 y old white male."
+    }
+  ]
+}

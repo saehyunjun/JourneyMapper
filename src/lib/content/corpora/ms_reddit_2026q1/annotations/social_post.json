@@ -3,13 +3,13 @@
     "schema_version": "1.0",
     "corpus_id": "ms_reddit_2026q1",
     "content_source": "social_post",
-    "updated_at": "2026-05-27T04:22:36.586Z",
+    "updated_at": "2026-06-04T20:21:54.370Z",
     "dimensions": {
       "segment_tags": {
         "generator": "scripts/propose-fragment-sentiment.mjs",
-        "model": "claude-opus-4-7",
+        "model": "claude-sonnet-4-6",
         "codebook_schema_version": "2.0",
-        "last_generated_at": "2026-05-27T03:59:31.353Z",
+        "last_generated_at": "2026-06-04T20:21:54.370Z",
         "annotated_batches": [
           "ms_reddit_2026q1-T10-C1",
           "ms_reddit_2026q1-T11-C1",
@@ -19,35 +19,40 @@
           "ms_reddit_2026q1-T15-C1",
           "ms_reddit_2026q1-T16-C1",
           "ms_reddit_2026q1-T17-C1",
-          "ms_reddit_2026q1-T18-C1"
+          "ms_reddit_2026q1-T18-C1",
+          "ms_reddit_2026q1-T19-C1",
+          "ms_reddit_2026q1-T20-C1",
+          "ms_reddit_2026q1-T21-C1",
+          "ms_reddit_2026q1-T22-C1",
+          "ms_reddit_2026q1-T23-C1",
+          "ms_reddit_2026q1-T24-C1",
+          "ms_reddit_2026q1-T25-C1",
+          "ms_reddit_2026q1-T26-C1",
+          "ms_reddit_2026q1-T27-C1",
+          "ms_reddit_2026q1-T28-C1",
+          "ms_reddit_2026q1-T29-C1",
+          "ms_reddit_2026q1-T30-C1",
+          "ms_reddit_2026q1-T31-C1",
+          "ms_reddit_2026q1-T32-C1",
+          "ms_reddit_2026q1-T33-C1",
+          "ms_reddit_2026q1-T34-C1",
+          "ms_reddit_2026q1-T35-C1",
+          "ms_reddit_2026q1-T36-C1",
+          "ms_reddit_2026q1-T37-C1",
+          "ms_reddit_2026q1-T38-C1",
+          "ms_reddit_2026q1-T39-C1",
+          "ms_reddit_2026q1-T40-C1"
         ],
         "fields_populated": [
           "sentiment_score",
           "emotions",
           "confidence",
-          "note",
-          "themes",
-          "subthemes"
+          "note"
         ],
         "fields_unpopulated": [
           "themes",
           "subthemes",
           "topics"
-        ],
-        "themes_generator": "scripts/propose-fragment-themes.mjs",
-        "themes_model": "claude-opus-4-7",
-        "themes_codebook_schema_version": "2.0",
-        "themes_last_generated_at": "2026-05-27T04:17:07.979Z",
-        "themes_annotated_batches": [
-          "ms_reddit_2026q1-T10-C1",
-          "ms_reddit_2026q1-T11-C1",
-          "ms_reddit_2026q1-T12-C1",
-          "ms_reddit_2026q1-T13-C1",
-          "ms_reddit_2026q1-T14-C1",
-          "ms_reddit_2026q1-T15-C1",
-          "ms_reddit_2026q1-T16-C1",
-          "ms_reddit_2026q1-T17-C1",
-          "ms_reddit_2026q1-T18-C1"
         ]
       },
       "stages": {
@@ -73,7 +78,10 @@
       "Multi-dimensional annotation file. Each fragment may carry multiple dimension keys (stages, segment_tags, ...).",
       "stages dimension: AI-proposed journey-stage tags, multi-label per fragment. Enum-constrained at generation time.",
       "Every stages entry is source: ai_proposed, review_status: pending.",
-      "Re-propose with: node scripts/propose-fragment-stages.mjs <corpus> [--source <name>] [--batch <id>] [--force]"
+      "Re-propose with: node scripts/propose-fragment-stages.mjs <corpus> [--source <name>] [--batch <id>] [--force]",
+      "Emotion trim 2026-05-29: 9 fragments had multiple emotions before the one-emotion-per-fragment rule; mechanically truncated to the first entry. 0 of these were two-primary pairs that map to a known Plutchik dyad (re-run sentiment with --force on those if dyad substitution is desired).",
+      "segment_tags dimension: AI-proposed sentiment + emotion. themes/subthemes/topics left empty (codebook is indication-specific; not in scope here).",
+      "Re-propose with: node scripts/propose-fragment-sentiment.mjs <corpus> [--source <name>] [--batch <id>] [--force]"
     ]
   },
   "annotations": {
@@ -88,8 +96,7 @@
           "treatment_decision_factors"
         ],
         "emotions": [
-          "pensiveness",
-          "apprehension"
+          "pensiveness"
         ],
         "topics": [],
         "sentiment_score": 0,
@@ -135,9 +142,7 @@
           "treatment_decision_factors"
         ],
         "emotions": [
-          "hope",
-          "optimism",
-          "interest"
+          "hope"
         ],
         "topics": [],
         "sentiment_score": 2,
@@ -178,9 +183,7 @@
           "treatment_decision_factors"
         ],
         "emotions": [
-          "hope",
-          "trust",
-          "optimism"
+          "hope"
         ],
         "topics": [],
         "sentiment_score": 1,
@@ -217,8 +220,7 @@
         "themes": [],
         "subthemes": [],
         "emotions": [
-          "admiration",
-          "interest"
+          "admiration"
         ],
         "topics": [],
         "sentiment_score": 1,
@@ -255,9 +257,7 @@
           "treatment_negative_experiences"
         ],
         "emotions": [
-          "annoyance",
-          "trust",
-          "optimism"
+          "annoyance"
         ],
         "topics": [],
         "sentiment_score": 0,
@@ -294,8 +294,7 @@
         "themes": [],
         "subthemes": [],
         "emotions": [
-          "hope",
-          "anticipation"
+          "hope"
         ],
         "topics": [],
         "sentiment_score": 1,
@@ -331,9 +330,7 @@
           "trial_barriers"
         ],
         "emotions": [
-          "interest",
-          "apprehension",
-          "optimism"
+          "interest"
         ],
         "topics": [],
         "sentiment_score": 0,
@@ -380,8 +377,7 @@
           "trial_decision_factors"
         ],
         "emotions": [
-          "acceptance",
-          "pensiveness"
+          "acceptance"
         ],
         "topics": [],
         "sentiment_score": -1,
@@ -423,8 +419,7 @@
           "treatment_knowledge_gaps"
         ],
         "emotions": [
-          "trust",
-          "apprehension"
+          "trust"
         ],
         "topics": [],
         "sentiment_score": 0,
@@ -447,6 +442,2340 @@
         ],
         "overall_confidence": 0.9,
         "note": "Comparing HSCT vs CAR-T safety/efficacy — risk-benefit weighing for intensive program",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-19-1-1_a": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.82,
+        "note": "Speaker lists multiple symptoms and disease burdens but closes with an explicit declaration of optimism; that stated outlook dominates the fragment's emotional tone despite the negative medical context.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.55,
+        "note": "Neutral greeting with mild anticipation about the approaching 6-month mark; mostly informational.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "serenity"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.75,
+        "note": "Explicitly expresses gratitude for tolerating treatment well despite insurance difficulties; calm relief/gratitude best captured by serenity.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "Mostly informational but mentions taking mental health breaks and actively researching recovery timelines, signaling underlying anxiety.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "bittersweetness"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.75,
+        "note": "Gratitude for regained motor function offset by distress over rock-bottom endurance; classic bittersweet split.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "Speaker acknowledges feeling lucky given a high-cervical lesion; grateful, accepting tone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.7,
+        "note": "Questioning whether back tightness is now permanent; quiet resigned sadness rather than acute distress.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.72,
+        "note": "Uncertainty about whether sensory symptoms will be permanent; apprehension about an unwanted chronic state.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "Explicitly contrasts the hopeful narrative they sustained with the harsh reality at 6 months; disappointment is clearly dominant.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Expressing persistent, debilitating exhaustion; sad, depleted emotional state.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "guilt"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.78,
+        "note": "Loss of ability to cook for family implies a strong sense of failing a caregiving role; guilt is the dominant undertone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "'A tiny bit of hope' signals the speaker is near the bottom; the yearning itself reveals an underlying despair (fear+sadness dyad).",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "Direct question seeking reassurance; neutral framing but motivated by underlying hope for a positive answer.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s12": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "guilt"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Apologizing for expressing distress; reflects guilt about burdening the community.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s13": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Bare neutral request for feedback; no strong emotional content.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-20-1-1_a_s14": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.5,
+        "note": "Bare well-wishes/thanks with no distinct emotional content beyond polite positivity.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-21-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.65,
+        "note": "Matter-of-fact statement about physical limitation from MS; resigned/accepting tone rather than overtly distressed.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-21-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.68,
+        "note": "Reflects on restricted mobility with a subdued, matter-of-fact sadness rather than acute distress.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-21-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Neutral transitional statement describing an action taken; mild forward-looking quality given narrative context.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-21-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "surprise"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.75,
+        "note": "'Surprisingly' signals genuine unexpected positive change; brief but clearly upbeat tone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-21-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.82,
+        "note": "'For the first time in a while' conveys strong positive emotion around regained independence.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-21-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "bittersweetness"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.78,
+        "note": "Regaining independence is strongly positive, but 'didn't realize I missed so much' implies an underlying sense of loss, making bittersweetness the best fit.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-21-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "delight"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.8,
+        "note": "Combination of surprise ('didn't expect') and genuine positive outcome captures delight well.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-22-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "serenity"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.75,
+        "note": "Warm, friendly greeting to a new community; light positive tone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-22-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.68,
+        "note": "Matter-of-fact disclosure of diagnosis and new treatment; stated calmly without overt distress.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-22-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "Acknowledging unfamiliarity with DMT hints at mild unease, though phrased neutrally.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-22-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "vigilance"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.72,
+        "note": "Practical watchfulness — asking what to monitor post-infusion; concern-driven but neutral in tone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-22-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "vigilance"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "Continuation of s03; same watchful, cautious stance about side effects beyond official list.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-22-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "Forward-looking, solution-seeking question; optimistic undertone of wanting to improve daily life.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-22-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.72,
+        "note": "Apologetic framing and 'bit of a change' is an understatement signalling underlying anxiety about adjusting to a new diagnosis and treatment regimen.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-23-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "cynicism"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.72,
+        "note": "Speaker frames the first year of MS with resigned negativity ('shit show'), blending frustration and dark humour — cynicism fits best.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-23-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.88,
+        "note": "Six months of near-continuous illness with no respite; the cumulative exhaustion and hopelessness point strongly to despair (fear+sadness dyad).",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-23-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "outrage"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.82,
+        "note": "'What kind of sick joke is this' expresses disbelief fused with anger — outrage captures both elements well.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-23-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "grief"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.87,
+        "note": "Sudden, total loss of health and ability to work — the stark contrast with 'perfectly healthy' signals acute grief over lost function/identity.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-23-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.78,
+        "note": "Questions seek reassurance that things improve over time; underlying tone is hopeful despite the difficult context.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-23-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.55,
+        "note": "Bare closing expression of gratitude; acceptance chosen lightly over an empty array to reflect the warm, appreciative close.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-24-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.7,
+        "note": "Speaker is forward-looking, planning retirement and property search — mild positive anticipation.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-24-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "bittersweetness"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.72,
+        "note": "Caregiver introduces wife's MS diagnosis with 'however', then expresses relief ('thankfully') about affordable Austrian care — blending concern and gratitude.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-24-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.78,
+        "note": "Speaker expresses clear uncertainty and worry about MS treatment access and affordability abroad — dominant emotion is anxiety about an unknown healthcare system.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-24-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.62,
+        "note": "A polite request for community help; implies trust that someone will respond helpfully — mild hope, largely neutral in tone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-24-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.5,
+        "note": "Bare closing thank-you; content-free well-wish, no substantive emotional content to tag.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-25-1-1_a": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.78,
+        "note": "Mixed tone: relief that the LP went smoothly (no pain, single poke) but clear underlying anxiety about post-LP headaches ('yet?') and actively seeking reassurance against negative stories they've read. Apprehension captures the cautious worry dominating the fragment.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-26-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "Factual recounting of first MS symptom 12 years ago; neutral in tone but reflective on a difficult past event.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-26-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Purely descriptive account of recurring pseudo-flares; no clear emotional signal beyond matter-of-fact reporting.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-26-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Content-free transitional phrase acknowledging difficulty of description.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-26-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Descriptive analogy; no emotional content, purely explanatory.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-26-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Factual clinical-style description of symptom progression; no emotional signal.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-26-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "confusion"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Speaker notes uncertainty about cause (sometimes heat, sometimes random); mild confusion about triggers.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-26-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "Seeking shared experience; primarily curiosity/community-seeking, with a subtle undercurrent of wanting validation.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-26-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.78,
+        "note": "'I know I'm not crazy' folder phrasing reveals underlying anxiety about whether symptoms are real/normal and fear of not being believed.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-27-1-1_a": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.72,
+        "note": "Mixed tone: genuine nervousness about new medication and a long MRI ('trapped', 😭, 'I get nervous') is softened by humor ('Am I going to be high? lol') and a resigned acceptance at the end ('I'm up for it'). Net sentiment is mixed/neutral; anxiety is the clearest underlying state.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-28-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.88,
+        "note": "'This stupid disease' signals clear frustration and resentment toward the diagnosis; annoyance captures that tone well.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-28-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "Factual recount of insurance denial; implied frustration at the system, though stated matter-of-factly.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-28-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.78,
+        "note": "Speaker expected the denial and is now seeking information/guidance; mostly inquisitive with mild underlying concern.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-28-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.75,
+        "note": "Question is oriented toward a positive outcome (timely resolution); hope is the primary driver.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-28-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.92,
+        "note": "Explicit worry about delay and disease worsening; anxiety is the dominant and clearly stated emotion.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "grief"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.9,
+        "note": "Speaker describes an internal shattering following relapse — profound emotional collapse.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anger"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "'Freaking years' signals bitter frustration at the unfairness of relapse after 4 clean years.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pride"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "Recalling past confidence at neuro's office; now ironic in hindsight, but the fragment itself captures a past moment of defiant pride.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pride"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.75,
+        "note": "Quoted past defiance — 'this disease won't get me' — captures speaker's former confident stance.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "optimism"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Describes past overconfidence retrospectively; optimism was real then but is now implicitly undermined.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pride"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Acknowledges effort made; pride in having done everything possible, though context implies it wasn't enough.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.85,
+        "note": "Clear positive recall of achievements and stability — the high point before the current crisis.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Vague but heavy — 'its been a lot' signals emotional burden and a downturn.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "fear"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.95,
+        "note": "Direct, unambiguous self-report of being scared.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.85,
+        "note": "Intrusive, pervasive presence of fear even with eyes closed — hallmark of anxiety.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.9,
+        "note": "Rumination first thing in morning and inability to sleep — classic anxiety presentation.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "fear"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.9,
+        "note": "Explicit fear of the future stated directly.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s12": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "Dreams create a positive undercurrent but fear clearly dominates the fragment.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s13": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "grief"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.85,
+        "note": "Deep isolation and the painful paradox of craving but being unable to talk — grief over lost connection.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s14": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.75,
+        "note": "Reaching out to community 'in hopes someone understands' — small but genuine hope.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s15": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pessimism"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "Knows they should stay positive but can't believe it — pessimism overriding the intention.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s16": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.9,
+        "note": "Existential question about the futility of self-care — deep despair about bodily betrayal.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s17": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "confusion"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "5 years and still unable to accept or make sense of MS — persistent confusion and non-acceptance.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s18": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.9,
+        "note": "Speaker explicitly names 'lack of hope' — despair is the named emotional state.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s19": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "bittersweetness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "5-year diagnosis anniversary — the ellipsis and context carry weight of mixed grief and reflection.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-29-1-1_a_s20": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "guilt"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "Apology for being 'too depressing' signals guilt; well-wishes and heart emoji add warmth, making it overall mixed/neutral.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-30-1-1_a": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.82,
+        "note": "The word 'unfortunately' signals the speaker's reluctance and unease about being directed to try Lemtrada; seeking reassurance from others reinforces underlying apprehension about the treatment.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-31-1-1_a": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Speaker reports worsening symptoms (mildly negative context) but the dominant emotional tone is curiosity and information-seeking about heat sensitivity triggers; no strong distress expressed.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.72,
+        "note": "Speaker signals openness and curiosity without strong positive or negative valence; throwaway indicates mild caution.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.68,
+        "note": "Reflective, quietly isolating note — diagnosed young and the topic goes largely unspoken in daily life.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.65,
+        "note": "Sense of not fitting the typical MS demographic; mild feeling of being out of place or underrepresented.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.67,
+        "note": "Feeling of peer-level isolation — peers simply don't know what MS is, underscoring loneliness of the experience at her age.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.55,
+        "note": "Describes others' shock reactions matter-of-factly; speaker's own emotion is more resigned observation than clear positive or negative feeling.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.75,
+        "note": "Purely factual background information; no discernible emotional charge.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "Factual treatment-frequency update; neutral informational content.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anticipation"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.75,
+        "note": "Warm invitation for connection and insight; forward-looking and open.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "delight"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "Strongly positive edit — speaker explicitly expresses love for the replies and genuine excitement/curiosity about all responses.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.8,
+        "note": "Light, enthusiastic enjoyment of the engagement regardless of repetition.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-32-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.75,
+        "note": "Enthusiastic affirmation of engagement; positive but content-light, best captured as active interest.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Speaker opens an investigative inquiry noting absence of comparable cases; analytical and skeptical but primarily curious.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "Purely factual timeline reporting; no discernible speaker emotion.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "unbelief"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "'Miraculous' used in skeptical investigative context; speaker implies disbelief rather than genuine admiration.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Neutral reporting of a quote; speaker emotion not expressed.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Extended quote from Selma Blair; speaker is neutrally documenting, not expressing personal emotion.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Continuation of quoted material; no speaker-level emotion expressed.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Still quoting Selma Blair; speaker remains neutral.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "cynicism"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.72,
+        "note": "Speaker highlights timeline inconsistencies and the Mavenclad website placement, building a suspicious/critical narrative.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "unbelief"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.78,
+        "note": "'Incredibly odd to me' and noting an unprecedented case signals the speaker's disbelief.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "cynicism"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Speaker challenges the plausibility of the claimed recovery, expressing skepticism about DMTs as miracle cures.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "cynicism"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.68,
+        "note": "Raising unverified claims of financial payments implies suspicion of paid promotion, though hedged.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s11": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "'I would hate to think she faked her symptoms' signals reluctant, worried consideration of a troubling possibility.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s12": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "confusion"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.9,
+        "note": "Direct self-report of confusion; clear and unambiguous.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-33-1-1_a_s13": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.72,
+        "note": "Community question seeking comparable experiences; skeptical undertone but primarily an inquiry.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-34-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.55,
+        "note": "Primarily descriptive/contextual; speaker's vulnerability in disclosing MS implies mild apprehension, but no strong emotion expressed directly.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-34-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Matter-of-fact recounting of being broken up with after MS disclosure; disappointment is the clearest underlying emotion.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-34-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "Direct, brief expression of emotional hurt.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-34-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "grief"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.85,
+        "note": "Layered pain: rejection for having MS plus one-year anniversary of diagnosis with explicit mention of ongoing grieving phases.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-34-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "grief"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Continued expression of inability to accept the diagnosis; ongoing grief/non-acceptance of chronic illness.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-34-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.85,
+        "note": "Clear, emphatic gratitude for health status and quality of treatment; strong positive pivot from surrounding negative content.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-34-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.6,
+        "note": "Underlying desire to find a partner who values her, but expressed with marked doubt ('will I ever'); hope framed negatively, hence negative sentiment score.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-34-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.65,
+        "note": "Short continuation of prior fragment; longing and quiet sadness that MS causes fear/rejection in potential partners.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-35-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.78,
+        "note": "Speaker retrospectively notes lack of agency and no real discussion with doctor, conveying mild dissatisfaction about being excluded from their own care decision.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-35-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "serenity"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.85,
+        "note": "'Thankfully' and 'great experience' convey relief and contentment; outcome was positive despite the lack of prior input.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-35-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.72,
+        "note": "Primarily informational/factual description of self-directed research and switching; mild positive tone from sense of empowerment and informed choice, captured by interest/exploration.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-35-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.9,
+        "note": "Direct statement of happiness with the decision; clear and uncomplicated positive affect.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-35-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "Outreach question; speaker identifies their own curiosity explicitly. Neutral sentiment.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-35-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.75,
+        "note": "Follow-up open question; neutral, curious in tone, no strong emotional valence.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-36-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.8,
+        "note": "Speaker is genuinely curious about others' ER diagnosis experiences; neutral-inquisitive tone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-36-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "Direct, brief statement of personal negative experiences with the ER.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-36-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Retrospective reflection on years of unrecognized symptoms; resigned, matter-of-fact sadness.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-36-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.78,
+        "note": "'lol' softens the tone but the core experience is dismissal by ER plus large bills; disappointment dominates.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-36-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "interest"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Neutral, informational observation about others' posts; mild interest but no strong personal emotion.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-36-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.72,
+        "note": "Frustration at regional disparity in access to emergency MRIs; barrier is noted with implicit irritation.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-36-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Factual recount of the diagnostic pathway; no discernible emotional valence expressed.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-36-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.75,
+        "note": "Continuation of the factual diagnostic narrative; neutral.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-36-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pensiveness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.72,
+        "note": "Quiet reflection on a prolonged, difficult wait for diagnosis; understated negative sentiment.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "Speaker is frustrated and dismissive of misinformation they consider dangerous; annoyance is the dominant tone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "contempt"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "Labeling these claims 'egregious' signals contempt toward those spreading them.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "contempt"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "Dismissive 'complete nonsense' language signals contempt; matter-of-fact but loaded.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "contempt"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.9,
+        "note": "'Alt-right nutjobs' is strong pejorative language; contempt is clear and strong.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.8,
+        "note": "Speaker uses personal experience to refute claims; sarcastic juxtaposition of contradictory dietary advice signals annoyance.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.75,
+        "note": "Rhetorical question expressing exasperation at contradictory claims.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "sadness"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.85,
+        "note": "Speaker explicitly frames this as 'the sad thing' and expresses concern for vulnerable patients being misled.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "alarm"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.85,
+        "note": "Direct warning about irreversible brain damage; urgent, alarmed tone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "contempt"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.8,
+        "note": "Condemning conspiracy theorists for abandoning patients; contempt mixed with protective anger.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "outrage"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.88,
+        "note": "Speaker explicitly names frustration at being blamed for their own MS and sadness for those misled; outrage captures both the anger and the moral indignation.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-37-1-1_a_s10": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "cynicism"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.7,
+        "note": "Rhetorical question labeled with 'nonsense'; seeking validation while expressing dismissive attitude toward the misinformation discussed.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-38-1-1_a": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "apprehension"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.92,
+        "note": "Speaker explicitly states fear about starting treatment following a recent MS diagnosis; apprehension fits the stated emotional state well.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-39-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.82,
+        "note": "Speaker is searching for a safer medication, implying worry about serious side effects like PML and cancer.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-39-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "pessimism"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.78,
+        "note": "Blunt, resigned declaration that no safe option exists — strongly negative and hopeless in tone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-39-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "acceptance"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Factual background on prior medications; neutral informational context with mild implied acceptance of treatment history.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-39-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "disappointment"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.88,
+        "note": "Strong disappointment that years of advocacy/fundraising have not yielded the treatment landscape the speaker hoped for.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-39-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "bittersweetness"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.82,
+        "note": "Speaker grudgingly acknowledges progress since 2004 but remains frustrated that no option avoids worse risks than the disease itself — classic bittersweet ambivalence.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-39-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.85,
+        "note": "Single-word expression of frustration/disgust.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-39-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Meta-closing statement; content-free beyond signaling end of rant.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-39-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "annoyance"
+        ],
+        "topics": [],
+        "sentiment_score": -1,
+        "confidence": 0.9,
+        "note": "Speaker explicitly self-reports frustration.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-39-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "despair"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.85,
+        "note": "Speaker reveals that pre-existing cancer and PML risk make all available options unusable for them — a position of hopelessness about treatment access.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-40-1-1_a_s00": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "ambivalence"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Opening a big life decision — debating leaving; mixed/uncertain tone, no strong valence yet.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-40-1-1_a_s01": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "admiration"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.82,
+        "note": "Speaker expresses strong appreciation for the union-provided health insurance — 'amazing'.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-40-1-1_a_s02": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "joy"
+        ],
+        "topics": [],
+        "sentiment_score": 2,
+        "confidence": 0.8,
+        "note": "Paying $0 out-of-pocket is presented with clear relief and satisfaction.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-40-1-1_a_s03": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "trust"
+        ],
+        "topics": [],
+        "sentiment_score": 1,
+        "confidence": 0.72,
+        "note": "Continued positive framing of assistance program coverage; slightly less emphatic than s02.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-40-1-1_a_s04": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "anxiety"
+        ],
+        "topics": [],
+        "sentiment_score": -2,
+        "confidence": 0.88,
+        "note": "Explicit worry about political threats to union insurance — core driver of the whole post.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-40-1-1_a_s05": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.75,
+        "note": "Informational question seeking lived experience; neutral in tone.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-40-1-1_a_s06": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.65,
+        "note": "Follow-up question, bare inquiry, no distinct emotional valence.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-40-1-1_a_s07": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "curiosity"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.7,
+        "note": "Practical informational question about MS treatment abroad; neutral.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-40-1-1_a_s08": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.6,
+        "note": "Factual edit adding occupational context; no emotional charge.",
+        "source": "ai_proposed",
+        "review_status": "pending"
+      }
+    },
+    "fc-ms_reddit_2026q1-40-1-1_a_s09": {
+      "segment_tags": {
+        "themes": [],
+        "subthemes": [],
+        "emotions": [
+          "hope"
+        ],
+        "topics": [],
+        "sentiment_score": 0,
+        "confidence": 0.78,
+        "note": "Acknowledges uncertainty of chronic illness constraint but expresses hope that husband's trade skill helps — optimism tempered by apprehension, hope best captures the blend.",
         "source": "ai_proposed",
         "review_status": "pending"
       }

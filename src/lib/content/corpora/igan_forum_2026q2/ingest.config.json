@@ -1,0 +1,24 @@
+{
+  "corpus_id": "igan_forum_2026q2",
+  "label": "IgA nephropathy / forum discussion, 2026 Q2 ingest",
+  "platform": "reddit",
+  "indications": ["iga_nephropathy"],
+  "input_file": "src/lib/content/corpora/igan_forum_2026q2/source/comments.json",
+  "license": "research_fair_use",
+  "redistribute_verbatim": false,
+  "deid_rules_version": "igan_forum@v1",
+  "deidentifier_version": "analyst-anonymization@v1",
+  "context_to_speaker_attrs": {},
+  "split_long_fragments": {
+    "enabled": true,
+    "min_chars": 400,
+    "min_sentences": 4,
+    "applies_to": ["social_post", "social_comment"]
+  },
+  "notes": [
+    "Source: CSV-as-JSON of a 17-thread r/IgANephropathy excerpt; columns Thread, Conversation, Comment, Username, Anonymized Username, Timestamp, Context, Text.",
+    "Context column in the source held thread titles (not per-user role flair). Stripped at parse time so the importer doesn't try to map it; role is assigned downstream via heuristic inference into author_attrs.json.",
+    "Long announcement-style posts are sentence-split at ingest (>=400 chars AND >=4 sentences). Short replies stay as one fragment per row.",
+    "Per the corpus-naming rule, the slug omits the literal platform name (\"reddit\"); platform is still captured in source_ref.platform."
+  ]
+}

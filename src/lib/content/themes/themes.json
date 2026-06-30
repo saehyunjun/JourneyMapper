@@ -1,0 +1,229 @@
+{
+  "schema_version": "themes-0.1",
+  "description": "Theme registry per CODEBOOK_TAXONOMY.md. 27 universal themes across 4 axes (hrqol/util/trial/life), plus per-indication overlay (dx.<indication>.*) reserved for the Safety Gate. surface_form_hints are SUGGESTION FUEL ONLY for the matcher — per-instance theme assignment lives in ThemeTag rows. Phase 1 seed; hints are populated incrementally as the sf36v2 lexicon merges and per-corpus extractors run.",
+  "items": [
+    {
+      "id": "hrqol.physical_functioning",
+      "axis": "hrqol",
+      "label": "Physical functioning",
+      "provenance": { "frame": "sf36v2" },
+      "captures": "Mobility, lifting, walking, self-care, basic physical activities",
+      "surface_form_hints": []
+    },
+    {
+      "id": "hrqol.role_physical",
+      "axis": "hrqol",
+      "label": "Role physical",
+      "provenance": { "frame": "sf36v2" },
+      "captures": "Physical health limiting work or daily role activities",
+      "surface_form_hints": []
+    },
+    {
+      "id": "hrqol.bodily_pain",
+      "axis": "hrqol",
+      "label": "Bodily pain",
+      "provenance": { "frame": "sf36v2" },
+      "captures": "Pain intensity, frequency, interference with normal work",
+      "surface_form_hints": ["pain", "ache", "aching", "sore", "hurts"]
+    },
+    {
+      "id": "hrqol.general_health",
+      "axis": "hrqol",
+      "label": "General health",
+      "provenance": { "frame": "sf36v2" },
+      "captures": "Self-rated health, perceived current state, expected trajectory",
+      "surface_form_hints": []
+    },
+    {
+      "id": "hrqol.vitality",
+      "axis": "hrqol",
+      "label": "Vitality",
+      "provenance": { "frame": "sf36v2" },
+      "captures": "Energy, fatigue, exhaustion, feeling worn out",
+      "surface_form_hints": ["fatigue", "tired", "exhausted", "wiped out", "low energy", "drained"]
+    },
+    {
+      "id": "hrqol.social_functioning",
+      "axis": "hrqol",
+      "label": "Social functioning",
+      "provenance": { "frame": "sf36v2" },
+      "captures": "Health interfering with social activities and relationships",
+      "excludes": "Caregiver / spousal strain — use life.caregiver",
+      "surface_form_hints": ["stopped seeing friends", "missed social", "withdrew", "isolation"]
+    },
+    {
+      "id": "hrqol.role_emotional",
+      "axis": "hrqol",
+      "label": "Role emotional",
+      "provenance": { "frame": "sf36v2" },
+      "captures": "Emotional state limiting work or daily role activities",
+      "surface_form_hints": []
+    },
+    {
+      "id": "hrqol.mental_health",
+      "axis": "hrqol",
+      "label": "Mental health",
+      "provenance": { "frame": "sf36v2" },
+      "captures": "Anxiety, depression, calm, mood, behavioral-emotional control",
+      "surface_form_hints": ["anxiety", "depression", "depressed", "mood", "mental health", "panic"]
+    },
+    {
+      "id": "util.access",
+      "axis": "util",
+      "label": "Access to care",
+      "provenance": { "frame": "ahrq", "citation": "National Healthcare Quality and Disparities framework — Access dimension" },
+      "captures": "Getting to care — geographic distance, appointment availability, finding a specialist, in-network gating",
+      "excludes": "Cost as access barrier — use util.coverage (plan design) or life.financial (household burden)",
+      "surface_form_hints": ["appointment", "specialist", "wait time", "find a doctor", "in-network", "access to care"]
+    },
+    {
+      "id": "util.coverage",
+      "axis": "util",
+      "label": "Coverage / plan design",
+      "provenance": { "frame": "ahrq" },
+      "captures": "What the plan does/doesn't include — formulary, benefits design, covered vs. uncovered services",
+      "excludes": "Carrier behavior on a specific claim — use util.insurance",
+      "surface_form_hints": ["formulary", "covered", "not covered", "in-network", "out-of-network", "benefits"]
+    },
+    {
+      "id": "util.insurance",
+      "axis": "util",
+      "label": "Insurance / carrier friction",
+      "provenance": { "frame": "ahrq" },
+      "captures": "Carrier behavior — denials, prior-auth battles, appeals, claim disputes",
+      "excludes": "What the plan covers from the outset — use util.coverage",
+      "surface_form_hints": ["prior auth", "denied", "denial", "appeal", "insurance", "claim"]
+    },
+    {
+      "id": "util.relationship",
+      "axis": "util",
+      "label": "Patient-provider relationship",
+      "provenance": { "frame": "cahps", "citation": "CAHPS communication dimensions" },
+      "captures": "Patient-provider trust, communication, being heard vs. dismissed",
+      "excludes": "Patient information adequacy / self-research — use util.decision_support",
+      "surface_form_hints": ["dismissed", "didn't listen", "didn't take me seriously", "trust", "communication"]
+    },
+    {
+      "id": "util.coordination",
+      "axis": "util",
+      "label": "Care coordination",
+      "provenance": { "frame": "ahrq" },
+      "captures": "Handoffs between providers, records continuity, conflicting medical advice",
+      "surface_form_hints": ["handoff", "records", "conflicting advice", "didn't communicate"]
+    },
+    {
+      "id": "util.diagnostic_journey",
+      "axis": "util",
+      "label": "Diagnostic journey",
+      "provenance": { "frame": "inspired" },
+      "captures": "Time to diagnosis, misdiagnosis loops, specialist hunt, second opinions",
+      "surface_form_hints": ["misdiagnosed", "misdiagnosis", "second opinion", "years to diagnose", "specialist hunt"]
+    },
+    {
+      "id": "util.decision_support",
+      "axis": "util",
+      "label": "Decision support",
+      "provenance": { "frame": "inspired" },
+      "captures": "Patient information adequacy, weighing options, self-research, shared-decision capacity, decision regret",
+      "excludes": "How the provider communicated — that's util.relationship",
+      "surface_form_hints": ["researched myself", "reddit", "forum", "googled", "looked it up", "weighing", "trade-off", "risk-benefit", "regret"]
+    },
+    {
+      "id": "trial.awareness",
+      "axis": "trial",
+      "label": "Trial awareness",
+      "provenance": { "frame": "consort" },
+      "captures": "Knowing trials exist; how patients hear about them",
+      "surface_form_hints": ["clinical trial", "study", "trial", "heard about", "found out about"]
+    },
+    {
+      "id": "trial.eligibility",
+      "axis": "trial",
+      "label": "Trial eligibility",
+      "provenance": { "frame": "consort" },
+      "captures": "Criteria fit, exclusion frustration, age/biomarker gates",
+      "surface_form_hints": ["eligible", "exclusion", "criteria", "too old", "too young", "qualified", "didn't qualify"]
+    },
+    {
+      "id": "trial.enrollment",
+      "axis": "trial",
+      "label": "Trial enrollment",
+      "provenance": { "frame": "consort" },
+      "captures": "Consent, decision-to-join, weighing pros/cons",
+      "surface_form_hints": ["consent", "signed up", "enrolled", "decided to join"]
+    },
+    {
+      "id": "trial.logistics",
+      "axis": "trial",
+      "label": "Trial logistics",
+      "provenance": { "frame": "consort" },
+      "captures": "Washout, visit cadence, diary compliance, protocol burden",
+      "surface_form_hints": ["washout", "visit cadence", "diary", "protocol burden", "travel to site"]
+    },
+    {
+      "id": "trial.relationship",
+      "axis": "trial",
+      "label": "Trial site relationship",
+      "provenance": { "frame": "consort" },
+      "captures": "Coordinator, PI, site staff interactions; trust gaps",
+      "surface_form_hints": ["coordinator", "trial nurse", "investigator", "study staff", "PI"]
+    },
+    {
+      "id": "trial.retention",
+      "axis": "trial",
+      "label": "Trial retention",
+      "provenance": { "frame": "consort" },
+      "captures": "During-trial sentiment; what makes patients stay or drop",
+      "surface_form_hints": ["dropped out", "stopped participating", "stayed in the trial", "wanted to quit"]
+    },
+    {
+      "id": "trial.post_trial",
+      "axis": "trial",
+      "label": "Post-trial transition",
+      "provenance": { "frame": "consort" },
+      "captures": "LTFU tail, access after the trial closes, transition to standard of care",
+      "surface_form_hints": ["after the trial", "LTFU", "long-term follow-up", "access after", "post-trial"]
+    },
+    {
+      "id": "trial.financial",
+      "axis": "trial",
+      "label": "Trial financial",
+      "provenance": { "frame": "consort" },
+      "captures": "Stipends, hidden costs, post-trial drug access economics",
+      "surface_form_hints": ["stipend", "reimbursement", "out-of-pocket for the trial", "drug access after"]
+    },
+    {
+      "id": "life.financial",
+      "axis": "life",
+      "label": "Household financial",
+      "provenance": { "frame": "inspired", "citation": "Economic-burden literature" },
+      "captures": "Household-level economic fallout — out-of-pocket, lost wages, debt, medicine-vs-groceries",
+      "excludes": "Carrier denials / prior auth — use util.insurance",
+      "surface_form_hints": ["can't afford", "out of pocket", "copay", "deductible", "debt", "medicine vs"]
+    },
+    {
+      "id": "life.occupation",
+      "axis": "life",
+      "label": "Work / school / occupation",
+      "provenance": { "frame": "inspired" },
+      "captures": "Job accommodations, school absenteeism, forced early retirement, career disruption",
+      "surface_form_hints": ["job", "career", "workplace", "absentee", "accommodation", "early retire", "school"]
+    },
+    {
+      "id": "life.caregiver",
+      "axis": "life",
+      "label": "Caregiver / family",
+      "provenance": { "frame": "zarit", "citation": "Zarit Burden Interview" },
+      "captures": "Spousal strain, family role reversals, caregiver burnout, child/partner impact",
+      "surface_form_hints": ["caregiver", "spouse", "partner", "family", "kids", "child"]
+    },
+    {
+      "id": "life.identity",
+      "axis": "life",
+      "label": "Identity / meaning",
+      "provenance": { "frame": "inspired" },
+      "captures": "Sense of self, future-self, hope, fear, faith, existential grief",
+      "surface_form_hints": ["survivor", "former patient", "pioneer", "future self", "who I am"]
+    }
+  ]
+}

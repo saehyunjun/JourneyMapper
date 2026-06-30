@@ -1,0 +1,477 @@
+{
+  "meta": {
+    "schema_version": "theme-tags-0.1",
+    "generator": "propose-theme-tags@0.1",
+    "model": "claude-opus-4-7",
+    "corpus_id": "ln_reddit_2026q1",
+    "content_source": "social_comment",
+    "updated_at": "2026-06-02T06:29:09.909Z",
+    "themes_count": 27,
+    "tagged_fragment_count": 40,
+    "total_tag_count": 33
+  },
+  "theme_tags": {
+    "fc-ln_reddit_2026q1-10-1-1_c": [
+      {
+        "span": {
+          "start": 133,
+          "end": 169,
+          "text": "I have IBS and nausea was part of it"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "sharing own symptom experience",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_d": [
+      {
+        "span": {
+          "start": 246,
+          "end": 315,
+          "text": "laying down and relaxing as i have been doing recently due to fatigue"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "fatigue forcing rest",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      },
+      {
+        "span": {
+          "start": 317,
+          "end": 347,
+          "text": "i get nauseous out of no where"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "persistent nausea symptom",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_e_s00": [
+      {
+        "span": {
+          "start": 12,
+          "end": 47,
+          "text": "gastritis that gave me nasty nausea"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "symptom experience",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_e_s01": [
+      {
+        "span": {
+          "start": 11,
+          "end": 66,
+          "text": "nasty nausea as sometimes my only symptom of a migraine"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "migraine symptom",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_e_s02": [
+      {
+        "span": {
+          "start": 25,
+          "end": 74,
+          "text": "reflux (no erosive) for years and years and years"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "chronic GI symptom",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_e_s03": [
+      {
+        "span": {
+          "start": 4,
+          "end": 30,
+          "text": "I did develop stomach pain"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "bodily pain",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_e_s04": [
+      {
+        "span": {
+          "start": 0,
+          "end": 64,
+          "text": "It was not daily nausea (well, hold on, yes it was at its worst)"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "symptom frequency",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_e_s05": [],
+    "fc-ln_reddit_2026q1-10-1-1_e_s06": [],
+    "fc-ln_reddit_2026q1-10-1-1_e_s07": [
+      {
+        "span": {
+          "start": 61,
+          "end": 147,
+          "text": "until the underlying cause can be sorted- the endoscopy will hopefully shed some light"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "diagnostic workup",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_f": [
+      {
+        "span": {
+          "start": 105,
+          "end": 199,
+          "text": "these past couple days its been the only thing keeping me in an even slightly functional state"
+        },
+        "theme_id": "hrqol.role_physical",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "functioning depends on medication",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      },
+      {
+        "span": {
+          "start": 48,
+          "end": 100,
+          "text": "ive always been told that i should limit usage of it"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "prior guidance shaping decisions",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_g": [
+      {
+        "span": {
+          "start": 39,
+          "end": 129,
+          "text": "ask if there is something else that would be preferred for long term use instead of Zofran"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "suggesting alternatives, shared decision",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_h": [],
+    "fc-ln_reddit_2026q1-10-1-1_i": [],
+    "fc-ln_reddit_2026q1-10-1-1_j_s00": [
+      {
+        "span": {
+          "start": 16,
+          "end": 77,
+          "text": "my husband and I got a stomach bug but his turned into sepsis"
+        },
+        "theme_id": "life.caregiver",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "family illness context",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_j_s01": [
+      {
+        "span": {
+          "start": 6,
+          "end": 54,
+          "text": "daily diarrhea and slight nausea for over a year"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "chronic GI symptoms",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_j_s02": [
+      {
+        "span": {
+          "start": 0,
+          "end": 58,
+          "text": "I had scopes done and they said it was post infectious IBS"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "diagnostic workup leading to diagnosis",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_j_s03": [],
+    "fc-ln_reddit_2026q1-10-1-1_j_s04": [
+      {
+        "span": {
+          "start": 0,
+          "end": 61,
+          "text": "I read about the fodmap diet and knew I would be unsuccessful"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.65,
+        "rationale": "self-assessment of treatment feasibility",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_j_s05": [],
+    "fc-ln_reddit_2026q1-10-1-1_j_s06": [],
+    "fc-ln_reddit_2026q1-10-1-1_j_s07": [],
+    "fc-ln_reddit_2026q1-10-1-1_j_s08": [
+      {
+        "span": {
+          "start": 0,
+          "end": 41,
+          "text": "It is such a difficult situation to be in"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.5,
+        "rationale": "existential hardship acknowledgment",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_j_s09": [
+      {
+        "span": {
+          "start": 30,
+          "end": 96,
+          "text": "crippling diarrhea and nausea for me that took 2 months to go away"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "medication side effect symptoms",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_k_s00": [
+      {
+        "span": {
+          "start": 139,
+          "end": 174,
+          "text": "just over all felt crappy every day"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "general health self-rating",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      },
+      {
+        "span": {
+          "start": 104,
+          "end": 119,
+          "text": "lots of fatigue"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "vitality",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      },
+      {
+        "span": {
+          "start": 44,
+          "end": 59,
+          "text": "constant nausea"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "chronic symptom",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_k_s01": [
+      {
+        "span": {
+          "start": 0,
+          "end": 75,
+          "text": "Went to the Dr pretty much every 3 months cause I wasn't feeling any better"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "repeated visits seeking diagnosis",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_k_s02": [
+      {
+        "span": {
+          "start": 79,
+          "end": 175,
+          "text": "Into the 5th year of feeling sooooo crappy, she decides to do blood work for autoimmune diseases"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.95,
+        "rationale": "long delay to diagnostic workup",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_k_s03": [
+      {
+        "span": {
+          "start": 0,
+          "end": 41,
+          "text": "Ended up getting diagnosed with lupus sle"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "diagnosis endpoint",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_k_s04": [],
+    "fc-ln_reddit_2026q1-10-1-1_k_s05": [],
+    "fc-ln_reddit_2026q1-10-1-1_k_s06": [
+      {
+        "span": {
+          "start": 74,
+          "end": 112,
+          "text": "I go in to UW hospital for 2nd opinion"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "second opinion seeking",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_k_s07": [
+      {
+        "span": {
+          "start": 2,
+          "end": 51,
+          "text": "I really questioned the lupus diagnosis all along"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "misdiagnosis concern",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      },
+      {
+        "span": {
+          "start": 53,
+          "end": 136,
+          "text": "the Dr there said I only had 1 or 2 lupus symptoms, she then diagnosed me with uctd"
+        },
+        "theme_id": "util.relationship",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "provider correcting diagnosis",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_k_s08": [],
+    "fc-ln_reddit_2026q1-10-1-1_k_s09": [
+      {
+        "span": {
+          "start": 27,
+          "end": 58,
+          "text": "it's such a frustrating journey"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "frustration with diagnostic journey",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_k_s10": [],
+    "fc-ln_reddit_2026q1-10-1-1_l": [
+      {
+        "span": {
+          "start": 45,
+          "end": 107,
+          "text": "When I have a flare I always get digestive issues alongside it"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "GI symptoms with flares",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      },
+      {
+        "span": {
+          "start": 109,
+          "end": 154,
+          "text": "Any stomach bug will stick with me for months"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "prolonged illness recovery",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      },
+      {
+        "span": {
+          "start": 192,
+          "end": 279,
+          "text": "I also removed gluten from my diet as that seems to help a lot and rarely ever eat meat"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "self-directed dietary management",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-11-1-1_b_s00": [],
+    "fc-ln_reddit_2026q1-11-1-1_b_s01": [
+      {
+        "span": {
+          "start": 0,
+          "end": 43,
+          "text": "I sometimes experience \"migraine with aura\""
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "migraine symptom",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-11-1-1_b_s02": [
+      {
+        "span": {
+          "start": 13,
+          "end": 59,
+          "text": "a distortion in a particular part of my vision"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "visual aura symptom",
+        "created_at": "2026-06-02T06:29:09.907Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-11-1-1_b_s03": []
+  }
+}

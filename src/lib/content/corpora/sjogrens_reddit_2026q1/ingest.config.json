@@ -1,0 +1,23 @@
+{
+  "corpus_id": "sjogrens_reddit_2026q1",
+  "label": "Sjögren's / sicca forum discussion, 2026 Q1 ingest",
+  "platform": "reddit",
+  "indications": ["sjogrens"],
+  "input_file": "src/lib/content/corpora/sjogrens_reddit_2026q1/source/comments.json",
+  "license": "research_fair_use",
+  "redistribute_verbatim": false,
+  "deid_rules_version": "sjogrens_reddit@v1",
+  "deidentifier_version": "analyst-anonymization@v1",
+  "context_to_speaker_attrs": {},
+  "split_long_fragments": {
+    "enabled": true,
+    "min_chars": 400,
+    "min_sentences": 4,
+    "applies_to": ["social_post", "social_comment"]
+  },
+  "notes": [
+    "Context column on this Sjögren's corpus is per-POST flair (e.g. 'Prediagnosis vent/questions', 'Study/Research', 'Participating in a clinical trial', '🎆🎇Wins & positivity! Woo-hoo!🎆🎇') — topic/post-flair, not per-user role. Mapping it to speaker_attrs.role would be wrong; context_to_speaker_attrs is intentionally empty.",
+    "Reddit '[deleted]' raw usernames are NOT trusted to map to one person. Each [deleted] occurrence gets a fresh per-row anonymous id.",
+    "Long announcement-style posts are sentence-split at ingest (>=400 chars AND >=4 sentences). Short replies stay as one fragment per row. Split children share source_ref.post_id with siblings; offsets are relative to the parent post's normalized text."
+  ]
+}

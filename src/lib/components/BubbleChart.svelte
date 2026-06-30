@@ -14,7 +14,12 @@
 	choreography matches SentimentDonut and other vizzes in the project.
 -->
 <script lang="ts" module>
-	export type BubbleVariant = 'horizontal' | 'vertical' | 'cluster' | 'center';
+	export type BubbleVariant =
+		| 'horizontal'
+		| 'vertical'
+		| 'cluster'
+		| 'center'
+		| 'bottom-row';
 	export type BubbleContext = 'auto' | 'finding' | 'export' | 'profile' | 'card';
 
 	// Past ~0.55 the tinted bubble reads dark enough that white text wins; under
@@ -111,6 +116,10 @@
 		opacity: number;
 		labelMode: 'in' | 'below' | 'right' | 'leader';
 		anchor?: { x: number; y: number; side: 'left' | 'right' | 'below' };
+		/** Override for the outer label font size. layoutCenter writes this
+		 *  when long satellite labels force a smaller font to fit. Other
+		 *  layouts leave it undefined and fall back to the CSS default. */
+		outLabelFont?: number;
 	};
 
 	const PADDING = { top: 24, right: 28, bottom: 32, left: 28 };
@@ -169,6 +178,8 @@
 				return layoutVertical(base, maxV, innerW, innerH);
 			case 'center':
 				return layoutCenter(base, maxV, innerW, innerH);
+			case 'bottom-row':
+				return layoutBottomRow(base, maxV, innerW, innerH);
 			case 'cluster':
 			default:
 				return layoutCluster(base, maxV, innerW, innerH);
@@ -230,6 +241,67 @@
 		});
 	}
 
+	/**
+	 * `bottom-row` — bubbles arrayed left→right along the baseline, sorted
+	 * by value desc so the largest sits on the left. Designed for the
+	 * bottom half of a lg card where the top half carries a stat figure
+	 * + body text. Numerals + unit labels render inside each bubble when
+	 * they fit, with leader-line fallback below for the smallest.
+	 */
+	function layoutBottomRow(
+		base: BaseDatum[],
+		maxV: number,
+		innerW: number,
+		innerH: number
+	): Placement[] {
+		const n = base.length;
+		const gap = 16;
+		// The hero bubble's diameter must fit within innerH so the bubble's
+		// TOP edge stays inside the canvas — earlier draft used 0.95*innerH
+		// as the radius, which put the bubble's top off-canvas by half its
+		// diameter. 0.48*innerH leaves a hairline of breathing room above.
+		const heroR = Math.min(innerH * 0.48, innerW / 2.4);
+		// Map by value-share so size differences read as steeply as the
+		// data warrants. sqrt scaling matches the area-encoded convention.
+		const rs = values.map((v) =>
+			Math.max(MIN_R, Math.sqrt(Math.max(v, 0) / maxV) * heroR)
+		);
+
+		// Sort by value desc; cap to fit available width if needed.
+		const sorted = base.map((d) => d.index).sort((a, b) => values[b] - values[a]);
+		let totalW = sorted.reduce((s, i) => s + 2 * rs[i], 0) + (n - 1) * gap;
+		if (totalW > innerW) {
+			const scale = innerW / totalW;
+			for (let i = 0; i < rs.length; i++) rs[i] = Math.max(MIN_R, rs[i] * scale);
+			totalW = sorted.reduce((s, i) => s + 2 * rs[i], 0) + (n - 1) * gap;
+		}
+		const startX = PADDING.left + (innerW - totalW) / 2;
+		// Anchor centers at (height - PADDING.bottom - r) so the bubble's
+		// bottom edge sits on the inner-canvas baseline.
+		const baselineY = PADDING.top + innerH;
+
+		const out: Placement[] = new Array(n);
+		let cursor = startX;
+		for (const i of sorted) {
+			const r = rs[i];
+			const cx = cursor + r;
+			const cy = baselineY - r;
+			cursor += 2 * r + gap;
+			const fontInside = Math.max(12, Math.min(28, r * 0.42));
+			const inside = labelFitsInside(base[i].label, fontInside, 2 * r) &&
+				valueFitsInside(base[i].valueText, fontInside, 2 * r);
+			out[i] = {
+				...base[i],
+				cx,
+				cy,
+				r,
+				labelMode: inside ? 'in' : 'below',
+				anchor: inside ? undefined : { x: cx, y: cy + r + 14, side: 'below' as const }
+			};
+		}
+		return out;
+	}
+
 	function layoutVertical(
 		base: BaseDatum[],
 		maxV: number,
@@ -269,12 +341,42 @@
 	): Placement[] {
 		const cx0 = width / 2;
 		const cy0 = height / 2;
-		const innerR = Math.min(innerW, innerH) / 2;
-		const heroR = innerR * 0.58;
 
 		const sorted = base.map((d) => d.index).sort((a, b) => values[b] - values[a]);
 		const heroIdx = sorted[0];
 		const satellites = sorted.slice(1);
+
+		// The earlier version sized the hero off `Math.min(innerW, innerH) / 2 * 0.58`
+		// and let leader-line labels land wherever they fell — long labels like
+		// "CAR T-cell therapy +" then clipped the left and bottom edges. The new
+		// math walks two passes: (1) estimate label extent for several font
+		// sizes; (2) pick the largest font where the hero radius stays above a
+		// usable minimum, then size everything from there. Result: labels always
+		// fit, and the chart only shrinks the type when it has no other room.
+		const LEADER_GAP = 10;
+		const LABEL_RESERVE_BELOW_BASE = 14; // anchor sits at cy+r+14; label glyph extends ~font px
+		const maxLabelChars = Math.max(6, ...base.map((d) => d.label.length));
+		const naiveHeroR = (Math.min(innerW, innerH) / 2) * 0.58;
+		const MIN_USABLE_HERO_R = 32;
+
+		const LABEL_FONT_CANDIDATES = [12, 11, 10, 9];
+		let labelFont = LABEL_FONT_CANDIDATES[LABEL_FONT_CANDIDATES.length - 1];
+		let heroR = MIN_USABLE_HERO_R;
+		for (const candidate of LABEL_FONT_CANDIDATES) {
+			const labelW = maxLabelChars * candidate * 0.55 + 6;
+			const labelH = candidate + LABEL_RESERVE_BELOW_BASE;
+			// `2.56*heroR + 18` is the worst-case half-extent (ring + satellite +
+			// gap). Solving for heroR: heroR ≤ (half - reserve) / 2.56.
+			const horizCap = (width / 2 - PADDING.right - LEADER_GAP - labelW - 18) / 2.56;
+			const vertCap = (height / 2 - PADDING.bottom - LEADER_GAP - labelH - 18) / 2.56;
+			const candidateHeroR = Math.min(naiveHeroR, horizCap, vertCap);
+			if (candidateHeroR >= MIN_USABLE_HERO_R || candidate === LABEL_FONT_CANDIDATES[LABEL_FONT_CANDIDATES.length - 1]) {
+				labelFont = candidate;
+				heroR = Math.max(MIN_USABLE_HERO_R, candidateHeroR);
+				break;
+			}
+		}
+		const labelW = maxLabelChars * labelFont * 0.55 + 6;
 
 		const rs = values.map((v, i) =>
 			i === heroIdx ? heroR : Math.max(MIN_R, Math.sqrt(v / maxV) * heroR * 0.78)
@@ -286,7 +388,8 @@
 			cx: cx0,
 			cy: cy0,
 			r: rs[heroIdx],
-			labelMode: 'in'
+			labelMode: 'in',
+			outLabelFont: labelFont
 		};
 
 		const maxSatR = satellites.length ? Math.max(...satellites.map((i) => rs[i])) : MIN_R;
@@ -301,19 +404,30 @@
 			const fits = labelFitsInside(base[i].label, fontInside, 2 * r);
 			const side: 'left' | 'right' | 'below' =
 				cx < cx0 - 4 ? 'left' : cx > cx0 + 4 ? 'right' : 'below';
+			// Final clamp: a satellite whose label would still bleed (very long
+			// labels at small canvas sizes after the font shrink already bottomed
+			// out) gets its anchor pulled inward instead of going off-canvas.
+			const rawAnchorX =
+				side === 'left' ? cx - r - LEADER_GAP : side === 'right' ? cx + r + LEADER_GAP : cx;
+			const rawAnchorY = side === 'below' ? cy + r + 14 : cy;
+			const clampedX =
+				side === 'left'
+					? Math.max(rawAnchorX, PADDING.left + labelW)
+					: side === 'right'
+						? Math.min(rawAnchorX, width - PADDING.right - labelW)
+						: rawAnchorX;
+			const clampedY =
+				side === 'below'
+					? Math.min(rawAnchorY, height - PADDING.bottom - labelFont)
+					: rawAnchorY;
 			out[i] = {
 				...base[i],
 				cx,
 				cy,
 				r,
 				labelMode: fits ? 'in' : 'leader',
-				anchor: fits
-					? undefined
-					: {
-							x: side === 'left' ? cx - r - 10 : side === 'right' ? cx + r + 10 : cx,
-							y: side === 'below' ? cy + r + 14 : cy,
-							side
-						}
+				anchor: fits ? undefined : { x: clampedX, y: clampedY, side },
+				outLabelFont: labelFont
 			};
 		});
 		return out;
@@ -430,12 +544,17 @@
 
 	// ------- variant cycler UI --------------------------------------------------
 
+	// `bottom-row` is intentionally excluded from the cycle — it's a
+	// context-specific layout (bottom half of a lg card) rather than a
+	// general option a reader would toggle through. Force it via `variant`
+	// when you need it.
 	const VARIANT_ORDER: BubbleVariant[] = ['horizontal', 'vertical', 'cluster', 'center'];
 	const VARIANT_LABEL: Record<BubbleVariant, string> = {
 		horizontal: 'Row',
 		vertical: 'Stack',
 		cluster: 'Cluster',
-		center: 'Hero'
+		center: 'Hero',
+		'bottom-row': 'Baseline'
 	};
 
 	function selectVariant(v: BubbleVariant) {
@@ -590,6 +709,7 @@
 			{#each placements as p (p.index + '-' + resolvedVariant)}
 				{@const valueFont = Math.max(11, Math.min(p.r * 0.42, 28))}
 				{@const showValueInside = valueFitsInside(p.valueText, valueFont, 2 * p.r)}
+				{@const outFontStyle = p.outLabelFont ? `font-size: ${p.outLabelFont}px;` : ''}
 				{#if p.labelMode !== 'in' && p.anchor}
 					<g
 						class="label-group"
@@ -597,7 +717,7 @@
 						style="animation-delay: {labelCfg.delay}ms; animation-duration: {labelCfg.duration}ms;"
 					>
 						{#if p.labelMode === 'below'}
-							<text class="label-out" x={p.anchor.x} y={p.anchor.y} text-anchor="middle">
+							<text class="label-out" x={p.anchor.x} y={p.anchor.y} text-anchor="middle" style={outFontStyle}>
 								{p.label}
 							</text>
 							{#if !showValueInside}
@@ -606,6 +726,7 @@
 									x={p.anchor.x}
 									y={p.anchor.y + 13}
 									text-anchor="middle"
+									style={outFontStyle}
 								>
 									{p.valueText}
 								</text>
@@ -616,6 +737,7 @@
 								x={p.anchor.x}
 								y={p.anchor.y - 3}
 								text-anchor="start"
+								style={outFontStyle}
 							>
 								{p.label}
 							</text>
@@ -624,6 +746,7 @@
 								x={p.anchor.x}
 								y={p.anchor.y + 12}
 								text-anchor="start"
+								style={outFontStyle}
 							>
 								{p.valueText}
 							</text>
@@ -639,6 +762,7 @@
 								x={p.anchor.x}
 								y={p.anchor.side === 'below' ? p.anchor.y + 10 : p.anchor.y - 2}
 								text-anchor={anchorAt}
+								style={outFontStyle}
 							>
 								{p.label}
 							</text>
@@ -648,6 +772,7 @@
 									x={p.anchor.x}
 									y={p.anchor.side === 'below' ? p.anchor.y + 24 : p.anchor.y + 11}
 									text-anchor={anchorAt}
+									style={outFontStyle}
 								>
 									{p.valueText}
 								</text>
@@ -724,7 +849,11 @@
 
 	.canvas {
 		display: block;
-		overflow: visible;
+		/* Clip anything that escapes the viewBox. layoutCenter computes the
+		 * hero radius + clamps leader-label anchor positions to keep labels
+		 * inside the box, but this is the belt-and-suspenders so a future
+		 * variant or extreme aspect ratio can't bleed into the host card. */
+		overflow: hidden;
 	}
 
 	.bubble {

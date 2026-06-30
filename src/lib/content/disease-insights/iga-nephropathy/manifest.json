@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "id": "iga_nephropathy",
+  "slug": "iga-nephropathy",
+  "label": "IgA Nephropathy",
+  "abbreviation": "IgAN",
+  "therapeutic_area_ids": ["nephrology", "immunology"],
+  "datasets": [
+    {
+      "id": "iga_nephropathy_keyword_clusters",
+      "type": "keyword_clusters",
+      "label": "IgA nephropathy keyword clusters",
+      "path": "lexicon/keyword_clusters.json",
+      "geography": null,
+      "unit": null,
+      "source_id": null
+    }
+  ]
+}

@@ -15,6 +15,12 @@
       "typical_metadata": ["platform", "post_id", "permalink", "author_handle", "captured_at", "engagement_counts"]
     },
     {
+      "id": "social_comment",
+      "label": "Social media comment",
+      "description": "Reply to a social media post. Same platforms as social_post but distinguished structurally — comments share a post_id with their parent and inherit thread context. Annotation paths mirror social_post; weighting may differ.",
+      "typical_metadata": ["platform", "post_id", "comment_id", "parent_comment_id", "author_handle", "captured_at"]
+    },
+    {
       "id": "youtube_transcript",
       "label": "YouTube transcript",
       "description": "Auto- or human-generated transcript of a YouTube video (creator vlogs, patient testimonials, advocacy organization channels). May include multiple speakers; timestamps are usually retained. Public-figure attribution is the norm.",
@@ -27,10 +33,22 @@
       "typical_metadata": ["platform", "thread_id", "post_id", "author_handle", "captured_at", "reply_count"]
     },
     {
+      "id": "forum_comment",
+      "label": "Forum / community comment",
+      "description": "Reply to a forum_post. Inherits thread context from its parent; commonly carries reply-depth and quoted-text affordances absent from social platforms.",
+      "typical_metadata": ["platform", "thread_id", "post_id", "comment_id", "parent_comment_id", "author_handle", "captured_at"]
+    },
+    {
       "id": "blog_post",
       "label": "Blog post",
       "description": "Long-form first-person blog entry (Medium, personal websites, advocacy organization blogs). Patient or caregiver authored. Less ephemeral than social posts; often more reflective and narrative.",
       "typical_metadata": ["site_domain", "post_url", "author_name", "published_at", "author_attribution_type"]
+    },
+    {
+      "id": "blog_comment",
+      "label": "Blog comment",
+      "description": "Reader comment on a blog post. Public attribution varies (name + URL, pseudonym, anonymous). Distinct from forum_comment in that the parent narrative is the original post, not a multi-author thread.",
+      "typical_metadata": ["site_domain", "post_url", "comment_id", "author_name", "published_at"]
     },
     {
       "id": "search_query",

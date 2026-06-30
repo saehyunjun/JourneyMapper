@@ -15,6 +15,7 @@ import type { IndicationId, TherapeuticAreaId } from '../registries/types';
 export type DiseaseDatasetType =
 	| 'keyword_clusters'
 	| 'search_volume_topics'
+	| 'search_volume_timeseries'
 	| 'community_engagement'
 	| 'ad_spend_timeseries'
 	| 'clinical_trials_raw'

@@ -2,10 +2,8 @@
 	import { untrack } from 'svelte';
 	import {
 		quotes,
-		buildRadialTree,
 		segmentsForTheme,
 		segmentsForSubtheme,
-		segmentsForKeyword,
 		themedQuestionIds,
 		themedParticipantIds,
 		questionLabel,
@@ -14,6 +12,10 @@
 		SENTIMENT_LABELS,
 		type RadialNode
 	} from '$lib/content/wctglpdemo-data/analysis';
+	import {
+		buildRadialTree,
+		segmentsForKeyword
+	} from '$lib/content/wctglpdemo-data/analysis-keywords';
 	import { Button } from "$lib/components/ui/button/index.js";
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import RadialThemeChart from '$lib/charts/glp/RadialThemeChart.svelte';

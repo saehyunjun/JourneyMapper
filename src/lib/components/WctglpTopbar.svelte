@@ -1,31 +1,19 @@
 <!--
-	WctglpTopbar — the /wctglpdemo top filter bar.
+	WctglpTopbar — the /patientlyiq top filter bar.
 
-	A single indication dropdown (bits-ui DropdownMenu — the same primitive
-	family used for the right-click ContextMenu in SegmentTagDrawer). The
-	cascading TA → Indication melt-ui selects didn't open reliably in
-	practice; this replacement is a click-to-open menu with indications
-	grouped under their therapeutic-area headings. Indications belonging to
-	multiple therapeutic areas appear under each of their groups.
-
-	Options are sourced from `data.slice.indications` + `data.slice.therapeutic_areas`,
-	which the layout server loads from src/lib/content/registries/ (indications.json
-	and therapeutic_areas.json) — the canonical registry. Cross-cutting
-	clusters use `indications: []` and always show under whichever indication
-	is active.
-
-	On selection: goto(?indication=<id>, { invalidateAll: true }) so every
-	loader downstream (layout + each +page.server.ts) re-runs and the
-	visible pages reflect the new indication's data.
+	The indication dropdown itself lives in IndicationPicker.svelte; this
+	component owns only the topbar chrome (brand lockup, divider, trigger
+	pill styling, view toggle). The shared picker handles grouping by TA,
+	?indication=<id> + invalidateAll navigation, and is also rendered as
+	an editorial pill in the /patientlyiq page header.
 -->
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { ChevronDown, Check } from '@lucide/svelte';
+	import { ChevronDown } from '@lucide/svelte';
 	import type { Indication, TherapeuticArea } from '$lib/server/lexicon';
 	import PIQLogo from '$lib/components/PIQLogo.svelte';
 	import ViewModeToggle from '$lib/components/ViewModeToggle.svelte';
+	import IndicationPicker from '$lib/components/IndicationPicker.svelte';
 
 	type Props = {
 		indications: Indication[];
@@ -37,36 +25,6 @@
 	// The Story / Dashboard toggle is meaningful only on pages that implement
 	// story mode. Today that's just the Executive Summary at /patientlyiq.
 	const showViewToggle = $derived(page.url.pathname === '/patientlyiq');
-
-	const selectable = $derived(indications);
-
-	// Group selectable indications by therapeutic area. An indication that
-	// belongs to multiple TAs appears under each of them, matching the
-	// many-to-many shape of the registry.
-	type Group = { area: TherapeuticArea; indications: Indication[] };
-	const groups = $derived<Group[]>(
-		therapeuticAreas
-			.map((area) => ({
-				area,
-				indications: selectable.filter((i) => i.therapeutic_area_ids.includes(area.id))
-			}))
-			.filter((g) => g.indications.length > 0)
-	);
-
-	const active = $derived(
-		indications.find((i) => i.id === activeIndication) ?? selectable[0] ?? indications[0]
-	);
-
-	async function selectIndication(id: string) {
-		if (id === activeIndication) return;
-		const u = new URL(page.url);
-		u.searchParams.set('indication', id);
-		// invalidateAll re-runs every load() in the page tree (layout +
-		// per-page +page.server.ts/+page.ts), so pages that read the active
-		// indication or load indication-scoped data refresh together with
-		// the URL change.
-		await goto(u, { invalidateAll: true, keepFocus: false, noScroll: true });
-	}
 </script>
 
 <div class="topbar">
@@ -77,52 +35,22 @@
 
 	<div class="divider-v"></div>
 
-	<DropdownMenu.Root>
-		<DropdownMenu.Trigger>
-			{#snippet child({ props })}
+	<IndicationPicker {indications} {therapeuticAreas} {activeIndication}>
+		{#snippet trigger({ active, props })}
 			<button
-					{...props}
-					type="button"
-					class="indication-trigger"
-					aria-label="Select indication"
-				>
+				{...props}
+				type="button"
+				class="indication-trigger"
+				aria-label="Select indication"
+			>
 				<span class="trigger-label">
 					<span class="trigger-kicker">Indication</span>
 					<span class="trigger-value">{active?.label ?? '—'}</span>
 				</span>
 				<ChevronDown class="size-4 shrink-0 text-(--gray)" />
 			</button>
-			{/snippet}
-		</DropdownMenu.Trigger>
-		<DropdownMenu.Content class="min-w-[18rem]" align="start" sideOffset={6}>
-			{#each groups as group, i (group.area.id)}
-				{#if i > 0}
-					<DropdownMenu.Separator />
-				{/if}
-				<DropdownMenu.Group>
-					<DropdownMenu.GroupHeading class="text-[0.65rem] font-heading font-semibold uppercase tracking-wider text-(--orange)"
-						>{group.area.label}</DropdownMenu.GroupHeading
-					>
-					{#each group.indications as ind (ind.id)}
-						{@const isActive = ind.id === activeIndication}
-						<DropdownMenu.Item onSelect={() => selectIndication(ind.id)}>
-							<div class="flex w-full items-start gap-2">
-								<div class="mt-0.5 size-4 shrink-0">
-									{#if isActive}
-										<Check class="size-4 text-(--orange)" />
-									{/if}
-								</div>
-								<div class="min-w-0 flex-1">
-									<div class="text-sm font-medium text-(--ink)">
-										{ind.label}</div>
-								</div>
-							</div>
-						</DropdownMenu.Item>
-					{/each}
-				</DropdownMenu.Group>
-			{/each}
-		</DropdownMenu.Content>
-	</DropdownMenu.Root>
+		{/snippet}
+	</IndicationPicker>
 
 	{#if showViewToggle}
 		<div class="ml-auto flex items-center">

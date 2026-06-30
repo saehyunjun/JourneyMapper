@@ -8,6 +8,7 @@
 
 export type Selection =
 	| { kind: 'overview' }
+	| { kind: 'summary' }
 	| { kind: 'finding'; id: string }
 	| { kind: 'theme'; id: string }
 	| { kind: 'quote'; id: string };

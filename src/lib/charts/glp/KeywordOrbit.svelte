@@ -32,7 +32,7 @@
 		PLUTCHIK_DYADS,
 		EMOTION_COLOR_MAP,
 		EMOTION_LEVELS_MAP
-	} from '$lib/journeymapper2/plutchikEmotionsConfig.js';
+	} from '$lib/content/emotions/plutchik';
 
 	let {
 		/** Fired when a theme hub (or a keyword orbiting one) is clicked. */

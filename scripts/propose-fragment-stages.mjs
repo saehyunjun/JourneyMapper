@@ -39,7 +39,12 @@ import Anthropic from '@anthropic-ai/sdk';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 
-const MODEL = 'claude-opus-4-7';
+// Model is overridable for cost/quality A-B: `TAG_MODEL=claude-sonnet-4-6 node …`
+// or `--model claude-sonnet-4-6`. Defaults to Opus.
+const MODEL =
+	process.env.TAG_MODEL ||
+	(process.argv.includes('--model') ? process.argv[process.argv.indexOf('--model') + 1] : null) ||
+	'claude-opus-4-7';
 
 if (existsSync(resolve(ROOT, '.env'))) process.loadEnvFile(resolve(ROOT, '.env'));
 if (!process.env.ANTHROPIC_API_KEY) {
@@ -52,9 +57,19 @@ if (!process.env.ANTHROPIC_API_KEY) {
 // === CLI ====================================================================
 
 const args = process.argv.slice(2);
-const corpusId = args.find((a) => !a.startsWith('--'));
+const VALUE_FLAGS = new Set(['--source', '--batch', '--model']);
+const corpusId = (() => {
+	for (let i = 0; i < args.length; i++) {
+		if (args[i].startsWith('--')) {
+			if (VALUE_FLAGS.has(args[i])) i++; // skip its value
+			continue;
+		}
+		return args[i];
+	}
+	return null;
+})();
 if (!corpusId) {
-	console.error('x Usage: node scripts/propose-fragment-stages.mjs <corpus_id> [--source <name>] [--batch <id>] [--force]');
+	console.error('x Usage: node scripts/propose-fragment-stages.mjs <corpus_id> [--source <name>] [--batch <id>] [--model <id>] [--force]');
 	process.exit(1);
 }
 const force = args.includes('--force');
@@ -220,6 +235,49 @@ for (const { content_source, fragments: partitionFragments } of partitions) {
 	const ANNOTATIONS_FILE = `${CORPUS_DIR}/annotations/${content_source}.json`;
 	console.log(`\n=== ${corpusId} / ${content_source} (${partitionFragments.length} fragments) ===`);
 
+	// Per-batch checkpoint helper. Same shape as the end-of-partition flush
+	// so an interrupted run leaves a consistent file.
+	function writePartitionAnnotations(annsObj, allBatchKeys, batchesMap, existingFile) {
+		const annotatedBatches = allBatchKeys.filter((k) =>
+			batchesMap.get(k).every((f) => annsObj[f.id]?.stages != null)
+		);
+		const priorMeta = existingFile.meta && typeof existingFile.meta === 'object' ? existingFile.meta : {};
+		const priorDimensions =
+			priorMeta.dimensions && typeof priorMeta.dimensions === 'object' ? priorMeta.dimensions : {};
+		const nowIso = new Date().toISOString();
+		const doc = {
+			meta: {
+				schema_version: '1.0',
+				corpus_id: corpusId,
+				content_source,
+				updated_at: nowIso,
+				dimensions: {
+					...priorDimensions,
+					stages: {
+						generator: 'scripts/propose-fragment-stages.mjs',
+						model: MODEL,
+						indication,
+						journey_schema_version: journey.meta.schema_version,
+						last_generated_at: nowIso,
+						annotated_batches: annotatedBatches
+					}
+				},
+				notes: [
+					'Multi-dimensional annotation file. Each fragment may carry multiple dimension keys (stages, segment_tags, ...).',
+					'stages dimension: AI-proposed journey-stage tags, multi-label per fragment. Enum-constrained at generation time.',
+					'Every stages entry is source: ai_proposed, review_status: pending.',
+					'Re-propose with: node scripts/propose-fragment-stages.mjs <corpus> [--source <name>] [--batch <id>] [--force]'
+				]
+			},
+			annotations: Object.fromEntries(
+				Object.keys(annsObj).sort().map((k) => [k, annsObj[k]])
+			)
+		};
+		const outPath = resolve(ROOT, ANNOTATIONS_FILE);
+		mkdirSync(dirname(outPath), { recursive: true });
+		writeFileSync(outPath, JSON.stringify(doc, null, 2) + '\n', 'utf8');
+	}
+
 	// Group by batching key.
 	const batches = new Map();
 	for (const f of partitionFragments) {
@@ -328,10 +386,12 @@ for (const { content_source, fragments: partitionFragments } of partitions) {
 		const missing = expected.filter((id) => !got.has(id));
 		const extra = [...got.keys()].filter((id) => !expected.includes(id));
 		if (missing.length || extra.length || got.size !== parsed.annotations.length) {
-			console.error(`x ${key}: coverage mismatch — annotations not written.`);
+			// Skip rather than exit — paired with the per-batch checkpoint write
+			// below, an interrupted run preserves work on earlier batches.
+			console.error(`x ${key}: coverage mismatch — SKIPPING this batch.`);
 			if (missing.length) console.error(`    missing ${missing.length}: ${missing.slice(0, 6).join(', ')}`);
 			if (extra.length) console.error(`    extra ${extra.length}: ${extra.slice(0, 6).join(', ')}`);
-			process.exit(1);
+			continue;
 		}
 
 		// Validate step_id ∈ stage_id (schema enum can't express parent-child).
@@ -363,6 +423,9 @@ for (const { content_source, fragments: partitionFragments } of partitions) {
 			};
 		}
 		console.log(`    ${key}: ${expected.length} fragments tagged.`);
+
+		// Per-batch checkpoint — see writePartitionAnnotations docstring above.
+		writePartitionAnnotations(annotations, allBatches, batches, existing);
 	}
 
 	// Write annotations file for this content_source.

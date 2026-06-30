@@ -1,0 +1,371 @@
+{
+  "meta": {
+    "schema_version": "theme-tags-0.1",
+    "generator": "propose-theme-tags@0.2",
+    "model": "claude-haiku-4-5",
+    "corpus_id": "ms_reddit_2026q1",
+    "content_source": "social_post",
+    "updated_at": "2026-06-02T14:43:52.882Z",
+    "themes_count": 27,
+    "tagged_fragment_count": 39,
+    "total_tag_count": 25
+  },
+  "theme_tags": {
+    "fc-ms_reddit_2026q1-10-1-1_a": [
+      {
+        "span": {
+          "start": 244,
+          "end": 279,
+          "text": "potential neurological side effects"
+        },
+        "theme_id": "trial.eligibility",
+        "tagger": "llm-proposed",
+        "confidence": 0.65,
+        "rationale": "Discussion of safety concerns as a consideration for trial eligibility and participation",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-11-1-1_b": [],
+    "fc-ms_reddit_2026q1-12-1-1_b": [
+      {
+        "span": {
+          "start": 0,
+          "end": 71,
+          "text": "It's still experimental so you're unlikely to run into many CAR-T users"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.68,
+        "rationale": "Discussion of trial awareness and scarcity of patient experience",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      },
+      {
+        "span": {
+          "start": 187,
+          "end": 250,
+          "text": "If your disease is this aggressive, I would go for it, honestly"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.72,
+        "rationale": "Speaker recommending participation based on disease severity considerations",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-13-1-1_b": [],
+    "fc-ms_reddit_2026q1-14-1-1_b": [
+      {
+        "span": {
+          "start": 45,
+          "end": 104,
+          "text": "There was a lot of back and forth with my insurance as well"
+        },
+        "theme_id": "util.insurance",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "Direct report of insurance friction and carrier disputes",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      },
+      {
+        "span": {
+          "start": 273,
+          "end": 356,
+          "text": "you can get generic Tecfidera (dimethyl Fumarate) for $20 a month at costPlus drugs"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.78,
+        "rationale": "Discussion of medication cost management and household financial relief",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-15-1-1_b": [],
+    "fc-ms_reddit_2026q1-16-1-1_b": [
+      {
+        "span": {
+          "start": 109,
+          "end": 256,
+          "text": "safety is much better than what you see with cancer treatments. There is still a risk of neuro-inflammation from the killing of the B-cells (ICANS)"
+        },
+        "theme_id": "trial.eligibility",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "Discussion of trial safety profile and adverse event risks as eligibility consideration",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      },
+      {
+        "span": {
+          "start": 546,
+          "end": 643,
+          "text": "If I got to do it for free, and was in relatively good health, I would strongly consider doing it"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "Speaker weighing pros/cons of trial participation",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      },
+      {
+        "span": {
+          "start": 649,
+          "end": 796,
+          "text": "I would want to know what my long-term follow up is going to look like, and what they're going to track to know if I need to start therapy up again"
+        },
+        "theme_id": "trial.post_trial",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Concern about post-trial transition and long-term disease management after trial closure",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-17-1-1_b": [
+      {
+        "span": {
+          "start": 0,
+          "end": 41,
+          "text": "The time investment is prohibitive for me"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Speaker citing protocol burden and visit cadence as barrier to trial participation",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-18-1-1_b": [
+      {
+        "span": {
+          "start": 14,
+          "end": 99,
+          "text": "HSCT has decades of proven efficacy and the safety profile is more or less understood"
+        },
+        "theme_id": "trial.eligibility",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "Comparison of trial eligibility and efficacy/safety evidence between treatment options",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-19-1-1_a": [
+      {
+        "span": {
+          "start": 101,
+          "end": 162,
+          "text": "I have nystagmus and a few days ago I felt ringing in my ears"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "Physical symptoms affecting sensory functioning",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      },
+      {
+        "span": {
+          "start": 164,
+          "end": 219,
+          "text": "I have an overactive bladder, which causes incontinence"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "Bladder dysfunction limiting self-care and physical functioning",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      },
+      {
+        "span": {
+          "start": 221,
+          "end": 253,
+          "text": "I suffer from MS-related fatigue"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Direct report of fatigue impacting energy and vitality",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      },
+      {
+        "span": {
+          "start": 269,
+          "end": 288,
+          "text": "I remain optimistic"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.65,
+        "rationale": "Statement of positive mood and emotional outlook",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-20-1-1_a_s00": [],
+    "fc-ms_reddit_2026q1-20-1-1_a_s01": [
+      {
+        "span": {
+          "start": 38,
+          "end": 83,
+          "text": "insurance was a nightmare to approve this lol"
+        },
+        "theme_id": "util.insurance",
+        "tagger": "llm-proposed",
+        "confidence": 0.87,
+        "rationale": "Direct report of insurance carrier friction in medication approval process",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-20-1-1_a_s02": [
+      {
+        "span": {
+          "start": 51,
+          "end": 126,
+          "text": "they were pretty concerned I had NMO or MOGAD but they ended up deciding MS"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Report of diagnostic loop and misdiagnosis considerations before final diagnosis",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-20-1-1_a_s03": [
+      {
+        "span": {
+          "start": 119,
+          "end": 159,
+          "text": "my endurance levels are just rock bottom"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.86,
+        "rationale": "Severe fatigue and lack of energy for sustained physical activity",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-20-1-1_a_s04": [],
+    "fc-ms_reddit_2026q1-20-1-1_a_s05": [
+      {
+        "span": {
+          "start": 0,
+          "end": 52,
+          "text": "My back tightness is maybe just part of who I am now"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.72,
+        "rationale": "Persistent pain symptom with uncertain long-term trajectory",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-20-1-1_a_s06": [
+      {
+        "span": {
+          "start": 0,
+          "end": 59,
+          "text": "The heavy entire upper body tingles and internal vibrations"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "Persistent paresthesias and abnormal sensations affecting multiple body regions",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-20-1-1_a_s07": [
+      {
+        "span": {
+          "start": 134,
+          "end": 220,
+          "text": "I can only stand for about the length of a shower before I have to sit again for a bit"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.84,
+        "rationale": "Severe fatigue and exhaustion limiting standing endurance",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      },
+      {
+        "span": {
+          "start": 0,
+          "end": 46,
+          "text": "I kept myself feeling pretty positive thinking"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.65,
+        "rationale": "Coping strategy of maintaining optimism to manage illness trajectory",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-20-1-1_a_s08": [],
+    "fc-ms_reddit_2026q1-20-1-1_a_s09": [],
+    "fc-ms_reddit_2026q1-20-1-1_a_s10": [
+      {
+        "span": {
+          "start": 0,
+          "end": 89,
+          "text": "I really want to find a tiny bit of hope that it can get better than what it is right now"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.79,
+        "rationale": "Expression of existential hope and fear about future trajectory and identity",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-20-1-1_a_s11": [],
+    "fc-ms_reddit_2026q1-20-1-1_a_s12": [],
+    "fc-ms_reddit_2026q1-20-1-1_a_s13": [],
+    "fc-ms_reddit_2026q1-20-1-1_a_s14": [],
+    "fc-ms_reddit_2026q1-21-1-1_a_s00": [],
+    "fc-ms_reddit_2026q1-21-1-1_a_s01": [
+      {
+        "span": {
+          "start": 66,
+          "end": 144,
+          "text": "I would exhaust myself if it was too far or if I had to deal with uneven roads"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Fatigue and physical limitations restricting mobility and activity range",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-21-1-1_a_s02": [],
+    "fc-ms_reddit_2026q1-21-1-1_a_s03": [],
+    "fc-ms_reddit_2026q1-21-1-1_a_s04": [
+      {
+        "span": {
+          "start": 31,
+          "end": 95,
+          "text": "I can go out to farther places without depending on someone else"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.77,
+        "rationale": "Improvement in mobility and physical independence with assistive device",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ],
+    "fc-ms_reddit_2026q1-21-1-1_a_s05": [],
+    "fc-ms_reddit_2026q1-21-1-1_a_s06": [],
+    "fc-ms_reddit_2026q1-22-1-1_a_s01": [],
+    "fc-ms_reddit_2026q1-22-1-1_a_s02": [],
+    "fc-ms_reddit_2026q1-22-1-1_a_s03": [],
+    "fc-ms_reddit_2026q1-22-1-1_a_s04": [],
+    "fc-ms_reddit_2026q1-22-1-1_a_s05": [],
+    "fc-ms_reddit_2026q1-22-1-1_a_s06": [],
+    "fc-ms_reddit_2026q1-23-1-1_a_s00": [
+      {
+        "span": {
+          "start": 11,
+          "end": 99,
+          "text": "the first year of MS is often a shit show of you figuring out your triggers and symptoms"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "Discussion of uncertain disease trajectory and symptom unpredictability in early MS",
+        "created_at": "2026-06-02T14:43:52.880Z"
+      }
+    ]
+  }
+}

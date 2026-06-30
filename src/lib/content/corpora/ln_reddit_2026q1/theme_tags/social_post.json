@@ -1,0 +1,549 @@
+{
+  "meta": {
+    "schema_version": "theme-tags-0.1",
+    "generator": "propose-theme-tags@0.1",
+    "model": "claude-opus-4-7",
+    "corpus_id": "ln_reddit_2026q1",
+    "content_source": "social_post",
+    "updated_at": "2026-06-02T06:29:52.704Z",
+    "themes_count": 27,
+    "tagged_fragment_count": 40,
+    "total_tag_count": 39
+  },
+  "theme_tags": {
+    "fc-ln_reddit_2026q1-10-1-1_a_s00": [],
+    "fc-ln_reddit_2026q1-10-1-1_a_s01": [],
+    "fc-ln_reddit_2026q1-10-1-1_a_s02": [
+      {
+        "span": {
+          "start": 35,
+          "end": 74,
+          "text": "i got sick, being nauseous and vomiting"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "acute illness symptoms",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_a_s03": [
+      {
+        "span": {
+          "start": 19,
+          "end": 62,
+          "text": "i was still not better, so i went to the er"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "seeking care for unresolved symptoms",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_a_s04": [
+      {
+        "span": {
+          "start": 40,
+          "end": 65,
+          "text": "nothing stuck out to them"
+        },
+        "theme_id": "util.diagnostic_journey",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "inconclusive workup in diagnostic search",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_a_s05": [
+      {
+        "span": {
+          "start": 4,
+          "end": 63,
+          "text": "referred to GI by both my rheumatologist and the er doctors"
+        },
+        "theme_id": "util.coordination",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "handoff between providers",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_a_s06": [
+      {
+        "span": {
+          "start": 64,
+          "end": 107,
+          "text": "chronic nausea that has left me out of work"
+        },
+        "theme_id": "hrqol.role_physical",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "physical symptom limiting work",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 88,
+          "end": 133,
+          "text": "left me out of work since the initial illness"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "job disruption from illness",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 152,
+          "end": 206,
+          "text": "suffering physically, but also financially now as well"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "financial fallout from illness",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_a_s07": [],
+    "fc-ln_reddit_2026q1-10-1-1_a_s08": [],
+    "fc-ln_reddit_2026q1-10-1-1_a_s09": [
+      {
+        "span": {
+          "start": 50,
+          "end": 84,
+          "text": "i have been significantly stressed"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "stress/mental health",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 163,
+          "end": 193,
+          "text": "left me unable to live my life"
+        },
+        "theme_id": "hrqol.social_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "illness interfering with normal life",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_a_s10": [
+      {
+        "span": {
+          "start": 76,
+          "end": 114,
+          "text": "its apparently going to be my life now"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "adjustment to chronic illness identity",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-10-1-1_a_s11": [],
+    "fc-ln_reddit_2026q1-10-1-1_a_s12": [],
+    "fc-ln_reddit_2026q1-11-1-1_a_s00": [],
+    "fc-ln_reddit_2026q1-11-1-1_a_s01": [],
+    "fc-ln_reddit_2026q1-11-1-1_a_s02": [
+      {
+        "span": {
+          "start": 42,
+          "end": 111,
+          "text": "a migraine can be completely painless and mimic early stroke warnings"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "new symptom revelation",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-11-1-1_a_s03": [
+      {
+        "span": {
+          "start": 94,
+          "end": 112,
+          "text": "leave me exhausted"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "exhaustion",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 113,
+          "end": 123,
+          "text": "and scared"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "fear/anxiety",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 50,
+          "end": 88,
+          "text": "why does it have to come with suprises"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "existential frustration with disease",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-11-1-1_a_s04": [
+      {
+        "span": {
+          "start": 7,
+          "end": 32,
+          "text": "I'm not emotionally ready"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "emotional impact",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 36,
+          "end": 102,
+          "text": "look at my mom and husband's faces while nurses radio stroke alert"
+        },
+        "theme_id": "life.caregiver",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "family witnessing emergency",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-11-1-1_a_s05": [
+      {
+        "span": {
+          "start": 27,
+          "end": 83,
+          "text": "numb and tingling face and arm as a standard symptom now"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "physical neurological symptoms",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-11-1-1_a_s06": [
+      {
+        "span": {
+          "start": 33,
+          "end": 86,
+          "text": "finding some new fun thing that is just my new normal"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "adjusting identity to ongoing disease changes",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-12-1-1_a_s00": [
+      {
+        "span": {
+          "start": 22,
+          "end": 56,
+          "text": "do any of us have quality of life?"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "questioning overall QoL",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-12-1-1_a_s01": [
+      {
+        "span": {
+          "start": 45,
+          "end": 81,
+          "text": "so much time fighting and advocating"
+        },
+        "theme_id": "util.relationship",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "advocating in healthcare system",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 91,
+          "end": 158,
+          "text": "not sure realistically what my life should be expected to look like"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "existential uncertainty",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-12-1-1_a_s02": [
+      {
+        "span": {
+          "start": 56,
+          "end": 72,
+          "text": "get back to work"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "work return goal",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 74,
+          "end": 99,
+          "text": "be able to exercise again"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "physical activity goal",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 104,
+          "end": 119,
+          "text": "grow our family"
+        },
+        "theme_id": "life.caregiver",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "family-building aspiration",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-12-1-1_a_s03": [],
+    "fc-ln_reddit_2026q1-13-1-1_a_s00": [],
+    "fc-ln_reddit_2026q1-13-1-1_a_s01": [],
+    "fc-ln_reddit_2026q1-13-1-1_a_s02": [
+      {
+        "span": {
+          "start": 5,
+          "end": 34,
+          "text": "feeling really scared and sad"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.95,
+        "rationale": "fear and sadness",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-13-1-1_a_s03": [
+      {
+        "span": {
+          "start": 108,
+          "end": 146,
+          "text": "tired of explaining everything to them"
+        },
+        "theme_id": "life.caregiver",
+        "tagger": "llm-proposed",
+        "confidence": 0.6,
+        "rationale": "interpersonal burden",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-13-1-1_a_s04": [],
+    "fc-ln_reddit_2026q1-13-1-1_a_s05": [
+      {
+        "span": {
+          "start": 24,
+          "end": 62,
+          "text": "the last time I got life altering sick"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "life-altering disease memory",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-13-1-1_a_s06": [],
+    "fc-ln_reddit_2026q1-14-1-1_a": [
+      {
+        "span": {
+          "start": 21,
+          "end": 62,
+          "text": "whenever I flare I just don't feel hungry"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "appetite loss during flares",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-15-1-1_a_s00": [],
+    "fc-ln_reddit_2026q1-15-1-1_a_s01": [
+      {
+        "span": {
+          "start": 41,
+          "end": 108,
+          "text": "I would get tired during classes and moving around using the stairs"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "fatigue",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 78,
+          "end": 118,
+          "text": "moving around using the stairs at school"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "mobility limitation",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-15-1-1_a_s02": [
+      {
+        "span": {
+          "start": 34,
+          "end": 78,
+          "text": "physically be dragged upstairs by my friends"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "severe mobility impairment",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 100,
+          "end": 114,
+          "text": "sleep in class"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "extreme fatigue",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 100,
+          "end": 114,
+          "text": "sleep in class"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.7,
+        "rationale": "impact on school",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-15-1-1_a_s03": [
+      {
+        "span": {
+          "start": 28,
+          "end": 64,
+          "text": "my teachers would just be dismissive"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "school dismissal of symptoms",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      },
+      {
+        "span": {
+          "start": 118,
+          "end": 142,
+          "text": "at one point humiliation"
+        },
+        "theme_id": "hrqol.mental_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "emotional harm from humiliation",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-15-1-1_a_s04": [
+      {
+        "span": {
+          "start": 16,
+          "end": 31,
+          "text": "extremely tired"
+        },
+        "theme_id": "hrqol.vitality",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "fatigue",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-15-1-1_a_s05": [
+      {
+        "span": {
+          "start": 3,
+          "end": 39,
+          "text": "my family thought that it was normal"
+        },
+        "theme_id": "life.caregiver",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "family dismissal",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-15-1-1_a_s06": [
+      {
+        "span": {
+          "start": 57,
+          "end": 108,
+          "text": "I could barely get up from bed and go to the toilet"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.95,
+        "rationale": "severe physical functioning loss",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ],
+    "fc-ln_reddit_2026q1-15-1-1_a_s07": [
+      {
+        "span": {
+          "start": 5,
+          "end": 55,
+          "text": "lifting my finger, I would be in excruciating pain"
+        },
+        "theme_id": "hrqol.bodily_pain",
+        "tagger": "llm-proposed",
+        "confidence": 0.95,
+        "rationale": "severe pain",
+        "created_at": "2026-06-02T06:29:52.703Z"
+      }
+    ]
+  }
+}

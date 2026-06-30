@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "persona_id": "ln_negative_treatment_health_history",
+    "corpus_id": "ln_reddit_2026q1",
+    "filter_hash": "564e6c98db65",
+    "evidence_fragment_ids": [
+      "fc-ln_reddit_2026q1-13-1-1_d",
+      "fc-ln_reddit_2026q1-3-1-1_p",
+      "fc-ln_reddit_2026q1-7-1-1_b",
+      "fc-ln_reddit_2026q1-4-1-1_ac_s04",
+      "fc-ln_reddit_2026q1-10-1-1_d",
+      "fc-ln_reddit_2026q1-12-1-1_aw",
+      "fc-ln_reddit_2026q1-11-1-1_f",
+      "fc-ln_reddit_2026q1-17-1-1_d",
+      "fc-ln_reddit_2026q1-19-1-1_aa_s10",
+      "fc-ln_reddit_2026q1-14-1-1_j",
+      "fc-ln_reddit_2026q1-16-1-1_c_s15",
+      "fc-ln_reddit_2026q1-19-1-1_o",
+      "fc-ln_reddit_2026q1-14-1-1_aj",
+      "fc-ln_reddit_2026q1-12-1-1_y_s04",
+      "fc-ln_reddit_2026q1-4-1-1_a_s02",
+      "fc-ln_reddit_2026q1-6-1-1_a_s10",
+      "fc-ln_reddit_2026q1-2-1-1_ak_s03",
+      "fc-ln_reddit_2026q1-18-1-1_p_s03",
+      "fc-ln_reddit_2026q1-14-1-1_z_s09",
+      "fc-ln_reddit_2026q1-19-1-1_h_s04"
+    ],
+    "generator": "propose-persona-narrative@0.1",
+    "model": "claude-opus-4-7",
+    "generated_at": "2026-05-29T03:30:07.761Z"
+  },
+  "tagline": "Running out of drugs that haven't already failed me.",
+  "paragraph": "I've been struggling for years to find something that works, minus one good two-year stretch I keep trying to get back to. The list of what I've tried reads like a pharmacy shelf — plaquenil that honestly isn't doing anything, six months of cyclophosphamide back in 2020, Gazyva starting in January after I relapsed, Benlysta a few weeks in with no improvement yet. One neurologist put me on a medicine for trigeminal neuralgia that swelled my face until my eyes nearly popped out, and the damage put me back to square one. I switched to a rheumatologist at USC Keck hoping for new ideas and was told that since my kidneys 'seem fine,' my only option is hydroxychloroquine. I have lupus nephritis class 4 and have been told I'm not a candidate for remission — expect to be on meds the rest of my life. So a two-year treatment plan actually sounds good to me. Right now I'm in a huge flare, back on prednisone, nothing tastes good, I can barely walk, and I'm widowed raising our 11-year-old on my own. I fought through dialysis as hard as I could to get this kidney back so I could be the parent and the hard worker I used to be. The doctors are 'excited' because what they're trying next hasn't been done before. I don't feel excited. I feel exhausted. This has to get better — I don't know how the hell I'm going to manage if it doesn't.",
+  "patient_concerns": [
+    "Exhausted the standard biologics and the one I tolerate barely works anymore.",
+    "Switching rheumatologists hoping for new options and being told plaquenil is it.",
+    "Bad reactions and side effects — swelling, hair loss, nausea needing ER Zofran drips.",
+    "Being told I'm not a candidate for remission, just lifelong immunosuppression."
+  ],
+  "person_concerns": [
+    "Want to be the parent and worker I was before my kidneys shut down.",
+    "Raising my kid alone while I can barely walk and have no energy.",
+    "Grieving the two-year stretch when treatment actually worked and life felt normal.",
+    "Scared the doctors are guessing and I'm the experiment they're excited about."
+  ],
+  "hero_quote_fragment_id": "fc-ln_reddit_2026q1-12-1-1_aw"
+}

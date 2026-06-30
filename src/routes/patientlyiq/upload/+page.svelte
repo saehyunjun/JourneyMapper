@@ -18,6 +18,7 @@
 
 
 	import questionBankRaw from '$lib/content/wctglpdemo-data/questions.json';
+	import TranscriptUploadDialog from '$lib/components/upload/TranscriptUploadDialog.svelte';
 	import SegmentTagDrawer from '$lib/components/SegmentTagDrawer.svelte';
 	import FragmentTagDrawer from '$lib/components/FragmentTagDrawer.svelte';
 	import type { Fragment, FragmentAnnotation } from '$lib/content/corpora/types';
@@ -27,7 +28,9 @@
 	import * as Popover from '$lib/components/ui/popover/index.js';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
+	import * as ButtonGroup from '$lib/components/ui/button-group/index.js';
 	import { Checkbox } from '$lib/components/ui/checkbox/index.js';
+	import { corpusParticipantAvatarUrl } from '$lib/dicebear-avatars';
 	import KeywordText from '$lib/components/KeywordText.svelte';
 	import { buildKeywordMatcher } from '$lib/content/wctglpdemo-data/keywords';
 	import PageHeader from '$lib/components/PageHeader.svelte';
@@ -116,19 +119,19 @@
 	// The question bank — canonical interview questions, in guide order.
 	const questionBank = [...questionBankRaw.questions].sort((a, b) => a.order - b.order);
 
-	let transcript = $state('');
-	let participantId = $state('');
-	let submitting = $state(false);
 	let savingQuestions = $state(false);
 
-	function loadFile(event: Event) {
-		const file = (event.currentTarget as HTMLInputElement).files?.[0];
-		if (!file) return;
-		const reader = new FileReader();
-		reader.onload = () => {
-			transcript = String(reader.result ?? '');
-		};
-		reader.readAsText(file);
+	// --- Unified transcript upload dialog ---
+	// Replaces the prior split (uploadOpen + addRowsOpen) with a single dialog
+	// that handles every transcript shape. defaultType seeds the type picker so
+	// the top-of-page button lands on Interview while the corpus pane button
+	// lands on Forum / social.
+	type TranscriptUploadType = 'interview' | 'forum' | 'blog' | 'podcast' | 'youtube';
+	let uploadDialogOpen = $state(false);
+	let uploadDialogDefaultType = $state<TranscriptUploadType>('interview');
+	function openUploadDialog(t: TranscriptUploadType) {
+		uploadDialogDefaultType = t;
+		uploadDialogOpen = true;
 	}
 
 	// The review view is driven by the interview loaded via ?interview=, except
@@ -157,9 +160,7 @@
 	let questionAssignments = $state<Record<number, string>>({});
 	let lastInterview = '';
 
-	// --- Upload modal + autotag job tracking ---
-	let uploadOpen = $state(false);
-	let uploadError = $state('');
+	// --- Autotag job tracking ---
 	// The autotag job for the interview in view. `autotagStep` is kept separate
 	// so live step updates from polling don't retrigger the polling effect.
 	let autotagJob = $state<AutotagJob | null>(null);
@@ -298,357 +299,58 @@
 		selectedFragments = new Set();
 	}
 
-	// === Add-rows-to-corpus dialog state ====================================
-	// Analyst paste/upload of forum-row CSV or JSON into the active corpus.
-	// Mirrors scripts/import-forum-as-fragments.mjs's input shape: per-row
-	// { Anonymized Username, Timestamp, Text, Thread, Conversation, Comment?,
-	//   Context?, Username? }. Parsing happens client-side so we can show a
-	// row-count preview + per-row validation before submitting; the server
-	// receives a clean JSON rows[].
-	let addRowsOpen = $state(false);
-	let addRowsFormat = $state<'csv' | 'json'>('csv');
-	let addRowsContent = $state('');
-	let addRowsSubmitting = $state(false);
-	let addRowsError = $state('');
-	let addRowsFileInput = $state<HTMLInputElement | null>(null);
-	// Auto-renumber the input's Thread ids so they start above the corpus's
-	// current max Thread — prevents a fresh export's Thread=1 from colliding
-	// with an existing Thread=1. Default on. When off, the input's Threads are
-	// passed through verbatim (an analyst re-ingesting the same source on
-	// purpose wants exact id reuse).
-	let autoRenumberThreads = $state(true);
-	// Run AI tagging (themes, sentiment, stages) on the new fragments after
-	// they're written. Opt-in because each pass is a paid Claude call per
-	// thread; analysts re-ingesting a known-good source can skip.
-	let runAutotag = $state(false);
-	// Two-step flow: 'edit' = paste + parse + preview-button; 'confirm' = server
-	// dry-run summary shown, awaiting analyst sign-off. Going back to 'edit'
-	// re-enables the textarea and discards the cached preview.
-	type AddRowsStage = 'edit' | 'confirm';
-	let addRowsStage = $state<AddRowsStage>('edit');
+	// Sibling-stack disclosure in the Thread view — which OP / comment groups
+	// (keyed below) are currently expanded. Multi-fragment groups start
+	// collapsed: first card visible, the rest behind a "Show N more" button,
+	// matching social-media comment-thread convention.
+	let expandedThreadGroups = $state(new Set<string>());
+	function toggleThreadGroup(key: string) {
+		const next = new Set(expandedThreadGroups);
+		if (next.has(key)) next.delete(key);
+		else next.add(key);
+		expandedThreadGroups = next;
+	}
+
+	// === Corpus-side runtime types kept for autotag tracking + toasts ========
+	// The old in-page add-rows dialog state moved into TranscriptUploadDialog;
+	// the remaining type alias is still referenced by the autotag progress
+	// toast which surfaces the per-partition breakdown.
 	type AddRowsPreview = {
 		totalNew: number;
 		totalOverwrite: number;
 		perPartition: Record<string, { new: number; overwrite: number }>;
 		overwriteSample: string[];
 	};
-	let addRowsPreview = $state<AddRowsPreview | null>(null);
 
-	const REQUIRED_ROW_FIELDS = ['Anonymized Username', 'Timestamp', 'Text'] as const;
-	type ForumRow = {
-		'Anonymized Username'?: string;
-		Username?: string;
-		Timestamp?: string;
-		Text?: string;
-		Thread?: string;
-		Conversation?: string;
-		Comment?: string;
-		Context?: string;
-	};
-
-	/** Minimal CSV reader: RFC-4180 quotes (double-quote escape), comma delim,
-	 *  CR/LF tolerant. First non-empty line is the header. Cells trim outer
-	 *  whitespace only when not quoted. Good enough for the analyst-paste
-	 *  schema; we don't ship a full csv-parse library for this. */
-	function parseCsv(text: string): Record<string, string>[] {
-		const rows: string[][] = [];
-		let cur: string[] = [];
-		let cell = '';
-		let inQuotes = false;
-		for (let i = 0; i < text.length; i++) {
-			const ch = text[i];
-			if (inQuotes) {
-				if (ch === '"') {
-					if (text[i + 1] === '"') {
-						cell += '"';
-						i += 1;
-					} else {
-						inQuotes = false;
-					}
-				} else {
-					cell += ch;
-				}
-				continue;
-			}
-			if (ch === '"') {
-				inQuotes = true;
-				continue;
-			}
-			if (ch === ',') {
-				cur.push(cell);
-				cell = '';
-				continue;
-			}
-			if (ch === '\r') continue;
-			if (ch === '\n') {
-				cur.push(cell);
-				rows.push(cur);
-				cur = [];
-				cell = '';
-				continue;
-			}
-			cell += ch;
-		}
-		if (cell.length > 0 || cur.length > 0) {
-			cur.push(cell);
-			rows.push(cur);
-		}
-		const nonEmpty = rows.filter((r) => r.some((c) => c.trim().length > 0));
-		if (nonEmpty.length === 0) return [];
-		const header = nonEmpty[0].map((c) => c.trim());
-		return nonEmpty.slice(1).map((cells) => {
-			const obj: Record<string, string> = {};
-			header.forEach((h, idx) => {
-				obj[h] = cells[idx] ?? '';
+	// === Unified-dialog success handler =====================================
+	// TranscriptUploadDialog encapsulates the form state + the action call; on
+	// a successful write it hands us back a UploadResult so we can drive the
+	// same toast + autotag-progress tracking the in-page handlers used to.
+	function onUploadSuccess(result: import('$lib/components/upload/TranscriptUploadDialog.svelte').UploadResult) {
+		if (result.kind === 'interview') return; // toast handled by the navigation path
+		const corpusId = result.corpusId;
+		const corpusLabel =
+			data.mode === 'corpus' && data.corpus?.id === corpusId
+				? data.corpus.label
+				: data.corpora.find((c) => c.id === corpusId)?.label ?? corpusId;
+		const added = result.added;
+		const overwrite = result.overwrite;
+		const writeLine =
+			overwrite > 0
+				? `Added ${added} fragment${added === 1 ? '' : 's'} (${overwrite} overwrote existing) to ${corpusLabel}.`
+				: `Added ${added} fragment${added === 1 ? '' : 's'} to ${corpusLabel}.`;
+		if (result.autotagError) {
+			toasts.push({
+				message: `${writeLine} Autotag could not start: ${result.autotagError}`,
+				variant: 'error',
+				duration: 0
 			});
-			return obj;
-		});
-	}
-
-	/** Parse the current content according to addRowsFormat. Returns rows + an
-	 *  optional error message. Empty content gives [] with no error so the
-	 *  preview can render "0 rows" instead of red. */
-	const parsedRows = $derived.by((): { rows: ForumRow[]; error: string } => {
-		const content = addRowsContent.trim();
-		if (!content) return { rows: [], error: '' };
-		try {
-			if (addRowsFormat === 'json') {
-				const parsed = JSON.parse(content);
-				if (!Array.isArray(parsed)) {
-					return { rows: [], error: 'JSON must be an array of row objects.' };
-				}
-				return { rows: parsed as ForumRow[], error: '' };
-			}
-			const rows = parseCsv(content) as unknown as ForumRow[];
-			return { rows, error: '' };
-		} catch (err) {
-			return { rows: [], error: (err as Error).message };
+		} else if (result.autotagStarted) {
+			toasts.push({ message: writeLine });
+			trackCorpusAutotag(corpusId, corpusLabel);
+		} else {
+			toasts.push({ message: writeLine });
 		}
-	});
-
-	const parsedRowProblems = $derived.by((): string[] => {
-		const { rows } = parsedRows;
-		const issues: string[] = [];
-		for (let i = 0; i < rows.length; i += 1) {
-			const r = rows[i];
-			const missing = REQUIRED_ROW_FIELDS.filter((k) => !(r[k] ?? '').toString().trim());
-			if (missing.length === REQUIRED_ROW_FIELDS.length) continue; // metadata-only row, server will skip
-			if (missing.length > 0) {
-				issues.push(`row ${i}: missing ${missing.join(', ')}`);
-			}
-		}
-		return issues;
-	});
-
-	// Highest integer Thread already in the corpus, extracted from the
-	// `${corpusId}-T<N>-C<N>` shape of each fragment's post_id. Non-numeric
-	// Thread values are ignored — the auto-renumber path only protects against
-	// numeric-Thread collisions, which is the format every existing forum
-	// ingester produces. Returns 0 when the corpus has no forum fragments.
-	const maxExistingThread = $derived.by((): number => {
-		if (data.mode !== 'corpus' || !data.corpus) return 0;
-		const re = /-T(\d+)-C/;
-		let max = 0;
-		for (const f of data.fragments) {
-			const ref = f.source_ref;
-			if (
-				ref.kind === 'social_post' ||
-				ref.kind === 'social_comment' ||
-				ref.kind === 'forum_post' ||
-				ref.kind === 'forum_comment' ||
-				ref.kind === 'blog_post' ||
-				ref.kind === 'blog_comment'
-			) {
-				const m = ref.post_id.match(re);
-				if (m) {
-					const n = Number(m[1]);
-					if (Number.isFinite(n) && n > max) max = n;
-				}
-			}
-		}
-		return max;
-	});
-
-	// Stable Thread remap for the current input. Each distinct Thread in the
-	// parsed rows is assigned a fresh integer starting at
-	// `maxExistingThread + 1`, in order of first appearance — so an input file
-	// with Threads (1, 2, 1, 3) and a corpus that already has Thread 14
-	// becomes (15, 16, 15, 17). Rows with no Thread are left as-is (the
-	// projector's fallback id path catches them).
-	const threadRemap = $derived.by((): Map<string, string> => {
-		const map = new Map<string, string>();
-		if (!autoRenumberThreads) return map;
-		const { rows } = parsedRows;
-		let next = maxExistingThread + 1;
-		for (const r of rows) {
-			const raw = (r.Thread ?? '').toString().trim();
-			if (!raw) continue;
-			if (!map.has(raw)) {
-				map.set(raw, String(next));
-				next += 1;
-			}
-		}
-		return map;
-	});
-
-	const remappedRows = $derived.by((): ForumRow[] => {
-		const { rows } = parsedRows;
-		if (!autoRenumberThreads || threadRemap.size === 0) return rows;
-		return rows.map((r) => {
-			const raw = (r.Thread ?? '').toString().trim();
-			const mapped = raw ? threadRemap.get(raw) : undefined;
-			return mapped ? { ...r, Thread: mapped } : r;
-		});
-	});
-
-	function loadAddRowsFile(event: Event) {
-		const file = (event.currentTarget as HTMLInputElement).files?.[0];
-		if (!file) return;
-		// Default the format from the extension so the user doesn't have to
-		// toggle separately after picking a file.
-		if (file.name.toLowerCase().endsWith('.json')) addRowsFormat = 'json';
-		else if (file.name.toLowerCase().endsWith('.csv')) addRowsFormat = 'csv';
-		const reader = new FileReader();
-		reader.onload = () => {
-			addRowsContent = String(reader.result ?? '');
-		};
-		reader.readAsText(file);
-	}
-
-	function resetAddRowsDialog() {
-		addRowsContent = '';
-		addRowsError = '';
-		addRowsStage = 'edit';
-		addRowsPreview = null;
-		runAutotag = false;
-		if (addRowsFileInput) addRowsFileInput.value = '';
-	}
-
-	/** Shared POST helper for the addToCorpus action. `dryRun` flips the server
-	 *  behavior between "compute the breakdown" and "write to disk." Sends the
-	 *  Thread-remapped rows when auto-renumber is on; the verbatim parse
-	 *  otherwise. */
-	async function callAddToCorpus(dryRun: boolean) {
-		if (data.mode !== 'corpus' || !data.corpus) return null;
-		const { error } = parsedRows;
-		const rows = remappedRows;
-		if (error) {
-			addRowsError = error;
-			return null;
-		}
-		if (rows.length === 0) {
-			addRowsError = 'Paste or upload at least one row before submitting.';
-			return null;
-		}
-		const fd = new FormData();
-		fd.append('corpus_id', data.corpus.id);
-		fd.append('rows', JSON.stringify(rows));
-		if (dryRun) fd.append('dry_run', '1');
-		// run_autotag is honored only on the real write; the dry-run preview
-		// computes the breakdown but never spawns the propose-* scripts.
-		if (!dryRun && runAutotag) fd.append('run_autotag', '1');
-		const res = await fetch('/patientlyiq/upload?/addToCorpus', {
-			method: 'POST',
-			body: fd
-		});
-		const text = await res.text();
-		return (await import('$app/forms')).deserialize(text) as
-			| {
-					type: 'success';
-					data?: {
-						stage?: string;
-						added?: number;
-						summary?: AddRowsPreview;
-						partitions?: Record<string, number>;
-						stats?: Record<string, number>;
-						autotagStarted?: boolean;
-						autotagError?: string | null;
-						error?: string;
-					};
-			  }
-			| { type: 'failure'; data?: { error?: string } }
-			| { type: 'error'; error?: { message?: string } }
-			| { type: 'redirect' };
-	}
-
-	async function previewAddRows() {
-		if (addRowsSubmitting) return;
-		addRowsSubmitting = true;
-		addRowsError = '';
-		try {
-			const result = await callAddToCorpus(true);
-			if (!result) return;
-			if (result.type === 'success' && result.data?.summary) {
-				addRowsPreview = result.data.summary;
-				addRowsStage = 'confirm';
-				return;
-			}
-			if (result.type === 'failure') {
-				addRowsError = result.data?.error ?? 'Could not preview rows.';
-			} else if (result.type === 'error') {
-				addRowsError = result.error?.message ?? 'Server error.';
-			}
-		} catch (err) {
-			addRowsError = `Preview failed: ${(err as Error).message}`;
-		} finally {
-			addRowsSubmitting = false;
-		}
-	}
-
-	async function confirmAddRows() {
-		if (data.mode !== 'corpus' || !data.corpus || addRowsSubmitting) return;
-		addRowsSubmitting = true;
-		addRowsError = '';
-		try {
-			const result = await callAddToCorpus(false);
-			if (!result) return;
-			if (result.type === 'success' && typeof result.data?.added === 'number') {
-				addRowsOpen = false;
-				const added = result.data.added;
-				const overwrite = result.data.summary?.totalOverwrite ?? 0;
-				const autotag = result.data.autotagStarted;
-				const autotagError = result.data.autotagError;
-				const corpusId = data.corpus.id;
-				const corpusLabel = data.corpus.label;
-				resetAddRowsDialog();
-				const writeLine =
-					overwrite > 0
-						? `Added ${added} fragment${added === 1 ? '' : 's'} (${overwrite} overwrote existing) to ${corpusLabel}.`
-						: `Added ${added} fragment${added === 1 ? '' : 's'} to ${corpusLabel}.`;
-				if (autotagError) {
-					toasts.push({
-						message: `${writeLine} Autotag could not start: ${autotagError}`,
-						variant: 'error',
-						duration: 0
-					});
-				} else if (autotag) {
-					// The write toast is a short success confirmation; the
-					// persistent progress toast tracks the propose-* chain and
-					// upgrades itself to success / error when polling ends.
-					toasts.push({ message: writeLine });
-					trackCorpusAutotag(corpusId, corpusLabel);
-				} else {
-					toasts.push({ message: writeLine });
-				}
-				await invalidateAll();
-				return;
-			}
-			if (result.type === 'failure') {
-				addRowsError = result.data?.error ?? 'Could not add rows.';
-			} else if (result.type === 'error') {
-				addRowsError = result.error?.message ?? 'Server error.';
-			}
-		} catch (err) {
-			addRowsError = `Could not add rows: ${(err as Error).message}`;
-		} finally {
-			addRowsSubmitting = false;
-		}
-	}
-
-	function backToEdit() {
-		addRowsStage = 'edit';
-		addRowsPreview = null;
-		addRowsError = '';
 	}
 
 	// --- Corpus autotag progress tracking -----------------------------------
@@ -833,9 +535,21 @@
 		);
 		return threads.size === 1 && !threads.has('__non_forum');
 	});
+	// Same tie-break the server uses (mergeFragments action): date_observed,
+	// then source_ref.char_start, then id. Without char_start the preview can
+	// flip split-children of the same forum post and disagree with what the
+	// server writes.
 	const mergePreviewText = $derived(
 		[...selectedFragmentObjects]
-			.sort((a, b) => new Date(a.date_observed).getTime() - new Date(b.date_observed).getTime())
+			.sort((a, b) => {
+				const at = new Date(a.date_observed).getTime();
+				const bt = new Date(b.date_observed).getTime();
+				if (at !== bt) return at - bt;
+				const acs = (a.source_ref as { char_start?: number }).char_start ?? 0;
+				const bcs = (b.source_ref as { char_start?: number }).char_start ?? 0;
+				if (acs !== bcs) return acs - bcs;
+				return a.id.localeCompare(b.id);
+			})
 			.map((f) => f.text)
 			.join('\n\n')
 	);
@@ -975,12 +689,26 @@
 		return n;
 	});
 
+	// The layout server reads `?indication=` to pick the lexicon slice. When
+	// a navigation drops it, the loader falls back to the first registered
+	// indication and the corpus filter at +page.server.ts hides everything
+	// that doesn't match — clicking an MS thread reverts the view to LN.
+	// Every URL we build below must carry the active indication forward.
+	function nextParams(): URLSearchParams {
+		const params = new URLSearchParams();
+		const ind = page.url.searchParams.get('indication');
+		if (ind) params.set('indication', ind);
+		return params;
+	}
+
 	async function selectSource(source: 'interview' | 'corpus') {
 		if (source === 'interview') {
-			await goto('?', { invalidateAll: true });
+			const params = nextParams();
+			const qs = params.toString();
+			await goto(qs ? `?${qs}` : '?', { invalidateAll: true });
 			return;
 		}
-		const params = new URLSearchParams();
+		const params = nextParams();
 		params.set('source', 'corpus');
 		const firstCorpus = data.corpora?.[0];
 		if (firstCorpus) params.set('corpus', firstCorpus.id);
@@ -989,7 +717,7 @@
 	}
 
 	async function selectCorpus(id: string) {
-		const params = new URLSearchParams();
+		const params = nextParams();
 		params.set('source', 'corpus');
 		params.set('corpus', id);
 		params.set('view', data.mode === 'corpus' ? data.view : 'thread');
@@ -998,7 +726,7 @@
 
 	async function setCorpusView(v: 'thread' | 'participant') {
 		if (data.mode !== 'corpus' || !data.corpus) return;
-		const params = new URLSearchParams();
+		const params = nextParams();
 		params.set('source', 'corpus');
 		params.set('corpus', data.corpus.id);
 		params.set('view', v);
@@ -1029,9 +757,69 @@
 		participantGroups.find(([id]) => id === selectedParticipantId)?.[1] ?? []
 	);
 
+	// char_start of a fragment within its parent post/comment, used to order
+	// split-children siblings. Falls back to 0 when the source doesn't expose
+	// offsets (orphan or non-forum kinds).
+	function siblingStart(f: Fragment): number {
+		const ref = f.source_ref;
+		if (
+			(ref.kind === 'social_post' ||
+				ref.kind === 'social_comment' ||
+				ref.kind === 'forum_post' ||
+				ref.kind === 'forum_comment' ||
+				ref.kind === 'blog_post' ||
+				ref.kind === 'blog_comment') &&
+			typeof ref.char_start === 'number'
+		) {
+			return ref.char_start;
+		}
+		return 0;
+	}
+
+	// OP siblings of the active thread, in char_start order. When the
+	// segmenter splits a long post into multiple fragments, the panel
+	// shows the first and collapses the rest behind a disclosure
+	// (see expandedThreadGroups).
+	const activeThreadOpFragments = $derived(
+		activeThreadItems
+			.filter((f) => f.content_source === 'social_post' && !isMergedFragment(f))
+			.sort((a, b) => siblingStart(a) - siblingStart(b))
+	);
+	const activeThreadMerges = $derived(activeThreadItems.filter(isMergedFragment));
+	// Replies grouped by comment_id so a single comment that was split into
+	// multiple fragments collapses under one disclosure too. Groups are
+	// ordered by the first sibling's date_observed.
+	const activeThreadReplyGroups = $derived.by(() => {
+		const groups = new Map<string, Fragment[]>();
+		for (const f of activeThreadItems) {
+			if (f.content_source === 'social_post' || isMergedFragment(f)) continue;
+			const ref = f.source_ref;
+			const cid =
+				ref.kind === 'social_comment' ||
+				ref.kind === 'forum_comment' ||
+				ref.kind === 'blog_comment'
+					? ref.comment_id ?? '__nocid'
+					: '__nocid';
+			const arr = groups.get(cid) ?? [];
+			arr.push(f);
+			groups.set(cid, arr);
+		}
+		const out: Array<{ key: string; siblings: Fragment[] }> = [];
+		for (const [cid, arr] of groups) {
+			arr.sort((a, b) => siblingStart(a) - siblingStart(b));
+			out.push({ key: `c:${cid}`, siblings: arr });
+		}
+		out.sort(
+			(a, b) =>
+				new Date(a.siblings[0].date_observed).getTime() -
+				new Date(b.siblings[0].date_observed).getTime()
+		);
+		return out;
+	});
+
 	async function selectThread(postId: string) {
 		if (data.mode !== 'corpus' || !data.corpus) return;
-		const params = new URLSearchParams();
+		const params = nextParams();
 		params.set('source', 'corpus');
 		params.set('corpus', data.corpus.id);
 		params.set('view', 'thread');
@@ -1041,7 +829,7 @@
 
 	async function selectParticipant(hash: string) {
 		if (data.mode !== 'corpus' || !data.corpus) return;
-		const params = new URLSearchParams();
+		const params = nextParams();
 		params.set('source', 'corpus');
 		params.set('corpus', data.corpus.id);
 		params.set('view', 'participant');
@@ -1054,8 +842,18 @@
 	// bolding follows the active indication's clusters, not the legacy
 	// statically-bundled lexicon. Re-derived if the indication changes (the URL
 	// triggers a fresh layout load).
+	//
+	// Phase 3 of the codebook migration: pass data.slice.entities through so
+	// the matcher's entitySpans() can recognize entity surface forms (drugs,
+	// biomarkers, sponsors, …) and KeywordText routes those clicks to the
+	// EntityDetailDrawer.
 	const corpusMatcher = $derived(
-		buildKeywordMatcher(data.slice.clusters, data.slice.themes, data.slice.drugs)
+		buildKeywordMatcher(
+			data.slice.clusters,
+			data.slice.themes,
+			data.slice.drugs,
+			data.slice.entities
+		)
 	);
 
 	// Per-group annotation tally for sidebar entries. Cheap to compute over the
@@ -1392,7 +1190,7 @@
 		title="Review interviews"
 	>
 		{#snippet actions()}
-			<Button onclick={() => { uploadError = ''; uploadOpen = true; }}>
+			<Button onclick={() => openUploadDialog('interview')}>
 				<UploadIcon />
 				Upload transcript
 			</Button>
@@ -1403,36 +1201,96 @@
 		<!-- Source switcher — interview transcripts vs. fragment corpora. Drives
 			 the URL (?source=corpus&corpus=…&view=thread|participant) so deep links
 			 reload directly into the corpus pane. -->
-		<div class="flex flex-wrap items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5">
-			<span class="text-xs font-semibold uppercase tracking-wide text-slate-500">Source</span>
-			<button
-				type="button"
+		<ButtonGroup.Root aria-label="Review source">
+			<ButtonGroup.Text>Source</ButtonGroup.Text>
+			<Button
+				variant={data.mode === 'interview' ? 'default' : 'outline'}
+				size="sm"
 				onclick={() => selectSource('interview')}
-				aria-pressed={data.mode === 'interview'}
-				class="rounded-full border px-3 py-1 text-xs transition-colors {data.mode === 'interview'
-					? 'border-accent-orange bg-accent-orange text-white'
-					: 'border-slate-200 text-slate-600 hover:border-slate-400'} disabled:cursor-not-allowed disabled:opacity-50"
+				pressed={data.mode === 'interview'}
 			>
 				Interview transcript
-			</button>
-			<button
-				type="button"
+			</Button>
+			<Button
+				variant={data.mode === 'corpus' ? 'default' : 'outline'}
+				size="sm"
 				onclick={() => selectSource('corpus')}
-				aria-pressed={data.mode === 'corpus'}
+				pressed={data.mode === 'corpus'}
 				disabled={!data.corpora || data.corpora.length === 0}
-				class="rounded-full border px-3 py-1 text-xs transition-colors {data.mode === 'corpus'
-					? 'border-accent-orange bg-accent-orange text-white'
-					: 'border-slate-200 text-slate-600 hover:border-slate-400'} disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				Forum corpus
 				{#if !data.corpora || data.corpora.length === 0}
-					<span class="ml-1 text-[10px] opacity-70">(no corpora)</span>
+					(no corpora)
 				{/if}
-			</button>
-		</div>
+			</Button>
+		</ButtonGroup.Root>
 
 		{#if data.mode === 'interview'}
-		<!-- Primary action: pick an ingested interview to review, or upload one. -->
+		<!-- Interview toolbar — parallel shape to the corpus toolbar below
+			 ({:else if data.mode === 'corpus'} branch). Picker + per-interview
+			 tallies + autotag + Add transcript. Keeps both modes visually
+			 symmetrical instead of forum getting a bar and interviews getting
+			 nothing. -->
+		<section
+			class="flex flex-wrap items-center gap-3 rounded-lg border border-muted bg-white p-4"
+		>
+			<label class="flex items-center gap-2 text-xs font-medium text-slate-500">
+				Interview
+				<select
+					value={data.review?.interviewId ?? ''}
+					onchange={(e) =>
+						goto(`?interview=${(e.currentTarget as HTMLSelectElement).value}`, {
+							keepFocus: true
+						})}
+					class="rounded border border-slate-300 px-2 py-1.5 text-sm text-slate-800"
+					disabled={data.interviewIds.length === 0}
+				>
+					{#if data.interviewIds.length === 0}
+						<option value="">— no interviews for this indication —</option>
+					{:else}
+						<option value="">— pick an interview —</option>
+						{#each data.interviewIds as id (id)}
+							<option value={id}>{id}</option>
+						{/each}
+					{/if}
+				</select>
+			</label>
+
+			<span class="ml-auto text-xs text-slate-500">
+				{#if result}
+					{@const turnCount = result.turns?.length ?? 0}
+					{@const segmentCount = result.segments?.length ?? 0}
+					{turnCount} turn{turnCount === 1 ? '' : 's'} ·
+					{segmentCount} segment{segmentCount === 1 ? '' : 's'} ·
+					{assignedCount} of {interviewerTurns.length} mapped
+				{:else}
+					{data.interviewIds.length} interview{data.interviewIds.length === 1 ? '' : 's'} available
+				{/if}
+			</span>
+
+			<Button
+				size="sm"
+				variant="outline"
+				onclick={retryAutotag}
+				disabled={!result?.interviewId || autotagJob?.state === 'running'}
+				title={!result?.interviewId
+					? 'Pick an interview first.'
+					: autotagJob?.state === 'running'
+						? `Autotagging ${autotagJob.interviewId} — wait for it to finish.`
+						: 'Re-run the AI tagging pass on this interview.'}
+			>
+				<SparklesIcon />
+				{autotagJob?.state === 'running' ? 'Autotagging…' : 'Autotag'}
+			</Button>
+			<Button
+				size="sm"
+				variant="action"
+				onclick={() => openUploadDialog('interview')}
+			>
+				<UploadIcon />
+				Add transcript
+			</Button>
+		</section>
 
 		<!-- Autotag status — shown while a freshly uploaded interview is being
 			 tagged by the AI pipeline, or if that run failed. -->
@@ -2023,7 +1881,12 @@
 			     analyst can see which thread each comment came from -->
 		{#snippet fragmentCard(
 			f: Fragment,
-			opts: { kind: 'op' | 'reply' | 'merged' | 'participant' }
+			opts: {
+				kind: 'op' | 'reply' | 'merged' | 'participant';
+				/** Shown as a "fragment N / M" pill when the parent post or
+				 *  comment was split into multiple siblings. */
+				siblingPos?: { n: number; total: number } | null;
+			}
 		)}
 			{@const ann = fragmentAnnotations[f.id] ?? null}
 			{@const reviewed =
@@ -2032,6 +1895,17 @@
 			{@const isStarred = starredFragments.has(f.id)}
 			{@const isSelectable = opts.kind !== 'participant'}
 			{@const isSelected = selectedFragments.has(f.id)}
+			{@const authorHandle =
+				f.source_ref.kind === 'social_post' ||
+				f.source_ref.kind === 'social_comment' ||
+				f.source_ref.kind === 'forum_post' ||
+				f.source_ref.kind === 'forum_comment' ||
+				f.source_ref.kind === 'blog_post' ||
+				f.source_ref.kind === 'blog_comment'
+					? f.source_ref.author_handle_hash
+					: null}
+			{@const authorAvatar =
+				authorHandle && data.corpus ? corpusParticipantAvatarUrl(data.corpus.id, authorHandle) : null}
 			<!-- A wrapping div (not a button) hosts the card click handler so we
 				 can nest a real <button> for the star icon without breaking
 				 nested-interactive-element rules. Keyboard support via key handler. -->
@@ -2082,6 +1956,14 @@
 								? 'merged'
 								: 'comment'}
 					</span>
+					{#if opts.siblingPos}
+						<span
+							class="rounded-full border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[10px] text-slate-500"
+							title="One of {opts.siblingPos.total} fragments split from the same source"
+						>
+							fragment {opts.siblingPos.n} / {opts.siblingPos.total}
+						</span>
+					{/if}
 					{#if opts.kind === 'merged' && Array.isArray(f.derived_from)}
 						<span
 							class="text-[10px] text-violet-700"
@@ -2092,6 +1974,13 @@
 					{/if}
 					{#if f.source_ref.kind === 'social_post' || f.source_ref.kind === 'social_comment' || f.source_ref.kind === 'forum_post' || f.source_ref.kind === 'forum_comment' || f.source_ref.kind === 'blog_post' || f.source_ref.kind === 'blog_comment'}
 						{#if f.source_ref.author_handle_hash && opts.kind !== 'participant'}
+							{#if authorAvatar}
+								<img
+									src={authorAvatar}
+									alt=""
+									class="size-5 shrink-0 rounded-full bg-white object-cover"
+								/>
+							{/if}
 							<span>{f.source_ref.author_handle_hash}</span>
 							<span>·</span>
 						{/if}
@@ -2253,10 +2142,7 @@
 				<Button
 					size="sm"
 					variant="action"
-					onclick={() => {
-						addRowsError = '';
-						addRowsOpen = true;
-					}}
+					onclick={() => openUploadDialog('forum')}
 				>
 					<UploadIcon />
 					Add rows
@@ -2334,25 +2220,38 @@
 						{#each participantGroups as [author, items] (author)}
 							{@const isActive = author === selectedParticipantId}
 							{@const tally = tallyConfirmed(items)}
+							{@const avatarUrl =
+								author !== '__anonymous' && data.corpus
+									? corpusParticipantAvatarUrl(data.corpus.id, author)
+									: null}
 							<button
 								type="button"
 								onclick={() => selectParticipant(author)}
 								aria-pressed={isActive}
-								class="flex flex-col gap-1 rounded-md border px-3 py-2 text-left transition-colors
+								class="flex gap-2 rounded-md border px-3 py-2 text-left transition-colors
 									{isActive
 									? 'border-accent-orange bg-accent-orange/10 text-slate-800'
 									: 'border-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50'}"
 							>
-								<span class="text-xs font-medium">{author}</span>
-								<span class="flex items-center gap-2 text-[10px] text-slate-400">
-									<span>{tally.total} frag</span>
-									<span>·</span>
-									<span
-										class={tally.confirmed === tally.total && tally.total > 0
-											? 'text-emerald-600'
-											: 'text-amber-600'}
-									>
-										{tally.confirmed}/{tally.total} confirmed
+								{#if avatarUrl}
+									<img
+										src={avatarUrl}
+										alt=""
+										class="mt-0.5 size-7 shrink-0 rounded-full bg-white object-cover"
+									/>
+								{/if}
+								<span class="flex min-w-0 flex-col gap-1">
+									<span class="truncate text-xs font-medium">{author}</span>
+									<span class="flex items-center gap-2 text-[10px] text-slate-400">
+										<span>{tally.total} frag</span>
+										<span>·</span>
+										<span
+											class={tally.confirmed === tally.total && tally.total > 0
+												? 'text-emerald-600'
+												: 'text-amber-600'}
+										>
+											{tally.confirmed}/{tally.total} confirmed
+										</span>
 									</span>
 								</span>
 							</button>
@@ -2371,13 +2270,9 @@
 				<div class="flex flex-col gap-3" in:fade={{ duration: 180, easing: cubicOut }}>
 					{#if corpusView === 'thread' && selectedThreadId}
 						{@const items = activeThreadItems}
-						{@const op = items.find(
-							(f) => f.content_source === 'social_post' && !isMergedFragment(f)
-						)}
-						{@const merges = items.filter(isMergedFragment)}
-						{@const replies = items.filter(
-							(f) => f.content_source !== 'social_post' && !isMergedFragment(f)
-						)}
+						{@const opFragments = activeThreadOpFragments}
+						{@const merges = activeThreadMerges}
+						{@const replyGroups = activeThreadReplyGroups}
 						<header class="flex flex-col gap-1">
 							<h3 class="text-base font-semibold text-slate-800">{threadTitle(items)}</h3>
 							<span class="font-mono text-[11px] text-slate-400">{selectedThreadId}</span>
@@ -2417,19 +2312,72 @@
 							</div>
 						{/if}
 
-						{#if op}
-							{@render fragmentCard(op, { kind: 'op' })}
+						<!-- OP siblings — when the segmenter split the post into N
+							 fragments, the first is always visible and the rest hide
+							 behind a "Show N more" disclosure (collapsed by default,
+							 social-thread convention). Single-fragment posts skip the
+							 disclosure entirely. -->
+						{#if opFragments.length}
+							{@const opKey = `op:${selectedThreadId}`}
+							{@const opExpanded = expandedThreadGroups.has(opKey)}
+							{@const opVisible = opExpanded ? opFragments : opFragments.slice(0, 1)}
+							{#each opVisible as f, i (f.id)}
+								{@render fragmentCard(f, {
+									kind: 'op',
+									siblingPos:
+										opFragments.length > 1
+											? { n: i + 1, total: opFragments.length }
+											: null
+								})}
+							{/each}
+							{#if opFragments.length > 1}
+								<button
+									type="button"
+									onclick={() => toggleThreadGroup(opKey)}
+									class="self-start rounded-full border border-accent-orange/30 bg-white px-3 py-1 text-xs text-accent-orange transition-colors hover:bg-accent-orange/10"
+								>
+									{opExpanded
+										? `Hide ${opFragments.length - 1} fragment${opFragments.length - 1 === 1 ? '' : 's'}`
+										: `Show ${opFragments.length - 1} more fragment${opFragments.length - 1 === 1 ? '' : 's'} from this post`}
+								</button>
+							{/if}
 						{/if}
 						{#each merges as f (f.id)}
 							{@render fragmentCard(f, { kind: 'merged' })}
 						{/each}
-						{#if replies.length}
+						{#if replyGroups.length}
 							<!-- Replies indented under the OP with a descender line for
-								 the parent→child visual cue. depth-2+ isn't supported yet
-								 because the source CSV has no parent_comment_id. -->
+								 the parent→child visual cue. Each comment is its own
+								 group: split-children of the same comment fold under one
+								 "Show N more" disclosure, matching the OP treatment.
+								 depth-2+ threading isn't supported yet because the source
+								 CSV has no parent_comment_id. -->
 							<div class="relative ml-3 flex flex-col gap-2 border-l-2 border-accent-orange/30 pl-4">
-								{#each replies as f (f.id)}
-									{@render fragmentCard(f, { kind: 'reply' })}
+								{#each replyGroups as group (group.key)}
+									{@const expanded = expandedThreadGroups.has(group.key)}
+									{@const visible = expanded
+										? group.siblings
+										: group.siblings.slice(0, 1)}
+									{#each visible as f, i (f.id)}
+										{@render fragmentCard(f, {
+											kind: 'reply',
+											siblingPos:
+												group.siblings.length > 1
+													? { n: i + 1, total: group.siblings.length }
+													: null
+										})}
+									{/each}
+									{#if group.siblings.length > 1}
+										<button
+											type="button"
+											onclick={() => toggleThreadGroup(group.key)}
+											class="self-start rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-500 transition-colors hover:bg-slate-100"
+										>
+											{expanded
+												? `Hide ${group.siblings.length - 1} fragment${group.siblings.length - 1 === 1 ? '' : 's'}`
+												: `Show ${group.siblings.length - 1} more from this comment`}
+										</button>
+									{/if}
 								{/each}
 							</div>
 						{/if}
@@ -2466,81 +2414,22 @@
 	</div>
 </div>
 
-<!-- Upload modal — paste or load a transcript; on submit the interview is
-	 parsed, segmented, and queued for AI autotagging. -->
-<Dialog.Root bind:open={uploadOpen}>
-	<Dialog.Content class="sm:max-w-2xl">
-		<Dialog.Header>
-			<Dialog.Title>Upload a transcript</Dialog.Title>
-			<Dialog.Description>
-				Paste or load a raw interview transcript. On submit it's parsed and segmented, then the AI
-				proposes its question mapping and segment tags automatically.
-			</Dialog.Description>
-		</Dialog.Header>
-		<form
-			method="POST"
-			action="?/parse"
-			class="flex flex-col gap-4"
-			use:enhance={() => {
-				submitting = true;
-				uploadError = '';
-				return async ({ result: actionResult }) => {
-					submitting = false;
-					if (actionResult.type === 'success' && actionResult.data?.success) {
-						const newId = String(actionResult.data.interviewId);
-						uploadOpen = false;
-						transcript = '';
-						participantId = '';
-						lastInterview = '';
-						await goto(`?interview=${newId}`, { invalidateAll: true });
-					} else if (actionResult.type === 'failure') {
-						uploadError = String(actionResult.data?.error ?? 'Upload failed.');
-					} else if (actionResult.type === 'error') {
-						uploadError = 'Could not reach the server.';
-					}
-				};
-			}}
-		>
-			<label class="flex flex-col gap-1.5">
-				<span class="text-sm font-medium text-slate-700">Participant number</span>
-				<input
-					name="participantId"
-					bind:value={participantId}
-					placeholder="e.g. 11 — leave blank to read from a “Participant N” title line"
-					class="rounded border border-slate-300 px-3 py-2 text-sm text-slate-800"
-				/>
-			</label>
-
-			<div class="flex items-center justify-between">
-				<span class="text-sm font-medium text-slate-700">Transcript text</span>
-				<label class="cursor-pointer text-xs text-accent-orange hover:underline">
-					Load from .txt / .md file
-					<input type="file" accept=".txt,.md,text/plain" class="hidden" onchange={loadFile} />
-				</label>
-			</div>
-			<textarea
-				name="transcript"
-				bind:value={transcript}
-				rows="14"
-				placeholder={'Paste the raw transcript. Speaker turns are detected from lines like:\n\nInterviewer: …\nParticipant: …'}
-				class="rounded border border-slate-300 p-3 font-mono text-xs leading-relaxed text-slate-800"
-			></textarea>
-
-			{#if uploadError}
-				<p class="rounded border border-rose-300 bg-rose-50 px-3 py-2 text-sm text-rose-900">
-					{uploadError}
-				</p>
-			{/if}
-
-			<div class="flex items-center justify-between">
-				<span class="text-xs text-slate-400">{transcript.length.toLocaleString()} characters</span>
-				<Button type="submit" disabled={submitting || transcript.trim().length === 0}>
-					{submitting ? 'Parsing…' : 'Parse & autotag'}
-				</Button>
-			</div>
-		</form>
-	</Dialog.Content>
-</Dialog.Root>
+<!-- Unified transcript upload dialog — replaces the old per-type modals.
+	 Type picker chooses interview / forum-social / blog / podcast / youtube;
+	 the body swaps between speaker-prefix text input and CSV/JSON row input
+	 to match each type's natural shape. Opened by:
+	   - the page header's "Upload transcript" → defaults to interview
+	   - the corpus pane's "Add rows" → defaults to forum + locked corpus -->
+<TranscriptUploadDialog
+	bind:open={uploadDialogOpen}
+	defaultType={uploadDialogDefaultType}
+	corpora={data.corpora}
+	lockedCorpus={data.mode === 'corpus' && data.corpus ? data.corpus : null}
+	existingFragmentsByCorpus={data.mode === 'corpus' && data.corpus
+		? { [data.corpus.id]: data.fragments }
+		: {}}
+	onSuccess={onUploadSuccess}
+/>
 
 <!-- Merge-fragments confirm dialog. Shown when the floating "Merge into one
 	 quote" button is clicked. Preview is the joined-by-blank-line text the
@@ -2592,335 +2481,6 @@
 	</Dialog.Content>
 </Dialog.Root>
 
-<!-- Add-rows-to-corpus dialog. Pastes/uploads forum-schema CSV or JSON; the
-	 server projects rows into fragments via the same logic the offline
-	 import-forum-as-fragments.mjs script uses, then appends to the corpus's
-	 existing partitions. -->
-{#if data.mode === 'corpus' && data.corpus}
-	<Dialog.Root bind:open={addRowsOpen}>
-		<Dialog.Content class="sm:max-w-2xl">
-			<Dialog.Header>
-				<Dialog.Title>Add rows to {data.corpus.label}</Dialog.Title>
-				<Dialog.Description>
-					{#if addRowsStage === 'edit'}
-						Paste or upload forum-row data. Required columns: Anonymized Username, Timestamp,
-						Text. Optional: Thread, Conversation, Comment, Context, Username. Long rows split
-						at ingest using the corpus's existing split thresholds.
-					{:else}
-						Review the impact before writing. Overwriting an existing fragment id replaces
-						its text + metadata; any annotations on that id stay but may no longer match.
-					{/if}
-				</Dialog.Description>
-			</Dialog.Header>
-
-			{#if addRowsStage === 'edit'}
-				<div class="flex flex-col gap-4">
-					<!-- Format toggle. Default CSV (most common analyst paste); JSON when
-						 the analyst already has a normalized array. -->
-					<div class="flex items-center gap-2 text-xs">
-						<span class="font-medium text-slate-500">Format</span>
-						<div class="inline-flex overflow-hidden rounded-md border border-muted">
-							{#each ['csv', 'json'] as const as fmt (fmt)}
-								<button
-									type="button"
-									onclick={() => (addRowsFormat = fmt)}
-									aria-pressed={addRowsFormat === fmt}
-									class="px-3 py-1 text-xs font-medium uppercase transition-colors {addRowsFormat ===
-									fmt
-										? 'bg-accent-orange text-white'
-										: 'bg-white text-slate-600 hover:bg-slate-50'}"
-								>
-									{fmt}
-								</button>
-							{/each}
-						</div>
-						<label class="ml-auto cursor-pointer text-xs text-accent-orange hover:underline">
-							Load from .csv / .json file
-							<input
-								bind:this={addRowsFileInput}
-								type="file"
-								accept=".csv,.json,text/csv,application/json"
-								class="hidden"
-								onchange={loadAddRowsFile}
-							/>
-						</label>
-					</div>
-
-					<textarea
-						bind:value={addRowsContent}
-						rows="12"
-						placeholder={addRowsFormat === 'csv'
-							? 'Anonymized Username,Timestamp,Text,Thread,Conversation,Comment,Context\nParticipant 010,2025-02-04T00:00:00Z,"Hello, world.",2,1,1 a,Diagnosed SLE'
-							: '[\n  {\n    "Anonymized Username": "Participant 010",\n    "Timestamp": "2025-02-04T00:00:00Z",\n    "Text": "Hello, world.",\n    "Thread": "2",\n    "Conversation": "1",\n    "Comment": "1 a",\n    "Context": "Diagnosed SLE"\n  }\n]'}
-						class="rounded border border-slate-300 p-3 font-mono text-xs leading-relaxed text-slate-800"
-					></textarea>
-
-					<!-- Thread renumbering — default on. When the corpus already has
-						 forum fragments, this is the difference between a fresh upload
-						 landing in its own namespace vs silently overwriting older
-						 Thread=1 entries. -->
-					<label class="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50/60 p-2.5 text-xs">
-						<input
-							type="checkbox"
-							bind:checked={autoRenumberThreads}
-							class="mt-0.5 size-3.5 cursor-pointer rounded border-slate-300 bg-accent"
-						/>
-						<div class="flex flex-col gap-0.5">
-							<span class="font-medium text-slate-700">
-								Auto-renumber Thread ids to avoid conflicts
-							</span>
-							<span class="text-slate-500">
-								{#if maxExistingThread === 0}
-									This corpus has no existing forum threads yet — input Thread ids will be
-									used as-is.
-								{:else if threadRemap.size === 0}
-									Highest existing Thread is <span class="font-mono">{maxExistingThread}</span>.
-									New threads will start at <span class="font-mono">{maxExistingThread + 1}</span>.
-								{:else}
-									Renumbering <span class="font-mono">{threadRemap.size}</span> distinct
-									Thread{threadRemap.size === 1 ? '' : 's'} starting at
-									<span class="font-mono">{maxExistingThread + 1}</span>.
-								{/if}
-							</span>
-						</div>
-					</label>
-
-					<!-- Live preview: row count from the client-side parse + any
-						 structural problems. The server re-validates and is the source of
-						 truth, but this shortens the feedback loop. -->
-					<div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
-						{#if parsedRows.error}
-							<span class="rounded border border-rose-300 bg-rose-50 px-2 py-1 text-rose-700">
-								Parse error: {parsedRows.error}
-							</span>
-						{:else}
-							<span>
-								<span class="font-semibold text-slate-700">{parsedRows.rows.length}</span>
-								row{parsedRows.rows.length === 1 ? '' : 's'} detected
-							</span>
-							{#if parsedRowProblems.length > 0}
-								<span class="rounded border border-amber-300 bg-amber-50 px-2 py-1 text-amber-800">
-									{parsedRowProblems.length} row{parsedRowProblems.length === 1 ? '' : 's'} missing
-									required fields
-								</span>
-							{/if}
-						{/if}
-						<span class="ml-auto text-slate-400">
-							{addRowsContent.length.toLocaleString()} characters
-						</span>
-					</div>
-
-					{#if parsedRowProblems.length > 0}
-						<details class="text-xs text-slate-600">
-							<summary class="cursor-pointer hover:text-slate-800">
-								Show first {Math.min(5, parsedRowProblems.length)} problem{parsedRowProblems.length ===
-								1
-									? ''
-									: 's'}
-							</summary>
-							<ul class="mt-1 list-disc pl-5">
-								{#each parsedRowProblems.slice(0, 5) as issue (issue)}
-									<li>{issue}</li>
-								{/each}
-							</ul>
-						</details>
-					{/if}
-
-					{#if addRowsError}
-						<p class="rounded border border-rose-300 bg-rose-50 px-3 py-2 text-sm text-rose-900">
-							{addRowsError}
-						</p>
-					{/if}
-
-					<div class="flex items-center justify-end gap-2">
-						<Button
-							variant="outline"
-							size="sm"
-							onclick={() => {
-								addRowsOpen = false;
-								resetAddRowsDialog();
-							}}
-						>
-							Cancel
-						</Button>
-						<Button
-							onclick={previewAddRows}
-							disabled={addRowsSubmitting ||
-								parsedRows.rows.length === 0 ||
-								parsedRows.error.length > 0}
-						>
-							{addRowsSubmitting ? 'Previewing…' : 'Preview changes →'}
-						</Button>
-					</div>
-				</div>
-			{:else if addRowsPreview}
-				<!-- Confirmation stage — server returned a dry-run summary; show
-					 the new-vs-overwrite breakdown before committing. -->
-				<div class="flex flex-col gap-4">
-					<div class="grid grid-cols-2 gap-3">
-						<div class="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
-							<p class="text-xs font-medium uppercase tracking-wide text-emerald-700">
-								New fragments
-							</p>
-							<p class="mt-1 text-2xl font-semibold text-emerald-900">
-								{addRowsPreview.totalNew.toLocaleString()}
-							</p>
-						</div>
-						<div
-							class="rounded-lg border p-4 {addRowsPreview.totalOverwrite > 0
-								? 'border-amber-300 bg-amber-50'
-								: 'border-slate-200 bg-slate-50'}"
-						>
-							<p
-								class="text-xs font-medium uppercase tracking-wide {addRowsPreview.totalOverwrite >
-								0
-									? 'text-amber-700'
-									: 'text-slate-500'}"
-							>
-								Will overwrite existing
-							</p>
-							<p
-								class="mt-1 text-2xl font-semibold {addRowsPreview.totalOverwrite > 0
-									? 'text-amber-900'
-									: 'text-slate-600'}"
-							>
-								{addRowsPreview.totalOverwrite.toLocaleString()}
-							</p>
-						</div>
-					</div>
-
-					{#if Object.keys(addRowsPreview.perPartition).length > 0}
-						<div class="rounded-md border border-slate-200 bg-white p-3 text-xs text-slate-600">
-							<p class="mb-1.5 font-medium uppercase tracking-wide text-slate-500">By partition</p>
-							<ul class="flex flex-col gap-0.5">
-								{#each Object.entries(addRowsPreview.perPartition) as [part, counts] (part)}
-									<li class="flex items-center justify-between gap-3">
-										<span class="font-mono">{part}</span>
-										<span>
-											<span class="text-emerald-700">+{counts.new} new</span>
-											{#if counts.overwrite > 0}
-												<span class="ml-2 text-amber-700">{counts.overwrite} overwrite</span>
-											{/if}
-										</span>
-									</li>
-								{/each}
-							</ul>
-						</div>
-					{/if}
-
-					{#if autoRenumberThreads && threadRemap.size > 0}
-						<div class="rounded-md border border-sky-200 bg-sky-50 p-3 text-xs text-sky-900">
-							<p class="font-medium">
-								Renumbered {threadRemap.size} Thread id{threadRemap.size === 1 ? '' : 's'}
-							</p>
-							<p class="mt-0.5 text-sky-800">
-								Input Threads were remapped to start above the corpus's existing max
-								(<span class="font-mono">{maxExistingThread}</span>) so they can't collide
-								with prior fragments.
-							</p>
-							<details class="mt-1.5">
-								<summary class="cursor-pointer hover:text-sky-950">
-									Show mapping
-								</summary>
-								<ul class="mt-1 grid grid-cols-2 gap-x-4 gap-y-0.5 font-mono text-[11px]">
-									{#each [...threadRemap.entries()] as [oldT, newT] (oldT)}
-										<li>
-											<span class="text-slate-500">{oldT}</span>
-											<span class="text-slate-400"> → </span>
-											<span class="text-sky-900">{newT}</span>
-										</li>
-									{/each}
-								</ul>
-							</details>
-						</div>
-					{/if}
-
-					{#if addRowsPreview.totalOverwrite > 0}
-						<div class="rounded-md border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
-							<p class="font-medium">
-								Heads-up: {addRowsPreview.totalOverwrite} existing fragment{addRowsPreview.totalOverwrite ===
-								1
-									? ''
-									: 's'} will be replaced.
-							</p>
-							<p class="mt-1">
-								The replacement happens whenever a row's (Thread, Conversation, Comment) key
-								matches a fragment already in the corpus. Re-uploading the same source file
-								does this on purpose; otherwise it's usually a sign the input overlaps with
-								earlier data.
-							</p>
-							{#if addRowsPreview.overwriteSample.length > 0}
-								<details class="mt-1.5">
-									<summary class="cursor-pointer hover:text-amber-950">
-										Show {Math.min(5, addRowsPreview.overwriteSample.length)} affected id{addRowsPreview
-											.overwriteSample.length === 1
-											? ''
-											: 's'}
-									</summary>
-									<ul class="mt-1 list-disc pl-5 font-mono text-[10px]">
-										{#each addRowsPreview.overwriteSample as id (id)}
-											<li>{id}</li>
-										{/each}
-									</ul>
-								</details>
-							{/if}
-						</div>
-					{/if}
-
-					<!-- AI tagging opt-in. Lives on the confirm step (not edit) so the
-						 analyst already knows how many fragments will be tagged before
-						 toggling — keeps the cost decision honest. -->
-					<label
-						class="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50/60 p-2.5 text-xs"
-					>
-						<input
-							type="checkbox"
-							bind:checked={runAutotag}
-							class="mt-0.5 size-3.5 cursor-pointer rounded border-slate-300 accent-accent-mint"
-						/>
-						<div class="flex flex-col gap-0.5">
-							<span class="font-medium text-slate-700">
-								Run AI autotagging on the new fragments
-							</span>
-							<span class="text-slate-500">
-								Spawns propose-fragment-themes / sentiment / stages in the background once
-								the write succeeds. Each pass is a paid Claude call per thread — skip when
-								re-ingesting a source that's already been tagged.
-							</span>
-						</div>
-					</label>
-
-					{#if addRowsError}
-						<p class="rounded border border-rose-300 bg-rose-50 px-3 py-2 text-sm text-rose-900">
-							{addRowsError}
-						</p>
-					{/if}
-
-					<div class="flex items-center justify-between gap-2">
-						<Button variant="ghost" size="sm" onclick={backToEdit}>← Back to edit</Button>
-						<div class="flex items-center gap-2">
-							<Button
-								variant="outline"
-								size="sm"
-								onclick={() => {
-									addRowsOpen = false;
-									resetAddRowsDialog();
-								}}
-							>
-								Cancel
-							</Button>
-							<Button onclick={confirmAddRows} disabled={addRowsSubmitting}>
-								{addRowsSubmitting
-									? 'Adding…'
-									: `Confirm and add ${addRowsPreview.totalNew + addRowsPreview.totalOverwrite}${runAutotag ? ' + autotag' : ''}`}
-							</Button>
-						</div>
-					</div>
-				</div>
-			{/if}
-		</Dialog.Content>
-	</Dialog.Root>
-{/if}
 
 <!-- Per-segment tag editing — opened by clicking a segment in the review view. -->
 <SegmentTagDrawer

@@ -38,6 +38,15 @@
 		ariaLabel?: string;
 		/** Snippet that renders one card. */
 		item: Snippet<[T, number]>;
+		/** Per-layer rotation (degrees) for cards behind the top. Index 0 is
+		 *  the top card; subsequent indices step deeper. Override to spread the
+		 *  deck wider (bento callers want each card visibly distinct). */
+		behindRot?: readonly number[];
+		/** Per-layer horizontal offset (px) for cards behind the top. */
+		behindTx?: readonly number[];
+		/** Per-layer vertical offset (px). Defaults to a constant 26px step;
+		 *  override for fans with non-uniform vertical separation. */
+		behindTy?: readonly number[];
 	};
 
 	let {
@@ -51,7 +60,10 @@
 		getKey,
 		class: klass = '',
 		ariaLabel,
-		item
+		item,
+		behindRot = [0, -6, 9, -11],
+		behindTx = [0, -12, 16, -10],
+		behindTy
 	}: Props = $props();
 
 	// Clamp activeIndex if the items list shrinks under us.
@@ -178,10 +190,6 @@
 
 	// ---- Per-card transform in stack mode ---------------------------------
 	const VISIBLE_BEHIND = 3;
-	// Rotation and horizontal nudge for layers 0 (top) → 3 (deepest visible).
-	// Alternating direction gives a natural fanned-deck look.
-	const BEHIND_ROT = [0, -6, 9, -11] as const;
-	const BEHIND_TX  = [0, -12, 16, -10] as const;
 
 	function layerFor(idx: number) {
 		if (items.length === 0) return 0;
@@ -191,15 +199,15 @@
 		const l = layerFor(idx);
 		const isTop = l === 0;
 		const clamped = Math.min(l, VISIBLE_BEHIND);
-		const ty = clamped * 26;
+		const ty = behindTy?.[clamped] ?? clamped * 26;
 		const sc = 1 - clamped * 0.06;
 		const op = l > VISIBLE_BEHIND ? 0 : Math.max(0, 1 - clamped * 0.15);
 		const z = items.length - l;
 		const wiggle = shakeBuffer * (Math.sin(performance.now() / 24) * 4);
-		const tx = isTop ? dragX + (shakeBuffer ? wiggle : 0) : BEHIND_TX[clamped] ?? 0;
+		const tx = isTop ? dragX + (shakeBuffer ? wiggle : 0) : behindTx[clamped] ?? 0;
 		const rot = isTop
 			? dragX * 0.025 + (shakeBuffer ? wiggle * 0.4 : 0)
-			: BEHIND_ROT[clamped] ?? 0;
+			: behindRot[clamped] ?? 0;
 		const transition = (isTop && dragging) || shakeBuffer
 			? 'opacity 300ms ease'
 			: 'transform 350ms cubic-bezier(.2,.7,.2,1), opacity 300ms ease';

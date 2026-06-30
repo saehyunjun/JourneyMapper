@@ -1,6 +1,6 @@
 {
   "meta": {
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "persona_id": "ln_sle_carT_curious_patients",
     "corpus_id": "ln_reddit_2026q1",
     "filter_hash": "a05859f7dd8b",
@@ -26,23 +26,60 @@
       "fc-ln_reddit_2026q1-3-1-1_h_s00",
       "fc-ln_reddit_2026q1-3-1-1_u"
     ],
-    "generator": "propose-persona-narrative@0.1",
+    "generator": "propose-persona-narrative@0.2",
     "model": "claude-opus-4-7",
     "generated_at": "2026-05-28T19:18:07.597Z"
   },
   "tagline": "Accepted into the future, blocked by ordinary life.",
   "paragraph": "I've been following the German study since my rheumatologist first mentioned CAR-T, and honestly it's the first time in years a treatment has sounded like an actual reset rather than another drug to cycle through. I've already been on Benlysta, Saphnelo, the long course of cyclophosphamide and steroids — some worked for a while, then stopped. My kidney function isn't end-stage yet, but I'm refractory enough that my doctor said this is the most promising path to real remission. The problem is everything around the infusion. After treatment it's six to eight weeks of not being able to drive, and I'm not married, I don't have a family member who can take me back and forth, and I still have to work. Someone suggested a personal loan. Others got disqualified for the opposite reason — not sick enough, or a cancer history, a clot history, hypermobility on top of the lupus and RA. I read about a woman whose brother had CAR-T thirty years ago for cancer and still says he'd rather die than do it again, and I think about that, and then I think about another flare. I keep going back to the subreddit to read the people actually enrolled at Emory or in Belgium, asking about chemo doses and B-cell biology, because my own rheumatologists barely mention any of this. I got my hopes up high once already and it was a hard fall. I'm trying not to do that again.",
-  "patient_concerns": [
-    "Six to eight weeks of no driving with no caregiver and a job to keep.",
-    "Eligibility keeps shifting: too well, too complicated, cancer or clot history disqualifies me.",
-    "Confused whether CAR-T chemo is truly heavier than the cyclophosphamide induction I already did.",
-    "Rheumatologists never sent me to a nephrologist despite stones, infections, and borderline kidney function."
+  "medical_self_efficacy": [
+    "Refractory enough to know what real remission would mean versus stabilized between flares.",
+    "Reads enrollee threads for chemo doses and B-cell biology her own care team won't discuss.",
+    "Confused whether CAR-T's conditioning is meaningfully heavier than the cyclophosphamide induction already completed.",
+    "Tracks shifting eligibility: too well, too complicated, cancer or clot history disqualifies."
   ],
-  "person_concerns": [
+  "provider_trust": [
+    "Rheumatologists barely mention CAR-T or the German study; the subreddit fills the gap.",
+    "Never referred to a nephrologist despite stones, infections, and borderline kidney function.",
+    "Doctor calls CAR-T the most promising path but isn't equipped to walk through the protocol.",
+    "Anchors hope in Emory and Belgium enrollees' posts, not in her own care team's guidance."
+  ],
+  "logistical_capacity": [
+    "Six to eight weeks of no driving after infusion with no caregiver available.",
+    "Unmarried, no family member who can take me back and forth to the site.",
+    "Cannot stop working through the recovery window; thread suggests a personal loan.",
+    "Treatment sites are non-local — Emory or international — so distance is structural, not preference."
+  ],
+  "emotional_valence": [
     "Afraid to hope again after the last trial rejection knocked me flat.",
-    "Watching trial enrollees online while feeling like a spectator to my own cure.",
     "Tired of cycling through Benlysta, Saphnelo, steroids and waiting for each to fail.",
-    "Dreaming of being actually healed, not just stabilized between flares."
+    "Watching trial enrollees online while feeling like a spectator to my own cure.",
+    "A stranger's brother had CAR-T thirty years ago and still says he'd rather die than do it again."
+  ],
+  "care_team_history": [
+    "Rheumatology — primary disease manager throughout",
+    "No nephrology referral despite kidney signals (stones, infections, borderline function)",
+    "No CAR-T site team yet (would be at Emory or an international trial site)",
+    "Information substitutes for care team: CAR-T-for-lupus subreddit, enrollee accounts"
+  ],
+  "key_health_events": [
+    "Long course of cyclophosphamide induction completed",
+    "Multiple biologic failures (Benlysta, Saphnelo lost durability)",
+    "Episodic kidney stones and infections",
+    "Borderline kidney function — refractory but not end-stage",
+    "Prior trial rejection — the \"hard fall\" she's guarding against"
+  ],
+  "treatment_history": [
+    "Benlysta (belimumab) — worked for a while, then stopped",
+    "Saphnelo (anifrolumab) — worked for a while, then stopped",
+    "Cyclophosphamide induction — long course completed",
+    "Steroids — ongoing background therapy"
+  ],
+  "trial_awareness": [
+    "German CAR-T-for-lupus study — first reference point her rheumatologist named",
+    "Emory CAR-T-for-lupus enrollees — primary US site she monitors",
+    "Belgium CAR-T trial — international site she tracks on the subreddit",
+    "Historical comparator: 30-year-old oncology CAR-T outcomes she's wary of"
   ],
   "hero_quote_fragment_id": "fc-ln_reddit_2026q1-3-1-1_t"
 }

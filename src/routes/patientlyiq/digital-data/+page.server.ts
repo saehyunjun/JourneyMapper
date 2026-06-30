@@ -22,7 +22,7 @@ import {
 	type DiseaseDatasetRef,
 	type DiseaseInsightManifest
 } from '$lib/content/disease-insights';
-import { getDatasetPayload } from '$lib/content/disease-insights/datasets';
+import { getDatasetPayload, readDatasetFromDisk } from '$lib/content/disease-insights/datasets';
 import type { PageServerLoad } from './$types';
 
 export type ResolvedDataset = {
@@ -74,13 +74,13 @@ async function readRawHeadSummary(
 	}
 }
 
-/** Pull the filter metadata + filtered count out of the bundled normalized payload, if present. */
-function extractFilteredCount(
+/** Pull the filter metadata + filtered count out of the on-disk normalized payload, if present. */
+async function extractFilteredCount(
 	manifest: DiseaseInsightManifest
-): Pick<RawStudiesSummary, 'filtered_count' | 'filter_rule' | 'filter_cutoff'> {
+): Promise<Pick<RawStudiesSummary, 'filtered_count' | 'filter_rule' | 'filter_cutoff'>> {
 	const normalizedRef = manifest.datasets.find((d) => d.type === 'clinical_trials_normalized');
 	if (!normalizedRef) return { filtered_count: null, filter_rule: null, filter_cutoff: null };
-	const payload = getDatasetPayload(manifest.slug, normalizedRef.path) as
+	const payload = (await readDatasetFromDisk(manifest.slug, normalizedRef.path)) as
 		| {
 				count?: number;
 				activity_filter?: { kept?: number; rule?: string; recent_cutoff?: string } | null;
@@ -116,7 +116,7 @@ async function loadRawSummary(
 	}
 	const cached = rawSummaryCache.get(cacheKey)!;
 	// Filtered count is cheap to recompute and reflects the (possibly re-run) normalized file.
-	return { ...cached, ...extractFilteredCount(manifest) };
+	return { ...cached, ...(await extractFilteredCount(manifest)) };
 }
 
 export const load: PageServerLoad = async ({ parent }) => {
@@ -130,6 +130,10 @@ export const load: PageServerLoad = async ({ parent }) => {
 					if (bundled !== undefined) return { ref, payload: bundled };
 					if (ref.type === 'clinical_trials_raw') {
 						return { ref, payload: await loadRawSummary(manifest, ref) };
+					}
+					if (ref.type === 'clinical_trials_normalized') {
+						const fromDisk = await readDatasetFromDisk(manifest.slug, ref.path);
+						return { ref, payload: fromDisk ?? null };
 					}
 					return { ref, payload: null };
 				})

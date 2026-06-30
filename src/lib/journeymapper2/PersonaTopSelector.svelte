@@ -169,7 +169,7 @@ aria-label="Persona selector" role="navigation" onmousemove={handleMouseMove}>
     font-family: var(--font-heading);
     font-size: .6725em;
     text-transform: uppercase;
-    color: var(--darkbluegray);
+    color: var(--darkgrayblue);
     opacity: 50%;
     font-weight: 400;
     margin-top: .725em;

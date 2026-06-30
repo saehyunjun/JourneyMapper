@@ -37,6 +37,33 @@
       "mesh_term": "Multiple Sclerosis",
       "therapeutic_area_ids": ["neurology", "immunology"],
       "description": "Autoimmune demyelinating disease of the CNS. Spans the disease-modifying therapy (DMT) landscape (anti-CD20, S1P modulators, fumarates, alpha-4 integrin, interferon-betas), MRI-based monitoring, EDSS-based disability tracking, and disease courses (RRMS, SPMS, PPMS). CAR-T programs targeting CD19+ B cells (e.g., KYV-101, Descartes-08) are in development for refractory / progressive MS."
+    },
+    {
+      "id": "pku",
+      "label": "Phenylketonuria",
+      "abbreviation": "PKU",
+      "mesh_id": "D010661",
+      "mesh_term": "Phenylketonurias",
+      "therapeutic_area_ids": ["endocrinology", "neurology"],
+      "description": "Inborn error of phenylalanine metabolism caused by phenylalanine hydroxylase (PAH) deficiency. Lifetime management centers on Phe-restricted diet plus medical foods, with pharmacotherapy via sapropterin (Kuvan) for BH4-responsive patients, pegvaliase (Palynziq) for adults with uncontrolled Phe, and sepiapterin (Sephience, PTC) added in 2024-25. Newborn screening (Guthrie / heel-prick) detects nearly all US cases at birth; downstream burden spans neurocognitive effects of elevated Phe, mood/executive-function impacts, maternal PKU syndrome, and lost-to-follow-up adults returning to care."
+    },
+    {
+      "id": "sjogrens",
+      "label": "Sjögren's Syndrome",
+      "abbreviation": "pSS",
+      "mesh_id": "D012859",
+      "mesh_term": "Sjogren's Syndrome",
+      "therapeutic_area_ids": ["immunology"],
+      "description": "Systemic autoimmune disease centered on lymphocytic infiltration of exocrine glands (lacrimal, salivary) causing sicca complex plus extraglandular involvement — fatigue, arthralgia, peripheral / small-fiber / autonomic neuropathy, interstitial lung disease, renal tubular acidosis, cryoglobulinemia, vasculitis, and elevated MALT lymphoma risk. Diagnosis anchored on anti-Ro/SSA + anti-La/SSB serology and lip biopsy (focus score). Scope here is primary Sjögren's, full systemic. Therapeutic landscape historically thin (HCQ, secretagogues, off-label immunosuppressants); active Ph3 / Ph2 pipeline includes ianalumab (Novartis), dazodalibep (Amgen), nipocalimab (J&J), tibulizumab (Lilly), iscalimab (Novartis)."
+    },
+    {
+      "id": "iga_nephropathy",
+      "label": "IgA Nephropathy",
+      "abbreviation": "IgAN",
+      "mesh_id": "D005922",
+      "mesh_term": "Glomerulonephritis, IGA",
+      "therapeutic_area_ids": ["nephrology", "immunology"],
+      "description": "Most common primary glomerulonephritis worldwide, driven by mesangial deposition of galactose-deficient IgA1 immune complexes. Classically presents in young adults with synpharyngitic gross hematuria or asymptomatic micro-hematuria + proteinuria found on routine urinalysis; biopsy graded by Oxford MEST-C. Therapeutic landscape shifted dramatically 2021-25 with the approvals of budesonide-ER (Tarpeyo), sparsentan (Filspari), iptacopan (Fabhalta), and atrasentan (Vanrafia) on top of the RASi + SGLT2i backbone; Ph3 pipeline includes APRIL/BLyS inhibitors (sibeprenlimab, atacicept, zigakibart, povetacicept) and complement-pathway agents."
     }
   ]
 }

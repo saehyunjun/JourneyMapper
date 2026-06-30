@@ -1,0 +1,503 @@
+{
+  "meta": {
+    "schema_version": "theme-tags-0.1",
+    "generator": "propose-theme-tags@0.2",
+    "model": "claude-haiku-4-5",
+    "corpus_id": "wct_glp1_2025q4",
+    "content_source": "interview",
+    "updated_at": "2026-06-02T16:21:59.722Z",
+    "themes_count": 27,
+    "tagged_fragment_count": 40,
+    "total_tag_count": 35
+  },
+  "theme_tags": {
+    "iv-participant_06_t01_s00": [],
+    "iv-participant_06_t03_s00": [
+      {
+        "span": {
+          "start": 130,
+          "end": 146,
+          "text": "cost prohibitive"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.92,
+        "rationale": "Direct statement about medication cost creating household financial burden",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      },
+      {
+        "span": {
+          "start": 154,
+          "end": 211,
+          "text": "will harm my family by me paying for the GLP-1 medication"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.93,
+        "rationale": "Explicit concern that medication cost will damage family finances",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      },
+      {
+        "span": {
+          "start": 233,
+          "end": 310,
+          "text": "something and my family have factored into realistically the rest of our life"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Long-term financial impact of medication costs on household planning",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t03_s01": [
+      {
+        "span": {
+          "start": 41,
+          "end": 62,
+          "text": "very cost prohibitive"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "Describes medication as financially unaffordable in household context",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t03_s02": [
+      {
+        "span": {
+          "start": 90,
+          "end": 169,
+          "text": "major medical side effect that my doctor said would be prohibitive to my health"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "Concerns about medication side effects limiting physical health and functioning",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t03_s03": [
+      {
+        "span": {
+          "start": 3,
+          "end": 51,
+          "text": "prohibitive to the financial health of my family"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.92,
+        "rationale": "Medication cost burden on household finances",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      },
+      {
+        "span": {
+          "start": 56,
+          "end": 92,
+          "text": "prohibitive to my physical wellbeing"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.87,
+        "rationale": "Side effects limiting physical functioning and health",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t05_s00": [
+      {
+        "span": {
+          "start": 16,
+          "end": 48,
+          "text": "if [medicine] was less expensive"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Cost as barrier to medication access and household financial decision",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t05_s01": [],
+    "iv-participant_06_t07_s00": [
+      {
+        "span": {
+          "start": 79,
+          "end": 102,
+          "text": "cost prohibitive for me"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "Medication cost as financial barrier driving search for cheaper alternatives",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t07_s01": [
+      {
+        "span": {
+          "start": 113,
+          "end": 144,
+          "text": "if it was significantly cheaper"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.87,
+        "rationale": "Price sensitivity driving medication choice decisions",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t07_s02": [
+      {
+        "span": {
+          "start": 46,
+          "end": 81,
+          "text": "GLP-1s work quite well with my body"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Medication efficacy and positive response to treatment class",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t09_s00": [],
+    "iv-participant_06_t11_s00": [
+      {
+        "span": {
+          "start": 26,
+          "end": 143,
+          "text": "my job, which as we know in the United States, our jobs, healthcare influences what medications we can and can get on"
+        },
+        "theme_id": "life.occupation",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "Employment-linked insurance affecting medication access and coverage decisions",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      },
+      {
+        "span": {
+          "start": 73,
+          "end": 143,
+          "text": "our jobs, healthcare influences what medications we can and can get on"
+        },
+        "theme_id": "util.coverage",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "Employment-based plan design and formulary restrictions on medication access",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t11_s01": [
+      {
+        "span": {
+          "start": 49,
+          "end": 169,
+          "text": "high probability that I could get the actual medication or a hundred percent probability that I could get the medication"
+        },
+        "theme_id": "trial.eligibility",
+        "tagger": "llm-proposed",
+        "confidence": 0.87,
+        "rationale": "Enrollment decision conditional on post-trial medication access guarantee",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      },
+      {
+        "span": {
+          "start": 174,
+          "end": 212,
+          "text": "my company had dropped Zepbound for me"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.83,
+        "rationale": "Employment-based coverage loss driving trial interest as fallback access",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t11_s02": [
+      {
+        "span": {
+          "start": 2,
+          "end": 104,
+          "text": "went from pre-diabetic with a lot of physical problems to, I have perfect numbers in all my things now"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.9,
+        "rationale": "Health status improvement from pre-diabetic to normal metabolic markers",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      },
+      {
+        "span": {
+          "start": 30,
+          "end": 56,
+          "text": "a lot of physical problems"
+        },
+        "theme_id": "hrqol.physical_functioning",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Baseline physical limitations improved by treatment",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t11_s03": [
+      {
+        "span": {
+          "start": 4,
+          "end": 49,
+          "text": "quality of my life has dramatically increased"
+        },
+        "theme_id": "hrqol.general_health",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Self-rated overall health and well-being improvement",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t11_s04": [
+      {
+        "span": {
+          "start": 19,
+          "end": 64,
+          "text": "huge factor for me in trying a clinical trial"
+        },
+        "theme_id": "trial.enrollment",
+        "tagger": "llm-proposed",
+        "confidence": 0.86,
+        "rationale": "Motivation to enroll in trial driven by treatment benefits and access",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t13_s00": [],
+    "iv-participant_06_t13_s01": [
+      {
+        "span": {
+          "start": 21,
+          "end": 80,
+          "text": "it's very scary to think that I wouldn't get any medication"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Fear of medication withdrawal during trial washout/placebo phase",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      },
+      {
+        "span": {
+          "start": 158,
+          "end": 225,
+          "text": "first time since I was 15 that I've been even near a regular weight"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.87,
+        "rationale": "Medication effect on self-perception and identity after long-term weight struggle",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t13_s02": [
+      {
+        "span": {
+          "start": 0,
+          "end": 54,
+          "text": "I have never been this weight since I was 15 years old"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.86,
+        "rationale": "Long-standing identity shift from sustained weight normalization",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t13_s03": [
+      {
+        "span": {
+          "start": 7,
+          "end": 81,
+          "text": "idea of going back is something, it would be very hard for me to risk that"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.89,
+        "rationale": "Reluctance to risk weight regain in trial, retention concern",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t15_s00": [],
+    "iv-participant_06_t15_s01": [
+      {
+        "span": {
+          "start": 7,
+          "end": 36,
+          "text": "I've been on it over 72 weeks"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.77,
+        "rationale": "Extended exposure to study medication beyond initial protocol duration",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t15_s02": [
+      {
+        "span": {
+          "start": 3,
+          "end": 49,
+          "text": "maintenance is going to be the rest of my life"
+        },
+        "theme_id": "life.identity",
+        "tagger": "llm-proposed",
+        "confidence": 0.84,
+        "rationale": "Lifelong commitment to medication as part of future identity and life plan",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t15_s03": [],
+    "iv-participant_06_t15_s04": [],
+    "iv-participant_06_t17_s00": [],
+    "iv-participant_06_t19_s00": [
+      {
+        "span": {
+          "start": 12,
+          "end": 26,
+          "text": "a little scary"
+        },
+        "theme_id": "trial.logistics",
+        "tagger": "llm-proposed",
+        "confidence": 0.75,
+        "rationale": "Anxiety about trial protocol compliance or visit burden",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t21_s00": [
+      {
+        "span": {
+          "start": 16,
+          "end": 68,
+          "text": "I've read quite a bit and I think it's very exciting"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Patient knowledge of trial options and positive interest",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t21_s01": [
+      {
+        "span": {
+          "start": 0,
+          "end": 77,
+          "text": "I've also read about the implant they're talking about doing for a year or so"
+        },
+        "theme_id": "trial.awareness",
+        "tagger": "llm-proposed",
+        "confidence": 0.82,
+        "rationale": "Awareness of emerging trial formulations and study designs",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t21_s02": [],
+    "iv-participant_06_t21_s03": [
+      {
+        "span": {
+          "start": 38,
+          "end": 190,
+          "text": "making sure that the study doctors and I have discussed if I have major side effects at the beginning of the month, how I should consider managing those"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.84,
+        "rationale": "Need for clear safety communication and shared decision-making on side effect management",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t21_s04": [
+      {
+        "span": {
+          "start": 9,
+          "end": 136,
+          "text": "having a discussion and making sure that if I had major side effects at the beginning with a higher dose that I knew what to do"
+        },
+        "theme_id": "util.relationship",
+        "tagger": "llm-proposed",
+        "confidence": 0.83,
+        "rationale": "Patient-provider communication about safety protocols and self-management guidance",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t23_s00": [
+      {
+        "span": {
+          "start": 46,
+          "end": 87,
+          "text": "big scare last March in the United States"
+        },
+        "theme_id": "util.coverage",
+        "tagger": "llm-proposed",
+        "confidence": 0.76,
+        "rationale": "Medication supply disruption affecting formulary availability",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t23_s01": [],
+    "iv-participant_06_t23_s02": [
+      {
+        "span": {
+          "start": 69,
+          "end": 88,
+          "text": "cheaper alternative"
+        },
+        "theme_id": "life.financial",
+        "tagger": "llm-proposed",
+        "confidence": 0.85,
+        "rationale": "Cost-driven decision between brand and generic medication options",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t23_s03": [
+      {
+        "span": {
+          "start": 0,
+          "end": 75,
+          "text": "I would want to do my research on the specific pharmacy I'm getting it from"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.8,
+        "rationale": "Patient self-research to inform medication sourcing decisions",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t23_s04": [
+      {
+        "span": {
+          "start": 32,
+          "end": 131,
+          "text": "I would want to see their COI and there's several forums I follow, just kind of get some background"
+        },
+        "theme_id": "util.decision_support",
+        "tagger": "llm-proposed",
+        "confidence": 0.81,
+        "rationale": "Active information-gathering to evaluate pharmacy credibility",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ],
+    "iv-participant_06_t25_s00": [],
+    "iv-participant_06_t25_s01": [],
+    "iv-participant_06_t27_s00": [
+      {
+        "span": {
+          "start": 21,
+          "end": 78,
+          "text": "I would be risking gaining weight if I was on the placebo"
+        },
+        "theme_id": "trial.retention",
+        "tagger": "llm-proposed",
+        "confidence": 0.88,
+        "rationale": "Reluctance to join trial due to risk of treatment loss and weight regain",
+        "created_at": "2026-06-02T16:21:59.720Z"
+      }
+    ]
+  }
+}

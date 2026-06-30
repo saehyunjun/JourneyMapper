@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "corpus_id": "ms_reddit_2026q1",
+    "content_source": "social_post",
+    "updated_at": "2026-05-29T00:24:45.982Z"
+  },
+  "tags": [
+    {
+      "keyword_id": "side_effects_2",
+      "corpus_id": "ms_reddit_2026q1",
+      "fragment_id": "fc-ms_reddit_2026q1-10-1-1_a",
+      "content_source": "social_post",
+      "char_start": 254,
+      "char_end": 266,
+      "surface": "neurological",
+      "source": "human",
+      "review_status": "confirmed",
+      "created_at": "2026-05-29T00:24:45.982Z"
+    }
+  ]
+}

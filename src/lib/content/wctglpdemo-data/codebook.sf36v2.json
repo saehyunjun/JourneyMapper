@@ -1,0 +1,330 @@
+{
+  "meta": {
+    "schema_version": "sf36v2-1.0",
+    "supersedes": null,
+    "status": "draft",
+    "description": "Alternate tagging taxonomy organized around the SF-36v2 Health-Related Quality of Life (HRQoL) instrument. Eight top-level themes (h3) correspond to the eight SF-36v2 scales; each is annotated with its component summary (PCS = Physical Component Summary; MCS = Mental Component Summary; GH belongs to both). Subthemes (h4) map to the canonical item facets within each scale, framed so taggers can apply them to free-form patient language (interview transcripts, social-corpus fragments) rather than to structured questionnaire responses. Sentiment scale carries forward from codebook.json @ 2.0 unchanged. Emotions are NOT inlined here — the single source of truth is src/lib/content/emotions/plutchik.ts (exports PLUTCHIK_EMOTIONS, PLUTCHIK_DYADS, ALL_EMOTION_IDS); the live codebook.json duplicates that list and we are not propagating the duplication. Cluster arrays are intentionally empty — populate the same way as the live codebook (cluster declares parent_theme + parent_subtheme).",
+    "changelog": [
+      "sf36v2-1.0 — initial SF-36v2 mirror of the live codebook. Themes structure replaced; meta notes and sentiment_scale preserved. Emotion taxonomy intentionally omitted in favor of content/emotions/plutchik.ts as the single source of truth. Subthemes derived from the SF-36v2 item content of each scale (e.g. PF's vigorous/moderate/lifting/climbing/walking/self-care; MH's anxiety/depression/calm/positive-affect)."
+    ],
+    "sentiment_scale": {
+      "0": "neutral / mixed",
+      "1": "positive",
+      "2": "strongly positive",
+      "-2": "strongly negative",
+      "-1": "negative"
+    },
+    "notes": [
+      "A segment may carry a theme with no subtheme (general use) or with one or more subthemes.",
+      "A subtheme may only be applied if its parent theme is also applied.",
+      "Each theme declares its SF-36v2 `component` (PCS, MCS, or both) so component-level rollups stay derivable without re-tagging.",
+      "Themes are not mutually exclusive — a single fragment about pain interfering with work and mood can carry BP, RP, and MH.",
+      "Cluster tags are recorded per-instance in keyword_tags.json with absolute char spans. A cluster's parent_theme/parent_subtheme is a default home for UI nesting — it does NOT auto-tag the segment with those parents when a span is tagged to the cluster.",
+      "Emotions follow the Plutchik model. Source of truth: src/lib/content/emotions/plutchik.ts. Tagging code that needs the valid id set should import ALL_EMOTION_IDS from there (not from this file).",
+      "This codebook is content-only; downstream consumers (proposer scripts, exec-summary, drawers) currently target codebook.json. To use this file, point loaders at codebook.sf36v2.json or run a migration."
+    ],
+    "instrument_reference": {
+      "name": "SF-36v2 Health Survey",
+      "scales": 8,
+      "components": ["PCS", "MCS"],
+      "note": "Scale names and item content follow Ware et al. (2007), SF-36v2 Health Survey: Administration Guide. This codebook uses the SF-36v2 scales as a tagging vocabulary; it is not a scoring or psychometric instrument."
+    }
+  },
+  "themes": [
+    {
+      "id": "physical_functioning",
+      "label": "Physical Functioning",
+      "abbreviation": "PF",
+      "component": "PCS",
+      "description": "Extent to which health limits physical activities — from vigorous exertion through basic self-care. Applies whenever a participant describes what their body can or can't do.",
+      "subthemes": [
+        {
+          "id": "pf_vigorous_activities",
+          "label": "Vigorous Activities",
+          "description": "Limitations in running, lifting heavy objects, strenuous sports, or other high-exertion activity.",
+          "clusters": []
+        },
+        {
+          "id": "pf_moderate_activities",
+          "label": "Moderate Activities",
+          "description": "Limitations in moving a table, vacuuming, bowling, golfing, or similar moderate-effort activity.",
+          "clusters": []
+        },
+        {
+          "id": "pf_lifting_carrying",
+          "label": "Lifting & Carrying",
+          "description": "Difficulty lifting or carrying groceries and similar everyday loads.",
+          "clusters": []
+        },
+        {
+          "id": "pf_climbing_stairs",
+          "label": "Climbing Stairs",
+          "description": "Difficulty climbing one or several flights of stairs.",
+          "clusters": []
+        },
+        {
+          "id": "pf_bending_kneeling",
+          "label": "Bending, Kneeling, Stooping",
+          "description": "Difficulty bending, kneeling, or stooping.",
+          "clusters": []
+        },
+        {
+          "id": "pf_walking",
+          "label": "Walking",
+          "description": "Limitations walking — more than a mile, several blocks, or even one block.",
+          "clusters": []
+        },
+        {
+          "id": "pf_self_care",
+          "label": "Bathing & Dressing",
+          "description": "Difficulty with bathing, dressing, and other basic self-care.",
+          "clusters": []
+        },
+        {
+          "id": "pf_mobility_aids",
+          "label": "Mobility Aids & Adaptations",
+          "description": "Use of canes, walkers, wheelchairs, grab bars, or other aids; home or environment adaptations made to compensate for physical limits. Not an SF-36 item, but commonly volunteered when PF limits are discussed in free text.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "role_physical",
+      "label": "Role-Physical",
+      "abbreviation": "RP",
+      "component": "PCS",
+      "description": "Extent to which physical health interferes with work and other regular daily activities — productivity lost, effort required, kinds of tasks given up.",
+      "subthemes": [
+        {
+          "id": "rp_reduced_time",
+          "label": "Cut Down Time",
+          "description": "Reducing the amount of time spent on work or other activities because of physical health.",
+          "clusters": []
+        },
+        {
+          "id": "rp_accomplished_less",
+          "label": "Accomplished Less",
+          "description": "Getting less done than wanted as a result of physical health.",
+          "clusters": []
+        },
+        {
+          "id": "rp_limited_kind",
+          "label": "Limited in Kind of Work",
+          "description": "Restricted in the kind of work or activities that can be done due to physical health (e.g. switching roles, dropping tasks).",
+          "clusters": []
+        },
+        {
+          "id": "rp_difficulty_performing",
+          "label": "Difficulty Performing",
+          "description": "Work or activities take extra effort, more time, or workarounds to complete due to physical health.",
+          "clusters": []
+        },
+        {
+          "id": "rp_career_impact",
+          "label": "Career & Income Impact",
+          "description": "Job loss, reduced hours, missed promotions, disability leave, or income loss attributed to physical health. Not an SF-36 item, but commonly volunteered around RP content in free text.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "bodily_pain",
+      "label": "Bodily Pain",
+      "abbreviation": "BP",
+      "component": "PCS",
+      "description": "Intensity of pain and the extent to which pain interferes with normal work and daily activity.",
+      "subthemes": [
+        {
+          "id": "bp_pain_intensity",
+          "label": "Pain Intensity",
+          "description": "How much bodily pain the participant has experienced — including severity, frequency, and pain that is described as constant or chronic.",
+          "clusters": []
+        },
+        {
+          "id": "bp_pain_interference",
+          "label": "Pain Interference",
+          "description": "How much pain interferes with normal work, household tasks, hobbies, or daily activities — inside and outside the home.",
+          "clusters": []
+        },
+        {
+          "id": "bp_pain_location_quality",
+          "label": "Pain Location & Quality",
+          "description": "Where the pain is felt (back, joints, head, abdominal, neuropathic, etc.) and how it is described (sharp, burning, throbbing, aching). Not a separate SF-36 item, but a common qualitative facet of BP language.",
+          "clusters": []
+        },
+        {
+          "id": "bp_pain_management",
+          "label": "Pain Management",
+          "description": "Strategies and treatments used to manage pain — medications, procedures, physical therapy, alternative approaches — and how well they work.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "general_health",
+      "label": "General Health",
+      "abbreviation": "GH",
+      "component": "PCS+MCS",
+      "description": "Personal evaluation of overall health — self-rating, comparison to others, expectations about the future, and beliefs about one's own susceptibility to illness.",
+      "subthemes": [
+        {
+          "id": "gh_self_rating",
+          "label": "Health Self-Rating",
+          "description": "How the participant rates their health overall (excellent / very good / good / fair / poor) and the language they use to summarize it in their own words.",
+          "clusters": []
+        },
+        {
+          "id": "gh_illness_susceptibility",
+          "label": "Illness Susceptibility",
+          "description": "Belief that they get sick more easily than other people, or claims that they are as healthy as anybody they know.",
+          "clusters": []
+        },
+        {
+          "id": "gh_health_outlook",
+          "label": "Health Outlook",
+          "description": "Expectation that health will get worse, stay the same, or improve over time.",
+          "clusters": []
+        },
+        {
+          "id": "gh_health_comparison",
+          "label": "Health Comparison",
+          "description": "Comparison of current health to a year ago, to peers, or to a prior baseline.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "vitality",
+      "label": "Vitality",
+      "abbreviation": "VT",
+      "component": "MCS",
+      "description": "Energy level and fatigue — feeling full of life and pep at one end, worn out and tired at the other.",
+      "subthemes": [
+        {
+          "id": "vt_full_of_life",
+          "label": "Full of Life",
+          "description": "Feeling lively, vital, full of life — the positive pole of the vitality scale.",
+          "clusters": []
+        },
+        {
+          "id": "vt_energy",
+          "label": "Energy",
+          "description": "Having a lot of energy; feeling able to do what one wants to do.",
+          "clusters": []
+        },
+        {
+          "id": "vt_worn_out",
+          "label": "Worn Out",
+          "description": "Feeling worn out, drained, depleted — beyond ordinary tiredness.",
+          "clusters": []
+        },
+        {
+          "id": "vt_tired",
+          "label": "Tired",
+          "description": "Feeling tired, sluggish, low-energy in a way the participant attributes to health or treatment.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "social_functioning",
+      "label": "Social Functioning",
+      "abbreviation": "SF",
+      "component": "MCS",
+      "description": "Extent to which physical or emotional health interferes with normal social activities with family, friends, neighbors, or groups.",
+      "subthemes": [
+        {
+          "id": "sf_extent_interference",
+          "label": "Extent of Interference",
+          "description": "How much physical or emotional problems have interfered with normal social activities with family, friends, neighbors, or groups (not at all → extremely).",
+          "clusters": []
+        },
+        {
+          "id": "sf_time_interference",
+          "label": "Frequency of Interference",
+          "description": "How much of the time physical or emotional health has interfered with social activities (none of the time → all of the time).",
+          "clusters": []
+        },
+        {
+          "id": "sf_relationship_strain",
+          "label": "Relationship Strain",
+          "description": "Strain on relationships with partners, family, friends, or caregivers attributed to health. Common qualitative facet of SF language in interviews.",
+          "clusters": []
+        },
+        {
+          "id": "sf_isolation_withdrawal",
+          "label": "Isolation & Withdrawal",
+          "description": "Withdrawing from social events, declining invitations, or feeling isolated as a consequence of health.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "role_emotional",
+      "label": "Role-Emotional",
+      "abbreviation": "RE",
+      "component": "MCS",
+      "description": "Extent to which emotional problems (e.g. feeling depressed or anxious) interfere with work and other regular daily activities.",
+      "subthemes": [
+        {
+          "id": "re_reduced_time_emotional",
+          "label": "Cut Down Time (Emotional)",
+          "description": "Reducing the amount of time spent on work or other activities because of emotional problems.",
+          "clusters": []
+        },
+        {
+          "id": "re_accomplished_less_emotional",
+          "label": "Accomplished Less (Emotional)",
+          "description": "Getting less done than wanted as a result of emotional problems.",
+          "clusters": []
+        },
+        {
+          "id": "re_reduced_carefulness",
+          "label": "Did Work Less Carefully",
+          "description": "Doing work or activities less carefully than usual because of emotional problems.",
+          "clusters": []
+        }
+      ]
+    },
+    {
+      "id": "mental_health",
+      "label": "Mental Health",
+      "abbreviation": "MH",
+      "component": "MCS",
+      "description": "Psychological distress and well-being — anxiety, depression, behavioral and emotional control, and general positive affect.",
+      "subthemes": [
+        {
+          "id": "mh_anxiety",
+          "label": "Anxiety & Nervousness",
+          "description": "Feeling very nervous, on edge, or anxious.",
+          "clusters": []
+        },
+        {
+          "id": "mh_depression",
+          "label": "Depression & Low Mood",
+          "description": "Feeling so down in the dumps that nothing could cheer one up; feeling downhearted, depressed, or hopeless.",
+          "clusters": []
+        },
+        {
+          "id": "mh_calm_peace",
+          "label": "Calm & Peaceful",
+          "description": "Feeling calm and peaceful — the positive pole of the affect-balance content.",
+          "clusters": []
+        },
+        {
+          "id": "mh_happiness",
+          "label": "Happiness",
+          "description": "Being a happy person — general positive emotional tone over the recall period.",
+          "clusters": []
+        },
+        {
+          "id": "mh_emotional_control",
+          "label": "Emotional Control",
+          "description": "Sense of being in control of (or losing control of) one's emotions or behavior; mood swings; reactivity.",
+          "clusters": []
+        }
+      ]
+    }
+  ],
+  "emotion_tags_source": "src/lib/content/emotions/plutchik.ts"
+}

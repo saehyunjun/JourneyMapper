@@ -36,7 +36,7 @@
 
 <script lang="ts">
 	import { Avatar, LinkPreview } from 'bits-ui';
-	import { participantAvatarUrl } from '$lib/participant-avatars';
+	import { participantNarrativeAvatarUrl } from '$lib/dicebear-avatars';
 	import { participantLabel } from '$lib/content/wctglpdemo-data/analysis';
 
 	let {
@@ -62,7 +62,10 @@
 	} as const;
 
 	const label = $derived(participantLabel(interviewId));
-	const src = $derived(srcOverride ?? participantAvatarUrl(interviewId));
+	// All participants share the persona-narrative gradient + Micah figure so
+	// interview transcripts, corpus fragment cards, and persona drawers read
+	// as part of one visual system. Uploaded avatar overrides win when set.
+	const src = $derived(srcOverride ?? participantNarrativeAvatarUrl({ kind: 'interview', interviewId }));
 	const initials = $derived(interviewId.match(/\d+/)?.[0] ?? '?');
 	const meta = $derived(META.get(interviewId));
 </script>

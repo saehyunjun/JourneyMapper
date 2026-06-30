@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "updated_at": "2026-05-29T00:24:13.061Z"
+  },
+  "authors": {
+    "Participant 097": {
+      "role": {
+        "value": "patient",
+        "evidence": "unknown"
+      },
+      "gender": {
+        "value": "female",
+        "evidence": "unknown"
+      },
+      "country": {
+        "value": "united states",
+        "evidence": "unknown"
+      },
+      "ses": {
+        "value": "middle",
+        "evidence": "unknown"
+      }
+    }
+  }
+}
